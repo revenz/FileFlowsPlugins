@@ -17,11 +17,11 @@ Get-ChildItem -Path .\ -Filter *.csproj -Recurse -File -Name | ForEach-Object {
     $json += "`t{`n"
     $json += "`t`t""Name"": ""$name"",`n"
     $json += "`t`t""Version"": ""$version"",`n"
-    $json += "`t`t""Package"": ""https://github.com/revenz/FileFlowsPlugins/Builds/" + $name + ".zip?raw=true""`n"
+    $json += "`t`t""Package"": ""https://github.com/revenz/FileFlowsPlugins/blob/master/Builds/" + $name + ".zip?raw=true""`n"
     $json += "`t},`n"
 
     # build an instance for FileFlow local code
-    dotnet build $_ /property:GenerateFullPaths=true /consoleloggerparameters:NoSummary --output:../FileFlows/Server/Plugins
+    # dotnet build $_ /property:GenerateFullPaths=true /consoleloggerparameters:NoSummary --output:../FileFlows/Server/Plugins
     # build instance to be published to repo
     dotnet build $_ /property:GenerateFullPaths=true /consoleloggerparameters:NoSummary --output:Builds/$name
     
