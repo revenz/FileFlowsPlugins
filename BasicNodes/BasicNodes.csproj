@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Plugin">
+      <HintPath>..\Plugin.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  
+  <ItemGroup>  
+    <PackageReference Include="Jint" Version="3.0.0-beta-2035" /> 
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Content Include="BasicNodes.en.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>  
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,5 @@
+Plugin.dll
+*/bin
+*/obj
+*.suo
+

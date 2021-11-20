@@ -1,0 +1,87 @@
+{
+    "Enums":{
+        "LogType":{
+            "Info":"Information",
+            "Debug":"Debug",
+            "Warning":"Warning",
+            "Error":"Error"
+        }
+    },
+    "Flow":{
+        "Parts":{
+            "InputFile":{
+                "Description":"An input node for a library file.  This is required and is the starting point of a flow.  Any input node can be used, just one is required."
+            },
+            "CopyFile":{
+                "Description":"Copies a file to the destination path",
+                "Fields":{
+                    "DestinationPath":"Destination Path",
+                    "DestinationPath-Help":"The path where the file will be copied too",
+                    "CopyFolder":"Copy Folder",
+                    "CopyFolder-Help" :"If the relative library folder structure should be copied too"
+                }
+            },
+            "Log":{
+                "Description":"Logs a message to the flow log",
+                "Fields":{
+                    "LogType":"Type",
+                    "Message":"Message"
+                }
+            },
+            "FileExtension":{
+                "Description":"Checks if the file has one of the configured extensions.\n\nOutput 1: Matches\nOutput 2: Does not match",
+                "Fields":{
+                    "Extensions":"Extensions",
+                    "Extensions-Help":"A list of case insensitive file extensions that will be matched against.\nOuput 1 Matches\nOutput 2: Does not match"
+                }
+            },
+            "FileSize":{
+                "Description":"Checks if the file size matches the configured parameters.\n\nOutput 1: Matches\nOutput 2: Does not match",
+                "Fields":{
+                    "Comparison":"Comparison",
+                    "Lower":"Lower",
+                    "Lower-Suffix":"MB",
+                    "Lower-Help":"The value it must bet greater than",
+                    "Upper":"Upper",
+                    "Upper-Suffix":"MB",
+                    "Upper-Help":"The value it must be less than. Leave as 0 to not test the upper limit."
+                }
+            },
+            "MoveFile":{
+                "Description":"Moves a file to the destination path",
+                "Fields":{
+                    "DestinationPath":"Destination Path",
+                    "DestinationPath-Help":"The path where the file will be moved too",
+                    "MoveFolder":"Copy Folder",
+                    "MoveFolder-Help" :"If the relative library folder structure should be copied too",
+                    "DeleteOriginal":"Delete Original",
+                    "DeleteOriginal-Help":"If the original file should be deleted, this will only happen if the working file is different to the original file"
+                }
+            },
+            "RenameFile":{
+                "Description":"Renames the working file",
+                "Fields":{
+                    "FileName":"File Name",
+                    "FileName-Help":"The new filename"
+                }
+            },
+            "DeleteSourceDirectory":{
+                "Description":"Deletes the source directory of the original library file",
+                "Fields":{
+                    "IfEmpty":"If Empty",
+                    "IfEmpty-Help":"Only delete the source directory if the it is empty",
+                    "IncludePatterns":"Include Patterns",
+                    "IncludePatterns-Help":"Optional, if set only files matching these patterns will be counted to see if the folder is empty.   Any of these patterns can match."
+                }
+            },
+            "Function":{
+                "Fields":{
+                    "Outputs":"Outputs",
+                    "Outputs-Help":"The number of outputs this node can have.",
+                    "Code":"Code",
+                    "Code-Help":"return -1 for error and flow to stop\nreturn 0 for flow to complete\nreturn 1 or more for the desired output to be called"
+                }
+            }
+        }
+    }
+}
