@@ -17,6 +17,8 @@
             "VideoEncode":{
                 "Description":"A generic video encoding node, this lets you customize how to encode a video file using ffmpeg.\n\nOutput 1: Video was processed\nOutput 2: No processing required",
                 "Fields":{  
+                    "Extension":"Extension",
+                    "Extension-Help":"The file extension to use on the newly created file",
                     "VideoCodec":"Video Codec",
                     "VideoCodec-Help":"The video codec the video should be in, for example hevc, h264",
                     "VideoCodecParameters":"Video Codec Parameters",
@@ -43,8 +45,10 @@
             "FFMPEG":{
                 "Description":"The node lets you run any FFMPEG command you like.  Giving you full control over what it can do.\n\nFor more information refer to the FFMPEG documentation",
                 "Fields":{                    
+                    "Extension":"Extension",
+                    "Extension-Help":"The file extension to use on the newly created file",
                     "CommandLine":"Command Line",
-                    "CommandLine-Help":"The command line to run with FFMPEG.\n'{WorkingFile}': the working file of the flow\n'{TempDir}': The temp directory, including trailing directory separator, where files are generally created during the flow."
+                    "CommandLine-Help":"The command line to run with FFMPEG.\n'{WorkingFile}': the working file of the flow\n'{Output}': The output file that will be passed as the last parameter to FFMPEG including the extension defined above."
                 }
             }
         }

@@ -24,6 +24,10 @@ namespace FileFlows.VideoNodes
         [Text(4)]
         public string Language { get; set; }
 
+        [DefaultValue("mkv")]
+        [Text(5)]
+        public string Extension { get; set; }
+
         public override string Icon => "far fa-file-video";
 
         private NodeParameters args;
@@ -122,7 +126,7 @@ namespace FileFlows.VideoNodes
 
                 string ffArgsLine = string.Join(" ", ffArgs);
 
-                if (Encode(args, ffmpegExe, ffArgsLine) == false)
+                if (Encode(args, ffmpegExe, ffArgsLine, Extension) == false)
                     return -1;
 
                 return 1;

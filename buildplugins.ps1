@@ -2,7 +2,6 @@ Remove-Item Builds  -Recurse -ErrorAction SilentlyContinue
 
 $revision = (git rev-list --count --first-parent HEAD) -join "`n"
 
-
 $json = "[`n"
 
 Get-ChildItem -Path .\ -Filter *.csproj -Recurse -File -Name | ForEach-Object {
@@ -21,7 +20,11 @@ Get-ChildItem -Path .\ -Filter *.csproj -Recurse -File -Name | ForEach-Object {
     $json += "`t},`n"
 
     # build an instance for FileFlow local code
-    # dotnet build $_ /property:GenerateFullPaths=true /consoleloggerparameters:NoSummary --output:../FileFlows/Server/Plugins
+    dotnet build $_ /property:GenerateFullPaths=true /consoleloggerparameters:NoSummary --output:../FileFlows/Server/Plugins/$name/$version
+    Remove-Item ../FileFlows/Server/Plugins/$name/$version/Plugin.dll -ErrorAction SilentlyContinue
+    Remove-Item ../FileFlows/Server/Plugins/$name/$version/*.deps.json -ErrorAction SilentlyContinue
+    Remove-Item ../FileFlows/Server/Plugins/$name/$version/ref -Recurse -ErrorAction SilentlyContinue
+
     # build instance to be published to repo
     dotnet build $_ /property:GenerateFullPaths=true /consoleloggerparameters:NoSummary --output:Builds/$name
     
@@ -37,7 +40,3 @@ $json = $json.Substring(0, $json.lastIndexOf(',')) + "`n"
 $json += ']';
 
 Set-Content -Path 'plugins.json' -Value $json
-
-Remove-Item ../FileFlows/Server/Plugins/Plugin.dll -ErrorAction SilentlyContinue
-Remove-Item ../FileFlows/Server/Plugins/*.deps.json -ErrorAction SilentlyContinue
-Remove-Item ../FileFlows/Server/Plugins/ref -Recurse -ErrorAction SilentlyContinue

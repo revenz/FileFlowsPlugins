@@ -18,18 +18,22 @@ namespace FileFlows.VideoNodes
 
         private FFMpegEncoder Encoder;
 
-        protected bool Encode(NodeParameters args, string ffmpegExe, string ffmpegParameters)
+        protected bool Encode(NodeParameters args, string ffmpegExe, string ffmpegParameters, string extension = "mkv", string outputFile = "")
         {
+            if (string.IsNullOrEmpty(extension))
+                extension = "mkv";
+
             this.args = args;
             Encoder = new FFMpegEncoder(ffmpegExe, args.Logger);
             Encoder.AtTime += AtTimeEvent;
 
-            string output = Path.Combine(args.TempPath, Guid.NewGuid().ToString() + ".mkv");
-            args.Logger.DLog("New Temp file: " + output);
+            if (string.IsNullOrEmpty(outputFile))
+                outputFile = Path.Combine(args.TempPath, Guid.NewGuid().ToString() + "." + extension);
 
-            bool success = Encoder.Encode(args.WorkingFile, output, ffmpegParameters);
+            bool success = Encoder.Encode(args.WorkingFile, outputFile, ffmpegParameters);
+            args.Logger.ILog("Encoding succesful: " + success);
             if (success)
-                args.SetWorkingFile(output);
+                args.SetWorkingFile(outputFile);
             Encoder.AtTime -= AtTimeEvent;
             Encoder = null;
             return success;

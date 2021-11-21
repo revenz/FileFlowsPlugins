@@ -37,7 +37,16 @@ namespace FileFlows.BasicNodes.File
             else
                 dest = Path.Combine(dest, new FileInfo(args.FileName).Name);
 
-            var destDir = new FileInfo(dest).DirectoryName;
+
+            var fiDest = new FileInfo(dest);
+            var fiWorkingFile = new FileInfo(args.WorkingFile);
+            if (fiDest.Extension != fiWorkingFile.Extension)
+            {
+                dest = dest.Replace(fiDest.Extension, fiWorkingFile.Extension);
+                fiDest = new FileInfo(dest);
+            }
+
+            var destDir = fiDest.DirectoryName;
             if (Directory.Exists(destDir) == false)
                 Directory.CreateDirectory(destDir);
 
@@ -50,6 +59,7 @@ namespace FileFlows.BasicNodes.File
                 {
                     if (System.IO.File.Exists(dest))
                         System.IO.File.Delete(dest);
+                    args.Logger.ILog($"Moving file: \"{args.WorkingFile}\" to \"{dest}\"");
                     System.IO.File.Move(args.WorkingFile, dest, true);
 
                     if (DeleteOriginal && args.WorkingFile != args.FileName)
@@ -68,7 +78,6 @@ namespace FileFlows.BasicNodes.File
 
             while (task.IsCompleted == false)
             {
-
                 long currentSize = 0;
                 var destFileInfo = new FileInfo(dest);
                 if (destFileInfo.Exists)

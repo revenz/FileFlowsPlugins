@@ -12,6 +12,10 @@ namespace FileFlows.VideoNodes
         [TextArea(1)]
         public string CommandLine { get; set; }
 
+        [DefaultValue("mkv")]
+        [Text(2)]
+        public string Extension { get; set; }
+
         public override string Icon => "far fa-file-video";
 
         private NodeParameters args;
@@ -34,8 +38,14 @@ namespace FileFlows.VideoNodes
                 if (string.IsNullOrEmpty(ffmpegExe))
                     return -1;
 
+                if (string.IsNullOrEmpty(Extension))
+                    Extension = "mkv";
+
+                string outputFile = Path.Combine(args.TempPath, Guid.NewGuid().ToString() + "." + Extension);
+
                 string cmd = CommandLine.Replace("{WorkingFile}", "\"" + args.WorkingFile + "\"")
-                                        .Replace("{TempDir}", "\"" + args.TempPath + Path.DirectorySeparatorChar + "\"");
+                                        .Replace("{Output}", outputFile)
+                                        .Replace("{output}", outputFile);
 
                 if (Encode(args, ffmpegExe, CommandLine) == false)
                     return -1;
