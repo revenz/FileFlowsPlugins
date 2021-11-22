@@ -25,9 +25,16 @@ namespace FileFlows.BasicNodes.Functions
         delegate void LogDelegate(params object[] values);
         public override int Execute(NodeParameters args)
         {
-            args.Logger.DLog("Code: ", Environment.NewLine + new string('=', 40) + Environment.NewLine + Code + Environment.NewLine + new string('=', 40));
             if (string.IsNullOrEmpty(Code))
-                return base.Execute(args); // no code, means will run fine... i think... maybe...  depends what i do
+                return -1; // no code, flow cannot continue doesnt know what to do
+
+            args.Logger.DLog("Code: ", Environment.NewLine + new string('=', 40) + Environment.NewLine + Code + Environment.NewLine + new string('=', 40));
+
+
+            long fileSize = 0;
+            var fileInfo = new FileInfo(args.WorkingFile);
+            if(fileInfo.Exists)
+                fileSize = fileInfo.Length;
 
             var sb = new StringBuilder();
             var log = new
@@ -43,15 +50,19 @@ namespace FileFlows.BasicNodes.Functions
                 options.MaxStatements(100);
             })
             .SetValue("Logger", args.Logger)
-            .SetValue("FileSize", new FileInfo(args.WorkingFile).Length)
-            //.SetValue("ILog", log.ILog)
+            .SetValue("FileSize", fileSize)
             ;
 
-            var result = engine.Evaluate(Code).ToObject();
-            if (result as bool? != true)
-                args.Result = NodeResult.Failure;
-
-            return base.Execute(args);
+            try
+            {
+                var result = int.Parse(engine.Evaluate(Code).ToObject().ToString());
+                return result;
+            }
+            catch (Exception ex)
+            {
+                args.Logger.ELog("Failed executing function: " + ex.Message);
+                return -1;
+            }
         }
     }
 }
