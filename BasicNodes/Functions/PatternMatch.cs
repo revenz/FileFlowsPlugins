@@ -11,11 +11,10 @@ namespace FileFlows.BasicNodes.Functions
         public override FlowElementType Type => FlowElementType.Logic;
         public override string Icon => "fas fa-equals";
 
-        [DefaultValue(".*?")]
-        [RegularExpression(2)]
+        [DefaultValue("")]
+        [Text(1)]
         public string Pattern { get; set; }
 
-        delegate void LogDelegate(params object[] values);
         public override int Execute(NodeParameters args)
         {
             if (string.IsNullOrEmpty(Pattern))
