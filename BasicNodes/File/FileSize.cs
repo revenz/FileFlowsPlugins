@@ -20,7 +20,17 @@ namespace FileFlows.BasicNodes.File
 
         public override int Execute(NodeParameters args)
         {
-            long size = new FileInfo(args.WorkingFile).Length;
+            var fi = new FileInfo(args.WorkingFile);
+            if (fi.Exists == false) {
+                args.Logger.ELog("File Does not exist: " + args.WorkingFile);
+                return -1;
+            }
+
+            return TestSize(args, fi.Length);
+        }
+
+        public int TestSize(NodeParameters args, long size)
+        {
             if (size < (Lower * 1024 * 1024))
                 return 2;
             if (Upper > 0 && size > (Upper * 1024 * 1024))
