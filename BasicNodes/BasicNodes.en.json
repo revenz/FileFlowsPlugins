@@ -75,7 +75,7 @@
             "DeleteOriginal-Help": "If the original file should be deleted, this will only happen if the working file is different to the original file"
           }
         },
-        "Pattern": {
+        "PatternMatch": {
           "Description": "Tests the working file and original file against a regular expression.\n\nOutput 1: Matches expression\nOutput 2: Does not match",
           "Fields": {
             "Pattern": "Pattern",

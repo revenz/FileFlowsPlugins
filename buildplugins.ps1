@@ -20,13 +20,13 @@ Get-ChildItem -Path .\ -Filter *.csproj -Recurse -File -Name | ForEach-Object {
     $json += "`t},`n"
 
     # build an instance for FileFlow local code
-    dotnet build $_ /property:GenerateFullPaths=true /consoleloggerparameters:NoSummary --output:../FileFlows/Server/Plugins/$name/$version
+    dotnet build $_ --configuration Release /property:GenerateFullPaths=true /consoleloggerparameters:NoSummary --output:../FileFlows/Server/Plugins/$name/$version
     Remove-Item ../FileFlows/Server/Plugins/$name/$version/Plugin.dll -ErrorAction SilentlyContinue
     Remove-Item ../FileFlows/Server/Plugins/$name/$version/*.deps.json -ErrorAction SilentlyContinue
     Remove-Item ../FileFlows/Server/Plugins/$name/$version/ref -Recurse -ErrorAction SilentlyContinue
 
     # build instance to be published to repo
-    dotnet build $_ /property:GenerateFullPaths=true /consoleloggerparameters:NoSummary --output:Builds/$name
+    dotnet build $_ --configuration Release /property:GenerateFullPaths=true /consoleloggerparameters:NoSummary --output:Builds/$name
     
     Remove-Item Builds/$name/Plugin.dll -ErrorAction SilentlyContinue
     Remove-Item Builds/$name/*.deps.json -ErrorAction SilentlyContinue
