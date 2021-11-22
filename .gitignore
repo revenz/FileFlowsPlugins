@@ -4,3 +4,6 @@ Plugin.dll
 */.vs
 *.suo
 TestStore/
+.vs/FileFlowsPlugins/v17/.futdcache.v1
+.vs/FileFlowsPlugins/DesignTimeBuild/.dtbcache.v2
+.vs/FileFlowsPlugins/project-colors.json

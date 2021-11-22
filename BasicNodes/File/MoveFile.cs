@@ -26,7 +26,7 @@ namespace FileFlows.BasicNodes.File
             string dest = DestinationPath;
             if (string.IsNullOrEmpty(dest))
             {
-                args.Logger.ELog("No destination specified");
+                args.Logger?.ELog("No destination specified");
                 args.Result = NodeResult.Failure;
                 return -1;
             }
@@ -47,52 +47,24 @@ namespace FileFlows.BasicNodes.File
             }
 
             var destDir = fiDest.DirectoryName;
-            if (Directory.Exists(destDir) == false)
+            if (string.IsNullOrEmpty(destDir) == false && Directory.Exists(destDir) == false)
                 Directory.CreateDirectory(destDir);
 
-            long fileSize = new FileInfo(args.WorkingFile).Length;
+            string original = args.WorkingFile;
+            if (args.MoveFile(dest) == false)
+                return -1;
 
-            bool moved = false;
-            Task task = Task.Run(() =>
+            if (DeleteOriginal && original != args.FileName)
             {
                 try
                 {
-                    if (System.IO.File.Exists(dest))
-                        System.IO.File.Delete(dest);
-                    args.Logger.ILog($"Moving file: \"{args.WorkingFile}\" to \"{dest}\"");
-                    System.IO.File.Move(args.WorkingFile, dest, true);
-
-                    if (DeleteOriginal && args.WorkingFile != args.FileName)
-                    {
-                        System.IO.File.Delete(args.FileName);
-                    }
-                    args.SetWorkingFile(dest);
-
-                    moved = true;
-                }
-                catch (Exception ex)
+                    System.IO.File.Delete(original);
+                }catch(Exception ex)
                 {
-                    args.Logger.ELog("Failed to move file: " + ex.Message);
+                    args.Logger?.WLog("Failed to delete original file: " + ex.Message);
                 }
-            });
-
-            while (task.IsCompleted == false)
-            {
-                long currentSize = 0;
-                var destFileInfo = new FileInfo(dest);
-                if (destFileInfo.Exists)
-                    currentSize = destFileInfo.Length;
-
-                args.PartPercentageUpdate(currentSize / fileSize * 100);
-                System.Threading.Thread.Sleep(50);
             }
-
-            if (moved == false)
-                return -1;
-
-            args.PartPercentageUpdate(100);
-
-            return base.Execute(args);
+            return 1;
         }
     }
 }
