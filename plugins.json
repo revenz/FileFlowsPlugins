@@ -1,12 +1,12 @@
 [
 	{
 		"Name": "BasicNodes",
-		"Version": "0.0.1.5",
+		"Version": "0.0.1.7",
 		"Package": "https://github.com/revenz/FileFlowsPlugins/blob/master/Builds/BasicNodes.zip?raw=true"
 	},
 	{
 		"Name": "VideoNodes",
-		"Version": "0.0.1.5",
+		"Version": "0.0.1.7",
 		"Package": "https://github.com/revenz/FileFlowsPlugins/blob/master/Builds/VideoNodes.zip?raw=true"
 	}
 ]
