@@ -8,10 +8,10 @@ namespace MetaNodes.Tests.TheMovieDb
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
-    public class RenamerTests
+    public class MovieMovieRenamerTests
     {
         [TestMethod]
-        public void RenamerTests_File_TitleYearExt()
+        public void MovieRenamerTests_File_TitleYearExt()
         {
             var args = new FileFlows.Plugin.NodeParameters(@"c:\test\Ghostbusters.mkv");
             var logger = new TestLogger();
@@ -22,7 +22,7 @@ namespace MetaNodes.Tests.TheMovieDb
                 ReleaseDate = new DateTime(1989, 5, 5)
             });
 
-            Renamer node = new Renamer();
+            MovieRenamer node = new MovieRenamer();
             node.Pattern = "{Title} ({Year}).{ext}";
             node.LogOnly = true;    
 
@@ -33,7 +33,7 @@ namespace MetaNodes.Tests.TheMovieDb
         }
 
         [TestMethod]
-        public void RenamerTests_File_TitleExt()
+        public void MovieRenamerTests_File_TitleExt()
         {
             var args = new FileFlows.Plugin.NodeParameters(@"c:\test\Ghostbusters.mkv");
             var logger = new TestLogger();
@@ -44,7 +44,7 @@ namespace MetaNodes.Tests.TheMovieDb
                 ReleaseDate = new DateTime(1989, 5, 5)
             });
 
-            Renamer node = new Renamer();
+            MovieRenamer node = new MovieRenamer();
             node.Pattern = "{Title}.{ext}";
             node.LogOnly = true;
 
@@ -55,7 +55,7 @@ namespace MetaNodes.Tests.TheMovieDb
         }
 
         [TestMethod]
-        public void RenamerTests_Folder_TitleYear_Windows()
+        public void MovieRenamerTests_Folder_TitleYear_Windows()
         {
             var args = new FileFlows.Plugin.NodeParameters(@"c:\test\Ghostbusters.mkv");
             var logger = new TestLogger();
@@ -66,7 +66,7 @@ namespace MetaNodes.Tests.TheMovieDb
                 ReleaseDate = new DateTime(1989, 5, 5)
             });
 
-            Renamer node = new Renamer();
+            MovieRenamer node = new MovieRenamer();
             node.Pattern = @"{Title} ({Year})\{Title}.{ext}";
             node.LogOnly = true;
 
@@ -77,7 +77,7 @@ namespace MetaNodes.Tests.TheMovieDb
         }
 
         [TestMethod]
-        public void RenamerTests_Folder_TitleYear_Linux()
+        public void MovieRenamerTests_Folder_TitleYear_Linux()
         {
             var args = new FileFlows.Plugin.NodeParameters(@"c:\test\Ghostbusters.mkv");
             var logger = new TestLogger();
@@ -88,7 +88,7 @@ namespace MetaNodes.Tests.TheMovieDb
                 ReleaseDate = new DateTime(1989, 5, 5)
             });
 
-            Renamer node = new Renamer();
+            MovieRenamer node = new MovieRenamer();
             node.Pattern = @"{Title} ({Year})/{Title}.{ext}";
             node.LogOnly = true;
 
@@ -99,7 +99,7 @@ namespace MetaNodes.Tests.TheMovieDb
         }
 
         [TestMethod]
-        public void RenamerTests_Folder_TitleYear_MoveActual()
+        public void MovieRenamerTests_Folder_TitleYear_MoveActual()
         {
             string tempFile = Path.Combine(Path.GetTempPath(), Guid.NewGuid() + ".mkv");
             string path = new FileInfo(tempFile).DirectoryName;
@@ -114,7 +114,7 @@ namespace MetaNodes.Tests.TheMovieDb
                 ReleaseDate = new DateTime(1989, 5, 5)
             });
 
-            Renamer node = new Renamer();
+            MovieRenamer node = new MovieRenamer();
             node.Pattern = @"{Title} ({Year})/{Title}.{ext}";
 
             var result = node.Execute(args);

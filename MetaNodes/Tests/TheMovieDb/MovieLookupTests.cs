@@ -109,6 +109,23 @@ namespace MetaNodes.Tests.TheMovieDb
             Assert.AreEqual("Back to the Future Part II", mi.Title);
             Assert.AreEqual(1989, mi.ReleaseDate.Year);
         }
+
+        [TestMethod]
+        public void MovieLookupTests_VariablesSet()
+        {
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\Back To The Future (1989)\Jaws.mkv");
+            args.Logger = new TestLogger();
+
+            MovieLookup ml = new MovieLookup();
+            ml.UseFolderName = true;
+
+            var result = ml.Execute(args);
+            Assert.AreEqual(1, result);
+            Assert.IsTrue(args.Variables.ContainsKey("mi.Title"));
+            Assert.IsTrue(args.Variables.ContainsKey("mi.Year"));
+            Assert.AreEqual("Back to the Future Part II", args.Variables["mi.Title"]);
+            Assert.AreEqual("1989", args.Variables["mi.Year"]);
+        }
     }
 }
 

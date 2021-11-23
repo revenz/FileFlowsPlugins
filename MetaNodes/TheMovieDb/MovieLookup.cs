@@ -11,7 +11,23 @@
     {
         public override int Inputs => 1;
         public override int Outputs => 2;
+
+        public override FlowElementType Type => FlowElementType.Logic;
+
         public override string Icon => "fas fa-film";
+
+        private Dictionary<string, object> _Variables;
+
+        public override Dictionary<string, object> Variables => _Variables;
+
+        public MovieLookup()
+        {
+            _Variables = new Dictionary<string, object>()
+            {
+                { "mi.Title", string.Empty },
+                {"mi.Year", string.Empty }
+            };
+        }
 
 
         [Boolean(1)]
@@ -96,6 +112,11 @@
                 return 2; // no match
 
             args.SetParameter(Globals.MOVIE_INFO, result);
+
+            Variables["mi.Title"] = result.Title;
+            Variables["mi.Year"] = result.ReleaseDate.Year.ToString();
+
+            args.UpdateVariables(Variables);
 
             return 1;
 

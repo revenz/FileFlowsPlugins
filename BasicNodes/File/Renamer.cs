@@ -1,20 +1,18 @@
-﻿namespace MetaNodes.TheMovieDb
+﻿namespace FileFlows.BasicNodes.File
 {
     using System.Text.RegularExpressions;
-    using DM.MovieApi;
-    using DM.MovieApi.ApiResponse;
-    using DM.MovieApi.MovieDb.Movies;
     using FileFlows.Plugin;
     using FileFlows.Plugin.Attributes;
 
-    public class MovieRenamer : Node
+    public class Renamer : Node
     {
         public override int Inputs => 1;
         public override int Outputs => 1;
         public override string Icon => "fas fa-font";
-        public override FlowElementType Type => FlowElementType.Process;
 
         public string _Pattern = string.Empty;
+
+        public override FlowElementType Type => FlowElementType.Process;
 
         [TextVariable(1)]
         public string? Pattern
@@ -42,21 +40,22 @@
                 args.Logger?.ELog("No pattern specified");
                 return -1;
             }
-            var movieInfo = args.GetParameter<MovieInfo>(Globals.MOVIE_INFO);
-            if (movieInfo == null) {
-                args.Logger?.ELog("MovieInfo not found, you must execute the Movie Lookup node first");
-                return -1;
-            }
 
             string newFile = Pattern;
             // incase they set a linux path on windows or vice versa
             newFile = newFile.Replace('\\', Path.DirectorySeparatorChar);
             newFile = newFile.Replace('/', Path.DirectorySeparatorChar);
 
-            newFile = ReplaceVariable(newFile, "Year", movieInfo.ReleaseDate.Year.ToString());
-            newFile = ReplaceVariable(newFile, "Title", movieInfo.Title);
-            newFile = ReplaceVariable(newFile, "Extension", args.WorkingFile.Substring(args.WorkingFile.LastIndexOf(".")+1));
-            newFile = ReplaceVariable(newFile, "Ext", args.WorkingFile.Substring(args.WorkingFile.LastIndexOf(".") + 1));
+            if (args.Variables?.Any() == true)
+            {
+                {
+                    foreach (string variable in args.Variables.Keys)
+                    {
+                        string strValue = args.Variables[variable]?.ToString() ?? "";
+                        newFile = ReplaceVariable(newFile, variable, strValue);
+                    }
+                }
+            }
 
             string destFolder = DestinationPath;
             if (string.IsNullOrEmpty(destFolder))

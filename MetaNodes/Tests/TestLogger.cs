@@ -1,4 +1,6 @@
-﻿namespace BasicNodes.Tests
+﻿#if(DEBUG)
+
+namespace MetaNodes.Tests
 {
     using FileFlows.Plugin;
     using System;
@@ -41,3 +43,5 @@
         }
     }
 }
+
+#endif

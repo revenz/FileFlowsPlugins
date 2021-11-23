@@ -33,7 +33,15 @@ namespace FileFlows.VideoNodes
             bool success = Encoder.Encode(args.WorkingFile, outputFile, ffmpegParameters);
             args.Logger.ILog("Encoding succesful: " + success);
             if (success)
+            {
                 args.SetWorkingFile(outputFile);
+
+                // get the new video info
+                var videoInfo = new VideoInfoHelper(ffmpegExe, args.Logger).Read(outputFile);
+                var newVariables = new Dictionary<string, object>();
+                SetVideoInfo(args, videoInfo, newVariables);
+                args.UpdateVariables(newVariables);
+            }
             Encoder.AtTime -= AtTimeEvent;
             Encoder = null;
             return success;

@@ -1,6 +1,8 @@
 namespace FileFlows.VideoNodes
 {
     using FileFlows.Plugin;
+    using global::VideoNodes;
+
     public abstract class VideoNode : Node
     {
         public override string Icon => "fas fa-video";
@@ -63,13 +65,37 @@ namespace FileFlows.VideoNodes
         }
 
         private const string VIDEO_INFO = "VideoInfo";
-        protected void SetVideoInfo(NodeParameters args, VideoInfo info)
+        protected void SetVideoInfo(NodeParameters args, VideoInfo videoInfo, Dictionary<string, object> variables)
         {
             if (args.Parameters.ContainsKey(VIDEO_INFO))
-                args.Parameters[VIDEO_INFO] = info;
+                args.Parameters[VIDEO_INFO] = videoInfo;
             else
-                args.Parameters.Add(VIDEO_INFO, info);
+                args.Parameters.Add(VIDEO_INFO, videoInfo);
+
+            variables.AddOrUpdate("vi.VideoCodec", videoInfo.VideoStreams[0].Codec);
+            if (videoInfo.AudioStreams?.Any() == true)
+            {
+                ;
+                if (string.IsNullOrEmpty(videoInfo.AudioStreams[0].Codec))
+                    Variables.AddOrUpdate("vi.AudioCodec", videoInfo.AudioStreams[0].Codec);
+                if (string.IsNullOrEmpty(videoInfo.AudioStreams[0].Language))
+                    Variables.AddOrUpdate("vi.AudioLanguage", videoInfo.AudioStreams[0].Language);
+                Variables.AddOrUpdate("vi.AudioCodecs", string.Join(", ", videoInfo.AudioStreams.Select(x => x.Codec).Where(x => string.IsNullOrEmpty(x) == false)));
+                Variables.AddOrUpdate("vi.AudioLanguages", string.Join(", ", videoInfo.AudioStreams.Select(x => x.Language).Where(x => string.IsNullOrEmpty(x) == false)));
+            }
+
+            if (videoInfo.VideoStreams[0].Width == 1920)
+                Variables.AddOrUpdate("vi.Resolution", "1080P");
+            else if (videoInfo.VideoStreams[0].Width == 3840)
+                Variables.AddOrUpdate("vi.Resolution", "4k");
+            else if (videoInfo.VideoStreams[0].Width == 1280)
+                Variables.AddOrUpdate("vi.Resolution", "720P");
+            else if (videoInfo.VideoStreams[0].Width < 1280)
+                Variables.AddOrUpdate("vi.Resolution", "SD");
+            else
+                Variables.AddOrUpdate("vi.Resolution", videoInfo.VideoStreams[0].Width + "x" + videoInfo.VideoStreams[0].Height);
         }
+
         protected VideoInfo GetVideoInfo(NodeParameters args)
         {
             if (args.Parameters.ContainsKey(VIDEO_INFO) == false)
