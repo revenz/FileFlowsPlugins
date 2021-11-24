@@ -1,17 +1,17 @@
 [
 	{
 		"Name": "BasicNodes",
-		"Version": "0.0.1.11",
+		"Version": "0.0.1.12",
 		"Package": "https://github.com/revenz/FileFlowsPlugins/blob/master/Builds/BasicNodes.zip?raw=true"
 	},
 	{
 		"Name": "MetaNodes",
-		"Version": "0.0.1.11",
+		"Version": "0.0.1.12",
 		"Package": "https://github.com/revenz/FileFlowsPlugins/blob/master/Builds/MetaNodes.zip?raw=true"
 	},
 	{
 		"Name": "VideoNodes",
-		"Version": "0.0.1.11",
+		"Version": "0.0.1.12",
 		"Package": "https://github.com/revenz/FileFlowsPlugins/blob/master/Builds/VideoNodes.zip?raw=true"
 	}
 ]

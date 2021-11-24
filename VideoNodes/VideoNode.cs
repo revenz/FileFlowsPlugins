@@ -85,15 +85,17 @@ namespace FileFlows.VideoNodes
             }
 
             if (videoInfo.VideoStreams[0].Width == 1920)
-                Variables.AddOrUpdate("vi.Resolution", "1080P");
+                Variables.AddOrUpdate("vi.Resolution", "1080");
             else if (videoInfo.VideoStreams[0].Width == 3840)
-                Variables.AddOrUpdate("vi.Resolution", "4k");
+                Variables.AddOrUpdate("vi.Resolution", "4l");
             else if (videoInfo.VideoStreams[0].Width == 1280)
-                Variables.AddOrUpdate("vi.Resolution", "720P");
+                Variables.AddOrUpdate("vi.Resolution", "720p");
             else if (videoInfo.VideoStreams[0].Width < 1280)
                 Variables.AddOrUpdate("vi.Resolution", "SD");
             else
                 Variables.AddOrUpdate("vi.Resolution", videoInfo.VideoStreams[0].Width + "x" + videoInfo.VideoStreams[0].Height);
+
+            args.UpdateVariables(variables);
         }
 
         protected VideoInfo GetVideoInfo(NodeParameters args)

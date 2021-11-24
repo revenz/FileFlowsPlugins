@@ -29,7 +29,7 @@ namespace BasicNodes.Tests
             args.SetWorkingFile($@"c:\temp\{Guid.NewGuid().ToString()}.avi", dontDelete: true);
 
             var result = pm.Execute(args);
-            Assert.AreEqual(0, result);
+            Assert.AreEqual(2, result);
         }
 
         [TestMethod]
@@ -42,6 +42,17 @@ namespace BasicNodes.Tests
 
             var result = pm.Execute(args);
             Assert.AreEqual(-1, result);
+        }
+        [TestMethod]
+        public void PatternMatch_Trailer()
+        {
+            PatternMatch pm = new PatternMatch();
+            pm.Pattern = @"\-trailer";
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile-TRAILER.avi");
+            args.SetWorkingFile($@"c:\temp\{Guid.NewGuid().ToString()}.avi", dontDelete: true);
+
+            var result = pm.Execute(args);
+            Assert.AreEqual(2, result);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace FileFlows.BasicNodes.Functions
                 var rgx = new Regex(Pattern);
                 if (rgx.IsMatch(args.WorkingFile) || rgx.IsMatch(args.FileName))
                     return 1;
-                return 0;
+                return 2;
             }
             catch (Exception ex)
             {

@@ -1,6 +1,7 @@
 ﻿namespace FileFlows.BasicNodes.File
 {
     using System.ComponentModel.DataAnnotations;
+    using System.Text;
     using System.Text.RegularExpressions;
     using FileFlows.Plugin;
     using FileFlows.Plugin.Attributes;
@@ -35,6 +36,9 @@
         [Boolean(3)]
         public bool LogOnly { get; set; }
 
+        [File(4)]
+        public string CsvFile { get; set; }
+
         public override int Execute(NodeParameters args)
         {
             if(string.IsNullOrEmpty(Pattern))
@@ -48,25 +52,36 @@
             newFile = newFile.Replace('\\', Path.DirectorySeparatorChar);
             newFile = newFile.Replace('/', Path.DirectorySeparatorChar);
 
-            if (args.Variables?.Any() == true)
-            {
-                {
-                    foreach (string variable in args.Variables.Keys)
-                    {
-                        string strValue = args.Variables[variable]?.ToString() ?? "";
-                        newFile = ReplaceVariable(newFile, variable, strValue);
-                    }
-                }
-            }
+            newFile = args.ReplaceVariables(newFile, stripMissing: true);
+            newFile = Regex.Replace(newFile, @"\.(\.[\w\d]+)$", "$1");
+            // remove empty [], (), {}
+            newFile = newFile.Replace("()", "").Replace("{}", "").Replace("[]", "");
+            // remove double space that may have been introduced by empty [], () removals
+            while (newFile.IndexOf("  ") >= 0)
+                newFile = newFile.Replace("  ", " ");
+            newFile = Regex.Replace(newFile, @"\s(\.[\w\d]+)$", "$1");
+            newFile = newFile.Replace(" \\", "\\");
 
             string destFolder = DestinationPath;
             if (string.IsNullOrEmpty(destFolder))
                 destFolder = new FileInfo(args.WorkingFile).Directory?.FullName ?? "";
 
-            var dest = new FileInfo(Path.Combine(destFolder, newFile));
-            
-            args.Logger?.ILog("Renaming file to: " + (string.IsNullOrEmpty(DestinationPath) ? "" : DestinationPath + Path.DirectorySeparatorChar) + newFile);
+            var dest = args.GetSafeName(Path.Combine(destFolder, newFile));
 
+
+            args.Logger?.ILog("Renaming file to: " + dest.FullName.Substring(destFolder.Length+1));
+
+            if (string.IsNullOrEmpty(CsvFile) == false)
+            {
+                try
+                {
+                    System.IO.File.AppendAllText(CsvFile, EscapeForCsv(args.FileName) + "," + EscapeForCsv(dest.FullName) + Environment.NewLine);
+                }
+                catch (Exception ex)  
+                {
+                    args.Logger?.ELog("Failed to append to CSV file: " + ex.Message);
+                }
+            }
 
             if (LogOnly)
                 return 1;
@@ -74,9 +89,18 @@
             return args.MoveFile(dest.FullName) ? 1 : -1;
         }
 
-        private string ReplaceVariable(string input, string variable, string value)
+        private string EscapeForCsv(string input)
         {
-            return Regex.Replace(input, @"{" + Regex.Escape(variable) + @"}", value, RegexOptions.IgnoreCase);
+            StringBuilder sb = new StringBuilder();
+            sb.Append('"');
+            foreach(char c in input)
+            {
+                sb.Append(c);
+                if(c == '"')
+                    sb.Append('"');
+            }
+            sb.Append('"');
+            return sb.ToString();
         }
     }
 }

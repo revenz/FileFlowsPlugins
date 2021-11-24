@@ -86,11 +86,12 @@
           "Description": "Renames the working file.\nVariables can be used by entering the key '{' inside the Pattern field.",
           "Fields": {
             "Pattern": "Pattern",
-            "Pattern-Help": "The pattern to use to rename the folder. Variables can be used, for example '{FileName}.{ext}'.",
             "DestinationPath": "Destination Path",
             "DestinationPath-Help": "If the file should be moved to a different directory.",
             "LogOnly": "Log Only",
-            "LogOnly-Help": "Turn on if you just want to test this node without it actually renaming the file"
+            "LogOnly-Help": "Turn on if you just want to test this node without it actually renaming the file",
+            "CsvFile": "CSV File",
+            "CsvFile-Help": "Will append to this file the original name and the renamed file.  Useful when using ''Log Only'' to test the renamer before changing files."
           }
         }
       }

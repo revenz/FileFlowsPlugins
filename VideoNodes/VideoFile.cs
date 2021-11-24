@@ -15,12 +15,12 @@ namespace FileFlows.VideoNodes
         {
             _Variables = new Dictionary<string, object>()
             {
-                { "vi.VideoCodec", string.Empty },
-                { "vi.AudioCodec", string.Empty },
-                { "vi.AudioCodecs", string.Empty },
-                { "vi.AudioLanguage", string.Empty },
-                { "vi.AudioLanguages", string.Empty },
-                { "vi.Resolution", string.Empty },
+                { "vi.VideoCodec", "hevc" },
+                { "vi.AudioCodec", "ac3" },
+                { "vi.AudioCodecs", "ac3,aac"},
+                { "vi.AudioLanguage", "eng" },
+                { "vi.AudioLanguages", "eng, mao" },
+                { "vi.Resolution", "1080p" },
             };
         }
 
@@ -52,29 +52,6 @@ namespace FileFlows.VideoNodes
                 }
 
                 SetVideoInfo(args, videoInfo, Variables);
-
-                Variables["vi.VideoCodec"] = videoInfo.VideoStreams[0].Codec;
-                if (videoInfo.AudioStreams?.Any() == true)
-                {
-                    ;
-                    if (string.IsNullOrEmpty(videoInfo.AudioStreams[0].Codec))
-                        Variables["vi.AudioCodec"] = videoInfo.AudioStreams[0].Codec;
-                    if(string.IsNullOrEmpty(videoInfo.AudioStreams[0].Language))
-                        Variables["vi.AudioLanguage"] = videoInfo.AudioStreams[0].Language;
-                    Variables["vi.AudioCodecs"] = string.Join(", ", videoInfo.AudioStreams.Select(x => x.Codec).Where(x => string.IsNullOrEmpty(x) == false));
-                    Variables["vi.AudioLanguages"] = string.Join(", ", videoInfo.AudioStreams.Select(x => x.Language).Where(x => string.IsNullOrEmpty(x) == false));
-                }
-
-                if (videoInfo.VideoStreams[0].Width == 1920)
-                    Variables["vi.Resolution"] = "1080P";
-                else if (videoInfo.VideoStreams[0].Width == 3840)
-                    Variables["vi.Resolution"] = "4k";
-                else if (videoInfo.VideoStreams[0].Width == 1280)
-                    Variables["vi.Resolution"] = "720p";
-                else if (videoInfo.VideoStreams[0].Width < 1280)
-                    Variables["vi.Resolution"] = "SD";
-                else
-                    Variables["vi.Resolution"] = videoInfo.VideoStreams[0].Width + "x" + videoInfo.VideoStreams[0].Height;
 
                 return 1;
             }

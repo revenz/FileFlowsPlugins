@@ -24,8 +24,8 @@
         {
             _Variables = new Dictionary<string, object>()
             {
-                { "mi.Title", string.Empty },
-                {"mi.Year", string.Empty }
+                { "mi.Title", "Batman Begins" },
+                { "mi.Year", 2005 }
             };
         }
 
