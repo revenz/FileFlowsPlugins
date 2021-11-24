@@ -120,10 +120,10 @@ namespace MetaNodes.Tests.TheMovieDb
 
             var result = ml.Execute(args);
             Assert.AreEqual(1, result);
-            Assert.IsTrue(args.Variables.ContainsKey("mi.Title"));
-            Assert.IsTrue(args.Variables.ContainsKey("mi.Year"));
-            Assert.AreEqual("Back to the Future Part II", args.Variables["mi.Title"]);
-            Assert.AreEqual("1989", args.Variables["mi.Year"]);
+            Assert.IsTrue(args.Variables.ContainsKey("miTitle"));
+            Assert.IsTrue(args.Variables.ContainsKey("miYear"));
+            Assert.AreEqual("Back to the Future Part II", args.Variables["miTitle"]);
+            Assert.AreEqual(1989, args.Variables["miYear"]);
         }
 
         [TestMethod]
@@ -137,8 +137,8 @@ namespace MetaNodes.Tests.TheMovieDb
 
             var result = ml.Execute(args);
             Assert.AreEqual(2, result);
-            Assert.IsFalse(args.Variables.ContainsKey("mi.Title"));
-            Assert.IsFalse(args.Variables.ContainsKey("mi.Year"));
+            Assert.IsFalse(args.Variables.ContainsKey("miTitle"));
+            Assert.IsFalse(args.Variables.ContainsKey("miYear"));
         }
     }
 }

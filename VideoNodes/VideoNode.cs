@@ -72,28 +72,30 @@ namespace FileFlows.VideoNodes
             else
                 args.Parameters.Add(VIDEO_INFO, videoInfo);
 
-            variables.AddOrUpdate("vi.VideoCodec", videoInfo.VideoStreams[0].Codec);
+            variables.AddOrUpdate("viVideoCodec", videoInfo.VideoStreams[0].Codec);
             if (videoInfo.AudioStreams?.Any() == true)
             {
                 ;
                 if (string.IsNullOrEmpty(videoInfo.AudioStreams[0].Codec))
-                    Variables.AddOrUpdate("vi.AudioCodec", videoInfo.AudioStreams[0].Codec);
+                    Variables.AddOrUpdate("viAudioCodec", videoInfo.AudioStreams[0].Codec);
+                if (string.IsNullOrEmpty(videoInfo.AudioStreams[0].Codec))
+                    Variables.AddOrUpdate("viAudioChannels", videoInfo.AudioStreams[0].Channels);
                 if (string.IsNullOrEmpty(videoInfo.AudioStreams[0].Language))
-                    Variables.AddOrUpdate("vi.AudioLanguage", videoInfo.AudioStreams[0].Language);
-                Variables.AddOrUpdate("vi.AudioCodecs", string.Join(", ", videoInfo.AudioStreams.Select(x => x.Codec).Where(x => string.IsNullOrEmpty(x) == false)));
-                Variables.AddOrUpdate("vi.AudioLanguages", string.Join(", ", videoInfo.AudioStreams.Select(x => x.Language).Where(x => string.IsNullOrEmpty(x) == false)));
+                    Variables.AddOrUpdate("viAudioLanguage", videoInfo.AudioStreams[0].Language);
+                Variables.AddOrUpdate("viAudioCodecs", string.Join(", ", videoInfo.AudioStreams.Select(x => x.Codec).Where(x => string.IsNullOrEmpty(x) == false)));
+                Variables.AddOrUpdate("viAudioLanguages", string.Join(", ", videoInfo.AudioStreams.Select(x => x.Language).Where(x => string.IsNullOrEmpty(x) == false)));
             }
 
             if (videoInfo.VideoStreams[0].Width == 1920)
-                Variables.AddOrUpdate("vi.Resolution", "1080");
+                Variables.AddOrUpdate("viResolution", "1080");
             else if (videoInfo.VideoStreams[0].Width == 3840)
-                Variables.AddOrUpdate("vi.Resolution", "4l");
+                Variables.AddOrUpdate("viResolution", "4l");
             else if (videoInfo.VideoStreams[0].Width == 1280)
-                Variables.AddOrUpdate("vi.Resolution", "720p");
+                Variables.AddOrUpdate("viResolution", "720p");
             else if (videoInfo.VideoStreams[0].Width < 1280)
-                Variables.AddOrUpdate("vi.Resolution", "SD");
+                Variables.AddOrUpdate("viResolution", "SD");
             else
-                Variables.AddOrUpdate("vi.Resolution", videoInfo.VideoStreams[0].Width + "x" + videoInfo.VideoStreams[0].Height);
+                Variables.AddOrUpdate("viResolution", videoInfo.VideoStreams[0].Width + "x" + videoInfo.VideoStreams[0].Height);
 
             args.UpdateVariables(variables);
         }

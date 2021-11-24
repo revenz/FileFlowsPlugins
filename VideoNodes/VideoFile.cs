@@ -15,12 +15,12 @@ namespace FileFlows.VideoNodes
         {
             _Variables = new Dictionary<string, object>()
             {
-                { "vi.VideoCodec", "hevc" },
-                { "vi.AudioCodec", "ac3" },
-                { "vi.AudioCodecs", "ac3,aac"},
-                { "vi.AudioLanguage", "eng" },
-                { "vi.AudioLanguages", "eng, mao" },
-                { "vi.Resolution", "1080p" },
+                { "viVideoCodec", "hevc" },
+                { "viAudioCodec", "ac3" },
+                { "viAudioCodecs", "ac3,aac"},
+                { "viAudioLanguage", "eng" },
+                { "viAudioLanguages", "eng, mao" },
+                { "viResolution", "1080p" },
             };
         }
 

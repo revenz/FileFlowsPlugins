@@ -16,21 +16,21 @@ namespace BasicNodes.Tests
             args.Logger = logger;   
             args.Variables = new Dictionary<string, object>
             {
-                { "mi.Title", "Ghostbusters" },
-                { "mi.Year", 1984 },
-                { "vi.Resolution", "1080P" }
+                { "miTitle", "Ghostbusters" },
+                { "miYear", 1984 },
+                { "viResolution", "1080P" }
             };
             args.SetWorkingFile($@"c:\temp\{Guid.NewGuid()}.mkv", dontDelete: true);
 
 
             Renamer node = new Renamer();
-            node.Pattern = @"{mi.Title} ({mi.Year})\{mi.Title} [{vi.Resolution}]{ext}";
+            node.Pattern = @"{miTitle} ({miYear})\{miTitle} [{viResolution}]{ext}";
             node.LogOnly = true;
 
             var result = node.Execute(args);
             Assert.AreEqual(1, result);
 
-            string expectedShort = $"Ghostbusters (1984){Path.DirectorySeparatorChar}Ghostbusters [1080P].mkv";
+            string expectedShort = $@"c:\temp\Ghostbusters (1984){Path.DirectorySeparatorChar}Ghostbusters [1080P].mkv";
             Assert.IsTrue(logger.Contains($"Renaming file to: " + expectedShort));
         }
         [TestMethod]
@@ -41,21 +41,21 @@ namespace BasicNodes.Tests
             args.Logger = logger;
             args.Variables = new Dictionary<string, object>
             {
-                { "mi.Title", "Ghostbusters" },
-                { "mi.Year", 1984 },
-                { "vi.Resolution", "1080P" }
+                { "miTitle", "Ghostbusters" },
+                { "miYear", 1984 },
+                { "viResolution", "1080P" }
             };
             args.SetWorkingFile($@"c:\temp\{Guid.NewGuid()}.mkv", dontDelete: true);
 
 
             Renamer node = new Renamer();
-            node.Pattern = @"{mi.Title} ({mi.Year})\{mi.Title} [{vi.Resolution}].{ext}";
+            node.Pattern = @"{miTitle} ({miYear})\{miTitle} [{viResolution}].{ext}";
             node.LogOnly = true;
 
             var result = node.Execute(args);
             Assert.AreEqual(1, result);
 
-            string expectedShort = $"Ghostbusters (1984){Path.DirectorySeparatorChar}Ghostbusters [1080P].mkv";
+            string expectedShort = $@"c:\temp\Ghostbusters (1984){Path.DirectorySeparatorChar}Ghostbusters [1080P].mkv";
             Assert.IsTrue(logger.Contains($"Renaming file to: " + expectedShort));
         }
 
@@ -67,20 +67,20 @@ namespace BasicNodes.Tests
             args.Logger = logger;
             args.Variables = new Dictionary<string, object>
             {
-                { "mi.Title", "Ghostbusters" },
-                { "mi.Year", 1984 }
+                { "miTitle", "Ghostbusters" },
+                { "miYear", 1984 }
             };
             args.SetWorkingFile($@"c:\temp\{Guid.NewGuid()}.mkv", dontDelete: true);
 
 
             Renamer node = new Renamer();
-            node.Pattern = @"{mi.Title} ({mi.Year})\{mi.Title} [{vi.Resolution}] {mi.Year}.{ext}";
+            node.Pattern = @"{miTitle} ({miYear})\{miTitle} [{viResolution}] {miYear}.{ext}";
             node.LogOnly = true;
 
             var result = node.Execute(args);
             Assert.AreEqual(1, result);
 
-            string expectedShort = $"Ghostbusters (1984){Path.DirectorySeparatorChar}Ghostbusters 1984.mkv";
+            string expectedShort = $@"c:\temp\Ghostbusters (1984){Path.DirectorySeparatorChar}Ghostbusters 1984.mkv";
             Assert.IsTrue(logger.Contains($"Renaming file to: " + expectedShort));
         }
 
@@ -92,20 +92,20 @@ namespace BasicNodes.Tests
             args.Logger = logger;
             args.Variables = new Dictionary<string, object>
             {
-                { "mi.Title", "Ghostbusters" },
-                { "vi.Resolution", "1080p" }
+                { "miTitle", "Ghostbusters" },
+                { "viResolution", "1080p" }
             };
             args.SetWorkingFile($@"c:\temp\{Guid.NewGuid()}.mkv", dontDelete: true);
 
 
             Renamer node = new Renamer();
-            node.Pattern = @"{mi.Title} ({mi.Year})\{mi.Title} ({mi.Year}) {vi.Resolution!}.{ext}";
+            node.Pattern = @"{miTitle} ({miYear})\{miTitle} ({miYear}) {viResolution!}.{ext}";
             node.LogOnly = true;
 
             var result = node.Execute(args);
             Assert.AreEqual(1, result);
 
-            string expectedShort = $"Ghostbusters{Path.DirectorySeparatorChar}Ghostbusters 1080P.mkv";
+            string expectedShort = $@"c:\temp\Ghostbusters{Path.DirectorySeparatorChar}Ghostbusters 1080P.mkv";
             Assert.IsTrue(logger.Contains($"Renaming file to: " + expectedShort));
         }
         [TestMethod]
@@ -116,20 +116,20 @@ namespace BasicNodes.Tests
             args.Logger = logger;
             args.Variables = new Dictionary<string, object>
             {
-                { "mi.Title", "Ghostbusters" },
-                { "mi.Year", 1984 }
+                { "miTitle", "Ghostbusters" },
+                { "miYear", 1984 }
             };
             args.SetWorkingFile($@"c:\temp\{Guid.NewGuid()}.mkv", dontDelete: true);
 
 
             Renamer node = new Renamer();
-            node.Pattern = @"{mi.Title} ({mi.Year})\{mi.Title} [{vi.Resolution}].{ext}";
+            node.Pattern = @"{miTitle} ({miYear})\{miTitle} [{viResolution}].{ext}";
             node.LogOnly = true;
 
             var result = node.Execute(args);
             Assert.AreEqual(1, result);
 
-            string expectedShort = $"Ghostbusters (1984){Path.DirectorySeparatorChar}Ghostbusters.mkv";
+            string expectedShort = $@"c:\temp\Ghostbusters (1984){Path.DirectorySeparatorChar}Ghostbusters.mkv";
             Assert.IsTrue(logger.Contains($"Renaming file to: " + expectedShort));
         }
 
@@ -142,20 +142,20 @@ namespace BasicNodes.Tests
             args.Logger = logger;
             args.Variables = new Dictionary<string, object>
             {
-                { "mi.Title", "Batman Unlimited: Mech vs Mutants" },
-                { "mi.Year", 2016 }
+                { "miTitle", "Batman Unlimited: Mech vs Mutants" },
+                { "miYear", 2016 }
             };
             args.SetWorkingFile($@"c:\temp\{Guid.NewGuid()}.mkv", dontDelete: true);
 
 
             Renamer node = new Renamer();
-            node.Pattern = @"{mi.Title} ({mi.Year})\{mi.Title}.{ext}";
+            node.Pattern = @"{miTitle} ({miYear})\{miTitle}.{ext}";
             node.LogOnly = true;
 
             var result = node.Execute(args);
             Assert.AreEqual(1, result);
 
-            string expectedShort = $"Batman Unlimited - Mech vs Mutants (2016){Path.DirectorySeparatorChar}Batman Unlimited - Mech vs Mutants.mkv";
+            string expectedShort = $@"c:\temp\Batman Unlimited - Mech vs Mutants (2016){Path.DirectorySeparatorChar}Batman Unlimited - Mech vs Mutants.mkv";
             Assert.IsTrue(logger.Contains($"Renaming file to: " + expectedShort));
         }
     }

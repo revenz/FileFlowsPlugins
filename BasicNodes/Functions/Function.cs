@@ -20,7 +20,7 @@ namespace FileFlows.BasicNodes.Functions
         public new int Outputs { get; set; }
 
         [Required]
-        [DefaultValue("// VideoFile object contains info about the video file\n\n// return 0 to complete the flow.\n// return -1 to signal an error in the flow\n// return 1+ to indicate which output to process next\n\n return 0;")]
+        [DefaultValue("// Variables contain variables available to this node from previous nodes.\n// Logger lets you log messages to the flow output.\n\n// return 0 to complete the flow.\n// return -1 to signal an error in the flow\n// return 1+ to select which output node will be processed next\n\nif(Variables.FileSize === 0)\n\treturn -1;\n\nreturn 0;")]
         [Code(2)]
         public string Code { get; set; }
 
@@ -52,8 +52,7 @@ namespace FileFlows.BasicNodes.Functions
                 options.MaxStatements(100);
             })
             .SetValue("Logger", args.Logger)
-            .SetValue("FileSize", fileSize)
-            ;
+            .SetValue("Variables", args.Variables);
 
             try
             {

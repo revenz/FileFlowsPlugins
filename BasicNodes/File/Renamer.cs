@@ -69,7 +69,7 @@
             var dest = args.GetSafeName(Path.Combine(destFolder, newFile));
 
 
-            args.Logger?.ILog("Renaming file to: " + dest.FullName.Substring(destFolder.Length+1));
+            args.Logger?.ILog("Renaming file to: " + dest.FullName);
 
             if (string.IsNullOrEmpty(CsvFile) == false)
             {

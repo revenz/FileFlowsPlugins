@@ -24,8 +24,8 @@
         {
             _Variables = new Dictionary<string, object>()
             {
-                { "mi.Title", "Batman Begins" },
-                { "mi.Year", 2005 }
+                { "miTitle", "Batman Begins" },
+                { "miYear", 2005 }
             };
         }
 
@@ -113,8 +113,8 @@
 
             args.SetParameter(Globals.MOVIE_INFO, result);
 
-            Variables["mi.Title"] = result.Title;
-            Variables["mi.Year"] = result.ReleaseDate.Year.ToString();
+            Variables["miTitle"] = result.Title;
+            Variables["miYear"] = result.ReleaseDate.Year;
 
             args.UpdateVariables(Variables);
 
