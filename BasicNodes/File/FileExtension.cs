@@ -1,6 +1,7 @@
 namespace FileFlows.BasicNodes.File
 {
     using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     using FileFlows.Plugin;
     using FileFlows.Plugin.Attributes;
 
@@ -11,6 +12,7 @@ namespace FileFlows.BasicNodes.File
         public override string Icon => "far fa-file-excel";
 
         [StringArray(1)]
+        [Required]
         public string[] Extensions { get; set; }
         public override FlowElementType Type => FlowElementType.Logic;
 

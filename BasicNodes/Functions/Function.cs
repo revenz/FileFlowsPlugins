@@ -7,6 +7,7 @@ namespace FileFlows.BasicNodes.Functions
     using Jint.Native.Object;
     using Jint;
     using System.Text;
+    using System.ComponentModel.DataAnnotations;
 
     public class Function : Node
     {
@@ -15,9 +16,10 @@ namespace FileFlows.BasicNodes.Functions
         public override string Icon => "fas fa-code";
 
         [DefaultValue(1)]
-        [NumberIntAttribute(1)]
+        [NumberInt(1)]
         public new int Outputs { get; set; }
 
+        [Required]
         [DefaultValue("// VideoFile object contains info about the video file\n\n// return 0 to complete the flow.\n// return -1 to signal an error in the flow\n// return 1+ to indicate which output to process next\n\n return 0;")]
         [Code(2)]
         public string Code { get; set; }

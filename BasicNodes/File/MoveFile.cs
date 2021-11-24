@@ -1,6 +1,7 @@
 namespace FileFlows.BasicNodes.File
 {
     using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     using System.Threading.Tasks;
     using FileFlows.Plugin;
     using FileFlows.Plugin.Attributes;
@@ -12,6 +13,7 @@ namespace FileFlows.BasicNodes.File
         public override FlowElementType Type => FlowElementType.Process;
         public override string Icon => "fas fa-file-export";
 
+        [Required]
         [Folder(1)]
         public string DestinationPath { get; set; }
 

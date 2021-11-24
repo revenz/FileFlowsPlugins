@@ -1,6 +1,7 @@
 namespace FileFlows.BasicNodes.File
 {
     using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     using FileFlows.Plugin;
     using FileFlows.Plugin.Attributes;
 
@@ -13,6 +14,7 @@ namespace FileFlows.BasicNodes.File
 
         private string _DestinationPath = string.Empty;
         
+        [Required]
         [Folder(1)]
         public string DestinationPath 
         { 

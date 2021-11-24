@@ -1,6 +1,7 @@
 namespace FileFlows.BasicNodes.Functions
 {
     using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     using System.Text.RegularExpressions;
     using FileFlows.Plugin;
     using FileFlows.Plugin.Attributes;
@@ -13,6 +14,7 @@ namespace FileFlows.BasicNodes.Functions
 
         [DefaultValue("")]
         [Text(1)]
+        [Required]
         public string Pattern { get; set; }
 
         public override int Execute(NodeParameters args)

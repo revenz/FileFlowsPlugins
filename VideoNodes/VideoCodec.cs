@@ -4,6 +4,7 @@ namespace FileFlows.VideoNodes
     using System.ComponentModel;
     using FileFlows.Plugin;
     using FileFlows.Plugin.Attributes;
+    using System.ComponentModel.DataAnnotations;
 
     public class VideoCodec : VideoNode
     {
@@ -12,6 +13,7 @@ namespace FileFlows.VideoNodes
         public override FlowElementType Type => FlowElementType.Logic;
 
         [StringArray(1)]
+        [Required]
         public string[] Codecs { get; set; }
 
         public override int Execute(NodeParameters args)

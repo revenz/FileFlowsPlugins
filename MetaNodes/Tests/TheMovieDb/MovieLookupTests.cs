@@ -2,7 +2,6 @@
 
 namespace MetaNodes.Tests.TheMovieDb
 {
-    using BasicNodes.Tests;
     using DM.MovieApi.MovieDb.Movies;
     using MetaNodes.TheMovieDb;
     using Microsoft.VisualStudio.TestTools.UnitTesting;

@@ -1,6 +1,7 @@
 namespace FileFlows.VideoNodes
 {
     using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     using FileFlows.Plugin;
     using FileFlows.Plugin.Attributes;
 
@@ -10,10 +11,12 @@ namespace FileFlows.VideoNodes
 
         [DefaultValue("-i {WorkingFile} {TempDir}output.mkv")]
         [TextArea(1)]
+        [Required]
         public string CommandLine { get; set; }
 
         [DefaultValue("mkv")]
         [Text(2)]
+        [Required]
         public string Extension { get; set; }
 
         public override string Icon => "far fa-file-video";

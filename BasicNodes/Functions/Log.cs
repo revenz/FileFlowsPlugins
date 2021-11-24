@@ -7,6 +7,7 @@ namespace FileFlows.BasicNodes.Functions
     using Jint.Native.Object;
     using Jint;
     using System.Text;
+    using System.ComponentModel.DataAnnotations;
 
     public class Log : Node
     {
@@ -19,6 +20,7 @@ namespace FileFlows.BasicNodes.Functions
         public LogType LogType { get; set; }
 
         [TextArea(2)]
+        [Required]
         public string Message { get; set; }
         public override int Execute(NodeParameters args)
         {

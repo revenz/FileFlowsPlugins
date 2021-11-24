@@ -1,5 +1,6 @@
 ﻿namespace FileFlows.BasicNodes.File
 {
+    using System.ComponentModel.DataAnnotations;
     using System.Text.RegularExpressions;
     using FileFlows.Plugin;
     using FileFlows.Plugin.Attributes;
@@ -14,6 +15,7 @@
 
         public override FlowElementType Type => FlowElementType.Process;
 
+        [Required]
         [TextVariable(1)]
         public string? Pattern
         {
