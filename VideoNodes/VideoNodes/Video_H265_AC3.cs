@@ -21,6 +21,17 @@ namespace FileFlows.VideoNodes
         [DefaultValue(0)]
         [NumberInt(4)]
         public int Threads { get; set; }
+
+        [DefaultValue(false)]
+        [Boolean(5)]
+        public bool NormalizeAudio { get; set; }
+
+
+        [DefaultValue(false)]
+        [Boolean(6)]
+        public bool ForceRencode { get; set; }
+
+
         public override string Icon => "far fa-file-video";
 
         private NodeParameters args;
@@ -68,7 +79,7 @@ namespace FileFlows.VideoNodes
                 if (crop != string.Empty)
                     crop = " -vf crop=" + crop;
 
-                if (firstAc3 == true && videoH265 != null)
+                if (ForceRencode == false && firstAc3 == true && videoH265 != null)
                 {
                     if (crop == string.Empty)
                     {
@@ -97,7 +108,9 @@ namespace FileFlows.VideoNodes
 
                 TotalTime = videoInfo.VideoStreams[0].Duration;
 
-                if (bestAudio.Codec.ToLower() != "ac3")
+                if(NormalizeAudio)
+                    ffArgs.Add($"-map 0:{bestAudio.Index} -c:a ac3 -af loudnorm=I=-24:LRA=7:TP=-2.0");
+                else if (bestAudio.Codec.ToLower() != "ac3")
                     ffArgs.Add($"-map 0:{bestAudio.Index} -c:a ac3");
                 else
                     ffArgs.Add($"-map 0:{bestAudio.Index} -c:a copy");
