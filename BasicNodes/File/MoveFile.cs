@@ -25,7 +25,7 @@ namespace FileFlows.BasicNodes.File
 
         public override int Execute(NodeParameters args)
         {
-            string dest = DestinationPath;
+            string dest = args.ReplaceVariables(DestinationPath, true);
             if (string.IsNullOrEmpty(dest))
             {
                 args.Logger?.ELog("No destination specified");
@@ -52,16 +52,17 @@ namespace FileFlows.BasicNodes.File
             if (string.IsNullOrEmpty(destDir) == false && Directory.Exists(destDir) == false)
                 Directory.CreateDirectory(destDir);
 
-            string original = args.WorkingFile;
             if (args.MoveFile(dest) == false)
                 return -1;
 
-            if (DeleteOriginal && original != args.FileName)
+            if (DeleteOriginal && args.FileName != args.WorkingFile)
             {
+                args.Logger?.ILog("Deleting orginal file: " + args.FileName);
                 try
                 {
-                    System.IO.File.Delete(original);
-                }catch(Exception ex)
+                    System.IO.File.Delete(args.FileName);
+                }
+                catch(Exception ex)
                 {
                     args.Logger?.WLog("Failed to delete original file: " + ex.Message);
                 }
