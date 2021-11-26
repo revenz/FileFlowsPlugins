@@ -82,6 +82,16 @@
             "Pattern-Help": "A regular expression, using the C# specifciation for regular expressions."
           }
         },
+        "PatternReplacer": {
+          "Description": "Lets you make replacements in the filename.  Can use regular expressions for replacements, or simple string raplacements.\n\nOutput 1: Replacement done\nOutput 2: No replacement done",
+          "Fields": {
+            "Replacements": "Replacements",
+            "ReplacementsKey": "Pattern",
+            "ReplacementsValue": "Value",
+            "UseWorkingFileName": "Use Working Filename",
+            "UseWorkingFileName-Help": "If current working filename should be used, or if false, the original filename of the incoming file will be used."
+          }
+        },
         "Renamer": {
           "Description": "Renames the working file.\nVariables can be used by entering the key '{' inside the Pattern field.",
           "Fields": {
