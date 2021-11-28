@@ -49,8 +49,7 @@ namespace FileFlows.BasicNodes.File
             }
 
             var destDir = fiDest.DirectoryName;
-            if (string.IsNullOrEmpty(destDir) == false && Directory.Exists(destDir) == false)
-                Directory.CreateDirectory(destDir);
+            args.CreateDirectoryIfNotExists(destDir ?? String.Empty);
 
             if (args.MoveFile(dest) == false)
                 return -1;

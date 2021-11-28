@@ -52,8 +52,7 @@ namespace FileFlows.BasicNodes.File
                 dest = Path.Combine(dest, new FileInfo(args.FileName).Name);
 
             var destDir = new FileInfo(dest).DirectoryName;
-            if (Directory.Exists(destDir) == false)
-                Directory.CreateDirectory(destDir);
+            args.CreateDirectoryIfNotExists(destDir ?? String.Empty);
 
             // have to use file streams so we can report progress
             int bufferSize = 1024 * 1024;

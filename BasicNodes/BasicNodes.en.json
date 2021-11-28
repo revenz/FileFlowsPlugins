@@ -79,7 +79,7 @@
           "Description": "Tests the working file and original file against a regular expression.\n\nOutput 1: Matches expression\nOutput 2: Does not match",
           "Fields": {
             "Pattern": "Pattern",
-            "Pattern-Help": "A regular expression, using the C# specifciation for regular expressions."
+            "Pattern-Help": "A regular expression, using the C# specification for regular expressions."
           }
         },
         "PatternReplacer": {
