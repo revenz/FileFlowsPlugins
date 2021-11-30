@@ -108,8 +108,11 @@ namespace FileFlows.VideoNodes
 
                 TotalTime = videoInfo.VideoStreams[0].Duration;
 
-                if(NormalizeAudio)
-                    ffArgs.Add($"-map 0:{bestAudio.Index} -c:a ac3 -af loudnorm=I=-24:LRA=7:TP=-2.0");
+                if (NormalizeAudio)
+                {
+                    int sampleRate = bestAudio.SampleRate > 0 ? bestAudio.SampleRate : 48_000;
+                    ffArgs.Add($"-map 0:{bestAudio.Index} -c:a ac3 -ar {sampleRate} -af loudnorm=I=-24:LRA=7:TP=-2.0");
+                }
                 else if (bestAudio.Codec.ToLower() != "ac3")
                     ffArgs.Add($"-map 0:{bestAudio.Index} -c:a ac3");
                 else

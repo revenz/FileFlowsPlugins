@@ -66,6 +66,11 @@ namespace FileFlows.VideoNodes
         /// The duration of the stream
         /// </summary>
         public TimeSpan Duration { get; set; }
+
+        /// <summary>
+        /// The sample rate of the audio stream
+        /// </summary>
+        public int SampleRate { get; set; }
     }
 
     public class SubtitleStream : VideoFileStream

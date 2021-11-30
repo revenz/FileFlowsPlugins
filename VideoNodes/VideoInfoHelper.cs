@@ -13,6 +13,7 @@ namespace FileFlows.VideoNodes
         Regex rgxTitle = new Regex(@"(?<=((^[\s]+title[\s]+:[\s])))(.*?)$", RegexOptions.Multiline);
         Regex rgxDuration = new Regex(@"(?<=((^[\s]+DURATION(\-[\w]+)?[\s]+:[\s])))([\d]+:?)+\.[\d]+[1-9]", RegexOptions.Multiline);
         Regex rgxDuration2 = new Regex(@"(?<=((^[\s]+Duration:[\s])))([\d]+:?)+\.[\d]+[1-9]", RegexOptions.Multiline);
+        Regex rgxAudioSampleRate = new Regex(@"(?<=((,|\s)))[\d]+(?=([\s]?hz))", RegexOptions.IgnoreCase);
 
         public VideoInfoHelper(string ffMpegExe, ILogger logger)
         {
@@ -146,6 +147,10 @@ namespace FileFlows.VideoNodes
             {
                 audio.Channels = float.Parse(Regex.Match(parts[2], @"^[\d]+(\.[\d]+)?").Value);
             }
+
+            var match = rgxAudioSampleRate.Match(info);
+            if (match.Success)
+                audio.SampleRate = int.Parse(match.Value);
 
             if (rgxTitle.IsMatch(info))
                 audio.Title = rgxTitle.Match(info).Value.Trim();
