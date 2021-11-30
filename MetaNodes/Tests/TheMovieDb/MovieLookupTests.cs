@@ -12,7 +12,7 @@ namespace MetaNodes.Tests.TheMovieDb
         [TestMethod]
         public void MovieLookupTests_File_Ghostbusters()
         {
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\Ghostbusters.mkv");
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\Ghostbusters 1984.mkv");
             args.Logger = new TestLogger();
 
             MovieLookup ml = new MovieLookup();
@@ -139,6 +139,47 @@ namespace MetaNodes.Tests.TheMovieDb
             Assert.AreEqual(2, result);
             Assert.IsFalse(args.Variables.ContainsKey("miTitle"));
             Assert.IsFalse(args.Variables.ContainsKey("miYear"));
+        }
+
+
+        [TestMethod]
+        public void MovieLookupTests_ComplexFile()
+        {
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\Constantine.2005.German.DL.AC3.1080p.BluRay.x265-Fun{{fdg$ERGESDG32fesdfgds}}\Constantine.2005.German.DL.AC3.1080p.BluRay.x265-Fun{{fdg$ERGESDG32fesdfgds}}.mkv");
+            args.Logger = new TestLogger();
+
+            MovieLookup ml = new MovieLookup();
+            ml.UseFolderName = false;
+
+            var result = ml.Execute(args);
+            Assert.AreEqual(1, result);
+            Assert.IsTrue(args.Parameters.ContainsKey(Globals.MOVIE_INFO));
+
+            var mi = args.Parameters[Globals.MOVIE_INFO] as MovieInfo;
+            Assert.IsNotNull(mi);
+
+            Assert.AreEqual("Constantine", mi.Title);
+            Assert.AreEqual(2005, mi.ReleaseDate.Year);
+        }
+
+        [TestMethod]
+        public void MovieLookupTests_WonderWoman()
+        {
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\Wonder.Woman.1984.2020.German.DL.AC3.1080p.BluRay.x265-Fun{{fdg$ERGESDG32fesdfgds}}\Wonder.Woman.1984.2020.German.DL.AC3.1080p.BluRay.x265-Fun{{fdg$ERGESDG32fesdfgds}}.mkv");
+            args.Logger = new TestLogger();
+
+            MovieLookup ml = new MovieLookup();
+            ml.UseFolderName = false;
+
+            var result = ml.Execute(args);
+            Assert.AreEqual(1, result);
+            Assert.IsTrue(args.Parameters.ContainsKey(Globals.MOVIE_INFO));
+
+            var mi = args.Parameters[Globals.MOVIE_INFO] as MovieInfo;
+            Assert.IsNotNull(mi);
+
+            Assert.AreEqual("Wonder Woman 1984", mi.Title);
+            Assert.AreEqual(2020, mi.ReleaseDate.Year);
         }
     }
 }

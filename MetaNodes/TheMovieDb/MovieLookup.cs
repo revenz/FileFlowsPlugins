@@ -41,11 +41,11 @@
 
             // look for year
             string year = string.Empty;
-            var match = Regex.Match(lookupName, @"((19[2-9][0-9])|(20[0-9]{2}))(?=([\.\s_\-\)\]]|$))");
-            if (match.Success)
+            var match = Regex.Matches(lookupName, @"((19[2-9][0-9])|(20[0-9]{2}))(?=([\.\s_\-\)\]]|$))").LastOrDefault();
+            if (match != null)
             {
-                year = match.Groups[1].Value;
-                lookupName = lookupName.Replace(year, "");
+                year = match.Value;
+                lookupName = lookupName.Substring(0, lookupName.IndexOf(year)).Trim();
             }
 
             // remove double spaces incase they were added when removing the year
