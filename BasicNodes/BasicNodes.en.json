@@ -34,7 +34,7 @@
           "Description": "Checks if the file has one of the configured extensions.\n\nOutput 1: Matches\nOutput 2: Does not match",
           "Fields": {
             "Extensions": "Extensions",
-            "Extensions-Help": "A list of case insensitive file extensions that will be matched against.\nOuput 1 Matches\nOutput 2: Does not match"
+            "Extensions-Help": "A list of case insensitive file extensions that will be matched against.\nOutput 1 Matches\nOutput 2: Does not match"
           }
         },
         "FileSize": {
@@ -83,7 +83,7 @@
           }
         },
         "PatternReplacer": {
-          "Description": "Lets you make replacements in the filename.  Can use regular expressions for replacements, or simple string raplacements.\n\nOutput 1: Replacement done\nOutput 2: No replacement done",
+          "Description": "Lets you make replacements in the filename.  Can use regular expressions for replacements, or simple string replacements.\n\nOutput 1: Replacement done\nOutput 2: No replacement done",
           "Fields": {
             "Replacements": "Replacements",
             "ReplacementsKey": "Pattern",
@@ -91,6 +91,9 @@
             "UseWorkingFileName": "Use Working Filename",
             "UseWorkingFileName-Help": "If current working filename should be used, or if false, the original filename of the incoming file will be used."
           }
+        },
+        "ReplaceOriginal": {
+          "Description": "Replaces the original file with the working file.\n\nIf the extension is different on the working file, the original file will be deleted and the working file will be moved to the original with the new extension.\nE.g. from File.avi to File.mkv"
         },
         "Renamer": {
           "Description": "Renames the working file.\nVariables can be used by entering the key '{' inside the Pattern field.",

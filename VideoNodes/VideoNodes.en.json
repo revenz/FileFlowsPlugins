@@ -42,8 +42,8 @@
                 "Threads-Help": "Only used if not using NVIDIA.  If set to 0, the threads will use FFMpegs defaults.",
                 "NormalizeAudio": "Normalize Audio",
                 "NormalizeAudio-Help": "If the audio track should have its volume level normalized",
-                "ForceRencode": "Force Rencode",
-                "ForceRencode-Help": "If the video should always be reencoded regardless if it already is in H265/AC3"
+                "ForceRencode": "Force Re-Encode",
+                "ForceRencode-Help": "If the video should always be re-encoded regardless if it already is in H265/AC3"
               }
             },
             "FFMPEG":{
