@@ -16,6 +16,9 @@ namespace FileFlows.VideoNodes
 
         internal const string CROP_KEY = "VideoCrop";
 
+        [NumberInt(1)]
+        public int CroppingThreshold { get; set; }
+
         public override int Execute(NodeParameters args)
         {
             string ffplay = GetFFMpegExe(args);
@@ -26,13 +29,13 @@ namespace FileFlows.VideoNodes
             if (crop == string.Empty)
                 return 2;
 
-            args.Logger.ILog("Black bars detcted, crop: " + crop);
+            args.Logger.ILog("Black bars detected, crop: " + crop);
             args.Parameters.Add(CROP_KEY, crop);
 
             return 1;
         }
 
-        public string Execute(string ffplay, string file, string tempDir)
+        public string Execute(string ffplay, string file, string tempDir, NodeParameters args)
         {
             string tempFile = Path.Combine(tempDir, Guid.NewGuid().ToString() + ".mkv");
             try
@@ -71,9 +74,13 @@ namespace FileFlows.VideoNodes
                     if (y == int.MaxValue)
                         y = 0;
 
-                    if (x + y < 28) // to small to bother croping
-                        return string.Empty;
-                    return $"{width}:{height}:{x}:{y}";
+                    if(CroppingThreshold < 0)
+                        CroppingThreshold = 0;
+
+                    bool willCrop = (x + y) > CroppingThreshold;
+                    args.Logger?.ILog($"Crop detection, x:{x}, y:{y}, total:{x + y}, threshold:{CroppingThreshold}, above threshold: {willCrop}");
+
+                    return willCrop ? $"{width}:{height}:{x}:{y}" : string.Empty;
                 }
             }
             catch (Exception)
