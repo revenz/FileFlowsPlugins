@@ -8,7 +8,7 @@
               "Description": "Processes a video file and scans for black bars in the video.\n\nIf found a parameter \"VideoCrop\" will be added.\n\nOutput 1: Black bars detected\nOutput 2: Not detected",
               "Fields": {
                 "CroppingThreshold": "Threshold",
-                "CroppingThreshold-Help": "The amount of pixels that must be greater than to crop.   E.g. if theres only 5 pixels detected as black space, you may consider this too small to crop."
+                "CroppingThreshold-Help": "The amount of pixels that must be greater than to crop.   E.g. if there's only 5 pixels detected as black space, you may consider this too small to crop."
               }
             },
             "VideoCodec":{
