@@ -25,7 +25,7 @@ namespace FileFlows.VideoNodes
             if (string.IsNullOrEmpty(ffplay))
                 return -1;
 
-            string crop = Execute(ffplay, args.WorkingFile, args.TempPath);
+            string crop = Execute(ffplay, args.WorkingFile, args.TempPath, args);
             if (crop == string.Empty)
                 return 2;
 
