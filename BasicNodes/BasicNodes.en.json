@@ -30,6 +30,22 @@
             "IncludePatterns-Help": "Optional, if set only files matching these patterns will be counted to see if the folder is empty.   Any of these patterns can match."
           }
         },
+        "Executor": {
+          "Description": "Execute the following process against the file.\nOutput 1: The process returned the success exit code\nOutput 2: The process return a non-successful exit code.",
+          "Fields": {
+            "FileName": "File Name",
+            "FileName-Help": "The name of the file to execute",
+            "Arguments": "Arguments",
+            "Arguments-Help": "The arguments to be passed to the process to execute",
+            "WorkingDirectory": "Working Directory",
+            "WorkingDirectory-Help": "The directory where the process will be executed from",
+            "SuccessCode": "Success Code",
+            "SuccessCode-Help": "The exit code of the process indicating the process was successful.  Usually this should be 0.",
+            "Timeout": "Timeout",
+            "Timeout-Help": "How long the process can run for before being terminated.  Use 0 for no timeout.",
+            "Timeout-Suffix": "seconds"
+          }
+        },
         "FileExtension": {
           "Description": "Checks if the file has one of the configured extensions.\n\nOutput 1: Matches\nOutput 2: Does not match",
           "Fields": {

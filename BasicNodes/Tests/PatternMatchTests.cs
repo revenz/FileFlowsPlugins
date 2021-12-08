@@ -13,7 +13,7 @@ namespace BasicNodes.Tests
         {
             PatternMatch pm = new PatternMatch();
             pm.Pattern = @"\.mkv$";
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv");
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", new TestLogger());
             args.SetWorkingFile($@"c:\temp\{Guid.NewGuid().ToString()}.mkv", dontDelete: true); 
 
             var result = pm.Execute(args);
@@ -25,7 +25,7 @@ namespace BasicNodes.Tests
         {
             PatternMatch pm = new PatternMatch();
             pm.Pattern = @"\.mkv$";
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.avi");
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.avi", new TestLogger());
             args.SetWorkingFile($@"c:\temp\{Guid.NewGuid().ToString()}.avi", dontDelete: true);
 
             var result = pm.Execute(args);
@@ -37,7 +37,7 @@ namespace BasicNodes.Tests
         {
             PatternMatch pm = new PatternMatch();
             pm.Pattern = @"[-$";
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.avi");
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.avi", new TestLogger());
             args.SetWorkingFile($@"c:\temp\{Guid.NewGuid().ToString()}.avi", dontDelete: true);
 
             var result = pm.Execute(args);
@@ -48,7 +48,7 @@ namespace BasicNodes.Tests
         {
             PatternMatch pm = new PatternMatch();
             pm.Pattern = @"\-trailer";
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile-TRAILER.avi");
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile-TRAILER.avi", new TestLogger());
             args.SetWorkingFile($@"c:\temp\{Guid.NewGuid().ToString()}.avi", dontDelete: true);
 
             var result = pm.Execute(args);

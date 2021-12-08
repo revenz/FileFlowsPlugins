@@ -13,8 +13,7 @@ namespace BasicNodes.Tests
         [TestInitialize]
         public void TestStarting()
         {
-            Args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv");
-            Args.Logger = new TestLogger();
+            Args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", new TestLogger());
 
         }
 
@@ -59,8 +58,7 @@ namespace BasicNodes.Tests
         {
             Function pm = new Function();
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv");
-            args.Logger = logger;
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger);
             args.Variables = new Dictionary<string, object>
             {
                 { "miTitle", "Ghostbusters" },
@@ -77,8 +75,7 @@ return 0";
         {
             Function pm = new Function();
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv");
-            args.Logger = logger;
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger);
             args.Variables = new Dictionary<string, object>
             {
                 { "miTitle", "Ghostbusters" },
@@ -96,8 +93,7 @@ return 0";
         {
             Function pm = new Function();
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv");
-            args.Logger = logger;
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger);
             args.Variables = new Dictionary<string, object>
             {
                 { "miTitle", "Ghostbusters" },
@@ -115,8 +111,7 @@ return 0";
         {
             Function pm = new Function();
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv");
-            args.Logger = logger;
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger);
             args.Variables = new Dictionary<string, object>
             {
                 { "miTitle", "Ghostbusters" },

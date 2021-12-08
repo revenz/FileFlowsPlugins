@@ -17,7 +17,7 @@ namespace BasicNodes.Tests
                 new KeyValuePair<string, string>("Seinfeld", "Batman")
             };
             node.UnitTest = true;
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\Seinfeld.mkv");
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\Seinfeld.mkv", new TestLogger());
 
             var result = node.Execute(args);
             Assert.AreEqual(1, result);
@@ -34,7 +34,7 @@ namespace BasicNodes.Tests
                 new KeyValuePair<string, string>(@"0([1-9]+x[\d]+)", "$1"),
             };
             node.UnitTest = true;
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\Seinfeld S03E06.mkv");
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\Seinfeld S03E06.mkv", new TestLogger());
 
             var result = node.Execute(args);
             Assert.AreEqual(1, result);

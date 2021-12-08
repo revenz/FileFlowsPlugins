@@ -11,9 +11,8 @@ namespace BasicNodes.Tests
         [TestMethod]
         public void Renamer_Extension()
         {
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv");
             var logger = new TestLogger();
-            args.Logger = logger;   
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger);
             args.Variables = new Dictionary<string, object>
             {
                 { "miTitle", "Ghostbusters" },
@@ -36,9 +35,8 @@ namespace BasicNodes.Tests
         [TestMethod]
         public void Renamer_Extension_DoubleDot()
         {
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv");
             var logger = new TestLogger();
-            args.Logger = logger;
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger);
             args.Variables = new Dictionary<string, object>
             {
                 { "miTitle", "Ghostbusters" },
@@ -62,9 +60,8 @@ namespace BasicNodes.Tests
         [TestMethod]
         public void Renamer_Empty_SquareBrackets()
         {
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv");
             var logger = new TestLogger();
-            args.Logger = logger;
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger);
             args.Variables = new Dictionary<string, object>
             {
                 { "miTitle", "Ghostbusters" },
@@ -87,9 +84,8 @@ namespace BasicNodes.Tests
         [TestMethod]
         public void Renamer_Empty_RoundBrackets()
         {
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv");
             var logger = new TestLogger();
-            args.Logger = logger;
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger);
             args.Variables = new Dictionary<string, object>
             {
                 { "miTitle", "Ghostbusters" },
@@ -111,9 +107,8 @@ namespace BasicNodes.Tests
         [TestMethod]
         public void Renamer_Empty_SquareBrackets_Extension()
         {
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv");
             var logger = new TestLogger();
-            args.Logger = logger;
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger);
             args.Variables = new Dictionary<string, object>
             {
                 { "miTitle", "Ghostbusters" },
@@ -137,9 +132,8 @@ namespace BasicNodes.Tests
         [TestMethod]
         public void Renamer_Colon()
         {
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv");
             var logger = new TestLogger();
-            args.Logger = logger;
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger);
             args.Variables = new Dictionary<string, object>
             {
                 { "miTitle", "Batman Unlimited: Mech vs Mutants" },
