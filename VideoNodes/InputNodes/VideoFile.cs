@@ -21,6 +21,7 @@ namespace FileFlows.VideoNodes
                 { "viAudioLanguage", "eng" },
                 { "viAudioLanguages", "eng, mao" },
                 { "viResolution", "1080p" },
+                { "viDuration", 1800 },
             };
         }
 

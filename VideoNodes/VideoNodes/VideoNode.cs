@@ -72,6 +72,7 @@ namespace FileFlows.VideoNodes
             else
                 args.Parameters.Add(VIDEO_INFO, videoInfo);
 
+            variables.AddOrUpdate("viDuration", videoInfo.VideoStreams[0].Duration.TotalSeconds);
             variables.AddOrUpdate("viVideoCodec", videoInfo.VideoStreams[0].Codec);
             if (videoInfo.AudioStreams?.Any() == true)
             {

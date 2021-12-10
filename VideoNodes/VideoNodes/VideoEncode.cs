@@ -1,6 +1,7 @@
 namespace FileFlows.VideoNodes
 {
     using System.ComponentModel;
+    using System.Text.RegularExpressions;
     using FileFlows.Plugin;
     using FileFlows.Plugin.Attributes;
 
@@ -8,42 +9,50 @@ namespace FileFlows.VideoNodes
     {
 
         [DefaultValue("hevc")]
-        [Text(1)]
+        [TextVariable(1)]
         public string VideoCodec { get; set; }
 
 
         [DefaultValue("hevc_nvenc -preset hq -crf 23")]
-        [Text(2)]
+        [TextVariable(2)]
         public string VideoCodecParameters { get; set; }
 
         [DefaultValue("ac3")]
-        [Text(3)]
+        [TextVariable(3)]
         public string AudioCodec { get; set; }
 
         [DefaultValue("eng")]
-        [Text(4)]
+        [TextVariable(4)]
         public string Language { get; set; }
 
         [DefaultValue("mkv")]
-        [Text(5)]
+        [TextVariable(5)]
         public string Extension { get; set; }
 
         public override string Icon => "far fa-file-video";
 
+#pragma warning disable CS8618 // suppressing this warning as this is used in classes that subclass this
         private NodeParameters args;
+#pragma warning restore CS8618 
 
         public override int Execute(NodeParameters args)
         {
             if (string.IsNullOrEmpty(VideoCodec))
             {
-                args.Logger.ELog("Video codec not set");
+                args.Logger?.ELog("Video codec not set");
                 return -1;
             }
             if (string.IsNullOrEmpty(AudioCodec))
             {
-                args.Logger.ELog("Audeio codec not set");
+                args.Logger?.ELog("Audio codec not set");
                 return -1;
             }
+            VideoCodec = args.ReplaceVariables(VideoCodec);
+            VideoCodecParameters = args.ReplaceVariables(VideoCodecParameters);
+            AudioCodec = args.ReplaceVariables(AudioCodec);
+            Language = args.ReplaceVariables(Language);
+            Extension = args.ReplaceVariables(Extension);
+
             VideoCodec = VideoCodec.ToLower();
             AudioCodec = AudioCodec.ToLower();
 
@@ -58,16 +67,16 @@ namespace FileFlows.VideoNodes
 
                 // ffmpeg is one based for stream index, so video should be 1, audio should be 2
 
-                var videoIsRightCodec = videoInfo.VideoStreams.FirstOrDefault(x => x.Codec?.ToLower() == VideoCodec);
+                var videoIsRightCodec = videoInfo.VideoStreams.FirstOrDefault(x => IsSameVideoCodec(x.Codec ?? string.Empty, VideoCodec));
                 var videoTrack = videoIsRightCodec ?? videoInfo.VideoStreams[0];
-                args.Logger.ILog("Video: ", videoTrack);
+                args.Logger?.ILog("Video: ", videoTrack);
 
                 var bestAudio = videoInfo.AudioStreams.Where(x => System.Text.Json.JsonSerializer.Serialize(x).ToLower().Contains("commentary") == false)
                 .OrderBy(x =>
                 {
                     if (Language != string.Empty)
                     {
-                        args.Logger.ILog("Language: " + x.Language, x);
+                        args.Logger?.ILog("Language: " + x.Language, x);
                         if (string.IsNullOrEmpty(x.Language))
                             return 50; // no language specified
                         if (x.Language?.ToLower() != Language)
@@ -81,7 +90,7 @@ namespace FileFlows.VideoNodes
                 .FirstOrDefault();
 
                 bool audioRightCodec = bestAudio?.Codec?.ToLower() == AudioCodec && videoInfo.AudioStreams[0] == bestAudio;
-                args.Logger.ILog("Best Audio: ", (object)bestAudio ?? (object)"null");
+                args.Logger?.ILog("Best Audio: ", bestAudio == null ? "null" : (object)bestAudio);
 
 
                 string crop = args.GetParameter<string>(DetectBlackBars.CROP_KEY) ?? "";
@@ -92,12 +101,12 @@ namespace FileFlows.VideoNodes
                 {
                     if (crop == string.Empty)
                     {
-                        args.Logger.DLog($"File is {VideoCodec} with the first audio track is {AudioCodec}");
+                        args.Logger?.DLog($"File is {VideoCodec} with the first audio track is {AudioCodec}");
                         return 2;
                     }
                     else
                     {
-                        args.Logger.ILog($"Video is {VideoCodec} and audio is {AudioCodec} but needs to be cropped");
+                        args.Logger?.ILog($"Video is {VideoCodec} and audio is {AudioCodec} but needs to be cropped");
                     }
                 }
 
@@ -115,9 +124,9 @@ namespace FileFlows.VideoNodes
                 TotalTime = videoInfo.VideoStreams[0].Duration;
 
                 if (audioRightCodec == false)
-                    ffArgs.Add($"-map 0:{bestAudio.Index} -c:a {AudioCodec}");
+                    ffArgs.Add($"-map 0:{bestAudio!.Index} -c:a {AudioCodec}");
                 else
-                    ffArgs.Add($"-map 0:{bestAudio.Index} -c:a copy");
+                    ffArgs.Add($"-map 0:{bestAudio!.Index} -c:a copy");
 
                 if (Language != string.Empty)
                     ffArgs.Add($"-map 0:s:m:language:{Language}? -c:s copy");
@@ -133,8 +142,25 @@ namespace FileFlows.VideoNodes
             }
             catch (Exception ex)
             {
-                args.Logger.ELog("Failed processing VideoFile: " + ex.Message);
+                args.Logger?.ELog("Failed processing VideoFile: " + ex.Message);
                 return -1;
+            }
+        }
+
+        protected bool IsSameVideoCodec(string current, string wanted)
+        {
+            wanted = ReplaceCommon(wanted);
+            current = ReplaceCommon(current);
+
+            return wanted == current;
+
+            string ReplaceCommon(string input)
+            {
+                input = input.ToLower();
+                input = Regex.Replace(input, "^(divx|xvid|m(-)?peg(-)4)$", "mpeg4", RegexOptions.IgnoreCase);
+                input = Regex.Replace(input, "^(hevc|h[\\.x\\-]?265)$", "h265", RegexOptions.IgnoreCase);
+                input = Regex.Replace(input, "^(h[\\.x\\-]?264)$", "h264", RegexOptions.IgnoreCase);
+                return input;
             }
         }
     }
