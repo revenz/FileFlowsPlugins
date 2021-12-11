@@ -123,15 +123,18 @@ namespace FileFlows.VideoNodes
 
                 TotalTime = videoInfo.VideoStreams[0].Duration;
 
-                if (audioRightCodec == false)
+                if (audioRightCodec == false || videoIsRightCodec == null) // always redo audio if video is wrong codec, as this can lead to some failed encodes (found in mp4s to mkvs)
                     ffArgs.Add($"-map 0:{bestAudio!.Index} -c:a {AudioCodec}");
                 else
                     ffArgs.Add($"-map 0:{bestAudio!.Index} -c:a copy");
 
-                if (Language != string.Empty)
-                    ffArgs.Add($"-map 0:s:m:language:{Language}? -c:s copy");
-                else
-                    ffArgs.Add($"-map 0:s? -c:s copy");
+                if (SupportsSubtitles(Extension))
+                {
+                    if (Language != string.Empty)
+                        ffArgs.Add($"-map 0:s:m:language:{Language}? -c:s copy");
+                    else
+                        ffArgs.Add($"-map 0:s? -c:s copy");
+                }
 
                 string ffArgsLine = string.Join(" ", ffArgs);
 
@@ -162,6 +165,13 @@ namespace FileFlows.VideoNodes
                 input = Regex.Replace(input, "^(h[\\.x\\-]?264)$", "h264", RegexOptions.IgnoreCase);
                 return input;
             }
+        }
+
+        private bool SupportsSubtitles(string container)
+        {
+            if (Regex.IsMatch(container ?? string.Empty, "(mp(e)?(g)?4)|avi|divx|xvid", RegexOptions.IgnoreCase))
+                return false;
+            return true;
         }
     }
 }

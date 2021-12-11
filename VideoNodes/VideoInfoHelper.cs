@@ -11,8 +11,8 @@ namespace FileFlows.VideoNodes
         private ILogger Logger;
 
         Regex rgxTitle = new Regex(@"(?<=((^[\s]+title[\s]+:[\s])))(.*?)$", RegexOptions.Multiline);
-        Regex rgxDuration = new Regex(@"(?<=((^[\s]+DURATION(\-[\w]+)?[\s]+:[\s])))([\d]+:?)+\.[\d]+[1-9]", RegexOptions.Multiline);
-        Regex rgxDuration2 = new Regex(@"(?<=((^[\s]+Duration:[\s])))([\d]+:?)+\.[\d]+[1-9]", RegexOptions.Multiline);
+        Regex rgxDuration = new Regex(@"(?<=((^[\s]+DURATION(\-[\w]+)?[\s]+:[\s])))([\d]+:?)+\.[\d]{1,7}", RegexOptions.Multiline);
+        Regex rgxDuration2 = new Regex(@"(?<=((^[\s]+Duration:[\s])))([\d]+:?)+\.[\d]{1,7}", RegexOptions.Multiline);
         Regex rgxAudioSampleRate = new Regex(@"(?<=((,|\s)))[\d]+(?=([\s]?hz))", RegexOptions.IgnoreCase);
 
         public VideoInfoHelper(string ffMpegExe, ILogger logger)
