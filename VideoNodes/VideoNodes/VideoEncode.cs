@@ -51,7 +51,7 @@ namespace FileFlows.VideoNodes
             VideoCodecParameters = args.ReplaceVariables(VideoCodecParameters);
             AudioCodec = args.ReplaceVariables(AudioCodec);
             Language = args.ReplaceVariables(Language);
-            Extension = args.ReplaceVariables(Extension);
+            Extension = args.ReplaceVariables(Extension)?.EmptyAsNull() ?? "mkv";
 
             VideoCodec = VideoCodec.ToLower();
             AudioCodec = AudioCodec.ToLower();
@@ -92,6 +92,8 @@ namespace FileFlows.VideoNodes
                 bool audioRightCodec = bestAudio?.Codec?.ToLower() == AudioCodec && videoInfo.AudioStreams[0] == bestAudio;
                 args.Logger?.ILog("Best Audio: ", bestAudio == null ? "null" : (object)bestAudio);
 
+                bool sameContainer = new FileInfo(args.WorkingFile).Extension.ToLower() == Extension.ToLower();
+
 
                 string crop = args.GetParameter<string>(DetectBlackBars.CROP_KEY) ?? "";
                 if (crop != string.Empty)
@@ -123,7 +125,7 @@ namespace FileFlows.VideoNodes
 
                 TotalTime = videoInfo.VideoStreams[0].Duration;
 
-                if (audioRightCodec == false || videoIsRightCodec == null) // always redo audio if video is wrong codec, as this can lead to some failed encodes (found in mp4s to mkvs)
+                if (audioRightCodec == false || sameContainer == false) // if container changes, re-encode audio, otherwise this can lead to failed encodings (mp4 to mkv this can happen... a lot)
                     ffArgs.Add($"-map 0:{bestAudio!.Index} -c:a {AudioCodec}");
                 else
                     ffArgs.Add($"-map 0:{bestAudio!.Index} -c:a copy");

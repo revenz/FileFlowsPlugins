@@ -1,7 +1,6 @@
 namespace FileFlows.VideoNodes
 {
     using FileFlows.Plugin;
-    using global::VideoNodes;
 
     public abstract class VideoNode : Node
     {

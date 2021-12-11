@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace VideoNodes
+﻿namespace FileFlows.VideoNodes
 {
     internal static class ExtensionMethods
     {
@@ -12,7 +6,11 @@ namespace VideoNodes
             if (dict.ContainsKey(key))
                 dict[key] = value;
             else
-                dict.Add(key, value);   
+                dict.Add(key, value);
+        }
+        public static string? EmptyAsNull(this string str)
+        {
+            return str == string.Empty ? null : str;
         }
     }
 }
