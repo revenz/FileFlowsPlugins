@@ -127,12 +127,19 @@ namespace FileFlows.VideoNodes
                 else
                     ffArgs.Add($"-map 0:{bestAudio!.Index} -c:a copy");
 
-                if (SupportsSubtitles(Extension))
+                if (videoInfo?.SubtitleStreams?.Any() == true)
                 {
-                    if (Language != string.Empty)
-                        ffArgs.Add($"-map 0:s:m:language:{Language}? -c:s copy");
+                    if (SupportsSubtitles(args, videoInfo))
+                    {
+                        if (Language != string.Empty)
+                            ffArgs.Add($"-map 0:s:m:language:{Language}? -c:s copy");
+                        else
+                            ffArgs.Add($"-map 0:s? -c:s copy");
+                    }
                     else
-                        ffArgs.Add($"-map 0:s? -c:s copy");
+                    {
+                        args.Logger?.WLog("Unsupported subtitle for target container, subtitles will be removed.");
+                    }
                 }
 
                 string ffArgsLine = string.Join(" ", ffArgs);
@@ -166,8 +173,14 @@ namespace FileFlows.VideoNodes
             }
         }
 
-        private bool SupportsSubtitles(string container)
+        private bool SupportsSubtitles(NodeParameters args, VideoInfo videoInfo)
         {
+            if (videoInfo?.SubtitleStreams?.Any() != true)
+                return false;
+            bool mov_text = videoInfo.SubtitleStreams.Any(x => x.Codec == "mov_text");
+            // if mov_text and going to mkv, we can't convert these subtitles
+            if (mov_text && Extension?.ToLower()?.EndsWith("mkv") == true)
+                return false;
             return true;
             //if (Regex.IsMatch(container ?? string.Empty, "(mp(e)?(g)?4)|avi|divx|xvid", RegexOptions.IgnoreCase))
             //    return false;
