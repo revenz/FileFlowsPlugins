@@ -168,9 +168,10 @@ namespace FileFlows.VideoNodes
 
         private bool SupportsSubtitles(string container)
         {
-            if (Regex.IsMatch(container ?? string.Empty, "(mp(e)?(g)?4)|avi|divx|xvid", RegexOptions.IgnoreCase))
-                return false;
             return true;
+            //if (Regex.IsMatch(container ?? string.Empty, "(mp(e)?(g)?4)|avi|divx|xvid", RegexOptions.IgnoreCase))
+            //    return false;
+            //return true;
         }
     }
 }
