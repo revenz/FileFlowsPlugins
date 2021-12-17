@@ -11,6 +11,12 @@
                 "CroppingThreshold-Help": "The amount of pixels that must be greater than to crop.   E.g. if there's only 5 pixels detected as black space, you may consider this too small to crop."
               }
             },
+            "SubtitleRemover":{
+              "Description": "Removes subtitles from a video file if found..\n\nOutput 1: Subtitles were removed\nOutput 2: No subtitles found that needed to be removed",
+              "Fields": {
+                "SubtitlesToRemove": "Subtitles To Remove"
+              }
+            },
             "VideoCodec":{
                 "Description":"This node will check the codecs in the input file, and trigger when matched.\n\nOutput 1: Matches\nOutput 2: Does not match",
                 "Fields":{
