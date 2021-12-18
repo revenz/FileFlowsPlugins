@@ -66,6 +66,9 @@ namespace FileFlows.VideoNodes
         private const string VIDEO_INFO = "VideoInfo";
         protected void SetVideoInfo(NodeParameters args, VideoInfo videoInfo, Dictionary<string, object> variables)
         {
+            if (videoInfo.VideoStreams?.Any() == false)
+                return;
+
             if (args.Parameters.ContainsKey(VIDEO_INFO))
                 args.Parameters[VIDEO_INFO] = videoInfo;
             else

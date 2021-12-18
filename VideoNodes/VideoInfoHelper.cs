@@ -71,6 +71,9 @@ namespace FileFlows.VideoNodes
                             if (vs != null)
                             {
                                 vs.Index = streamIndex;
+                                var match = Regex.Match(sm.Value, @"(?<=(Stream #))[\d]+:[\d]+");
+                                if (match.Success)
+                                    vs.IndexString = match.Value;
                                 vi.VideoStreams.Add(vs);
                             }
                         }
@@ -80,6 +83,9 @@ namespace FileFlows.VideoNodes
                             if (audio != null)
                             {
                                 audio.Index = streamIndex;
+                                var match = Regex.Match(sm.Value, @"(?<=(Stream #))[\d]+:[\d]+");
+                                if (match.Success)
+                                    audio.IndexString = match.Value;
                                 vi.AudioStreams.Add(audio);
                             }
                         }
@@ -89,6 +95,9 @@ namespace FileFlows.VideoNodes
                             if (sub != null)
                             {
                                 sub.Index = streamIndex;
+                                var match = Regex.Match(sm.Value, @"(?<=(Stream #))[\d]+:[\d]+");
+                                if (match.Success)
+                                    sub.IndexString = match.Value;
                                 vi.SubtitleStreams.Add(sub);
                             }
                         }
@@ -121,6 +130,7 @@ namespace FileFlows.VideoNodes
 
             if (Regex.IsMatch(line, @"([\d]+(\.[\d]+)?)\sfps") && float.TryParse(Regex.Match(line, @"([\d]+(\.[\d]+)?)\sfps").Groups[1].Value, out float fps))
                 vs.FramesPerSecond = fps;
+
 
             if (rgxDuration.IsMatch(info) && TimeSpan.TryParse(rgxDuration.Match(info).Value, out TimeSpan duration))
                 vs.Duration = duration;

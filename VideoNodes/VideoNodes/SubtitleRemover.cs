@@ -56,8 +56,7 @@
                     return -1;
 
                 List<string> ffArgs = new List<string>();
-                ffArgs.Add($"-c:v copy");
-                ffArgs.Add($"-c:a copy");
+                ffArgs.Add($"-map 0:v -map 0:a");
 
                 var removeCodecs = SubtitlesToRemove?.Where(x => string.IsNullOrWhiteSpace(x) == false)?.Select(x => x.ToLower())?.ToList() ?? new List<string>();
 
@@ -68,12 +67,13 @@
 
                 foreach (var sub in videoInfo.SubtitleStreams)
                 {
+                    args.Logger?.ILog("Subtitle found: " + sub.Codec + ", " + sub.Title);
                     if (removeCodecs.Contains(sub.Codec.ToLower()))
                     {
                         foundBadSubtitle = true;
                         continue;
                     }
-                    ffArgs.Add("-map 0:s:" + sub.TypeIndex);
+                    ffArgs.Add("-map " + sub.IndexString);
                 }
 
                 if(foundBadSubtitle == false)
@@ -81,6 +81,7 @@
                     // nothing to remove
                     return 2;
                 }
+                ffArgs.Add("-c copy");
 
                 string ffArgsLine = string.Join(" ", ffArgs);
 

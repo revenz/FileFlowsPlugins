@@ -27,6 +27,8 @@ namespace FileFlows.VideoNodes
         /// The codec of the stream
         /// </summary>
         public string Codec { get; set; } = "";
+
+        public string IndexString { get; set; }
     }
 
     public class VideoStream : VideoFileStream

@@ -30,7 +30,7 @@ namespace FileFlows.VideoNodes
             if (string.IsNullOrEmpty(outputFile))
                 outputFile = Path.Combine(args.TempPath, Guid.NewGuid().ToString() + "." + extension);
 
-            bool success = Encoder.Encode(args.WorkingFile, outputFile, ffmpegParameters);
+             bool success = Encoder.Encode(args.WorkingFile, outputFile, ffmpegParameters);
             args.Logger.ILog("Encoding succesful: " + success);
             if (success)
             {
