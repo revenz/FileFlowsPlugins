@@ -21,11 +21,13 @@ namespace FileFlows.BasicNodes.File
         public override int Execute(NodeParameters args)
         {
             string path = args.FileName.Substring(0, args.FileName.Length - args.RelativeFile.Length);
-            args.Logger.ILog("Library path: " + path);
-            int pathIndex = args.RelativeFile.IndexOf(System.IO.Path.DirectorySeparatorChar);
+
+            args.Logger?.ILog("Library path: " + path);
+            args.Logger?.ILog("RelativeFile: " + args.RelativeFile);
+            int pathIndex = args.RelativeFile.IndexOfAny(new[] { '\\', '/' });
             if (pathIndex < 0)
             {
-                args.Logger.ILog("File is in library root, will not delete");
+                args.Logger?.ILog("File is in library root, will not delete");
                 return base.Execute(args);
             }
 
@@ -34,7 +36,7 @@ namespace FileFlows.BasicNodes.File
 
             if (IfEmpty)
             {
-                var files = new System.IO.DirectoryInfo(pathToDelete).GetFiles("*.*", SearchOption.AllDirectories);
+                var files = new DirectoryInfo(pathToDelete).GetFiles("*.*", SearchOption.AllDirectories);
                 if (IncludePatterns?.Any() == true)
                 {
                     var count = files.Where(x =>
@@ -54,26 +56,26 @@ namespace FileFlows.BasicNodes.File
                     }).Count();
                     if (count > 0)
                     {
-                        args.Logger.ILog("Directory is not empty, cannot delete: " + pathToDelete);
+                        args.Logger?.ILog("Directory is not empty, cannot delete: " + pathToDelete);
                         return 2;
                     }
                 }
                 else if (files.Length == 0)
                 {
-                    args.Logger.ILog("Directory is not empty, cannot delete: " + pathToDelete);
+                    args.Logger?.ILog("Directory is not empty, cannot delete: " + pathToDelete);
                     return 2;
                 }
             }
 
 
-            args.Logger.ILog("Deleting directory: " + pathToDelete);
+            args.Logger?.ILog("Deleting directory: " + pathToDelete);
             try
             {
-                System.IO.Directory.Delete(pathToDelete, true);
+                Directory.Delete(pathToDelete, true);
             }
             catch (Exception ex)
             {
-                args.Logger.ELog("Failed to delete directory: " + ex.Message);
+                args.Logger?.ELog("Failed to delete directory: " + ex.Message);
                 return -1;
             }
             return base.Execute(args);
