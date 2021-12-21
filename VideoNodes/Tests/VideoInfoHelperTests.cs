@@ -75,6 +75,20 @@ namespace VideoNodes.Tests
 
             Assert.IsTrue(result);
         }
+        [TestMethod]
+        public void VideoInfoTest_CanEncodeNvidia()
+        {
+            const string file = @"D:\videos\unprocessed\Bourne.mkv";
+            const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger());
+            //args.Process = new FileFlows.Plugin.ProcessHelper(args.Logger);
+
+            var node = new VideoEncode();
+            node.SetArgs(args);
+            bool result = node.CanProcessEncoder(ffmpeg, "hevc_nvenc -preset hq");
+
+            Assert.IsTrue(result);
+        }
     }
 }
 

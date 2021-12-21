@@ -178,11 +178,11 @@ namespace FileFlows.VideoNodes
             if (vidparams.ToLower().Contains("hevc_nvenc"))
             {
                 // nvidia h265 encoding, check can
-                bool nvidia = HasNvidiaCard(ffmpeg);
-                if(nvidia == false)
+                bool canProcess = CanProcessEncoder(ffmpeg, vidparams);                
+                if(canProcess == false)
                 {
                     // change to cpu encoding 
-                    args.Logger?.ILog("No NVIDIA card detected, falling back to CPU encoding H265 (libx265)");
+                    args.Logger?.ILog("Can't encode using hevc_nvenc, falling back to CPU encoding H265 (libx265)");
                     return "libx265";
                 }
                 return vidparams;
@@ -190,16 +190,34 @@ namespace FileFlows.VideoNodes
             else if (vidparams.ToLower().Contains("h264_nvenc"))
             {
                 // nvidia h265 encoding, check can
-                bool nvidia = HasNvidiaCard(ffmpeg);
-                if (nvidia == false)
+                bool canProcess = CanProcessEncoder(ffmpeg, vidparams);
+                if (canProcess == false)
                 {
                     // change to cpu encoding 
-                    args.Logger?.ILog("No NVIDIA card detected, falling back to CPU encoding H264 (libx264)");
+                    args.Logger?.ILog("Can't encode using h264_nvenc, falling back to CPU encoding H264 (libx264)");
                     return "libx264";
                 }
                 return vidparams;
             }
             return vidparams;
+        }
+
+        public bool CanProcessEncoder(string ffmpeg, string encodingParams)
+        {
+            //ffmpeg -loglevel error -f lavfi -i color=black:s=1080x1080 -vframes 1 -an -c:v hevc_nven2c -preset hq -f null -"
+
+            string cmdArgs = $"-loglevel error -f lavfi -i color=black:s=1080x1080 -vframes 1 -an -c:v {encodingParams} -f null -\"";
+            var cmd = args.Process.ExecuteShellCommand(new ExecuteArgs
+            {
+                Command = ffmpeg,
+                Arguments = cmdArgs
+            }).Result;
+            if (cmd.ExitCode != 0 || string.IsNullOrWhiteSpace(cmd.Output) == false)
+            {
+                args.Logger?.WLog($"Cant prcoess '{encodingParams}': {cmd.Output ?? ""}");
+                return false;
+            }
+            return true;
         }
 
         public bool HasNvidiaCard(string ffmpeg)
