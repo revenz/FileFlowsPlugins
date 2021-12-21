@@ -48,12 +48,22 @@ namespace FileFlows.VideoNodes
                     process.StartInfo.RedirectStandardOutput = true;
                     process.StartInfo.RedirectStandardError = true;
                     process.StartInfo.CreateNoWindow = true;
-                    process.StartInfo.Arguments = $"-i \"{file}\" -hide_banner -t 10 -ss 60 -vf cropdetect=24:16:0 {tempFile}";
+                    process.StartInfo.Arguments = $"-i \"{file}\" -hide_banner -t 10 -ss 60 -vf cropdetect {tempFile}";
+                    args.Logger?.DLog("Exectuing ffmpeg " + process.StartInfo.Arguments);
                     process.Start();
                     string output = process.StandardError.ReadToEnd();
                     Console.WriteLine(output);
                     string error = process.StandardError.ReadToEnd();
                     process.WaitForExit();
+
+                    var dimMatch = Regex.Match(output, @"Stream #[\d]+:[\d]+: Video:(.*?)([\d]+)x([\d]+)", RegexOptions.Multiline);
+                    if (dimMatch.Success == false)
+                        return String.Empty; // cant find dimensions
+
+                    int vidWidth = int.Parse(dimMatch.Groups[2].Value);
+                    int vidHeight = int.Parse(dimMatch.Groups[3].Value);
+
+                    args.Logger?.DLog($"Video dimensions: {vidWidth}x{vidHeight}");
 
                     var matches = Regex.Matches(output, @"(?<=(crop=))([\d]+:){3}[\d]+");
                     int x = int.MaxValue;
@@ -77,8 +87,10 @@ namespace FileFlows.VideoNodes
                     if(CroppingThreshold < 0)
                         CroppingThreshold = 0;
 
-                    bool willCrop = (x + y) > CroppingThreshold;
-                    args.Logger?.ILog($"Crop detection, x:{x}, y:{y}, total:{x + y}, threshold:{CroppingThreshold}, above threshold: {willCrop}");
+                    int diff = x + y + (vidWidth - width) + (vidHeight - height);
+
+                    bool willCrop = diff > CroppingThreshold;
+                    args.Logger?.ILog($"Crop detection, x:{x}, y:{y}, width: {width}, height: {height}, total:{diff}, threshold:{CroppingThreshold}, above threshold: {willCrop}");
 
                     return willCrop ? $"{width}:{height}:{x}:{y}" : string.Empty;
                 }

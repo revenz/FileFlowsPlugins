@@ -48,7 +48,7 @@ namespace VideoNodes.Tests
         [TestMethod]
         public void VideoInfoTest_DetectBlackBars()
         {
-            const string file = @"D:\videos\unprocessed\Bourne.mkv";
+            const string file = @"D:\videos\unprocessed\The Witcher - S02E05 - Turn Your Back.mkv";
             var vi = new VideoInfoHelper(@"C:\utils\ffmpeg\ffmpeg.exe", new TestLogger());
             vi.Read(@"D:\videos\unprocessed\Bourne.mkv");
 
