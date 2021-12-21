@@ -29,7 +29,7 @@ namespace FileFlows.VideoNodes
             if (crop == string.Empty)
                 return 2;
 
-            args.Logger.ILog("Black bars detected, crop: " + crop);
+            args.Logger?.ILog("Black bars detected, crop: " + crop);
             args.Parameters.Add(CROP_KEY, crop);
 
             return 1;

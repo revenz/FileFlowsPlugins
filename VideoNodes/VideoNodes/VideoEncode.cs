@@ -1,6 +1,7 @@
 namespace FileFlows.VideoNodes
 {
     using System.ComponentModel;
+    using System.Diagnostics;
     using System.Text.RegularExpressions;
     using FileFlows.Plugin;
     using FileFlows.Plugin.Attributes;
@@ -116,7 +117,10 @@ namespace FileFlows.VideoNodes
                 List<string> ffArgs = new List<string>();
 
                 if (videoIsRightCodec == null || crop != string.Empty)
+                {
+                    string codecParameters = CheckVideoCodec(ffmpegExe, VideoCodecParameters);
                     ffArgs.Add($"-map 0:v:0 -c:v {VideoCodecParameters} {crop}");
+                }
                 else
                     ffArgs.Add($"-map 0:v:0 -c:v copy");
 
@@ -153,6 +157,93 @@ namespace FileFlows.VideoNodes
             {
                 args.Logger?.ELog("Failed processing VideoFile: " + ex.Message);
                 return -1;
+            }
+        }
+
+#if(DEBUG)
+        /// <summary>
+        /// Used for unit tests
+        /// </summary>
+        /// <param name="args">the args</param>
+        public void SetArgs(NodeParameters args)
+        {
+            this.args = args;
+        }
+#endif
+
+        public string CheckVideoCodec(string ffmpeg, string vidparams)
+        {
+            if (string.IsNullOrEmpty(vidparams))
+                return string.Empty;
+            if (vidparams.ToLower().Contains("hevc_nvenc"))
+            {
+                // nvidia h265 encoding, check can
+                bool nvidia = HasNvidiaCard(ffmpeg);
+                if(nvidia == false)
+                {
+                    // change to cpu encoding 
+                    args.Logger?.ILog("No NVIDIA card detected, falling back to CPU encoding H265 (libx265)");
+                    return "libx265";
+                }
+                return vidparams;
+            }
+            else if (vidparams.ToLower().Contains("h264_nvenc"))
+            {
+                // nvidia h265 encoding, check can
+                bool nvidia = HasNvidiaCard(ffmpeg);
+                if (nvidia == false)
+                {
+                    // change to cpu encoding 
+                    args.Logger?.ILog("No NVIDIA card detected, falling back to CPU encoding H264 (libx264)");
+                    return "libx264";
+                }
+                return vidparams;
+            }
+            return vidparams;
+        }
+
+        public bool HasNvidiaCard(string ffmpeg)
+        {
+            try
+            {
+                if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+                {
+                    var cmd = args.Process.ExecuteShellCommand(new ExecuteArgs
+                    {
+                        Command = "wmic",
+                        Arguments = "path win32_VideoController get name"
+                    }).Result;
+                    if(cmd.ExitCode == 0)
+                    {
+                        // it worked
+                        if (cmd.Output?.ToLower()?.Contains("nvidia") == false)
+                            return false;
+                    }
+                }
+                else
+                {
+                    // linux, crude method, look for nvidia in the /dev dir
+                    var dir = new DirectoryInfo("/dev");
+                    if (dir.Exists == false)
+                        return false;
+
+                    bool dev = dir.GetDirectories().Any(x => x.Name.ToLower().Contains("nvidia"));
+                    if (dev == false)
+                        return false;
+                }
+
+                // check cuda in ffmpeg itself
+                var result = args.Process.ExecuteShellCommand(new ExecuteArgs
+                {
+                    Command = ffmpeg,
+                    Arguments = "-hide_banner -init_hw_device list"
+                }).Result;
+                return result.Output?.Contains("cuda") == true;
+            } 
+            catch (Exception ex)
+            {
+                args.Logger?.ELog("Failed to detect NVIDIA card: " + ex.Message + Environment.NewLine + ex.StackTrace);
+                return false;
             }
         }
 

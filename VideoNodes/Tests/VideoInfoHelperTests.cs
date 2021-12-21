@@ -20,6 +20,7 @@ namespace VideoNodes.Tests
             vi.Read(@"D:\videos\unprocessed\Hellboy 2019 Bluray-1080p.mp4");
 
         }
+
         [TestMethod]
         public void VideoInfoTest_SubtitleRemover()
         {
@@ -42,6 +43,37 @@ namespace VideoNodes.Tests
 
             Assert.AreEqual(1, output);
 
+        }
+
+        [TestMethod]
+        public void VideoInfoTest_DetectBlackBars()
+        {
+            const string file = @"D:\videos\unprocessed\Bourne.mkv";
+            var vi = new VideoInfoHelper(@"C:\utils\ffmpeg\ffmpeg.exe", new TestLogger());
+            vi.Read(@"D:\videos\unprocessed\Bourne.mkv");
+
+            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger());
+            args.GetToolPath = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
+            args.TempPath = @"D:\videos\temp";
+
+            int result = new DetectBlackBars().Execute(args);
+
+            Assert.IsTrue(result > 0);
+
+        }
+        [TestMethod]
+        public void VideoInfoTest_NvidiaCard()
+        {
+            const string file = @"D:\videos\unprocessed\Bourne.mkv";
+            const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger());
+            //args.Process = new FileFlows.Plugin.ProcessHelper(args.Logger);
+
+            var node = new VideoEncode();
+            node.SetArgs(args);
+            bool result = node.HasNvidiaCard(ffmpeg);
+
+            Assert.IsTrue(result);
         }
     }
 }
