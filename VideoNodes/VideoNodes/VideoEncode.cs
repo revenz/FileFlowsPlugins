@@ -189,12 +189,36 @@ namespace FileFlows.VideoNodes
             }
             else if (vidparams.ToLower().Contains("h264_nvenc"))
             {
-                // nvidia h265 encoding, check can
+                // nvidia h264 encoding, check can
                 bool canProcess = CanProcessEncoder(ffmpeg, vidparams);
                 if (canProcess == false)
                 {
                     // change to cpu encoding 
                     args.Logger?.ILog("Can't encode using h264_nvenc, falling back to CPU encoding H264 (libx264)");
+                    return "libx264";
+                }
+                return vidparams;
+            }
+            else if (vidparams.ToLower().Contains("hevc_qsv"))
+            {
+                // nvidia h265 encoding, check can
+                bool canProcess = CanProcessEncoder(ffmpeg, vidparams);
+                if (canProcess == false)
+                {
+                    // change to cpu encoding 
+                    args.Logger?.ILog("Can't encode using hevc_qsv, falling back to CPU encoding H265 (libx265)");
+                    return "libx265";
+                }
+                return vidparams;
+            }
+            else if (vidparams.ToLower().Contains("h264_qsv"))
+            {
+                // nvidia h264 encoding, check can
+                bool canProcess = CanProcessEncoder(ffmpeg, vidparams);
+                if (canProcess == false)
+                {
+                    // change to cpu encoding 
+                    args.Logger?.ILog("Can't encode using h264_qsv, falling back to CPU encoding H264 (libx264)");
                     return "libx264";
                 }
                 return vidparams;
