@@ -56,12 +56,15 @@ namespace FileFlows.VideoNodes
                     string error = process.StandardError.ReadToEnd();
                     process.WaitForExit();
 
-                    var dimMatch = Regex.Match(output, @"Stream #[\d]+:[\d]+: Video:(.*?)([\d]+)x([\d]+)", RegexOptions.Multiline);
+                    var dimMatch = Regex.Match(output, @"Stream #[\d]+:[\d]+(.*?)Video:(.*?)([\d]+)x([\d]+)", RegexOptions.Multiline);
                     if (dimMatch.Success == false)
+                    {
+                        args.Logger?.WLog("Can't find dimensions for video");
                         return String.Empty; // cant find dimensions
+                    }
 
-                    int vidWidth = int.Parse(dimMatch.Groups[2].Value);
-                    int vidHeight = int.Parse(dimMatch.Groups[3].Value);
+                    int vidWidth = int.Parse(dimMatch.Groups[3].Value);
+                    int vidHeight = int.Parse(dimMatch.Groups[4].Value);
 
                     args.Logger?.DLog($"Video dimensions: {vidWidth}x{vidHeight}");
 
