@@ -2,7 +2,7 @@
     "Flow":{
       "Parts": {
         "AudioTrackReorder": {
-          "Description": "Allows you to reorder audio tracks in the preferred order.\n\nEnter the audio codecs in the order you want.  Any not listed will be ordered after the ones entered in their original order.\nIf there are multiple tracks with same codec, they will be ordered first by the order you entered, then in their original order.",
+          "Description": "Allows you to reorder audio tracks in the preferred order.\n\nEnter the audio codecs in the order you want.  Any not listed will be ordered after the ones entered in their original order.\nIf there are multiple tracks with same codec, they will be ordered first by the order you entered, then in their original order.\n\nOutput 1: Audio tracks were reordered\nOutput 2: Audio tracks did not need reordering",
           "Fields": {
             "OrderedTracks": "Ordered Audio Codecs"
           }
