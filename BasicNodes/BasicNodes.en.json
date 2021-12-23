@@ -12,6 +12,9 @@
         "InputFile": {
           "Description": "An input node for a library file.  This is required and is the starting point of a flow.  Any input node can be used, just one is required."
         },
+        "InputDirectory": {
+          "Description": "An input node for a directory.  This will only work if the library using this flow is configured for directories."
+        },
         "CopyFile": {
           "Description": "Copies a file to the destination path",
           "Fields": {
@@ -121,6 +124,15 @@
             "LogOnly-Help": "Turn on if you just want to test this node without it actually renaming the file",
             "CsvFile": "CSV File",
             "CsvFile-Help": "Will append to this file the original name and the renamed file.  Useful when using ''Log Only'' to test the renamer before changing files."
+          }
+        },
+        "Zip": {
+          "Description": "Allows you to zip the input",
+          "Fields": {
+            "DestinationPath": "Destination Path",
+            "DestinationPath-Help": "The destination path where to put the zip file.  If blank, the zip will be placed in the library root.",
+            "DestinationFile": "Destination File",
+            "DestinationFile-Help": "The filename of the newly created zip.  If blank, the name of the item will be used as the zip file."
           }
         }
       }
