@@ -8,6 +8,7 @@ namespace FileFlows.BasicNodes.Functions
     using Jint;
     using System.Text;
     using System.ComponentModel.DataAnnotations;
+    using System.Text.RegularExpressions;
 
     public class Function : Node
     {
@@ -38,6 +39,14 @@ namespace FileFlows.BasicNodes.Functions
             if(fileInfo.Exists)
                 fileSize = fileInfo.Length;
 
+            // replace Variables. with dictionary notation
+            string tcode = Code;
+            foreach (string k in args.Variables.Keys.OrderByDescending(x => x.Length))
+            {
+                tcode = tcode.Replace("Variables." + k, "Variables['" + k + "']");
+            }
+
+
             var sb = new StringBuilder();
             var log = new
             {
@@ -56,7 +65,7 @@ namespace FileFlows.BasicNodes.Functions
 
             try
             {
-                var result = int.Parse(engine.Evaluate(Code).ToObject().ToString());
+                var result = int.Parse(engine.Evaluate(tcode).ToObject().ToString());
                 return result;
             }
             catch (Exception ex)
@@ -65,5 +74,28 @@ namespace FileFlows.BasicNodes.Functions
                 return -1;
             }
         }
+
+        //private Dictionary<string, object> ExplodeVariables(Dictionary<string, object> input)
+        //{
+        //    Dictionary<string, object> result = new();
+        //    foreach(var key in input.Keys)
+        //    {
+        //        if(key.IndexOf(".") > 0)
+        //        {
+        //            // folder.Date.Year
+        //            // folder.Date.Month
+        //            // folder.Date.Date
+        //            //bk = Date
+        //            string bk = key.Substring(0, key.IndexOf("."));
+        //            if(result.ContainsKey(bk) == false) 
+        //                result.Add(bk, new Dictionary<string, object>());
+        //            Dictionary<string, object> bkdict = (Dictionary<string, object>)result[bk];
+        //            // nk = Year
+        //            string nk = key.Substring(key.IndexOf(".") + 1);
+        //            bkdict[]
+        //        }
+        //    }
+        //    return result;
+        //}
     }
 }

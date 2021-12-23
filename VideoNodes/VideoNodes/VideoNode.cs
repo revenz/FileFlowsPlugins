@@ -74,31 +74,31 @@ namespace FileFlows.VideoNodes
             else
                 args.Parameters.Add(VIDEO_INFO, videoInfo);
 
-            variables.AddOrUpdate("viDuration", videoInfo.VideoStreams[0].Duration.TotalSeconds);
-            variables.AddOrUpdate("viVideoCodec", videoInfo.VideoStreams[0].Codec);
+            variables.AddOrUpdate("vi.Duration", videoInfo.VideoStreams[0].Duration.TotalSeconds);
+            variables.AddOrUpdate("vi.Video.Codec", videoInfo.VideoStreams[0].Codec);
             if (videoInfo.AudioStreams?.Any() == true)
             {
                 ;
                 if (string.IsNullOrEmpty(videoInfo.AudioStreams[0].Codec))
-                    Variables.AddOrUpdate("viAudioCodec", videoInfo.AudioStreams[0].Codec);
+                    Variables.AddOrUpdate("vi.Audio.Codec", videoInfo.AudioStreams[0].Codec);
                 if (string.IsNullOrEmpty(videoInfo.AudioStreams[0].Codec))
-                    Variables.AddOrUpdate("viAudioChannels", videoInfo.AudioStreams[0].Channels);
+                    Variables.AddOrUpdate("vi.Audio.Channels", videoInfo.AudioStreams[0].Channels);
                 if (string.IsNullOrEmpty(videoInfo.AudioStreams[0].Language))
-                    Variables.AddOrUpdate("viAudioLanguage", videoInfo.AudioStreams[0].Language);
-                Variables.AddOrUpdate("viAudioCodecs", string.Join(", ", videoInfo.AudioStreams.Select(x => x.Codec).Where(x => string.IsNullOrEmpty(x) == false)));
-                Variables.AddOrUpdate("viAudioLanguages", string.Join(", ", videoInfo.AudioStreams.Select(x => x.Language).Where(x => string.IsNullOrEmpty(x) == false)));
+                    Variables.AddOrUpdate("vi.Audio.Language", videoInfo.AudioStreams[0].Language);
+                Variables.AddOrUpdate("vi.Audio.Codecs", string.Join(", ", videoInfo.AudioStreams.Select(x => x.Codec).Where(x => string.IsNullOrEmpty(x) == false)));
+                Variables.AddOrUpdate("vi.Audio.Languages", string.Join(", ", videoInfo.AudioStreams.Select(x => x.Language).Where(x => string.IsNullOrEmpty(x) == false)));
             }
 
             if (videoInfo.VideoStreams[0].Width == 1920)
-                Variables.AddOrUpdate("viResolution", "1080");
+                Variables.AddOrUpdate("vi.Resolution", "1080");
             else if (videoInfo.VideoStreams[0].Width == 3840)
-                Variables.AddOrUpdate("viResolution", "4l");
+                Variables.AddOrUpdate("vi.Resolution", "4l");
             else if (videoInfo.VideoStreams[0].Width == 1280)
-                Variables.AddOrUpdate("viResolution", "720p");
+                Variables.AddOrUpdate("vi.Resolution", "720p");
             else if (videoInfo.VideoStreams[0].Width < 1280)
-                Variables.AddOrUpdate("viResolution", "SD");
+                Variables.AddOrUpdate("vi.Resolution", "SD");
             else
-                Variables.AddOrUpdate("viResolution", videoInfo.VideoStreams[0].Width + "x" + videoInfo.VideoStreams[0].Height);
+                Variables.AddOrUpdate("vi.Resolution", videoInfo.VideoStreams[0].Width + "x" + videoInfo.VideoStreams[0].Height);
 
             args.UpdateVariables(variables);
         }

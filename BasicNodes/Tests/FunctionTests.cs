@@ -13,7 +13,7 @@ namespace BasicNodes.Tests
         [TestInitialize]
         public void TestStarting()
         {
-            Args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", new TestLogger());
+            Args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", new TestLogger(), false, string.Empty);
 
         }
 
@@ -58,7 +58,7 @@ namespace BasicNodes.Tests
         {
             Function pm = new Function();
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger);
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty);
             args.Variables = new Dictionary<string, object>
             {
                 { "miTitle", "Ghostbusters" },
@@ -75,7 +75,7 @@ return 0";
         {
             Function pm = new Function();
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger);
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty);
             args.Variables = new Dictionary<string, object>
             {
                 { "miTitle", "Ghostbusters" },
@@ -93,7 +93,7 @@ return 0";
         {
             Function pm = new Function();
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger);
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty);
             args.Variables = new Dictionary<string, object>
             {
                 { "miTitle", "Ghostbusters" },
@@ -111,7 +111,7 @@ return 0";
         {
             Function pm = new Function();
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger);
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty);
             args.Variables = new Dictionary<string, object>
             {
                 { "miTitle", "Ghostbusters" },
@@ -125,6 +125,40 @@ return 0";
             Assert.IsTrue(args.Variables.ContainsKey("NewItem"));
             Assert.AreEqual(1234d, args.Variables["NewItem"]);
             Assert.AreEqual(2001d, args.Variables["miYear"]);
+        }
+
+
+        [TestMethod]
+        public void Function_UseVariables_Date()
+        {
+            Function pm = new Function();
+            var logger = new TestLogger();
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty);
+            args.Variables = new Dictionary<string, object>
+            {
+                { "folder.Date", new DateTime(2020, 03, 01) }
+            };
+            pm.Code = @"
+if(Variables.folder.Date.getFullYear() === 2020) return 1;
+return 2";
+            var result = pm.Execute(args);
+            Assert.AreEqual(1, result);
+        }
+        [TestMethod]
+        public void Function_UseVariables_MultipelDot()
+        {
+            Function pm = new Function();
+            var logger = new TestLogger();
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty);
+            args.Variables = new Dictionary<string, object>
+            {
+                { "folder.Date.Year", 2020 }
+            };
+            pm.Code = @"
+if(Variables.folder.Date.Year === 2020) return 1;
+return 2";
+            var result = pm.Execute(args);
+            Assert.AreEqual(1, result);
         }
     }
 }

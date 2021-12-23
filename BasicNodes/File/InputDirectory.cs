@@ -4,27 +4,26 @@ namespace FileFlows.BasicNodes.File
     using FileFlows.Plugin;
     using FileFlows.Plugin.Attributes;
 
-    public class InputFile : Node
+    public class InputDirectory: Node
     {
         public override int Outputs => 1;
         public override FlowElementType Type => FlowElementType.Input;
-        public override string Icon => "far fa-file";
-
+        public override string Icon => "far fa-folder";
         public override int Execute(NodeParameters args)
         {
             try
             {
-                FileInfo fileInfo = new FileInfo(args.WorkingFile);
-                if (fileInfo.Exists == false)
+                var info = new DirectoryInfo(args.WorkingFile);
+                if (info.Exists == false)
                 {
-                    args.Logger?.ELog("File not found: " + args.WorkingFile);
+                    args.Logger?.ELog("Directory not found: " + args.WorkingFile);
                     return -1;
                 }
                 return 1;
             }
             catch (Exception ex)
             {
-                args.Logger?.ELog("Failed in InputFile: " + ex.Message + Environment.NewLine + ex.StackTrace);
+                args.Logger?.ELog("Failed in InputDirectory: " + ex.Message + Environment.NewLine + ex.StackTrace);
                 return -1;
             }
         }

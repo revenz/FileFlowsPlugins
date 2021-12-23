@@ -12,7 +12,7 @@ namespace BasicNodes.Tests
         public void Renamer_Extension()
         {
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger);
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger, false, string.Empty);
             args.Variables = new Dictionary<string, object>
             {
                 { "miTitle", "Ghostbusters" },
@@ -36,7 +36,7 @@ namespace BasicNodes.Tests
         public void Renamer_Extension_DoubleDot()
         {
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger);
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger, false, string.Empty);
             args.Variables = new Dictionary<string, object>
             {
                 { "miTitle", "Ghostbusters" },
@@ -61,7 +61,7 @@ namespace BasicNodes.Tests
         public void Renamer_Empty_SquareBrackets()
         {
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger);
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger, false, string.Empty);
             args.Variables = new Dictionary<string, object>
             {
                 { "miTitle", "Ghostbusters" },
@@ -85,7 +85,7 @@ namespace BasicNodes.Tests
         public void Renamer_Empty_RoundBrackets()
         {
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger);
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger, false, string.Empty);
             args.Variables = new Dictionary<string, object>
             {
                 { "miTitle", "Ghostbusters" },
@@ -108,7 +108,7 @@ namespace BasicNodes.Tests
         public void Renamer_Empty_SquareBrackets_Extension()
         {
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger);
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger, false, string.Empty);
             args.Variables = new Dictionary<string, object>
             {
                 { "miTitle", "Ghostbusters" },
@@ -133,7 +133,7 @@ namespace BasicNodes.Tests
         public void Renamer_Colon()
         {
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger);
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger, false, string.Empty);
             args.Variables = new Dictionary<string, object>
             {
                 { "miTitle", "Batman Unlimited: Mech vs Mutants" },

@@ -13,7 +13,7 @@ namespace BasicNodes.Tests
         [TestInitialize]
         public void TestStarting()
         {
-            Args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", new TestLogger());
+            Args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", new TestLogger(), false, string.Empty);
 
         }
 

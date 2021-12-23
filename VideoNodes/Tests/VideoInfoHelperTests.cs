@@ -33,7 +33,7 @@ namespace VideoNodes.Tests
             {
                 "subrip", "srt"
             };
-            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger());
+            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
             args.GetToolPath = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\videos\temp";
 
@@ -48,25 +48,28 @@ namespace VideoNodes.Tests
         [TestMethod]
         public void VideoInfoTest_DetectBlackBars()
         {
-            const string file = @"D:\videos\unprocessed\The Witcher - S02E05 - Turn Your Back.mkv";
-            var vi = new VideoInfoHelper(@"C:\utils\ffmpeg\ffmpeg.exe", new TestLogger());
-            vi.Read(@"D:\videos\unprocessed\Bourne.mkv");
+            //const string file = @"D:\videos\unprocessed\The Witcher - S02E05 - Turn Your Back.mkv";
+            //const string file = @"D:\videos\unprocessed\Hawkeye (2021) - S01E05 - Ronin.mkv";
+            const string file = @"\\ORACLE\tv\Dexter - New Blood\Season 1\Dexter - New Blood - S01E07 - Skin of Her Teeth.mkv";
+            //var vi = new VideoInfoHelper(@"C:\utils\ffmpeg\ffmpeg.exe", new TestLogger(), false, string.Empty);
+            //vi.Read(@"D:\videos\unprocessed\Bourne.mkv");
 
-            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger());
+            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
             args.GetToolPath = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\videos\temp";
 
             int result = new DetectBlackBars().Execute(args);
 
             Assert.IsTrue(result > 0);
-
         }
+
+
         [TestMethod]
         public void VideoInfoTest_NvidiaCard()
         {
             const string file = @"D:\videos\unprocessed\Bourne.mkv";
             const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
-            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger());
+            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
             //args.Process = new FileFlows.Plugin.ProcessHelper(args.Logger);
 
             var node = new VideoEncode();
@@ -80,7 +83,7 @@ namespace VideoNodes.Tests
         {
             const string file = @"D:\videos\unprocessed\Bourne.mkv";
             const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
-            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger());
+            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
             //args.Process = new FileFlows.Plugin.ProcessHelper(args.Logger);
 
             var node = new VideoEncode();
@@ -94,7 +97,7 @@ namespace VideoNodes.Tests
         {
             const string file = @"D:\videos\unprocessed\Bourne.mkv";
             const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
-            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger());
+            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
             //args.Process = new FileFlows.Plugin.ProcessHelper(args.Logger);
 
             var node = new VideoEncode();
