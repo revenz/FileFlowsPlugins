@@ -87,6 +87,17 @@ namespace FileFlows.VideoNodes
                     }
                 }
 
+                if (width == 0 || height == 0)
+                {
+                    args.Logger?.WLog("Width/Height not detected: " + width + "x" + height);
+                    return String.Empty;
+                }
+                if(x == 0 && y == 0)
+                {
+                    // nothing to do
+                    return String.Empty;
+                }
+
                 if (x == int.MaxValue)
                     x = 0;
                 if (y == int.MaxValue)
