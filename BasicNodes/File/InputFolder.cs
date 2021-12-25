@@ -4,7 +4,7 @@ namespace FileFlows.BasicNodes.File
     using FileFlows.Plugin;
     using FileFlows.Plugin.Attributes;
 
-    public class InputDirectory: Node
+    public class InputFolder: Node
     {
         public override int Outputs => 1;
         public override FlowElementType Type => FlowElementType.Input;

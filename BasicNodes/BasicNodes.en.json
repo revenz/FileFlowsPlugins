@@ -12,8 +12,8 @@
         "InputFile": {
           "Description": "An input node for a library file.  This is required and is the starting point of a flow.  Any input node can be used, just one is required."
         },
-        "InputDirectory": {
-          "Description": "An input node for a directory.  This will only work if the library using this flow is configured for directories."
+        "InputFolder": {
+          "Description": "An input node for a folder.  This will only work if the library using this flow is configured for folders."
         },
         "CopyFile": {
           "Description": "Copies a file to the destination path",
