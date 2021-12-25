@@ -5,7 +5,7 @@ namespace FileFlows.BasicNodes.File
     public class Delete : Node
     {
         public override int Inputs => 1;
-        public override int Outputs => 0;
+        public override int Outputs => 1;
         public override FlowElementType Type => FlowElementType.Process;
         public override string Icon => "far fa-trash-alt";
 
@@ -18,7 +18,7 @@ namespace FileFlows.BasicNodes.File
                     args.Logger?.ILog("Deleting directory: " + args.WorkingFile);
                     Directory.Delete(args.WorkingFile, true);
                     args.Logger?.ILog("Deleted directory: " + args.WorkingFile);
-                    return 0;
+                    return 1;
                 }
                 catch (Exception ex)
                 {
@@ -33,7 +33,7 @@ namespace FileFlows.BasicNodes.File
                     args.Logger?.ILog("Deleting file: " + args.WorkingFile);
                     System.IO.File.Delete(args.WorkingFile);
                     args.Logger?.ILog("Deleted file: " + args.WorkingFile);
-                    return 0;
+                    return 1;
                 }
                 catch (Exception ex)
                 {
