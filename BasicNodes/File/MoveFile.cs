@@ -45,6 +45,12 @@ namespace FileFlows.BasicNodes.File
             else
                 dest = Path.Combine(dest, new FileInfo(args.FileName).Name);
 
+            var fiDest = new FileInfo(dest);
+            var fiWorking = new FileInfo(args.WorkingFile);
+            if (string.IsNullOrEmpty(fiDest.Extension) == false && fiDest.Extension != fiWorking.Extension)
+            {
+                dest = dest.Substring(0, dest.LastIndexOf(".")) + fiWorking.Extension;
+            }
 
             if (string.IsNullOrEmpty(DestinationFile) == false)
             {
@@ -52,7 +58,7 @@ namespace FileFlows.BasicNodes.File
                 dest = Path.Combine(new FileInfo(dest).DirectoryName!, destFile);
             }
 
-            var fiDest = new FileInfo(dest);
+            fiDest = new FileInfo(dest);
             var fiWorkingFile = new FileInfo(args.WorkingFile);
             if (fiDest.Extension != fiWorkingFile.Extension)
             {

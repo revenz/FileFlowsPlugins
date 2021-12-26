@@ -58,6 +58,13 @@ namespace FileFlows.BasicNodes.File
             else
                 dest = Path.Combine(dest, new FileInfo(args.FileName).Name);
 
+            var fiDest = new FileInfo(dest);
+            var fiWorking = new FileInfo(args.WorkingFile);
+            if (string.IsNullOrEmpty(fiDest.Extension) == false && fiDest.Extension != fiWorking.Extension)
+            {
+                dest = dest.Substring(0, dest.LastIndexOf(".")) + fiWorking.Extension;
+            }
+
             var destDir = new FileInfo(dest).DirectoryName;
             args.CreateDirectoryIfNotExists(destDir ?? String.Empty);
 
@@ -67,6 +74,7 @@ namespace FileFlows.BasicNodes.File
                 dest = Path.Combine(destDir!, destFile);
             }
 
+            args.Logger?.ILog($"Copying file '{args.WorkingFile}' to '{dest}");
             // have to use file streams so we can report progress
             int bufferSize = 1024 * 1024;
 

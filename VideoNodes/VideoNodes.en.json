@@ -10,6 +10,14 @@
             "Languages-Help": "The order of languages to sort the audio tracks by.  This sorting is done before the codec."
           }
         },
+        "AudioTrackSetLanguage": {
+          "Label": "Audio: Set Language",
+          "Description": "Allows you to set the language for any audio tracks that have no language set.  If the audio track does have a language set, it will be skipped.\n\nOutput 1: Audio Tracks were updated\nOutput 2: No audio tracks were needing to be updated",
+          "Fields": {
+            "Language": "Language",
+            "Language-Help": "The ISO 639-2 language code to use. \nhttps://en.wikipedia.org/wiki/List_of_ISO_639-2_codes"
+          }
+        },
         "VideoFile": {
           "Description": "An input video file that has had its VideoInformation read and can be processed"
         },
