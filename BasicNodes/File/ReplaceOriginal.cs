@@ -8,7 +8,7 @@
     {
         public override int Inputs => 1;
         public override int Outputs => 1;
-        public override string Icon => "fas fa-font";
+        public override string Icon => "fas fa-file";
 
         public string _Pattern = string.Empty;
 

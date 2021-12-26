@@ -15,15 +15,15 @@ namespace BasicNodes.Tests
             var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger, false, string.Empty);
             args.Variables = new Dictionary<string, object>
             {
-                { "miTitle", "Ghostbusters" },
-                { "miYear", 1984 },
+                { "movie.Title", "Ghostbusters" },
+                { "movie.Year", 1984 },
                 { "viResolution", "1080P" }
             };
             args.SetWorkingFile($@"c:\temp\{Guid.NewGuid()}.mkv", dontDelete: true);
 
 
             Renamer node = new Renamer();
-            node.Pattern = @"{miTitle} ({miYear})\{miTitle} [{viResolution}]{ext}";
+            node.Pattern = @"{movie.Title} ({movie.Year})\{movie.Title} [{viResolution}]{ext}";
             node.LogOnly = true;
 
             var result = node.Execute(args);
@@ -39,15 +39,15 @@ namespace BasicNodes.Tests
             var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger, false, string.Empty);
             args.Variables = new Dictionary<string, object>
             {
-                { "miTitle", "Ghostbusters" },
-                { "miYear", 1984 },
+                { "movie.Title", "Ghostbusters" },
+                { "movie.Year", 1984 },
                 { "viResolution", "1080P" }
             };
             args.SetWorkingFile($@"c:\temp\{Guid.NewGuid()}.mkv", dontDelete: true);
 
 
             Renamer node = new Renamer();
-            node.Pattern = @"{miTitle} ({miYear})\{miTitle} [{viResolution}].{ext}";
+            node.Pattern = @"{movie.Title} ({movie.Year})\{movie.Title} [{viResolution}].{ext}";
             node.LogOnly = true;
 
             var result = node.Execute(args);
@@ -64,14 +64,14 @@ namespace BasicNodes.Tests
             var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger, false, string.Empty);
             args.Variables = new Dictionary<string, object>
             {
-                { "miTitle", "Ghostbusters" },
-                { "miYear", 1984 }
+                { "movie.Title", "Ghostbusters" },
+                { "movie.Year", 1984 }
             };
             args.SetWorkingFile($@"c:\temp\{Guid.NewGuid()}.mkv", dontDelete: true);
 
 
             Renamer node = new Renamer();
-            node.Pattern = @"{miTitle} ({miYear})\{miTitle} [{viResolution}] {miYear}.{ext}";
+            node.Pattern = @"{movie.Title} ({movie.Year})\{movie.Title} [{viResolution}] {movie.Year}.{ext}";
             node.LogOnly = true;
 
             var result = node.Execute(args);
@@ -88,14 +88,14 @@ namespace BasicNodes.Tests
             var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger, false, string.Empty);
             args.Variables = new Dictionary<string, object>
             {
-                { "miTitle", "Ghostbusters" },
+                { "movie.Title", "Ghostbusters" },
                 { "viResolution", "1080p" }
             };
             args.SetWorkingFile($@"c:\temp\{Guid.NewGuid()}.mkv", dontDelete: true);
 
 
             Renamer node = new Renamer();
-            node.Pattern = @"{miTitle} ({miYear})\{miTitle} ({miYear}) {viResolution!}.{ext}";
+            node.Pattern = @"{movie.Title} ({movie.Year})\{movie.Title} ({movie.Year}) {viResolution!}.{ext}";
             node.LogOnly = true;
 
             var result = node.Execute(args);
@@ -111,14 +111,14 @@ namespace BasicNodes.Tests
             var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger, false, string.Empty);
             args.Variables = new Dictionary<string, object>
             {
-                { "miTitle", "Ghostbusters" },
-                { "miYear", 1984 }
+                { "movie.Title", "Ghostbusters" },
+                { "movie.Year", 1984 }
             };
             args.SetWorkingFile($@"c:\temp\{Guid.NewGuid()}.mkv", dontDelete: true);
 
 
             Renamer node = new Renamer();
-            node.Pattern = @"{miTitle} ({miYear})\{miTitle} [{viResolution}].{ext}";
+            node.Pattern = @"{movie.Title} ({movie.Year})\{movie.Title} [{viResolution}].{ext}";
             node.LogOnly = true;
 
             var result = node.Execute(args);
@@ -136,14 +136,14 @@ namespace BasicNodes.Tests
             var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger, false, string.Empty);
             args.Variables = new Dictionary<string, object>
             {
-                { "miTitle", "Batman Unlimited: Mech vs Mutants" },
-                { "miYear", 2016 }
+                { "movie.Title", "Batman Unlimited: Mech vs Mutants" },
+                { "movie.Year", 2016 }
             };
             args.SetWorkingFile($@"c:\temp\{Guid.NewGuid()}.mkv", dontDelete: true);
 
 
             Renamer node = new Renamer();
-            node.Pattern = @"{miTitle} ({miYear})\{miTitle}.{ext}";
+            node.Pattern = @"{movie.Title} ({movie.Year})\{movie.Title}.{ext}";
             node.LogOnly = true;
 
             var result = node.Execute(args);

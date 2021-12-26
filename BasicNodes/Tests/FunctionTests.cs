@@ -61,11 +61,11 @@ namespace BasicNodes.Tests
             var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty);
             args.Variables = new Dictionary<string, object>
             {
-                { "miTitle", "Ghostbusters" },
-                { "miYear", 1984 }
+                { "movie.Title", "Ghostbusters" },
+                { "movie.Year", 1984 }
             };
             pm.Code = @"
-if(Variables['miYear'] == 1984) return 2;
+if(Variables['movie.Year'] == 1984) return 2;
 return 0";
             var result = pm.Execute(args);
             Assert.AreEqual(2, result);
@@ -78,11 +78,11 @@ return 0";
             var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty);
             args.Variables = new Dictionary<string, object>
             {
-                { "miTitle", "Ghostbusters" },
-                { "miYear", 1984 }
+                { "movie.Title", "Ghostbusters" },
+                { "movie.Year", 1984 }
             };
             pm.Code = @"
-if(Variables['miYear'] == 2000) return 2;
+if(Variables['movie.Year'] == 2000) return 2;
 return 0";
             var result = pm.Execute(args);
             Assert.AreEqual(0, result);
@@ -96,11 +96,11 @@ return 0";
             var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty);
             args.Variables = new Dictionary<string, object>
             {
-                { "miTitle", "Ghostbusters" },
-                { "miYear", 1984 }
+                { "movie.Title", "Ghostbusters" },
+                { "movie.Year", 1984 }
             };
             pm.Code = @"
-if(Variables.miYear == 1984) return 2;
+if(Variables.movie.Year == 1984) return 2;
 return 0";
             var result = pm.Execute(args);
             Assert.AreEqual(2, result);
@@ -114,17 +114,17 @@ return 0";
             var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty);
             args.Variables = new Dictionary<string, object>
             {
-                { "miTitle", "Ghostbusters" },
-                { "miYear", 1984 }
+                { "movie.Title", "Ghostbusters" },
+                { "movie.Year", 1984 }
             };
             pm.Code = @"
 Variables.NewItem = 1234;
-Variables.miYear = 2001;
+Variables.movie.Year = 2001;
 return 0";
             var result = pm.Execute(args);
             Assert.IsTrue(args.Variables.ContainsKey("NewItem"));
             Assert.AreEqual(1234d, args.Variables["NewItem"]);
-            Assert.AreEqual(2001d, args.Variables["miYear"]);
+            Assert.AreEqual(2001d, args.Variables["movie.Year"]);
         }
 
 

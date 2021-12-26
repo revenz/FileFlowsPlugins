@@ -17,10 +17,14 @@ namespace FileFlows.BasicNodes.File
         [Folder(1)]
         public string DestinationPath { get; set; }
 
-        [Boolean(2)]
-        public bool MoveFolder { get; set; }
+        [Required]
+        [TextVariable(2)]
+        public string DestinationFile{ get; set; }
 
         [Boolean(3)]
+        public bool MoveFolder { get; set; }
+
+        [Boolean(4)]
         public bool DeleteOriginal { get; set; }
 
         public override int Execute(NodeParameters args)
@@ -41,6 +45,12 @@ namespace FileFlows.BasicNodes.File
             else
                 dest = Path.Combine(dest, new FileInfo(args.FileName).Name);
 
+
+            if (string.IsNullOrEmpty(DestinationFile) == false)
+            {
+                string destFile = args.ReplaceVariables(DestinationFile);
+                dest = Path.Combine(new FileInfo(dest).DirectoryName!, destFile);
+            }
 
             var fiDest = new FileInfo(dest);
             var fiWorkingFile = new FileInfo(args.WorkingFile);

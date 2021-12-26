@@ -16,19 +16,22 @@
           "Description": "An input node for a folder.  This will only work if the library using this flow is configured for folders."
         },
         "CopyFile": {
-          "Description": "Copies a file to the destination path",
+          "Description": "Copies a file to the destination folder",
           "Fields": {
-            "DestinationPath": "Destination Path",
-            "DestinationPath-Help": "The path where the file will be copied too",
+            "DestinationPath": "Destination Folder",
+            "DestinationPath-Help": "The folder where the file will be copied to",
+            "DestinationFile": "Destination File",
+            "DestinationFile-Help": "The filename to copy the file to.  If empty, the original filename will be used",
             "CopyFolder": "Copy Folder",
             "CopyFolder-Help": "If the relative library folder structure should be copied too"
           }
         },
         "DeleteSourceDirectory": {
-          "Description": "Deletes the source directory of the original library file",
+          "Label": "Delete Source Folder",
+          "Description": "Deletes the source folder of the original library file",
           "Fields": {
             "IfEmpty": "If Empty",
-            "IfEmpty-Help": "Only delete the source directory if the it is empty",
+            "IfEmpty-Help": "Only delete the source folder if the it is empty",
             "IncludePatterns": "Include Patterns",
             "IncludePatterns-Help": "Optional, if set only files matching these patterns will be counted to see if the folder is empty.   Any of these patterns can match."
           }
@@ -40,8 +43,8 @@
             "FileName-Help": "The name of the file to execute",
             "Arguments": "Arguments",
             "Arguments-Help": "The arguments to be passed to the process to execute",
-            "WorkingDirectory": "Working Directory",
-            "WorkingDirectory-Help": "The directory where the process will be executed from",
+            "WorkingDirectory": "Working Folder",
+            "WorkingDirectory-Help": "The folder where the process will be executed from",
             "SuccessCode": "Success Code",
             "SuccessCode-Help": "The exit code of the process indicating the process was successful.  Usually this should be 0.",
             "Timeout": "Timeout",
@@ -84,10 +87,12 @@
           }
         },
         "MoveFile": {
-          "Description": "Moves a file to the destination path",
+          "Description": "Moves a file to the destination folder",
           "Fields": {
-            "DestinationPath": "Destination Path",
-            "DestinationPath-Help": "The path where the file will be moved too",
+            "DestinationPath": "Destination Folder",
+            "DestinationPath-Help": "The folder where the file will be moved to",
+            "DestinationFile": "Destination File",
+            "DestinationFile-Help": "The filename to move the file to.  If empty, the original filename will be used",
             "MoveFolder": "Copy Folder",
             "MoveFolder-Help": "If the relative library folder structure should be copied too",
             "DeleteOriginal": "Delete Original",
@@ -118,8 +123,8 @@
           "Description": "Renames the working file.\nVariables can be used by entering the key '{' inside the Pattern field.",
           "Fields": {
             "Pattern": "Pattern",
-            "DestinationPath": "Destination Path",
-            "DestinationPath-Help": "If the file should be moved to a different directory.",
+            "DestinationPath": "Destination Folder",
+            "DestinationPath-Help": "If the file should be moved to a different folder.",
             "LogOnly": "Log Only",
             "LogOnly-Help": "Turn on if you just want to test this node without it actually renaming the file",
             "CsvFile": "CSV File",
@@ -129,8 +134,8 @@
         "Zip": {
           "Description": "Allows you to zip the input",
           "Fields": {
-            "DestinationPath": "Destination Path",
-            "DestinationPath-Help": "The destination path where to put the zip file.  If blank, the zip will be placed in the library root.",
+            "DestinationPath": "Destination Folder",
+            "DestinationPath-Help": "The destination folder where to put the zip file.  If blank, the zip will be placed in the library root.",
             "DestinationFile": "Destination File",
             "DestinationFile-Help": "The filename of the newly created zip.  If blank, the name of the item will be used as the zip file."
           }

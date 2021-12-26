@@ -18,6 +18,9 @@
             "LogOnly": "Log Only",
             "LogOnly-Help": "Turn on if you just want to test this node without it actually renaming the file"
           }
+        },
+        "MusicMeta": {
+          "Description": "Loads the metadata of a music file into the flow variables."
         }
       }
     }

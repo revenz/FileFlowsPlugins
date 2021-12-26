@@ -1,6 +1,5 @@
 namespace FileFlows.BasicNodes.File
 {
-    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using FileFlows.Plugin;
     using FileFlows.Plugin.Attributes;
@@ -13,7 +12,8 @@ namespace FileFlows.BasicNodes.File
         public override string Icon => "far fa-copy";
 
         private string _DestinationPath = string.Empty;
-        
+        private string _DestinationFile = string.Empty;
+
         [Required]
         [Folder(1)]
         public string DestinationPath 
@@ -21,8 +21,15 @@ namespace FileFlows.BasicNodes.File
             get => _DestinationPath;
             set { _DestinationPath = value ?? ""; }
         }
+        [Required]
+        [TextVariable(2)]
+        public string DestinationFile
+        {
+            get => _DestinationFile;
+            set { _DestinationFile = value ?? ""; }
+        }
 
-        [Boolean(2)]
+        [Boolean(3)]
         public bool CopyFolder { get; set; }
 
         private bool Canceled;
@@ -37,14 +44,14 @@ namespace FileFlows.BasicNodes.File
         public override int Execute(NodeParameters args)
         {
             Canceled = false;
-            string dest = DestinationPath;
+            string dest = args.ReplaceVariables(DestinationPath, true);
+            dest = dest.Replace("\\", Path.DirectorySeparatorChar.ToString());
+            dest = dest.Replace("/", Path.DirectorySeparatorChar.ToString());
             if (string.IsNullOrEmpty(dest))
             {
-                args.Logger.ELog("No destination specified");
-                args.Result = NodeResult.Failure;
+                args.Logger?.ELog("No destination specified");
                 return -1;
             }
-            args.Result = NodeResult.Failure;
 
             if (CopyFolder)
                 dest = Path.Combine(dest, args.RelativeFile);
@@ -53,6 +60,12 @@ namespace FileFlows.BasicNodes.File
 
             var destDir = new FileInfo(dest).DirectoryName;
             args.CreateDirectoryIfNotExists(destDir ?? String.Empty);
+
+            if(string.IsNullOrEmpty(DestinationFile) == false)
+            {
+                string destFile = args.ReplaceVariables(DestinationFile);
+                dest = Path.Combine(destDir!, destFile);
+            }
 
             // have to use file streams so we can report progress
             int bufferSize = 1024 * 1024;
@@ -74,14 +87,15 @@ namespace FileFlows.BasicNodes.File
                             float percent = fsOut.Position / fileSize * 100;
                             if (percent > 100)
                                 percent = 100;
-                            args.PartPercentageUpdate(percent);
+                            if(args?.PartPercentageUpdate != null)
+                                args.PartPercentageUpdate(percent);
                         }
-                        if (Canceled == false)
+                        if (Canceled == false && args?.PartPercentageUpdate != null)
                             args.PartPercentageUpdate(100);
                     }
                     catch (Exception ex)
                     {
-                        args.Logger.ELog("Failed to move file: " + ex.Message + Environment.NewLine + ex.StackTrace);
+                        args.Logger?.ELog("Failed to move file: " + ex.Message + Environment.NewLine + ex.StackTrace);
                         return -1;
                     }
                 }
@@ -94,14 +108,14 @@ namespace FileFlows.BasicNodes.File
                     System.IO.File.Delete(dest);
                 }
                 catch (Exception) { }
-                args.Logger.ELog("Action was canceled.");
+                args?.Logger?.ELog("Action was canceled.");
                 return -1;
             }
             else
             {
-                args.SetWorkingFile(dest);
+                args?.SetWorkingFile(dest);
 
-                return base.Execute(args);
+                return base.Execute(args!);
             }
         }
     }
