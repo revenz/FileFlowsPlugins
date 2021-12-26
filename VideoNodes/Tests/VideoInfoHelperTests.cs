@@ -106,6 +106,167 @@ namespace VideoNodes.Tests
 
             Assert.IsTrue(result);
         }
+
+
+        [TestMethod]
+        public void VideoInfoTest_AudioTrackReorder()
+        {
+            var node = new AudioTrackReorder();
+            var original = new List<AudioStream>
+            {
+                new AudioStream{ Codec = "aac", Language = "fre"},
+                new AudioStream{ Codec = "dts", Language = "fre"},
+                new AudioStream{ Codec = "aac", Language = "eng"},
+                new AudioStream{ Codec = "aac", Language = "mao"},
+                new AudioStream{ Codec = "dts", Language = "mao"},
+                new AudioStream{ Codec = "ac3", Language = "mao"},
+                new AudioStream{ Codec = "ac3", Language = "eng"},
+                new AudioStream{ Codec = "ac3", Language = "fre"},
+            };
+            node.Languages = new List<string> { "eng" };
+            node.OrderedTracks = new List<string> { "ac3", "aac" };
+            var reordered = node.Reorder(original);
+
+            Assert.AreEqual("ac3", reordered[0].Codec);
+            Assert.AreEqual("eng", reordered[0].Language);
+
+            Assert.AreEqual("aac", reordered[1].Codec);
+            Assert.AreEqual("eng", reordered[1].Language);
+            
+            Assert.AreEqual("ac3", reordered[2].Codec);
+            Assert.AreEqual("mao", reordered[2].Language);
+
+            Assert.AreEqual("ac3", reordered[3].Codec);
+            Assert.AreEqual("fre", reordered[3].Language);
+
+            Assert.AreEqual("aac", reordered[4].Codec);
+            Assert.AreEqual("fre", reordered[4].Language);
+
+            Assert.AreEqual("aac", reordered[5].Codec);
+            Assert.AreEqual("mao", reordered[5].Language);
+
+            Assert.AreEqual("dts", reordered[6].Codec);
+            Assert.AreEqual("fre", reordered[6].Language);
+
+            Assert.AreEqual("dts", reordered[7].Codec);
+            Assert.AreEqual("mao", reordered[7].Language);
+        }
+
+
+
+        [TestMethod]
+        public void VideoInfoTest_AudioTrackReorder_NothingConfigured()
+        {
+            var node = new AudioTrackReorder();
+            var original = new List<AudioStream>
+            {
+                new AudioStream{ Codec = "aac", Language = "fre"},
+                new AudioStream{ Codec = "dts", Language = "fre"},
+                new AudioStream{ Codec = "aac", Language = "eng"},
+                new AudioStream{ Codec = "aac", Language = "mao"},
+                new AudioStream{ Codec = "dts", Language = "mao"},
+                new AudioStream{ Codec = "ac3", Language = "mao"},
+                new AudioStream{ Codec = "ac3", Language = "eng"},
+                new AudioStream{ Codec = "ac3", Language = "fre"},
+            };
+            node.Languages = null;
+            node.OrderedTracks = new List<string>();
+            var reordered = node.Reorder(original);
+
+            for(int i = 0; i < original.Count; i++)
+            {
+                Assert.AreEqual(original[i].Codec, reordered[i].Codec);
+                Assert.AreEqual(original[i].Language, reordered[i].Language);
+            }
+        }
+
+        [TestMethod]
+        public void VideoInfoTest_AudioTrackReorder_NoLanguage()
+        {
+            var node = new AudioTrackReorder();
+            var original = new List<AudioStream>
+            {
+                new AudioStream{ Codec = "aac", Language = "fre"},
+                new AudioStream{ Codec = "dts", Language = "fre"},
+                new AudioStream{ Codec = "aac", Language = "eng"},
+                new AudioStream{ Codec = "aac", Language = "mao"},
+                new AudioStream{ Codec = "dts", Language = "mao"},
+                new AudioStream{ Codec = "ac3", Language = "mao"},
+                new AudioStream{ Codec = "ac3", Language = "eng"},
+                new AudioStream{ Codec = "ac3", Language = "fre"},
+            };
+            node.OrderedTracks = new List<string> { "ac3", "aac" };
+            var reordered = node.Reorder(original);
+
+            Assert.AreEqual("ac3", reordered[0].Codec);
+            Assert.AreEqual("mao", reordered[0].Language);
+
+            Assert.AreEqual("ac3", reordered[1].Codec);
+            Assert.AreEqual("eng", reordered[1].Language);
+
+            Assert.AreEqual("ac3", reordered[2].Codec);
+            Assert.AreEqual("fre", reordered[2].Language);
+
+            Assert.AreEqual("aac", reordered[3].Codec);
+            Assert.AreEqual("fre", reordered[3].Language);
+
+            Assert.AreEqual("aac", reordered[4].Codec);
+            Assert.AreEqual("eng", reordered[4].Language);
+
+            Assert.AreEqual("aac", reordered[5].Codec);
+            Assert.AreEqual("mao", reordered[5].Language);
+
+            Assert.AreEqual("dts", reordered[6].Codec);
+            Assert.AreEqual("fre", reordered[6].Language);
+
+            Assert.AreEqual("dts", reordered[7].Codec);
+            Assert.AreEqual("mao", reordered[7].Language);
+        }
+
+
+
+        [TestMethod]
+        public void VideoInfoTest_AudioTrackReorder_NoCodec()
+        {
+            var node = new AudioTrackReorder();
+            var original = new List<AudioStream>
+            {
+                new AudioStream{ Codec = "aac", Language = "fre"},
+                new AudioStream{ Codec = "dts", Language = "fre"},
+                new AudioStream{ Codec = "aac", Language = "eng"},
+                new AudioStream{ Codec = "aac", Language = "mao"},
+                new AudioStream{ Codec = "dts", Language = "mao"},
+                new AudioStream{ Codec = "ac3", Language = "mao"},
+                new AudioStream{ Codec = "ac3", Language = "eng"},
+                new AudioStream{ Codec = "ac3", Language = "fre"},
+            };
+            node.Languages = new List<string> { "eng" };
+            var reordered = node.Reorder(original);
+
+            Assert.AreEqual("aac", reordered[0].Codec);
+            Assert.AreEqual("eng", reordered[0].Language);
+
+            Assert.AreEqual("ac3", reordered[1].Codec);
+            Assert.AreEqual("eng", reordered[1].Language);
+
+            Assert.AreEqual("aac", reordered[2].Codec);
+            Assert.AreEqual("fre", reordered[2].Language);
+
+            Assert.AreEqual("dts", reordered[3].Codec);
+            Assert.AreEqual("fre", reordered[3].Language);
+
+            Assert.AreEqual("aac", reordered[4].Codec);
+            Assert.AreEqual("mao", reordered[4].Language);
+
+            Assert.AreEqual("dts", reordered[5].Codec);
+            Assert.AreEqual("mao", reordered[5].Language);
+
+            Assert.AreEqual("ac3", reordered[6].Codec);
+            Assert.AreEqual("mao", reordered[6].Language);
+
+            Assert.AreEqual("ac3", reordered[7].Codec);
+            Assert.AreEqual("fre", reordered[7].Language);
+        }
     }
 }
 

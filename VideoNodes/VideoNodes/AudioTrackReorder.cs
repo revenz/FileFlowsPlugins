@@ -6,6 +6,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
+    using System.Text;
 
     public class AudioTrackReorder: EncodingNode
     {
@@ -14,8 +15,56 @@
         public override string Icon => "fas fa-volume-off";
 
         [StringArray(1)]
-        [Required]
+        public List<string> Languages { get; set; }
+
+        [StringArray(2)]
         public List<string> OrderedTracks { get; set; }
+
+        public List<AudioStream> Reorder(List<AudioStream> input)
+        {
+            Languages ??= new List<string>();
+            OrderedTracks ??= new List<string>();
+            if (Languages.Count == 0 && OrderedTracks.Count == 0)
+                return input; // nothing to do
+
+            int count = 1_000_000_000;
+            var debug = new StringBuilder();
+            var data = input.OrderBy(x =>
+            {
+                int langIndex = Languages.IndexOf(x.Language?.ToLower() ?? String.Empty);
+                int codecIndex = OrderedTracks.IndexOf(x.Codec?.ToLower() ?? String.Empty);
+                int result = 0;
+                if (langIndex >= 0)
+                {
+                    if (codecIndex >= 0)
+                        result = (langIndex * 10_000) + (codecIndex * 100) + x.Index;
+                    else
+                        result = ((langIndex + 1) * 10_000) - 100 + x.Index;
+                }
+                else if (codecIndex >= 0)
+                    result = ((codecIndex + 1) * 10_000_000) + x.Index;
+                else
+                    result = ++count;
+                debug.AppendLine(x.Codec + " , " + x.Language + " = " + result);
+                return result;
+            }).ToList();
+
+            
+            return data;
+
+        }
+
+        public bool AreSame(List<AudioStream> original, List<AudioStream> reordered)
+        {
+            for (int i = 0; i < reordered.Count; i++)
+            {
+                if (reordered[i] != original[i])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
 
         public override int Execute(NodeParameters args)
         {
@@ -34,28 +83,10 @@
 
                 OrderedTracks = OrderedTracks?.Select(x => x.ToLower())?.ToList() ?? new ();
 
-                int count = 100_000;
-                var reordered = videoInfo.AudioStreams.OrderBy(x =>
-                {
-                    int index = OrderedTracks.IndexOf(x.Codec?.ToLower() ?? String.Empty);
-                    if (index >= 0)
-                    {
-                        // incase there are multiple tracks with the same codedc
-                        // eg ac3, ac3, dts, truehd
-                        return (index * 100) + x.Index;
-                    }
-                    return ++count;
-                }).ToList();
+                var reordered = Reorder(videoInfo.AudioStreams);
 
-                bool same = true;
-                for(int i = 0; i < reordered.Count; i++)
-                {
-                    if (reordered[i] != videoInfo.AudioStreams[i])
-                    {
-                        same = false;
-                        break;
-                    }
-                }
+                bool same = AreSame(videoInfo.AudioStreams, reordered);
+
                 if(same)
                 {
                     args.Logger?.ILog("No audio tracks need reordering");
