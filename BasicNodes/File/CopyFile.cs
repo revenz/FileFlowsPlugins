@@ -21,7 +21,6 @@ namespace FileFlows.BasicNodes.File
             get => _DestinationPath;
             set { _DestinationPath = value ?? ""; }
         }
-        [Required]
         [TextVariable(2)]
         public string DestinationFile
         {

@@ -17,7 +17,6 @@ namespace FileFlows.BasicNodes.File
         [Folder(1)]
         public string DestinationPath { get; set; }
 
-        [Required]
         [TextVariable(2)]
         public string DestinationFile{ get; set; }
 
