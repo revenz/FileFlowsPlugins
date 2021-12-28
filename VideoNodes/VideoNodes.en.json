@@ -5,7 +5,7 @@
           "Description": "Allows you to reorder audio tracks in the preferred order.\n\nEnter the languages/audio codecs in the order you want.  Any not listed will be ordered after the ones entered in their original order.\nIf there are multiple tracks with same language/codec, they will be ordered first by the order you entered, then in their original order.\n\nOutput 1: Audio tracks were reordered\nOutput 2: Audio tracks did not need reordering",
           "Fields": {
             "OrderedTracks": "Ordered Audio Codecs",
-            "OrderedTracks-Help": "The order of audio codecs to the audio tracks by.  This is done after the langauges (if any)",
+            "OrderedTracks-Help": "The order of audio codecs to the audio tracks by.  This is done after the languages (if any)",
             "Languages": "Languages",
             "Languages-Help": "The order of languages to sort the audio tracks by.  This sorting is done before the codec."
           }
@@ -83,7 +83,7 @@
           }
         },
         "VideoScaler": {
-          "Description": "This allows you to scale a video to the specified dimensions.  It will retain the aspect raito of the video so if the video was 1920x1000 it wouuld scale to 1280x668 if you select 720P.",
+          "Description": "This allows you to scale a video to the specified dimensions.  It will retain the aspect ratio of the video so if the video was 1920x1000 it would scale to 1280x668 if you select 720P.",
           "Fields": {
             "VideoCodec": "Video Codec",
             "Language-Help": "The video codec to encode the scaled video in",
