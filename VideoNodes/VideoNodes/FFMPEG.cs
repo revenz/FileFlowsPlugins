@@ -21,8 +21,6 @@ namespace FileFlows.VideoNodes
 
         public override string Icon => "far fa-file-video";
 
-        private NodeParameters args;
-
         public override int Execute(NodeParameters args)
         {
             if (string.IsNullOrEmpty(CommandLine))

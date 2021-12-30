@@ -34,8 +34,6 @@ namespace FileFlows.VideoNodes
 
         public override string Icon => "far fa-file-video";
 
-        private NodeParameters args;
-
         public override int Execute(NodeParameters args)
         {
             this.args = args;
@@ -72,7 +70,7 @@ namespace FileFlows.VideoNodes
                 .FirstOrDefault();
 
                 bool firstAc3 = bestAudio?.Codec?.ToLower() == "ac3" && videoInfo.AudioStreams[0] == bestAudio;
-                args.Logger.ILog("Best Audio: ", (object)bestAudio ?? (object)"null");
+                args.Logger.ILog("Best Audio: ", bestAudio == null ? (object)"null" : (object)bestAudio);
 
 
                 string crop = args.GetParameter<string>(DetectBlackBars.CROP_KEY) ?? "";

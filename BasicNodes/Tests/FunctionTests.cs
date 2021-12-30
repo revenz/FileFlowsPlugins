@@ -160,6 +160,32 @@ return 2";
             var result = pm.Execute(args);
             Assert.AreEqual(1, result);
         }
+
+        [TestMethod]
+        public void Function_Flow_SetParameter()
+        {
+            Function pm = new Function();
+            var logger = new TestLogger();
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty);
+            Assert.IsFalse(args.Parameters.ContainsKey("batman"));
+            pm.Code = @"
+Flow.SetParameter('batman', 1989);
+return 1";
+            var result = pm.Execute(args);
+            Assert.AreEqual(1, result);
+            Assert.IsTrue(args.Parameters.ContainsKey("batman"));
+            Assert.AreEqual(args.Parameters["batman"].ToString(), "1989");
+        }
+        [TestMethod]
+        public void Function_Flow_GetDirectorySize()
+        {
+            Function pm = new Function();
+            var logger = new TestLogger();
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty);
+            pm.Code = @"return Flow.GetDirectorySize('C:\\temp');";
+            var result = pm.Execute(args);
+            Assert.IsTrue(result > 0);
+        }
     }
 }
 

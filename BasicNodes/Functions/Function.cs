@@ -21,7 +21,7 @@ namespace FileFlows.BasicNodes.Functions
         public new int Outputs { get; set; }
 
         [Required]
-        [DefaultValue("// Variables contain variables available to this node from previous nodes.\n// Logger lets you log messages to the flow output.\n\n// return 0 to complete the flow.\n// return -1 to signal an error in the flow\n// return 1+ to select which output node will be processed next\n\nif(Variables.file.Size === 0)\n\treturn -1;\n\nreturn 0;")]
+        [DefaultValue("// Custom javascript code that you can run against the flow file.\n// Flow contains helper functions for the Flow.\n// Variables contain variables available to this node from previous nodes.\n// Logger lets you log messages to the flow output.\n\n// return 0 to complete the flow.\n// return -1 to signal an error in the flow\n// return 1+ to select which output node will be processed next\n\nif(Variables.file.Size === 0)\n\treturn -1;\n\nreturn 0;")]
         [Code(2)]
         public string Code { get; set; }
 
@@ -46,7 +46,6 @@ namespace FileFlows.BasicNodes.Functions
                 tcode = tcode.Replace("Variables." + k, "Variables['" + k + "']");
             }
 
-
             var sb = new StringBuilder();
             var log = new
             {
@@ -58,10 +57,11 @@ namespace FileFlows.BasicNodes.Functions
             var engine = new Engine(options =>
             {
                 options.LimitMemory(4_000_000);
-                options.MaxStatements(100);
+                options.MaxStatements(500);
             })
             .SetValue("Logger", args.Logger)
-            .SetValue("Variables", args.Variables);
+            .SetValue("Variables", args.Variables)
+            .SetValue("Flow", args);
 
             try
             {
