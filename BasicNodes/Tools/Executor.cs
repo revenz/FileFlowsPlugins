@@ -3,6 +3,7 @@
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.Diagnostics;
+    using System.Text.RegularExpressions;
     using FileFlows.Plugin;
     using FileFlows.Plugin.Attributes;
 
@@ -12,6 +13,8 @@
         public override int Outputs => 2;
         public override FlowElementType Type => FlowElementType.Process;
         public override string Icon => "fas fa-terminal";
+
+        private const string VariablePattern = "^([a-zA-Z_]+)[a-zA-Z_0-9]*$";
 
         [Required]
         [File(1)]
@@ -30,6 +33,13 @@
 
         [NumberInt(5)]
         public int Timeout { get; set; }
+
+        [Text(6)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(VariablePattern)]
+        public string OutputVariable { get; set; }
+        [Text(7)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(VariablePattern)]
+        public string OutputErrorVariable { get; set; }
 
         private NodeParameters args;
 
@@ -58,6 +68,20 @@
                 return -1;
             }
             bool success = task.Result.ExitCode == this.SuccessCode;
+            if(Regex.IsMatch(OutputVariable ?? string.Empty, VariablePattern))
+            {
+                args.UpdateVariables(new Dictionary<string, object>
+                {
+                    { OutputVariable, task.Result.StandardOutput }
+                });
+            }
+            if (Regex.IsMatch(OutputErrorVariable ?? string.Empty, VariablePattern))
+            {
+                args.UpdateVariables(new Dictionary<string, object>
+                {
+                    { OutputErrorVariable, task.Result.StandardError }
+                });
+            }
             if (success)
                 return 1;
             else

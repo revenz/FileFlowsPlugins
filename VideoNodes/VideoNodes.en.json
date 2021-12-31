@@ -54,13 +54,13 @@
           "Description": "A generic video encoding node, this lets you customize how to encode a video file using ffmpeg.\n\nOutput 1: Video was processed\nOutput 2: No processing required",
           "Fields": {
             "Extension": "Extension",
-            "Extension-Help": "The file extension to use on the newly created file",
+            "Extension-Help": "The file extension to use on the newly created file.",
             "VideoCodec": "Video Codec",
-            "VideoCodec-Help": "The video codec the video should be in, for example hevc, h264",
+            "VideoCodec-Help": "The video codec the video should be in, for example hevc, h264.\nIf left empty all original video tracks will be copied.",
             "VideoCodecParameters": "Video Codec Parameters",
             "VideoCodecParameters-Help": "The parameters to use to encode the video, eg. \"hevc_nvenc -preset hq -crf 23\" to encode into hevc using the HQ preset a constant rate factor of 23 and using NVIDIA hardware acceleration.",
             "AudioCodec": "Audio Codec",
-            "AudioCodec-Help": "The audio codec to encode the video with",
+            "AudioCodec-Help": "The audio codec to encode the video with.\nIf left empty all original audio tracks will be copied.",
             "Language": "Language",
             "Language-Help": "Optional ISO 639-2 language code to use.  Will attempt to find an audio track with this language code if not the best audio track will be used.\nhttps://en.wikipedia.org/wiki/List_of_ISO_639-2_codes"
           }
