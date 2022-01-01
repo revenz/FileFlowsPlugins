@@ -83,6 +83,12 @@
             "Code-Help": "return -1 for error and flow to stop\nreturn 0 for flow to complete\nreturn 1 or more for the desired output to be called"
           }
         },
+        "GotoFlow": {
+          "Description": "This lets you switch to a different flow to process.  This flow will exit and the parameters and working file will be passed into the new Flow",
+          "Fields": {
+            "Flow": "Flow"
+          }
+        },
         "Log": {
           "Description": "Logs a message to the flow log",
           "Fields": {
