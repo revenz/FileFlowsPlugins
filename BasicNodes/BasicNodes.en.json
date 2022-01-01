@@ -49,7 +49,11 @@
             "SuccessCode-Help": "The exit code of the process indicating the process was successful.  Usually this should be 0.",
             "Timeout": "Timeout",
             "Timeout-Help": "How long the process can run for before being terminated.  Use 0 for no timeout.",
-            "Timeout-Suffix": "seconds"
+            "Timeout-Suffix": "seconds",
+            "OutputVariable": "Output Variable",
+            "OutputVariable-Help": "An optional variable name to store the process output into",
+            "OutputErrorVariable": "Output Variable",
+            "OutputErrorVariable-Help": "An optional variable name to store the process error output into"
           }
         },
         "FileExtension": {
