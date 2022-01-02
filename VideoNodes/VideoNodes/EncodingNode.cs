@@ -78,6 +78,30 @@ namespace FileFlows.VideoNodes
         {
             if (string.IsNullOrEmpty(vidparams))
                 return string.Empty;
+
+            if(vidparams.ToLower() == "hevc" || vidparams.ToLower() == "h265")
+            {
+                // try find best hevc encoder
+                foreach(string vidparam in new [] { "hevc_nvenc", "hevc_qsv" })
+                {
+                    bool canProcess = CanProcessEncoder(ffmpeg, vidparam);
+                    if (canProcess)
+                        return vidparam;
+                }
+                return "libx265";
+            }
+            if (vidparams.ToLower() == "h265")
+            {
+                // try find best hevc encoder
+                foreach (string vidparam in new[] { "h264_nvenc", "h264_qsv" })
+                {
+                    bool canProcess = CanProcessEncoder(ffmpeg, vidparam);
+                    if (canProcess)
+                        return vidparam;
+                }
+                return "libx264";
+            }
+
             if (vidparams.ToLower().Contains("hevc_nvenc"))
             {
                 // nvidia h265 encoding, check can
