@@ -38,9 +38,18 @@
           }
         },
         "SubtitleRemover": {
-          "Description": "Removes subtitles from a video file if found..\n\nOutput 1: Subtitles were removed\nOutput 2: No subtitles found that needed to be removed",
+          "Description": "Removes subtitles from a video file if found.\n\nOutput 1: Subtitles were removed\nOutput 2: No subtitles found that needed to be removed",
           "Fields": {
             "SubtitlesToRemove": "Subtitles To Remove"
+          }
+        },
+        "SubtitleExtractor": {
+          "Description": "Extract a single subtitle tracks and saves it to the destination.  Can extract srt, ass, and ssa format.\nThis will NOT update the working file, and will keep the working file the same as the input file.\n\nOutput 1: Subtitles were extracted\nOutput 2: No subtitles found to extract",
+          "Fields": {
+            "Language": "Language",
+            "Language-Help": "The ISO 639-2 language code to use. \nhttps://en.wikipedia.org/wiki/List_of_ISO_639-2_codes",
+            "OutputFile": "Output File",
+            "OutputFile-Help": "Where to save the the output file to, e.g. \"'{folder.Orig.FullName}\\{file.Orig.FileName}.srt'\" to save it with the original file as a srt output.\nIf left blank an srt subtitle will be created in the same folder as the original input file."
           }
         },
         "VideoCodec": {

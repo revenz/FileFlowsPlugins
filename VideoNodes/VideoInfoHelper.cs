@@ -63,6 +63,8 @@ namespace FileFlows.VideoNodes
                     var rgxStreams = new Regex(@"Stream\s#[\d]+:[\d]+(.*?)(?=(Stream\s#[\d]|$))", RegexOptions.Singleline);
                     var streamMatches = rgxStreams.Matches(output);
                     int streamIndex = 0;
+
+                    int subtitleIndex = 1;
                     foreach (Match sm in streamMatches)
                     {
                         if (sm.Value.Contains(" Video: "))
@@ -95,11 +97,13 @@ namespace FileFlows.VideoNodes
                             if (sub != null)
                             {
                                 sub.Index = streamIndex;
+                                sub.TypeIndex = subtitleIndex;
                                 var match = Regex.Match(sm.Value, @"(?<=(Stream #))[\d]+:[\d]+");
                                 if (match.Success)
                                     sub.IndexString = match.Value;
                                 vi.SubtitleStreams.Add(sub);
                             }
+                            ++subtitleIndex;
                         }
                         ++streamIndex;
                     }
