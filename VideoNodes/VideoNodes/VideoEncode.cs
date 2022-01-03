@@ -45,6 +45,9 @@ namespace FileFlows.VideoNodes
                 return -1;
             }
 
+            if (string.IsNullOrWhiteSpace(VideoCodecParameters))
+                VideoCodecParameters = VideoCodec;
+
             VideoCodec = args.ReplaceVariables(VideoCodec ?? string.Empty);
             VideoCodecParameters = args.ReplaceVariables(VideoCodecParameters ?? string.Empty);
             AudioCodec = args.ReplaceVariables(AudioCodec ?? string.Empty);
