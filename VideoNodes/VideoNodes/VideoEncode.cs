@@ -104,7 +104,6 @@ namespace FileFlows.VideoNodes
 
                 if (string.IsNullOrEmpty(AudioCodec) == false)
                 {
-
                     var bestAudio = videoInfo.AudioStreams.Where(x => System.Text.Json.JsonSerializer.Serialize(x).ToLower().Contains("commentary") == false)
                     .OrderBy(x =>
                     {

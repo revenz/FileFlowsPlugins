@@ -82,7 +82,7 @@ namespace FileFlows.VideoNodes
             if(vidparams.ToLower() == "hevc" || vidparams.ToLower() == "h265")
             {
                 // try find best hevc encoder
-                foreach(string vidparam in new [] { "hevc_nvenc -preset hq", "hevc_qsv -load_plugin hevc_hw" })
+                foreach(string vidparam in new [] { "hevc_nvenc -preset hq", "hevc_qsv -load_plugin hevc_hw", "hevc_amf", "hevc_vaapi" })
                 {
                     bool canProcess = CanProcessEncoder(ffmpeg, vidparam);
                     if (canProcess)
@@ -90,10 +90,10 @@ namespace FileFlows.VideoNodes
                 }
                 return "libx265";
             }
-            if (vidparams.ToLower() == "h265")
+            if (vidparams.ToLower() == "h264")
             {
                 // try find best hevc encoder
-                foreach (string vidparam in new[] { "h264_nvenc", "h264_qsv" })
+                foreach (string vidparam in new[] { "h264_nvenc", "h264_qsv", "h264_amf", "h264_vaapi" })
                 {
                     bool canProcess = CanProcessEncoder(ffmpeg, vidparam);
                     if (canProcess)
