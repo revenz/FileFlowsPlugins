@@ -5,6 +5,7 @@ namespace MetaNodes
     public class Plugin : FileFlows.Plugin.IPlugin
     {
         public string Name => "Meta Nodes";
+        public string MinimumVersion => string.Empty;
 
         public void Init() { }
     }
