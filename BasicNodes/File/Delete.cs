@@ -1,6 +1,7 @@
 namespace FileFlows.BasicNodes.File
 {
     using FileFlows.Plugin;
+    using FileFlows.Plugin.Attributes;
 
     public class Delete : Node
     {
@@ -9,15 +10,22 @@ namespace FileFlows.BasicNodes.File
         public override FlowElementType Type => FlowElementType.Process;
         public override string Icon => "far fa-trash-alt";
 
+        [TextVariable(1)]
+        public string FileName { get; set; }
+
         public override int Execute(NodeParameters args)
         {
+            string filename = args.ReplaceVariables(this.FileName ?? string.Empty, stripMissing: true);
+            if (string.IsNullOrEmpty(filename))
+                filename = args.WorkingFile;
+
             if (args.IsDirectory)
             {
                 try
                 {
-                    args.Logger?.ILog("Deleting directory: " + args.WorkingFile);
-                    Directory.Delete(args.WorkingFile, true);
-                    args.Logger?.ILog("Deleted directory: " + args.WorkingFile);
+                    args.Logger?.ILog("Deleting directory: " + filename);
+                    Directory.Delete(filename, true);
+                    args.Logger?.ILog("Deleted directory: " + filename);
                     return 1;
                 }
                 catch (Exception ex)
@@ -30,14 +38,14 @@ namespace FileFlows.BasicNodes.File
             {
                 try
                 {
-                    args.Logger?.ILog("Deleting file: " + args.WorkingFile);
-                    System.IO.File.Delete(args.WorkingFile);
-                    args.Logger?.ILog("Deleted file: " + args.WorkingFile);
+                    args.Logger?.ILog("Deleting file: " + filename);
+                    System.IO.File.Delete(filename);
+                    args.Logger?.ILog("Deleted file: " + filename);
                     return 1;
                 }
                 catch (Exception ex)
                 {
-                    args.Logger?.ELog($"Failed to delete file: '{args.WorkingFile}' => {ex.Message}");
+                    args.Logger?.ELog($"Failed to delete file: '{filename}' => {ex.Message}");
                     return -1;
                 }
             }

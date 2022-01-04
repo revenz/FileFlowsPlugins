@@ -63,6 +63,20 @@
             "Extensions-Help": "A list of case insensitive file extensions that will be matched against.\nOutput 1 Matches\nOutput 2: Does not match"
           }
         },
+        "FileExists": {
+          "Description": "Checks if a file exists\n\nOutput 1: File exists\nOutput 2: File does not exist",
+          "Fields": {
+            "FileName": "File Name",
+            "FileName-Help": "The file to check if exists.  This should be used with a variable from a previous node."
+          }
+        },
+        "Delete": {
+          "Description": "Deletes a file",
+          "Fields": {
+            "FileName": "File Name",
+            "FileName-Help": "If left blank the current working file will be deleted, or folder if library is folder based."
+          }
+        },
         "FileSize": {
           "Description": "Checks if the file size matches the configured parameters. The values are in megabytes.\n\nOutput 1: Matches\nOutput 2: Does not match",
           "Fields": {

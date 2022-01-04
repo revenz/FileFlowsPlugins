@@ -1,0 +1,21 @@
+{
+  "Flow":{
+    "Parts": {
+      "DataCollection": {
+        "Description": "Checks a database for a key and a matching value.  If not in the database, will add it to the database.\n\nOutput 1: Not in database\nOutput 2: In database and the same\nOutput 3: In datbase but value different.",
+        "Fields": {
+          "DatabaseFolder": "Database Folder",
+          "DatabaseFolder-Help": "The location to save the SQLite database file.  This folder must be accessible by every processing node.",
+          "DatabaseFile": "Database File",
+          "DatabaseFile-Help": "The SQLite database file.  This file must be accessible by every processing node.",
+          "Key": "Key",
+          "Key-Help": "The key value used to index the collection.  If left empty the original filename will be used.",
+          "Value": "Value",
+          "Value-Help": "The value to check the collection for.  Can be a variable from a previous node.",
+          "UpdateIfDifferent": "Update If Different",
+          "UpdateIfDifferent-Help": "If the value in the collection should be updated if the stored value is different."
+        }
+      }
+    }
+  }
+}

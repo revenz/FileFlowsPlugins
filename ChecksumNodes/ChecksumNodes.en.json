@@ -1,0 +1,15 @@
+{
+    "Flow":{
+      "Parts": {
+        "MD5Checksum": {
+          "Description": "Computes a MD5 checksum of the working file and stores it in the variable \"MD5\" and in \"Checksum\"."
+        },
+        "SHA1Checksum": {
+          "Description": "Computes a SHA1 checksum of the working file and stores it in the variable \"SHA1\" and in \"Checksum\"."
+        },
+        "SHA256Checksum": {
+          "Description": "Computes a SHA256 checksum of the working file and stores it in the variable \"SHA256\" and in \"Checksum\"."
+        }
+      }
+    }
+}
