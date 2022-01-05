@@ -74,6 +74,9 @@ namespace FileFlows.VideoNodes
             else
                 args.Parameters.Add(VIDEO_INFO, videoInfo);
 
+            variables.AddOrUpdate("vi.VideoInfo", videoInfo);
+            variables.AddOrUpdate("vi.Width", videoInfo.VideoStreams[0].Width);
+            variables.AddOrUpdate("vi.Height", videoInfo.VideoStreams[0].Height);
             variables.AddOrUpdate("vi.Duration", videoInfo.VideoStreams[0].Duration.TotalSeconds);
             variables.AddOrUpdate("vi.Video.Codec", videoInfo.VideoStreams[0].Codec);
             if (videoInfo.AudioStreams?.Any() == true)

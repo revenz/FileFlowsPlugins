@@ -3,7 +3,7 @@
       "Parts": {
         "AudioTrackReorder": {
           "Outputs": {
-            "1": "Audio tracks re-ordred",
+            "1": "Audio tracks re-ordred in new temporary file",
             "2": "Audio tracks NOT re-ordered"
           },
           "Description": "Allows you to reorder audio tracks in the preferred order.\n\nEnter the languages/audio codecs in the order you want.  Any not listed will be ordered after the ones entered in their original order.\nIf there are multiple tracks with same language/codec, they will be ordered first by the order you entered, then in their original order.\n\nOutput 1: Audio tracks were reordered\nOutput 2: Audio tracks did not need reordering",
@@ -17,7 +17,7 @@
         "AudioTrackSetLanguage": {
           "Label": "Audio: Set Language",
           "Outputs": {
-            "1": "Audio tracks updated",
+            "1": "Audio tracks updated to new temporary file",
             "2": "Audio tracks NOT updated"
           },
           "Description": "Allows you to set the language for any audio tracks that have no language set.  If the audio track does have a language set, it will be skipped.\n\nOutput 1: Audio Tracks were updated\nOutput 2: No audio tracks were needing to be updated",
@@ -58,7 +58,7 @@
         "SubtitleRemover": {
           "Description": "Removes subtitles from a video file if found.\n\nOutput 1: Subtitles were removed\nOutput 2: No subtitles found that needed to be removed",
           "Outputs": {
-            "1": "Subtitles removed",
+            "1": "Subtitles removed in new temporary file",
             "2": "No subtitles to remove"
           },
           "Fields": {
@@ -88,7 +88,7 @@
         "VideoEncode": {
           "Description": "A generic video encoding node, this lets you customize how to encode a video file using ffmpeg.\n\nOutput 1: Video was processed\nOutput 2: No processing required",
           "Outputs": {
-            "1": "Video re-encoded",
+            "1": "Video re-encoded to temporary file",
             "2": "Video not re-encoded"
           },
           "Fields": {
@@ -107,7 +107,7 @@
         "Video_H265_AC3": {
           "Description": "This will ensure all videos are encoded in H265 (if not already encoded) and that AC3 audio is the first audio channel\n\nOutput 1: Video was processed\nOutput 2: No processing required",
           "Outputs": {
-            "1": "Video re-encoded",
+            "1": "Video re-encoded to temporary file",
             "2": "Video not re-encoded"
           },
           "Fields": {
@@ -128,7 +128,7 @@
         "VideoScaler": {
           "Description": "This allows you to scale a video to the specified dimensions.  It will retain the aspect ratio of the video so if the video was 1920x1000 it would scale to 1280x668 if you select 720P.",
           "Outputs": {
-            "1": "Video rescaled"
+            "1": "Video rescaled to temporary file"
           },
           "Fields": {
             "VideoCodec": "Video Codec",

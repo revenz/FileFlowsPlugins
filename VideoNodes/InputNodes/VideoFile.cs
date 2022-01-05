@@ -22,6 +22,9 @@ namespace FileFlows.VideoNodes
                 { "vi.Audio.Languages", "eng, mao" },
                 { "vi.Resolution", "1080p" },
                 { "vi.Duration", 1800 },
+                { "vi.VideoInfo", new VideoInfo() },
+                { "vi.Width", 1920 },
+                { "vi.Height", 1080 },
             };
         }
 
