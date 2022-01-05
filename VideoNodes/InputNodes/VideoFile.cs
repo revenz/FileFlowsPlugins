@@ -22,7 +22,20 @@ namespace FileFlows.VideoNodes
                 { "vi.Audio.Languages", "eng, mao" },
                 { "vi.Resolution", "1080p" },
                 { "vi.Duration", 1800 },
-                { "vi.VideoInfo", new VideoInfo() },
+                { "vi.VideoInfo", new VideoInfo() 
+                    {
+                        VideoStreams = new List<VideoStream> {
+                            new VideoStream { }
+                        },
+                        AudioStreams = new List<AudioStream> {
+                            new AudioStream { }
+                        },
+                        SubtitleStreams = new List<SubtitleStream>
+                        {
+                            new SubtitleStream { }
+                        }
+                    } 
+                },
                 { "vi.Width", 1920 },
                 { "vi.Height", 1080 },
             };
