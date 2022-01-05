@@ -2,6 +2,10 @@
     "Flow":{
       "Parts": {
         "AudioTrackReorder": {
+          "Outputs": {
+            "1": "Audio tracks re-ordred",
+            "2": "Audio tracks NOT re-ordered"
+          },
           "Description": "Allows you to reorder audio tracks in the preferred order.\n\nEnter the languages/audio codecs in the order you want.  Any not listed will be ordered after the ones entered in their original order.\nIf there are multiple tracks with same language/codec, they will be ordered first by the order you entered, then in their original order.\n\nOutput 1: Audio tracks were reordered\nOutput 2: Audio tracks did not need reordering",
           "Fields": {
             "OrderedTracks": "Ordered Audio Codecs",
@@ -12,6 +16,10 @@
         },
         "AudioTrackSetLanguage": {
           "Label": "Audio: Set Language",
+          "Outputs": {
+            "1": "Audio tracks updated",
+            "2": "Audio tracks NOT updated"
+          },
           "Description": "Allows you to set the language for any audio tracks that have no language set.  If the audio track does have a language set, it will be skipped.\n\nOutput 1: Audio Tracks were updated\nOutput 2: No audio tracks were needing to be updated",
           "Fields": {
             "Language": "Language",
@@ -19,10 +27,17 @@
           }
         },
         "VideoFile": {
-          "Description": "An input video file that has had its VideoInformation read and can be processed"
+          "Description": "An input video file that has had its VideoInformation read and can be processed",
+          "Outputs": {
+            "1": "Video file from library"
+          }
         },
         "DetectBlackBars": {
           "Description": "Processes a video file and scans for black bars in the video.\n\nIf found a parameter \"VideoCrop\" will be added.\n\nOutput 1: Black bars detected\nOutput 2: Not detected",
+          "Outputs": {
+            "1": "Black bars detected",
+            "2": "No black bars detected"
+          },
           "Fields": {
             "CroppingThreshold": "Threshold",
             "CroppingThreshold-Help": "The amount of pixels that must be greater than to crop.   E.g. if there's only 5 pixels detected as black space, you may consider this too small to crop."
@@ -30,6 +45,9 @@
         },
         "FFMPEG": {
           "Description": "The node lets you run any FFMPEG command you like.  Giving you full control over what it can do.\n\nFor more information refer to the FFMPEG documentation",
+          "Outputs": {
+            "1": "Video processed"
+          },
           "Fields": {
             "Extension": "Extension",
             "Extension-Help": "The file extension to use on the newly created file",
@@ -39,12 +57,20 @@
         },
         "SubtitleRemover": {
           "Description": "Removes subtitles from a video file if found.\n\nOutput 1: Subtitles were removed\nOutput 2: No subtitles found that needed to be removed",
+          "Outputs": {
+            "1": "Subtitles removed",
+            "2": "No subtitles to remove"
+          },
           "Fields": {
             "SubtitlesToRemove": "Subtitles To Remove"
           }
         },
         "SubtitleExtractor": {
           "Description": "Extract a single subtitle tracks and saves it to the destination.  Can extract srt, ass, and ssa format.\nThis will NOT update the working file, and will keep the working file the same as the input file.\n\nOutput 1: Subtitles were extracted\nOutput 2: No subtitles found to extract",
+          "Outputs": {
+            "1": "Subtitles extracted",
+            "2": "No subtitles extracted"
+          },
           "Fields": {
             "Language": "Language",
             "Language-Help": "The ISO 639-2 language code to use. \nhttps://en.wikipedia.org/wiki/List_of_ISO_639-2_codes",
@@ -61,6 +87,10 @@
         },
         "VideoEncode": {
           "Description": "A generic video encoding node, this lets you customize how to encode a video file using ffmpeg.\n\nOutput 1: Video was processed\nOutput 2: No processing required",
+          "Outputs": {
+            "1": "Video re-encoded",
+            "2": "Video not re-encoded"
+          },
           "Fields": {
             "Extension": "Extension",
             "Extension-Help": "The file extension to use on the newly created file.",
@@ -76,6 +106,10 @@
         },
         "Video_H265_AC3": {
           "Description": "This will ensure all videos are encoded in H265 (if not already encoded) and that AC3 audio is the first audio channel\n\nOutput 1: Video was processed\nOutput 2: No processing required",
+          "Outputs": {
+            "1": "Video re-encoded",
+            "2": "Video not re-encoded"
+          },
           "Fields": {
             "Language": "Language",
             "Language-Help": "Optional ISO 639-2 language code to use.  Will attempt to find an audio track with this language code if not the best audio track will be used.\nhttps://en.wikipedia.org/wiki/List_of_ISO_639-2_codes",
@@ -93,6 +127,9 @@
         },
         "VideoScaler": {
           "Description": "This allows you to scale a video to the specified dimensions.  It will retain the aspect ratio of the video so if the video was 1920x1000 it would scale to 1280x668 if you select 720P.",
+          "Outputs": {
+            "1": "Video rescaled"
+          },
           "Fields": {
             "VideoCodec": "Video Codec",
             "Language-Help": "The video codec to encode the scaled video in",

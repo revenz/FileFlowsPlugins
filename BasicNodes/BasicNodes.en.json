@@ -10,13 +10,22 @@
     "Flow":{
       "Parts": {
         "InputFile": {
-          "Description": "An input node for a library file.  This is required and is the starting point of a flow.  Any input node can be used, just one is required."
+          "Description": "An input node for a library file.  This is required and is the starting point of a flow.  Any input node can be used, just one is required.",
+          "Outputs": {
+            "1": "Library File"
+          }
         },
         "InputFolder": {
-          "Description": "An input node for a folder.  This will only work if the library using this flow is configured for folders."
+          "Description": "An input node for a folder.  This will only work if the library using this flow is configured for folders.",
+          "Outputs": {
+            "1": "Library Folder"
+          }
         },
         "CopyFile": {
           "Description": "Copies a file to the destination folder",
+          "Outputs": {
+            "1": "File copied"
+          },
           "Fields": {
             "DestinationPath": "Destination Folder",
             "DestinationPath-Help": "The folder where the file will be copied to",
@@ -28,6 +37,9 @@
         },
         "DeleteSourceDirectory": {
           "Label": "Delete Source Folder",
+          "Outputs": {
+            "1": "Source directory deleted"
+          },
           "Description": "Deletes the source folder of the original library file",
           "Fields": {
             "IfEmpty": "If Empty",
@@ -38,6 +50,10 @@
         },
         "Executor": {
           "Description": "Execute the following process against the file.\nOutput 1: The process returned the success exit code\nOutput 2: The process return a non-successful exit code.",
+          "Outputs": {
+            "1": "Process returned success",
+            "2": "Process returned failure"
+          },
           "Fields": {
             "FileName": "File Name",
             "FileName-Help": "The name of the file to execute",
@@ -58,6 +74,10 @@
         },
         "FileExtension": {
           "Description": "Checks if the file has one of the configured extensions.\n\nOutput 1: Matches\nOutput 2: Does not match",
+          "Outputs": {
+            "1": "Extension match",
+            "2": "Extension did not match"
+          },
           "Fields": {
             "Extensions": "Extensions",
             "Extensions-Help": "A list of case insensitive file extensions that will be matched against.\nOutput 1 Matches\nOutput 2: Does not match"
@@ -65,6 +85,10 @@
         },
         "FileExists": {
           "Description": "Checks if a file exists\n\nOutput 1: File exists\nOutput 2: File does not exist",
+          "Outputs": {
+            "1": "File exists",
+            "2": "File does not exist"
+          },
           "Fields": {
             "FileName": "File Name",
             "FileName-Help": "The file to check if exists.  This should be used with a variable from a previous node."
@@ -72,6 +96,9 @@
         },
         "Delete": {
           "Description": "Deletes a file",
+          "Outputs": {
+            "1": "File deleted"
+          },
           "Fields": {
             "FileName": "File Name",
             "FileName-Help": "If left blank the current working file will be deleted, or folder if library is folder based."
@@ -79,6 +106,10 @@
         },
         "FileSize": {
           "Description": "Checks if the file size matches the configured parameters. The values are in megabytes.\n\nOutput 1: Matches\nOutput 2: Does not match",
+          "Outputs": {
+            "1": "File size within range",
+            "2": "File size not within range"
+          },
           "Fields": {
             "Comparison": "Comparison",
             "Lower": "Lower",
@@ -90,6 +121,18 @@
           }
         },
         "Function": {
+          "Outputs": {
+            "1": "returned 1",
+            "2": "returned 2",
+            "3": "returned 3",
+            "4": "returned 4",
+            "5": "returned 5",
+            "6": "returned 6",
+            "7": "returned 7",
+            "8": "returned 8",
+            "9": "returned 9",
+            "10": "returned 10"
+          },
           "Fields": {
             "Outputs": "Outputs",
             "Outputs-Help": "The number of outputs this node can have.",
@@ -105,6 +148,9 @@
         },
         "Log": {
           "Description": "Logs a message to the flow log",
+          "Outputs": {
+            "1": "Message logged"
+          },
           "Fields": {
             "LogType": "Type",
             "Message": "Message"
@@ -112,6 +158,9 @@
         },
         "MoveFile": {
           "Description": "Moves a file to the destination folder",
+          "Outputs": {
+            "1": "File moved"
+          },
           "Fields": {
             "DestinationPath": "Destination Folder",
             "DestinationPath-Help": "The folder where the file will be moved to",
@@ -125,6 +174,10 @@
         },
         "PatternMatch": {
           "Description": "Tests the working file and original file against a regular expression.\n\nOutput 1: Matches expression\nOutput 2: Does not match",
+          "Outputs": {
+            "1": "Matches expression",
+            "2": "Does NOT match"
+          },
           "Fields": {
             "Pattern": "Pattern",
             "Pattern-Help": "A regular expression, using the C# specification for regular expressions."
@@ -132,6 +185,10 @@
         },
         "PatternReplacer": {
           "Description": "Lets you make replacements in the filename.  Can use regular expressions for replacements, or simple string replacements.\n\nOutput 1: Replacement done\nOutput 2: No replacement done",
+          "Outputs": {
+            "1": "Replacement done",
+            "2": "No replacement done"
+          },
           "Fields": {
             "Replacements": "Replacements",
             "ReplacementsKey": "Pattern",
@@ -141,10 +198,16 @@
           }
         },
         "ReplaceOriginal": {
-          "Description": "Replaces the original file with the working file.\n\nIf the extension is different on the working file, the original file will be deleted and the working file will be moved to the original with the new extension.\nE.g. from File.avi to File.mkv"
+          "Description": "Replaces the original file with the working file.\n\nIf the extension is different on the working file, the original file will be deleted and the working file will be moved to the original with the new extension.\nE.g. from File.avi to File.mkv",
+          "Outputs": {
+            "1": "Original file replaced"
+          }
         },
         "Renamer": {
           "Description": "Renames the working file.\nVariables can be used by entering the key '{' inside the Pattern field.",
+          "Outputs": {
+            "1": "File renamed"
+          },
           "Fields": {
             "Pattern": "Pattern",
             "DestinationPath": "Destination Folder",
@@ -157,6 +220,9 @@
         },
         "Zip": {
           "Description": "Allows you to zip the input",
+          "Outputs": {
+            "1": "Zip created"
+          },
           "Fields": {
             "DestinationPath": "Destination Folder",
             "DestinationPath-Help": "The destination folder where to put the zip file.  If blank, the zip will be placed in the library root.",
