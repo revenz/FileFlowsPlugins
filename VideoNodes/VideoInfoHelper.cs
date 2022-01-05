@@ -134,7 +134,10 @@ namespace FileFlows.VideoNodes
 
             if (Regex.IsMatch(line, @"([\d]+(\.[\d]+)?)\sfps") && float.TryParse(Regex.Match(line, @"([\d]+(\.[\d]+)?)\sfps").Groups[1].Value, out float fps))
                 vs.FramesPerSecond = fps;
-
+            
+            var rgxBps = new Regex(@"(?<=((BPS(\-[\w]+)?[\s]*:[\s])))([\d]+)");
+            if (rgxBps.IsMatch(info) && float.TryParse(rgxBps.Match(info).Value, out float bps))
+                vs.Bitrate = bps;
 
             if (rgxDuration.IsMatch(info) && TimeSpan.TryParse(rgxDuration.Match(info).Value, out TimeSpan duration))
                 vs.Duration = duration;

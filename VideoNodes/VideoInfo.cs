@@ -24,6 +24,11 @@ namespace FileFlows.VideoNodes
         public string Title { get; set; } = "";
 
         /// <summary>
+        /// The bitrate(BPS) of the video stream
+        /// </summary>
+        public float Bitrate { get; set; }
+
+        /// <summary>
         /// The codec of the stream
         /// </summary>
         public string Codec { get; set; } = "";
