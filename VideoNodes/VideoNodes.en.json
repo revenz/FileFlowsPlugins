@@ -80,13 +80,23 @@
         "RemuxToMKV": {
           "Descritption": "Remuxes a video file into a MKV container.  All streams will be copied to the new container",
           "Outputs": {
-            "1": "File remuxed to temporary file"
+            "1": "File remuxed to temporary file",
+            "2": "File was already in a MKV container"
+          },
+          "Fields": {
+            "Force": "Force",
+            "Force-Help": "If the file should be always remuxed into a MKV container even when it already is in a MKV container.\ni.e. a new temporary file will always be created."
           }
         },
         "RemuxToMP4": {
           "Descritption": "Remuxes a video file into a MP4 container.  All streams will be copied to the new container",
           "Outputs": {
-            "1": "File remuxed to temporary file"
+            "1": "File remuxed to temporary file",
+            "2": "File was already in a MP4 container"
+          },
+          "Fields": {
+            "Force": "Force",
+            "Force-Help": "If the file should be always remuxed into a MP4 container even when it already is in a MP4 container.\ni.e. a new temporary file will always be created."
           }
         },
         "SubtitleRemover": {

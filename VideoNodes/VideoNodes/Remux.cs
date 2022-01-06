@@ -1,19 +1,25 @@
 ﻿namespace FileFlows.VideoNodes
 {
     using FileFlows.Plugin;
+    using FileFlows.Plugin.Attributes;
     using System;
 
     public class RemuxToMKV: EncodingNode
     {
-
-        public override int Outputs => 1;
         public override string Icon => "far fa-file-video";
+
+        [Boolean(1)]
+        public bool Force { get; set; }
 
         public override int Execute(NodeParameters args)
         {
             string ffmpegExe = GetFFMpegExe(args);
             if (string.IsNullOrEmpty(ffmpegExe))
                 return -1;
+
+
+            if (Force == false && args.WorkingFile?.ToLower()?.EndsWith(".mkv") == true)
+                return 2;
 
             try 
             { 
@@ -32,15 +38,19 @@
 
     public class RemuxToMP4 : EncodingNode
     {
-
-        public override int Outputs => 1;
         public override string Icon => "far fa-file-video";
+
+        [Boolean(1)]
+        public bool Force { get; set; }
 
         public override int Execute(NodeParameters args)
         {
             string ffmpegExe = GetFFMpegExe(args);
             if (string.IsNullOrEmpty(ffmpegExe))
                 return -1;
+
+            if (Force == false && args.WorkingFile?.ToLower()?.EndsWith(".mp4") == true)
+                return 2;
 
             try
             {
