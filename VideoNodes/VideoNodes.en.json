@@ -1,6 +1,28 @@
 {
     "Flow":{
       "Parts": {
+        "AudioAdjustVolume": {
+          "Outputs": {
+            "1": "Audio tracks volume was adjusted and saved to temporary file",
+            "2": "Audio tracks were not adjusted"
+          },
+          "Description": "Adjusts audio tracks volume in a video file using FFMPEG",
+          "Fields": {
+            "VolumePercent": "Volume Percent",
+            "VolumePercent-Help": "The percent of the adjusted volume.\n100 means no adjustment\n50 means half volume\n0 means muted"
+          }
+        },
+        "AudioNormalization": {
+          "Outputs": {
+            "1": "Audio tracks were normalized and saved to temporary file",
+            "2": "Audio tracks were not normalized"
+          },
+          "Description": "Normalizes all audio tracks in a video file using FFMPEGs loudnorm filter",
+          "Fields": {
+            "AllAudio": "All Audio Tracks",
+            "AllAudio-Help": "If all audio tracks should be normalized or if just the first track should be"
+          }
+        },
         "AudioTrackReorder": {
           "Outputs": {
             "1": "Audio tracks re-ordred in new temporary file",
@@ -53,6 +75,18 @@
             "Extension-Help": "The file extension to use on the newly created file",
             "CommandLine": "Command Line",
             "CommandLine-Help": "The command line to run with FFMPEG.\n'{WorkingFile}': the working file of the flow\n'{Output}': The output file that will be passed as the last parameter to FFMPEG including the extension defined above."
+          }
+        },
+        "RemuxToMKV": {
+          "Descritption": "Remuxes a video file into a MKV container.  All streams will be copied to the new container",
+          "Outputs": {
+            "1": "File remuxed to temporary file"
+          }
+        },
+        "RemuxToMP4": {
+          "Descritption": "Remuxes a video file into a MP4 container.  All streams will be copied to the new container",
+          "Outputs": {
+            "1": "File remuxed to temporary file"
           }
         },
         "SubtitleRemover": {

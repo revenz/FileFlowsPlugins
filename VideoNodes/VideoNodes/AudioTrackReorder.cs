@@ -98,7 +98,9 @@
                     ffArgs.Add($"-map " + audio.IndexString);
                 }
 
-                ffArgs.Add("-map 0:s -c copy");
+                if (videoInfo.SubtitleStreams?.Any() == true)
+                    ffArgs.Add("-map 0:s -c copy");
+
                 // this makes the first audio track now the default track
                 ffArgs.Add("-disposition:a:0 default");
 
