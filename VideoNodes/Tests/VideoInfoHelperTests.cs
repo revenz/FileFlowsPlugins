@@ -26,7 +26,7 @@ namespace VideoNodes.Tests
         {
             const string file = @"D:\videos\unprocessed\Bourne.mkv";
             var vi = new VideoInfoHelper(@"C:\utils\ffmpeg\ffmpeg.exe", new TestLogger());
-            vi.Read(@"D:\videos\unprocessed\Bourne.mkv");
+            var vii = vi.Read(@"D:\videos\unprocessed\Masters of the Universe (1987) Bluray-1080p.mkv.skip");
 
             SubtitleRemover remover = new SubtitleRemover();
             remover.SubtitlesToRemove = new List<string>
@@ -267,6 +267,29 @@ namespace VideoNodes.Tests
             Assert.AreEqual("ac3", reordered[7].Codec);
             Assert.AreEqual("fre", reordered[7].Language);
         }
+
+
+        [TestMethod]
+        public void ComskipTest()
+        {
+            const string file = @"D:\videos\unprocessed\The IT Crowd - 2x04 - The Dinner Party - No English.mkv";
+            const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
+
+            args.GetToolPath = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
+            args.TempPath = @"D:\videos\temp";
+
+
+            var vi = new VideoInfoHelper(@"C:\utils\ffmpeg\ffmpeg.exe", new TestLogger());
+            var vii = vi.Read(file);
+            args.SetParameter("VideoInfo", vii);
+            //args.Process = new FileFlows.Plugin.ProcessHelper(args.Logger);
+
+            var node = new ComskipRemoveAds();
+            int output = node.Execute(args);
+            Assert.AreEqual(1, output);
+        }
+
     }
 }
 

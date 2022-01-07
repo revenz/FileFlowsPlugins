@@ -18,7 +18,7 @@ namespace FileFlows.VideoNodes
 
         private FFMpegEncoder Encoder;
 
-        protected bool Encode(NodeParameters args, string ffmpegExe, string ffmpegParameters, string extension = "mkv", string outputFile = "")
+        protected bool Encode(NodeParameters args, string ffmpegExe, string ffmpegParameters, string extension = "mkv", string outputFile = "", bool updateWorkingFile = true, bool dontAddInputFile = false)
         {
             if (string.IsNullOrEmpty(extension))
                 extension = "mkv";
@@ -30,9 +30,9 @@ namespace FileFlows.VideoNodes
             if (string.IsNullOrEmpty(outputFile))
                 outputFile = Path.Combine(args.TempPath, Guid.NewGuid().ToString() + "." + extension);
 
-            bool success = Encoder.Encode(args.WorkingFile, outputFile, ffmpegParameters);
+            bool success = Encoder.Encode(args.WorkingFile, outputFile, ffmpegParameters, dontAddInputFile: dontAddInputFile);
             args.Logger.ILog("Encoding succesful: " + success);
-            if (success)
+            if (success && updateWorkingFile)
             {
                 args.SetWorkingFile(outputFile);
 

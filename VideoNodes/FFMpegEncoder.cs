@@ -26,10 +26,13 @@ namespace FileFlows.VideoNodes
             this.Logger = logger;
         }
 
-        public bool Encode(string input, string output, string arguments)
+        public bool Encode(string input, string output, string arguments, bool dontAddInputFile = false)
         {
             // -y means it will overwrite a file if output already exists
-            arguments = $"-i \"{input}\" -y {arguments} \"{output}\"";
+            if(dontAddInputFile == false)
+                arguments = $"-i \"{input}\" -y {arguments} \"{output}\"";
+            else
+                arguments = $"{arguments} \"{output}\"";
 
             Logger.ILog(new string('=', ("FFMpeg.Arguments: " + arguments).Length));
             Logger.ILog("FFMpeg.Arguments: " + arguments);

@@ -48,6 +48,13 @@
             "Language-Help": "The ISO 639-2 language code to use. \nhttps://en.wikipedia.org/wiki/List_of_ISO_639-2_codes"
           }
         },
+        "ComskipRemoveAds": {
+          "Description": "Uses a comskip EDL file and will remove commericals using that file.",
+          "Outputs": {
+            "1": "Commericals removed, saved to temporary file",
+            "2": "No commericals detected"
+          }
+        },
         "VideoFile": {
           "Description": "An input video file that has had its VideoInformation read and can be processed",
           "Outputs": {
