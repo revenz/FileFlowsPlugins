@@ -39,7 +39,7 @@
             foreach(string line in text.Split(new string[] { "\r\n", "\n", "\r"}, StringSplitOptions.RemoveEmptyEntries))
             {
                 // 93526.47 93650.13 0
-                string[] parts = line.Split(" ");
+                string[] parts = line.Split(new[] { " ", "\t" }, StringSplitOptions.RemoveEmptyEntries);
                 if (parts.Length < 2)
                     continue;
                 float start = 0;

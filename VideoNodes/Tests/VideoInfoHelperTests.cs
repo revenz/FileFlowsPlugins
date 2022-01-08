@@ -321,6 +321,26 @@ namespace VideoNodes.Tests
             Assert.AreEqual(1, output);
         }
 
+        [TestMethod]
+        public void Comskip_Chapters()
+        {
+            const string file = @"D:\videos\recordings\Rescue My Renovation (2001).ts";
+            const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
+
+            args.GetToolPath = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
+            args.TempPath = @"D:\videos\temp";
+
+
+            var vi = new VideoInfoHelper(@"C:\utils\ffmpeg\ffmpeg.exe", new TestLogger());
+            var vii = vi.Read(file);
+            args.SetParameter("VideoInfo", vii);
+            //args.Process = new FileFlows.Plugin.ProcessHelper(args.Logger);
+
+            var node = new ComskipChapters();
+            int output = node.Execute(args);
+            Assert.AreEqual(1, output);
+        }
     }
 }
 

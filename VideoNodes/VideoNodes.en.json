@@ -50,6 +50,13 @@
             "Language-Help": "The ISO 639-2 language code to use. \nhttps://en.wikipedia.org/wiki/List_of_ISO_639-2_codes"
           }
         },
+        "ComskipChapters": {
+          "Description": "Uses a comskip EDL file and will create chapters given that EDL comskip file.",
+          "Outputs": {
+            "1": "Commericals chapters created, saved to temporary file",
+            "2": "No commericals detected"
+          }
+        },
         "ComskipRemoveAds": {
           "Description": "Uses a comskip EDL file and will remove commericals using that file.",
           "Outputs": {

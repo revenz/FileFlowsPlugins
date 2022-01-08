@@ -14,7 +14,7 @@
         public override FlowElementType Type => FlowElementType.Process;
         public override string Icon => "fas fa-terminal";
 
-        private const string VariablePattern = "^([a-zA-Z_]+)[a-zA-Z_0-9]*$";
+        private const string VariablePattern = @"(^[\s]*$)|(^([a-zA-Z_]+)[a-zA-Z_0-9]*$)";
 
         [Required]
         [File(1)]
@@ -37,6 +37,7 @@
         [Text(6)]
         [System.ComponentModel.DataAnnotations.RegularExpression(VariablePattern)]
         public string OutputVariable { get; set; }
+
         [Text(7)]
         [System.ComponentModel.DataAnnotations.RegularExpression(VariablePattern)]
         public string OutputErrorVariable { get; set; }
