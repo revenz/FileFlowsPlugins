@@ -20,32 +20,52 @@
         [StringArray(2)]
         public List<string> OrderedTracks { get; set; }
 
+        [StringArray(3)]
+        public List<string> Channels { get; set; }
+
         public List<AudioStream> Reorder(List<AudioStream> input)
         {
             Languages ??= new List<string>();
             OrderedTracks ??= new List<string>();
-            if (Languages.Count == 0 && OrderedTracks.Count == 0)
+            Channels ??= new List<string>();
+            List<float> actualChannels = Channels.Select(x =>
+            {
+                if (float.TryParse(x, out float value))
+                    return value;
+                return -1f;
+            }).Where(x => x > 0f).ToList();
+
+            if (Languages.Any() == false && OrderedTracks.Any() == false && actualChannels.Any() == false)
                 return input; // nothing to do
 
-            int count = 1_000_000_000;
+            Languages.Reverse();
+            OrderedTracks.Reverse();
+            actualChannels.Reverse();
+
+            const int base_number = 1_000_000_000;
+            int count = base_number;
             var debug = new StringBuilder();
             var data = input.OrderBy(x =>
             {
                 int langIndex = Languages.IndexOf(x.Language?.ToLower() ?? String.Empty);
                 int codecIndex = OrderedTracks.IndexOf(x.Codec?.ToLower() ?? String.Empty);
-                int result = 0;
+                int channelIndex = actualChannels.IndexOf(x.Channels);
+
+                int result = base_number;
                 if (langIndex >= 0)
                 {
-                    if (codecIndex >= 0)
-                        result = (langIndex * 10_000) + (codecIndex * 100) + x.Index;
-                    else
-                        result = ((langIndex + 1) * 10_000) - 100 + x.Index;
+                    result -= ((langIndex + 1) * 10_000_000);
                 }
-                else if (codecIndex >= 0)
-                    result = ((codecIndex + 1) * 10_000_000) + x.Index;
-                else
+                if(codecIndex >= 0)
+                {
+                    result -= ((codecIndex + 1) * 100_000);
+                }
+                if(channelIndex >= 0)
+                {
+                    result -= ((channelIndex + 1) * 1_000);
+                }
+                if (result == base_number)
                     result = ++count;
-                debug.AppendLine(x.Codec + " , " + x.Language + " = " + result);
                 return result;
             }).ToList();
 

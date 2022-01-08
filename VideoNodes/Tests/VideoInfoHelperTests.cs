@@ -155,6 +155,37 @@ namespace VideoNodes.Tests
 
 
         [TestMethod]
+        public void VideoInfoTest_AudioTrackReorder_Channels()
+        {
+            var node = new AudioTrackReorder();
+            var original = new List<AudioStream>
+            {
+                new AudioStream{ Codec = "aac", Language = "fre", Channels = 5.1f},
+                new AudioStream{ Codec = "dts", Language = "fre", Channels = 2},
+                new AudioStream{ Codec = "aac", Language = "eng", Channels = 2.1f},
+                new AudioStream{ Codec = "aac", Language = "mao", Channels = 8},
+                new AudioStream{ Codec = "dts", Language = "mao" , Channels=7.1f} ,
+                new AudioStream{ Codec = "ac3", Language = "mao", Channels = 6.2f},
+                new AudioStream{ Codec = "ac3", Language = "eng", Channels = 5.1f},
+                new AudioStream{ Codec = "ac3", Language = "fre", Channels = 8},
+            };
+
+
+            node.Channels = new List<string> { "8", "5.1", "7.1",  "6.2" };
+            var reordered = node.Reorder(original);
+
+            int count = 0;
+            foreach (var chan in new[] { ("aac", "mao", 8f), ("ac3", "fre", 8), ("aac", "fre", 5.1f), ("ac3", "eng", 5.1f), ("dts", "mao", 7.1f),
+                ("ac3", "mao", 6.2f), ("dts", "fre", 2), ("aac", "eng", 2.1f) })
+            {
+                Assert.AreEqual(chan.Item1, reordered[count].Codec);
+                Assert.AreEqual(chan.Item2, reordered[count].Language);
+                Assert.AreEqual(chan.Item3, reordered[count].Channels);
+                ++count;
+            }
+        }
+
+        [TestMethod]
         public void VideoInfoTest_AudioTrackReorder_NothingConfigured()
         {
             var node = new AudioTrackReorder();
