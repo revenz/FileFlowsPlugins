@@ -28,8 +28,12 @@ namespace FileFlows.BasicNodes.Functions
         public string Code { get; set; }
 
         delegate void LogDelegate(params object[] values);
+
+        private NodeParameters NodeParameters;
         public override int Execute(NodeParameters args)
         {
+            NodeParameters = args;
+
             if (string.IsNullOrEmpty(Code))
                 return -1; // no code, flow cannot continue doesnt know what to do
 
@@ -63,7 +67,8 @@ namespace FileFlows.BasicNodes.Functions
             })
             .SetValue("Logger", args.Logger)
             .SetValue("Variables", args.Variables)
-            .SetValue("Flow", args);
+            .SetValue("Flow", args)
+            .SetValue("Process", Process);
 
             try
             {
@@ -76,6 +81,13 @@ namespace FileFlows.BasicNodes.Functions
                 return -1;
             }
         }
+
+        public ProcessResult Process(ExecuteArgs args)
+        {
+            var result = NodeParameters.Process.ExecuteShellCommand(args).Result;
+            return result;
+        }
+
 
         //private Dictionary<string, object> ExplodeVariables(Dictionary<string, object> input)
         //{

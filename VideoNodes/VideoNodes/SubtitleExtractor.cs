@@ -63,7 +63,14 @@
                 var result = args.Process.ExecuteShellCommand(new ExecuteArgs
                 {
                     Command = ffmpegExe,
-                    Arguments = $"-i \"{args.WorkingFile}\" -map \"0:s:{subTrack.TypeIndex}\" -map \"-0:v\" -map \"-0:a\" \"{OutputFile}\""
+                    ArgumentList = new []
+                    {
+                        "-i", args.WorkingFile,
+                        "-map", $"0:s:{subTrack.TypeIndex}",
+                        "-map", "-0:v",
+                        "-map", "-0:a",
+                        OutputFile
+                    }
                 }).Result;
 
                 if (result.ExitCode == 0)

@@ -3,6 +3,7 @@
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.Diagnostics;
+    using System.Text;
     using System.Text.RegularExpressions;
     using FileFlows.Plugin;
     using FileFlows.Plugin.Attributes;
@@ -48,7 +49,6 @@
         {
             args?.Process?.Cancel();
         }
-
         public override int Execute(NodeParameters args)
         {
             this.args = args;
@@ -91,5 +91,7 @@
                 return 2;
             }
         }
+
+
     }
 }

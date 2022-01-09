@@ -186,6 +186,68 @@ return 1";
             var result = pm.Execute(args);
             Assert.IsTrue(result > 0);
         }
+
+
+        [TestMethod]
+        public void Function_Flow_Execute()
+        {
+            Function pm = new Function();
+            var logger = new TestLogger();
+            var args = new FileFlows.Plugin.NodeParameters(@"D:\videos\unprocessed\The IT Crowd - 2x04 - The Dinner Party - No English.mkv", logger, false, string.Empty);
+            pm.Code = @"
+let result = Flow.Execute({command:'c:\\utils\\ffmpeg\\ffmpeg.exe', argumentList: ['-i', Variables.file.FullName]});
+Logger.ILog('ExitCode: ' + result.exitCode);
+Logger.ILog('completed: ' + result.completed);
+Logger.ILog('standardOutput: ' + result.standardOutput);
+if(!result.standardOutput || result.standardOutput.length < 1)
+    return 3;
+if(result.exitCode === 1)
+	return 2;
+return 0;
+;";
+            var result = pm.Execute(args);
+            Assert.AreEqual(2, result);
+        }
+        [TestMethod]
+        public void Function_Flow_ExecuteFfmpeg()
+        {
+            Function pm = new Function();
+            var logger = new TestLogger();
+            var args = new FileFlows.Plugin.NodeParameters(@"D:\videos\unprocessed\The IT Crowd - 2x04 - The Dinner Party - No English.mkv", logger, false, string.Empty);
+            args.GetToolPath = (string name) => @"C:\utils\ffmpeg\ffmpeg.exe";
+            args.TempPath = @"D:\videos\temp";
+            pm.Code = @"
+let output = Flow.TempPath + '/' + Flow.NewGuid() + '.mkv';
+let ffmpeg = Flow.GetToolPath('ffmpeg');
+let process = Flow.Execute({
+	command: ffmpeg,
+	argumentList: [
+		'-i',
+		Variables.file.FullName,
+		'-c:v',
+		'libx265',
+		'-c:a',
+		'copy',
+		output
+	]
+});
+
+if(process.standardOutput)
+	Logger.ILog('Standard output: ' + process.standardOutput);
+if(process.starndardError)
+	Logger.ILog('Standard error: ' + process.starndardError);
+
+if(process.exitCode !== 0){
+	Logger.ELog('Failed processing ffmpeg: ' + process.exitCode);
+	return -1;
+}
+
+Flow.SetWorkingFile(output);
+return 1;
+;";
+            var result = pm.Execute(args);
+            Assert.AreEqual(1, result);
+        }
     }
 }
 
