@@ -1,0 +1,99 @@
+[
+{
+  "Name": "Basic Nodes",
+  "Version": "0.0.1.80",
+  "MinimumVersion": "0.2.1.349",
+  "Authors": "John Andrews",
+  "Url": "https://fileflows.com/",
+  "Description": "Basic nodes for FileFlows.  This plugin contains basic and common nodes to process files.  \r\nThis plugin is required for FileFlows to work.",
+  "Package": "BasicNodes",
+  "Elements": [
+    "InputFile",
+    "InputFolder",
+    "CopyFile",
+    "Delete",
+    "DeleteSourceDirectory",
+    "Executor",
+    "MoveFile",
+    "Renamer",
+    "ReplaceOriginal",
+    "Zip",
+    "FileExists",
+    "FileExtension",
+    "FileSize",
+    "Function",
+    "GotoFlow",
+    "Log",
+    "PatternMatch",
+    "PatternReplacer"
+  ]
+},
+{
+  "Name": "Checksum Nodes",
+  "Version": "0.0.1.80",
+  "MinimumVersion": "",
+  "Authors": "John Andrews",
+  "Url": "https://fileflows.com/",
+  "Description": "Nodes that provide the ability to run a checksum against a file.",
+  "Package": "ChecksumNodes",
+  "Elements": [
+    "MD5",
+    "SHA1",
+    "SHA256",
+    "SHA512"
+  ]
+},
+{
+  "Name": "Collection Nodes",
+  "Version": "0.0.1.80",
+  "MinimumVersion": "0.2.0.310",
+  "Authors": "John Andrews",
+  "Url": "https://fileflows.com/",
+  "Description": "Nodes that provide the ability to read and write from collections.\r\n\r\nAllows storing of data to database that persists between flow executions.",
+  "Package": "CollectionNodes",
+  "Elements": [
+    "DataCollection"
+  ]
+},
+{
+  "Name": "Meta Nodes",
+  "Version": "0.0.1.80",
+  "MinimumVersion": "",
+  "Authors": "John Andrews",
+  "Url": "https://fileflows.com/",
+  "Description": "A plugin that contains Meta information nodes used to lookup meta information on files.\r\n\r\nContains nodes to lookup movie information from TheMovieDB, and music information from ID3 tags inside the file.",
+  "Package": "MetaNodes",
+  "Elements": [
+    "MusicMeta",
+    "MovieLookup"
+  ]
+},
+{
+  "Name": "Video Nodes",
+  "Version": "0.0.1.80",
+  "MinimumVersion": "",
+  "Authors": "John Andrews",
+  "Url": "https://fileflows.com/",
+  "Description": "Nodes for processing video files.  This plugin contains nodes to convert video files to different formats.  Node to parse the video information from a file.",
+  "Package": "VideoNodes",
+  "Elements": [
+    "VideoFile",
+    "AudioAdjustVolume",
+    "AudioNormalization",
+    "AudioTrackReorder",
+    "AudioTrackSetLanguage",
+    "ComskipChapters",
+    "ComskipRemoveAds",
+    "FFMPEG",
+    "RemuxToMKV",
+    "RemuxToMP4",
+    "SubtitleExtractor",
+    "SubtitleRemover",
+    "Video_H265_AC3",
+    "VideoEncode",
+    "VideoScaler",
+    "DetectBlackBars",
+    "VideoCodec"
+  ]
+}
+]

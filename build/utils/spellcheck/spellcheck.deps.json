@@ -1,0 +1,52 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "spellcheck/1.0.0": {
+        "dependencies": {
+          "WeCantSpell.Hunspell": "3.0.1"
+        },
+        "runtime": {
+          "spellcheck.dll": {}
+        }
+      },
+      "System.Memory/4.5.1": {},
+      "WeCantSpell.Hunspell/3.0.1": {
+        "dependencies": {
+          "System.Memory": "4.5.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/WeCantSpell.Hunspell.dll": {
+            "assemblyVersion": "3.0.1.0",
+            "fileVersion": "3.0.1.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "spellcheck/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.Memory/4.5.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-sDJYJpGtTgx+23Ayu5euxG5mAXWdkDb4+b0rD0Cab0M1oQS9H0HXGPriKcqpXuiJDTV7fTp/d+fMDJmnr6sNvA==",
+      "path": "system.memory/4.5.1",
+      "hashPath": "system.memory.4.5.1.nupkg.sha512"
+    },
+    "WeCantSpell.Hunspell/3.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-guVwsDstyatfSrF3pcRvBecKAOAHg2/V/kpQlzUEa/09xgsfyMeDzV/W8iFHR5HpzPCOEYsHtRtpWLP+OZAiiw==",
+      "path": "wecantspell.hunspell/3.0.1",
+      "hashPath": "wecantspell.hunspell.3.0.1.nupkg.sha512"
+    }
+  }
+}

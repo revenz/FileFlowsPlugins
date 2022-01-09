@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "FileFlows.Plugin/0.0.1.0": {
+        "runtime": {
+          "FileFlows.Plugin.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "FileFlows.Plugin/0.0.1.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

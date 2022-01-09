@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FileFlows.Shared</name>
+    </assembly>
+    <members>
+        <member name="P:FileFlows.Shared.Models.ElementField.Placeholder">
+            <summary>
+            Gets or sets optional place holder text, this can be a translation key
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.Library.Folders">
+            <summary>
+            If this library monitors for folders or files
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.Library.LastScanned">
+            <summary>
+            When the library was last scanned
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.Library.LastScannedAgo">
+            <summary>
+            The timespan of when this was last scanned
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.Library.ScanInterval">
+            <summary>
+            Gets or sets the number of seconds to scan files
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.Library.FileSizeDetectionInterval">
+            <summary>
+            Gets or sets the number of seconds to wait before checking for file size changes when scanning the library
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.Library.Priority">
+            <summary>
+            Gets or sets the processing priority of this library
+            </summary>
+        </member>
+        <member name="T:FileFlows.Shared.Validators.DefaultValidator">
+            <summary>
+            Used instead of null
+            </summary>
+        </member>
+    </members>
+</doc>

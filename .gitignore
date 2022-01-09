@@ -8,3 +8,4 @@ TestStore/
 .vs/FileFlowsPlugins/DesignTimeBuild/.dtbcache.v2
 .vs/FileFlowsPlugins/project-colors.json
 /Plugin.pdb
+deploy/

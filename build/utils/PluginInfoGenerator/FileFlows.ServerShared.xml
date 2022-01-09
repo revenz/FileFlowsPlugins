@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FileFlows.ServerShared</name>
+    </assembly>
+    <members>
+        <member name="M:FileFlows.ServerShared.Helpers.FileHelper.RemoveIllegalCharacters(System.String)">
+            <summary>
+            Removes illegal file/path characters from a string
+            </summary>
+            <param name="input">the string to clean</param>
+            <returns>the original string with all illegal characters removed</returns>
+        </member>
+        <member name="T:FileFlows.ServerShared.Helpers.PluginHelper">
+            <summary>
+            This class will allow hot reloading of an plugin assembly so they can be update
+            This class should return nothing from a Plugin assembly and just common C# objects
+            </summary>
+        </member>
+        <member name="M:FileFlows.ServerShared.Helpers.PluginHelper.LoadNode(FileFlows.Shared.Models.FlowPart)">
+            <summary>
+            This needs to return an instance so the FlowExecutor can use it...
+            </summary>
+            <param name="part">The flow part</param>
+            <returns>an insstance of the plugin node</returns>
+        </member>
+    </members>
+</doc>

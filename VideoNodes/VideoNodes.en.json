@@ -53,15 +53,15 @@
         "ComskipChapters": {
           "Description": "Uses a comskip EDL file and will create chapters given that EDL comskip file.",
           "Outputs": {
-            "1": "Commericals chapters created, saved to temporary file",
-            "2": "No commericals detected"
+            "1": "Commercials chapters created, saved to temporary file",
+            "2": "No commercials detected"
           }
         },
         "ComskipRemoveAds": {
-          "Description": "Uses a comskip EDL file and will remove commericals using that file.",
+          "Description": "Uses a comskip EDL file and will remove commercials using that file.",
           "Outputs": {
-            "1": "Commericals removed, saved to temporary file",
-            "2": "No commericals detected"
+            "1": "Commercials removed, saved to temporary file",
+            "2": "No commercials detected"
           }
         },
         "VideoFile": {
