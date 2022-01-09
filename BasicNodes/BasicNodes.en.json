@@ -135,9 +135,10 @@
           },
           "Fields": {
             "Outputs": "Outputs",
-            "Outputs-Help": "The number of outputs this node can have.",
+            "Template": "Template",
+            "Template-Help": "WARNING: This will replace whatever is in the code block with the template you select.",
             "Code": "Code",
-            "Code-Help": "return -1 for error and flow to stop\nreturn 0 for flow to complete\nreturn 1 or more for the desired output to be called"
+            "Code-Help": "return -1 for error and flow to stop.  return 0 for flow to complete.  return 1 or more for the desired output to be called"
           }
         },
         "GotoFlow": {

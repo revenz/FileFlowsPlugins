@@ -16,6 +16,8 @@ namespace FileFlows.BasicNodes.Functions
         public override FlowElementType Type => FlowElementType.Logic;
         public override string Icon => "fas fa-code";
 
+        public override string HelpUrl => "https://github.com/revenz/FileFlows/wiki/Function-Node"; 
+
         [DefaultValue(1)]
         [NumberInt(1)]
         public new int Outputs { get; set; }
