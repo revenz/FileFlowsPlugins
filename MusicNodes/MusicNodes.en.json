@@ -1,0 +1,76 @@
+{
+    "Flow":{
+      "Parts": {
+        "AudioTrackReorder": {
+          "Description": "Allows you to reorder audio tracks in the preferred order.\n\nEnter the audio codecs in the order you want.  Any not listed will be ordered after the ones entered in their original order.\nIf there are multiple tracks with same codec, they will be ordered first by the order you entered, then in their original order.\n\nOutput 1: Audio tracks were reordered\nOutput 2: Audio tracks did not need reordering",
+          "Fields": {
+            "OrderedTracks": "Ordered Audio Codecs"
+          }
+        },
+        "VideoFile": {
+          "Description": "An input video file that has had its VideoInformation read and can be processed"
+        },
+        "DetectBlackBars": {
+          "Description": "Processes a video file and scans for black bars in the video.\n\nIf found a parameter \"VideoCrop\" will be added.\n\nOutput 1: Black bars detected\nOutput 2: Not detected",
+          "Fields": {
+            "CroppingThreshold": "Threshold",
+            "CroppingThreshold-Help": "The amount of pixels that must be greater than to crop.   E.g. if there's only 5 pixels detected as black space, you may consider this too small to crop."
+          }
+        },
+        "SubtitleRemover": {
+          "Description": "Removes subtitles from a video file if found..\n\nOutput 1: Subtitles were removed\nOutput 2: No subtitles found that needed to be removed",
+          "Fields": {
+            "SubtitlesToRemove": "Subtitles To Remove"
+          }
+        },
+        "VideoCodec": {
+          "Description": "This node will check the codecs in the input file, and trigger when matched.\n\nOutput 1: Matches\nOutput 2: Does not match",
+          "Fields": {
+            "Codecs": "Codecs",
+            "Codecs-Help": "Enter a list of case insensitive video or audio codecs.\nEg hevc, h265, mpeg4, ac3"
+          }
+        },
+        "VideoEncode": {
+          "Description": "A generic video encoding node, this lets you customize how to encode a video file using ffmpeg.\n\nOutput 1: Video was processed\nOutput 2: No processing required",
+          "Fields": {
+            "Extension": "Extension",
+            "Extension-Help": "The file extension to use on the newly created file",
+            "VideoCodec": "Video Codec",
+            "VideoCodec-Help": "The video codec the video should be in, for example hevc, h264",
+            "VideoCodecParameters": "Video Codec Parameters",
+            "VideoCodecParameters-Help": "The parameters to use to encode the video, eg. \"hevc_nvenc -preset hq -crf 23\" to encode into hevc using the HQ preset a constant rate factor of 23 and using NVIDIA hardware acceleration.",
+            "AudioCodec": "Audio Codec",
+            "AudioCodec-Help": "The audio codec to encode the video with",
+            "Language": "Language",
+            "Language-Help": "Optional ISO 639-2 language code to use.  Will attempt to find an audio track with this language code if not the best audio track will be used.\nhttps://en.wikipedia.org/wiki/List_of_ISO_639-2_codes"
+          }
+        },
+        "Video_H265_AC3": {
+          "Description": "This will ensure all videos are encoded in H265 (if not already encoded) and that AC3 audio is the first audio channel\n\nOutput 1: Video was processed\nOutput 2: No processing required",
+          "Fields": {
+            "Language": "Language",
+            "Language-Help": "Optional ISO 639-2 language code to use.  Will attempt to find an audio track with this language code if not the best audio track will be used.\nhttps://en.wikipedia.org/wiki/List_of_ISO_639-2_codes",
+            "Crf": "Constant Rate Factor",
+            "Crf-Help": "Refer to ffmpeg for more details, the lower the value the bigger the file.  A good value is around 19-23.  Default is 21.",
+            "NvidiaEncoding": "NVIDIA Encoding",
+            "NvidiaEncoding-Help": "If NVIDIA hardware encoding should be used.  If you do not have a supported NVIDIA card the encoding will fail.",
+            "Threads": "Threads",
+            "Threads-Help": "Only used if not using NVIDIA.  If set to 0, the threads will use FFMpegs defaults.",
+            "NormalizeAudio": "Normalize Audio",
+            "NormalizeAudio-Help": "If the audio track should have its volume level normalized",
+            "ForceRencode": "Force Re-Encode",
+            "ForceRencode-Help": "If the video should always be re-encoded regardless if it already is in H265/AC3"
+          }
+        },
+        "FFMPEG": {
+          "Description": "The node lets you run any FFMPEG command you like.  Giving you full control over what it can do.\n\nFor more information refer to the FFMPEG documentation",
+          "Fields": {
+            "Extension": "Extension",
+            "Extension-Help": "The file extension to use on the newly created file",
+            "CommandLine": "Command Line",
+            "CommandLine-Help": "The command line to run with FFMPEG.\n'{WorkingFile}': the working file of the flow\n'{Output}': The output file that will be passed as the last parameter to FFMPEG including the extension defined above."
+          }
+        }
+      }
+    }
+}

@@ -3,7 +3,7 @@ Write-Output "###      Building Plugins      ###"
 Write-Output "##################################"
 
 
-& dotnet utils/spellcheck/spellcheck.dll .
+& dotnet utils/spellcheck/spellcheck.dll ../
 if ($LASTEXITCODE -ne 0 ) {
     Write-Error "Spellcheck failed"
     exit

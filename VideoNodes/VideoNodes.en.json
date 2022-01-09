@@ -25,7 +25,7 @@
         },
         "AudioTrackReorder": {
           "Outputs": {
-            "1": "Audio tracks re-ordred in new temporary file",
+            "1": "Audio tracks re-ordered in new temporary file",
             "2": "Audio tracks NOT re-ordered"
           },
           "Description": "Allows you to reorder audio tracks in the preferred order.\n\nEnter the languages/audio codecs/channels in the order you want.  Any not listed will be ordered after the ones entered in their original order.\nIf there are multiple tracks with same language/codec/channels, they will be ordered first by the order you entered, then in their original order.\n\nOutput 1: Audio tracks were reordered\nOutput 2: Audio tracks did not need reordering",
