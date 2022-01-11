@@ -48,9 +48,15 @@
                 else
                 {
                     var file = new FileInfo(args.FileName);
-                    OutputFile = file.FullName.Substring(0, file.FullName.LastIndexOf(file.Extension)) + ".srt";
+
+                    string extension = "srt";
+                    if(subTrack.Codec?.ToLower()?.Contains("pgs") == true)
+                        extension = "sup";
+
+                    OutputFile = file.FullName.Substring(0, file.FullName.LastIndexOf(file.Extension)) + "." + extension;
                 }
                 OutputFile = args.MapPath(OutputFile);
+                bool textSubtitles = System.Text.RegularExpressions.Regex.IsMatch(OutputFile, @"\.(sup)$") == false;
 
 
                 if (File.Exists(OutputFile))
@@ -63,12 +69,19 @@
                 var result = args.Process.ExecuteShellCommand(new ExecuteArgs
                 {
                     Command = ffmpegExe,
-                    ArgumentList = new []
-                    {
+                    ArgumentList = textSubtitles ? new[] {
+
                         "-i", args.WorkingFile,
-                        "-map", $"0:s:{subTrack.TypeIndex}",
+                        "-map", $"{subTrack.IndexString}",
                         "-map", "-0:v",
                         "-map", "-0:a",
+                        OutputFile
+                    }
+                    : new []
+                    {
+                        "-i", args.WorkingFile,
+                        "-c", "copy",
+                        "-map", $"{subTrack.IndexString}",
                         OutputFile
                     }
                 }).Result;
@@ -78,6 +91,16 @@
                     return 1;
                 }
 
+                var of = new FileInfo(OutputFile);
+                if (of.Exists && of.Length == 0)
+                {
+                    // delete the output file if it created an empty file
+                    try
+                    {
+                        of.Delete();
+                    }
+                    catch (Exception) { }
+                }
                 args.Logger?.ELog("FFMPEG process failed to extract subtitles");
                 args.Logger?.ILog("Unexpected exit code: " + result.ExitCode);
                 args.Logger?.ILog(result.StandardOutput ?? String.Empty);

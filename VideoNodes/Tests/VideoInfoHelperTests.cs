@@ -341,6 +341,29 @@ namespace VideoNodes.Tests
             int output = node.Execute(args);
             Assert.AreEqual(1, output);
         }
+
+
+
+        [TestMethod]
+        public void VideoInfoTest_Subtitle_Extractor()
+        {
+            const string file = @"D:\videos\Injustice.mkv";
+            var vi = new VideoInfoHelper(@"C:\utils\ffmpeg\ffmpeg.exe", new TestLogger());
+            var vii = vi.Read(file);
+
+            SubtitleExtractor node = new ();
+            //node.OutputFile = file + ".sup";
+            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
+            args.GetToolPath = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
+            args.TempPath = @"D:\videos\temp";
+
+            new VideoFile().Execute(args);
+
+            int output = node.Execute(args);
+
+            Assert.AreEqual(1, output);
+
+        }
     }
 }
 

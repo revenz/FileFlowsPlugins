@@ -46,9 +46,12 @@ namespace FileFlows.VideoNodes
                     process.StartInfo.RedirectStandardOutput = true;
                     process.StartInfo.RedirectStandardError = true;
                     process.StartInfo.CreateNoWindow = true;
-                    process.StartInfo.Arguments = $"-i \"{filename}\"";
+                    process.StartInfo.ArgumentList.Add("-hide_banner");
+                    process.StartInfo.ArgumentList.Add("-i");
+                    process.StartInfo.ArgumentList.Add(filename);
                     process.Start();
                     string output = process.StandardError.ReadToEnd();
+                    output = output.Replace("At least one output file must be specified", string.Empty).Trim();
                     string error = process.StandardError.ReadToEnd();
                     process.WaitForExit();
 
