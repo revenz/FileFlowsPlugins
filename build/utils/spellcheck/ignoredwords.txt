@@ -47,3 +47,11 @@ remuxed
 srt
 ssa
 rescaled
+Bitrate
+bitrate
+MusicInformation
+Kbps
+AAC
+WAV
+OGG
+FLAC
