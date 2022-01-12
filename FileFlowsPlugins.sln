@@ -11,7 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaNodes", "MetaNodes\Meta
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChecksumNodes", "ChecksumNodes\ChecksumNodes.csproj", "{910B0A24-0E5C-4E1D-9C52-D537F896DE02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CollectionNodes", "CollectionNodes\CollectionNodes.csproj", "{4211AAE9-0764-4626-B0F2-089A466E002A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CollectionNodes", "CollectionNodes\CollectionNodes.csproj", "{4211AAE9-0764-4626-B0F2-089A466E002A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicNodes", "MusicNodes\MusicNodes.csproj", "{A7D498A4-5C67-45E9-9D33-20E8F570C25A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailNodes", "EmailNodes\EmailNodes.csproj", "{8F2739B8-2BD6-4AAC-A54B-2EE1B4AAF559}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{4211AAE9-0764-4626-B0F2-089A466E002A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4211AAE9-0764-4626-B0F2-089A466E002A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4211AAE9-0764-4626-B0F2-089A466E002A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7D498A4-5C67-45E9-9D33-20E8F570C25A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7D498A4-5C67-45E9-9D33-20E8F570C25A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7D498A4-5C67-45E9-9D33-20E8F570C25A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7D498A4-5C67-45E9-9D33-20E8F570C25A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F2739B8-2BD6-4AAC-A54B-2EE1B4AAF559}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F2739B8-2BD6-4AAC-A54B-2EE1B4AAF559}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F2739B8-2BD6-4AAC-A54B-2EE1B4AAF559}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F2739B8-2BD6-4AAC-A54B-2EE1B4AAF559}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
