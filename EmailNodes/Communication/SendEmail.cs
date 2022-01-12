@@ -38,10 +38,9 @@ namespace FileFlows.Communication
             string subject = args.ReplaceVariables(this.Subject ?? String.Empty)?.EmptyAsNull() ?? "Email from FileFlows"; ;
 
 
+            SendMailKit(args, settings, sender, subject, body);
 
-            //SendMailKit(args, settings, sender, subject, body);
-
-            SendDotNet(args, settings, sender, subject, body);
+            //SendDotNet(args, settings, sender, subject, body);
 
             return 1;
         }
