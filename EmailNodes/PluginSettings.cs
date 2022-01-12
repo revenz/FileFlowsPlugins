@@ -18,7 +18,7 @@
         [Text(2)]
         public string SmtpUsername { get; set; }
 
-        [Text(3)]
+        [Password(3)]
         public string SmtpPassword { get; set; }
 
         [Text(4)]
