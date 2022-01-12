@@ -47,8 +47,10 @@ namespace FileFlows.Communication
                 Text = body
             };
 
-            using(var client = new SmtpClient())
+            args.Logger?.ILog($"About to construct SmtpClient");
+            using (var client = new SmtpClient())
             {
+                args.Logger?.ILog($"Connecting to SMTP Server: {settings.SmtpServer}:{settings.SmtpPort}");
                 client.Connect(settings.SmtpServer, settings.SmtpPort);
 
                 if (string.IsNullOrEmpty(settings.SmtpUsername) == false)
@@ -57,7 +59,9 @@ namespace FileFlows.Communication
                     client.AuthenticationMechanisms.Remove("XOAUTH2");
                     client.Authenticate(settings.SmtpUsername, settings.SmtpPassword);
                 }
+                args.Logger?.ILog($"About to send message");
                 client.Send(message);
+                args.Logger?.ILog($"Message sent");
                 client.Disconnect(true);
             }
 
