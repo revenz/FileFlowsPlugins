@@ -26,7 +26,7 @@
           "Subject": "Subject",
           "Subject-Help": "The subject of the email being set",
           "Body": "Body",
-          "Body-Help": "The content of the email message being sent.  "
+          "Body-Help": "The content of the email message being sent. Uses the scriban templating language\nhttps://github.com/scriban/scriban"
         }
       }
     }

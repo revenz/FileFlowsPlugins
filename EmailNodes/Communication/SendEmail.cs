@@ -1,6 +1,7 @@
 ﻿
 using MailKit.Net.Smtp;
 using MimeKit;
+using Scriban;
 
 namespace FileFlows.Communication
 {
@@ -33,9 +34,10 @@ namespace FileFlows.Communication
 
             args.Logger?.ILog($"Got SMTP Server: {settings.SmtpServer} [{settings.SmtpPort}]");
 
-            string body = this.Body ?? string.Empty;
+            string body = RenderBody(args);
+
             string sender = settings.Sender ?? "fileflows@" + Environment.MachineName;
-            string subject = args.ReplaceVariables(this.Subject ?? String.Empty)?.EmptyAsNull() ?? "Email from FileFlows"; ;
+            string subject = args.ReplaceVariables(this.Subject ?? String.Empty)?.EmptyAsNull() ?? "Email from FileFlows";
 
 
             SendMailKit(args, settings, sender, subject, body);
@@ -43,6 +45,25 @@ namespace FileFlows.Communication
             //SendDotNet(args, settings, sender, subject, body);
 
             return 1;
+        }
+
+        internal string RenderBody(NodeParameters args)
+        {
+            if (string.IsNullOrEmpty(this.Body))
+                return string.Empty;
+
+            string body = this.Body;
+            var dict = new Dictionary<string, object>();
+            foreach(string key in args.Variables.Keys)
+            {
+                string newKey = key.Replace(".", "");
+                body = body.Replace(key, newKey);
+                if (dict.ContainsKey(newKey) == false)
+                    dict.Add(newKey, args.Variables[key]);
+            }
+            var template = Template.Parse(body);
+            string result = template.Render(dict).Trim();
+            return result;
         }
 
         private void SendDotNet(NodeParameters args, PluginSettings settings, string sender, string subject, string body)

@@ -56,3 +56,6 @@ WAV
 OGG
 FLAC
 SMTP
+templating
+scriban
+github
