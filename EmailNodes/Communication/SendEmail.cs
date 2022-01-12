@@ -30,6 +30,9 @@ namespace FileFlows.Communication
                 args.Logger?.ELog("No SMTP Server configured, configure this under the 'Plugins > Email Nodes > Edit' page.");
                 return -1;
             }
+
+            args.Logger?.ILog($"Got SMTP Server: {settings.SmtpServer} [{settings.SmtpPort}]");
+
             string body = this.Body ?? string.Empty;
             string sender = settings.Sender ?? "fileflows@" + Environment.MachineName;
             string subject = args.ReplaceVariables(this.Subject ?? String.Empty)?.EmptyAsNull() ?? "Email from FileFlows"; ;
