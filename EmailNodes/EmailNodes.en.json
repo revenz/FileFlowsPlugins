@@ -1,0 +1,34 @@
+{
+  "Plugins": {
+    "EmailNodes": {
+      "Fields": {
+        "SmtpServer": "SMTP Server",
+        "SmtpServer-Help": "The address of the SMTP Server used to send emails",
+        "SmtpPort": "SMTP Port",
+        "SmtpPort-Help": "The port of the SMTP Server used to send emails, default 25",
+        "SmtpUsername": "SMTP Username",
+        "SmtpUsername-Help": "The username used to authenticate against the SMTP Server",
+        "SmtpPassword": "SMTP Password",
+        "SmtpPassword-Help": "The password used to authenticate against the SMTP Server"
+      }
+    }
+  },
+  "Flow": {
+    "Parts": {
+      "SendEmail": {
+        "Outputs": {
+          "1": "Sent email to {Recipient}"
+        },
+        "Description": "Sends an email using the configured SMTP Server",
+        "Fields": {
+          "Recipients": "Recipients",
+          "Recipients-Help": "A list of email addresses to send the message to",
+          "Subject": "Subject",
+          "Subject-Help": "The subject of the email being set",
+          "Body": "Body",
+          "Body-Help": "The content of the email message being sent.  "
+        }
+      }
+    }
+  }
+}
