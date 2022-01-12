@@ -37,6 +37,44 @@ namespace FileFlows.Communication
             string sender = settings.Sender ?? "fileflows@" + Environment.MachineName;
             string subject = args.ReplaceVariables(this.Subject ?? String.Empty)?.EmptyAsNull() ?? "Email from FileFlows"; ;
 
+
+
+            //SendMailKit(args, settings, sender, subject, body);
+
+            SendDotNet(args, settings, sender, subject, body);
+
+            return 1;
+        }
+
+        private void SendDotNet(NodeParameters args, PluginSettings settings, string sender, string subject, string body)
+        {
+            args.Logger?.ILog($"Send using .NET internal mail library");
+            System.Net.Mail.MailMessage message = new ();
+            message.From = new System.Net.Mail.MailAddress(sender);
+            foreach (var recipient in Recipients)
+                message.To.Add(recipient);
+            message.Subject = subject;
+            message.Body = args.ReplaceVariables(body);
+
+
+            System.Net.Mail.SmtpClient smtp = new ();
+            smtp.Port = settings.SmtpPort;
+            smtp.Host = settings.SmtpServer;
+            if (string.IsNullOrEmpty(settings.SmtpUsername) == false)
+            {
+                args.Logger?.ILog("Sending using credientials");
+                smtp.EnableSsl = true;
+                smtp.UseDefaultCredentials = false;
+                smtp.Credentials = new System.Net.NetworkCredential(settings.SmtpUsername, settings.SmtpPassword);
+                //smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            }
+            args.Logger?.ILog("About to send email");
+            smtp.Send(message);
+            args.Logger?.ILog("Email sent!");
+        }
+
+        private void SendMailKit(NodeParameters args, PluginSettings settings, string sender, string subject, string body)
+        {
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress(sender, sender));
             foreach (var recipient in Recipients)
@@ -64,34 +102,6 @@ namespace FileFlows.Communication
                 args.Logger?.ILog($"Message sent");
                 client.Disconnect(true);
             }
-
-
-
-
-
-            //MailMessage message = new MailMessage();
-            //message.From = new MailAddress(sender);
-            //foreach (var recipient in Recipients)
-            //    message.To.Add(recipient);
-            //message.Subject = subject;
-            //message.Body = args.ReplaceVariables(body);
-
-
-
-            //SmtpClient smtp = new SmtpClient();
-            //smtp.Port = settings.SmtpPort;
-            //smtp.Host = settings.SmtpServer;
-            //if (string.IsNullOrEmpty(settings.SmtpUsername) == false)
-            //{
-            //    args.Logger?.ILog("Sending using credientials");
-            //    smtp.EnableSsl = true;
-            //    smtp.UseDefaultCredentials = false;
-            //    smtp.Credentials = new NetworkCredential(settings.SmtpUsername, settings.SmtpPassword);
-            //    //smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-            //}
-            //smtp.Send(message);
-
-            return 1;
         }
     }
 }
