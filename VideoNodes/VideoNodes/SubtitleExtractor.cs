@@ -19,6 +19,18 @@
         [File(2)]
         public string OutputFile { get; set; }
 
+        [Boolean(3)]
+        public bool SetWorkingFile { get; set; }
+        private Dictionary<string, object> _Variables;
+        public override Dictionary<string, object> Variables => _Variables;
+        public SubtitleExtractor()
+        {
+            _Variables = new Dictionary<string, object>()
+            {
+                { "sub.FileName", "/path/to/subtitle.sub" }
+            };
+        }
+
         public override int Execute(NodeParameters args)
         {
             try
@@ -88,6 +100,13 @@
 
                 if (result.ExitCode == 0)
                 {
+                    args.UpdateVariables(new Dictionary<string, object>
+                    {
+                        { "sub.FileName", OutputFile }
+                    });
+                    if (SetWorkingFile)
+                        args.SetWorkingFile(OutputFile, dontDelete: true);
+
                     return 1;
                 }
 
