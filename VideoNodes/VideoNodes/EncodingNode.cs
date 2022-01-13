@@ -31,7 +31,7 @@ namespace FileFlows.VideoNodes
                 outputFile = Path.Combine(args.TempPath, Guid.NewGuid().ToString() + "." + extension);
 
             bool success = Encoder.Encode(args.WorkingFile, outputFile, ffmpegParameters, dontAddInputFile: dontAddInputFile);
-            args.Logger.ILog("Encoding succesful: " + success);
+            args.Logger.ILog("Encoding successful: " + success);
             if (success && updateWorkingFile)
             {
                 args.SetWorkingFile(outputFile);
@@ -62,7 +62,6 @@ namespace FileFlows.VideoNodes
                 return;
             }
             float percent = (float)((time.TotalMilliseconds / TotalTime.TotalMilliseconds) * 100);
-            args?.Logger?.ILog($"Time Percent: {percent} ({time.TotalMilliseconds}) ({TotalTime.TotalMilliseconds})");
             args?.PartPercentageUpdate(percent);
         }
 
