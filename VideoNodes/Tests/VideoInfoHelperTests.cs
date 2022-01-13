@@ -326,7 +326,8 @@ namespace VideoNodes.Tests
         {
             const string file = @"D:\videos\recordings\Rescue My Renovation (2001).ts";
             const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
-            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
+            var logger = new TestLogger();
+            var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty);
 
             args.GetToolPath = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\videos\temp";
