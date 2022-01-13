@@ -164,6 +164,7 @@ namespace FileFlows.VideoNodes
                 {
                     var timeString = rgxTime.Match(e.Data).Value;
                     var ts = TimeSpan.Parse(timeString);
+                    Logger.DLog("TimeSpan Detected: " + ts);
                     if (AtTime != null)
                         AtTime.Invoke(ts);
                 }

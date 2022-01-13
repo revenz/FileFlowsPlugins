@@ -57,8 +57,12 @@ namespace FileFlows.VideoNodes
         void AtTimeEvent(TimeSpan time)
         {
             if (TotalTime.TotalMilliseconds == 0)
+            {
+                args?.Logger?.DLog("Can't report time progress as total time is 0");
                 return;
+            }
             float percent = (float)((time.TotalMilliseconds / TotalTime.TotalMilliseconds) * 100);
+            args?.Logger?.ILog($"Time Percent: {percent} ({time.TotalMilliseconds}) ({TotalTime.TotalMilliseconds})");
             args?.PartPercentageUpdate(percent);
         }
 
