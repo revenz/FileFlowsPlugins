@@ -25,6 +25,8 @@
           "Recipients-Help": "A list of email addresses to send the message to",
           "Subject": "Subject",
           "Subject-Help": "The subject of the email being set",
+          "Sender": "Sender",
+          "Sender-Help": "The email address who emails will be sent from",
           "Body": "Body",
           "Body-Help": "The content of the email message being sent. Uses the scriban templating language\nhttps://github.com/scriban/scriban"
         }
