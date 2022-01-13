@@ -144,6 +144,7 @@ namespace FileFlows.VideoNodes
                 ffArgs.Add(encodeAudioParameters?.EmptyAsNull() ?? copyAudioStream);
 
                 TotalTime = videoInfo.VideoStreams[0].Duration;
+                args.Logger.ILog("### Total Time: " + TotalTime);
 
                 if (videoInfo?.SubtitleStreams?.Any() == true)
                 {
