@@ -67,6 +67,15 @@ namespace FileFlows.VideoNodes
                     var streamMatches = rgxStreams.Matches(output);
                     int streamIndex = 0;
 
+
+                    // get a rough estimate, bitrate: 346 kb/s
+                    var rgxBitrate = new Regex(@"(?<=(bitrate: ))[\d\.]+(?!=( kb/s))");
+                    var brMatch = rgxBitrate.Match(output);
+                    if (brMatch.Success)
+                    {
+                        vi.Bitrate = float.Parse(brMatch.Value) * 1_000; // to convert to b/s
+                    }
+
                     int subtitleIndex = 1;
                     foreach (Match sm in streamMatches)
                     {

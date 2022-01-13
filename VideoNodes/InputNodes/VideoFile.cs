@@ -24,6 +24,7 @@ namespace FileFlows.VideoNodes
                 { "vi.Duration", 1800 },
                 { "vi.VideoInfo", new VideoInfo() 
                     {
+                        Bitrate = 10_000_000,
                         VideoStreams = new List<VideoStream> {
                             new VideoStream { }
                         },

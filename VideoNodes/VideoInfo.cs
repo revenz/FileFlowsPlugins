@@ -3,6 +3,10 @@ namespace FileFlows.VideoNodes
     public class VideoInfo
     {
         public string FileName { get; set; }
+        /// <summary>
+        /// Gets or sets the bitrate in bytes per second
+        /// </summary>
+        public float Bitrate { get; set; }
         public List<VideoStream> VideoStreams { get; set; } = new List<VideoStream>();
         public List<AudioStream> AudioStreams { get; set; } = new List<AudioStream>();
         public List<SubtitleStream> SubtitleStreams { get; set; } = new List<SubtitleStream>();
@@ -24,7 +28,7 @@ namespace FileFlows.VideoNodes
         public string Title { get; set; } = "";
 
         /// <summary>
-        /// The bitrate(BPS) of the video stream
+        /// The bitrate(BPS) of the video stream in bytes per second
         /// </summary>
         public float Bitrate { get; set; }
 
