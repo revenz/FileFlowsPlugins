@@ -55,7 +55,7 @@ namespace FileFlows.VideoNodes
                         process.StartInfo.RedirectStandardOutput = true;
                         process.StartInfo.RedirectStandardError = true;
                         process.StartInfo.CreateNoWindow = true;
-                        process.StartInfo.Arguments = $" -ss {ss} -i \"{file}\" -hide_banner -vframes 25 -vf cropdetect=24:16:0 -f null -";
+                        process.StartInfo.Arguments = $" -ss {ss} -i \"{file}\" -hide_banner -vframes 25 -vf cropdetect -f null -";
                         args.Logger?.DLog("Executing ffmpeg " + process.StartInfo.Arguments);
                         process.Start();
                         string output = process.StandardError.ReadToEnd();
