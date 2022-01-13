@@ -19,7 +19,7 @@
     "Parts": {
       "SendEmail": {
         "Outputs": {
-          "1": "Sent email to {Recipient}"
+          "1": "Email ''{Subject}'' was sent"
         },
         "Description": "Sends an email using the configured SMTP Server",
         "Fields": {
