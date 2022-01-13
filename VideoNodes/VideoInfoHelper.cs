@@ -142,10 +142,14 @@ namespace FileFlows.VideoNodes
             if (rgxBps.IsMatch(info) && float.TryParse(rgxBps.Match(info).Value, out float bps))
                 vs.Bitrate = bps;
 
-            if (rgxDuration.IsMatch(info) && TimeSpan.TryParse(rgxDuration.Match(info).Value, out TimeSpan duration))
+            if (rgxDuration.IsMatch(info) && TimeSpan.TryParse(rgxDuration.Match(info).Value, out TimeSpan duration) && duration.TotalSeconds > 0)
                 vs.Duration = duration;
-            else if (rgxDuration2.IsMatch(fullOutput) && TimeSpan.TryParse(rgxDuration2.Match(fullOutput).Value, out TimeSpan duration2))
+            else if (rgxDuration2.IsMatch(fullOutput) && TimeSpan.TryParse(rgxDuration2.Match(fullOutput).Value, out TimeSpan duration2) && duration2.TotalSeconds > 0)
                 vs.Duration = duration2;
+            else
+            {
+                Logger?.ILog("Failed to read duration for VideoStream: " + info);
+            }
 
             return vs;
         }

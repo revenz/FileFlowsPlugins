@@ -158,6 +158,8 @@ namespace FileFlows.VideoNodes
             }
             else
             {
+                if (e.Data.Contains("Skipping NAL unit"))
+                    return; // just slighlty ignore these
                 if (rgxTime.IsMatch(e.Data))
                 {
                     var timeString = rgxTime.Match(e.Data).Value;
