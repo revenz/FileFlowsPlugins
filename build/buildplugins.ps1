@@ -16,12 +16,10 @@ if ([String]::IsNullOrEmpty($output)) {
 
 $output = $output | Resolve-Path
 
-$year = (Get-Date).year
-$copyright = "Copyright $year - John Andrews"
-
 Remove-Item Builds  -Recurse -ErrorAction SilentlyContinue
 
 $revision = (git rev-list --count --first-parent HEAD) -join "`n"
+$version = "0.1.0.$revision"
 
 $json = "[`n"
 
@@ -29,7 +27,7 @@ Get-ChildItem -Path ..\ -Filter *.csproj -Recurse -File -Name | ForEach-Object {
     $csproj = '../' + $_
     # update version number of builds
     (Get-Content $csproj) `
-        -replace '(?<=(Version>([\d]+\.){3}))([\d]+)(?=<)', $revision |
+        -replace '(?<=(Version>))([\d]+\.){3}[\d]+)(?=<)', $version |
     Out-File $csproj
 
         
@@ -53,7 +51,7 @@ Get-ChildItem -Path ..\ -Filter *.csproj -Recurse -File -Name | ForEach-Object {
         
         #read nfo file
         # build server needs ../, locally we cant have it
-        if ([System.IO.File]::Exists("$output/$package/.nfo") -eq $false){
+        if ([System.IO.File]::Exists("$output/$package/.nfo") -eq $false) {
             Write-Error "Failed to locate nfo file $output/$package/.nfo"
         }
         $pluginNfo = [System.IO.File]::ReadAllText("$output/$package/.nfo");
