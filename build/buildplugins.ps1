@@ -27,7 +27,7 @@ Get-ChildItem -Path ..\ -Filter *.csproj -Recurse -File -Name | ForEach-Object {
     $csproj = '../' + $_
     # update version number of builds
     (Get-Content $csproj) `
-        -replace '(?<=(Version>))([\d]+\.){3}[\d]+)(?=<)', $version |
+        -replace '(?<=(Version>))([\d]+\.){3}[\d]+(?=<)', $version |
     Out-File $csproj
 
         
