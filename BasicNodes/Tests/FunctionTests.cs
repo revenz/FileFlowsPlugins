@@ -214,7 +214,7 @@ return 0;
             Function pm = new Function();
             var logger = new TestLogger();
             var args = new FileFlows.Plugin.NodeParameters(@"D:\videos\unprocessed\The IT Crowd - 2x04 - The Dinner Party - No English.mkv", logger, false, string.Empty);
-            args.GetToolPath = (string name) => @"C:\utils\ffmpeg\ffmpeg.exe";
+            args.GetToolPathActual = (string name) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\videos\temp";
             pm.Code = @"
 let output = Flow.TempPath + '/' + Flow.NewGuid() + '.mkv';

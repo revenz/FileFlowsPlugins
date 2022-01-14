@@ -23,7 +23,7 @@ namespace VideoNodes.Tests
             DetectBlackBars node = new();
             //node.OutputFile = file + ".sup";
             var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
-            args.GetToolPath = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
+            args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\videos\temp";
 
             new VideoFile().Execute(args);

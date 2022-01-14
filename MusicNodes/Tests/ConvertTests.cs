@@ -22,7 +22,7 @@ namespace FileFlows.MusicNodes.Tests
 
             ConvertToAAC node = new ();
             var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
-            args.GetToolPath = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
+            args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\music\temp";
             new MusicFile().Execute(args); // need to read the music info and set it
             int output = node.Execute(args);
@@ -38,7 +38,7 @@ namespace FileFlows.MusicNodes.Tests
 
             ConvertToMP3 node = new();
             var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
-            args.GetToolPath = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
+            args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\music\temp";
             new MusicFile().Execute(args); // need to read the music info and set it
             int output = node.Execute(args);
@@ -53,7 +53,7 @@ namespace FileFlows.MusicNodes.Tests
 
             ConvertToWAV node = new();
             var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
-            args.GetToolPath = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
+            args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\music\temp";
             new MusicFile().Execute(args); // need to read the music info and set it
             int output = node.Execute(args);
@@ -69,7 +69,7 @@ namespace FileFlows.MusicNodes.Tests
 
             ConvertToOGG node = new();
             var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
-            args.GetToolPath = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
+            args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\music\temp";
             new MusicFile().Execute(args); // need to read the music info and set it
             int output = node.Execute(args);
@@ -86,7 +86,7 @@ namespace FileFlows.MusicNodes.Tests
 
             ConvertToMP3 node = new();
             var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
-            args.GetToolPath = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
+            args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\music\temp";
             new MusicFile().Execute(args); // need to read the music info and set it
             int output = node.Execute(args);

@@ -35,7 +35,7 @@ namespace VideoNodes.Tests
                 "subrip", "srt"
             };
             var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
-            args.GetToolPath = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
+            args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\videos\temp";
 
             new VideoFile().Execute(args);
@@ -56,7 +56,7 @@ namespace VideoNodes.Tests
             //vi.Read(@"D:\videos\unprocessed\Bourne.mkv");
 
             var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
-            args.GetToolPath = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
+            args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\videos\temp";
 
             int result = new DetectBlackBars().Execute(args);
@@ -308,7 +308,7 @@ namespace VideoNodes.Tests
             const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
             var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
 
-            args.GetToolPath = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
+            args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\videos\temp";
 
 
@@ -330,7 +330,7 @@ namespace VideoNodes.Tests
             var logger = new TestLogger();
             var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty);
 
-            args.GetToolPath = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
+            args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\videos\temp";
 
 
@@ -356,7 +356,7 @@ namespace VideoNodes.Tests
             SubtitleExtractor node = new ();
             //node.OutputFile = file + ".sup";
             var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
-            args.GetToolPath = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
+            args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\videos\temp";
 
             new VideoFile().Execute(args);
