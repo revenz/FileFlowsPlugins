@@ -108,7 +108,7 @@ namespace FileFlows.VideoNodes
 
                 args.Logger?.DLog($"Video dimensions: {vidWidth}x{vidHeight}");
 
-                int diff = x + y + (vidWidth - width) + (vidHeight - height);
+                int diff = (vidWidth - width) + (vidHeight - height);
 
                 bool willCrop = diff > CroppingThreshold;
                 args.Logger?.ILog($"Crop detection, x:{x}, y:{y}, width: {width}, height: {height}, total:{diff}, threshold:{CroppingThreshold}, above threshold: {willCrop}");
