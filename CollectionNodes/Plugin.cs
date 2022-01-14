@@ -6,7 +6,7 @@ namespace CollectionNodes
     public class Plugin : IPlugin
     {
         public string Name => "Collection Nodes";
-        public string MinimumVersion => "0.2.0.310";
+        public string MinimumVersion => "0.3.1.391";
 
         [Folder(1)]
         [Required]
