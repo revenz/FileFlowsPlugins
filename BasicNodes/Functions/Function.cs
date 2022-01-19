@@ -33,71 +33,52 @@ namespace FileFlows.BasicNodes.Functions
             if (string.IsNullOrEmpty(Code))
                 return -1; // no code, flow cannot continue doesnt know what to do
 
-            args.Logger?.DLog("Code: ", Environment.NewLine + new string('=', 40) + Environment.NewLine + Code + Environment.NewLine + new string('=', 40));
-
-
-            long fileSize = 0;
-            var fileInfo = new FileInfo(args.WorkingFile);
-            if(fileInfo.Exists)
-                fileSize = fileInfo.Length;
-
-            // replace Variables. with dictionary notation
-            string tcode = Code;
-            foreach (string k in args.Variables.Keys.OrderByDescending(x => x.Length))
-            {
-                tcode = tcode.Replace("Variables." + k, "Variables['" + k + "']");
-            }
-
-            var sb = new StringBuilder();
-            var log = new
-            {
-                ILog = new LogDelegate(args.Logger.ILog),
-                DLog = new LogDelegate(args.Logger.DLog),
-                WLog = new LogDelegate(args.Logger.WLog),
-                ELog = new LogDelegate(args.Logger.ELog),
-            };
-            var engine = new Engine(options =>
-            {
-                options.LimitMemory(4_000_000);
-                options.MaxStatements(500);
-            })
-            .SetValue("Logger", args.Logger)
-            .SetValue("Variables", args.Variables)
-            .SetValue("Flow", args);
 
             try
             {
+                args.Logger?.DLog("Code: ", Environment.NewLine + new string('=', 40) + Environment.NewLine + Code + Environment.NewLine + new string('=', 40));
+
+
+                long fileSize = 0;
+                var fileInfo = new FileInfo(args.WorkingFile);
+                if (fileInfo.Exists)
+                    fileSize = fileInfo.Length;
+
+                // replace Variables. with dictionary notation
+                string tcode = Code;
+                foreach (string k in args.Variables.Keys.OrderByDescending(x => x.Length))
+                {
+                    // replace Variables.Key or Variables?.Key?.Subkey etc to just the variable
+                    // so Variables.file?.Orig.Name, will be replaced to Variables["file.Orig.Name"] 
+                    // since its just a dictionary key value 
+                    string keyRegex = @"Variables(\?)?\." + k.Replace(".", @"(\?)?\.");
+                    tcode = Regex.Replace(tcode, keyRegex, "Variables['" + k + "']");
+                }
+
+                var sb = new StringBuilder();
+                var log = new
+                {
+                    ILog = new LogDelegate(args.Logger.ILog),
+                    DLog = new LogDelegate(args.Logger.DLog),
+                    WLog = new LogDelegate(args.Logger.WLog),
+                    ELog = new LogDelegate(args.Logger.ELog),
+                };
+                var engine = new Engine(options =>
+                {
+                    options.LimitMemory(4_000_000);
+                    options.MaxStatements(500);
+                })
+                .SetValue("Logger", args.Logger)
+                .SetValue("Variables", args.Variables)
+                .SetValue("Flow", args);
                 var result = int.Parse(engine.Evaluate(tcode).ToObject().ToString());
                 return result;
             }
             catch (Exception ex)
             {
-                args.Logger.ELog("Failed executing function: " + ex.Message);
+                args.Logger?.ELog("Failed executing function: " + ex.Message + Environment.NewLine + ex.StackTrace);
                 return -1;
             }
         }
-
-        //private Dictionary<string, object> ExplodeVariables(Dictionary<string, object> input)
-        //{
-        //    Dictionary<string, object> result = new();
-        //    foreach(var key in input.Keys)
-        //    {
-        //        if(key.IndexOf(".") > 0)
-        //        {
-        //            // folder.Date.Year
-        //            // folder.Date.Month
-        //            // folder.Date.Date
-        //            //bk = Date
-        //            string bk = key.Substring(0, key.IndexOf("."));
-        //            if(result.ContainsKey(bk) == false) 
-        //                result.Add(bk, new Dictionary<string, object>());
-        //            Dictionary<string, object> bkdict = (Dictionary<string, object>)result[bk];
-        //            // nk = Year
-        //            string nk = key.Substring(key.IndexOf(".") + 1);
-        //            bkdict[]
-        //        }
-        //    }
-        //    return result;
-        //}
     }
 }

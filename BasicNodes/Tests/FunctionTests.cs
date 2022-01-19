@@ -176,6 +176,7 @@ return 1";
             Assert.IsTrue(args.Parameters.ContainsKey("batman"));
             Assert.AreEqual(args.Parameters["batman"].ToString(), "1989");
         }
+
         [TestMethod]
         public void Function_Flow_GetDirectorySize()
         {
@@ -208,6 +209,7 @@ return 0;
             var result = pm.Execute(args);
             Assert.AreEqual(2, result);
         }
+
         [TestMethod]
         public void Function_Flow_ExecuteFfmpeg()
         {
@@ -248,6 +250,144 @@ return 1;
             var result = pm.Execute(args);
             Assert.AreEqual(1, result);
         }
+
+
+        [TestMethod]
+        public void Function_Flow_NullabeVI()
+        {
+            Function pm = new Function();
+            var logger = new TestLogger();
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty);
+
+            foreach(var kv in new Dictionary<string, object>()
+            {
+                { "vi.Video.Codec", "hevc" },
+                { "vi.Audio.Codec", "ac3" },
+                { "vi.Audio.Codecs", "ac3,aac"},
+                { "vi.Audio.Language", "eng" },
+                { "vi.Audio.Languages", "eng, mao" },
+                { "vi.Resolution", "1080p" },
+                { "vi.Duration", 1800 },
+                { "vi.VideoInfo", new 
+                    {
+                        Bitrate = 10_000_000,
+                        VideoStreams = new List<object> {
+                            new { Width = 1920, Height = 1080 }
+                        }
+                    }
+                },
+                { "vi.Width", 1920 },
+                { "vi.Height", 1080 },
+            })
+            {
+                args.Variables.Add(kv.Key, kv.Value);
+            };
+
+            pm.Code = @"
+// get the first video stream, likely the only one
+let video = Variables.vi?.VideoInfo?.VideoStreams[0];
+if (!video)
+    return -1; // no video streams detected
+
+if (video.Width > 1920)
+{
+    // down scale to 1920 and encodes using NVIDIA
+	// then add a 'Video Encode' node and in that node 
+	// set 
+	// 'Video Codec' to 'hevc'
+	// 'Video Codec Parameters' to '{EncodingParameters}'
+	Logger.ILog(`Need to downscale from ${video.Width}x${video.Height}`);
+    Variables.EncodingParameters = '-vf scale=1920:-2:flags=lanczos -c:v hevc_nvenc -preset hq -crf 23'
+	return 1;
+}
+
+Logger.ILog('Do not need to downscale');
+return 2;";
+            var result = pm.Execute(args);
+            Assert.IsTrue(result > 0);
+        }
+
+
+        [TestMethod]
+        public void Function_Flow_NullabeVI_2()
+        {
+            Function pm = new Function();
+            var logger = new TestLogger();
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty);
+
+            foreach (var kv in new Dictionary<string, object>()
+            {
+                { "vi.Video.Codec", "hevc" },
+                { "vi.Audio.Codec", "ac3" },
+                { "vi.Audio.Codecs", "ac3,aac"},
+                { "vi.Audio.Language", "eng" },
+                { "vi.Audio.Languages", "eng, mao" },
+                { "vi.Resolution", "1080p" },
+                { "vi.Duration", 1800 },
+                { "vi.VideoInfo", new
+                    {
+                        Bitrate = 10_000_000,
+                        VideoStreams = new List<object> {
+                            new { Width = 1920, Height = 1080 }
+                        },
+                        AudioStreams = new List<object> {
+                            new { Bitrate = 1_000 }
+                        }
+                    }
+                },
+                { "vi.Width", 1920 },
+                { "vi.Height", 1080 },
+            })
+            {
+                args.Variables.Add(kv.Key, kv.Value);
+            };
+
+            pm.Code = @"
+// check if the bitrate for a video is over a certain amount
+let MAX_BITRATE = 3_000_000; // bitrate is 3,000 KBps
+
+let vi = Variables.vi?.VideoInfo;
+if(!vi)
+	return -1; // no video information found
+
+// get the video stream
+let bitrate = vi.VideoStreams[0]?.Bitrate;
+
+if(!bitrate)
+{
+	// video stream doesn't have bitrate information
+	// need to use the overall bitrate
+	let overall = vi.Bitrate;
+	if(!overall)
+		return 0; // couldn't get overall bitrate either
+
+	// overall bitrate includes all audio streams, so we try and subtrack those
+	let calculated = overall;
+	if(vi.AudioStreams?.length) // check there are audio streams
+	{
+		for(let audio of vi.AudioStreams)
+		{
+			if(audio.Bitrate > 0)
+				calculated -= audio.Bitrate;
+			else{
+				// audio doesn't have bitrate either, so we just subtract 5% of the original bitrate
+				// this is a guess, but it should get us close
+				calculated -= (overall * 0.05);
+			}
+		}
+	}
+	bitrate = calculated;
+}
+
+// check if the bitrate is over the maximum bitrate
+if(bitrate > MAX_BITRATE)
+	return 1; // it is, so call output 1
+return 2; // it isn't so call output 2";
+            var result = pm.Execute(args);
+            Assert.IsTrue(result > 0);
+        }
+
+
     }
 }
 
