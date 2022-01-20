@@ -210,6 +210,21 @@ return 0;
             Assert.AreEqual(2, result);
         }
 
+
+        [TestMethod]
+        public void Function_Log()
+        {
+            Function pm = new Function();
+            var logger = new TestLogger();
+            var args = new FileFlows.Plugin.NodeParameters(@"D:\videos\unprocessed\The IT Crowd - 2x04 - The Dinner Party - No English.mkv", logger, false, string.Empty);
+            pm.Code = @"
+Logger.ILog('My Message');
+return 2;
+            ; ";
+            var result = pm.Execute(args);
+            Assert.AreEqual(2, result);
+        }
+
         [TestMethod]
         public void Function_Flow_ExecuteFfmpeg()
         {

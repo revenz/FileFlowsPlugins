@@ -164,7 +164,8 @@ namespace FileFlows.VideoNodes
             var cmd = args.Process.ExecuteShellCommand(new ExecuteArgs
             {
                 Command = ffmpeg,
-                Arguments = cmdArgs
+                Arguments = cmdArgs,
+                Silent = true
             }).Result;
             if (cmd.ExitCode != 0 || string.IsNullOrWhiteSpace(cmd.Output) == false)
             {

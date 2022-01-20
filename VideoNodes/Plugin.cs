@@ -6,7 +6,7 @@ namespace FileFlows.VideoNodes
     public class Plugin : FileFlows.Plugin.IPlugin
     {
         public string Name => "Video Nodes";
-        public string MinimumVersion => "0.3.2.394";
+        public string MinimumVersion => "0.3.3.410";
 
         public void Init()
         {
