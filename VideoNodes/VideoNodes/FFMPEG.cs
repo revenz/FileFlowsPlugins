@@ -48,7 +48,7 @@ namespace FileFlows.VideoNodes
                                         .Replace("{Output}", outputFile)
                                         .Replace("{output}", outputFile);
 
-                if (Encode(args, ffmpegExe, CommandLine) == false)
+                if (Encode(args, ffmpegExe, cmd) == false)
                     return -1;
 
                 return 1;
