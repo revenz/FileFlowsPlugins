@@ -36,35 +36,8 @@ namespace FileFlows.BasicNodes.File
 
             if (IfEmpty)
             {
-                var files = new DirectoryInfo(pathToDelete).GetFiles("*.*", SearchOption.AllDirectories);
-                if (IncludePatterns?.Any() == true)
-                {
-                    var count = files.Where(x =>
-                    {
-                        foreach (var pattern in IncludePatterns)
-                        {
-                            if (x.FullName.Contains(pattern))
-                                return true;
-                            try
-                            {
-                                if (System.Text.RegularExpressions.Regex.IsMatch(x.FullName, pattern, System.Text.RegularExpressions.RegexOptions.IgnoreCase))
-                                    return true;
-                            }
-                            catch (Exception) { }
-                        }
-                        return false;
-                    }).Count();
-                    if (count > 0)
-                    {
-                        args.Logger?.ILog("Directory is not empty, cannot delete: " + pathToDelete);
-                        return 2;
-                    }
-                }
-                else if (files.Length == 0)
-                {
-                    args.Logger?.ILog("Directory is not empty, cannot delete: " + pathToDelete);
-                    return 2;
-                }
+                string libFilePath = args.IsDirectory ? args.FileName : new FileInfo(args.FileName).DirectoryName;
+                return RecursiveDelete(args, path, libFilePath, true);
             }
 
 
@@ -79,6 +52,63 @@ namespace FileFlows.BasicNodes.File
                 return -1;
             }
             return base.Execute(args);
+        }
+
+        private int RecursiveDelete(NodeParameters args, string root, string path, bool deleteSubFolders)
+        {
+            DirectoryInfo dir = new DirectoryInfo(path);
+            if (dir.Parent.FullName.ToLower() == root.ToLower())
+                return 1;
+            if (dir.Parent.FullName.Length <= root.Length)
+                return 1;
+            if (deleteSubFolders == false && dir.GetDirectories().Any())
+            {
+                args.Logger?.ILog("Directory is contains subfolders, cannot delete: " + dir.FullName);
+                return 2;
+            }
+
+            var files = dir.GetFiles("*.*", SearchOption.AllDirectories);
+            if (IncludePatterns?.Any() == true)
+            {
+                var count = files.Where(x =>
+                {
+                    foreach (var pattern in IncludePatterns)
+                    {
+                        if (x.FullName.Contains(pattern))
+                            return true;
+                        try
+                        {
+                            if (System.Text.RegularExpressions.Regex.IsMatch(x.FullName, pattern, System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+                                return true;
+                        }
+                        catch (Exception) { }
+                    }
+                    return false;
+                }).Count();
+                if (count > 0)
+                {
+                    args.Logger?.ILog("Directory is not empty, cannot delete: " + dir.FullName);
+                    return 2;
+                }
+            }
+            else if (files.Length == 0)
+            {
+                args.Logger?.ILog("Directory is not empty, cannot delete: " + dir.FullName);
+                return 2;
+            }
+
+            args.Logger?.ILog("Deleting directory: " + dir.FullName);
+            try
+            {
+                dir.Delete(true);
+            }
+            catch (Exception ex)
+            {
+                args.Logger?.ELog("Failed to delete directory: " + ex.Message);
+                return -1;
+            }
+
+            return RecursiveDelete(args, root, dir.Parent.FullName, false);
         }
     }
 }
