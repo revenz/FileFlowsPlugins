@@ -403,6 +403,31 @@ return 2; // it isn't so call output 2";
         }
 
 
+        [TestMethod]
+        public void Function_FileNameStringVariable()
+        {
+            Function pm = new Function();
+            var logger = new TestLogger();
+            var args = new FileFlows.Plugin.NodeParameters(@"D:\videos\unprocessed\movie h264.mkv", logger, false, string.Empty);
+            pm.Code = @"
+let newName = Variables.file.Name;
+
+if (newName.indexOf('h264') > 0)
+    newName = newName.replace('h264', 'h265');
+else if (newName.indexOf('hevc') > 0)
+    newName = newName.replace('hevc', 'h265');
+else
+    newName += ' h265';
+if (newName == Variables.file.Name)
+    return 2;
+
+Variables.NewName = newName;
+return 1;
+            ; ";
+            var result = pm.Execute(args);
+            Assert.AreEqual(1, result);
+            Assert.AreEqual("movie h265", args.Variables["NewName"]);
+        }
     }
 }
 

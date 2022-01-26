@@ -9,6 +9,7 @@ namespace FileFlows.BasicNodes.Functions
     using System.Text;
     using System.ComponentModel.DataAnnotations;
     using System.Text.RegularExpressions;
+    using System.Text.Json;
 
     public class Function : Node
     {
@@ -52,6 +53,17 @@ namespace FileFlows.BasicNodes.Functions
                     // so Variables.file?.Orig.Name, will be replaced to Variables["file.Orig.Name"] 
                     // since its just a dictionary key value 
                     string keyRegex = @"Variables(\?)?\." + k.Replace(".", @"(\?)?\.");
+
+
+                    object? value = args.Variables[k];
+                    if (value is JsonElement jElement)
+                    {
+                        if (jElement.ValueKind == JsonValueKind.String)
+                            value = jElement.GetString();
+                        if (jElement.ValueKind == JsonValueKind.Number)
+                            value = jElement.GetInt64();
+                    }
+
                     tcode = Regex.Replace(tcode, keyRegex, "Variables['" + k + "']");
                 }
 
