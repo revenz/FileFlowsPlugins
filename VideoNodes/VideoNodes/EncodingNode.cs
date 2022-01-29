@@ -30,6 +30,16 @@ namespace FileFlows.VideoNodes
             if (string.IsNullOrEmpty(outputFile))
                 outputFile = Path.Combine(args.TempPath, Guid.NewGuid().ToString() + "." + extension);
 
+            if (TotalTime.TotalMilliseconds == 0)
+            {
+                VideoInfo videoInfo = GetVideoInfo(args);
+                if (videoInfo != null)
+                {
+                    TotalTime = videoInfo.VideoStreams[0].Duration;
+                    args.Logger.ILog("### Total Time: " + TotalTime);
+                }
+            }
+
             bool success = Encoder.Encode(args.WorkingFile, outputFile, ffmpegParameters, dontAddInputFile: dontAddInputFile);
             args.Logger.ILog("Encoding successful: " + success);
             if (success && updateWorkingFile)

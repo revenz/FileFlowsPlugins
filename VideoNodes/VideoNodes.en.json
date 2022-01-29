@@ -20,7 +20,9 @@
           "Description": "Normalizes all audio tracks in a video file using FFMPEGs loudnorm filter",
           "Fields": {
             "AllAudio": "All Audio Tracks",
-            "AllAudio-Help": "If all audio tracks should be normalized or if just the first track should be"
+            "AllAudio-Help": "If all audio tracks should be normalized or if just the first track should be",
+            "TwoPass": "Two Pass",
+            "TwoPass-Help": "If the audio tracks should use two pass normalization.  This improves the normalization but increases the processing time."
           }
         },
         "AudioTrackReorder": {

@@ -23,6 +23,10 @@ namespace FileFlows.VideoNodes
                 {
                     _CodecOptions = new List<ListOption>
                     {
+                        new ListOption { Label = "Automatic", Value = "###GROUP###"},
+                        new ListOption { Value = "h264", Label = "H264"},
+                        new ListOption { Value = "h265", Label = "H265"},
+
                         new ListOption { Label = "CPU Encoding", Value = "###GROUP###"},
                         new ListOption { Value = "libx264", Label = "H264 (CPU)"},
                         new ListOption { Value = "libx265", Label = "H265 (CPU)"},

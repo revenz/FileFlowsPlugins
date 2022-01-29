@@ -59,3 +59,4 @@ SMTP
 templating
 scriban
 github
+normalization
