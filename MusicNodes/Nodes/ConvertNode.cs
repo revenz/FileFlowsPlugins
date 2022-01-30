@@ -123,6 +123,24 @@ namespace FileFlows.MusicNodes
             }
         }
 
+        protected override List<string> GetArguments()
+        {
+            string codec = Codec switch 
+            {
+                "ogg" => "libvorbis",
+                "wav" => "pcm_s16le",
+                _ => Codec.ToLower()
+            };
+
+            return new List<string>
+            {
+                "-c:a",
+                codec,
+                "-ab",
+                Bitrate + "k"
+            };
+        }
+
         public override int Execute(NodeParameters args)
         {
             MusicInfo musicInfo = GetMusicInfo(args);
@@ -223,7 +241,7 @@ namespace FileFlows.MusicNodes
             ffArgs.Insert(3, args.WorkingFile);
             ffArgs.Add(outputFile);
 
-            args.Logger?.ILog("FFArgs: " + String.Join(", ", ffArgs));
+            args.Logger?.ILog("FFArgs: " + String.Join(" ", ffArgs.Select(x => x.IndexOf(" ") > 0 ? "\"" + x + "\"" : x).ToArray()));
 
             var result = args.Execute(new ExecuteArgs
             {
