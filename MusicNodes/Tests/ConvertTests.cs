@@ -93,6 +93,26 @@ namespace FileFlows.MusicNodes.Tests
 
             Assert.AreEqual(1, output);
         }
+
+        [TestMethod]
+        public void Convert_Mp3_AlreadyMp3()
+        {
+
+            const string file = @"D:\videos\music\13-the_cranberries-why.mp3";
+
+            ConvertAudio node = new();
+            node.SkipIfCodecMatches = true;
+            node.Codec = "mp3";
+
+            node.Bitrate = 192;
+            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
+            args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
+            args.TempPath = @"D:\music\temp";
+            new MusicFile().Execute(args); // need to read the music info and set it
+            int output = node.Execute(args);
+
+            Assert.AreEqual(2, output);
+        }
     }
 }
 

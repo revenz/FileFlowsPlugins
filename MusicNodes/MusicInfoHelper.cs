@@ -61,7 +61,24 @@ namespace FileFlows.MusicNodes
                         return mi;
                     }
 
-                    foreach(string line in output.Split('\n'))
+                    if (output.ToLower().Contains("mp3"))
+                        mi.Codec = "mp3";
+                    else if (output.ToLower().Contains("ogg"))
+                        mi.Codec = "ogg";
+                    else if (output.ToLower().Contains("flac"))
+                        mi.Codec = "flac";
+                    else if (output.ToLower().Contains("wav"))
+                        mi.Codec = "wav";
+                    else if (filename.ToLower().EndsWith(".mp3"))
+                        mi.Codec = "mp3";
+                    else if (filename.ToLower().EndsWith(".ogg"))
+                        mi.Codec = "ogg";
+                    else if (filename.ToLower().EndsWith(".flac"))
+                        mi.Codec = "flac";
+                    else if (filename.ToLower().EndsWith(".wav"))
+                        mi.Codec = "wav";
+
+                    foreach (string line in output.Split('\n'))
                     {
                         int colonIndex = line.IndexOf(":");
                         if(colonIndex < 1)
