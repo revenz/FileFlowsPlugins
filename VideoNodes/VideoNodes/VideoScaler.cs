@@ -89,12 +89,19 @@ namespace FileFlows.VideoNodes
                     return -1;
 
 
-                string codec = CheckVideoCodec(ffmpegExe, VideoCodec);
                 List<string> ffArgs = new List<string>()
                 {
                     "-vf", $"scale={Resolution}:flags=lanczos",
-                    "-c:v", "codec"
+                    "-c:v"
                 };
+
+                string codec = CheckVideoCodec(ffmpegExe, VideoCodec);
+                foreach (string c in codec.Split(" "))
+                {
+                    if (string.IsNullOrWhiteSpace(c.Trim()))
+                        continue;
+                    ffArgs.Add(c.Trim());
+                }
 
                 if (Encode(args, ffmpegExe, ffArgs, Extension) == false)
                     return -1;

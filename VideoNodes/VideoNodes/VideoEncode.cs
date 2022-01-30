@@ -140,8 +140,8 @@ namespace FileFlows.VideoNodes
 
                 List<string> ffArgs = new List<string>();
 
-                ffArgs.AddRange((encodeVideoParameters?.EmptyAsNull() ?? copyVideoStream).Split(" "));
-                ffArgs.AddRange((encodeAudioParameters?.EmptyAsNull() ?? copyAudioStream).Split(" "));
+                ffArgs.AddRange((encodeVideoParameters?.EmptyAsNull() ?? copyVideoStream).Split(" ").Where(x => string.IsNullOrEmpty(x.Trim()) == false).Select(x => x.Trim()).ToArray());
+                ffArgs.AddRange((encodeAudioParameters?.EmptyAsNull() ?? copyAudioStream).Split(" ").Where(x => string.IsNullOrEmpty(x.Trim()) == false).Select(x => x.Trim()).ToArray());
 
                 TotalTime = videoInfo.VideoStreams[0].Duration;
                 args.Logger.ILog("### Total Time: " + TotalTime);
