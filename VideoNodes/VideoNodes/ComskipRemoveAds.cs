@@ -89,7 +89,15 @@
             string concatList = segmentPrefix + "concatlist.txt";
             File.WriteAllLines(concatList, segments.Select(x => $"file '{x}'"));
 
-            bool concatResult = Encode(args, ffmpegExe, $"-f concat -safe 0 -i \"{concatList}\" -c copy", dontAddInputFile: true, extension: extension);
+            List<string> ffArgs = new List<string>
+            {
+                "-f", "concat",
+                "-safe", "0",
+                "-i", "concatList",
+                "-c", "copy"
+            };
+
+            bool concatResult = Encode(args, ffmpegExe, ffArgs, dontAddInputFile: true, extension: extension);
 
             foreach(string segment in segments.Union(new[] { concatList }))
             {
@@ -108,7 +116,13 @@
             bool EncodeSegment(float start, float duration)
             {
                 string segment = segmentPrefix + (++count).ToString("D2") + "." + extension;
-                if (Encode(args, ffmpegExe, $"-ss {start} -t {duration} -c copy", outputFile: segment, updateWorkingFile: false))
+                List<string> ffArgs = new List<string>
+                {
+                    "-ss", start.ToString(),
+                    "-t", duration.ToString(),
+                    "-c", "copy"
+                };
+                if (Encode(args, ffmpegExe, ffArgs, outputFile: segment, updateWorkingFile: false))
                 {
                     segments.Add(segment);
                     return true;

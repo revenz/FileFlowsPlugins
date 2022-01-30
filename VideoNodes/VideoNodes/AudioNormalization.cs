@@ -44,10 +44,10 @@
 
                 List<string> ffArgs = new List<string>();
 
-                ffArgs.Add("-c copy");
+                ffArgs.AddRange(new[] { "-c", "copy" });
 
-                if(videoInfo.VideoStreams?.Any() == true)
-                    ffArgs.Add($"-map 0:v");
+                if (videoInfo.VideoStreams?.Any() == true)
+                    ffArgs.AddRange(new[] { "-map", "0:v" });
 
 
                 for (int j = 0; j < videoInfo.AudioStreams.Count;j++)
@@ -59,26 +59,24 @@
                         if (TwoPass)
                         {
                             string twoPass = DoTwoPass(args, ffmpegExe, audio.IndexString);
-                            ffArgs.Add($"-map 0:{audio.Index} -c:a {audio.Codec} -ar {sampleRate} {twoPass}");
+                            ffArgs.AddRange(new[] { "-map", $"0:{audio.Index}", "-c:a", audio.Codec, "-ar", sampleRate.ToString(), "-af", twoPass });
                         }
                         else
                         {
-                            ffArgs.Add($"-map 0:{audio.Index} -c:a {audio.Codec} -ar {sampleRate} -af loudnorm={LOUDNORM_TARGET}");
+                            ffArgs.AddRange(new[] { "-map", $"0:{audio.Index}", "-c:a", audio.Codec, "-ar", sampleRate.ToString(), "-af", $"loudnorm={LOUDNORM_TARGET}" });
                         }
                     }
                     else
                         ffArgs.Add($"-map 0:{audio.Index}");
                 }
                 if (videoInfo.SubtitleStreams?.Any() == true)
-                    ffArgs.Add("-map 0:s");
-
-                string ffArgsLine = string.Join(" ", ffArgs);
+                    ffArgs.AddRange(new[] { "-map", "0:s" });
 
                 string extension = new FileInfo(args.WorkingFile).Extension;
                 if (extension.StartsWith("."))
                     extension = extension.Substring(1);
 
-                if (Encode(args, ffmpegExe, ffArgsLine, extension) == false)
+                if (Encode(args, ffmpegExe, ffArgs, extension) == false)
                     return -1;
                 
                 return 1;
@@ -91,10 +89,11 @@
         }
 
         [RequiresUnreferencedCode("Calls System.Text.Json.JsonSerializer.Deserialize<FileFlows.VideoNodes.AudioNormalization.LoudNormStats>(string, System.Text.Json.JsonSerializerOptions?)")]
-        public static string DoTwoPass(NodeParameters args,string ffmpegExe, string audioIndex)
+        public string DoTwoPass(NodeParameters args,string ffmpegExe, string audioIndex)
         {
             //-af loudnorm=I=-24:LRA=7:TP=-2.0"
-            var result = args.Execute(ffmpegExe, argumentList: new[]
+            string output;
+            var result = Encode(args, ffmpegExe, new List<string>
             {
                 "-hide_banner",
                 "-i", args.WorkingFile,
@@ -102,20 +101,20 @@
                 "-af", "loudnorm=" + LOUDNORM_TARGET + ":print_format=json",
                 "-f", "null",
                 "-"
-            });
+            }, out output, updateWorkingFile: false, dontAddInputFile: true);
 
-            if (result.ExitCode != 0)
+            if (result == false)
                 throw new Exception("Failed to prcoess audio track");
 
-            int index = result.Output.LastIndexOf("{");
+            int index = output.LastIndexOf("{");
             if (index == -1)
                 throw new Exception("Failed to detected json in output");
-            string json = result.Output.Substring(index);
+            string json = output.Substring(index);
             json = json.Substring(0, json.IndexOf("}") + 1);
             if (string.IsNullOrEmpty(json))
                 throw new Exception("Failed to parse TwoPass json");
             LoudNormStats stats = JsonSerializer.Deserialize<LoudNormStats>(json);
-            string ar = $"-af loudnorm=print_format=summary:linear=true:{LOUDNORM_TARGET}:measured_I={stats.input_i}:measured_LRA={stats.input_lra}:measured_tp={stats.input_tp}:measured_thresh={stats.input_thresh}:offset={stats.target_offset}";
+            string ar = $"loudnorm=print_format=summary:linear=true:{LOUDNORM_TARGET}:measured_I={stats.input_i}:measured_LRA={stats.input_lra}:measured_tp={stats.input_tp}:measured_thresh={stats.input_thresh}:offset={stats.target_offset}";
             return ar;
         }
 

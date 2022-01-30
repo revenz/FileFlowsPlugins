@@ -26,22 +26,31 @@ namespace FileFlows.VideoNodes
             this.Logger = logger;
         }
 
-        public bool Encode(string input, string output, string arguments, bool dontAddInputFile = false)
+        public (bool successs, string output) Encode(string input, string output, List<string> arguments, bool dontAddInputFile = false)
         {
-            // -y means it will overwrite a file if output already exists
-            if(dontAddInputFile == false)
-                arguments = $"-i \"{input}\" -y {arguments} \"{output}\"";
-            else
-                arguments = $"{arguments} \"{output}\"";
+            arguments ??= new List<string> ();
 
-            Logger.ILog(new string('=', ("FFMpeg.Arguments: " + arguments).Length));
-            Logger.ILog("FFMpeg.Arguments: " + arguments);
-            Logger.ILog(new string('=', ("FFMpeg.Arguments: " + arguments).Length));
+            // -y means it will overwrite a file if output already exists
+            if (dontAddInputFile == false) {
+                arguments.Insert(0, "-i");
+                arguments.Insert(1, input);
+                arguments.Insert(2, "-y");
+            }
+
+            if (arguments.Last() != "-")
+                arguments.Add(output);
+            else
+                Logger.ILog("Last argument '-' skipping adding output file");
+
+            string argsString = String.Join(" ", arguments.Select(x => x.IndexOf(" ") > 0 ? "\"" + x + "\"" : x));
+            Logger.ILog(new string('=', ("FFMpeg.Arguments: " + argsString).Length));
+            Logger.ILog("FFMpeg.Arguments: " + argsString);
+            Logger.ILog(new string('=', ("FFMpeg.Arguments: " + argsString).Length));
 
             var task = ExecuteShellCommand(ffMpegExe, arguments, 0);
             task.Wait();
             Logger.ILog("Exit Code: " + task.Result.ExitCode);
-            return task.Result.ExitCode == 0; // exitcode 0 means it was successful
+            return (task.Result.ExitCode == 0, task.Result.Output); // exitcode 0 means it was successful
         }
 
         internal void Cancel()
@@ -58,7 +67,7 @@ namespace FileFlows.VideoNodes
             catch (Exception) { }
         }
 
-        public async Task<ProcessResult> ExecuteShellCommand(string command, string arguments, int timeout = 0)
+        public async Task<ProcessResult> ExecuteShellCommand(string command, List<string> arguments, int timeout = 0)
         {
             var result = new ProcessResult();
 
@@ -69,7 +78,11 @@ namespace FileFlows.VideoNodes
                 // To fix it you can try to add '#!/bin/bash' header to the script.
 
                 process.StartInfo.FileName = command;
-                process.StartInfo.Arguments = arguments;
+                if (arguments?.Any() == true)
+                {
+                    foreach (string arg in arguments)
+                        process.StartInfo.ArgumentList.Add(arg); ;
+                }
                 process.StartInfo.UseShellExecute = false;
                 process.StartInfo.RedirectStandardInput = true;
                 process.StartInfo.RedirectStandardOutput = true;
@@ -125,12 +138,7 @@ namespace FileFlows.VideoNodes
                     {
                         result.Completed = true;
                         result.ExitCode = process.ExitCode;
-
-                        // Adds process output if it was completed with error
-                        if (process.ExitCode != 0)
-                        {
-                            result.Output = $"{outputBuilder}{errorBuilder}";
-                        }
+                        result.Output = $"{outputBuilder}{errorBuilder}";
                     }
                     else
                     {

@@ -18,7 +18,13 @@ namespace FileFlows.VideoNodes
 
         private FFMpegEncoder Encoder;
 
-        protected bool Encode(NodeParameters args, string ffmpegExe, string ffmpegParameters, string extension = "mkv", string outputFile = "", bool updateWorkingFile = true, bool dontAddInputFile = false)
+        protected bool Encode(NodeParameters args, string ffmpegExe, List<string> ffmpegParameters, string extension = "mkv", string outputFile = "", bool updateWorkingFile = true, bool dontAddInputFile = false)
+        {
+            string output;
+            return Encode(args, ffmpegExe, ffmpegParameters, out output, extension, outputFile, updateWorkingFile, dontAddInputFile);
+        }
+
+        protected bool Encode(NodeParameters args, string ffmpegExe, List<string> ffmpegParameters, out string ouput, string extension = "mkv", string outputFile = "", bool updateWorkingFile = true, bool dontAddInputFile = false)
         {
             if (string.IsNullOrEmpty(extension))
                 extension = "mkv";
@@ -40,9 +46,9 @@ namespace FileFlows.VideoNodes
                 }
             }
 
-            bool success = Encoder.Encode(args.WorkingFile, outputFile, ffmpegParameters, dontAddInputFile: dontAddInputFile);
-            args.Logger.ILog("Encoding successful: " + success);
-            if (success && updateWorkingFile)
+            var success = Encoder.Encode(args.WorkingFile, outputFile, ffmpegParameters, dontAddInputFile: dontAddInputFile);
+            args.Logger.ILog("Encoding successful: " + success.successs);
+            if (success.successs && updateWorkingFile)
             {
                 args.SetWorkingFile(outputFile);
 
@@ -54,7 +60,8 @@ namespace FileFlows.VideoNodes
             }
             Encoder.AtTime -= AtTimeEvent;
             Encoder = null;
-            return success;
+            ouput = success.output;
+            return success.successs;
         }
 
         public override Task Cancel()

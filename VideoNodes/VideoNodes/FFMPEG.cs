@@ -44,11 +44,14 @@ namespace FileFlows.VideoNodes
 
                 string outputFile = Path.Combine(args.TempPath, Guid.NewGuid().ToString() + "." + Extension);
 
-                string cmd = CommandLine.Replace("{WorkingFile}", "\"" + args.WorkingFile + "\"")
-                                        .Replace("{Output}", outputFile)
-                                        .Replace("{output}", outputFile);
+                List<string> ffArgs = CommandLine.SplitCommandLine().Select(x =>
+                {
+                    if (x.ToLower() == "{workingfile}") return args.WorkingFile;
+                    if (x.ToLower() == "{output}") return outputFile;
+                    return x;
+                }).ToList();
 
-                if (Encode(args, ffmpegExe, cmd) == false)
+                if (Encode(args, ffmpegExe, ffArgs) == false)
                     return -1;
 
                 return 1;

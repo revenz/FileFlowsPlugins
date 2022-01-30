@@ -140,8 +140,8 @@ namespace FileFlows.VideoNodes
 
                 List<string> ffArgs = new List<string>();
 
-                ffArgs.Add(encodeVideoParameters?.EmptyAsNull() ?? copyVideoStream);
-                ffArgs.Add(encodeAudioParameters?.EmptyAsNull() ?? copyAudioStream);
+                ffArgs.AddRange((encodeVideoParameters?.EmptyAsNull() ?? copyVideoStream).Split(" "));
+                ffArgs.AddRange((encodeAudioParameters?.EmptyAsNull() ?? copyAudioStream).Split(" "));
 
                 TotalTime = videoInfo.VideoStreams[0].Duration;
                 args.Logger.ILog("### Total Time: " + TotalTime);
@@ -151,9 +151,9 @@ namespace FileFlows.VideoNodes
                     if (SupportsSubtitles(args, videoInfo, Extension))
                     {
                         if (Language != string.Empty)
-                            ffArgs.Add($"-map 0:s:m:language:{Language}? -c:s copy");
+                            ffArgs.AddRange(new[] { "-map", $"0:s:m:language:{Language}?", "-c:s", "copy" });
                         else
-                            ffArgs.Add($"-map 0:s? -c:s copy");
+                            ffArgs.AddRange(new[] { "-map", "0:s?", "-c:s", "copy" });
                     }
                     else
                     {
@@ -161,9 +161,8 @@ namespace FileFlows.VideoNodes
                     }
                 }
 
-                string ffArgsLine = string.Join(" ", ffArgs);
 
-                if (Encode(args, ffmpegExe, ffArgsLine, Extension) == false)
+                if (Encode(args, ffmpegExe, ffArgs, Extension) == false)
                     return -1;
 
                 return 1;

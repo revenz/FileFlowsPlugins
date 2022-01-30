@@ -23,7 +23,7 @@
 
             try 
             { 
-                if (Encode(args, ffmpegExe, "-c copy -map 0", "mkv") == false)
+                if (Encode(args, ffmpegExe, new List<string> { "-c", "copy", "-map", "0" }, "mkv") == false)
                     return -1;
 
                 return 1;
@@ -54,7 +54,7 @@
 
             try
             {
-                if (Encode(args, ffmpegExe, "-c copy -map 0", "mp4") == false)
+                if (Encode(args, ffmpegExe, new List<string> { "-c", "copy", "-map", "0" }, "mp4") == false)
                     return -1;
 
                 return 1;

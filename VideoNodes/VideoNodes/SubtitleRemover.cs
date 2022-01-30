@@ -55,8 +55,11 @@
                 if (string.IsNullOrEmpty(ffmpegExe))
                     return -1;
 
-                List<string> ffArgs = new List<string>();
-                ffArgs.Add($"-map 0:v -map 0:a");
+                List<string> ffArgs = new List<string>()
+                {
+                    "-map", "0:v",
+                    "-map", "0:a",
+                };
 
                 var removeCodecs = SubtitlesToRemove?.Where(x => string.IsNullOrWhiteSpace(x) == false)?.Select(x => x.ToLower())?.ToList() ?? new List<string>();
 
@@ -73,7 +76,7 @@
                         foundBadSubtitle = true;
                         continue;
                     }
-                    ffArgs.Add("-map " + sub.IndexString);
+                    ffArgs.AddRange(new[] { "-map", sub.IndexString});
                 }
 
                 if(foundBadSubtitle == false)
@@ -81,15 +84,14 @@
                     // nothing to remove
                     return 2;
                 }
-                ffArgs.Add("-c copy");
+                ffArgs.AddRange(new[] { "-c", "copy" });
 
-                string ffArgsLine = string.Join(" ", ffArgs);
 
                 string extension = new FileInfo(args.WorkingFile).Extension;
                 if(extension.StartsWith("."))
                     extension = extension.Substring(1); 
 
-                if (Encode(args, ffmpegExe, ffArgsLine, extension) == false)
+                if (Encode(args, ffmpegExe, ffArgs, extension) == false)
                     return -1;
 
                 return 1;

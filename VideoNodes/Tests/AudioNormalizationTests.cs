@@ -30,7 +30,7 @@ namespace VideoNodes.Tests
 
             new VideoFile().Execute(args);
 
-            string output = AudioNormalization.DoTwoPass(args, ffmpeg, "0:1");
+            string output = node.DoTwoPass(args, ffmpeg, "0:1");
             Assert.IsFalse(string.IsNullOrWhiteSpace(output));
         }
 

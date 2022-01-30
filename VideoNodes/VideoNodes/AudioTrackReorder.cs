@@ -98,8 +98,12 @@
                 if (string.IsNullOrEmpty(ffmpegExe))
                     return -1;
 
-                List<string> ffArgs = new List<string>();
-                ffArgs.Add($"-map 0:v");
+                List<string> ffArgs = new List<string>
+                {
+                    "-c", "copy",
+                    "-map", "0:v",
+                };
+
 
                 OrderedTracks = OrderedTracks?.Select(x => x.ToLower())?.ToList() ?? new ();
 
@@ -115,22 +119,20 @@
 
                 foreach (var audio in reordered)
                 {
-                    ffArgs.Add($"-map " + audio.IndexString);
+                    ffArgs.AddRange(new[] { "-map", audio.IndexString });
                 }
 
                 if (videoInfo.SubtitleStreams?.Any() == true)
-                    ffArgs.Add("-map 0:s -c copy");
+                    ffArgs.AddRange(new[] { "-map", "0:s" });
 
                 // this makes the first audio track now the default track
-                ffArgs.Add("-disposition:a:0 default");
-
-                string ffArgsLine = string.Join(" ", ffArgs);
+                ffArgs.AddRange(new[] { "-disposition:a:0", "default" });
 
                 string extension = new FileInfo(args.WorkingFile).Extension;
                 if(extension.StartsWith("."))
                     extension = extension.Substring(1); 
 
-                if (Encode(args, ffmpegExe, ffArgsLine, extension) == false)
+                if (Encode(args, ffmpegExe, ffArgs, extension) == false)
                     return -1;
 
                 return 1;

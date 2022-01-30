@@ -88,14 +88,15 @@ namespace FileFlows.VideoNodes
                 if (string.IsNullOrEmpty(ffmpegExe))
                     return -1;
 
-                List<string> ffArgs = new List<string>();
 
                 string codec = CheckVideoCodec(ffmpegExe, VideoCodec);
-                ffArgs.Add($"-vf scale={Resolution}:flags=lanczos -c:v {codec}");
+                List<string> ffArgs = new List<string>()
+                {
+                    "-vf", $"scale={Resolution}:flags=lanczos",
+                    "-c:v", "codec"
+                };
 
-                string ffArgsLine = string.Join(" ", ffArgs);
-
-                if (Encode(args, ffmpegExe, ffArgsLine, Extension) == false)
+                if (Encode(args, ffmpegExe, ffArgs, Extension) == false)
                     return -1;
 
                 return 1;

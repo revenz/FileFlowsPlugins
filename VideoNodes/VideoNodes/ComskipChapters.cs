@@ -69,8 +69,8 @@
             string tempMetaDataFile = Path.Combine(args.TempPath, Guid.NewGuid().ToString() + ".txt");
             File.WriteAllText(tempMetaDataFile, metadata.ToString());
 
-            string ffArgs = $"-i \"{tempMetaDataFile}\" -map_metadata 1 -codec copy -max_muxing_queue_size 1024";
-            if (Encode(args, ffmpegExe, ffArgs)) 
+            string[] ffArgs = new[] { "-i", tempMetaDataFile, "-map_metadata", "1", "-codec", "copy", "-max_muxing_queue_size", "1024" };
+            if (Encode(args, ffmpegExe, ffArgs.ToList())) 
             {
                 args.Logger?.ILog($"Adding {chapter} chapters to file");
                 return 1;

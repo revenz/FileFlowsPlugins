@@ -43,25 +43,27 @@
                     return 2;
                 }
 
-                List<string> ffArgs = new List<string>();
-                ffArgs.Add($"-map 0:v");
+                List<string> ffArgs = new List<string>
+                {
+                    "-c", "copy",
+                    "-map", "0:v",
+                };
 
                 float volume = this.VolumePercent / 100f;
                 foreach (var audio in videoInfo.AudioStreams)
                 {
-                    ffArgs.Add($"-map 0:{audio.Index}  -filter:a \"volume={volume.ToString(".0######")}\"");
+                    ffArgs.AddRange(new[] { "-map", $"0:{audio.Index}", "-filter:a", $"volume={volume.ToString(".0######")}" });
                 }
 
                 if (videoInfo.SubtitleStreams?.Any() == true)
-                    ffArgs.Add("-map 0:s -c copy");
+                    ffArgs.AddRange(new[] { "-map", "0:s" });
 
-                string ffArgsLine = string.Join(" ", ffArgs);
 
                 string extension = new FileInfo(args.WorkingFile).Extension;
                 if(extension.StartsWith("."))
                     extension = extension.Substring(1); 
 
-                if (Encode(args, ffmpegExe, ffArgsLine, extension) == false)
+                if (Encode(args, ffmpegExe, ffArgs, extension) == false)
                     return -1;
 
                 return 1;
