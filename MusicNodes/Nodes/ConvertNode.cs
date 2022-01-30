@@ -90,6 +90,64 @@ namespace FileFlows.MusicNodes
     //    }
     //}
 
+    public class ConvertAudio : ConvertNode
+    {
+        protected override string Extension => Codec;
+
+        public static List<ListOption> BitrateOptions => ConvertNode.BitrateOptions;
+
+        [Select(nameof(CodecOptions), 0)]
+        public string Codec { get; set; }
+
+        [Boolean(3)]
+        public bool SkipIfCodecMatches { get; set; }
+
+        public override int Outputs => 2; 
+
+        private static List<ListOption> _CodecOptions;
+        public static List<ListOption> CodecOptions
+        {
+            get
+            {
+                if (_CodecOptions == null)
+                {
+                    _CodecOptions = new List<ListOption>
+                    {
+                        new ListOption { Label = "AAC", Value = "aac"},
+                        new ListOption { Label = "MP3", Value = "MP3"},
+                        new ListOption { Label = "OGG", Value = "ogg"},
+                        new ListOption { Label = "WAV", Value = "wav"},
+                    };
+                }
+                return _CodecOptions;
+            }
+        }
+
+        public override int Execute(NodeParameters args)
+        {
+            MusicInfo musicInfo = GetMusicInfo(args);
+            if (musicInfo == null)
+                return -1;
+
+            if(musicInfo.Codec?.ToLower() == Codec?.ToLower())
+            {
+                if (SkipIfCodecMatches)
+                {
+                    args.Logger?.ILog($"Music file already '{Codec}' at bitrate '{musicInfo.BitRate}', and set to skip if codec matches");
+                    return 2;
+                }
+
+                if(musicInfo.BitRate <= Bitrate)
+                {
+                    args.Logger?.ILog($"Music file already '{Codec}' at bitrate '{musicInfo.BitRate}'");
+                    return 2;
+                }
+            }
+            return base.Execute(args);
+
+        }
+    }
+
     public abstract class ConvertNode:MusicNode
     {
         protected abstract string Extension { get; }
