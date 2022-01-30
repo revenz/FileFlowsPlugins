@@ -43,8 +43,12 @@
                 }
 
                 List<string> ffArgs = new List<string>();
+
+                ffArgs.Add("-c copy");
+
                 if(videoInfo.VideoStreams?.Any() == true)
                     ffArgs.Add($"-map 0:v");
+
 
                 for (int j = 0; j < videoInfo.AudioStreams.Count;j++)
                 {
@@ -54,7 +58,7 @@
                         int sampleRate = audio.SampleRate > 0 ? audio.SampleRate : 48_000;
                         if (TwoPass)
                         {
-                            string twoPass = DoTwoPass(args, ffmpegExe, audio.Index);
+                            string twoPass = DoTwoPass(args, ffmpegExe, audio.IndexString);
                             ffArgs.Add($"-map 0:{audio.Index} -c:a {audio.Codec} -ar {sampleRate} {twoPass}");
                         }
                         else
@@ -63,11 +67,10 @@
                         }
                     }
                     else
-                        ffArgs.Add($"-map 0:{audio.Index} -c copy");
+                        ffArgs.Add($"-map 0:{audio.Index}");
                 }
-
-                if(videoInfo.SubtitleStreams?.Any() == true)
-                    ffArgs.Add("-map 0:s -c copy");
+                if (videoInfo.SubtitleStreams?.Any() == true)
+                    ffArgs.Add("-map 0:s");
 
                 string ffArgsLine = string.Join(" ", ffArgs);
 
@@ -88,14 +91,14 @@
         }
 
         [RequiresUnreferencedCode("Calls System.Text.Json.JsonSerializer.Deserialize<FileFlows.VideoNodes.AudioNormalization.LoudNormStats>(string, System.Text.Json.JsonSerializerOptions?)")]
-        public static string DoTwoPass(NodeParameters args,string ffmpegExe, int audioIndex)
+        public static string DoTwoPass(NodeParameters args,string ffmpegExe, string audioIndex)
         {
             //-af loudnorm=I=-24:LRA=7:TP=-2.0"
             var result = args.Execute(ffmpegExe, argumentList: new[]
             {
                 "-hide_banner",
                 "-i", args.WorkingFile,
-                "-map", $"0:{audioIndex}",
+                "-map", audioIndex,
                 "-af", "loudnorm=" + LOUDNORM_TARGET + ":print_format=json",
                 "-f", "null",
                 "-"

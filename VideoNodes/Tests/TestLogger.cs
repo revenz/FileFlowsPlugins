@@ -41,6 +41,11 @@ namespace VideoNodes.Tests
             string log = string.Join(Environment.NewLine, Messages);
             return log.Contains(message);
         }
+
+        public override string ToString()
+        {
+            return String.Join(Environment.NewLine, this.Messages.ToArray());
+        }
     }
 }
 

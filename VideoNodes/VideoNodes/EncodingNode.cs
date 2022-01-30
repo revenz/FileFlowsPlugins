@@ -72,7 +72,8 @@ namespace FileFlows.VideoNodes
                 return;
             }
             float percent = (float)((time.TotalMilliseconds / TotalTime.TotalMilliseconds) * 100);
-            args?.PartPercentageUpdate(percent);
+            if(args?.PartPercentageUpdate != null)
+                args.PartPercentageUpdate(percent);
         }
 
 
