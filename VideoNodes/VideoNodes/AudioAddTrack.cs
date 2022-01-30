@@ -4,6 +4,7 @@
     using FileFlows.Plugin.Attributes;
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
@@ -15,9 +16,11 @@
 
         [NumberInt(1)]
         [Range(1, 100)]
+        [DefaultValue(2)]
         public int Index { get; set; }
 
 
+        [DefaultValue("aac")]
         [Select(nameof(CodecOptions), 1)]
         public string Codec { get; set; }
 
@@ -40,6 +43,7 @@
             }
         }
 
+        [DefaultValue(2f)]
         [Select(nameof(ChannelsOptions), 2)]
         public float Channels { get; set; }
 
@@ -73,6 +77,7 @@
                 {
                     _BitrateOptions = new List<ListOption>
                     {
+                        new ListOption { Label = "Automatic", Value = 0},
                         new ListOption { Label = "64 Kbps", Value = 64},
                         new ListOption { Label = "96 Kbps", Value = 96},
                         new ListOption { Label = "128 Kbps", Value = 128},
@@ -157,6 +162,14 @@
             if (Channels == 0)
             {
                 // same as source
+                if(Bitrate == 0)
+                {
+                    return new[]
+                    {
+                        "-map", videoInfo.AudioStreams[0].IndexString,
+                        "-c:a:" + index, Codec
+                    };
+                }
                 return new[]
                 {
                     "-map", videoInfo.AudioStreams[0].IndexString,
@@ -166,6 +179,15 @@
             }
             else
             {
+                if (Bitrate == 0)
+                {
+                    return new[]
+                    {
+                        "-map", videoInfo.AudioStreams[0].IndexString,
+                        "-c:a:" + index, Codec,
+                        "-ac", Channels.ToString()
+                    };
+                }
                 return new[]
                 {
                     "-map", videoInfo.AudioStreams[0].IndexString,

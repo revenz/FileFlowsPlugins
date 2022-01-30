@@ -30,7 +30,7 @@ namespace VideoNodes.Tests
 
             new VideoFile().Execute(args);
             node.Bitrate = 128;
-            node.Channels = 2;
+            node.Channels = 0;
             node.Index = 2;
             node.Codec = "aac";
 
