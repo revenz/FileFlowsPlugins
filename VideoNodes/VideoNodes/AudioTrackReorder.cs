@@ -142,6 +142,6 @@
                 args.Logger?.ELog("Failed processing VideoFile: " + ex.Message);
                 return -1;
             }
-}
+        }
     }
 }

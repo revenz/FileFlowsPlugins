@@ -1,6 +1,21 @@
 {
     "Flow":{
       "Parts": {
+        "AudioAddTrack": {
+          "Outputs": {
+            "1": "Audio track adde and saved to temporary file"
+          },
+          "Description": "Adds a new audio track to ta video file, all other audio tracks will remain.  This will use the first audio track of the file as the source audio track to convert.",
+          "Fields": {
+            "Index": "Index",
+            "Index-Help": "The index where to insert the new audio track.  1 based, so to insert the new audio track as the first track set this to 1.",
+            "Channels": "Channels",
+            "Channels-Help": "The number of channels to convert this audio track to.",
+            "Bitrate": "Bitrate",
+            "Bitrate-Help": "Bitrate of the new audio track"
+          }
+
+        },
         "AudioAdjustVolume": {
           "Outputs": {
             "1": "Audio tracks volume was adjusted and saved to temporary file",
