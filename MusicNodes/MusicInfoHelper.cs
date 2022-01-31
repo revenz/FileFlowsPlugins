@@ -83,48 +83,51 @@ namespace FileFlows.MusicNodes
                         int colonIndex = line.IndexOf(":");
                         if(colonIndex < 1)
                             continue;
-                        if (line.Trim().ToLower().StartsWith("language"))
+
+                        string lowLine = line.ToLower().Trim();
+
+                        if (lowLine.StartsWith("language"))
                             mi.Language = line.Substring(colonIndex + 1).Trim();
-                        else if (line.Trim().ToLower().StartsWith("track"))
+                        else if (lowLine.StartsWith("track") && lowLine.Contains("total") == false)
                         {
                             var trackMatch = Regex.Match(line.Substring(colonIndex + 1).Trim(), @"^[\d]+");
                             if (trackMatch.Success && int.TryParse(trackMatch.Value, out int value))
                                 mi.Track = value;
                         }
-                        else if (line.Trim().ToLower().StartsWith("artist") || line.Trim().ToLower().StartsWith("album_artist"))
+                        else if (lowLine.StartsWith("artist") || lowLine.StartsWith("album_artist"))
                         {
                             if(string.IsNullOrWhiteSpace(mi.Artist))
                                 mi.Artist = line.Substring(colonIndex + 1).Trim();
                         }
-                        else if (line.Trim().ToLower().StartsWith("title"))
+                        else if (lowLine.StartsWith("title"))
                             mi.Title = line.Substring(colonIndex + 1).Trim();
-                        else if (line.Trim().ToLower().StartsWith("album"))
+                        else if (lowLine.StartsWith("album"))
                             mi.Album = line.Substring(colonIndex + 1).Trim();
-                        else if (line.Trim().ToLower().StartsWith("disc"))
+                        else if (lowLine.StartsWith("disc"))
                         {
                             if (int.TryParse(line.Substring(colonIndex + 1).Trim(), out int value))
                                 mi.Disc = value;
                         }
-                        else if (line.Trim().ToLower().StartsWith("disctotal") || line.Trim().ToLower().StartsWith("totaldiscs"))
+                        else if (lowLine.StartsWith("disctotal") || lowLine.StartsWith("totaldiscs"))
                         {
                             if (int.TryParse(line.Substring(colonIndex + 1).Trim(), out int value))
                                 mi.TotalDiscs = value;
                         }
-                        else if (line.Trim().ToLower().StartsWith("date") && mi.Date < new DateTime(1900, 1, 1))
+                        else if (lowLine.StartsWith("date") && mi.Date < new DateTime(1900, 1, 1))
                         {
                             if (int.TryParse(line.Substring(colonIndex + 1).Trim(), out int value))
                                 mi.Date = new DateTime(value, 1, 1);
                         }
-                        else if (line.Trim().ToLower().StartsWith("retail date"))
+                        else if (lowLine.StartsWith("retail date"))
                         {
                             if (DateTime.TryParse(line.Substring(colonIndex + 1).Trim(), out DateTime value))
                                 mi.Date = value;
                         }
-                        else if (line.Trim().ToLower().StartsWith("genre"))
+                        else if (lowLine.StartsWith("genre"))
                             mi.Genres = line.Substring(colonIndex + 1).Trim().Split(' ');
-                        else if (line.Trim().ToLower().StartsWith("encoder"))
+                        else if (lowLine.StartsWith("encoder"))
                             mi.Encoder = line.Substring(colonIndex + 1).Trim();
-                        else if (line.Trim().ToLower().StartsWith("duration"))
+                        else if (lowLine.StartsWith("duration"))
                         {
                             string temp = line.Substring(colonIndex + 1).Trim();
                             if (temp.IndexOf(",") > 0)
@@ -136,9 +139,9 @@ namespace FileFlows.MusicNodes
                         }
 
 
-                        if (line.IndexOf("bitrate:") > 0)
+                        if (line.ToLower().IndexOf("bitrate:") > 0)
                         {
-                            string br = line.Substring(line.IndexOf("bitrate:") + "bitrate:".Length).Trim();
+                            string br = line.Substring(line.ToLower().IndexOf("bitrate:") + "bitrate:".Length).Trim();
                             if (br.IndexOf(" ") > 0)
                             {
                                 br = br.Substring(0, br.IndexOf(" "));
