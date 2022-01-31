@@ -83,15 +83,18 @@ namespace FileFlows.MusicNodes
                         int colonIndex = line.IndexOf(":");
                         if(colonIndex < 1)
                             continue;
-                        if(line.Trim().ToLower().StartsWith("language"))
+                        if (line.Trim().ToLower().StartsWith("language"))
                             mi.Language = line.Substring(colonIndex + 1).Trim();
                         else if (line.Trim().ToLower().StartsWith("track"))
                         {
                             if (int.TryParse(line.Substring(colonIndex + 1).Trim(), out int value))
                                 mi.Track = value;
                         }
-                        else if (line.Trim().ToLower().StartsWith("artist"))
-                            mi.Artist = line.Substring(colonIndex + 1).Trim();
+                        else if (line.Trim().ToLower().StartsWith("artist") || line.Trim().ToLower().StartsWith("album_artist"))
+                        {
+                            if(string.IsNullOrWhiteSpace(mi.Artist))
+                                mi.Artist = line.Substring(colonIndex + 1).Trim();
+                        }
                         else if (line.Trim().ToLower().StartsWith("title"))
                             mi.Title = line.Substring(colonIndex + 1).Trim();
                         else if (line.Trim().ToLower().StartsWith("album"))
@@ -123,7 +126,7 @@ namespace FileFlows.MusicNodes
                         else if (line.Trim().ToLower().StartsWith("duration"))
                         {
                             string temp = line.Substring(colonIndex + 1).Trim();
-                            if(temp.IndexOf(",") > 0)
+                            if (temp.IndexOf(",") > 0)
                             {
                                 temp = temp.Substring(0, temp.IndexOf(","));
                                 if (TimeSpan.TryParse(temp, out TimeSpan value))

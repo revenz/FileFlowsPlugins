@@ -193,6 +193,10 @@ namespace FileFlows.VideoNodes
                 Logger.ELog(e.Data);
                 errorBuilder.AppendLine(e.Data);
             }
+            else if (e.Data.Contains("Skipping NAL unit"))
+            {
+                return; // just slighlty ignore these
+            }
             else
             {
                 if (rgxTime.IsMatch(e.Data))
