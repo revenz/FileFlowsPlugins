@@ -61,6 +61,9 @@ namespace FileFlows.MusicNodes
             variables.AddOrUpdate("mi.Title", musicInfo.Title);
             variables.AddOrUpdate("mi.Track", musicInfo.Track);
             variables.AddOrUpdate("mi.TrackPad", musicInfo.Track.ToString("D2"));
+            variables.AddOrUpdate("mi.Disc", musicInfo.Disc < 1 ? 1 : musicInfo.Disc);
+            variables.AddOrUpdate("mi.DiscPad", musicInfo.Disc.ToString("D2"));
+            variables.AddOrUpdate("mi.TotalDiscs", musicInfo.TotalDiscs < 1 ? 1 : musicInfo.TotalDiscs);
 
             args.UpdateVariables(variables);
         }

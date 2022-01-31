@@ -85,7 +85,7 @@ namespace FileFlows.MusicNodes
                             continue;
                         if(line.Trim().ToLower().StartsWith("language"))
                             mi.Language = line.Substring(colonIndex + 1).Trim();
-                        else if (line.Trim().StartsWith("track"))
+                        else if (line.Trim().ToLower().StartsWith("track"))
                         {
                             if (int.TryParse(line.Substring(colonIndex + 1).Trim(), out int value))
                                 mi.Track = value;
@@ -96,6 +96,16 @@ namespace FileFlows.MusicNodes
                             mi.Title = line.Substring(colonIndex + 1).Trim();
                         else if (line.Trim().ToLower().StartsWith("album"))
                             mi.Album = line.Substring(colonIndex + 1).Trim();
+                        else if (line.Trim().ToLower().StartsWith("disc"))
+                        {
+                            if (int.TryParse(line.Substring(colonIndex + 1).Trim(), out int value))
+                                mi.Disc = value;
+                        }
+                        else if (line.Trim().ToLower().StartsWith("disctotal") || line.Trim().ToLower().StartsWith("totaldiscs"))
+                        {
+                            if (int.TryParse(line.Substring(colonIndex + 1).Trim(), out int value))
+                                mi.TotalDiscs = value;
+                        }
                         else if (line.Trim().ToLower().StartsWith("date") && mi.Date < new DateTime(1900, 1, 1))
                         {
                             if (int.TryParse(line.Substring(colonIndex + 1).Trim(), out int value))

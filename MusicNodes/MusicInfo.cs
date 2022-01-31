@@ -4,6 +4,8 @@ namespace FileFlows.MusicNodes
     {
         public string Language { get; set; }
         public int Track { get; set; }
+        public int Disc { get; set; }
+        public int TotalDiscs { get; set; }
         public string Artist { get; set; }
         public string Title { get; set; }
         public string Album { get; set; }

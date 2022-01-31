@@ -28,8 +28,11 @@ namespace FileFlows.MusicNodes
                 { "mi.Language", "English" },
                 { "mi.Title", "Song Title" },
                 { "mi.Track", 2 },
-                { "mi.TrackPad", "02" }
-            };
+                { "mi.TrackPad", "02" },
+                { "mi.Disc", 2 },
+                { "mi.DiscPad", "02" },
+                { "mi.TotalDiscs", 2 }
+        };
         }
 
         public override int Execute(NodeParameters args)
