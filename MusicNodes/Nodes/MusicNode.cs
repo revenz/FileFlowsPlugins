@@ -47,6 +47,7 @@ namespace FileFlows.MusicNodes
             else
                 args.Parameters.Add(MUSIC_INFO, musicInfo);
 
+            variables.AddOrUpdate("mi.Artist", musicInfo.Artist);
             variables.AddOrUpdate("mi.Album", musicInfo.Album);
             variables.AddOrUpdate("mi.BitRate", musicInfo.BitRate);
             variables.AddOrUpdate("mi.Channels", musicInfo.Channels);
@@ -59,6 +60,7 @@ namespace FileFlows.MusicNodes
             variables.AddOrUpdate("mi.Language", musicInfo.Language);
             variables.AddOrUpdate("mi.Title", musicInfo.Title);
             variables.AddOrUpdate("mi.Track", musicInfo.Track);
+            variables.AddOrUpdate("mi.TrackPad", musicInfo.Track.ToString("D2"));
 
             args.UpdateVariables(variables);
         }

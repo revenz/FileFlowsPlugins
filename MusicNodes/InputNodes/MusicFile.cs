@@ -27,7 +27,8 @@ namespace FileFlows.MusicNodes
                 { "mi.Genres", new  [] { "Pop", "Rock" } },
                 { "mi.Language", "English" },
                 { "mi.Title", "Song Title" },
-                { "mi.Track", 2 }
+                { "mi.Track", 2 },
+                { "mi.TrackPad", "02" }
             };
         }
 
