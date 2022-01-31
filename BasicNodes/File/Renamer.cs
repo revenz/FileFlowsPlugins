@@ -52,7 +52,7 @@
             newFile = newFile.Replace('\\', Path.DirectorySeparatorChar);
             newFile = newFile.Replace('/', Path.DirectorySeparatorChar);
 
-            newFile = args.ReplaceVariables(newFile, stripMissing: true);
+            newFile = args.ReplaceVariables(newFile, stripMissing: true, cleanSpecialCharacters: true);
             newFile = Regex.Replace(newFile, @"\.(\.[\w\d]+)$", "$1");
             // remove empty [], (), {}
             newFile = newFile.Replace("()", "").Replace("{}", "").Replace("[]", "");
@@ -62,7 +62,7 @@
             newFile = Regex.Replace(newFile, @"\s(\.[\w\d]+)$", "$1");
             newFile = newFile.Replace(" \\", "\\");
 
-            string destFolder = args.ReplaceVariables(DestinationPath ?? string.Empty, stripMissing: true);
+            string destFolder = args.ReplaceVariables(DestinationPath ?? string.Empty, stripMissing: true, cleanSpecialCharacters: true);
             if (string.IsNullOrEmpty(destFolder))
                 destFolder = new FileInfo(args.WorkingFile).Directory?.FullName ?? "";
 
