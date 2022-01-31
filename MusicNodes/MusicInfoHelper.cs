@@ -87,7 +87,8 @@ namespace FileFlows.MusicNodes
                             mi.Language = line.Substring(colonIndex + 1).Trim();
                         else if (line.Trim().ToLower().StartsWith("track"))
                         {
-                            if (int.TryParse(line.Substring(colonIndex + 1).Trim(), out int value))
+                            var trackMatch = Regex.Match(line.Substring(colonIndex + 1).Trim(), @"^[\d]+");
+                            if (trackMatch.Success && int.TryParse(trackMatch.Value, out int value))
                                 mi.Track = value;
                         }
                         else if (line.Trim().ToLower().StartsWith("artist") || line.Trim().ToLower().StartsWith("album_artist"))
