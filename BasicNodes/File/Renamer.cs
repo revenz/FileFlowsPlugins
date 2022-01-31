@@ -62,12 +62,11 @@
             newFile = Regex.Replace(newFile, @"\s(\.[\w\d]+)$", "$1");
             newFile = newFile.Replace(" \\", "\\");
 
-            string destFolder = DestinationPath;
+            string destFolder = args.ReplaceVariables(DestinationPath ?? string.Empty, stripMissing: true);
             if (string.IsNullOrEmpty(destFolder))
                 destFolder = new FileInfo(args.WorkingFile).Directory?.FullName ?? "";
 
             var dest = args.GetSafeName(Path.Combine(destFolder, newFile));
-
 
             args.Logger?.ILog("Renaming file to: " + dest.FullName);
 
