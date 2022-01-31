@@ -96,11 +96,14 @@ namespace FileFlows.MusicNodes
                         }
                         else if (lowLine.StartsWith("artist") || lowLine.StartsWith("album_artist"))
                         {
-                            if(string.IsNullOrWhiteSpace(mi.Artist))
+                            if (string.IsNullOrWhiteSpace(mi.Artist))
                                 mi.Artist = line.Substring(colonIndex + 1).Trim();
                         }
-                        else if (lowLine.StartsWith("title"))
-                            mi.Title = line.Substring(colonIndex + 1).Trim();
+                        else if (lowLine.StartsWith("title") && lowLine.Contains(".jpg") == false)
+                        {
+                            if(string.IsNullOrWhiteSpace(mi.Title))
+                                mi.Title = line.Substring(colonIndex + 1).Trim();
+                        }
                         else if (lowLine.StartsWith("album"))
                             mi.Album = line.Substring(colonIndex + 1).Trim();
                         else if (lowLine.StartsWith("disc"))
