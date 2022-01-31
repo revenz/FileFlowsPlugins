@@ -16,6 +16,7 @@ namespace FileFlows.MusicNodes
             _Variables = new Dictionary<string, object>()
             {
                 { "mi.Album", "Album" },
+                { "mi.Artist", "Artist" },
                 { "mi.BitRate", 845 },
                 { "mi.Channels", 2 },
                 { "mi.Codec", "flac" },

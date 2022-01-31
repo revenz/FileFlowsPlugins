@@ -83,32 +83,34 @@ namespace FileFlows.MusicNodes
                         int colonIndex = line.IndexOf(":");
                         if(colonIndex < 1)
                             continue;
-                        if(line.Trim().StartsWith("Language"))
+                        if(line.Trim().ToLower().StartsWith("language"))
                             mi.Language = line.Substring(colonIndex + 1).Trim();
                         else if (line.Trim().StartsWith("track"))
                         {
                             if (int.TryParse(line.Substring(colonIndex + 1).Trim(), out int value))
                                 mi.Track = value;
                         }
-                        else if (line.Trim().StartsWith("Title"))
+                        else if (line.Trim().ToLower().StartsWith("artist"))
+                            mi.Artist = line.Substring(colonIndex + 1).Trim();
+                        else if (line.Trim().ToLower().StartsWith("title"))
                             mi.Title = line.Substring(colonIndex + 1).Trim();
-                        else if (line.Trim().StartsWith("Album"))
+                        else if (line.Trim().ToLower().StartsWith("album"))
                             mi.Album = line.Substring(colonIndex + 1).Trim();
-                        else if (line.Trim().StartsWith("Date") && mi.Date < new DateTime(1900, 1, 1))
+                        else if (line.Trim().ToLower().StartsWith("date") && mi.Date < new DateTime(1900, 1, 1))
                         {
                             if (int.TryParse(line.Substring(colonIndex + 1).Trim(), out int value))
                                 mi.Date = new DateTime(value, 1, 1);
                         }
-                        else if (line.Trim().StartsWith("Retail Date"))
+                        else if (line.Trim().ToLower().StartsWith("retail date"))
                         {
                             if (DateTime.TryParse(line.Substring(colonIndex + 1).Trim(), out DateTime value))
                                 mi.Date = value;
                         }
-                        else if (line.Trim().StartsWith("Genre"))
+                        else if (line.Trim().ToLower().StartsWith("genre"))
                             mi.Genres = line.Substring(colonIndex + 1).Trim().Split(' ');
-                        else if (line.Trim().StartsWith("Encoder"))
+                        else if (line.Trim().ToLower().StartsWith("encoder"))
                             mi.Encoder = line.Substring(colonIndex + 1).Trim();
-                        else if (line.Trim().StartsWith("Duration"))
+                        else if (line.Trim().ToLower().StartsWith("duration"))
                         {
                             string temp = line.Substring(colonIndex + 1).Trim();
                             if(temp.IndexOf(",") > 0)
