@@ -226,16 +226,24 @@ namespace FileFlows.MusicNodes
             {
                 var fileInfo = new FileInfo(filename);
 
+                using var tfile = TagLib.File.Create(filename);
+
                 var cdMatch = Regex.Match(filename.Replace("\\", "/"), @"(?<=(/(cd|disc)))[\s]*([\d]+)(?!=(/))", RegexOptions.IgnoreCase);
                 if (cdMatch.Success && int.TryParse(cdMatch.Value.Trim(), out int disc))
+                {
                     mi.Disc = disc;
+                    tfile.Tag.Disc = Convert.ToUInt32(disc);
+                }
 
                 var trackMatch = Regex.Match(fileInfo.Name, @"[\-_\s\.]+([\d]{1,2})[\-_\s\.]+");
                 if (trackMatch.Success) 
                 {
                     string trackString = trackMatch.Value;
-                    if(int.TryParse(Regex.Match(trackString, @"[\d]+").Value, out int track))
+                    if (int.TryParse(Regex.Match(trackString, @"[\d]+").Value, out int track))
+                    {
                         mi.Track = track;
+                        tfile.Tag.Track = Convert.ToUInt32(track);
+                    }
                 }
 
                 string album = fileInfo.Directory.Name;
@@ -244,7 +252,10 @@ namespace FileFlows.MusicNodes
                 {
                     album = album.Replace("(" + yearMatch.Value + ")", "").Trim();
                     if (int.TryParse(yearMatch.Value, out int year))
+                    {
                         mi.Date = new DateTime(year, 1, 1);
+                        tfile.Tag.Year = Convert.ToUInt32(year);
+                    }
                 }
 
                 mi.Album = album;
@@ -252,12 +263,22 @@ namespace FileFlows.MusicNodes
 
                 // the title
                 int titleIndex = fileInfo.Name.LastIndexOf(" - ");
-                if(titleIndex > 0)
+                if (titleIndex > 0)
                 {
                     mi.Title = fileInfo.Name.Substring(titleIndex + 3);
-                    if(string.IsNullOrEmpty(fileInfo.Extension) == false)
+                    if (string.IsNullOrEmpty(fileInfo.Extension) == false)
+                    {
                         mi.Title = mi.Title.Replace(fileInfo.Extension, "");
+                        tfile.Tag.Title = mi.Title;
+                    }
                 }
+                if(string.IsNullOrEmpty(mi.Artist) == false)
+                    tfile.Tag.AlbumArtists = new[] { mi.Artist };
+                if(string.IsNullOrEmpty(mi.Album) == false)
+                    tfile.Tag.Album = mi.Album;
+
+                tfile.Save();
+
             }
             catch (Exception ex)
             {
