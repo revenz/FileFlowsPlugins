@@ -175,7 +175,6 @@ namespace FileFlows.MusicNodes
 
                         if (line.IndexOf(" stereo,") > 0)
                             mi.Channels = 2;
-
                     }
 
                 }
@@ -183,6 +182,12 @@ namespace FileFlows.MusicNodes
             catch (Exception ex)
             {
                 Logger.ELog(ex.Message, ex.StackTrace.ToString());
+            }
+
+            if (string.IsNullOrEmpty(mi.Artist) && string.IsNullOrEmpty(mi.Album) && mi.Track < 1)
+            {
+                // try parse the file
+                ParseFileNameInfo(filename, mi);
             }
 
             return mi;
@@ -213,6 +218,51 @@ namespace FileFlows.MusicNodes
             }
             catch (Exception) { }
             return info;
+        }
+
+        public void ParseFileNameInfo(string filename, MusicInfo mi)
+        {
+            try
+            {
+                var fileInfo = new FileInfo(filename);
+
+                var cdMatch = Regex.Match(filename.Replace("\\", "/"), @"(?<=(/(cd|disc)))[\s]*([\d]+)(?!=(/))", RegexOptions.IgnoreCase);
+                if (cdMatch.Success && int.TryParse(cdMatch.Value.Trim(), out int disc))
+                    mi.Disc = disc;
+
+                var trackMatch = Regex.Match(fileInfo.Name, @"[\-_\s\.]+([\d]{1,2})[\-_\s\.]+");
+                if (trackMatch.Success) 
+                {
+                    string trackString = trackMatch.Value;
+                    if(int.TryParse(Regex.Match(trackString, @"[\d]+").Value, out int track))
+                        mi.Track = track;
+                }
+
+                string album = fileInfo.Directory.Name;
+                var yearMatch = Regex.Match(album, @"(?<=(\())[\d]{4}(?!=\))");
+                if (yearMatch.Success)
+                {
+                    album = album.Replace("(" + yearMatch.Value + ")", "").Trim();
+                    if (int.TryParse(yearMatch.Value, out int year))
+                        mi.Date = new DateTime(year, 1, 1);
+                }
+
+                mi.Album = album;
+                mi.Artist = fileInfo.Directory.Parent.Name;
+
+                // the title
+                int titleIndex = fileInfo.Name.LastIndexOf(" - ");
+                if(titleIndex > 0)
+                {
+                    mi.Title = fileInfo.Name.Substring(titleIndex + 3);
+                    if(string.IsNullOrEmpty(fileInfo.Extension) == false)
+                        mi.Title = mi.Title.Replace(fileInfo.Extension, "");
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger?.WLog("Failed parsing music info from filename: " + ex.Message + Environment.NewLine + ex.StackTrace);
+            }
         }
 
     }

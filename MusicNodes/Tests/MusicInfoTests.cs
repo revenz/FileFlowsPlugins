@@ -64,9 +64,27 @@ namespace FileFlows.MusicNodes.Tests
                 string folder = args.ReplaceVariables("{mi.ArtistThe} ({mi.Year})");
                 Assert.AreEqual($"{mi.Artist} ({mi.Date.Year})", folder);
 
-                string fname = args.ReplaceVariables("{mi.Artist} - {mi.Track:##} - {mi.Title}");
+                string fname = args.ReplaceVariables("{mi.Artist} - {mi.Album} - {mi.Track:##} - {mi.Title}");
                 Assert.AreEqual($"{mi.Artist} - {mi.Track.ToString("00")} - {mi.Title}", fname);
             }
+        }
+
+        [TestMethod]
+        public void MusicInfo_FileNameMetadata()
+        {
+            const string ffmpegExe = @"C:\utils\ffmpeg\ffmpeg.exe";
+            var logger = new TestLogger();
+            string file = @"\\jor-el\music\Meat Loaf\Bat out of Hell II- Back Into Hell… (1993)\Meat Loaf - Bat out of Hell II- Back Into Hell… - 03 - I’d Do Anything for Love (but I Won’t Do That).flac";
+            
+            var mi = new MusicInfo();
+
+            new MusicInfoHelper(ffmpegExe, logger).ParseFileNameInfo(file, mi);
+
+            Assert.AreEqual("Meat Loaf", mi.Artist);
+            Assert.AreEqual("Bat out of Hell II- Back Into Hell…", mi.Album);
+            Assert.AreEqual(1993, mi.Date.Year);
+            Assert.AreEqual("I’d Do Anything for Love (but I Won’t Do That)", mi.Title);
+            Assert.AreEqual(3, mi.Track);
         }
     }
 }
