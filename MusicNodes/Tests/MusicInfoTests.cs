@@ -54,8 +54,18 @@ namespace FileFlows.MusicNodes.Tests
             foreach (string file in Directory.GetFiles(@"D:\videos\music"))
             {
                 var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty);
-                var info = new MusicInfoHelper(ffmpegExe, logger).Read(file);
-                Assert.IsNotNull(info);
+                args.GetToolPathActual = (string tool) => ffmpegExe;
+
+                // laod the variables
+                Assert.AreEqual(1, new MusicFile().Execute(args));
+
+                var mi = new MusicInfoHelper(ffmpegExe, args.Logger).Read(args.WorkingFile);
+
+                string folder = args.ReplaceVariables("{mi.ArtistThe} ({mi.Year})");
+                Assert.AreEqual($"{mi.Artist} ({mi.Date.Year})", folder);
+
+                string fname = args.ReplaceVariables("{mi.Artist} - {mi.Track:##} - {mi.Title}");
+                Assert.AreEqual($"{mi.Artist} - {mi.Track.ToString("00")} - {mi.Title}", fname);
             }
         }
     }

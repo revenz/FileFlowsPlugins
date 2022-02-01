@@ -17,10 +17,12 @@ namespace FileFlows.MusicNodes
             {
                 { "mi.Album", "Album" },
                 { "mi.Artist", "Artist" },
+                { "mi.ArtistThe", "Artist, The" },
                 { "mi.BitRate", 845 },
                 { "mi.Channels", 2 },
                 { "mi.Codec", "flac" },
                 { "mi.Date", new DateTime(2020, 05, 23) },
+                { "mi.Year", 2020 },
                 { "mi.Duration", 256 },
                 { "mi.Encoder", "FLAC 1.2.1" },
                 { "mi.Frequency", 44100 },
@@ -28,9 +30,7 @@ namespace FileFlows.MusicNodes
                 { "mi.Language", "English" },
                 { "mi.Title", "Song Title" },
                 { "mi.Track", 2 },
-                { "mi.TrackPad", "02" },
                 { "mi.Disc", 2 },
-                { "mi.DiscPad", "02" },
                 { "mi.TotalDiscs", 2 }
         };
         }

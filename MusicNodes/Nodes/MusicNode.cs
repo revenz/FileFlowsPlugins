@@ -47,12 +47,22 @@ namespace FileFlows.MusicNodes
             else
                 args.Parameters.Add(MUSIC_INFO, musicInfo);
 
-            variables.AddOrUpdate("mi.Artist", musicInfo.Artist);
+            if(musicInfo.Artist.EndsWith(", The"))
+                variables.AddOrUpdate("mi.Artist", "The " + musicInfo.Artist.Substring(0, musicInfo.Artist.Length - ", The".Length).Trim());
+            else
+                variables.AddOrUpdate("mi.Artist", musicInfo.Artist);
+
+            if(musicInfo.Artist?.StartsWith("The ") == true)
+                variables.AddOrUpdate("mi.ArtistThe", musicInfo.Artist.Substring(4).Trim() + ", The");
+            else
+                variables.AddOrUpdate("mi.ArtistThe", musicInfo.Artist);
+
             variables.AddOrUpdate("mi.Album", musicInfo.Album);
             variables.AddOrUpdate("mi.BitRate", musicInfo.BitRate);
             variables.AddOrUpdate("mi.Channels", musicInfo.Channels);
             variables.AddOrUpdate("mi.Codec", musicInfo.Codec);
             variables.AddOrUpdate("mi.Date", musicInfo.Date);
+            variables.AddOrUpdate("mi.Year", musicInfo.Date.Year);
             variables.AddOrUpdate("mi.Duration", musicInfo.Duration);
             variables.AddOrUpdate("mi.Encoder", musicInfo.Encoder);
             variables.AddOrUpdate("mi.Frequency", musicInfo.Frequency);
@@ -60,9 +70,7 @@ namespace FileFlows.MusicNodes
             variables.AddOrUpdate("mi.Language", musicInfo.Language);
             variables.AddOrUpdate("mi.Title", musicInfo.Title);
             variables.AddOrUpdate("mi.Track", musicInfo.Track);
-            variables.AddOrUpdate("mi.TrackPad", musicInfo.Track.ToString("D2"));
             variables.AddOrUpdate("mi.Disc", musicInfo.Disc < 1 ? 1 : musicInfo.Disc);
-            variables.AddOrUpdate("mi.DiscPad", musicInfo.Disc.ToString("D2"));
             variables.AddOrUpdate("mi.TotalDiscs", musicInfo.TotalDiscs < 1 ? 1 : musicInfo.TotalDiscs);
 
             args.UpdateVariables(variables);
