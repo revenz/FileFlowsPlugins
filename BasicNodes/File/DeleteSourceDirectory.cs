@@ -35,16 +35,16 @@ namespace FileFlows.BasicNodes.File
             string pathToDelete = Path.Combine(path, topdir);
             args.Logger?.ILog("Path To Delete: " + pathToDelete);
 
-            if (IfEmpty)
-            {
-                string libFilePath = args.IsDirectory ? args.FileName : new FileInfo(args.FileName).DirectoryName;
-                return RecursiveDelete(args, path, libFilePath, true);
-            }
-
-
-            args.Logger?.ILog("Deleting directory: " + pathToDelete);
             try
             {
+                if (IfEmpty)
+                {
+                    string libFilePath = args.IsDirectory ? args.FileName : new FileInfo(args.FileName).DirectoryName;
+                    return RecursiveDelete(args, path, libFilePath, true);
+                }
+
+
+                args.Logger?.ILog("Deleting directory: " + pathToDelete);
                 Directory.Delete(pathToDelete, true);
             }
             catch (Exception ex)
