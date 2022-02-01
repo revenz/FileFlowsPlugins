@@ -62,11 +62,20 @@
             newFile = Regex.Replace(newFile, @"\s(\.[\w\d]+)$", "$1");
             newFile = newFile.Replace(" \\", "\\");
 
+            
             string destFolder = args.ReplaceVariables(DestinationPath ?? string.Empty, stripMissing: true, cleanSpecialCharacters: true);
             if (string.IsNullOrEmpty(destFolder))
                 destFolder = new FileInfo(args.WorkingFile).Directory?.FullName ?? "";
 
             var dest = args.GetSafeName(Path.Combine(destFolder, newFile));
+
+            if (string.IsNullOrEmpty(dest.Extension) == false)
+            {
+                // just ensures extensions are lowercased
+                dest = new FileInfo(dest.FullName.Substring(0, dest.FullName.LastIndexOf(dest.Extension)) + dest.Extension.ToLower());
+            }
+
+
 
             args.Logger?.ILog("Renaming file to: " + dest.FullName);
 

@@ -31,6 +31,8 @@ namespace FileFlows.MusicNodes
                 return mi;
             }
 
+            mi = ReadMetaData(filename);
+
             try
             {
                 using (var process = new Process())
@@ -90,9 +92,12 @@ namespace FileFlows.MusicNodes
                             mi.Language = line.Substring(colonIndex + 1).Trim();
                         else if (lowLine.StartsWith("track") && lowLine.Contains("total") == false)
                         {
-                            var trackMatch = Regex.Match(line.Substring(colonIndex + 1).Trim(), @"^[\d]+");
-                            if (trackMatch.Success && int.TryParse(trackMatch.Value, out int value))
-                                mi.Track = value;
+                            if (mi.Track < 1)
+                            {
+                                var trackMatch = Regex.Match(line.Substring(colonIndex + 1).Trim(), @"^[\d]+");
+                                if (trackMatch.Success && int.TryParse(trackMatch.Value, out int value))
+                                    mi.Track = value;
+                            }
                         }
                         else if (lowLine.StartsWith("artist") || lowLine.StartsWith("album_artist"))
                         {
@@ -101,11 +106,14 @@ namespace FileFlows.MusicNodes
                         }
                         else if (lowLine.StartsWith("title") && lowLine.Contains(".jpg") == false)
                         {
-                            if(string.IsNullOrWhiteSpace(mi.Title))
+                            if (string.IsNullOrWhiteSpace(mi.Title))
                                 mi.Title = line.Substring(colonIndex + 1).Trim();
                         }
                         else if (lowLine.StartsWith("album"))
-                            mi.Album = line.Substring(colonIndex + 1).Trim();
+                        {
+                            if (string.IsNullOrWhiteSpace(mi.Album))
+                                mi.Album = line.Substring(colonIndex + 1).Trim();
+                        }
                         else if (lowLine.StartsWith("disc"))
                         {
                             if (int.TryParse(line.Substring(colonIndex + 1).Trim(), out int value))
@@ -116,28 +124,34 @@ namespace FileFlows.MusicNodes
                             if (int.TryParse(line.Substring(colonIndex + 1).Trim(), out int value))
                                 mi.TotalDiscs = value;
                         }
-                        else if (lowLine.StartsWith("date") && mi.Date < new DateTime(1900, 1, 1))
+                        else if (lowLine.StartsWith("date") || lowLine.StartsWith("retail date") || lowLine.StartsWith("retaildate") || lowLine.StartsWith("originaldate") || lowLine.StartsWith("original date"))
                         {
                             if (int.TryParse(line.Substring(colonIndex + 1).Trim(), out int value))
-                                mi.Date = new DateTime(value, 1, 1);
-                        }
-                        else if (lowLine.StartsWith("retail date"))
-                        {
-                            if (DateTime.TryParse(line.Substring(colonIndex + 1).Trim(), out DateTime value))
-                                mi.Date = value;
+                            {
+                                if(mi.Date < new DateTime(1900, 1, 1))
+                                    mi.Date = new DateTime(value, 1, 1);
+                            }
+                            else if(DateTime.TryParse(line.Substring(colonIndex + 1).Trim(), out DateTime dtValue) && dtValue.Year > 1900)
+                                mi.Date = dtValue; 
                         }
                         else if (lowLine.StartsWith("genre"))
-                            mi.Genres = line.Substring(colonIndex + 1).Trim().Split(' ');
+                        {
+                            if(mi.Genres?.Any() != true)
+                                mi.Genres = line.Substring(colonIndex + 1).Trim().Split(' ');
+                        }
                         else if (lowLine.StartsWith("encoder"))
                             mi.Encoder = line.Substring(colonIndex + 1).Trim();
                         else if (lowLine.StartsWith("duration"))
                         {
-                            string temp = line.Substring(colonIndex + 1).Trim();
-                            if (temp.IndexOf(",") > 0)
+                            if (mi.Duration < 1)
                             {
-                                temp = temp.Substring(0, temp.IndexOf(","));
-                                if (TimeSpan.TryParse(temp, out TimeSpan value))
-                                    mi.Duration = (long)value.TotalSeconds;
+                                string temp = line.Substring(colonIndex + 1).Trim();
+                                if (temp.IndexOf(",") > 0)
+                                {
+                                    temp = temp.Substring(0, temp.IndexOf(","));
+                                    if (TimeSpan.TryParse(temp, out TimeSpan value))
+                                        mi.Duration = (long)value.TotalSeconds;
+                                }
                             }
                         }
 
@@ -172,6 +186,33 @@ namespace FileFlows.MusicNodes
             }
 
             return mi;
+        }
+
+        public MusicInfo ReadMetaData(string file)
+        {
+            using var tfile = TagLib.File.Create(file);
+            MusicInfo info = new MusicInfo();
+            try
+            {
+                info.Title = tfile.Tag.Title;
+                info.Duration = (long)tfile.Properties.Duration.TotalSeconds;
+                info.TotalDiscs = Convert.ToInt32(tfile.Tag.DiscCount);
+                if (info.TotalDiscs < 1)
+                    info.TotalDiscs = 1;
+                info.Disc = Convert.ToInt32(tfile.Tag.Disc);
+                if (info.Disc < 1)
+                    info.Disc = 1;
+                info.Artist = String.Join(", ", tfile.Tag.AlbumArtists);
+                info.Album = tfile.Tag.Album;
+                info.Track = Convert.ToInt32(tfile.Tag.Track);
+                if(tfile.Tag.Year > 1900)
+                {
+                    info.Date = new DateTime(Convert.ToInt32(tfile.Tag.Year), 1, 1);
+                }
+                info.Genres = tfile.Tag.Genres.SelectMany(x => x.Split(new[] { ";", "," }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim())).ToArray();
+            }
+            catch (Exception) { }
+            return info;
         }
 
     }

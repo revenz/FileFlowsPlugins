@@ -45,6 +45,19 @@ namespace FileFlows.MusicNodes.Tests
 
             Assert.AreEqual(8, musicInfo.Track);
         }
+
+        [TestMethod]
+        public void MusicInfo_GetMetaData()
+        {
+            const string ffmpegExe = @"C:\utils\ffmpeg\ffmpeg.exe";
+            var logger = new TestLogger();
+            foreach (string file in Directory.GetFiles(@"D:\videos\music"))
+            {
+                var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty);
+                var info = new MusicInfoHelper(ffmpegExe, logger).Read(file);
+                Assert.IsNotNull(info);
+            }
+        }
     }
 }
 
