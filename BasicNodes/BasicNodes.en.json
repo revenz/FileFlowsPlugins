@@ -38,7 +38,8 @@
         "DeleteSourceDirectory": {
           "Label": "Delete Source Folder",
           "Outputs": {
-            "1": "Source directory deleted"
+            "1": "Source directory deleted",
+            "2": "Directory was NOT deleted"
           },
           "Description": "Deletes the source folder of the original library file",
           "Fields": {

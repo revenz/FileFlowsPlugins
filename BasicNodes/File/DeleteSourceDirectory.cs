@@ -49,8 +49,8 @@ namespace FileFlows.BasicNodes.File
             }
             catch (Exception ex)
             {
-                args.Logger?.ELog("Failed to delete directory: " + ex.Message);
-                return -1;
+                args.Logger?.WLog("Failed to delete directory: " + ex.Message);
+                return Directory.Exists(pathToDelete) ? 2 : 1; // silent fail, another runner may have already deleted it, eg if processing music albums 
             }
             return base.Execute(args);
         }
@@ -112,8 +112,8 @@ namespace FileFlows.BasicNodes.File
             }
             catch (Exception ex)
             {
-                args.Logger?.ELog("Failed to delete directory: " + ex.Message);
-                return -1;
+                args.Logger?.WLog("Failed to delete directory: " + ex.Message);
+                return dir.Exists ? 2 : 1; // silenty fail
             }
 
             return RecursiveDelete(args, root, dir.Parent.FullName, false);
