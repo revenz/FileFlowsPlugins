@@ -184,7 +184,7 @@ namespace FileFlows.MusicNodes
                 Logger.ELog(ex.Message, ex.StackTrace.ToString());
             }
 
-            if (string.IsNullOrEmpty(mi.Artist) && string.IsNullOrEmpty(mi.Album) && mi.Track < 1)
+            if (string.IsNullOrEmpty(mi.Artist) || string.IsNullOrEmpty(mi.Album) || mi.Track < 1 || string.IsNullOrEmpty(mi.Title))
             {
                 // try parse the file
                 ParseFileNameInfo(filename, mi);
@@ -227,22 +227,31 @@ namespace FileFlows.MusicNodes
                 var fileInfo = new FileInfo(filename);
 
                 using var tfile = TagLib.File.Create(filename);
+                bool dirty = false;
 
-                var cdMatch = Regex.Match(filename.Replace("\\", "/"), @"(?<=(/(cd|disc)))[\s]*([\d]+)(?!=(/))", RegexOptions.IgnoreCase);
-                if (cdMatch.Success && int.TryParse(cdMatch.Value.Trim(), out int disc))
+                if (mi.Disc < 1)
                 {
-                    mi.Disc = disc;
-                    tfile.Tag.Disc = Convert.ToUInt32(disc);
+                    var cdMatch = Regex.Match(filename.Replace("\\", "/"), @"(?<=(/(cd|disc)))[\s]*([\d]+)(?!=(/))", RegexOptions.IgnoreCase);
+                    if (cdMatch.Success && int.TryParse(cdMatch.Value.Trim(), out int disc))
+                    {
+                        dirty = true;
+                        mi.Disc = disc;
+                        tfile.Tag.Disc = Convert.ToUInt32(disc);
+                    }
                 }
 
-                var trackMatch = Regex.Match(fileInfo.Name, @"[\-_\s\.]+([\d]{1,2})[\-_\s\.]+");
-                if (trackMatch.Success) 
+                if (mi.Track < 1)
                 {
-                    string trackString = trackMatch.Value;
-                    if (int.TryParse(Regex.Match(trackString, @"[\d]+").Value, out int track))
+                    var trackMatch = Regex.Match(fileInfo.Name, @"[\-_\s\.]+([\d]{1,2})[\-_\s\.]+");
+                    if (trackMatch.Success)
                     {
-                        mi.Track = track;
-                        tfile.Tag.Track = Convert.ToUInt32(track);
+                        string trackString = trackMatch.Value;
+                        if (int.TryParse(Regex.Match(trackString, @"[\d]+").Value, out int track))
+                        {
+                            mi.Track = track;
+                            tfile.Tag.Track = Convert.ToUInt32(track);
+                            dirty = true;
+                        }
                     }
                 }
 
@@ -251,33 +260,57 @@ namespace FileFlows.MusicNodes
                 if (yearMatch.Success)
                 {
                     album = album.Replace("(" + yearMatch.Value + ")", "").Trim();
-                    if (int.TryParse(yearMatch.Value, out int year))
+
+                    if (mi.Date < new DateTime(1900, 1, 1))
                     {
-                        mi.Date = new DateTime(year, 1, 1);
-                        tfile.Tag.Year = Convert.ToUInt32(year);
+                        if (int.TryParse(yearMatch.Value, out int year))
+                        {
+                            mi.Date = new DateTime(year, 1, 1);
+                            tfile.Tag.Year = Convert.ToUInt32(year);
+                            dirty = true;
+                        }
                     }
                 }
 
-                mi.Album = album;
-                mi.Artist = fileInfo.Directory.Parent.Name;
+
+                if (string.IsNullOrEmpty(mi.Album))
+                {
+                    mi.Album = album;
+                    if (string.IsNullOrEmpty(album) == false)
+                    {
+                        tfile.Tag.Album = mi.Album;
+                        dirty = true;
+                    }
+                }
+
+                if (string.IsNullOrEmpty(mi.Artist))
+                {
+                    mi.Artist = fileInfo.Directory.Parent.Name;
+                    if (string.IsNullOrEmpty(mi.Artist) == false)
+                    {
+                        tfile.Tag.AlbumArtists = new[] { mi.Artist };
+                        dirty = true;
+                    }
+                }
 
                 // the title
-                int titleIndex = fileInfo.Name.LastIndexOf(" - ");
-                if (titleIndex > 0)
+                if (string.IsNullOrEmpty(mi.Title))
                 {
-                    mi.Title = fileInfo.Name.Substring(titleIndex + 3);
-                    if (string.IsNullOrEmpty(fileInfo.Extension) == false)
+                    int titleIndex = fileInfo.Name.LastIndexOf(" - ");
+                    if (titleIndex > 0)
                     {
-                        mi.Title = mi.Title.Replace(fileInfo.Extension, "");
-                        tfile.Tag.Title = mi.Title;
+                        mi.Title = fileInfo.Name.Substring(titleIndex + 3);
+                        if (string.IsNullOrEmpty(fileInfo.Extension) == false)
+                        {
+                            mi.Title = mi.Title.Replace(fileInfo.Extension, "");
+                            tfile.Tag.Title = mi.Title;
+                            dirty = true;
+                        }
                     }
                 }
-                if(string.IsNullOrEmpty(mi.Artist) == false)
-                    tfile.Tag.AlbumArtists = new[] { mi.Artist };
-                if(string.IsNullOrEmpty(mi.Album) == false)
-                    tfile.Tag.Album = mi.Album;
 
-                tfile.Save();
+                if(dirty)
+                    tfile.Save();
 
             }
             catch (Exception ex)
