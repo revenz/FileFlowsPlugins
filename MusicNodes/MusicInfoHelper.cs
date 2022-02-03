@@ -217,6 +217,7 @@ namespace FileFlows.MusicNodes
                 info.Genres = tfile.Tag.Genres.SelectMany(x => x.Split(new[] { ";", "," }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim())).ToArray();
             }
             catch (Exception) { }
+            tfile.Dispose();
             return info;
         }
 
