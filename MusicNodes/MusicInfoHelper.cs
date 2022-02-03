@@ -223,11 +223,11 @@ namespace FileFlows.MusicNodes
 
         public void ParseFileNameInfo(string filename, MusicInfo mi)
         {
+            using var tfile = TagLib.File.Create(filename);
             try
             {
                 var fileInfo = new FileInfo(filename);
 
-                using var tfile = TagLib.File.Create(filename);
                 bool dirty = false;
 
                 if (mi.Disc < 1)
@@ -317,6 +317,10 @@ namespace FileFlows.MusicNodes
             catch (Exception ex)
             {
                 Logger?.WLog("Failed parsing music info from filename: " + ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+            finally
+            {
+                tfile.Dispose();
             }
         }
 
