@@ -39,7 +39,7 @@
                 if(args.MoveFile(dest) == false)
                 {
                     args.Logger?.ELog("Failed to move file to: " + dest);
-                    return 1;
+                    return -1;
                 }
                 if (dest.ToLower() != args.FileName.ToLower())
                 {
