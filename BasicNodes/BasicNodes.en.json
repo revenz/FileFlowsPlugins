@@ -121,6 +121,15 @@
             "Upper-Help": "The value it must be less than than this number of megabytes. Leave as 0 to not test the upper limit."
           }
         },
+        "FileSizeCompare": {
+          "Description": "Checks if the file size has changed sized from the original file. \n\nOutput 1: File is smaller than original\nOutput 2: File is same size\nOutput 3: File is larger than original",
+          "Outputs": {
+            "1": "Smaller than original",
+            "2": "Same size as original",
+            "3": "Larger than original"
+          }
+
+        },
         "Function": {
           "Outputs": {
             "1": "returned 1",

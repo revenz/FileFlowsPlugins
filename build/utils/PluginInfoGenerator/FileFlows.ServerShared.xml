@@ -11,6 +11,13 @@
             <param name="input">the string to clean</param>
             <returns>the original string with all illegal characters removed</returns>
         </member>
+        <member name="M:FileFlows.ServerShared.Helpers.FileHelper.CalculateFingerprint(System.String)">
+            <summary>
+            Calculates a fingerprint for a file
+            </summary>
+            <param name="file">The filename</param>
+            <returns>The fingerprint</returns>
+        </member>
         <member name="T:FileFlows.ServerShared.Helpers.PluginHelper">
             <summary>
             This class will allow hot reloading of an plugin assembly so they can be update

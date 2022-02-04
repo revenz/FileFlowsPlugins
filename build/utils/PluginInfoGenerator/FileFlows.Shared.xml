@@ -14,6 +14,11 @@
             If this library monitors for folders or files
             </summary>
         </member>
+        <member name="P:FileFlows.Shared.Models.Library.UseFingerprinting">
+            <summary>
+            Gets or sets if this library will use fingerprinting to determine if a file already is known
+            </summary>
+        </member>
         <member name="P:FileFlows.Shared.Models.Library.LastScanned">
             <summary>
             When the library was last scanned
