@@ -154,12 +154,12 @@ namespace FileFlows.VideoNodes
             if (rgxDuration.IsMatch(info) && TimeSpan.TryParse(rgxDuration.Match(info).Value, out TimeSpan duration) && duration.TotalSeconds > 0)
             {
                 vs.Duration = duration;
-                Logger?.ILog("Video stream duration:: " + vs.Duration);
+                Logger?.ILog("Video stream duration: " + vs.Duration);
             }
             else if (rgxDuration2.IsMatch(fullOutput) && TimeSpan.TryParse(rgxDuration2.Match(fullOutput).Value, out TimeSpan duration2) && duration2.TotalSeconds > 0)
             {
                 vs.Duration = duration2;
-                Logger?.ILog("Video stream duration:: " + vs.Duration);
+                Logger?.ILog("Video stream duration: " + vs.Duration);
             }
             else
             {

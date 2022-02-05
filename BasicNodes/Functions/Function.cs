@@ -34,12 +34,8 @@ namespace FileFlows.BasicNodes.Functions
             if (string.IsNullOrEmpty(Code))
                 return -1; // no code, flow cannot continue doesnt know what to do
 
-
             try
             {
-                args.Logger?.DLog("Code: ", Environment.NewLine + new string('=', 40) + Environment.NewLine + Code + Environment.NewLine + new string('=', 40));
-
-
                 long fileSize = 0;
                 var fileInfo = new FileInfo(args.WorkingFile);
                 if (fileInfo.Exists)
