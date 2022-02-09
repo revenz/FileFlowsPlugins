@@ -364,7 +364,33 @@ namespace VideoNodes.Tests
             int output = node.Execute(args);
 
             Assert.AreEqual(1, output);
+        }
 
+        [TestMethod]
+        public void VideoInfoTest_AC1()
+        {
+            string ffmpegOutput = @"Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/media/Videos/#-Test Tdarr/Input3/input file.mp4':
+  Metadata:
+    major_brand     : mp42
+    minor_version   : 512
+    compatible_brands: mp42iso6
+    creation_time   : 2022-01-07T06:30:47.000000Z
+    title           : Episode title
+    comment         : Episode description
+  Duration: 00:42:23.75, start: 0.000000, bitrate: 3174 kb/s
+    Stream #0:0(und): Video: h264 (High) (avc1 / 0x31637661), yuv420p, 1920x1080 [SAR 1:1 DAR 16:9], 2528 kb/s, 23.98 fps, 23.98 tbr, 24k tbn, 47.95 tbc (default)
+    Metadata:
+      creation_time   : 2022-01-07T06:30:47.000000Z
+      handler_name    : VideoHandler
+    Stream #0:1(deu): Audio: eac3 (ec-3 / 0x332D6365), 48000 Hz, 5.1(side), fltp, 640 kb/s (default)
+    Metadata:
+      creation_time   : 2022-01-07T06:30:47.000000Z
+      handler_name    : SoundHandler
+    Side data:
+      audio service type: main";
+            var vi = VideoInfoHelper.ParseOutput(null, ffmpegOutput);
+            Assert.AreEqual(1920, vi.VideoStreams[0].Width);
+            Assert.AreEqual(1080, vi.VideoStreams[0].Height);
         }
     }
 }
