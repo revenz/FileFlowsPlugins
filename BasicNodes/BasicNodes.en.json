@@ -183,6 +183,12 @@
             "DeleteOriginal-Help": "If the original file should be deleted, this will only happen if the working file is different to the original file"
           }
         },
+        "OriginalFile": {
+          "Description": "Sets the current working file in the flow to the original file that started the flow",
+          "Outputs": {
+            "1": "Working file set to original file"
+          }
+        },
         "PatternMatch": {
           "Description": "Tests the working file and original file against a regular expression.\n\nOutput 1: Matches expression\nOutput 2: Does not match",
           "Outputs": {
