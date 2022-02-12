@@ -16,7 +16,7 @@ namespace VideoNodes.Tests
         [TestMethod]
         public void DetectBlackBars_Test_01()
         {
-            const string file = @"D:\videos\unprocessed\Fast Five (2011) Bluray-2160p.mkv";
+            const string file = @"D:\videos\Dexter - New Blood - S01E02 - Storm of Fuck.mkv";
             var vi = new VideoInfoHelper(@"C:\utils\ffmpeg\ffmpeg.exe", new TestLogger());
             var vii = vi.Read(file);
 
@@ -35,7 +35,13 @@ namespace VideoNodes.Tests
 
             Assert.AreEqual(1, output);
         }
-    }
+        [TestMethod]
+        public void DetectBlackBars_Test_02()
+        {
+            var crop = DetectBlackBars.TestAboveThreshold(1920, 1080, 1920, 1072, 20);
+            Assert.IsFalse(crop.crop);
+        }
+        }
 }
 
 

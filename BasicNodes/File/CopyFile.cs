@@ -31,6 +31,12 @@ namespace FileFlows.BasicNodes.File
         [Boolean(3)]
         public bool CopyFolder { get; set; }
 
+        [StringArray(4)]
+        public string[] AdditionalFiles { get; set; }
+
+        [Boolean(5)]
+        public bool AdditionalFilesFromOriginal { get; set; }
+
         private bool Canceled;
 
         public override Task Cancel()
@@ -118,12 +124,39 @@ namespace FileFlows.BasicNodes.File
                 args?.Logger?.ELog("Action was canceled.");
                 return -1;
             }
-            else
-            {
-                args?.SetWorkingFile(dest);
 
-                return base.Execute(args!);
+            var srcDir = AdditionalFilesFromOriginal ? new FileInfo(args.FileName).DirectoryName : new FileInfo(args.WorkingFile).DirectoryName;
+
+            if (AdditionalFiles?.Any() == true)
+            {
+                try
+                {
+                    var diSrc = new DirectoryInfo(srcDir);
+                    foreach (var additional in AdditionalFiles)
+                    {
+                        foreach (var addFile in diSrc.GetFiles(additional))
+                        {
+                            try
+                            {
+                                string addFileDest = Path.Combine(destDir, addFile.Name);
+                                System.IO.File.Copy(addFile.FullName, addFileDest, true);
+                                args.Logger?.ILog("Copyied file: \"" + addFile.FullName + "\" to \"" + addFileDest + "\"");
+                            }
+                            catch (Exception ex)
+                            {
+                                args.Logger?.ILog("Failed copying file: \"" + addFile.FullName + "\": " + ex.Message);
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    args.Logger.WLog("Error copying additinoal files: " + ex.Message);
+                }
             }
+
+            args?.SetWorkingFile(dest);
+            return 1;
         }
     }
 }

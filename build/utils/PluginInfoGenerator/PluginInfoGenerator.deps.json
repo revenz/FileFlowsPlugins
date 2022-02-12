@@ -35,18 +35,6 @@
           }
         }
       },
-      "NodaTime/3.0.9": {
-        "dependencies": {
-          "System.Runtime.CompilerServices.Unsafe": "4.7.1"
-        },
-        "runtime": {
-          "lib/netstandard2.0/NodaTime.dll": {
-            "assemblyVersion": "3.0.9.0",
-            "fileVersion": "3.0.9.0"
-          }
-        }
-      },
-      "System.Runtime.CompilerServices.Unsafe/4.7.1": {},
       "FileFlows.Plugin/1.0.0": {
         "runtime": {
           "FileFlows.Plugin.dll": {}
@@ -55,8 +43,7 @@
       "FileFlows.ServerShared/1.0.0": {
         "dependencies": {
           "FileFlows.Plugin": "1.0.0",
-          "FileFlows.Shared": "1.0.0",
-          "NodaTime": "3.0.9"
+          "FileFlows.Shared": "1.0.0"
         },
         "runtime": {
           "FileFlows.ServerShared.dll": {}
@@ -92,20 +79,6 @@
       "sha512": "sha512-ZfM20uUR0tf50Av8blG6hgdsveRKDiY3nd/1itwfFfXVw7GmO/DxhU1wZzt/TTk1+S6XTf56dTSgeOP9V/qwBA==",
       "path": "microsoft.extensions.objectpool/5.0.5",
       "hashPath": "microsoft.extensions.objectpool.5.0.5.nupkg.sha512"
-    },
-    "NodaTime/3.0.9": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-7KzJBkgSzLLyBXNYafDlnzlji3aB/8myvt5RJu5aaTFq6puVCq2WDJY9v9yDMg22+5or5IaKNItQ1jNA8nzQNA==",
-      "path": "nodatime/3.0.9",
-      "hashPath": "nodatime.3.0.9.nupkg.sha512"
-    },
-    "System.Runtime.CompilerServices.Unsafe/4.7.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-zOHkQmzPCn5zm/BH+cxC1XbUS3P4Yoi3xzW7eRgVpDR2tPGSzyMZ17Ig1iRkfJuY0nhxkQQde8pgePNiA7z7TQ==",
-      "path": "system.runtime.compilerservices.unsafe/4.7.1",
-      "hashPath": "system.runtime.compilerservices.unsafe.4.7.1.nupkg.sha512"
     },
     "FileFlows.Plugin/1.0.0": {
       "type": "project",

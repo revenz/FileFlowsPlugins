@@ -60,3 +60,5 @@ templating
 scriban
 github
 normalization
+doesn''t
+*

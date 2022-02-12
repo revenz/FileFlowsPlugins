@@ -44,6 +44,11 @@
             Gets or sets the processing priority of this library
             </summary>
         </member>
+        <member name="P:FileFlows.Shared.Models.LibraryFile.ExecutedNodes">
+            <summary>
+            Gets or sets a list of nodes that were executed against this library file
+            </summary>
+        </member>
         <member name="T:FileFlows.Shared.Validators.DefaultValidator">
             <summary>
             Used instead of null

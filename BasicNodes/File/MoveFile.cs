@@ -26,6 +26,12 @@ namespace FileFlows.BasicNodes.File
         [Boolean(4)]
         public bool DeleteOriginal { get; set; }
 
+        [StringArray(5)]
+        public string[] AdditionalFiles { get; set; }
+
+        [Boolean(6)]
+        public bool AdditionalFilesFromOriginal { get; set; }
+
         public override int Execute(NodeParameters args)
         {
             string dest = args.ReplaceVariables(DestinationPath, true);
@@ -68,8 +74,39 @@ namespace FileFlows.BasicNodes.File
             var destDir = fiDest.DirectoryName;
             args.CreateDirectoryIfNotExists(destDir ?? String.Empty);
 
+            var srcDir = AdditionalFilesFromOriginal ? new FileInfo(args.FileName).DirectoryName : new FileInfo(args.WorkingFile).DirectoryName;
+
             if (args.MoveFile(dest) == false)
                 return -1;
+
+            if(AdditionalFiles?.Any() == true)
+            {
+                try
+                {
+                    var diSrc = new DirectoryInfo(srcDir);
+                    foreach (var additional in AdditionalFiles)
+                    {
+                        foreach(var addFile in diSrc.GetFiles(additional))
+                        {
+                            try
+                            {
+                                string addFileDest = Path.Combine(destDir, addFile.Name);
+                                System.IO.File.Move(addFile.FullName, addFileDest, true);
+                                args.Logger?.ILog("Moved file: \"" + addFile.FullName + "\" to \"" + addFileDest + "\"");
+                            }
+                            catch(Exception ex)
+                            {
+                                args.Logger?.ILog("Failed moving file: \"" + addFile.FullName + "\": " + ex.Message);
+                            }
+                        }
+                    }
+                }
+                catch(Exception ex)
+                {
+                    args.Logger.WLog("Error moving additinoal files: " + ex.Message);
+                }
+            }
+
 
             if (DeleteOriginal && args.FileName != args.WorkingFile)
             {

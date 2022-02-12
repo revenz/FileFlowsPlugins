@@ -10,10 +10,10 @@ namespace FileFlows.VideoNodes
         private string ffMpegExe;
         private ILogger Logger;
 
-        Regex rgxTitle = new Regex(@"(?<=((^[\s]+title[\s]+:[\s])))(.*?)$", RegexOptions.Multiline);
-        Regex rgxDuration = new Regex(@"(?<=((^[\s]+DURATION(\-[\w]+)?[\s]+:[\s])))([\d]+:?)+\.[\d]{1,7}", RegexOptions.Multiline);
-        Regex rgxDuration2 = new Regex(@"(?<=((^[\s]+Duration:[\s])))([\d]+:?)+\.[\d]{1,7}", RegexOptions.Multiline);
-        Regex rgxAudioSampleRate = new Regex(@"(?<=((,|\s)))[\d]+(?=([\s]?hz))", RegexOptions.IgnoreCase);
+        static Regex rgxTitle = new Regex(@"(?<=((^[\s]+title[\s]+:[\s])))(.*?)$", RegexOptions.Multiline);
+        static Regex rgxDuration = new Regex(@"(?<=((^[\s]+DURATION(\-[\w]+)?[\s]+:[\s])))([\d]+:?)+\.[\d]{1,7}", RegexOptions.Multiline);
+        static Regex rgxDuration2 = new Regex(@"(?<=((^[\s]+Duration:[\s])))([\d]+:?)+\.[\d]{1,7}", RegexOptions.Multiline);
+        static Regex rgxAudioSampleRate = new Regex(@"(?<=((,|\s)))[\d]+(?=([\s]?hz))", RegexOptions.IgnoreCase);
 
         public VideoInfoHelper(string ffMpegExe, ILogger logger)
         {
@@ -62,64 +62,7 @@ namespace FileFlows.VideoNodes
                     }
 
                     Logger.ILog("Video Information:" + Environment.NewLine + output);
-
-                    var rgxStreams = new Regex(@"Stream\s#[\d]+:[\d]+(.*?)(?=(Stream\s#[\d]|$))", RegexOptions.Singleline);
-                    var streamMatches = rgxStreams.Matches(output);
-                    int streamIndex = 0;
-
-
-                    // get a rough estimate, bitrate: 346 kb/s
-                    var rgxBitrate = new Regex(@"(?<=(bitrate: ))[\d\.]+(?!=( kb/s))");
-                    var brMatch = rgxBitrate.Match(output);
-                    if (brMatch.Success)
-                    {
-                        vi.Bitrate = float.Parse(brMatch.Value) * 1_000; // to convert to b/s
-                    }
-
-                    int subtitleIndex = 1;
-                    foreach (Match sm in streamMatches)
-                    {
-                        if (sm.Value.Contains(" Video: "))
-                        {
-                            var vs = ParseVideoStream(sm.Value, output);
-                            if (vs != null)
-                            {
-                                vs.Index = streamIndex;
-                                var match = Regex.Match(sm.Value, @"(?<=(Stream #))[\d]+:[\d]+");
-                                if (match.Success)
-                                    vs.IndexString = match.Value;
-                                vi.VideoStreams.Add(vs);
-                            }
-                        }
-                        else if (sm.Value.Contains(" Audio: "))
-                        {
-                            var audio = ParseAudioStream(sm.Value);
-                            if (audio != null)
-                            {
-                                audio.Index = streamIndex;
-                                var match = Regex.Match(sm.Value, @"(?<=(Stream #))[\d]+:[\d]+");
-                                if (match.Success)
-                                    audio.IndexString = match.Value;
-                                vi.AudioStreams.Add(audio);
-                            }
-                        }
-                        else if (sm.Value.Contains(" Subtitle: "))
-                        {
-                            var sub = ParseSubtitleStream(sm.Value);
-                            if (sub != null)
-                            {
-                                sub.Index = streamIndex;
-                                sub.TypeIndex = subtitleIndex;
-                                var match = Regex.Match(sm.Value, @"(?<=(Stream #))[\d]+:[\d]+");
-                                if (match.Success)
-                                    sub.IndexString = match.Value;
-                                vi.SubtitleStreams.Add(sub);
-                            }
-                            ++subtitleIndex;
-                        }
-                        ++streamIndex;
-                    }
-
+                    vi = ParseOutput(Logger, output);
                 }
             }
             catch (Exception ex)
@@ -130,7 +73,69 @@ namespace FileFlows.VideoNodes
             return vi;
         }
 
-        VideoStream ParseVideoStream(string info, string fullOutput)
+        public static VideoInfo ParseOutput(ILogger logger, string output)
+        {
+            var vi = new VideoInfo();
+            var rgxStreams = new Regex(@"Stream\s#[\d]+:[\d]+(.*?)(?=(Stream\s#[\d]|$))", RegexOptions.Singleline);
+            var streamMatches = rgxStreams.Matches(output);
+            int streamIndex = 0;
+
+
+            // get a rough estimate, bitrate: 346 kb/s
+            var rgxBitrate = new Regex(@"(?<=(bitrate: ))[\d\.]+(?!=( kb/s))");
+            var brMatch = rgxBitrate.Match(output);
+            if (brMatch.Success)
+            {
+                vi.Bitrate = float.Parse(brMatch.Value) * 1_000; // to convert to b/s
+            }
+
+            int subtitleIndex = 1;
+            foreach (Match sm in streamMatches)
+            {
+                if (sm.Value.Contains(" Video: "))
+                {
+                    var vs = ParseVideoStream(logger, sm.Value, output);
+                    if (vs != null)
+                    {
+                        vs.Index = streamIndex;
+                        var match = Regex.Match(sm.Value, @"(?<=(Stream #))[\d]+:[\d]+");
+                        if (match.Success)
+                            vs.IndexString = match.Value;
+                        vi.VideoStreams.Add(vs);
+                    }
+                }
+                else if (sm.Value.Contains(" Audio: "))
+                {
+                    var audio = ParseAudioStream(sm.Value);
+                    if (audio != null)
+                    {
+                        audio.Index = streamIndex;
+                        var match = Regex.Match(sm.Value, @"(?<=(Stream #))[\d]+:[\d]+");
+                        if (match.Success)
+                            audio.IndexString = match.Value;
+                        vi.AudioStreams.Add(audio);
+                    }
+                }
+                else if (sm.Value.Contains(" Subtitle: "))
+                {
+                    var sub = ParseSubtitleStream(sm.Value);
+                    if (sub != null)
+                    {
+                        sub.Index = streamIndex;
+                        sub.TypeIndex = subtitleIndex;
+                        var match = Regex.Match(sm.Value, @"(?<=(Stream #))[\d]+:[\d]+");
+                        if (match.Success)
+                            sub.IndexString = match.Value;
+                        vi.SubtitleStreams.Add(sub);
+                    }
+                    ++subtitleIndex;
+                }
+                ++streamIndex;
+            }
+            return vi;
+        }
+
+        public static VideoStream ParseVideoStream(ILogger logger, string info, string fullOutput)
         {
             // Stream #0:0(eng): Video: h264 (High), yuv420p(tv, bt709/unknown/unknown, progressive), 1920x1080 [SAR 1:1 DAR 16:9], 23.98 fps, 23.98 tbr, 1k tbn (default)
             string line = info.Split(new string[] { "\r\n", "\n", "\r" }, StringSplitOptions.RemoveEmptyEntries).First();
@@ -154,22 +159,22 @@ namespace FileFlows.VideoNodes
             if (rgxDuration.IsMatch(info) && TimeSpan.TryParse(rgxDuration.Match(info).Value, out TimeSpan duration) && duration.TotalSeconds > 0)
             {
                 vs.Duration = duration;
-                Logger?.ILog("Video stream duration: " + vs.Duration);
+                logger?.ILog("Video stream duration: " + vs.Duration);
             }
             else if (rgxDuration2.IsMatch(fullOutput) && TimeSpan.TryParse(rgxDuration2.Match(fullOutput).Value, out TimeSpan duration2) && duration2.TotalSeconds > 0)
             {
                 vs.Duration = duration2;
-                Logger?.ILog("Video stream duration: " + vs.Duration);
+                logger?.ILog("Video stream duration: " + vs.Duration);
             }
             else
             {
-                Logger?.ILog("Failed to read duration for VideoStream: " + info);
+                logger?.ILog("Failed to read duration for VideoStream: " + info);
             }
 
             return vs;
         }
 
-        AudioStream ParseAudioStream(string info)
+        public static AudioStream ParseAudioStream(string info)
         {
             // Stream #0:1(eng): Audio: dts (DTS), 48000 Hz, stereo, fltp, 1536 kb/s (default)
             string line = info.Split(new string[] { "\r\n", "\n", "\r" }, StringSplitOptions.RemoveEmptyEntries).First();
@@ -201,7 +206,7 @@ namespace FileFlows.VideoNodes
 
             return audio;
         }
-        SubtitleStream ParseSubtitleStream(string info)
+        public static SubtitleStream ParseSubtitleStream(string info)
         {
             // Stream #0:1(eng): Audio: dts (DTS), 48000 Hz, stereo, fltp, 1536 kb/s (default)
             string line = info.Split(new string[] { "\r\n", "\n", "\r" }, StringSplitOptions.RemoveEmptyEntries).First();

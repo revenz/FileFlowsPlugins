@@ -32,7 +32,11 @@
             "DestinationFile": "Destination File",
             "DestinationFile-Help": "The filename to copy the file to.  If empty, the original filename will be used",
             "CopyFolder": "Copy Folder",
-            "CopyFolder-Help": "If the relative library folder structure should be copied too"
+            "CopyFolder-Help": "If the relative library folder structure should be copied too",
+            "AdditionalFiles": "Additional Files",
+            "AdditionalFiles-Help": "Additional files to copy from the directory to the new directory.\nEach value can contain a combination of valid literal path and wildcard (* and ?) characters, but it doesn''t support regular expressions.",
+            "AdditionalFilesFromOriginal": "Original Directory",
+            "AdditionalFilesFromOriginal-Help": "If the additional files should be copied from the working directory or from the original directory.  Turn on for original directory."
           }
         },
         "DeleteSourceDirectory": {
@@ -180,7 +184,11 @@
             "MoveFolder": "Copy Folder",
             "MoveFolder-Help": "If the relative library folder structure should be copied too",
             "DeleteOriginal": "Delete Original",
-            "DeleteOriginal-Help": "If the original file should be deleted, this will only happen if the working file is different to the original file"
+            "DeleteOriginal-Help": "If the original file should be deleted, this will only happen if the working file is different to the original file",
+            "AdditionalFiles": "Additional Files",
+            "AdditionalFiles-Help": "Additional files to move from the directory to the new directory.\nEach value can contain a combination of valid literal path and wildcard (* and ?) characters, but it doesn''t support regular expressions.",
+            "AdditionalFilesFromOriginal": "Original Directory",
+            "AdditionalFilesFromOriginal-Help": "If the additional files should be moved from the working directory or from the original directory.  Turn on for original directory."
           }
         },
         "OriginalFile": {
