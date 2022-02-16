@@ -30,18 +30,19 @@ namespace VideoNodes.Tests
 
             int output = node.Execute(args);
 
-            string crop = args.Parameters[DetectBlackBars.CROP_KEY] as string;
+            string crop = args.Variables[DetectBlackBars.CROP_KEY] as string;
             Assert.IsFalse(string.IsNullOrWhiteSpace(crop));
 
             Assert.AreEqual(1, output);
         }
+
         [TestMethod]
         public void DetectBlackBars_Test_02()
         {
             var crop = DetectBlackBars.TestAboveThreshold(1920, 1080, 1920, 1072, 20);
             Assert.IsFalse(crop.crop);
         }
-        }
+    }
 }
 
 

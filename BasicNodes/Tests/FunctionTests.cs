@@ -428,6 +428,44 @@ return 1;
             Assert.AreEqual(1, result);
             Assert.AreEqual("movie h265", args.Variables["NewName"]);
         }
+
+
+        [TestMethod]
+        public void Function_CropVariable()
+        {
+            Function pm = new Function();
+            var logger = new TestLogger();
+            var args = new FileFlows.Plugin.NodeParameters(@"D:\videos\unprocessed\movie h264.mkv", logger, false, string.Empty);
+            pm.Code = @"
+let quality = Variables.VideoCrop ? 17 : 19;
+Variables.VideoCodecParameters = `hevc_qsv -preset slow -tune film -global_quality ${quality} -look_ahead 1`;
+Variables.VideoCodec = 'h265';
+Variables.Extension = 'mkv';
+return 1;
+            ; ";
+            args.Variables["VideoCrop"] = "1920:1000:40:40";
+            var result = pm.Execute(args);
+            Assert.AreEqual(1, result);
+            Assert.AreEqual("hevc_qsv -preset slow -tune film -global_quality 17 -look_ahead 1", args.Variables["VideoCodecParameters"]);
+        }
+
+        [TestMethod]
+        public void Function_CropVariable_Missing()
+        {
+            Function pm = new Function();
+            var logger = new TestLogger();
+            var args = new FileFlows.Plugin.NodeParameters(@"D:\videos\unprocessed\movie h264.mkv", logger, false, string.Empty);
+            pm.Code = @"
+let quality = Variables.VideoCrop ? 17 : 19;
+Variables.VideoCodecParameters = `hevc_qsv -preset slow -tune film -global_quality ${quality} -look_ahead 1`;
+Variables.VideoCodec = 'h265';
+Variables.Extension = 'mkv';
+return 1;
+            ; ";
+            var result = pm.Execute(args);
+            Assert.AreEqual(1, result);
+            Assert.AreEqual("hevc_qsv -preset slow -tune film -global_quality 19 -look_ahead 1", args.Variables["VideoCodecParameters"]);
+        }
     }
 }
 

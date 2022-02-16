@@ -16,8 +16,19 @@ namespace FileFlows.VideoNodes
 
         internal const string CROP_KEY = "VideoCrop";
 
+        private Dictionary<string, object> _Variables;
+        public override Dictionary<string, object> Variables => _Variables;
+
         [NumberInt(1)]
         public int CroppingThreshold { get; set; }
+
+        public DetectBlackBars()
+        {
+            _Variables = new Dictionary<string, object>()
+            {
+                { CROP_KEY, "1920:1000:0:40" }
+            };
+        }
 
         public override int Execute(NodeParameters args)
         {
@@ -31,7 +42,7 @@ namespace FileFlows.VideoNodes
 
             int vidWidth = videoInfo.VideoStreams[0].Width;
             int vidHeight = videoInfo.VideoStreams[0].Height;
-            if(vidWidth < 1)
+            if (vidWidth < 1)
             {
                 args.Logger?.ELog("Failed to find video width");
                 return -1;
@@ -47,7 +58,10 @@ namespace FileFlows.VideoNodes
                 return 2;
 
             args.Logger?.ILog("Black bars detected, crop: " + crop);
-            args.Parameters.Add(CROP_KEY, crop);
+            args.UpdateVariables(new Dictionary<string, object> 
+            { 
+                { CROP_KEY, crop }
+            });
 
             return 1;
         }

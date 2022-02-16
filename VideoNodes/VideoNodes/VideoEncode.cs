@@ -82,7 +82,7 @@ namespace FileFlows.VideoNodes
                     var videoTrack = videoIsRightCodec ?? videoInfo.VideoStreams[0];
                     args.Logger?.ILog("Video: ", videoTrack);
 
-                    string crop = args.GetParameter<string>(DetectBlackBars.CROP_KEY) ?? "";
+                    string crop = (args.Variables.ContainsKey(DetectBlackBars.CROP_KEY) ? args.Variables[DetectBlackBars.CROP_KEY] as string : string.Empty) ?? string.Empty;
                     if (crop != string.Empty)
                         crop = " -vf crop=" + crop;
 
