@@ -30,7 +30,7 @@
         "AudioNormalization": {
           "Outputs": {
             "1": "Audio tracks were normalized and saved to temporary file",
-            "2": "Audio tracks were not normalized"
+            "2": "No audio tracks were found to be normalized"
           },
           "Description": "Normalizes all audio tracks in a video file using FFMPEGs loudnorm filter",
           "Fields": {
