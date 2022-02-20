@@ -10,6 +10,8 @@ namespace FileFlows.VideoNodes
         public List<VideoStream> VideoStreams { get; set; } = new List<VideoStream>();
         public List<AudioStream> AudioStreams { get; set; } = new List<AudioStream>();
         public List<SubtitleStream> SubtitleStreams { get; set; } = new List<SubtitleStream>();
+
+        public List<Chapter> Chapters { get; set; } = new List<Chapter>();
     }
 
     public class VideoFileStream
@@ -95,5 +97,12 @@ namespace FileFlows.VideoNodes
         /// If this is a forced subtitle
         /// </summary>
         public bool Forced { get; set; }
+    }
+
+    public class Chapter
+    {
+        public string Title { get; set; }    
+        public TimeSpan Start { get; set; }
+        public TimeSpan End { get; set; }
     }
 }

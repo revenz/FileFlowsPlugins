@@ -67,6 +67,21 @@
             "Language-Help": "The ISO 639-2 language code to use. \nhttps://en.wikipedia.org/wiki/List_of_ISO_639-2_codes"
           }
         },
+        "AutoChapters": {
+          "Description": "Automatically detect scene changes in the video to generate chapters.",
+          "Outputs": {
+            "1": "Chapters generated and saved to temporary file",
+            "2": "No chapters detected or video already had chapters"
+          },
+          "Fields": {
+            "MinimumLength": "Minimum Length",
+            "MinimumLength-Suffix": "seconds",
+            "MinimumLength-Help": "The minimum length of a chapter in seconds",
+            "Percent": "Percent",
+            "Percent-Suffix": "%",
+            "Percent-Help": "The threshold percentage value to use for scene detection changes.  A good value is 45%"
+          }
+        },
         "ComskipChapters": {
           "Description": "Uses a comskip EDL file and will create chapters given that EDL comskip file.",
           "Outputs": {

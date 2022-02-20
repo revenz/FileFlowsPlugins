@@ -1,5 +1,6 @@
 namespace FileFlows.VideoNodes
 {
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;
     using System.Text.RegularExpressions;
@@ -89,6 +90,8 @@ namespace FileFlows.VideoNodes
                 vi.Bitrate = float.Parse(brMatch.Value) * 1_000; // to convert to b/s
             }
 
+            vi.Chapters = ParseChapters(output);
+
             int subtitleIndex = 1;
             foreach (Match sm in streamMatches)
             {
@@ -133,6 +136,54 @@ namespace FileFlows.VideoNodes
                 ++streamIndex;
             }
             return vi;
+        }
+
+        private static List<Chapter> ParseChapters(string output)
+        {
+            try
+            {
+                var rgxChatpers = new Regex("(?<=(Chapters:))(.*?)(?=(Stream))", RegexOptions.Singleline);
+                string strChapters;
+                if (rgxChatpers.TryMatch(output, out Match matchChapters))
+                    strChapters = matchChapters.Value.Trim();
+                else
+                    return new List<Chapter>();
+
+                var rgxChapter = new Regex("Chapter #(.*?)(?=(Chapter #|$))", RegexOptions.Singleline);
+                var chapters = new List<Chapter>();
+
+                var rgxTitle = new Regex(@"title[\s]*:[\s]*(.*?)$");
+                var rgxStart = new Regex(@"(?<=(start[\s]))[\d]+\.[\d]+");
+                var rgxEnd = new Regex(@"(?<=(end[\s]))[\d]+\.[\d]+");
+                foreach (Match match in rgxChapter.Matches(strChapters))
+                {
+                    try
+                    {
+                        Chapter chapter = new Chapter();
+                        if (rgxTitle.TryMatch(match.Value.Trim(), out Match title))
+                            chapter.Title = title.Groups[1].Value;
+
+                        if (rgxStart.TryMatch(match.Value, out Match start))
+                        {
+                            double startSeconds = double.Parse(start.Value);
+                            chapter.Start = TimeSpan.FromSeconds(startSeconds);
+                        }
+                        if (rgxEnd.TryMatch(match.Value, out Match end))
+                        {
+                            double endSeconds = double.Parse(end.Value);
+                            chapter.End = TimeSpan.FromSeconds(endSeconds);
+                        }
+
+                        if (chapter.Start > TimeSpan.Zero || chapter.End > TimeSpan.Zero)
+                        {
+                            chapters.Add(chapter);
+                        }
+                    }
+                    catch (Exception ) { }
+                }
+
+                return chapters;
+            }catch (Exception) { return new List<Chapter>(); }
         }
 
         public static VideoStream ParseVideoStream(ILogger logger, string info, string fullOutput)

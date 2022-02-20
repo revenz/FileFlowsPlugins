@@ -1,6 +1,8 @@
 ﻿namespace FileFlows.VideoNodes
 {
     using System.Linq;
+    using System.Text.RegularExpressions;
+
     internal static class ExtensionMethods
     {
         public static void AddOrUpdate(this Dictionary<string, object> dict, string key, object value) {
@@ -12,6 +14,12 @@
         public static string? EmptyAsNull(this string str)
         {
             return str == string.Empty ? null : str;
+        }
+
+        public static bool TryMatch(this Regex regex, string input, out Match match)
+        {
+            match = regex.Match(input);
+            return match.Success;
         }
 
         public static IEnumerable<string> SplitCommandLine(this string commandLine)
