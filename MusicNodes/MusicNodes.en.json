@@ -7,6 +7,12 @@
           "1": "Music file from library"
         }
       },
+      "AudioFileNormalization": {
+        "Description": "Normalizes an audio file using two passes of FFMPEGs loudnorm filter",
+        "Outputs": {
+          "1": "Audio file normalized and saved to temporary file"
+        }
+      },
       "ConvertAudio": {
         "Description": "Convert a music file to the specified audio codec",
         "Outputs": {
