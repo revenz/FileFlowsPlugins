@@ -29,7 +29,6 @@ namespace DM.MovieApi.MovieDb.IndustryProfessions
 
             var arr = ( JArray )obj["jobs"];
 
-            // ReSharper disable once PossibleNullReferenceException
             var professions = arr.ToObject<IReadOnlyList<Profession>>();
 
             return professions;

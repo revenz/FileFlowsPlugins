@@ -11,7 +11,6 @@ namespace DM.MovieApi.MovieDb.Genres
 {
     internal class ApiGenreRequest : ApiRequestBase, IApiGenreRequest
     {
-        // ReSharper disable once InconsistentNaming
         private static readonly List<Genre> _allGenres = new();
 
         public IReadOnlyList<Genre> AllGenres
@@ -146,7 +145,6 @@ namespace DM.MovieApi.MovieDb.Genres
 
             var arr = ( JArray )obj["genres"];
 
-            // ReSharper disable once PossibleNullReferenceException
             var genres = arr.ToObject<IReadOnlyList<Genre>>();
 
             return genres;

@@ -14,7 +14,11 @@
 
         public override string Icon => "fas fa-comment";
 
-        [Checklist(nameof(Options), 1)]
+
+        [Boolean(1)]
+        public bool RemoveAll { get; set; }
+
+        [Checklist(nameof(Options), 2)]
         public List<string> SubtitlesToRemove { get; set; }
 
         private static List<ListOption> _Options;
@@ -32,6 +36,7 @@
                         new ListOption { Value = "xsub", Label = "DivX subtitles (XSUB)" },
                         new ListOption { Value = "dvbsub", Label = "DVB subtitles (codec dvb_subtitle)"},
                         new ListOption { Value = "dvdsub", Label = "DVD subtitles (codec dvd_subtitle)"},
+                        new ListOption { Value = "dvb_teletext", Label = "DVB/Teletext Format"},                        
                         new ListOption { Value = "text", Label = "Raw text subtitle"},
                         new ListOption { Value = "subrip", Label = "SubRip subtitle"},
                         new ListOption { Value = "srt", Label = "SubRip subtitle (codec subrip)"},
@@ -61,22 +66,31 @@
                     "-map", "0:a",
                 };
 
-                var removeCodecs = SubtitlesToRemove?.Where(x => string.IsNullOrWhiteSpace(x) == false)?.Select(x => x.ToLower())?.ToList() ?? new List<string>();
-
-                if (removeCodecs.Count == 0)
-                    return 2; // nothing to remove
-
                 bool foundBadSubtitle = false;
 
-                foreach (var sub in videoInfo.SubtitleStreams)
+                if (RemoveAll == false)
                 {
-                    args.Logger?.ILog("Subtitle found: " + sub.Codec + ", " + sub.Title);
-                    if (removeCodecs.Contains(sub.Codec.ToLower()))
+
+                    var removeCodecs = SubtitlesToRemove?.Where(x => string.IsNullOrWhiteSpace(x) == false)?.Select(x => x.ToLower())?.ToList() ?? new List<string>();
+
+                    if (removeCodecs.Count == 0)
+                        return 2; // nothing to remove
+
+
+                    foreach (var sub in videoInfo.SubtitleStreams)
                     {
-                        foundBadSubtitle = true;
-                        continue;
+                        args.Logger?.ILog("Subtitle found: " + sub.Codec + ", " + sub.Title);
+                        if (removeCodecs.Contains(sub.Codec.ToLower()))
+                        {
+                            foundBadSubtitle = true;
+                            continue;
+                        }
+                        ffArgs.AddRange(new[] { "-map", sub.IndexString });
                     }
-                    ffArgs.AddRange(new[] { "-map", sub.IndexString});
+                }
+                else
+                {
+                    foundBadSubtitle = videoInfo.SubtitleStreams?.Any() == true;
                 }
 
                 if(foundBadSubtitle == false)

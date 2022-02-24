@@ -154,7 +154,9 @@
             "2": "No subtitles to remove"
           },
           "Fields": {
-            "SubtitlesToRemove": "Subtitles To Remove"
+            "SubtitlesToRemove": "Subtitles To Remove",
+            "RemoveAll": "Remove All",
+            "RemoveAll-Help": "When checked, all subtitles will be removed from the file, otherwise only those selected below will be"
           }
         },
         "SubtitleExtractor": {
