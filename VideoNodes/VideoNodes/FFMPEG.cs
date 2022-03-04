@@ -21,10 +21,8 @@ namespace FileFlows.VideoNodes
 
         public override string Icon => "far fa-file-video";
 
-        public List<string> GetFFMPEGArgs(NodeParameters args)
+        public List<string> GetFFMPEGArgs(NodeParameters args, string outputFile)
         {
-            string outputFile = Path.Combine(args.TempPath, Guid.NewGuid().ToString() + "." + Extension);
-
             string cmdLine = args.ReplaceVariables(CommandLine);
 
             List<string> ffArgs = cmdLine.SplitCommandLine().Select(x =>
@@ -57,10 +55,17 @@ namespace FileFlows.VideoNodes
                 if (string.IsNullOrEmpty(Extension))
                     Extension = "mkv";
 
-                var ffArgs = GetFFMPEGArgs(args);
+                string outputFile = Path.Combine(args.TempPath, Guid.NewGuid().ToString() + "." + Extension);
+                var ffArgs = GetFFMPEGArgs(args, outputFile);
 
-                if (Encode(args, ffmpegExe, ffArgs) == false)
+                if (Encode(args, ffmpegExe, ffArgs, updateWorkingFile: false, dontAddInputFile: true, dontAddOutputFile: true) == false)
                     return -1;
+
+                if (File.Exists(outputFile))
+                {
+                    args.Logger?.ILog("Output file exists, updating working file: " + outputFile);
+                    args.SetWorkingFile(outputFile);
+                }
 
                 return 1;
             }

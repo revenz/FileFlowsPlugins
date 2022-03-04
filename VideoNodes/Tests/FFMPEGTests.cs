@@ -30,14 +30,14 @@ namespace VideoNodes.Tests
             node.CommandLine = "-i {workingFile} {SomeVars} -o {output}";
             node.Extension = ".mkv";
 
-            var results = node.GetFFMPEGArgs(args);
+            var results = node.GetFFMPEGArgs(args, "file");
             Assert.AreEqual("-i", results[0]);
             Assert.AreEqual(args.WorkingFile, results[1]);
             Assert.AreEqual("i", results[2]);
             Assert.AreEqual("am", results[3]);
             Assert.AreEqual("batman", results[4]);
             Assert.AreEqual("-o", results[5]);
-            Assert.IsTrue(results[6].EndsWith(".mkv"));
+            Assert.AreEqual("file", results[6]);
 
         }
     }

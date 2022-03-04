@@ -26,7 +26,7 @@ namespace FileFlows.VideoNodes
             this.Logger = logger;
         }
 
-        public (bool successs, string output) Encode(string input, string output, List<string> arguments, bool dontAddInputFile = false)
+        public (bool successs, string output) Encode(string input, string output, List<string> arguments, bool dontAddInputFile = false, bool dontAddOutputFile = false)
         {
             arguments ??= new List<string> ();
 
@@ -37,10 +37,13 @@ namespace FileFlows.VideoNodes
                 arguments.Insert(2, "-y");
             }
 
-            if (arguments.Last() != "-")
-                arguments.Add(output);
-            else
-                Logger.ILog("Last argument '-' skipping adding output file");
+            if (dontAddOutputFile == false)
+            {
+                if (arguments.Last() != "-")
+                    arguments.Add(output);
+                else
+                    Logger.ILog("Last argument '-' skipping adding output file");
+            }
 
             string argsString = String.Join(" ", arguments.Select(x => x.IndexOf(" ") > 0 ? "\"" + x + "\"" : x));
             Logger.ILog(new string('=', ("FFMpeg.Arguments: " + argsString).Length));

@@ -18,13 +18,13 @@ namespace FileFlows.VideoNodes
 
         private FFMpegEncoder Encoder;
 
-        protected bool Encode(NodeParameters args, string ffmpegExe, List<string> ffmpegParameters, string extension = "mkv", string outputFile = "", bool updateWorkingFile = true, bool dontAddInputFile = false)
+        protected bool Encode(NodeParameters args, string ffmpegExe, List<string> ffmpegParameters, string extension = "mkv", string outputFile = "", bool updateWorkingFile = true, bool dontAddInputFile = false, bool dontAddOutputFile = false)
         {
             string output;
-            return Encode(args, ffmpegExe, ffmpegParameters, out output, extension, outputFile, updateWorkingFile, dontAddInputFile);
+            return Encode(args, ffmpegExe, ffmpegParameters, out output, extension, outputFile, updateWorkingFile, dontAddInputFile: dontAddInputFile, dontAddOutputFile: dontAddOutputFile);
         }
 
-        protected bool Encode(NodeParameters args, string ffmpegExe, List<string> ffmpegParameters, out string ouput, string extension = "mkv", string outputFile = "", bool updateWorkingFile = true, bool dontAddInputFile = false)
+        protected bool Encode(NodeParameters args, string ffmpegExe, List<string> ffmpegParameters, out string ouput, string extension = "mkv", string outputFile = "", bool updateWorkingFile = true, bool dontAddInputFile = false, bool dontAddOutputFile = false)
         {
             if (string.IsNullOrEmpty(extension))
                 extension = "mkv";
@@ -46,7 +46,7 @@ namespace FileFlows.VideoNodes
                 }
             }
 
-            var success = Encoder.Encode(args.WorkingFile, outputFile, ffmpegParameters, dontAddInputFile: dontAddInputFile);
+            var success = Encoder.Encode(args.WorkingFile, outputFile, ffmpegParameters, dontAddInputFile: dontAddInputFile, dontAddOutputFile: dontAddOutputFile);
             args.Logger.ILog("Encoding successful: " + success.successs);
             if (success.successs && updateWorkingFile)
             {
