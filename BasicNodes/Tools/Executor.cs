@@ -15,7 +15,7 @@
         public override FlowElementType Type => FlowElementType.Process;
         public override string Icon => "fas fa-terminal";
 
-        private const string VariablePattern = @"(^[\s]*$)|(^([a-zA-Z_]+)[a-zA-Z_0-9]*$)";
+        internal const string VariablePattern = @"(^[\s]*$)|(^([a-zA-Z_]+)[a-zA-Z_0-9]*$)";
 
         [Required]
         [File(1)]
@@ -69,14 +69,14 @@
                 return -1;
             }
             bool success = task.Result.ExitCode == this.SuccessCode;
-            if(Regex.IsMatch(OutputVariable ?? string.Empty, VariablePattern))
+            if(string.IsNullOrWhiteSpace(OutputVariable) == false && Regex.IsMatch(OutputVariable, VariablePattern))
             {
                 args.UpdateVariables(new Dictionary<string, object>
                 {
                     { OutputVariable, task.Result.StandardOutput }
                 });
             }
-            if (Regex.IsMatch(OutputErrorVariable ?? string.Empty, VariablePattern))
+            if (string.IsNullOrWhiteSpace(OutputErrorVariable) == false && Regex.IsMatch(OutputErrorVariable ?? string.Empty, VariablePattern))
             {
                 args.UpdateVariables(new Dictionary<string, object>
                 {
