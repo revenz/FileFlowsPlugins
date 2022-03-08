@@ -93,7 +93,7 @@
             {
                 "-f", "concat",
                 "-safe", "0",
-                "-i", "concatList",
+                "-i", concatList,
                 "-c", "copy"
             };
 
