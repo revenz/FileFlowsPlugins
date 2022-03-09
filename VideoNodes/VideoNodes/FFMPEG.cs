@@ -9,7 +9,7 @@ namespace FileFlows.VideoNodes
     {
         public override int Outputs => 1;
 
-        [DefaultValue("-i {WorkingFile} {TempDir}output.mkv")]
+        [DefaultValue("-i {WorkingFile} {Output}")]
         [TextArea(1)]
         [Required]
         public string CommandLine { get; set; }
