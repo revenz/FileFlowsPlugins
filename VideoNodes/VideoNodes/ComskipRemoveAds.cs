@@ -71,15 +71,13 @@
             List<string> segmentsInfo = new List<string>();
             foreach (BreakPoint bp in breakPoints)
             {
-                segmentsInfo.Add(DebugString(segStart, bp.Start));
-                if (EncodeSegment(segStart, bp.Start) == false) 
+                if (EncodeSegment(segStart, bp.Start) == false)
                 {
                     args.Logger?.ELog("Failed to create segment: " + count);
                     return 2;
                 }
                 segStart = bp.End;
             }
-            segmentsInfo.Add(DebugString(segStart, totalTime));
             // add the end
             if (EncodeSegment(segStart, totalTime) == false)
             {
@@ -87,15 +85,21 @@
                 return 2;
             }
 
+            // stitch file back together
+            string concatList = segmentPrefix + "concatlist.txt";
+            string concatListContents = String.Join(Environment.NewLine, segments.Select(x => $"file '{x}'"));
+            File.WriteAllText(concatList, concatListContents);
+
             args.Logger?.ILog("====================================================");
             foreach (var str in segmentsInfo)
                 args.Logger?.ILog(str);
+            args.Logger?.ILog("Concat list:");
+            foreach (var line in concatListContents.Split(new String[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                args.Logger?.ILog(line);
+            }
             args.Logger?.ILog("====================================================");
 
-
-            // stitch file back together
-            string concatList = segmentPrefix + "concatlist.txt";
-            File.WriteAllLines(concatList, segments.Select(x => $"file '{x}'"));
 
             List<string> ffArgs = new List<string>
             {
@@ -125,6 +129,11 @@
             {
                 string segment = segmentPrefix + (++count).ToString("D2") + "." + extension;
                 float duration = end - start;
+                if (duration < 30)
+                {
+                    args.Logger?.ILog("Segment is less than 30 seconds, skipping");
+                    return true;
+                }
                 List<string> ffArgs = new List<string>
                 {
                     "-ss", start.ToString(),
@@ -134,6 +143,7 @@
                 if (Encode(args, ffmpegExe, ffArgs, outputFile: segment, updateWorkingFile: false))
                 {
                     segments.Add(segment);
+                    segmentsInfo.Add(DebugString(start, end));
                     return true;
                 }
                 return false;
