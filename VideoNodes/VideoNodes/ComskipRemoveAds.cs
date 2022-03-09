@@ -68,21 +68,29 @@
             string extension = args.WorkingFile.Substring(args.WorkingFile.LastIndexOf(".") + 1);
             string segmentPrefix = Path.Combine(args.TempPath, Guid.NewGuid().ToString())+"_";
             int count = 0;
+            List<string> segmentsInfo = new List<string>();
             foreach (BreakPoint bp in breakPoints)
             {
-                if(EncodeSegment(segStart, bp.Duration) == false) 
+                segmentsInfo.Add(DebugString(segStart, bp.Start));
+                if (EncodeSegment(segStart, bp.Start) == false) 
                 {
                     args.Logger?.ELog("Failed to create segment: " + count);
                     return 2;
                 }
                 segStart = bp.End;
             }
+            segmentsInfo.Add(DebugString(segStart, totalTime));
             // add the end
-            if (EncodeSegment(segStart, totalTime - segStart) == false)
+            if (EncodeSegment(segStart, totalTime) == false)
             {
                 args.Logger?.ELog("Failed to create segment: " + count);
                 return 2;
             }
+
+            args.Logger?.ILog("====================================================");
+            foreach (var str in segmentsInfo)
+                args.Logger?.ILog(str);
+            args.Logger?.ILog("====================================================");
 
 
             // stitch file back together
@@ -113,9 +121,10 @@
             args.Logger?.ELog("Failed to stitch file back together");
             return 2;
 
-            bool EncodeSegment(float start, float duration)
+            bool EncodeSegment(float start, float end)
             {
                 string segment = segmentPrefix + (++count).ToString("D2") + "." + extension;
+                float duration = end - start;
                 List<string> ffArgs = new List<string>
                 {
                     "-ss", start.ToString(),
@@ -131,6 +140,13 @@
             }
         }
 
+        private string DebugString(float start, float end)
+        {
+            var tsStart = new TimeSpan((long)start * TimeSpan.TicksPerSecond);
+            var tsEnd= new TimeSpan((long)end * TimeSpan.TicksPerSecond);
+
+            return "Segment: " + tsStart.ToString(@"mm\:ss") + " to " + tsEnd.ToString(@"mm\:ss");
+        }
         private class BreakPoint
         {
             public float Start { get; set; }
