@@ -44,10 +44,6 @@ namespace FileFlows.VideoNodes
             this.args = args;
             try
             {
-                VideoInfo videoInfo = GetVideoInfo(args);
-                if (videoInfo == null)
-                    return -1;
-
                 string ffmpegExe = GetFFMpegExe(args);
                 if (string.IsNullOrEmpty(ffmpegExe))
                     return -1;
