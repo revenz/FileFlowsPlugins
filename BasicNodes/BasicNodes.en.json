@@ -243,6 +243,27 @@
             "CsvFile-Help": "Will append to this file the original name and the renamed file.  Useful when using ''Log Only'' to test the renamer before changing files."
           }
         },
+        "WebRequest": {
+          "Description": "Allows you to send a web request",
+          "Outputs": {
+            "1": "Successfully sent",
+            "2": "Request returned a non-successful status code"
+          },
+          "Fields": {
+            "Url": "URL",
+            "Url-Help": "The URL of the request",
+            "Method": "Method",
+            "Method-Help": "The web method to use when sending this request",
+            "ContentType": "Content Type",
+            "ContentType-Help": "The Content-Type of the message to send.",
+            "Headers": "Headers",
+            "Headers-Help": "Optional headers to send with the request",
+            "HeadersKey": "Key",
+            "HeadersValue": "Value",
+            "Body": "Body",
+            "Body-Help": "The body of the request being sent.  Variables can be used in this field."
+          }
+        },
         "Zip": {
           "Description": "Allows you to zip the input",
           "Outputs": {

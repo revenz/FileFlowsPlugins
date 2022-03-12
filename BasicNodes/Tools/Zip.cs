@@ -3,7 +3,6 @@
     using FileFlows.Plugin;
     using FileFlows.Plugin.Attributes;
     using System;
-    using System.ComponentModel.DataAnnotations;
     using System.IO.Compression;
 
 

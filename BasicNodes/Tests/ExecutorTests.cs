@@ -4,6 +4,7 @@ namespace BasicNodes.Tests
 {
     using FileFlows.BasicNodes.File;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using System.Text.RegularExpressions;
 
     [TestClass]
     public class ExecutorTests
@@ -23,6 +24,11 @@ namespace BasicNodes.Tests
             Assert.IsTrue(args.Variables.ContainsKey("ExecOutput"));
             string output = args.Variables["ExecOutput"] as string;
             Assert.IsNotNull(output);
+        }
+        [TestMethod]
+        public void Executor_VariablePattern_Tests()
+        {
+            Assert.IsFalse(Regex.IsMatch(string.Empty, Executor.VariablePattern));
         }
     }
 }
