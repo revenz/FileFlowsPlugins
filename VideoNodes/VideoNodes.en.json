@@ -37,7 +37,11 @@
             "AllAudio": "All Audio Tracks",
             "AllAudio-Help": "If all audio tracks should be normalized or if just the first track should be",
             "TwoPass": "Two Pass",
-            "TwoPass-Help": "If the audio tracks should use two pass normalization.  This improves the normalization but increases the processing time."
+            "TwoPass-Help": "If the audio tracks should use two pass normalization.  This improves the normalization but increases the processing time.",
+            "Pattern": "Pattern",
+            "Pattern-Help": "An optional regular expression to filter out audio tracks to normalize.  Will match against the title, codec and language",
+            "NotMatching": "Not Matching",
+            "NotMatching-Help": "If the pattern should be used to exclude audio tracks from normalization, otherwise if the audio track matches they will be normalized."
           }
         },
         "AudioTrackRemover": {

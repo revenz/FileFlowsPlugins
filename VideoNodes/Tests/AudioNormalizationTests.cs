@@ -57,9 +57,9 @@ namespace VideoNodes.Tests
         }
 
         [TestMethod]
-        public void AudioNormalization_Test_TwoPass_2()
+        public void AudioNormalization_Pattern_Test()
         {
-            const string file = @"Z:\Boston Legal\Season 1\Boston.Legal.S01E06.1080p.mkv";
+            const string file = @"D:\videos\unprocessed\Masters of the Universe (1987) Bluray-1080p.mkv";
             var logger = new TestLogger();
             var vi = new VideoInfoHelper(@"C:\utils\ffmpeg\ffmpeg.exe", logger);
             var vii = vi.Read(file);
@@ -67,7 +67,9 @@ namespace VideoNodes.Tests
             const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
 
             AudioNormalization node = new();
-            node.TwoPass = true;
+            node.AllAudio = true;
+            node.Pattern = "commentary";
+            node.NotMatching = true;
             //node.OutputFile = file + ".sup";
             var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty);
             args.GetToolPathActual = (string tool) => ffmpeg;

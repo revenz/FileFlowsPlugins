@@ -9,6 +9,7 @@
     using System.Linq;
     using System.Text;
     using System.Text.Json;
+    using System.Text.RegularExpressions;
 
     public class AudioNormalization: EncodingNode
     {
@@ -21,6 +22,12 @@
 
         [Boolean(2)]
         public bool TwoPass { get; set; }
+
+        [TextVariable(3)]
+        public string Pattern { get; set; }
+
+        [Boolean(4)]
+        public bool NotMatching { get; set; }
 
         const string LOUDNORM_TARGET = "I=-24:LRA=7:TP=-2.0";
 
@@ -56,6 +63,20 @@
                 for (int j = 0; j < videoInfo.AudioStreams.Count;j++)
                 {
                     var audio = videoInfo.AudioStreams[j];
+
+                    if(string.IsNullOrEmpty(Pattern) == false)
+                    {
+                        string audioString = audio.Title + ":" + audio.Language + ":" + audio.Codec;
+                        bool match = new Regex(Pattern, RegexOptions.IgnoreCase).IsMatch(audioString);
+                        if (NotMatching)
+                            match = !match;
+                        if (match == false)
+                        {
+                            ffArgs.AddRange(new[] { "-map", $"0:a:{j}" });
+                            continue;
+                        }
+                    }
+
                     if (AllAudio || j == 0)
                     {
                         int sampleRate = audio.SampleRate > 0 ? audio.SampleRate : 48_000;
@@ -70,7 +91,7 @@
                         }
                     }
                     else
-                        ffArgs.Add($"-map 0:a:{j}");
+                        ffArgs.AddRange(new[] { "-map", $"0:a:{j}" });
                 }
                 if (videoInfo.SubtitleStreams?.Any() == true)
                     ffArgs.AddRange(new[] { "-map", "0:s" });
