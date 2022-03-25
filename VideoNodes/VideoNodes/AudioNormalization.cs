@@ -59,7 +59,7 @@
                 if (videoInfo.VideoStreams?.Any() == true)
                     ffArgs.AddRange(new[] { "-map", "0:v" });
 
-
+                List<int> tracksToNormalize = new ();
                 for (int j = 0; j < videoInfo.AudioStreams.Count;j++)
                 {
                     var audio = videoInfo.AudioStreams[j];
@@ -67,6 +67,7 @@
                     if(string.IsNullOrEmpty(Pattern) == false)
                     {
                         string audioString = audio.Title + ":" + audio.Language + ":" + audio.Codec;
+                        args.Logger?.ILog($"Audio Track [{j}] test string: {audioString}");
                         bool match = new Regex(Pattern, RegexOptions.IgnoreCase).IsMatch(audioString);
                         if (NotMatching)
                             match = !match;
@@ -83,16 +84,29 @@
                         if (TwoPass)
                         {
                             string twoPass = DoTwoPass(args, ffmpegExe, j);
-                            ffArgs.AddRange(new[] { "-map", $"0:a:{j}", "-c:a", audio.Codec, "-ar", sampleRate.ToString(), "-af", twoPass });
+                            ffArgs.AddRange(new[] { "-map", $"0:a:{j}", "-c:a:" + j, audio.Codec, "-ar", sampleRate.ToString(), "-filter:a:" + j, twoPass });
                         }
                         else
                         {
-                            ffArgs.AddRange(new[] { "-map", $"0:a:{j}", "-c:a", audio.Codec, "-ar", sampleRate.ToString(), "-af", $"loudnorm={LOUDNORM_TARGET}" });
+                            ffArgs.AddRange(new[] { "-map", $"0:a:{j}", "-c:a:" + j, audio.Codec, "-ar", sampleRate.ToString(), "-filter:a:" + j, $"loudnorm={LOUDNORM_TARGET}" });
                         }
+                        tracksToNormalize.Add(j);
                     }
                     else
+                    {
                         ffArgs.AddRange(new[] { "-map", $"0:a:{j}" });
+                    }
                 }
+
+                if (tracksToNormalize.Any() == false)
+                {
+                    args.Logger?.ILog("No audio streams to normalize");
+                    return 2;
+                }
+
+                foreach (int i in tracksToNormalize)
+                    args.Logger?.ILog($"Normalizing track [{i}]: {videoInfo.AudioStreams[i].Title};{videoInfo.AudioStreams[i].Language};{videoInfo.AudioStreams[i].Codec};");
+
                 if (videoInfo.SubtitleStreams?.Any() == true)
                     ffArgs.AddRange(new[] { "-map", "0:s" });
 
