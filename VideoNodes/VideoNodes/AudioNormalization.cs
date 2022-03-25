@@ -80,15 +80,14 @@
 
                     if (AllAudio || j == 0)
                     {
-                        int sampleRate = audio.SampleRate > 0 ? audio.SampleRate : 48_000;
                         if (TwoPass)
                         {
                             string twoPass = DoTwoPass(args, ffmpegExe, j);
-                            ffArgs.AddRange(new[] { "-map", $"0:a:{j}", "-c:a:" + j, audio.Codec, "-ar", sampleRate.ToString(), "-filter:a:" + j, twoPass });
+                            ffArgs.AddRange(new[] { "-map", $"0:a:{j}", "-c:a:" + j, audio.Codec, "-filter:a:" + j, twoPass });
                         }
                         else
                         {
-                            ffArgs.AddRange(new[] { "-map", $"0:a:{j}", "-c:a:" + j, audio.Codec, "-ar", sampleRate.ToString(), "-filter:a:" + j, $"loudnorm={LOUDNORM_TARGET}" });
+                            ffArgs.AddRange(new[] { "-map", $"0:a:{j}", "-c:a:" + j, audio.Codec, "-filter:a:" + j, $"loudnorm={LOUDNORM_TARGET}" });
                         }
                         tracksToNormalize.Add(j);
                     }
