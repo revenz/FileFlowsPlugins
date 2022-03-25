@@ -44,7 +44,10 @@
 
                 List<string> ffArgs = new List<string>();
 
+                ffArgs.AddRange(new[] { "-strict", "-2" }); // allow experimental stuff
+
                 ffArgs.AddRange(new[] { "-c", "copy" });
+
 
                 if (videoInfo.VideoStreams?.Any() == true)
                     ffArgs.AddRange(new[] { "-map", "0:v" });
@@ -58,16 +61,16 @@
                         int sampleRate = audio.SampleRate > 0 ? audio.SampleRate : 48_000;
                         if (TwoPass)
                         {
-                            string twoPass = DoTwoPass(args, ffmpegExe, audio.IndexString);
-                            ffArgs.AddRange(new[] { "-map", $"0:{audio.Index}", "-c:a", audio.Codec, "-ar", sampleRate.ToString(), "-af", twoPass });
+                            string twoPass = DoTwoPass(args, ffmpegExe, j);
+                            ffArgs.AddRange(new[] { "-map", $"0:a:{j}", "-c:a", audio.Codec, "-ar", sampleRate.ToString(), "-af", twoPass });
                         }
                         else
                         {
-                            ffArgs.AddRange(new[] { "-map", $"0:{audio.Index}", "-c:a", audio.Codec, "-ar", sampleRate.ToString(), "-af", $"loudnorm={LOUDNORM_TARGET}" });
+                            ffArgs.AddRange(new[] { "-map", $"0:a:{j}", "-c:a", audio.Codec, "-ar", sampleRate.ToString(), "-af", $"loudnorm={LOUDNORM_TARGET}" });
                         }
                     }
                     else
-                        ffArgs.Add($"-map 0:{audio.Index}");
+                        ffArgs.Add($"-map 0:a:{j}");
                 }
                 if (videoInfo.SubtitleStreams?.Any() == true)
                     ffArgs.AddRange(new[] { "-map", "0:s" });
@@ -89,7 +92,7 @@
         }
 
         [RequiresUnreferencedCode("Calls System.Text.Json.JsonSerializer.Deserialize<FileFlows.VideoNodes.AudioNormalization.LoudNormStats>(string, System.Text.Json.JsonSerializerOptions?)")]
-        public string DoTwoPass(NodeParameters args,string ffmpegExe, string audioIndex)
+        public string DoTwoPass(NodeParameters args,string ffmpegExe, int audioIndex)
         {
             //-af loudnorm=I=-24:LRA=7:TP=-2.0"
             string output;
@@ -97,7 +100,8 @@
             {
                 "-hide_banner",
                 "-i", args.WorkingFile,
-                "-map", audioIndex,
+                "-strict", "-2",  // allow experimental stuff
+                "-map", "0:a:" + audioIndex,
                 "-af", "loudnorm=" + LOUDNORM_TARGET + ":print_format=json",
                 "-f", "null",
                 "-"

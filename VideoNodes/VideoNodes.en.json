@@ -40,6 +40,21 @@
             "TwoPass-Help": "If the audio tracks should use two pass normalization.  This improves the normalization but increases the processing time."
           }
         },
+        "AudioTrackRemover": {
+          "Outputs": {
+            "1": "Audio tracks were removed",
+            "2": "Audio tracks were NOT removed"
+          },
+          "Description": "Allows you to remove audio tracks based on either their title or their language codes.\n\nAny title (or language code if set to \"Use Language Code\") that is blank will NOT be removed regardless of the pattern.",
+          "Fields": {
+            "Pattern": "Pattern",
+            "Pattern-Help": "A regular expression to match against, eg \"commentary\" to remove commentary tracks",
+            "NotMatching": "Not Matching",
+            "NotMatching-Help": "If audio tracks NOT matching the pattern should be removed",
+            "UseLanguageCode": "Use Language Code",
+            "UseLanguageCode-Help": "If the language code of the audio track should be used instead of the title"
+          }
+        },
         "AudioTrackReorder": {
           "Outputs": {
             "1": "Audio tracks re-ordered in new temporary file",
@@ -180,6 +195,22 @@
             "SetWorkingFile": "Set as Working File",
             "SetWorkingFile-Help": "When this is checked, if a subtitle is extracted, the working file will be changed to this extracted subtitle.  The original working file will NOT be deleted."
           }
+        },
+        "SubtitleLanguageRemover": {
+          "Outputs": {
+            "1": "Subtitles were removed",
+            "2": "Subtitles were NOT removed"
+          },
+          "Description": "Allows you to remove subtitles based on either their title or their language codes.\n\nAny language (or title if set to \"Use Title\") that is blank will NOT be removed regardless of the pattern.",
+          "Fields": {
+            "Pattern": "Pattern",
+            "Pattern-Help": "A regular expression to match against, eg \"eng\" to remove English tracks",
+            "NotMatching": "Not Matching",
+            "NotMatching-Help": "If subtitles NOT matching the pattern should be removed",
+            "UseTitle": "Use Title",
+            "UseTitle-Help": "If the title of the subtitle should be used for matching instead of the language"
+          }
+
         },
         "VideoCodec": {
           "Description": "This node will check the codecs in the input file, and trigger when matched.\n\nOutput 1: Matches\nOutput 2: Does not match",
