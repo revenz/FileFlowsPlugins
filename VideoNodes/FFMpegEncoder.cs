@@ -73,25 +73,12 @@ namespace FileFlows.VideoNodes
         public async Task<ProcessResult> ExecuteShellCommand(string command, List<string> arguments, int timeout = 0)
         {
             var result = new ProcessResult();
-            string? puid = Environment.GetEnvironmentVariable("PUID2");
 
             using (var process = new Process())
             {
                 this.process = process;
 
-                if (puid != null)
-                {
-                    Logger?.ILog("Running command as user: " + puid);
-                    process.StartInfo.FileName = "runuser";
-                    process.StartInfo.ArgumentList.Add("-u");
-                    process.StartInfo.ArgumentList.Add(puid);
-                    process.StartInfo.ArgumentList.Add("--");
-                    process.StartInfo.ArgumentList.Add(command);
-                }
-                else
-                {
-                    process.StartInfo.FileName = command;
-                }
+                process.StartInfo.FileName = command;
                 if (arguments?.Any() == true)
                 {
                     foreach (string arg in arguments)
