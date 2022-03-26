@@ -3,6 +3,7 @@ namespace FileFlows.BasicNodes.File
     using System.ComponentModel.DataAnnotations;
     using FileFlows.Plugin;
     using FileFlows.Plugin.Attributes;
+    using FileFlows.Plugin.Helpers;
 
     public class CopyFile : Node
     {
@@ -79,51 +80,9 @@ namespace FileFlows.BasicNodes.File
                 dest = Path.Combine(destDir!, destFile);
             }
 
-            args.Logger?.ILog($"Copying file '{args.WorkingFile}' to '{dest}");
-            // have to use file streams so we can report progress
-            int bufferSize = 1024 * 1024;
-
-            using (FileStream fsOut = new FileStream(dest, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite))
-            {
-                using (FileStream fsIn = new FileStream(args.WorkingFile, FileMode.Open, FileAccess.Read))
-                {
-                    try
-                    {
-                        long fileSize = fsIn.Length;
-                        fsOut.SetLength(fileSize);
-                        int bytesRead = -1;
-                        byte[] bytes = new byte[bufferSize];
-
-                        while ((bytesRead = fsIn.Read(bytes, 0, bufferSize)) > 0 && Canceled == false)
-                        {
-                            fsOut.Write(bytes, 0, bytesRead);
-                            float percent = fsOut.Position / fileSize * 100;
-                            if (percent > 100)
-                                percent = 100;
-                            if(args?.PartPercentageUpdate != null)
-                                args.PartPercentageUpdate(percent);
-                        }
-                        if (Canceled == false && args?.PartPercentageUpdate != null)
-                            args.PartPercentageUpdate(100);
-                    }
-                    catch (Exception ex)
-                    {
-                        args.Logger?.ELog("Failed to move file: " + ex.Message + Environment.NewLine + ex.StackTrace);
-                        return -1;
-                    }
-                }
-            }
-
-            if (Canceled)
-            {
-                try
-                {
-                    System.IO.File.Delete(dest);
-                }
-                catch (Exception) { }
-                args?.Logger?.ELog("Action was canceled.");
+            bool copied = args.CopyFile(dest);
+            if (!copied)
                 return -1;
-            }
 
             var srcDir = AdditionalFilesFromOriginal ? new FileInfo(args.FileName).DirectoryName : new FileInfo(args.WorkingFile).DirectoryName;
 
@@ -140,6 +99,9 @@ namespace FileFlows.BasicNodes.File
                             {
                                 string addFileDest = Path.Combine(destDir, addFile.Name);
                                 System.IO.File.Copy(addFile.FullName, addFileDest, true);
+                                
+                                FileHelper.ChangeOwner(args.Logger, addFileDest, file: true);
+
                                 args.Logger?.ILog("Copyied file: \"" + addFile.FullName + "\" to \"" + addFileDest + "\"");
                             }
                             catch (Exception ex)
