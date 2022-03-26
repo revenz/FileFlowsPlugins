@@ -73,18 +73,29 @@ namespace FileFlows.VideoNodes
         public async Task<ProcessResult> ExecuteShellCommand(string command, List<string> arguments, int timeout = 0)
         {
             var result = new ProcessResult();
+            string? puid = Environment.GetEnvironmentVariable("PUID2");
 
             using (var process = new Process())
             {
                 this.process = process;
-                // If you run bash-script on Linux it is possible that ExitCode can be 255.
-                // To fix it you can try to add '#!/bin/bash' header to the script.
 
-                process.StartInfo.FileName = command;
+                if (puid != null)
+                {
+                    Logger?.ILog("Running command as user: " + puid);
+                    process.StartInfo.FileName = "runuser";
+                    process.StartInfo.ArgumentList.Add("-u");
+                    process.StartInfo.ArgumentList.Add(puid);
+                    process.StartInfo.ArgumentList.Add("--");
+                    process.StartInfo.ArgumentList.Add(command);
+                }
+                else
+                {
+                    process.StartInfo.FileName = command;
+                }
                 if (arguments?.Any() == true)
                 {
                     foreach (string arg in arguments)
-                        process.StartInfo.ArgumentList.Add(arg); ;
+                        process.StartInfo.ArgumentList.Add(arg);
                 }
                 process.StartInfo.UseShellExecute = false;
                 process.StartInfo.RedirectStandardInput = true;
