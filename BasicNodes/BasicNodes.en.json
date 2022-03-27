@@ -117,10 +117,10 @@
           },
           "Fields": {
             "Comparison": "Comparison",
-            "Lower": "Lower",
+            "Lower": "Greater Than",
             "Lower-Suffix": "MB",
             "Lower-Help": "The value it must be greater than this number of megabytes",
-            "Upper": "Upper",
+            "Upper": "Less Than",
             "Upper-Suffix": "MB",
             "Upper-Help": "The value it must be less than than this number of megabytes. Leave as 0 to not test the upper limit."
           }
