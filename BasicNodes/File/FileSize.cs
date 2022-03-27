@@ -31,9 +31,9 @@ namespace FileFlows.BasicNodes.File
 
         public int TestSize(NodeParameters args, long size)
         {
-            if (size < (Lower * 1024 * 1024))
+            if (size < (((long)Lower) * 1024 * 1024))
                 return 2;
-            if (Upper > 0 && size > (Upper * 1024 * 1024))
+            if (Upper > 0 && size > (((long)Upper) * 1024 * 1024))
                 return 2;
             return 1;
         }

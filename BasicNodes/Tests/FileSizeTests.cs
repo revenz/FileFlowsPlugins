@@ -51,6 +51,21 @@ namespace BasicNodes.Tests
             var result = pm.TestSize(Args, 5 * 1024 * 1024);
             Assert.AreEqual(1, result);
         }
+
+        [TestMethod]
+        public void FileSize_25GB()
+        {
+            FileSize pm = new FileSize();
+            pm.Upper = 25600;
+            long fileSize = 2240000000; // 2.24GB
+            var result = pm.TestSize(Args, fileSize);
+            Assert.AreEqual(1, result);
+
+            pm.Upper = 25600;
+            fileSize = 224000000000; // 2.24GB
+            result = pm.TestSize(Args, fileSize);
+            Assert.AreEqual(2, result);
+        }
     }
 }
 
