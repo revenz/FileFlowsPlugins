@@ -59,19 +59,19 @@ namespace FileFlows.BasicNodes.File
         {
             args.Logger?.ILog("Checking directory to delete: " + path);
             DirectoryInfo dir = new DirectoryInfo(path);
-            if (dir.Parent.FullName.ToLower() == root.ToLower())
+            if (dir.FullName.ToLower() == root.ToLower())
             {
                 args.Logger?.ILog("At root, stopping deleting: " + root);
                 return 1;
             }
-            if (dir.Parent.FullName.Length <= root.Length)
+            if (dir.FullName.Length <= root.Length)
             {
                 args.Logger?.ILog("At root2, stopping deleting: " + root);
                 return 1;
             }
             if (deleteSubFolders == false && dir.GetDirectories().Any())
             {
-                args.Logger?.ILog("Directory is contains subfolders, cannot delete: " + dir.FullName);
+                args.Logger?.ILog("Directory contains subfolders, cannot delete: " + dir.FullName);
                 return 2;
             }
 

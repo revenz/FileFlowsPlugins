@@ -11,7 +11,7 @@ namespace VideoNodes.Tests
     using System.Threading.Tasks;
 
     [TestClass]
-    public class AudoTrackRemovalTests 
+    public class AudioTrackRemovalTests 
     { 
         [TestMethod]
         public void AudoTrackRemoval_Test_01()

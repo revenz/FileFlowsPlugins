@@ -68,8 +68,60 @@ namespace VideoNodes.Tests
 
             AudioNormalization node = new();
             node.AllAudio = true;
-            node.Pattern = "commentary";
+            node.Pattern = "";
             node.NotMatching = true;
+            //node.OutputFile = file + ".sup";
+            var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty);
+            args.GetToolPathActual = (string tool) => ffmpeg;
+            args.TempPath = @"D:\videos\temp";
+
+            new VideoFile().Execute(args);
+
+            int output = node.Execute(args);
+            string log = logger.ToString();
+            Assert.AreEqual(1, output);
+        }
+
+        [TestMethod]
+        public void AudioNormalization_Pattern_Test3()
+        {
+            const string file = @"D:\videos\unprocessed\test_orig.mkv";
+            var logger = new TestLogger();
+            var vi = new VideoInfoHelper(@"C:\utils\ffmpeg\ffmpeg.exe", logger);
+            var vii = vi.Read(file);
+
+            const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+
+            AudioNormalization node = new();
+            node.AllAudio = true;
+            node.Pattern = "flac";
+            node.NotMatching = false;
+            //node.OutputFile = file + ".sup";
+            var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty);
+            args.GetToolPathActual = (string tool) => ffmpeg;
+            args.TempPath = @"D:\videos\temp";
+
+            new VideoFile().Execute(args);
+
+            int output = node.Execute(args);
+            string log = logger.ToString();
+            Assert.AreEqual(2, output);
+        }
+
+        [TestMethod]
+        public void AudioNormalization_Pattern_Test4()
+        {
+            const string file = @"D:\videos\unprocessed\test_orig.mkv";
+            var logger = new TestLogger();
+            var vi = new VideoInfoHelper(@"C:\utils\ffmpeg\ffmpeg.exe", logger);
+            var vii = vi.Read(file);
+
+            const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+
+            AudioNormalization node = new();
+            node.AllAudio = true;
+            //node.Pattern = "truehd";
+            //node.NotMatching = false;
             //node.OutputFile = file + ".sup";
             var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty);
             args.GetToolPathActual = (string tool) => ffmpeg;

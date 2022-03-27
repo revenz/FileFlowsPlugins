@@ -466,6 +466,52 @@ return 1;
             Assert.AreEqual(1, result);
             Assert.AreEqual("hevc_qsv -preset slow -tune film -global_quality 19 -look_ahead 1", args.Variables["VideoCodecParameters"]);
         }
+
+        [TestMethod]
+        public void Function_FFMPEG()
+        {
+            Function pm = new Function();
+            var logger = new TestLogger();
+            var args = new FileFlows.Plugin.NodeParameters(@"D:\videos\unprocessed\dummy.mkv", logger, false, string.Empty);
+            args.GetToolPathActual = (string name) => @"C:\utils\ffmpeg\ffmpeg.exe";
+            args.TempPath = @"D:\videos\temp";
+            pm.Code = @"
+let output = Flow.TempPath + '/' + Flow.NewGuid() + '.mkv';
+let ffmpeg = Flow.GetToolPath('ffmpeg');
+let process = Flow.Execute({
+	command: ffmpeg,
+	argumentList: [
+		'-i',
+		Variables.file.FullName,
+		'-c:v',
+		'libx265',
+		'-c:a:1',
+		'aac',
+		'-ac',
+		'2',
+		'-filter:a:0',
+		'""acompressor = ratio = 4""',
+
+        output
+	]
+});
+
+if(process.standardOutput)
+    Logger.ILog('Standard output: ' + process.standardOutput);
+if(process.starndardError)
+    Logger.ILog('Standard error: ' + process.starndardError);
+
+if(process.exitCode !== 0){
+	Logger.ELog('Failed processing ffmpeg: ' + process.exitCode);
+	return -1;
+}
+
+    Flow.SetWorkingFile(output);
+return 1;
+            ; ";
+            var result = pm.Execute(args);
+            Assert.AreEqual(1, result);
+        }
     }
 }
 
