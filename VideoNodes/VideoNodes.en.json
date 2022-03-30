@@ -266,14 +266,19 @@
         "VideoScaler": {
           "Description": "This allows you to scale a video to the specified dimensions.  It will retain the aspect ratio of the video so if the video was 1920x1000 it would scale to 1280x668 if you select 720P.",
           "Outputs": {
-            "1": "Video rescaled to temporary file"
+            "1": "Video rescaled to temporary file",
+            "2": "Video was already in/near the scaled resolution"
           },
           "Fields": {
             "VideoCodec": "Video Codec",
             "Language-Help": "The video codec to encode the scaled video in",
             "Extension": "Extension",
             "Extension-Help": "The file extension to use on the newly created file",
-            "Resolution": "Resolution"
+            "Force": "Force",
+            "Force-Help": "When checked the video will be force scaled even if the working file is already in this resolution (or near this resolution).",
+            "Resolution": "Resolution",
+            "VideoCodecParameters": "Video Codec Parameters",
+            "VideoCodecParameters-Help": "The parameters to use to encode the video, eg. \"hevc_nvenc -preset hq -crf 23\" to encode into hevc using the HQ preset a constant rate factor of 23 and using NVIDIA hardware acceleration."
           }
         }
       }

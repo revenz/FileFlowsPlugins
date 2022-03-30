@@ -1,6 +1,7 @@
 namespace FileFlows.VideoNodes
 {
     using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     using System.Diagnostics;
     using System.Text.RegularExpressions;
     using FileFlows.Plugin;
@@ -9,10 +10,15 @@ namespace FileFlows.VideoNodes
     public class VideoScaler: EncodingNode
     {
         public override string Icon => "fas fa-search-plus";
-        public override int Outputs => 1; // this node always re-encodes
+        public override int Outputs => 2; // this node always re-encodes
 
         [Select(nameof(CodecOptions), 1)]
         public string VideoCodec { get; set; }
+
+        [Required]
+        [TextVariable(2)]        
+        [ConditionEquals(nameof(VideoCodec), "Custom")]
+        public string VideoCodecParameters { get; set; }
 
         private static List<ListOption> _CodecOptions;
         public static List<ListOption> CodecOptions
@@ -37,7 +43,10 @@ namespace FileFlows.VideoNodes
 
                         new ListOption { Label = "Intel Hardware Encoding", Value = "###GROUP###"},
                         new ListOption { Value = "h264_qsv", Label = "H264 (Intel)"},
-                        new ListOption { Value = "hevc_qsv", Label = "H265 (Intel)"}
+                        new ListOption { Value = "hevc_qsv", Label = "H265 (Intel)"},
+
+                        new ListOption { Label = "Custom", Value = "###GROUP###"},
+                        new ListOption { Value = "Custom", Label = "Custom"},
                     };
                 }
                 return _CodecOptions;
@@ -46,11 +55,16 @@ namespace FileFlows.VideoNodes
 
 
         [DefaultValue("mkv")]
-        [TextVariable(3)]
+        [TextVariable(4)]
         public string Extension { get; set; }
 
-        [Select(nameof(ResolutionOptions), 2)]
+        [Boolean(5)]
+        public bool Force { get; set; }
+
+
+        [Select(nameof(ResolutionOptions), 3)]
         public string Resolution { get; set; }
+
 
         private static List<ListOption> _ResolutionOptions;
         public static List<ListOption> ResolutionOptions
@@ -84,10 +98,23 @@ namespace FileFlows.VideoNodes
                 if (videoInfo == null)
                     return -1;
 
+
+                if (Force == false)
+                {
+                    if (Between(videoInfo.VideoStreams[0].Width, 1860, 1980) && Resolution.StartsWith("1920"))
+                        return 2;
+                    else if (Between(videoInfo.VideoStreams[0].Width, 3780, 3900) && Resolution.StartsWith("3840"))
+                        return 2;
+                    else if (Between(videoInfo.VideoStreams[0].Width, 1220, 1340) && Resolution.StartsWith("1280"))
+                        return 2;
+                    else if (Between(videoInfo.VideoStreams[0].Width, 600, 700) && Resolution.StartsWith("640"))
+                        return 2;
+                }
+
+
                 string ffmpegExe = GetFFMpegExe(args);
                 if (string.IsNullOrEmpty(ffmpegExe))
                     return -1;
-
 
                 List<string> ffArgs = new List<string>()
                 {
@@ -95,7 +122,9 @@ namespace FileFlows.VideoNodes
                     "-c:v"
                 };
 
-                string codec = CheckVideoCodec(ffmpegExe, VideoCodec);
+                string codec = VideoCodec == "Custom" && string.IsNullOrWhiteSpace(VideoCodecParameters) == false ?
+                               VideoCodecParameters : CheckVideoCodec(ffmpegExe, VideoCodec);
+
                 foreach (string c in codec.Split(" "))
                 {
                     if (string.IsNullOrWhiteSpace(c.Trim()))
@@ -114,5 +143,7 @@ namespace FileFlows.VideoNodes
                 return -1;
             }
         }
+
+        private bool Between(int value, int lower, int max) => value >= lower && value <= max;
     }
 }

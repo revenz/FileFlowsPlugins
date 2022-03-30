@@ -1,6 +1,7 @@
 namespace FileFlows.VideoNodes
 {
     using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     using System.Diagnostics;
     using System.Text.RegularExpressions;
     using FileFlows.Plugin;
@@ -12,7 +13,6 @@ namespace FileFlows.VideoNodes
         [DefaultValue("hevc")]
         [TextVariable(1)]
         public string VideoCodec { get; set; }
-
 
         [DefaultValue("hevc_nvenc -preset hq -crf 23")]
         [TextVariable(2)]
