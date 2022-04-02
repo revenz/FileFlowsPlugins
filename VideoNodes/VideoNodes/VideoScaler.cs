@@ -101,13 +101,14 @@ namespace FileFlows.VideoNodes
 
                 if (Force == false)
                 {
-                    if (Between(videoInfo.VideoStreams[0].Width, 1860, 1980) && Resolution.StartsWith("1920"))
+                    var resolution = ResolutionHelper.GetResolution(videoInfo);
+                    if(resolution == ResolutionHelper.Resolution.r1080p && Resolution.StartsWith("1920"))
                         return 2;
-                    else if (Between(videoInfo.VideoStreams[0].Width, 3780, 3900) && Resolution.StartsWith("3840"))
+                    else if (resolution == ResolutionHelper.Resolution.r4k && Resolution.StartsWith("3840"))
                         return 2;
-                    else if (Between(videoInfo.VideoStreams[0].Width, 1220, 1340) && Resolution.StartsWith("1280"))
+                    else if (resolution == ResolutionHelper.Resolution.r720p && Resolution.StartsWith("1280"))
                         return 2;
-                    else if (Between(videoInfo.VideoStreams[0].Width, 600, 700) && Resolution.StartsWith("640"))
+                    else if (resolution == ResolutionHelper.Resolution.r480p && Resolution.StartsWith("640"))
                         return 2;
                 }
 
@@ -143,7 +144,5 @@ namespace FileFlows.VideoNodes
                 return -1;
             }
         }
-
-        private bool Between(int value, int lower, int max) => value >= lower && value <= max;
     }
 }

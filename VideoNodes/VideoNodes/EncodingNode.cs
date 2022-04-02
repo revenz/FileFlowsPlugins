@@ -54,9 +54,7 @@ namespace FileFlows.VideoNodes
 
                 // get the new video info
                 var videoInfo = new VideoInfoHelper(ffmpegExe, args.Logger).Read(outputFile);
-                var newVariables = new Dictionary<string, object>();
-                SetVideoInfo(args, videoInfo, newVariables);
-                args.UpdateVariables(newVariables);
+                SetVideoInfo(args, videoInfo, this.Variables ?? new Dictionary<string, object>());
             }
             Encoder.AtTime -= AtTimeEvent;
             Encoder = null;

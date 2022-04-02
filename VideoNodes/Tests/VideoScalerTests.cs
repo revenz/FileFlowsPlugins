@@ -125,6 +125,42 @@ namespace VideoNodes.Tests
                 Assert.AreEqual(-1, output);
             }
         }
+
+
+        [TestMethod]
+        public void VideoScaler_VideoInfoUpdated_Test()
+        {
+            const string file = @"D:\videos\problemfile\sample fileflows.mkv";
+            var vi = new VideoInfoHelper(@"C:\utils\ffmpeg\ffmpeg.exe", new TestLogger());
+            var vii = vi.Read(file);
+
+            VideoScaler node = new();
+            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
+            args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
+            args.TempPath = @"D:\videos\temp";
+
+            node.VideoCodec = "h265";
+
+
+            new VideoFile().Execute(args);
+
+            TestVideoInfo(args, "h264", 1280, 720, "720p");
+
+            node.Resolution = "1920:-2";
+            int output = node.Execute(args);
+
+            Assert.AreEqual(1, output);
+
+            TestVideoInfo(args, "hevc", 1920, 1080, "1080p");
+        }
+
+        private void TestVideoInfo(FileFlows.Plugin.NodeParameters parameters, string videoCodec, int width, int height, string resolution)
+        {
+            Assert.AreEqual(videoCodec, parameters.Variables["vi.Video.Codec"]);
+            Assert.AreEqual(resolution, parameters.Variables["vi.Resolution"]);
+            var videoInfo = parameters.Variables["vi.VideoInfo"] as VideoInfo;
+            Assert.AreEqual(videoCodec, videoInfo.VideoStreams[0].Codec);
+        }
     }
 }
 
