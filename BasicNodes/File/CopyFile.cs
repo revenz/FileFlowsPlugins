@@ -117,7 +117,8 @@ namespace FileFlows.BasicNodes.File
                 }
             }
 
-            args?.SetWorkingFile(dest);
+            // not needed as args.CopyFile does this
+            //args?.SetWorkingFile(dest);
             return 1;
         }
     }
