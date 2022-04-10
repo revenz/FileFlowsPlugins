@@ -26,7 +26,7 @@ namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests
             FfmpegBuilderStart ffStart = new ();
             Assert.AreEqual(1, ffStart.Execute(args));
 
-            FfmpegBuilderVideoEncode ffEncode = new ();
+            FfmpegBuilderVideoCodec ffEncode = new ();
             ffEncode.VideoCodec = "h264";
             ffEncode.Execute(args);
 
@@ -65,7 +65,7 @@ namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests
             FfmpegBuilderStart ffStart = new();
             Assert.AreEqual(1, ffStart.Execute(args));
 
-            FfmpegBuilderVideoEncode ffEncode = new();
+            FfmpegBuilderVideoCodec ffEncode = new();
             ffEncode.VideoCodec = "h264";
             ffEncode.Execute(args);
 
@@ -112,7 +112,7 @@ namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests
             FfmpegBuilderStart ffStart = new();
             Assert.AreEqual(1, ffStart.Execute(args));
 
-            FfmpegBuilderVideoEncode ffEncode = new();
+            FfmpegBuilderVideoCodec ffEncode = new();
             ffEncode.VideoCodec = "h265";
             ffEncode.Execute(args);
 
@@ -162,7 +162,7 @@ namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests
             FfmpegBuilderStart ffStart = new();
             Assert.AreEqual(1, ffStart.Execute(args));
 
-            FfmpegBuilderVideoEncode ffEncode = new();
+            FfmpegBuilderVideoCodec ffEncode = new();
             ffEncode.VideoCodec = "h265";
             ffEncode.Execute(args);
 
@@ -217,7 +217,7 @@ namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests
             FfmpegBuilderStart ffStart = new();
             Assert.AreEqual(1, ffStart.Execute(args));
 
-            FfmpegBuilderVideoEncode ffEncode = new();
+            FfmpegBuilderVideoCodec ffEncode = new();
             ffEncode.VideoCodec = "h265";
             ffEncode.Execute(args);
 
@@ -271,7 +271,7 @@ namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests
             FfmpegBuilderStart ffStart = new();
             Assert.AreEqual(1, ffStart.Execute(args));
 
-            FfmpegBuilderVideoEncode ffEncode = new();
+            FfmpegBuilderVideoCodec ffEncode = new();
             ffEncode.VideoCodec = "h265";
             ffEncode.Execute(args);
 

@@ -1,6 +1,6 @@
 ﻿namespace FileFlows.VideoNodes.FfmpegBuilderNodes
 {
-    public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
+    public class FfmpegBuilderVideoCodec:FfmpegBuilderNode
     {
         public override int Outputs => 2;
 

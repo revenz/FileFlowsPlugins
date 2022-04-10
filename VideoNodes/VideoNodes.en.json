@@ -262,9 +262,9 @@
             "Resolution": "Resolution"
           }
         },
-        "FfmpegBuilderVideoEncode": {
-          "Label": "FFMPEG Builder: Video Encode",
-          "Description": "Encodes video streams in the specified codec",
+        "FfmpegBuilderVideoCodec": {
+          "Label": "FFMPEG Builder: Video Codec",
+          "Description": "Sets FFMPEG Builder to encode the video streams in the specified codec",
           "Outputs": {
             "1": "FFMPEG Builder video streams set to encode",
             "2": "Video already in target codec, will not re-encode"
