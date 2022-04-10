@@ -51,7 +51,7 @@
 
             if (Filter.Any())
             {
-                results.Add("-vf");
+                results.Add("-filter:v:" + outputIndex);
                 results.Add(String.Join(", ", Filter));
             }
 
