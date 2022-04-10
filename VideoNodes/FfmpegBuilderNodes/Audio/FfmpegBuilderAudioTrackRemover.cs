@@ -26,7 +26,7 @@
         {
             this.Init(args);
             bool removing = false;
-            var regex = new Regex(this.Pattern, RegexOptions.IgnoreCase);
+            Regex? regex = null;
             foreach(var audio in Model.AudioStreams)
             {
                 if (RemoveAll)
@@ -35,6 +35,8 @@
                     removing = true;
                     continue;
                 }
+                if(regex == null)
+                    regex = new Regex(this.Pattern, RegexOptions.IgnoreCase);
                 string str = UseLanguageCode ? audio.Stream.Language : audio.Stream.Title;
                 if (string.IsNullOrEmpty(str) == false) // if empty we always use this since we have no info to go on
                 {

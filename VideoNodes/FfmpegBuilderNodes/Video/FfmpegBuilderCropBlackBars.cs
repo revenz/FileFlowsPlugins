@@ -3,6 +3,7 @@
     public class FfmpegBuilderCropBlackBars : FfmpegBuilderNode
     {
         [NumberInt(1)]
+        [DefaultValue(10)]
         public int CroppingThreshold { get; set; }
         public override int Outputs => 2;
         public override int Execute(NodeParameters args)
