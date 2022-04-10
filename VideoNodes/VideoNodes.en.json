@@ -5,7 +5,7 @@
           "Outputs": {
             "1": "Audio track added and saved to temporary file"
           },
-          "Description": "Adds a new audio track to ta video file, all other audio tracks will remain.  This will use the first audio track of the file as the source audio track to convert.",
+          "Description": "Adds a new audio track to the video file, all other audio tracks will remain.  This will use the first audio track of the file as the source audio track to convert.",
           "Fields": {
             "Index": "Index",
             "Index-Help": "The index where to insert the new audio track.  1 based, so to insert the new audio track as the first track set this to 1.",
@@ -75,7 +75,7 @@
           }
         },
         "AudioTrackSetLanguage": {
-          "Label": "Audio: Set Language",
+          "Label": "Audio Set Language",
           "Outputs": {
             "1": "Audio tracks updated to new temporary file",
             "2": "Audio tracks NOT updated"
@@ -142,6 +142,140 @@
             "Extension-Help": "The file extension to use on the newly created file",
             "CommandLine": "Command Line",
             "CommandLine-Help": "The command line to run with FFMPEG.\n'{WorkingFile}': the working file of the flow\n'{Output}': The output file that will be passed as the last parameter to FFMPEG including the extension defined above."
+          }
+        },
+        "FfmpegBuilderStart": {
+          "Label": "FFMPEG Builder: Start",
+          "Outputs": {
+            "1": "FFMPEG Builder created and ready to add FFMPEG Builder nodes to"
+          },
+          "Description": "Creates an instance of the FFMPEG Builder which can build a FFMPEG argument to then execute with the FFMPEG Executor."
+        },
+        "FfmpegBuilderExecutor": {
+          "Label": "FFMPEG Builder: Executor",
+          "Outputs": {
+            "1": "FFMPEG Builder ran successfully and created new temporary file",
+            "2": "No changes detected in FFMPEG Builder, file not created"
+          },
+          "Description": "Executes a FFMPEG Builder command created by other FFMPEG Builder nodes."
+        },
+        "FfmpegBuilderAudioAddTrack": {
+          "Label": "FFMPEG Builder: Audio Add Track",
+          "Outputs": {
+            "1": "Added audio track to FFMPEG Builder"
+          },
+          "Description": "Adds a new audio track to FFMPEG Builder which will be added once the builder is executed.",
+          "Fields": {
+            "Index": "Index",
+            "Index-Help": "The index where to insert the new audio track.  1 based, so to insert the new audio track as the first track set this to 1.",
+            "Channels": "Channels",
+            "Channels-Help": "The number of channels to convert this audio track to.",
+            "Bitrate": "Bitrate",
+            "Bitrate-Help": "Bitrate of the new audio track",
+            "Language": "Language",
+            "Language-Help": "Optional ISO 639-2 language code to use.  Will attempt to find an audio track with this language code if not the best audio track will be used.\nhttps://en.wikipedia.org/wiki/List_of_ISO_639-2_codes"
+          }
+        },
+        "FfmpegBuilderAudioTrackRemover": {
+          "Label": "FFMPEG Builder: Audio Track Remover",
+          "Outputs": {
+            "1": "Audio tracks set to remove",
+            "2": "Audio tracks NOT set to removed"
+          },
+          "Description": "Allows you to remove audio tracks based on either their title or their language codes.\n\nAny title (or language code if set to \"Use Language Code\") that is blank will NOT be removed regardless of the pattern.",
+          "Fields": {
+            "RemoveAll": "Remove All",
+            "RemoveAll-Help": "Remove all current tracks from the output file.  You can use Add Audio Track afterwards to add tracks of specific codecs",
+            "Pattern": "Pattern",
+            "Pattern-Help": "A regular expression to match against, eg \"commentary\" to remove commentary tracks",
+            "NotMatching": "Not Matching",
+            "NotMatching-Help": "If audio tracks NOT matching the pattern should be removed",
+            "UseLanguageCode": "Use Language Code",
+            "UseLanguageCode-Help": "If the language code of the audio track should be used instead of the title"
+          }
+        },
+        "FfmpegBuilderSubtitleFormatRemover": {
+          "Label": "FFMPEG Builder: Subtitle Format Remover",
+          "Description": "Removes subtitles from a video file if found.",
+          "Outputs": {
+            "1": "Subtitles marked for removal in FFMPEG Builder",
+            "2": "No subtitles to remove"
+          },
+          "Fields": {
+            "SubtitlesToRemove": "Subtitles To Remove",
+            "RemoveAll": "Remove All",
+            "RemoveAll-Help": "When checked, all subtitles will be removed from the file, otherwise only those selected below will be"
+          }
+        },
+        "FfmpegBuilderSubtitleTrackRemover": {
+          "Label": "FFMPEG Builder: Subtitle Track Remover",
+          "Outputs": {
+            "1": "Subtitles marked for removal in FFMPEG Builder",
+            "2": "No subtitles to remove"
+          },
+          "Description": "Allows you to remove subtitles based on either their title or their language codes.\n\nAny language (or title if set to \"Use Title\") that is blank will NOT be removed regardless of the pattern.",
+          "Fields": {
+            "Pattern": "Pattern",
+            "Pattern-Help": "A regular expression to match against, eg \"eng\" to remove English tracks",
+            "NotMatching": "Not Matching",
+            "NotMatching-Help": "If subtitles NOT matching the pattern should be removed",
+            "UseLanguageCode": "Use Language Code",
+            "UseLanguageCode-Help": "If the language code of the audio track should be used instead of the title"
+          }
+        },
+        "FfmpegBuilderCropBlackBars": {
+          "Label": "FFMPEG Builder: Crop Black Bars",
+          "Description": "Updated FFMPEG Builder to crop black bars if detected",
+          "Outputs": {
+            "1": "FFMPEG Builder updated to crop black bars",
+            "2": "No black bars detected, not cropping"
+          },
+          "Fields": {
+            "CroppingThreshold": "Threshold",
+            "CroppingThreshold-Help": "The amount of pixels that must be greater than to crop.   E.g. if there's only 5 pixels detected as black space, you may consider this too small to crop."
+          }
+        },
+        "FfmpegBuilderRemuxToMkv": {
+          "Label": "FFMPEG Builder: Remux to MKV",
+          "Descritption": "Remuxes a video file into a MKV container.",
+          "Outputs": {
+            "1": "FFMPEG Builder set to remux to MKV"
+          }
+        },
+        "FfmpegBuilderRemuxToMP4": {
+          "Label": "FFMPEG Builder: Remux to MP4",
+          "Descritption": "Remuxes a video file into a MP4 container.",
+          "Outputs": {
+            "1": "FFMPEG Builder set to remux to MP4"
+          }
+        },
+        "FfmpegBuilderScaler": {
+          "Label": "FFMPEG Builder: Video Scaler",
+          "Description": "This allows you to scale a video to the specified dimensions.  It will retain the aspect ratio of the video so if the video was 1920x1000 it would scale to 1280x668 if you select 720P.",
+          "Outputs": {
+            "1": "FFMPEG Builder scale filter added",
+            "2": "Video was already in/near the scaled resolution"
+          },
+          "Fields": {
+            "Force": "Force",
+            "Force-Help": "When checked the video will be force scaled even if the working file is already in this resolution (or near this resolution).",
+            "Resolution": "Resolution"
+          }
+        },
+        "FfmpegBuilderVideoEncode": {
+          "Label": "FFMPEG Builder: Video Encode",
+          "Description": "Encodes video streams in the specified codec",
+          "Outputs": {
+            "1": "FFMPEG Builder video streams set to encode",
+            "2": "Video already in target codec, will not re-encode"
+          },
+          "Fields": {
+            "VideoCodec": "Video Codec",
+            "VideoCodec-Help": "The video codec the video should be in, for example hevc, h264.\nIf left empty all original video tracks will be copied.",
+            "VideoCodecParameters": "Video Codec Parameters",
+            "VideoCodecParameters-Help": "The parameters to use to encode the video, eg. \"hevc_nvenc -preset hq -crf 23\" to encode into hevc using the HQ preset a constant rate factor of 23 and using NVIDIA hardware acceleration.",
+            "Force": "Force Encode",
+            "Force-Help": "Will force a encode of the video even if it is already in the target Video Codec"
           }
         },
         "RemuxToMKV": {
@@ -214,7 +348,6 @@
             "UseTitle": "Use Title",
             "UseTitle-Help": "If the title of the subtitle should be used for matching instead of the language"
           }
-
         },
         "VideoCodec": {
           "Description": "This node will check the codecs in the input file, and trigger when matched.\n\nOutput 1: Matches\nOutput 2: Does not match",

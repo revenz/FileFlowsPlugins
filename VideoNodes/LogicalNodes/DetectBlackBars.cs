@@ -40,20 +40,8 @@ namespace FileFlows.VideoNodes
             if (videoInfo == null || videoInfo.VideoStreams?.Any() != true)
                 return -1;
 
-            int vidWidth = videoInfo.VideoStreams[0].Width;
-            int vidHeight = videoInfo.VideoStreams[0].Height;
-            if (vidWidth < 1)
-            {
-                args.Logger?.ELog("Failed to find video width");
-                return -1;
-            }
-            if (vidHeight < 1)
-            {
-                args.Logger?.ELog("Failed to find video height");
-                return -1;
-            }
 
-            string crop = Execute(ffmpeg, args.WorkingFile, args, vidWidth, vidHeight);
+            string crop = Detect(ffmpeg, videoInfo, args, this.CroppingThreshold);
             if (crop == string.Empty)
                 return 2;
 
@@ -66,7 +54,24 @@ namespace FileFlows.VideoNodes
             return 1;
         }
 
-        public string Execute(string ffplay, string file, NodeParameters args, int vidWidth, int vidHeight)
+        public static string Detect(string ffmpeg, VideoInfo videoInfo, NodeParameters args, int threshold)
+        {
+            int vidWidth = videoInfo.VideoStreams[0].Width;
+            int vidHeight = videoInfo.VideoStreams[0].Height;
+            if (vidWidth < 1)
+            {
+                args.Logger?.ELog("Failed to find video width");
+                return string.Empty;
+            }
+            if (vidHeight < 1)
+            {
+                args.Logger?.ELog("Failed to find video height");
+                return string.Empty;
+            }
+            return Execute(ffmpeg, args.WorkingFile, args, vidWidth, vidHeight, threshold);
+        }
+
+        public static string Execute(string ffplay, string file, NodeParameters args, int vidWidth, int vidHeight, int threshold)
         {
             try
             {
@@ -74,7 +79,7 @@ namespace FileFlows.VideoNodes
                 int y = int.MaxValue;
                 int width = 0;
                 int height = 0;
-                foreach (int ss in new int[] { 60, 120, 240, 360 })  // check at multiple times
+                foreach (int ss in new int[] { 60, 100, 240, 360 })  // check at multiple times
                 {
                     using (var process = new Process())
                     {
@@ -127,13 +132,13 @@ namespace FileFlows.VideoNodes
                 if (y == int.MaxValue)
                     y = 0;
 
-                if (CroppingThreshold < 0)
-                    CroppingThreshold = 0;
+                if (threshold < 0)
+                    threshold = 0;
 
                 args.Logger?.DLog($"Video dimensions: {vidWidth}x{vidHeight}");
 
-                var willCrop = TestAboveThreshold(vidWidth, vidHeight, width, height, CroppingThreshold); 
-                args.Logger?.ILog($"Crop detection, x:{x}, y:{y}, width: {width}, height: {height}, total:{willCrop.diff}, threshold:{CroppingThreshold}, above threshold: {willCrop}");
+                var willCrop = TestAboveThreshold(vidWidth, vidHeight, width, height, threshold); 
+                args.Logger?.ILog($"Crop detection, x:{x}, y:{y}, width: {width}, height: {height}, total:{willCrop.diff}, threshold:{threshold}, above threshold: {willCrop}");
 
                 return willCrop.crop ? $"{width}:{height}:{x}:{y}" : string.Empty;
             }
