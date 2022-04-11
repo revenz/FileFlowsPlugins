@@ -6,7 +6,7 @@ namespace FileFlows.MusicNodes
     public class Plugin : FileFlows.Plugin.IPlugin
     {
         public string Name => "Music Nodes";
-        public string MinimumVersion => "0.5.0.680";
+        public string MinimumVersion => "0.5.0.679";
 
         public void Init()
         {
