@@ -5,7 +5,7 @@ namespace FileFlows.BasicNodes
     public class Plugin : FileFlows.Plugin.IPlugin
     {
         public string Name => "Basic Nodes";
-        public string MinimumVersion => "0.4.3.660";
+        public string MinimumVersion => "0.5.0.680";
 
         public void Init() { }
     }
