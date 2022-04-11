@@ -15,6 +15,10 @@
         [Boolean(3)]
         public bool Force { get; set; }
 
+        [Boolean(4)]
+        [DefaultValue(true)]
+        public bool DisableOtherVideoStreams { get; set; }
+
         public override int Execute(NodeParameters args)
         {
             base.Init(args);
@@ -28,15 +32,20 @@
             parameters = CheckVideoCodec(ffmpegExe, parameters);
 
             bool encoding = false;
-            foreach (var stream in Model.VideoStreams)
+            foreach (var item in Model.VideoStreams.Select((x, index) => (stream: x, index)))
             {
+                if(DisableOtherVideoStreams && item.index > 0)
+                {
+                    item.stream.Deleted = true;
+                    continue;
+                }
                 if(Force == false)
                 {
-                    if (IsSameVideoCodec(stream.Stream.Codec, this.VideoCodec))
+                    if (IsSameVideoCodec(item.stream.Stream.Codec, this.VideoCodec))
                         continue;
                 }
-                stream.EncodingParameters.Clear();
-                stream.EncodingParameters.AddRange(SplitCommand(parameters));
+                item.stream.EncodingParameters.Clear();
+                item.stream.EncodingParameters.AddRange(SplitCommand(parameters));
                 encoding = true;
             }
             return encoding ? 1 : 2;
