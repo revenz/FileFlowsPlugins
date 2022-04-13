@@ -29,7 +29,7 @@
         [Boolean(4)]
         public bool NotMatching { get; set; }
 
-        const string LOUDNORM_TARGET = "I=-24:LRA=7:TP=-2.0";
+        internal const string LOUDNORM_TARGET = "I=-24:LRA=7:TP=-2.0";
 
         public override int Execute(NodeParameters args)
         {
@@ -82,7 +82,7 @@
                     {
                         if (TwoPass)
                         {
-                            string twoPass = DoTwoPass(args, ffmpegExe, j);
+                            string twoPass = DoTwoPass(this, args, ffmpegExe, j);
                             ffArgs.AddRange(new[] { "-map", $"0:a:{j}", "-c:a:" + j, audio.Codec, "-filter:a:" + j, twoPass });
                         }
                         else
@@ -126,11 +126,11 @@
         }
 
         [RequiresUnreferencedCode("Calls System.Text.Json.JsonSerializer.Deserialize<FileFlows.VideoNodes.AudioNormalization.LoudNormStats>(string, System.Text.Json.JsonSerializerOptions?)")]
-        public string DoTwoPass(NodeParameters args,string ffmpegExe, int audioIndex)
+        public static string DoTwoPass(EncodingNode node, NodeParameters args, string ffmpegExe, int audioIndex)
         {
             //-af loudnorm=I=-24:LRA=7:TP=-2.0"
             string output;
-            var result = Encode(args, ffmpegExe, new List<string>
+            var result = node.Encode(args, ffmpegExe, new List<string>
             {
                 "-hide_banner",
                 "-i", args.WorkingFile,
@@ -151,7 +151,9 @@
             json = json.Substring(0, json.IndexOf("}") + 1);
             if (string.IsNullOrEmpty(json))
                 throw new Exception("Failed to parse TwoPass json");
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             LoudNormStats stats = JsonSerializer.Deserialize<LoudNormStats>(json);
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
             string ar = $"loudnorm=print_format=summary:linear=true:{LOUDNORM_TARGET}:measured_I={stats.input_i}:measured_LRA={stats.input_lra}:measured_tp={stats.input_tp}:measured_thresh={stats.input_thresh}:offset={stats.target_offset}";
             return ar;
         }

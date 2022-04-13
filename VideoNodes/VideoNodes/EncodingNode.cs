@@ -18,13 +18,13 @@ namespace FileFlows.VideoNodes
 
         private FFMpegEncoder Encoder;
 
-        protected bool Encode(NodeParameters args, string ffmpegExe, List<string> ffmpegParameters, string extension = "mkv", string outputFile = "", bool updateWorkingFile = true, bool dontAddInputFile = false, bool dontAddOutputFile = false)
+        public bool Encode(NodeParameters args, string ffmpegExe, List<string> ffmpegParameters, string extension = "mkv", string outputFile = "", bool updateWorkingFile = true, bool dontAddInputFile = false, bool dontAddOutputFile = false)
         {
             string output;
             return Encode(args, ffmpegExe, ffmpegParameters, out output, extension, outputFile, updateWorkingFile, dontAddInputFile: dontAddInputFile, dontAddOutputFile: dontAddOutputFile);
         }
 
-        protected bool Encode(NodeParameters args, string ffmpegExe, List<string> ffmpegParameters, out string ouput, string extension = "mkv", string outputFile = "", bool updateWorkingFile = true, bool dontAddInputFile = false, bool dontAddOutputFile = false)
+        public bool Encode(NodeParameters args, string ffmpegExe, List<string> ffmpegParameters, out string ouput, string extension = "mkv", string outputFile = "", bool updateWorkingFile = true, bool dontAddInputFile = false, bool dontAddOutputFile = false)
         {
             if (string.IsNullOrEmpty(extension))
                 extension = "mkv";

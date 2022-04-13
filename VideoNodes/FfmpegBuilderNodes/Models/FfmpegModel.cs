@@ -21,17 +21,33 @@
             set => _SubtitleStreams = value ?? new List<FfmpegSubtitleStream>();
         }
 
+        private List<string> _MetadataParameters = new List<string>();
+        public List<string> MetadataParameters
+        {
+            get => _MetadataParameters;
+            set => _MetadataParameters = value ?? new List<string>();
+        }
+
         public string Extension { get; set; }
+
+        private List<string> _InputFiles = new List<string>();
+        public List<string> InputFiles
+        {
+            get => _InputFiles;
+            set => _InputFiles = value ?? new List<string>();
+        }
 
 
         internal static FfmpegModel CreateModel(VideoInfo info)
         {
             var model = new FfmpegModel();
+            model.InputFiles.Add(info.FileName);
             foreach (var item in info.VideoStreams.Select((stream, index) => (stream, index)))
             {
                 model.VideoStreams.Add(new FfmpegVideoStream
                 {
                     Index = item.index,
+                    Title = item.stream.Title,
                     Stream = item.stream,
                 });
             }
@@ -40,6 +56,8 @@
                 model.AudioStreams.Add(new FfmpegAudioStream
                 {
                     Index = item.index,
+                    Title = item.stream.Title,
+                    Language = item.stream.Language,
                     Stream = item.stream,
                 });
             }
@@ -48,6 +66,8 @@
                 model.SubtitleStreams.Add(new FfmpegSubtitleStream
                 {
                     Index = item.index,
+                    Title = item.stream.Title,
+                    Language = item.stream.Language,
                     Stream = item.stream,
                 });
             }

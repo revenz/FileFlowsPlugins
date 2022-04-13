@@ -26,6 +26,7 @@ namespace FileFlows.VideoNodes
         public VideoInfo Read(string filename)
         {
             var vi = new VideoInfo();
+            vi.FileName = filename;
             if (File.Exists(filename) == false)
             {
                 Logger.ELog("File not found: " + filename);
@@ -232,12 +233,14 @@ namespace FileFlows.VideoNodes
             var parts = line.Split(",").Select(x => x?.Trim() ?? "").ToArray();
             AudioStream audio = new AudioStream();
             audio.Title = "";
-            audio.TypeIndex = int.Parse(Regex.Match(line, @"#([\d]+):([\d]+)").Groups[2].Value);
+            audio.TypeIndex = int.Parse(Regex.Match(line, @"#([\d]+):([\d]+)").Groups[2].Value) - 1;
             audio.Codec = parts[0].Substring(parts[0].IndexOf("Audio: ") + "Audio: ".Length).Trim().Split(' ').First().ToLower() ?? "";
             audio.Language = Regex.Match(line, @"(?<=(Stream\s#[\d]+:[\d]+)\()[^\)]+").Value?.ToLower() ?? "";
             //Logger.ILog("codec: " + vs.Codec);
             if (parts[2] == "stereo")
                 audio.Channels = 2;
+            else if (parts[2] == "mono")
+                audio.Channels = 1;
             else if (Regex.IsMatch(parts[2], @"^[\d]+(\.[\d]+)?"))
             {
                 audio.Channels = float.Parse(Regex.Match(parts[2], @"^[\d]+(\.[\d]+)?").Value);

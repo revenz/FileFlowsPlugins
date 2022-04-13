@@ -9,7 +9,7 @@
     using System.Threading.Tasks;
 
 
-    public class ComskipChapters: EncodingNode
+    public class ComskipChapters : EncodingNode
     {
         public override int Outputs => 2;
 
@@ -21,16 +21,32 @@
             VideoInfo videoInfo = GetVideoInfo(args);
             if (videoInfo == null)
                 return -1;
+
+            string tempMetaDataFile = GenerateMetaDataFile(args, videoInfo);
+            if (string.IsNullOrEmpty(tempMetaDataFile))
+                return 2;
+
+            string[] ffArgs = new[] { "-i", tempMetaDataFile, "-map_metadata", "1", "-codec", "copy", "-max_muxing_queue_size", "1024" };
+            if (Encode(args, ffmpegExe, ffArgs.ToList()))
+            {
+                args.Logger?.ILog($"Added chapters to file");
+                return 1;
+            }
+            args.Logger?.ELog("Processing failed");
+            return -1;
+        }
+
+        internal static string GenerateMetaDataFile(NodeParameters args, VideoInfo videoInfo)
+        {
             float totalTime = (float)videoInfo.VideoStreams[0].Duration.TotalSeconds;
 
-
             string edlFile = args.WorkingFile.Substring(0, args.WorkingFile.LastIndexOf(".") + 1) + "edl";
-            if(File.Exists(edlFile) == false)
+            if (File.Exists(edlFile) == false)
                 edlFile = args.WorkingFile.Substring(0, args.WorkingFile.LastIndexOf(".") + 1) + "edl";
             if (File.Exists(edlFile) == false)
             {
                 args.Logger?.ILog("No EDL file found for file");
-                return 2;
+                return string.Empty;
             }
 
             string text = File.ReadAllText(edlFile) ?? string.Empty;
@@ -41,7 +57,7 @@
             metadata.AppendLine("");
             int chapter = 0;
 
-            foreach (string line in text.Split(new string[] { "\r\n", "\n", "\r"}, StringSplitOptions.RemoveEmptyEntries))
+            foreach (string line in text.Split(new string[] { "\r\n", "\n", "\r" }, StringSplitOptions.RemoveEmptyEntries))
             {
                 // 93526.47 93650.13 0
                 string[] parts = line.Split(new[] { " ", "\t" }, StringSplitOptions.RemoveEmptyEntries);
@@ -59,24 +75,16 @@
                 last = end;
             }
 
-            if(chapter == 0)
+            if (chapter == 0)
             {
                 args.Logger?.ILog("No ads found in edl file");
-                return 2;
+                return string.Empty;
             }
             AddChapter(last, totalTime);
 
             string tempMetaDataFile = Path.Combine(args.TempPath, Guid.NewGuid().ToString() + ".txt");
             File.WriteAllText(tempMetaDataFile, metadata.ToString());
-
-            string[] ffArgs = new[] { "-i", tempMetaDataFile, "-map_metadata", "1", "-codec", "copy", "-max_muxing_queue_size", "1024" };
-            if (Encode(args, ffmpegExe, ffArgs.ToList())) 
-            {
-                args.Logger?.ILog($"Adding {chapter} chapters to file");
-                return 1;
-            }
-            args.Logger?.ELog("Processing failed");
-            return -1;
+            return tempMetaDataFile;
 
             void AddChapter(float start, float end)
             {
@@ -88,6 +96,7 @@
                 metadata.AppendLine("title=Chapter " + (++chapter));
                 metadata.AppendLine();
             }
+
         }
     }
 }

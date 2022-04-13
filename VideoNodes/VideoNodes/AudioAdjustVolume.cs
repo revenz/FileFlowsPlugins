@@ -52,7 +52,7 @@
                 float volume = this.VolumePercent / 100f;
                 foreach (var audio in videoInfo.AudioStreams)
                 {
-                    ffArgs.AddRange(new[] { "-map", $"0:{audio.Index}", "-filter:a", $"volume={volume.ToString(".0######")}" });
+                    ffArgs.AddRange(new[] { "-map", $"0:a:{audio.TypeIndex}", "-filter:a", $"volume={volume.ToString(".0######")}" });
                 }
 
                 if (videoInfo.SubtitleStreams?.Any() == true)

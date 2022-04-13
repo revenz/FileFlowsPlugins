@@ -31,28 +31,35 @@
                 return new string[] { };
 
             var results = new List<string> { "-map", "0:v:" + outputIndex };
-            if (Filter.Any() == false  && EncodingParameters.Any() == false)
+            if (Filter.Any() == false && EncodingParameters.Any() == false)
             {
                 results.Add("-c:v:" + Stream.TypeIndex);
                 results.Add("copy");
                 return results.ToArray();
             }
-
-            if (EncodingParameters.Any())
-            {
-                results.Add("-c:v:" + Stream.TypeIndex);
-                results.AddRange(EncodingParameters.Select(x => x.Replace("{index}", outputIndex.ToString())));
-            }
             else
             {
-                // we need to set this codec since a filter will be applied, so we cant copy it.
-                //results.Add("copy");
+                if (EncodingParameters.Any())
+                {
+                    results.Add("-c:v:" + Stream.TypeIndex);
+                    results.AddRange(EncodingParameters.Select(x => x.Replace("{index}", outputIndex.ToString())));
+                }
+                else
+                {
+                    // we need to set this codec since a filter will be applied, so we cant copy it.
+                    //results.Add("copy");
+                }
+
+                if (Filter.Any())
+                {
+                    results.Add("-filter:v:" + outputIndex);
+                    results.Add(String.Join(", ", Filter));
+                }
             }
 
-            if (Filter.Any())
+            if (Metadata.Any())
             {
-                results.Add("-filter:v:" + outputIndex);
-                results.Add(String.Join(", ", Filter));
+                results.AddRange(Metadata.Select(x => x.Replace("{index}", outputIndex.ToString())));
             }
 
             return results.ToArray();

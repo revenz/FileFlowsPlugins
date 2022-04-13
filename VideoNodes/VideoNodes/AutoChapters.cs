@@ -37,31 +37,47 @@
                 return 2;
             }
 
+            string tempMetaDataFile = GenerateMetaDataFile(this, args, videoInfo, ffmpegExe, this.Percent, this.MinimumLength);
+            if (string.IsNullOrEmpty(tempMetaDataFile))
+                return 2; 
+
+            string[] ffArgs = new[] { "-i", tempMetaDataFile, "-map_metadata", "1", "-codec", "copy", "-max_muxing_queue_size", "1024" };
+            if (Encode(args, ffmpegExe, ffArgs.ToList())) 
+            {
+                args.Logger?.ILog($"Adding chapters to file");
+                return 1;
+            }
+            args.Logger?.ELog("Processing failed");
+            return -1;
+        }
+
+        internal static string GenerateMetaDataFile(EncodingNode node, NodeParameters args, VideoInfo videoInfo, string ffmpegExe, int percent, int minimumLength)
+        {
             string output;
-            var result = Encode(args, ffmpegExe, new List<string>
+            var result = node.Encode(args, ffmpegExe, new List<string>
             {
                 "-hide_banner",
                 "-i", args.WorkingFile,
-                "-filter:v", $"select='gt(scene,{Percent / 100f})',showinfo",
+                "-filter:v", $"select='gt(scene,{percent / 100f})',showinfo",
                 "-f", "null",
                 "-"
             }, out output, updateWorkingFile: false, dontAddInputFile: true);
 
-            if(result == false)
+            if (result == false)
             {
                 args.Logger?.WLog("Failed to detect scenes");
-                return 2;
+                return string.Empty;
             }
 
 
-            if (MinimumLength < 30)
+            if (minimumLength < 30)
             {
                 args.Logger?.ILog("Mimium length set to invalid number, defaulting to 60 seconds");
-                MinimumLength = 60;
+                minimumLength = 60;
             }
             else
             {
-                args.Logger?.ILog($"Minimum length of chapter {MinimumLength} seconds");
+                args.Logger?.ILog($"Minimum length of chapter {minimumLength} seconds");
             }
 
             StringBuilder metadata = new StringBuilder();
@@ -73,8 +89,8 @@
             TimeSpan previous = TimeSpan.Zero;
             foreach (Match match in Regex.Matches(output, @"(?<=(pts_time:))[\d]+\.[\d]+"))
             {
-                TimeSpan time = TimeSpan.FromSeconds(double.Parse(match.Value));                
-                if(Math.Abs((time - previous).TotalSeconds) < MinimumLength)
+                TimeSpan time = TimeSpan.FromSeconds(double.Parse(match.Value));
+                if (Math.Abs((time - previous).TotalSeconds) < minimumLength)
                     continue;
 
                 AddChapter(previous, time);
@@ -82,26 +98,19 @@
             }
 
             var totalTime = TimeSpan.FromSeconds(videoInfo.VideoStreams[0].Duration.TotalSeconds);
-            if (Math.Abs((totalTime - previous).TotalSeconds) > MinimumLength)
+            if (Math.Abs((totalTime - previous).TotalSeconds) > minimumLength)
                 AddChapter(previous, totalTime);
 
             if (chapter == 0)
             {
-                args.Logger?.ILog("No ads found in edl file");
-                return 2;
+                args.Logger?.ILog("Failed to detect any scene changes");
+                return string.Empty;
             }
 
             string tempMetaDataFile = Path.Combine(args.TempPath, Guid.NewGuid().ToString() + ".txt");
             File.WriteAllText(tempMetaDataFile, metadata.ToString());
 
-            string[] ffArgs = new[] { "-i", tempMetaDataFile, "-map_metadata", "1", "-codec", "copy", "-max_muxing_queue_size", "1024" };
-            if (Encode(args, ffmpegExe, ffArgs.ToList())) 
-            {
-                args.Logger?.ILog($"Adding {chapter} chapters to file");
-                return 1;
-            }
-            args.Logger?.ELog("Processing failed");
-            return -1;
+            return tempMetaDataFile;
 
             void AddChapter(TimeSpan start, TimeSpan end)
             {

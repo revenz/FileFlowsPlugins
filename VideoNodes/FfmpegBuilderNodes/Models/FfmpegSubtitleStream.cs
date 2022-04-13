@@ -15,8 +15,14 @@
             //if (EncodingParameters.Any() == false)
             {
                 results.Add("copy");
-                return results.ToArray();
             }
+
+            if (Metadata.Any())
+            {
+                results.AddRange(Metadata.Select(x => x.Replace("{index}", outputIndex.ToString())));
+            }
+
+            return results.ToArray();
         }
     }
 }

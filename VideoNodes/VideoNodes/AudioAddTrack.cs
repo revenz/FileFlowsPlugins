@@ -15,7 +15,7 @@
         public override string Icon => "fas fa-volume-down";
 
         [NumberInt(1)]
-        [Range(1, 100)]
+        [Range(0, 100)]
         [DefaultValue(2)]
         public int Index { get; set; }
 
@@ -115,7 +115,7 @@
                 int audioIndex = 0;
                 for(int i = 0; i < videoInfo.AudioStreams.Count; i++)
                 {
-                    if((i + 1) == Index)
+                    if(i == Index)
                     {
                         ffArgs.AddRange(GetNewAudioTrackParameters(videoInfo, audioIndex));
                         added = true;

@@ -2,13 +2,13 @@
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes
 {
-    public class FfmpegBuilderAudioAddTrack: FfmpegBuilderNode
+    public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
     {
         public override string Icon => "fas fa-volume-off";
 
         [NumberInt(1)]
-        [Range(1, 100)]
-        [DefaultValue(2)]
+        [Range(0, 100)]
+        [DefaultValue(1)]
         public int Index { get; set; }
 
 
@@ -94,7 +94,6 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
             base.Init(args);
 
             var audio = new FfmpegAudioStream();
-            audio.Stream = Model.AudioStreams[0].Stream;
 
 #pragma warning disable IL2026 // Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code
             var bestAudio = Model.AudioStreams.Where(x => System.Text.Json.JsonSerializer.Serialize(x.Stream).ToLower().Contains("commentary") == false)
@@ -114,12 +113,13 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
             .ThenByDescending(x => x.Stream.Channels)
             .ThenBy(x => x.Index)
             .FirstOrDefault();
+            audio.Stream = bestAudio.Stream;
 
-            audio.EncodingParameters.AddRange(GetNewAudioTrackParameters("0:a:" + (bestAudio.Stream.TypeIndex - 1)));
-            if (Index > Model.AudioStreams.Count)
+            audio.EncodingParameters.AddRange(GetNewAudioTrackParameters("0:a:" + (bestAudio.Stream.TypeIndex)));
+            if (Index > Model.AudioStreams.Count - 1)
                 Model.AudioStreams.Add(audio);
             else 
-                Model.AudioStreams.Insert(Math.Max(0, Index - 1), audio);
+                Model.AudioStreams.Insert(Math.Max(0, Index), audio);
 
             return 1;
         }
@@ -156,7 +156,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
                         "-map", source,
                         "-c:a:{index}",
                         Codec,
-                        "-ac", Channels.ToString()
+                        "-ac:a:{index}", Channels.ToString()
                     };
                 }
                 return new[]
@@ -164,7 +164,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
                     "-map", source,
                     "-c:a:{index}",
                     Codec,
-                    "-ac", Channels.ToString(),
+                    "-ac:a:{index}", Channels.ToString(),
                     "-b:a:{index}", Bitrate + "k"
                 };
             }

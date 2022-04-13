@@ -15,6 +15,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
             this.Init(args);
             var model = this.Model;
             List<string> ffArgs = new List<string>();
+            ffArgs.AddRange(new[] { "-strict", "-2" }); // allow experimental stuff
             bool hasChange = false;
             int actualIndex = 0;
             int currentType = 0;
@@ -32,9 +33,16 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
                     actualIndex = 0;
                     currentType = item.type;    
                 }
+                
                 ffArgs.AddRange(item.stream.GetParameters(actualIndex));
-                hasChange |= item.stream.HasChange;
+                hasChange |= item.stream.HasChange | item.stream.ForcedChange;
                 ++actualIndex;
+            }
+
+            if(model.MetadataParameters?.Any() == true)
+            {
+                hasChange = true;
+                ffArgs.AddRange(model.MetadataParameters);
             }
 
             if (hasChange == false && (string.IsNullOrWhiteSpace(model.Extension) || args.WorkingFile.ToLower().EndsWith("." + model.Extension.ToLower())))
@@ -42,7 +50,22 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
 
             string extension = model.Extension?.EmptyAsNull() ?? "mkv";
 
-            if (Encode(args, ffmpegExe, ffArgs, extension) == false)
+            List<string> startArgs = new List<string>();
+            if (model.InputFiles?.Any() == false)
+                model.InputFiles.Add(args.WorkingFile);
+            else
+                model.InputFiles[0] = args.WorkingFile;
+
+            foreach(string file in model.InputFiles)
+            {
+                startArgs.Add("-i");
+                startArgs.Add(file);
+            }
+            startArgs.Add("-y");
+            ffArgs = startArgs.Concat(ffArgs).ToList();
+
+
+            if (Encode(args, ffmpegExe, ffArgs, extension, dontAddInputFile: true) == false)
                 return -1;
 
             return 1;

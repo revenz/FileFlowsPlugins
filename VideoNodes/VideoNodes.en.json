@@ -8,7 +8,7 @@
           "Description": "Adds a new audio track to the video file, all other audio tracks will remain.  This will use the first audio track of the file as the source audio track to convert.",
           "Fields": {
             "Index": "Index",
-            "Index-Help": "The index where to insert the new audio track.  1 based, so to insert the new audio track as the first track set this to 1.",
+            "Index-Help": "The index where to insert the new audio track.  0 based, so to insert the new audio track as the first track set this to 0.",
             "Channels": "Channels",
             "Channels-Help": "The number of channels to convert this audio track to.",
             "Bitrate": "Bitrate",
@@ -167,13 +167,53 @@
           "Description": "Adds a new audio track to FFMPEG Builder which will be added once the builder is executed.",
           "Fields": {
             "Index": "Index",
-            "Index-Help": "The index where to insert the new audio track.  1 based, so to insert the new audio track as the first track set this to 1.",
+            "Index-Help": "The index where to insert the new audio track.  0 based, so to insert the new audio track as the first track set this to 0.",
             "Channels": "Channels",
             "Channels-Help": "The number of channels to convert this audio track to.",
             "Bitrate": "Bitrate",
             "Bitrate-Help": "Bitrate of the new audio track",
             "Language": "Language",
             "Language-Help": "Optional ISO 639-2 language code to use.  Will attempt to find an audio track with this language code if not the best audio track will be used.\nhttps://en.wikipedia.org/wiki/List_of_ISO_639-2_codes"
+          }
+        },
+        "FfmpegBuilderAudioAdjustVolume": {
+          "Label": "FFMPEG Builder: Audio Adjust Volume",
+          "Outputs": {
+            "1": "Audio tracks volume filter added to FFMPEG Builder",
+            "2": "Audio tracks were not adjusted"
+          },
+          "Description": "Adjusts audio tracks volume in a video file using FFMPEG",
+          "Fields": {
+            "AllAudio": "All Audio Tracks",
+            "AllAudio-Help": "If all audio tracks should be normalized or if just the first track should be",
+            "VolumePercent": "Volume Percent",
+            "VolumePercent-Help": "The percent of the adjusted volume.\n100 means no adjustment\n50 means half volume\n0 means muted",
+            "Pattern": "Pattern",
+            "Pattern-Help": "A regular expression to match against, eg \"commentary\" to remove commentary tracks",
+            "NotMatching": "Not Matching",
+            "NotMatching-Help": "If audio tracks NOT matching the pattern should be removed",
+            "UseLanguageCode": "Use Language Code",
+            "UseLanguageCode-Help": "If the language code of the audio track should be used instead of the title"
+          }
+        },
+        "FfmpegBuilderAudioNormalization": {
+          "Label": "FFMPEG Builder: Audio Normalization",
+          "Outputs": {
+            "1": "Audio tracks were normalized and added to FFMPEG Builder",
+            "2": "No audio tracks were found to be normalized"
+          },
+          "Description": "Normalizes all audio tracks in a video file using FFMPEGs loudnorm filter",
+          "Fields": {
+            "TwoPass": "Two Pass",
+            "TwoPass-Help": "If the audio tracks should use two pass normalization.  This improves the normalization but increases the processing time.",
+            "AllAudio": "All Audio Tracks",
+            "AllAudio-Help": "If all audio tracks should be normalized or if just the first track should be",
+            "Pattern": "Pattern",
+            "Pattern-Help": "A regular expression to match against, eg \"commentary\" to remove commentary tracks",
+            "NotMatching": "Not Matching",
+            "NotMatching-Help": "If audio tracks NOT matching the pattern should be removed",
+            "UseLanguageCode": "Use Language Code",
+            "UseLanguageCode-Help": "If the language code of the audio track should be used instead of the title"
           }
         },
         "FfmpegBuilderAudioTrackRemover": {
@@ -192,6 +232,42 @@
             "NotMatching-Help": "If audio tracks NOT matching the pattern should be removed",
             "UseLanguageCode": "Use Language Code",
             "UseLanguageCode-Help": "If the language code of the audio track should be used instead of the title"
+          }
+        },
+        "FfmpegBuilderAudioSetLanguage": {
+          "Label": "FFMPEG Builder: Audio Set Language",
+          "Outputs": {
+            "1": "Audio tracks updated in FFMPEG Builder",
+            "2": "Audio tracks NOT updated"
+          },
+          "Description": "Allows you to set the language for any audio tracks that have no language set.  If the audio track does have a language set, it will be skipped.\n\nOutput 1: Audio Tracks were updated\nOutput 2: No audio tracks were needing to be updated",
+          "Fields": {
+            "Language": "Language",
+            "Language-Help": "Optional ISO 639-2 language code to use.  Will attempt to find an audio track with this language code if not the best audio track will be used.\nhttps://en.wikipedia.org/wiki/List_of_ISO_639-2_codes"
+          }
+        },
+        "FfmpegBuilderAutoChapters": {
+          "Label": "FFMPEG Builder: Auto Chapters",
+          "Description": "Automatically detect scene changes in the video to generate chapters.",
+          "Outputs": {
+            "1": "Chapters generated and added to FFMPEG Builder",
+            "2": "No chapters detected or video already had chapters"
+          },
+          "Fields": {
+            "MinimumLength": "Minimum Length",
+            "MinimumLength-Suffix": "seconds",
+            "MinimumLength-Help": "The minimum length of a chapter in seconds",
+            "Percent": "Percent",
+            "Percent-Suffix": "%",
+            "Percent-Help": "The threshold percentage value to use for scene detection changes.  A good value is 45%"
+          }
+        },
+        "FfmpegBuilderComskipChapters": {
+          "Label": "FFMPEG Builder: Comskip Chapters",
+          "Description": "Uses a comskip EDL file and will create chapters given that EDL comskip file.",
+          "Outputs": {
+            "1": "Commercials chapters created, added to FFMPEG Builder",
+            "2": "No commercials detected"
           }
         },
         "FfmpegBuilderSubtitleFormatRemover": {
