@@ -702,6 +702,32 @@ namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests
             string log = logger.ToString();
             Assert.AreEqual(1, result);
         }
+
+        [TestMethod]
+        public void FfmpegBuilder_HdrToSdr()
+        {
+            const string file = @"D:\videos\unprocessed\hdr.mkv";
+            var logger = new TestLogger();
+            const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+            var vi = new VideoInfoHelper(ffmpeg, logger);
+            var vii = vi.Read(file);
+            var args = new NodeParameters(file, logger, false, string.Empty);
+            args.GetToolPathActual = (string tool) => ffmpeg;
+            args.TempPath = @"D:\videos\temp";
+            args.Parameters.Add("VideoInfo", vii);
+
+            FfmpegBuilderStart ffStart = new();
+            Assert.AreEqual(1, ffStart.Execute(args));
+
+            FfmpegBuilderHdrToSdr ffHdrToSdr= new();
+            Assert.AreEqual(1, ffHdrToSdr.Execute(args));
+
+            FfmpegBuilderExecutor ffExecutor = new();
+            int result = ffExecutor.Execute(args);
+
+            string log = logger.ToString();
+            Assert.AreEqual(1, result);
+        }
     }
 }
 

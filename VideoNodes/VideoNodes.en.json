@@ -286,6 +286,14 @@
             "2": "No commercials detected"
           }
         },
+        "FfmpegBuilderHdrToSdr": {
+          "Label": "FFMPEG Builder: HDR to SDR",
+          "Description": "Checks if a video stream is HDR and if it is updates the FFMPEG Builder to convert it to SDR",
+          "Outputs": {
+            "1": "HDR stream detected and updated FFMPEG Builder to convert",
+            "2": "No HDR stream found"
+          }
+        },
         "FfmpegBuilderSubtitleFormatRemover": {
           "Label": "FFMPEG Builder: Subtitle Format Remover",
           "Description": "Removes subtitles from a video file if found.",

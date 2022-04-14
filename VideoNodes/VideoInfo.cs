@@ -40,6 +40,11 @@ namespace FileFlows.VideoNodes
         public string Codec { get; set; } = "";
 
         public string IndexString { get; set; }
+
+        /// <summary>
+        /// Gets or sets if the stream is HDR
+        /// </summary>
+        public bool HDR { get; set; }
     }
 
     public class VideoStream : VideoFileStream

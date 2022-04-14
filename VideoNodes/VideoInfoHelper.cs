@@ -223,6 +223,8 @@ namespace FileFlows.VideoNodes
                 logger?.ILog("Failed to read duration for VideoStream: " + info);
             }
 
+            vs.HDR = info.Contains("bt2020nc") && info.Contains("smpte2084");
+
             return vs;
         }
 

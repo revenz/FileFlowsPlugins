@@ -66,3 +66,5 @@ doesn''t
 eng
 remux
 Scaler
+SDR
+HDR
