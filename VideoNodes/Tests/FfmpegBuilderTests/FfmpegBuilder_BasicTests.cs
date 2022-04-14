@@ -728,6 +728,54 @@ namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests
             string log = logger.ToString();
             Assert.AreEqual(1, result);
         }
+
+
+        [TestMethod]
+        public void FfmpegBuilder_AudioMinusOne()
+        {
+            const string file = @"D:\videos\unprocessed\minus1.mkv";
+            var logger = new TestLogger();
+            const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+            var vi = new VideoInfoHelper(ffmpeg, logger);
+            var vii = vi.Read(file);
+            var args = new NodeParameters(file, logger, false, string.Empty);
+            args.GetToolPathActual = (string tool) => ffmpeg;
+            args.TempPath = @"D:\videos\temp";
+            args.Parameters.Add("VideoInfo", vii);
+
+
+            FfmpegBuilderStart ffStart = new();
+            Assert.AreEqual(1, ffStart.Execute(args));
+
+            //FfmpegBuilderVideoCodec ffEncode = new();
+            //ffEncode.VideoCodec = "h264";
+            //ffEncode.Execute(args);
+
+            FfmpegBuilderAudioTrackRemover ffAudioRemover = new();
+            ffAudioRemover.RemoveAll = true;
+            ffAudioRemover.Execute(args);
+
+            FfmpegBuilderAudioAddTrack ffAddAudio = new();
+            ffAddAudio.Codec = "ac3";
+            ffAddAudio.Index = 0;
+            ffAddAudio.Execute(args);
+
+            //FfmpegBuilderAudioAddTrack ffAddAudio2 = new();
+            //ffAddAudio2.Codec = "aac";
+            //ffAddAudio2.Index = 2;
+            //ffAddAudio2.Execute(args);
+
+            //FfmpegBuilderAudioNormalization ffAudioNormalize = new();
+            //ffAudioNormalize.TwoPass = false;
+            //ffAudioNormalize.AllAudio = true;
+            //ffAudioNormalize.Execute(args);
+
+            FfmpegBuilderExecutor ffExecutor = new();
+            int result = ffExecutor.Execute(args);
+
+            string log = logger.ToString();
+            Assert.AreEqual(1, result);
+        }
     }
 }
 

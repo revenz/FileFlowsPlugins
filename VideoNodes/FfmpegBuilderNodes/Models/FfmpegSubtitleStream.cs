@@ -11,7 +11,7 @@
             if (Deleted)
                 return new string[] { };
 
-            var results = new List<string> { "-map", "0:s:" + outputIndex, "-c:s:" + (Stream.TypeIndex - 1) };
+            var results = new List<string> { "-map", "0:s:" + outputIndex, "-c:s:" + Stream.TypeIndex };
             //if (EncodingParameters.Any() == false)
             {
                 results.Add("copy");

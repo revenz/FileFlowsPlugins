@@ -93,7 +93,9 @@ namespace FileFlows.VideoNodes
 
             vi.Chapters = ParseChapters(output);
 
-            int subtitleIndex = 1;
+            int subtitleIndex = 0;
+            int videoIndex = 0;
+            int audioIndex = 0;
             foreach (Match sm in streamMatches)
             {
                 if (sm.Value.Contains(" Video: "))
@@ -102,23 +104,27 @@ namespace FileFlows.VideoNodes
                     if (vs != null)
                     {
                         vs.Index = streamIndex;
+                        vs.TypeIndex = videoIndex;
                         var match = Regex.Match(sm.Value, @"(?<=(Stream #))[\d]+:[\d]+");
                         if (match.Success)
                             vs.IndexString = match.Value;
                         vi.VideoStreams.Add(vs);
                     }
+                    ++videoIndex;
                 }
                 else if (sm.Value.Contains(" Audio: "))
                 {
                     var audio = ParseAudioStream(sm.Value);
                     if (audio != null)
                     {
+                        audio.TypeIndex = audioIndex;
                         audio.Index = streamIndex;
                         var match = Regex.Match(sm.Value, @"(?<=(Stream #))[\d]+:[\d]+");
                         if (match.Success)
                             audio.IndexString = match.Value;
                         vi.AudioStreams.Add(audio);
                     }
+                    ++audioIndex;
                 }
                 else if (sm.Value.Contains(" Subtitle: "))
                 {
@@ -198,8 +204,6 @@ namespace FileFlows.VideoNodes
                 vs.Width = width;
             if (int.TryParse(dimensions.Groups[2].Value, out int height))
                 vs.Height = height;
-            if (int.TryParse(Regex.Match(line, @"#([\d]+):([\d]+)").Groups[2].Value, out int typeIndex))
-                vs.TypeIndex = typeIndex;
 
             if (Regex.IsMatch(line, @"([\d]+(\.[\d]+)?)\sfps") && float.TryParse(Regex.Match(line, @"([\d]+(\.[\d]+)?)\sfps").Groups[1].Value, out float fps))
                 vs.FramesPerSecond = fps;
@@ -235,6 +239,7 @@ namespace FileFlows.VideoNodes
             var parts = line.Split(",").Select(x => x?.Trim() ?? "").ToArray();
             AudioStream audio = new AudioStream();
             audio.Title = "";
+            // this isnt type index, this is overall index
             audio.TypeIndex = int.Parse(Regex.Match(line, @"#([\d]+):([\d]+)").Groups[2].Value) - 1;
             audio.Codec = parts[0].Substring(parts[0].IndexOf("Audio: ") + "Audio: ".Length).Trim().Split(' ').First().ToLower() ?? "";
             audio.Language = Regex.Match(line, @"(?<=(Stream\s#[\d]+:[\d]+)\()[^\)]+").Value?.ToLower() ?? "";
