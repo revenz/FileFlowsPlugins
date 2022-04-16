@@ -10,3 +10,4 @@ TestStore/
 /Plugin.pdb
 deploy/**
 *.ffplugin
+DiscordNodes/settings.json
