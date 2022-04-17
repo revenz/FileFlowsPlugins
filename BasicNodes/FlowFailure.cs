@@ -1,4 +1,5 @@
 ﻿using FileFlows.Plugin;
+using System.Text.RegularExpressions;
 
 namespace FileFlows.BasicNodes;
 
@@ -17,7 +18,9 @@ public class FlowFailure: Node
         {
             { "fail.Flow", "The Flow Name" },
             { "fail.Log", "A short tail of the log" },
+            { "fail.LogNoDates", "A short tail of the log" },
             { "fail.Message", "A formatted message containing the failure details" },
+            { "fail.MessageNoDates", "A formatted message containing the failure details" },
             { "fail.Node", "FailedNodeName" },
         };
     }
@@ -29,15 +32,24 @@ public class FlowFailure: Node
             string failedNode = args.GetVariable("FailedNode") as string ?? "Unknown";
             string flowName = args.GetVariable("FlowName") as string ?? "Unknown";
 
+            var rgxDateTime = new Regex(@"^[\d]{4}-[\d]{2}\-[\d]{2} [\d]{2}:[\d]{2}:[\d]{2}\.[\d]+ - ");
+            string logNoDates = string.Join(Environment.NewLine, log.Replace("\r\n", "\n").Split('\n').Select(x => rgxDateTime.Replace(x, "")));
+
             string message = @$"Failed processing file {args.FileName}
 Flow: {flowName}
 Node: {failedNode}
 {log}";
+            string messageNoDates = @$"Failed processing file {args.FileName}
+Flow: {flowName}
+Node: {failedNode}
+{logNoDates}";
 
             Variables.AddOrUpdate("fail.Node", failedNode);
             Variables.AddOrUpdate("fail.Flow", flowName);
             Variables.AddOrUpdate("fail.Message", message);
+            Variables.AddOrUpdate("fail.MessageNoDates", messageNoDates);
             Variables.AddOrUpdate("fail.Log", log);
+            Variables.AddOrUpdate("fail.LogNoDates", logNoDates);
             args.UpdateVariables(Variables);
             return 1;
         }
