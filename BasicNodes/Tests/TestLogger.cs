@@ -41,6 +41,8 @@ namespace BasicNodes.Tests
             string log = string.Join(Environment.NewLine, Messages);
             return log.Contains(message);
         }
+
+        public string GetTail(int length = 50) => "Not implemented";
     }
 }
 

@@ -7,8 +7,9 @@ public class Discord: Node
 {
     public override int Inputs => 1;
     public override int Outputs => 2;
-    public override FlowElementType Type => FlowElementType.Process; 
+    public override FlowElementType Type => FlowElementType.Communication; 
     public override string Icon => "fab fa-discord";
+    public override bool FailureNode => true;
 
     [Required]
     [TextVariable(1)]

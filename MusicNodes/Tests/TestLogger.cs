@@ -46,6 +46,15 @@ namespace FileFlows.MusicNodes.Tests
         {
             return String.Join(Environment.NewLine, this.Messages.ToArray());
         }
+
+        public string GetTail(int length = 50)
+        {
+            if (length <= 0)
+                length = 50;
+            if (Messages.Count <= length)
+                return string.Join(Environment.NewLine, Messages);
+            return string.Join(Environment.NewLine, Messages.TakeLast(length));
+        }
     }
 }
 

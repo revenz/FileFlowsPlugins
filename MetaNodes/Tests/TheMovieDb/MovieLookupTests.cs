@@ -2,6 +2,7 @@
 
 namespace MetaNodes.Tests.TheMovieDb
 {
+    using DM.MovieApi;
     using DM.MovieApi.MovieDb.Movies;
     using MetaNodes.TheMovieDb;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -171,6 +172,20 @@ namespace MetaNodes.Tests.TheMovieDb
 
             Assert.AreEqual("Wonder Woman 1984", mi.Title);
             Assert.AreEqual(2020, mi.ReleaseDate.Year);
+        }
+
+        [TestMethod]
+        public void MovieLookupTests_File_TheBatman_Metadata()
+        {
+            MovieDbFactory.RegisterSettings(MovieLookup.MovieDbBearerToken);
+            var movieApi = MovieDbFactory.Create<IApiMovieRequest>().Value;
+            var md = MovieLookup.GetVideoMetadata(movieApi, 414906, @"D:\videos\temp");
+            Assert.IsNotNull(md);
+            string json = System.Text.Json.JsonSerializer.Serialize(md, new System.Text.Json.JsonSerializerOptions
+            {
+                WriteIndented = true
+            });
+            File.WriteAllText(@"D:\videos\metadata.json", json);
         }
     }
 }

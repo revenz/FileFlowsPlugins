@@ -11,7 +11,8 @@ namespace FileFlows.Communication
         public override int Outputs => 1;
         public override string Icon => "fas fa-envelope";
 
-        public override FlowElementType Type => FlowElementType.Process;
+        public override FlowElementType Type => FlowElementType.Communication;
+        public override bool FailureNode => true;
 
         [StringArray(1)]
         public string[] Recipients { get; set; }

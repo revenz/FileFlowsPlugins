@@ -29,6 +29,7 @@
             };
         }
 
+        internal const string MovieDbBearerToken = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZjVlNTAyNmJkMDM4YmZjZmU2MjI2MWU2ZGEwNjM0ZiIsInN1YiI6IjRiYzg4OTJjMDE3YTNjMGY5MjAwMDIyZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.yMwyT8DEK1rF1gQMKJ-ZSy-dUGxFs5T345XwBLrvrWE";
 
         [Boolean(1)]
         public bool UseFolderName { get; set; }
@@ -52,13 +53,10 @@
             while (lookupName.IndexOf("  ") > 0)
                 lookupName = lookupName.Replace("  ", " ");
 
-            string bearerToken = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZjVlNTAyNmJkMDM4YmZjZmU2MjI2MWU2ZGEwNjM0ZiIsInN1YiI6IjRiYzg4OTJjMDE3YTNjMGY5MjAwMDIyZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.yMwyT8DEK1rF1gQMKJ-ZSy-dUGxFs5T345XwBLrvrWE";
-
             // RegisterSettings only needs to be called one time when your application starts-up.
-            MovieDbFactory.RegisterSettings(bearerToken);
+            MovieDbFactory.RegisterSettings(MovieDbBearerToken);
 
             var movieApi = MovieDbFactory.Create<IApiMovieRequest>().Value;
-
 
             ApiSearchResponse<MovieInfo> response = movieApi.SearchByTitleAsync(lookupName).Result;
 
@@ -115,12 +113,55 @@
 
             Variables["movie.Title"] = result.Title;
             Variables["movie.Year"] = result.ReleaseDate.Year;
+            Variables["VideoMetadata"] = GetVideoMetadata(movieApi, result.Id, args.TempPath);
 
             args.UpdateVariables(Variables);
-
             return 1;
 
         }
 
+
+        internal static VideoMetadata GetVideoMetadata(IApiMovieRequest movieApi, int id, string tempPath)
+        {
+            var movie = movieApi.FindByIdAsync(id).Result?.Item;
+            if (movie == null)
+                return null;
+            
+            var credits = movieApi.GetCreditsAsync(id).Result?.Item;
+
+            VideoMetadata md = new();
+            md.Title = movie.Title;
+            md.Genres = movie.Genres?.Select(x => x.Name).ToList();
+            md.Description = movie.Overview;
+            md.Year = movie.ReleaseDate.Year;
+            md.Subtitle = movie.Tagline;
+            md.ReleaseDate = movie.ReleaseDate;
+            if (string.IsNullOrWhiteSpace(movie.PosterPath) == false)
+            {
+                try
+                {
+                    using var httpClient = new HttpClient();
+                    using var stream = httpClient.GetStreamAsync("https://image.tmdb.org/t/p/w500" + movie.PosterPath).Result;
+                    string file = Path.Combine(tempPath, Guid.NewGuid() + ".jpg");
+                    using var fileStream = new FileStream(file, FileMode.CreateNew);
+                    stream.CopyTo(fileStream);
+                    md.ArtJpeg = file;
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+            
+            if(credits != null)
+            {
+                md.Actors = credits.CastMembers?.Select(x => x.Name)?.ToList();
+                md.Writers  = credits.CrewMembers?.Where(x => x.Job == "Writer" || x.Job == "Screenplay") ?.Select(x => x.Name)?.ToList();
+                md.Directors = credits.CrewMembers?.Where(x => x.Job == "Director")?.Select(x => x.Name)?.ToList();
+                md.Producers = credits.CrewMembers?.Where(x => x.Job == "Producer")?.Select(x => x.Name)?.ToList();
+            }
+
+            return md;
+        }
     }
 }

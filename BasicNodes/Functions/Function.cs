@@ -16,6 +16,7 @@ namespace FileFlows.BasicNodes.Functions
         public override int Inputs => 1;
         public override FlowElementType Type => FlowElementType.Logic;
         public override string Icon => "fas fa-code";
+        public override bool FailureNode => true;
 
         public override string HelpUrl => "https://github.com/revenz/FileFlows/wiki/Function-Node"; 
 
