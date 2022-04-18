@@ -13,6 +13,20 @@
                 _Filter = value ?? new List<string>();
             }
         }
+        private List<string> _OptionalFilter = new List<string>();
+
+        /// <summary>
+        /// Gets or sets filters that will process but only if processing is needed, these won't trigger a has changed
+        /// value of the video file by themselves
+        /// </summary>
+        public List<string> OptionalFilter
+        {
+            get => _OptionalFilter;
+            set
+            {
+                _OptionalFilter = value ?? new List<string>();
+            }
+        }
 
         private List<string> _EncodingParameters = new List<string>();
         public List<string> EncodingParameters
@@ -50,10 +64,10 @@
                     //results.Add("copy");
                 }
 
-                if (Filter.Any())
+                if (Filter.Any() || OptionalFilter.Any())
                 {
                     results.Add("-filter:v:" + outputIndex);
-                    results.Add(String.Join(", ", Filter));
+                    results.Add(String.Join(", ", Filter.Concat(OptionalFilter)).Replace("{index}", outputIndex.ToString()));
                 }
             }
 

@@ -362,6 +362,13 @@
             "Resolution": "Resolution"
           }
         },
+        "FfmpegBuilderVideo10Bit": {
+          "Label": "FFMPEG Builder: Video 10 Bit",
+          "Description": "Sets FFMPEG Builder to encode the video streams in 10 Bit",
+          "Outputs": {
+            "1": "FFMPEG Builder video streams set to encode in 10 Bit"
+          }
+        },
         "FfmpegBuilderVideoCodec": {
           "Label": "FFMPEG Builder: Video Codec",
           "Description": "Sets FFMPEG Builder to encode the video streams in the specified codec",
