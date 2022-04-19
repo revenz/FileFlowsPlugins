@@ -13,7 +13,7 @@
 
             var stream = Model?.VideoStreams?.Where(x => x.Deleted == false)?.FirstOrDefault();
             if (stream != null)
-                stream.OptionalFilter.AddRange(new[] { "-pix_fmt:{index}", "yuv420p10le" });
+                stream.OptionalEncodingParameters.AddRange(new[] { "-pix_fmt:v:{index}", "yuv420p10le" });
 
             return 1;
         }
