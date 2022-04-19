@@ -15,7 +15,7 @@ if ([String]::IsNullOrEmpty($output)) {
 }
 
 if ([System.IO.Directory]::Exists($output) -eq $false) {        
-    [System.IO.Directory]::Create($output)
+    [System.IO.Directory]::CreateDirectory($output)
 }
 
 $output = $output | Resolve-Path
