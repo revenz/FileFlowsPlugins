@@ -74,3 +74,6 @@ api
 webhooks
 [webhookid]
 [webhooktoken]
+Gotify
+gotify
+lan

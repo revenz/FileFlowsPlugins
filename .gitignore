@@ -11,3 +11,4 @@ TestStore/
 deploy/**
 *.ffplugin
 DiscordNodes/settings.json
+Gotify/settings.json
