@@ -16,6 +16,10 @@ if ([String]::IsNullOrEmpty($output)) {
 
 $output = $output | Resolve-Path
 
+if ([System.IO.Directory]::Exists($output) -eq $false) {        
+    [System.IO.Directory]::Create($output)
+}
+
 Remove-Item Builds  -Recurse -ErrorAction SilentlyContinue
 
 $revision = (git rev-list --count --first-parent HEAD) -join "`n"
