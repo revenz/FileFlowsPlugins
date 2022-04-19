@@ -14,11 +14,11 @@ if ([String]::IsNullOrEmpty($output)) {
     $output = '../deploy';
 }
 
-$output = $output | Resolve-Path
-
 if ([System.IO.Directory]::Exists($output) -eq $false) {        
     [System.IO.Directory]::Create($output)
 }
+
+$output = $output | Resolve-Path
 
 Remove-Item Builds  -Recurse -ErrorAction SilentlyContinue
 
