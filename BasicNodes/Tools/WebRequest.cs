@@ -84,7 +84,13 @@ public class WebRequest : Node
         {
             using var client = new HttpClient();
 
-            string url = args.ReplaceVariables(this.Url, stripMissing: true);
+
+            string url = VariablesHelper.ReplaceVariables(this.Url, args.Variables, true, false, encoder: (string input) =>
+            {
+                if (string.IsNullOrEmpty(input))
+                    return string.Empty;
+                return Uri.EscapeDataString(input);
+            });
 
             HttpMethod method = this.Method switch
             {

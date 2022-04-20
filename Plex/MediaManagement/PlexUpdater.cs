@@ -85,7 +85,7 @@ public class PlexUpdater: Node
         if (updateResponse.success == false)
         {
             if(string.IsNullOrWhiteSpace(updateResponse.body) == false)
-                args.Logger.WLog("Failed to update Plex:" + updateResponse.body);
+                args.Logger?.WLog("Failed to update Plex:" + updateResponse.body);
             return 2;
         }
         return 1;

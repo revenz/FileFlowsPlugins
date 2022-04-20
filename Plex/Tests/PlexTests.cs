@@ -1,6 +1,6 @@
 ﻿#if(DEBUG)
 
-using FileFlows.Plex.Media;
+using FileFlows.Plex.MediaManagement;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FileFlows.Plex.Tests;
@@ -20,6 +20,7 @@ public class PlexTests
         var node = new PlexUpdater();
         Assert.AreEqual(1, node.Execute(args));
     }
+
     [TestMethod]
     public void Plex_Fail()
     {
