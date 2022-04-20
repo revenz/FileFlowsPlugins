@@ -77,3 +77,9 @@ webhooks
 Gotify
 gotify
 lan
+Plex
+Jellyfin
+Emby
+revenz
+Fenrus
+Plex-Token

@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gotify", "Gotify\Gotify.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiscordNodes", "DiscordNodes\DiscordNodes.csproj", "{27721E6D-1FBF-4950-824E-5231CACDE64C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plex", "Plex\Plex.csproj", "{4127A3CC-8BCE-41AE-BDE4-6FA75EF2D8A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{27721E6D-1FBF-4950-824E-5231CACDE64C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27721E6D-1FBF-4950-824E-5231CACDE64C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27721E6D-1FBF-4950-824E-5231CACDE64C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4127A3CC-8BCE-41AE-BDE4-6FA75EF2D8A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4127A3CC-8BCE-41AE-BDE4-6FA75EF2D8A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4127A3CC-8BCE-41AE-BDE4-6FA75EF2D8A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4127A3CC-8BCE-41AE-BDE4-6FA75EF2D8A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,25 @@
+{
+  "Plugins": {
+    "Plex": {
+      "Description": "A plugin that allows you to communicate with Plex.",
+      "Fields": {
+        "ServerUrl": "Server",
+        "ServerUrl-Placeholder": "http://localhost:32400/",
+        "ServerUrl-Help": "The URL of the Plex server",
+        "AccessToken": "Access Token",
+        "AccessToken-Help": "The access token used to communicate with the Plex server.\nhttps://github.com/revenz/Fenrus/wiki/Plex-Token"
+      }
+    }
+  },
+  "Flow": {
+    "Parts": {
+      "PlexUpdater": {
+        "Outputs": {
+          "1": "Plex update request sent",
+          "2": "Plex update request failed to send"
+        },
+        "Description": "Sends a message to a Plex server to update the library."
+      }
+    }
+  }
+}
