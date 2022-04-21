@@ -1,0 +1,25 @@
+{
+  "Plugins": {
+    "Emby": {
+      "Description": "A plugin that allows you to communicate with Emby.",
+      "Fields": {
+        "ServerUrl": "Server",
+        "ServerUrl-Placeholder": "http://localhost:8096/",
+        "ServerUrl-Help": "The URL of the Emby server",
+        "AccessToken": "Access Token",
+        "AccessToken-Help": "An Emby API access token"
+      }
+    }
+  },
+  "Flow": {
+    "Parts": {
+      "EmbyUpdater": {
+        "Outputs": {
+          "1": "Emby update request sent",
+          "2": "Emby update request failed to send"
+        },
+        "Description": "Sends a message to a Emby server to update the library."
+      }
+    }
+  }
+}

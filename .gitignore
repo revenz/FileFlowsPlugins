@@ -13,3 +13,5 @@ deploy/**
 DiscordNodes/settings.json
 Gotify/settings.json
 Plex/settings.json
+Emby/settings.invalid.json
+Emby/settings.json
