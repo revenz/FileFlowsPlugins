@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using FileFlows.Plugin.Attributes;
+using System.Text.RegularExpressions;
 
 namespace FileFlows.Emby.MediaManagement;
 
@@ -9,16 +10,30 @@ public class EmbyUpdater: Node
     public override FlowElementType Type => FlowElementType.Process; 
     public override string Icon => "fas fa-paper-plane";
 
+    public override bool NoEditorOnAdd => true;
+
+    [Text(1)]
+    public string ServerUrl { get; set; }
+
+    [Text(2)]
+    public string AccessToken { get; set; }
+
+    [KeyValue(3)]
+    public List<KeyValuePair<string, string>> Mapping { get; set; }
+
     public override int Execute(NodeParameters args)
     {
         var settings = args.GetPluginSettings<PluginSettings>();
+        string serverUrl = ServerUrl?.EmptyAsNull() ?? settings.ServerUrl;
+        string accessToken = AccessToken?.EmptyAsNull() ?? settings.AccessToken;
+        var mapping = (string.IsNullOrWhiteSpace(ServerUrl) ? settings.Mapping : Mapping) ?? new List<KeyValuePair<string, string>>();
 
-        if (string.IsNullOrWhiteSpace(settings?.AccessToken))
+        if (string.IsNullOrWhiteSpace(accessToken))
         {
             args.Logger?.WLog("No access token set");
             return 2;
         }
-        if (string.IsNullOrWhiteSpace(settings?.ServerUrl))
+        if (string.IsNullOrWhiteSpace(serverUrl))
         {
             args.Logger?.WLog("No server URL set");
             return 2;
@@ -27,6 +42,14 @@ public class EmbyUpdater: Node
         // get the path
         string path = args.WorkingFile;
         path = args.UnMapPath(path);
+
+        foreach (var map in mapping)
+        {
+            if (string.IsNullOrEmpty(map.Key))
+                continue;
+            path = path.Replace(map.Key, map.Value ?? string.Empty);
+        }
+
         if (args.IsDirectory == false)
         {
             bool windows = path.StartsWith("\\") || Regex.IsMatch(path, @"^[a-zA-Z]:\\");
@@ -34,7 +57,8 @@ public class EmbyUpdater: Node
             path = path.Substring(0, path.LastIndexOf(pathSeparator));
         }
 
-        string url = settings.ServerUrl;
+
+        string url = serverUrl;
         if (url.EndsWith("/") == false)
             url += "/";
         url += "Library/Media/Updated";
@@ -45,7 +69,7 @@ public class EmbyUpdater: Node
 
         using var httpClient = new HttpClient();
 
-        var updateResponse = GetWebRequest(httpClient, url, settings.AccessToken, body);
+        var updateResponse = GetWebRequest(httpClient, url, accessToken, body);
         if (updateResponse.success == false)
         {
             if(string.IsNullOrWhiteSpace(updateResponse.body) == false)

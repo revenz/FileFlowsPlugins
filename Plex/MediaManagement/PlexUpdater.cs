@@ -10,16 +10,30 @@ public class PlexUpdater: Node
     public override FlowElementType Type => FlowElementType.Process; 
     public override string Icon => "fas fa-paper-plane";
 
+    public override bool NoEditorOnAdd => true;
+
+    [Text(1)]
+    public string ServerUrl { get; set; }
+
+    [Text(2)]
+    public string AccessToken { get; set; }
+
+    [KeyValue(3)]
+    public List<KeyValuePair<string, string>> Mapping { get; set; }
+
     public override int Execute(NodeParameters args)
     {
         var settings = args.GetPluginSettings<PluginSettings>();
+        string serverUrl = ServerUrl?.EmptyAsNull() ?? settings.ServerUrl;
+        string accessToken = AccessToken?.EmptyAsNull() ?? settings.AccessToken;
+        var mapping = (string.IsNullOrWhiteSpace(ServerUrl) ? settings.Mapping : Mapping) ?? new List<KeyValuePair<string, string>>();
 
-        if (string.IsNullOrWhiteSpace(settings?.AccessToken))
+        if (string.IsNullOrWhiteSpace(accessToken))
         {
             args.Logger?.WLog("No access token set");
             return 2;
         }
-        if (string.IsNullOrWhiteSpace(settings?.ServerUrl))
+        if (string.IsNullOrWhiteSpace(serverUrl))
         {
             args.Logger?.WLog("No server URL set");
             return 2;
@@ -35,14 +49,14 @@ public class PlexUpdater: Node
             path = path.Substring(0, path.LastIndexOf(pathSeparator));
         }
 
-        string url = settings.ServerUrl;
+        string url = serverUrl;
         if (url.EndsWith("/") == false)
             url += "/";
         url += "library/sections";
 
         using var httpClient = new HttpClient();
 
-        var sectionsResponse= GetWebRequest(httpClient, url + "?X-Plex-Token=" + settings.AccessToken);
+        var sectionsResponse= GetWebRequest(httpClient, url + "?X-Plex-Token=" + accessToken);
         if (sectionsResponse.success == false)
         {
             args.Logger?.WLog("Failed to retrieve sections" + (string.IsNullOrWhiteSpace(sectionsResponse.body) ? "" : ": " + sectionsResponse.body));
@@ -61,6 +75,14 @@ public class PlexUpdater: Node
             args.Logger?.ELog("Failed deserializing sections json: " + ex.Message);
             return 2;
         }
+
+        foreach(var map in mapping)
+        {
+            if (string.IsNullOrEmpty(map.Key))
+                continue;
+            path = path.Replace(map.Key, map.Value ?? string.Empty);
+        }
+
         string pathLower = path.ToLower();
         var section = sections?.MediaContainer?.Directory?.Where(x => {
             if (x.Location?.Any() != true)
