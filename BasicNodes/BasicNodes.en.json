@@ -243,6 +243,16 @@
             "CsvFile-Help": "Will append to this file the original name and the renamed file.  Useful when using ''Log Only'' to test the renamer before changing files."
           }
         },
+        "Touch": {
+          "Description": "Touches a file or directory and sets the last write time to now.",
+          "Outputs": {
+            "1": "Successfully touched item"
+          },
+          "Fields": {
+            "FileName": "File Name",
+            "FileName-Help": "Full filename of file or folder to touch.\nIf left blank the working file will be used."
+          }
+        },
         "WebRequest": {
           "Description": "Allows you to send a web request",
           "Outputs": {
