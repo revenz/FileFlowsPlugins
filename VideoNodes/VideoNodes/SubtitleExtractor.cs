@@ -43,8 +43,6 @@
                 if (string.IsNullOrEmpty(ffmpegExe))
                     return -1;
 
-                List<string> ffArgs = new List<string>();
-
                 // ffmpeg -i input.mkv -map "0:m:language:eng" -map "-0:v" -map "-0:a" output.srt
                 var subTrack = videoInfo.SubtitleStreams?.Where(x => string.IsNullOrEmpty(Language) || x.Language?.ToLower() == Language.ToLower()).FirstOrDefault();
                 if (subTrack == null)
@@ -61,44 +59,23 @@
                 {
                     var file = new FileInfo(args.FileName);
 
-                    string extension = "srt";
-                    if(subTrack.Codec?.ToLower()?.Contains("pgs") == true)
-                        extension = "sup";
 
-                    OutputFile = file.FullName.Substring(0, file.FullName.LastIndexOf(file.Extension)) + "." + extension;
+                    OutputFile = file.FullName.Substring(0, file.FullName.LastIndexOf(file.Extension));
                 }
                 OutputFile = args.MapPath(OutputFile);
-                bool textSubtitles = System.Text.RegularExpressions.Regex.IsMatch(OutputFile, @"\.(sup)$") == false;
+
+                string extension = "srt";
+                if (subTrack.Codec?.ToLower()?.Contains("pgs") == true)
+                    extension = "sup";
+                if (OutputFile.ToLower().EndsWith(".srt") || OutputFile.ToLower().EndsWith(".sup"))
+                    OutputFile = OutputFile[0..^4];
+
+                OutputFile += "." + extension;
+                //bool textSubtitles = Regex.IsMatch(OutputFile, @"\.(sup)$") == false;
 
 
-                if (File.Exists(OutputFile))
-                {
-                    args.Logger?.ILog("File already exists, deleting file: " + OutputFile);
-                    File.Delete(OutputFile);
-                }
-
-                // -y means it will overwrite a file if output already exists
-                var result = args.Process.ExecuteShellCommand(new ExecuteArgs
-                {
-                    Command = ffmpegExe,
-                    ArgumentList = textSubtitles ? new[] {
-
-                        "-i", args.WorkingFile,
-                        "-map", $"{subTrack.IndexString}",
-                        "-map", "-0:v",
-                        "-map", "-0:a",
-                        OutputFile
-                    }
-                    : new []
-                    {
-                        "-i", args.WorkingFile,
-                        "-c", "copy",
-                        "-map", $"{subTrack.IndexString}",
-                        OutputFile
-                    }
-                }).Result;
-
-                if (result.ExitCode == 0)
+                var extracted = ExtractSubtitle(args, ffmpegExe, "0:s:" + subTrack.TypeIndex, OutputFile);
+                if(extracted)
                 {
                     args.UpdateVariables(new Dictionary<string, object>
                     {
@@ -110,7 +87,51 @@
                     return 1;
                 }
 
-                var of = new FileInfo(OutputFile);
+                return -1;
+            }
+            catch (Exception ex)
+            {
+                args.Logger?.ELog("Failed processing VideoFile: " + ex.Message);
+                return -1;
+            }
+        }
+
+        internal bool ExtractSubtitle(NodeParameters args, string ffmpegExe, string subtitleStream, string output)
+        {
+            if (File.Exists(OutputFile))
+            {
+                args.Logger?.ILog("File already exists, deleting file: " + OutputFile);
+                File.Delete(OutputFile);
+            }
+
+            bool textSubtitles = Regex.IsMatch(OutputFile.ToLower(), @"\.(sup)$") == false;
+            // -y means it will overwrite a file if output already exists
+            var result = args.Process.ExecuteShellCommand(new ExecuteArgs
+            {
+                Command = ffmpegExe,
+                ArgumentList = textSubtitles ? 
+                    new[] {
+
+                        "-i", args.WorkingFile,
+                        "-map", subtitleStream,
+                        output
+                    } : 
+                    new[] {
+
+                        "-i", args.WorkingFile,
+                        "-map", subtitleStream,
+                        "-c:s", "copy",
+                        output
+                    }
+            }).Result;
+
+            var of = new FileInfo(OutputFile);
+            if (result.ExitCode != 0)
+            {
+                args.Logger?.ELog("FFMPEG process failed to extract subtitles");
+                args.Logger?.ILog("Unexpected exit code: " + result.ExitCode);
+                args.Logger?.ILog(result.StandardOutput ?? String.Empty);
+                args.Logger?.ILog(result.StandardError ?? String.Empty);
                 if (of.Exists && of.Length == 0)
                 {
                     // delete the output file if it created an empty file
@@ -120,17 +141,9 @@
                     }
                     catch (Exception) { }
                 }
-                args.Logger?.ELog("FFMPEG process failed to extract subtitles");
-                args.Logger?.ILog("Unexpected exit code: " + result.ExitCode);
-                args.Logger?.ILog(result.StandardOutput ?? String.Empty);
-                args.Logger?.ILog(result.StandardError ?? String.Empty);
-                return -1;
+                return false;
             }
-            catch (Exception ex)
-            {
-                args.Logger?.ELog("Failed processing VideoFile: " + ex.Message);
-                return -1;
-            }
+            return of.Exists;
         }
     }
 }

@@ -1,0 +1,5 @@
+{
+  "TestPath": "C:\\videos\\testfiles",
+  "TempPath": "C:\\videos\\temp",
+  "FfmpegPath": "C:\\Utils\\ffmpeg\\ffmpeg.exe"
+}
