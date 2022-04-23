@@ -1,108 +1,15 @@
 ﻿using FileFlows.Plex.Models;
-using System.Text.RegularExpressions;
 
 namespace FileFlows.Plex.MediaManagement;
 
-public class PlexUpdater: Node
+public class PlexUpdater: PlexNode
 {
-    public override int Inputs => 1;
-    public override int Outputs => 2;
-    public override FlowElementType Type => FlowElementType.Process; 
     public override string Icon => "fas fa-paper-plane";
-
-    public override bool NoEditorOnAdd => true;
-
-    [Text(1)]
-    public string ServerUrl { get; set; }
-
-    [Text(2)]
-    public string AccessToken { get; set; }
-
-    [KeyValue(3)]
-    public List<KeyValuePair<string, string>> Mapping { get; set; }
-
-    public override int Execute(NodeParameters args)
+    protected override int ExecuteActual(NodeParameters args, PlexDirectory directory, string url, string mappedPath, string accessToken)
     {
-        var settings = args.GetPluginSettings<PluginSettings>();
-        string serverUrl = ServerUrl?.EmptyAsNull() ?? settings.ServerUrl;
-        string accessToken = AccessToken?.EmptyAsNull() ?? settings.AccessToken;
-        var mapping = (string.IsNullOrWhiteSpace(ServerUrl) ? settings.Mapping : Mapping) ?? new List<KeyValuePair<string, string>>();
-
-        if (string.IsNullOrWhiteSpace(accessToken))
-        {
-            args.Logger?.WLog("No access token set");
-            return 2;
-        }
-        if (string.IsNullOrWhiteSpace(serverUrl))
-        {
-            args.Logger?.WLog("No server URL set");
-            return 2;
-        }
-
-        // get the path
-        string path = args.WorkingFile;
-        path = args.UnMapPath(path);
-        if (args.IsDirectory == false)
-        {
-            bool windows = path.StartsWith("\\") || Regex.IsMatch(path, @"^[a-zA-Z]:\\");
-            string pathSeparator = windows ? "\\" : "/";
-            path = path.Substring(0, path.LastIndexOf(pathSeparator));
-        }
-
-        string url = serverUrl;
-        if (url.EndsWith("/") == false)
-            url += "/";
-        url += "library/sections";
+        url += $"library/sections/{directory.Key}/refresh?path={Uri.EscapeDataString(mappedPath)}&X-Plex-Token=" + accessToken;
 
         using var httpClient = new HttpClient();
-
-        var sectionsResponse= GetWebRequest(httpClient, url + "?X-Plex-Token=" + accessToken);
-        if (sectionsResponse.success == false)
-        {
-            args.Logger?.WLog("Failed to retrieve sections" + (string.IsNullOrWhiteSpace(sectionsResponse.body) ? "" : ": " + sectionsResponse.body));
-            return 2;
-        }
-
-        PlexSections sections;
-        try
-        {
-            var options = new System.Text.Json.JsonSerializerOptions();
-            options.PropertyNameCaseInsensitive = true;
-            sections = System.Text.Json.JsonSerializer.Deserialize<PlexSections>(sectionsResponse.body, options);
-        }
-        catch (Exception ex)
-        {
-            args.Logger?.ELog("Failed deserializing sections json: " + ex.Message);
-            return 2;
-        }
-
-        foreach(var map in mapping)
-        {
-            if (string.IsNullOrEmpty(map.Key))
-                continue;
-            path = path.Replace(map.Key, map.Value ?? string.Empty);
-        }
-
-        string pathLower = path.ToLower();
-        var section = sections?.MediaContainer?.Directory?.Where(x => {
-            if (x.Location?.Any() != true)
-                return false;
-            foreach (var loc in x.Location) {
-                if (loc.Path == null)
-                    continue;
-                if (pathLower.StartsWith(loc.Path.ToLower()))
-                    return true;
-            }
-            return false;
-        }).FirstOrDefault();
-        if(section == null)
-        {
-            args.Logger?.WLog("Failed to find Plex section for path: " + path);
-            return 2;
-        }
-
-        url += $"/{section.Key}/refresh?path={Uri.EscapeDataString(path)}&X-Plex-Token=" + settings.AccessToken;
-
         var updateResponse = GetWebRequest(httpClient, url);
         if (updateResponse.success == false)
         {
@@ -111,31 +18,5 @@ public class PlexUpdater: Node
             return 2;
         }
         return 1;
-    }
-
-    private Func<HttpClient, string, (bool success, string body)> _GetWebRequest;
-    internal Func<HttpClient, string, (bool success, string body)> GetWebRequest
-    {
-        get
-        {
-            if(_GetWebRequest == null)
-            {
-                _GetWebRequest = (HttpClient client, string url) =>
-                {
-                    try
-                    {
-                        client.DefaultRequestHeaders.Add("Accept", "application/json");
-                        var response = client.GetAsync(url).Result;
-                        string body = response.Content.ReadAsStringAsync().Result;
-                        return (response.IsSuccessStatusCode, body);
-                    }
-                    catch(Exception ex)
-                    {
-                        return (false, ex.Message);
-                    }
-                };
-            }
-            return _GetWebRequest;
-        }
     }
 }

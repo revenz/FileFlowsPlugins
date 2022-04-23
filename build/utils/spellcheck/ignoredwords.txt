@@ -83,3 +83,4 @@ Emby
 revenz
 Fenrus
 Plex-Token
+analyze

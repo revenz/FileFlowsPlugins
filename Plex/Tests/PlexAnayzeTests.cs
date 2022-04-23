@@ -6,38 +6,38 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FileFlows.Plex.Tests;
 
 [TestClass]
-public class PlexTests
+public class PlexAnayzeTests
 {
     [TestMethod]
-    public void Plex_Basic()
+    public void PlexAnayze_Basic()
     {
-        var args = new NodeParameters(@"/media/movies/Citizen Kane (1941)/Citizen Kane (1941).mp4", new TestLogger(), false, string.Empty);
+        var args = new NodeParameters(@"/media/tv/Outrageous Fortune/Season 3/Outrageous Fotune - 3x02.mkv", new TestLogger(), false, string.Empty);
         args.GetPluginSettingsJson = (string input) =>
         {
             return File.ReadAllText("../../../settings.json");
         };
 
-        var node = new PlexUpdater();
+        var node = new PlexAnalyze();
         Assert.AreEqual(1, node.Execute(args));
     }
 
     [TestMethod]
-    public void Plex_Fail()
+    public void PlexAnayze_Fail()
     {
-        var args = new NodeParameters(@"/media/unknownmovies/The Batman (2022)/The Batman.mkv", new TestLogger(), false, string.Empty);
+        var args = new NodeParameters(@"/media/tv/Outrageous Fortune/Season 3/Outrageous Fotune - 3x02a.mkv", new TestLogger(), false, string.Empty);
         args.GetPluginSettingsJson = (string input) =>
         {
             return File.ReadAllText("../../../settings.json");
         };
 
-        var node = new PlexUpdater();
+        var node = new PlexAnalyze();
         Assert.AreEqual(2, node.Execute(args));
     }
 
     [TestMethod]
-    public void Plex_Mapping()
+    public void PlexAnayze_Mapping()
     {
-        var args = new NodeParameters(@"/mnt/movies/Citizen Kane (1941)/Citizen Kane (1941).mp4", new TestLogger(), false, string.Empty);
+        var args = new NodeParameters(@"/mnt/movies/The Batman (2022)/The Batman (2022).mkv", new TestLogger(), false, string.Empty);
         var settings = new PluginSettings();
         settings.Mapping = new List<KeyValuePair<string, string>>();
         settings.Mapping.Add(new KeyValuePair<string, string>("/mnt/movies", "/media/movies"));
@@ -47,7 +47,7 @@ public class PlexTests
             return File.ReadAllText("../../../settings.json");
         };
 
-        var node = new PlexUpdater();
+        var node = new PlexAnalyze();
         Assert.AreEqual(1, node.Execute(args));
     }
 

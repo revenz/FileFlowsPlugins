@@ -1,6 +1,6 @@
 ﻿namespace FileFlows.Plex.Models;
 
-internal class PlexDirectory
+public class PlexDirectory
 {
     public string Key { get; set; }
     public PlexDirectoryLocation[] Location { get; set; }
