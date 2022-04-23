@@ -3,6 +3,9 @@
     public class FfmpegBuilderVideo10Bit : FfmpegBuilderNode
     {
         public override int Outputs => 1;
+
+        public override string HelpUrl => "https://github.com/revenz/FileFlows/wiki/FFMPEG-Builder:-Video-10-Bit";
+
         public override int Execute(NodeParameters args)
         {
             base.Init(args);

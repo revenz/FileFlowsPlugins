@@ -4,6 +4,8 @@
     {
         public override int Outputs => 2;
 
+        public override string HelpUrl => "https://github.com/revenz/FileFlows/wiki/FFMPEG-Builder:-Video-Codec";
+
         [DefaultValue("hevc")]
         [TextVariable(1)]
         public string VideoCodec { get; set; }

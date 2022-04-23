@@ -14,6 +14,7 @@
     {
         public override int Outputs => 2;
 
+
         [NumberInt(1)]
         [DefaultValue(60)]
         public int MinimumLength { get; set; } = 60;

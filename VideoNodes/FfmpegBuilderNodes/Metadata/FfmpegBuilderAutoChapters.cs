@@ -3,6 +3,7 @@
     public class FfmpegBuilderAutoChapters : FfmpegBuilderNode
     {
         public override int Outputs => 2;
+        public override string HelpUrl => "https://github.com/revenz/FileFlows/wiki/FFMPEG-Builder:-Auto-Chapters";
 
         [NumberInt(1)]
         [DefaultValue(60)]

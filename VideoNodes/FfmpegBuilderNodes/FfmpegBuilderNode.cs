@@ -12,6 +12,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
         public override int Outputs => 1;
         public override string Icon => "far fa-file-video";
         public override FlowElementType Type => FlowElementType.BuildPart;
+        public override string HelpUrl => "https://github.com/revenz/FileFlows/wiki/FFMPEG-Builder";
 
         protected void Init(NodeParameters args)
         {

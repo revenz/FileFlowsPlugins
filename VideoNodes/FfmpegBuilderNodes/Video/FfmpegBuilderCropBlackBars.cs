@@ -6,6 +6,9 @@
         [DefaultValue(10)]
         public int CroppingThreshold { get; set; }
         public override int Outputs => 2;
+
+        public override string HelpUrl => "https://github.com/revenz/FileFlows/wiki/FFMPEG-Builder:-Crop-Black-Bars";
+
         public override int Execute(NodeParameters args)
         {
             base.Init(args);

@@ -3,6 +3,9 @@
     public class FfmpegBuilderHdrToSdr : FfmpegBuilderNode
     {
         public override int Outputs => 2;
+
+        public override string HelpUrl => "https://github.com/revenz/FileFlows/wiki/FFMPEG-Builder:-HDR-to-SDR";
+
         public override int Execute(NodeParameters args)
         {
             base.Init(args);
