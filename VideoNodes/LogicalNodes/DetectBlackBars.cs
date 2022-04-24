@@ -79,7 +79,7 @@ namespace FileFlows.VideoNodes
                 int y = int.MaxValue;
                 int width = 0;
                 int height = 0;
-                foreach (int ss in new int[] { 60, 100, 240, 360 })  // check at multiple times
+                foreach (int ss in new int[] { 60, 120, 240, 360 })  // check at multiple times
                 {
                     using (var process = new Process())
                     {

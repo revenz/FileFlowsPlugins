@@ -1,12 +1,12 @@
-﻿namespace FileFlows.VideoNodes.FfmpegBuilderNodes
+﻿namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
+
+public class FfmpegBuilderRemuxToMkv: FfmpegBuilderNode
 {
-    public class FfmpegBuilderRemuxToMkv: FfmpegBuilderNode
+    public override string HelpUrl => "https://github.com/revenz/FileFlows/wiki/FFMPEG-Builder:-Remux-to-MKV";
+    public override int Execute(NodeParameters args)
     {
-        public override int Execute(NodeParameters args)
-        {
-            base.Init(args);
-            this.Model.Extension = "mkv";
-            return 1;
-        }
+        base.Init(args);
+        this.Model.Extension = "mkv";
+        return 1;
     }
 }
