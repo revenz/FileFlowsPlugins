@@ -157,7 +157,11 @@
             "1": "FFMPEG Builder ran successfully and created new temporary file",
             "2": "No changes detected in FFMPEG Builder, file not created"
           },
-          "Description": "Executes a FFMPEG Builder command created by other FFMPEG Builder nodes."
+          "Description": "Executes a FFMPEG Builder command created by other FFMPEG Builder nodes.",
+          "Fields": {
+            "HardwareDecoding": "Hardware Decoding",
+            "HardwareDecoding-Help": "If the executor should attempt to use hardware decoding.  If not available the execution will proceed just without hardware decoding enabled."
+          }
         },
         "FfmpegBuilderAudioAddTrack": {
           "Label": "FFMPEG Builder: Audio Add Track",

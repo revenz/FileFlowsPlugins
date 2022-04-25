@@ -10,12 +10,22 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
         public override int Outputs => 2;
         public override FlowElementType Type => FlowElementType.BuildEnd;
 
+        public override bool NoEditorOnAdd => true;
+
+        [DefaultValue(true)]
+        [Boolean(1)]
+        public bool HardwareDecoding { get; set; }
+
         public override int Execute(NodeParameters args)
         {
             this.Init(args);
             var model = this.Model;
             List<string> ffArgs = new List<string>();
             ffArgs.AddRange(new[] { "-strict", "-2" }); // allow experimental stuff
+            if (HardwareDecoding)
+            {
+                ffArgs.AddRange(GetHardwareDecodingArgs());
+            }
             bool hasChange = false;
             int actualIndex = 0;
             int currentType = 0;
@@ -69,6 +79,39 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
                 return -1;
 
             return 1;
+        }
+
+        internal string[] GetHardwareDecodingArgs()
+        {
+            string testFile = Path.Combine(args.TempPath, Guid.NewGuid() + ".hwtest.mkv");
+            foreach(var hw in new [] { "cuda", "dxva2","qsv","d3d11va","opencl" })
+            {
+                // ffmpeg -y -hwaccel qsvf -f lavfi -i color=color=red -frames:v 10 test.mkv
+                try
+                {
+                    var result = args.Execute(new ExecuteArgs
+                    {
+                        ArgumentList = new[]
+                        {
+                            "-y",
+                            "-hwaccel", hw,
+                            "-f", "lavfi",
+                            "-i", "color=color=red",
+                            "-frames:v", "10",
+                            testFile
+                        }
+                    });
+                    if (result.ExitCode == 0)
+                    {
+                        args.Logger?.ILog("Supported hardware decoding detected: " + hw);
+                        return new[] { "-hwaccel", hw };
+                    }
+                }
+                catch (Exception) { }
+            }
+
+            args.Logger?.ILog("No hardware decoding availble");
+            return new string[] { };
         }
     }
 }
