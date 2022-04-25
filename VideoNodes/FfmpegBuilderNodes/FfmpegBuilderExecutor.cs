@@ -22,10 +22,6 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
             var model = this.Model;
             List<string> ffArgs = new List<string>();
             ffArgs.AddRange(new[] { "-strict", "-2" }); // allow experimental stuff
-            if (HardwareDecoding)
-            {
-                ffArgs.AddRange(GetHardwareDecodingArgs());
-            }
             bool hasChange = false;
             int actualIndex = 0;
             int currentType = 0;
@@ -66,7 +62,13 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
             else
                 model.InputFiles[0] = args.WorkingFile;
 
-            foreach(string file in model.InputFiles)
+
+            if (HardwareDecoding)
+            {
+                startArgs.AddRange(GetHardwareDecodingArgs());
+            }
+
+            foreach (string file in model.InputFiles)
             {
                 startArgs.Add("-i");
                 startArgs.Add(file);
@@ -91,6 +93,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
                 {
                     var result = args.Execute(new ExecuteArgs
                     {
+                        Command = ffmpegExe,                        
                         ArgumentList = new[]
                         {
                             "-y",
