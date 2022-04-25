@@ -97,33 +97,86 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
 
         var audio = new FfmpegAudioStream();
 
-#pragma warning disable IL2026 // Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code
-        var bestAudio = Model.AudioStreams.Where(x => System.Text.Json.JsonSerializer.Serialize(x.Stream).ToLower().Contains("commentary") == false)
-#pragma warning restore IL2026 // Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code
-        .OrderBy(x =>
+        var bestAudio = GetBestAudioTrack(args, Model.AudioStreams.Select(x => x.Stream));
+        if (bestAudio == null)
         {
-            if (Language != string.Empty)
-            {
-                args.Logger?.ILog("Language: " + x.Stream.Language, x);
-                if (string.IsNullOrEmpty(x.Stream.Language))
-                    return 50; // no language specified
-                if (x.Stream.Language?.ToLower() != Language)
-                    return 100; // low priority not the desired language
-            }
-            return 0;
-        })
-        .ThenByDescending(x => x.Stream.Channels)
-        .ThenBy(x => x.Index)
-        .FirstOrDefault();
-        audio.Stream = bestAudio.Stream;
+            args.Logger.WLog("No source audio track found");
+            return -1;
+        }
 
-        audio.EncodingParameters.AddRange(GetNewAudioTrackParameters("0:a:" + (bestAudio.Stream.TypeIndex)));
+        audio.Stream = bestAudio;
+
+        bool directCopy = false;
+        if(bestAudio.Codec.ToLower() == this.Codec.ToLower())
+        {
+            if(this.Channels == 0 || this.Channels == bestAudio.Channels)
+            {
+                directCopy = true;
+            }
+        }
+
+        if (directCopy)
+        {
+            args.Logger?.ILog($"Source audio is already in appropriate format, just copying that track: {bestAudio.IndexString}, Channels: {bestAudio.Channels}, Codec: {bestAudio.Codec}");
+        }
+        else
+        {
+            audio.EncodingParameters.AddRange(GetNewAudioTrackParameters("0:a:" + (bestAudio.TypeIndex)));
+        }
         if (Index > Model.AudioStreams.Count - 1)
             Model.AudioStreams.Add(audio);
         else 
             Model.AudioStreams.Insert(Math.Max(0, Index), audio);
 
         return 1;
+    }
+
+    internal AudioStream GetBestAudioTrack(NodeParameters args, IEnumerable<AudioStream> streams)
+    {
+#pragma warning disable IL2026 // Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code
+        var bestAudio = streams.Where(x => System.Text.Json.JsonSerializer.Serialize(x).ToLower().Contains("commentary") == false)
+#pragma warning restore IL2026 // Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code
+        .OrderBy(x =>
+        {
+            if (Language != string.Empty)
+            {
+                args.Logger?.ILog("Language: " + x.Language, x);
+                if (string.IsNullOrEmpty(x.Language))
+                    return 50; // no language specified
+                if (x.Language.ToLower() != Language)
+                    return 100; // low priority not the desired language
+            }
+            return 0;
+        })
+        .ThenByDescending(x => {
+            if(this.Channels == 2)
+            {
+                if (x.Channels == 2)
+                    return 1_000_000_000;
+                // compare codecs
+                if (x.Codec?.ToLower() == this.Codec?.ToLower())
+                    return 1_000_000;
+            }
+            if(this.Channels == 1)
+            {
+                if (x.Channels == 1)
+                    return 1_000_000_000;
+                if (x.Channels <= 2.1f)
+                    return 5_000_000;
+                if (x.Codec?.ToLower() == this.Codec?.ToLower())
+                    return 1_000_000;
+            }
+
+            // now we want best channels, but to prefer matching codec
+            if (x.Codec?.ToLower() == this.Codec?.ToLower())
+            {
+                return 1_000 + x.Channels;
+            }
+            return x.Channels;
+        })
+        .ThenBy(x => x.Index)
+        .FirstOrDefault();
+        return bestAudio;
     }
 
 
