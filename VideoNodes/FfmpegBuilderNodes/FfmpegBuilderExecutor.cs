@@ -86,7 +86,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
         internal string[] GetHardwareDecodingArgs()
         {
             string testFile = Path.Combine(args.TempPath, Guid.NewGuid() + ".hwtest.mkv");
-            foreach(var hw in new [] { "cuda", "dxva2","qsv","d3d11va","opencl" })
+            foreach(var hw in new [] { "cuda", "dxva2", "qsv", "d3d11va", "opencl" })
             {
                 // ffmpeg -y -hwaccel qsvf -f lavfi -i color=color=red -frames:v 10 test.mkv
                 try
