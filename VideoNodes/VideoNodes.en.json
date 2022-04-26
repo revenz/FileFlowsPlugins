@@ -119,6 +119,11 @@
           "Description": "An input video file that has had its VideoInformation read and can be processed",
           "Outputs": {
             "1": "Video file from library"
+          },
+          "Fields": {
+            "ProbeSize": "Probe Size",
+            "ProbeSize-Suffix": "MB",
+            "ProbeSize-Help": "The probe size to use in FFMPEG when executing."
           }
         },
         "DetectBlackBars": {
@@ -371,6 +376,18 @@
           "Description": "Sets FFMPEG Builder to encode the video streams in 10 Bit",
           "Outputs": {
             "1": "FFMPEG Builder video streams set to encode in 10 Bit"
+          }
+        },
+        "FfmpegBuilderVideoBitrate": {
+          "Label": "FFMPEG Builder: Video Bitrate",
+          "Description": "Sets FFMPEG Builder to encode the video given the bitrate",
+          "Outputs": {
+            "1": "FFMPEG Builder video streams updated"
+          },
+          "Fields": {
+            "Bitrate": "Bitrate",
+            "Bitrate-Suffix": "KB",
+            "Bitrate-Help": "The target bitrate of the video in kilobytes"
           }
         },
         "FfmpegBuilderVideoCodec": {

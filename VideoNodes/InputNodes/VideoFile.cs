@@ -9,6 +9,13 @@ namespace FileFlows.VideoNodes
         public override int Outputs => 1;
         public override FlowElementType Type => FlowElementType.Input;
 
+        public override bool NoEditorOnAdd => true;
+
+        [DefaultValue(25)]
+        [NumberInt(1)]
+        [Range(5, 1000)]
+        public int ProbeSize { get; set; }
+
         private Dictionary<string, object> _Variables;
         public override Dictionary<string, object> Variables => _Variables;
         public VideoFile()
@@ -47,6 +54,8 @@ namespace FileFlows.VideoNodes
             string ffmpegExe = GetFFMpegExe(args);
             if (string.IsNullOrEmpty(ffmpegExe))
                 return -1;
+
+            VideoInfoHelper.ProbeSize = this.ProbeSize;
 
             try
             {

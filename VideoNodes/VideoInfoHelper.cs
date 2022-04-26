@@ -16,6 +16,21 @@ namespace FileFlows.VideoNodes
         static Regex rgxDuration2 = new Regex(@"(?<=((^[\s]+Duration:[\s])))([\d]+:?)+\.[\d]{1,7}", RegexOptions.Multiline);
         static Regex rgxAudioSampleRate = new Regex(@"(?<=((,|\s)))[\d]+(?=([\s]?hz))", RegexOptions.IgnoreCase);
 
+        static int _ProbeSize = 25;
+        internal static int ProbeSize 
+        { 
+            get => _ProbeSize;
+            set
+            {
+                if (value < 5)
+                    _ProbeSize = 5;
+                else if (value > 1000)
+                    _ProbeSize = 1000;
+                else
+                    _ProbeSize = value;
+            }
+        }
+
         public VideoInfoHelper(string ffMpegExe, ILogger logger)
         {
             this.ffMpegExe = ffMpegExe;
@@ -48,9 +63,16 @@ namespace FileFlows.VideoNodes
                     process.StartInfo.RedirectStandardOutput = true;
                     process.StartInfo.RedirectStandardError = true;
                     process.StartInfo.CreateNoWindow = true;
-                    process.StartInfo.ArgumentList.Add("-hide_banner");
-                    process.StartInfo.ArgumentList.Add("-i");
-                    process.StartInfo.ArgumentList.Add(filename);
+                    foreach (var arg in new[]
+                    {
+                        "-hide_banner",
+                        "-probesize", ProbeSize + "M",
+                        "-i",
+                        filename,
+                    })
+                    {
+                        process.StartInfo.ArgumentList.Add(arg);
+                    }
                     process.Start();
                     string output = process.StandardError.ReadToEnd();
                     output = output.Replace("At least one output file must be specified", string.Empty).Trim();
@@ -243,14 +265,25 @@ namespace FileFlows.VideoNodes
             audio.TypeIndex = int.Parse(Regex.Match(line, @"#([\d]+):([\d]+)").Groups[2].Value) - 1;
             audio.Codec = parts[0].Substring(parts[0].IndexOf("Audio: ") + "Audio: ".Length).Trim().Split(' ').First().ToLower() ?? "";
             audio.Language = Regex.Match(line, @"(?<=(Stream\s#[\d]+:[\d]+)\()[^\)]+").Value?.ToLower() ?? "";
-            //Logger.ILog("codec: " + vs.Codec);
-            if (parts[2] == "stereo")
-                audio.Channels = 2;
-            else if (parts[2] == "mono")
-                audio.Channels = 1;
-            else if (Regex.IsMatch(parts[2], @"^[\d]+(\.[\d]+)?"))
+            if (info.IndexOf("0 channels") >= 0)
             {
-                audio.Channels = float.Parse(Regex.Match(parts[2], @"^[\d]+(\.[\d]+)?").Value);
+                audio.Channels = 0;
+            }
+            else
+            {
+                try
+                {
+                    //Logger.ILog("codec: " + vs.Codec);
+                    if (parts[2] == "stereo")
+                        audio.Channels = 2;
+                    else if (parts[2] == "mono")
+                        audio.Channels = 1;
+                    else if (Regex.IsMatch(parts[2], @"^[\d]+(\.[\d]+)?"))
+                    {
+                        audio.Channels = float.Parse(Regex.Match(parts[2], @"^[\d]+(\.[\d]+)?").Value);
+                    }
+                }
+                catch (Exception) { }
             }
 
             var match = rgxAudioSampleRate.Match(info);

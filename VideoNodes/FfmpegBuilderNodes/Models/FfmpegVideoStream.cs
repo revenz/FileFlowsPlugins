@@ -50,7 +50,17 @@
                 _OptionalEncodingParameters = value ?? new List<string>();
             }
         }
-        public override bool HasChange => EncodingParameters.Any() || Filter.Any();
+        private List<string> _AdditionalParameters = new List<string>();
+        public List<string> AdditionalParameters
+        {
+            get => _AdditionalParameters;
+            set
+            {
+                _AdditionalParameters = value ?? new List<string>();
+            }
+        }
+        public override bool HasChange => EncodingParameters.Any() || Filter.Any() || AdditionalParameters.Any();
+
 
         public override string[] GetParameters(int outputIndex)
         {
@@ -58,7 +68,7 @@
                 return new string[] { };
 
             var results = new List<string> { "-map", "0:v:" + outputIndex };
-            if (Filter.Any() == false && EncodingParameters.Any() == false)
+            if (Filter.Any() == false && EncodingParameters.Any() == false && AdditionalParameters.Any() == false)
             {
                 results.Add("-c:v:" + Stream.TypeIndex);
                 results.Add("copy");
@@ -78,6 +88,8 @@
                     // we need to set this codec since a filter will be applied, so we cant copy it.
                     //results.Add("copy");
                 }
+                if (AdditionalParameters.Any())
+                    results.AddRange(AdditionalParameters.Select(x => x.Replace("{index}", outputIndex.ToString())));
 
                 if (Filter.Any() || OptionalFilter.Any())
                 {

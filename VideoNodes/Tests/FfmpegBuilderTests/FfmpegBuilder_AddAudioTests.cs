@@ -148,6 +148,7 @@ public class FfmpegBuilder_AddAudioTests
         Assert.AreEqual("AAC", best.Codec);
         Assert.AreEqual(2f, best.Channels);
     }
+
     [TestMethod]
     public void FfmpegBuilder_AddAudio_DtsMono()
     {

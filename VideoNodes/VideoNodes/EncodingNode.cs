@@ -185,7 +185,7 @@ namespace FileFlows.VideoNodes
             }).Result;
             if (cmd.ExitCode != 0 || string.IsNullOrWhiteSpace(cmd.Output) == false)
             {
-                args.Logger?.WLog($"Cant prcoess '{encodingParams}': {cmd.Output ?? ""}");
+                args.Logger?.WLog($"Cant process '{encodingParams}': {cmd.Output ?? ""}");
                 return false;
             }
             return true;

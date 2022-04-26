@@ -62,6 +62,9 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
             else
                 model.InputFiles[0] = args.WorkingFile;
 
+            startArgs.AddRange(new[] {
+                "-probesize", VideoInfoHelper.ProbeSize + "M"
+            });
 
             if (HardwareDecoding)
             {
