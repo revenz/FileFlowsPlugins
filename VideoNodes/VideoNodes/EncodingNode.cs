@@ -101,7 +101,7 @@ namespace FileFlows.VideoNodes
             if(vidparams.ToLower() == "hevc" || vidparams.ToLower() == "h265")
             {
                 // try find best hevc encoder
-                foreach(string vidparam in new [] { "hevc_nvenc -preset hq", "hevc_qsv -load_plugin hevc_hw", "hevc_amf", "hevc_vaapi" })
+                foreach(string vidparam in new [] { "hevc_nvenc -preset hq", "hevc_qsv -global_quality 28 -load_plugin hevc_hw", "hevc_amf", "hevc_vaapi" })
                 {
                     bool canProcess = CanProcessEncoder(ffmpeg, vidparam);
                     if (canProcess)
