@@ -1,0 +1,56 @@
+{
+  "Flow": {
+    "Parts": {
+      "ImageFlip": {
+        "Outputs": {
+          "1": "Image flipped, saved to new temporary file"
+        },
+        "Description": "Flips an image",
+        "Fields": {
+          "Format": "Format",
+          "Format-Help": "The image format to convert to",
+          "Vertical": "Vertical",
+          "Vertical-Help": "If set the image will be flipped vertically, otherwise horizontally"
+        }
+      },
+      "ImageFormat": {
+        "Outputs": {
+          "1": "Image converted, saved to new temporary file"
+        },
+        "Description": "Converts an image to the specified format",
+        "Fields": {
+          "Format": "Format",
+          "Format-Help": "The image format to convert to"
+        }
+      },
+      "ImageResizer": {
+        "Outputs": {
+          "1": "Image resized, saved to new temporary file"
+        },
+        "Description": "Resizes an image",
+        "Fields": {
+          "Format": "Format",
+          "Format-Help": "The image format to convert to",
+          "Width": "Width",
+          "Width-Suffix": "px",
+          "Height": "Height",
+          "Height-Suffix": "px",
+          "Mode": "Mode",
+          "Mode-Help": "The mode to use when resizing the image"
+        }
+      },
+      "ImageRotate": {
+        "Outputs": {
+          "1": "Image rotated, saved to new temporary file"
+        },
+        "Description": "Rotates an image",
+        "Fields": {
+          "Format": "Format",
+          "Format-Help": "The image format to convert to",
+          "Angle": "Angle",
+          "Angle-Help": "The rotation angle"
+        }
+      }
+    }
+  }
+}
