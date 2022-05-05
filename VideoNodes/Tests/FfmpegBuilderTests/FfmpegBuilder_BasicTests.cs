@@ -776,6 +776,144 @@ namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests
             string log = logger.ToString();
             Assert.AreEqual(1, result);
         }
+
+
+        [TestMethod]
+        public void FfmpegBuilder_HardwareDecoding()
+        {
+            const string file = @"D:\videos\unprocessed\basic.mkv";
+            var logger = new TestLogger();
+            const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+            var vi = new VideoInfoHelper(ffmpeg, logger);
+            var vii = vi.Read(file);
+            var args = new NodeParameters(file, logger, false, string.Empty);
+            args.GetToolPathActual = (string tool) => ffmpeg;
+            args.TempPath = @"D:\videos\temp";
+            args.Parameters.Add("VideoInfo", vii);
+
+
+            FfmpegBuilderStart ffStart = new();
+            Assert.AreEqual(1, ffStart.Execute(args));
+
+            FfmpegBuilderVideoCodec ffEncode = new();
+            ffEncode.VideoCodec = "h264";
+            ffEncode.Execute(args);
+
+
+            FfmpegBuilderAudioAddTrack ffAddAudio = new();
+            ffAddAudio.Codec = "ac3";
+            ffAddAudio.Index = 0;
+            ffAddAudio.Execute(args);
+
+            FfmpegBuilderExecutor ffExecutor = new();
+            ffExecutor.HardwareDecoding = true;
+            int result = ffExecutor.Execute(args);
+
+            string log = logger.ToString();
+            Assert.AreEqual(1, result);
+        }
+
+
+        [TestMethod]
+        public void FfmpegBuilder_VideoBitrate()
+        {
+            const string file = @"D:\videos\unprocessed\basic.mkv";
+            var logger = new TestLogger();
+            const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+            var vi = new VideoInfoHelper(ffmpeg, logger);
+            var vii = vi.Read(file);
+            var args = new NodeParameters(file, logger, false, string.Empty);
+            args.GetToolPathActual = (string tool) => ffmpeg;
+            args.TempPath = @"D:\videos\temp";
+            args.Parameters.Add("VideoInfo", vii);
+
+
+            FfmpegBuilderStart ffStart = new();
+            Assert.AreEqual(1, ffStart.Execute(args));
+
+            FfmpegBuilderVideoBitrate ffBitrate = new();
+            ffBitrate.Bitrate = 1_000;
+            ffBitrate.Execute(args);
+
+            FfmpegBuilderExecutor ffExecutor = new();
+            ffExecutor.HardwareDecoding = true;
+            int result = ffExecutor.Execute(args);
+
+            string log = logger.ToString();
+            Assert.AreEqual(1, result);
+        }
+
+        [TestMethod]
+        public void FfmpegBuilder_VideoCodecAndBitrate()
+        {
+            const string file = @"D:\videos\unprocessed\basic.mkv";
+            var logger = new TestLogger();
+            const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+            var vi = new VideoInfoHelper(ffmpeg, logger);
+            var vii = vi.Read(file);
+            var args = new NodeParameters(file, logger, false, string.Empty);
+            args.GetToolPathActual = (string tool) => ffmpeg;
+            args.TempPath = @"D:\videos\temp";
+            args.Parameters.Add("VideoInfo", vii);
+
+
+            FfmpegBuilderStart ffStart = new();
+            Assert.AreEqual(1, ffStart.Execute(args));
+
+            FfmpegBuilderVideoCodec ffEncode = new();
+            ffEncode.VideoCodec = "h264";
+            ffEncode.Force = true;
+            ffEncode.Execute(args);
+
+            FfmpegBuilderVideoBitrate ffBitrate = new();
+            ffBitrate.Bitrate = 1_000;
+            ffBitrate.Execute(args);
+
+            FfmpegBuilderExecutor ffExecutor = new();
+            ffExecutor.HardwareDecoding = true;
+            int result = ffExecutor.Execute(args);
+
+            string log = logger.ToString();
+            Assert.AreEqual(1, result);
+        }
+
+        [TestMethod]
+        public void FfmpegBuilder_FF43()
+        {
+            const string file = @"D:\videos\testfiles\ff-43.ts";
+            var logger = new TestLogger();
+            const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+            var vi = new VideoInfoHelper(ffmpeg, logger);
+            var vii = vi.Read(file);
+            var args = new NodeParameters(file, logger, false, string.Empty);
+            args.GetToolPathActual = (string tool) => ffmpeg;
+            args.TempPath = @"D:\videos\temp";
+            args.Parameters.Add("VideoInfo", vii);
+
+
+            FfmpegBuilderStart ffStart = new();
+            Assert.AreEqual(1, ffStart.Execute(args));
+
+            FfmpegBuilderAudioTrackRemover ffRemoveAudio = new();
+            ffRemoveAudio.RemoveAll = true;
+            ffRemoveAudio.Execute(args);
+
+            FfmpegBuilderAudioAddTrack ffAddAudio = new();
+            ffAddAudio.Codec = "ac3";
+            ffAddAudio.Index = 0;
+            ffAddAudio.Execute(args);
+
+            FfmpegBuilderAudioAddTrack ffAddAudio2 = new();
+            ffAddAudio2.Codec = "aac";
+            ffAddAudio2.Index = 1;
+            ffAddAudio2.Execute(args);
+
+            FfmpegBuilderExecutor ffExecutor = new();
+            int result = ffExecutor.Execute(args);
+
+            string log = logger.ToString();
+            Assert.AreEqual(1, result);
+        }
     }
 }
 
