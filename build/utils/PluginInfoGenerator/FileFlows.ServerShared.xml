@@ -31,5 +31,135 @@
             <param name="part">The flow part</param>
             <returns>an insstance of the plugin node</returns>
         </member>
+        <member name="T:FileFlows.ServerShared.Services.IPluginService">
+            <summary>
+            Plugin Service interface
+            </summary>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.IPluginService.GetAll">
+            <summary>
+            Get all plugin infos
+            </summary>
+            <returns>all plugin infos</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.IPluginService.Update(FileFlows.Shared.Models.PluginInfo)">
+            <summary>
+            Updates plugin info
+            </summary>
+            <param name="pluginInfo">the plugin info</param>
+            <returns>the updated plugininfo</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.IPluginService.Download(FileFlows.Shared.Models.PluginInfo)">
+            <summary>
+            Download a plugin
+            </summary>
+            <param name="plugin">the plugin to download</param>
+            <returns>the byte data of the plugin</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.IPluginService.GetSettingsJson(System.String)">
+            <summary>
+            Gets the settings json for a plugin
+            </summary>
+            <param name="pluginPackageName">the name of the plugin package</param>
+            <returns>the settings json</returns>
+        </member>
+        <member name="T:FileFlows.ServerShared.Services.PluginService">
+            <summary>
+            Plugin service
+            </summary>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.PluginService.Load">
+            <summary>
+            Loads an instance of the plugin service
+            </summary>
+            <returns>an instance of the plugin service</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.PluginService.Download(FileFlows.Shared.Models.PluginInfo)">
+            <summary>
+            Download a plugin
+            </summary>
+            <param name="plugin">the plugin to download</param>
+            <returns>the byte data of the plugin</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.PluginService.GetAll">
+            <summary>
+            Get all plugin infos
+            </summary>
+            <returns>all plugin infos</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.PluginService.GetSettingsJson(System.String)">
+            <summary>
+            Gets the settings json for a plugin
+            </summary>
+            <param name="pluginPackageName">the name of the plugin package</param>
+            <returns>the settings json</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.PluginService.Update(FileFlows.Shared.Models.PluginInfo)">
+            <summary>
+            Updates plugin info
+            </summary>
+            <param name="pluginInfo">the plugin info</param>
+            <returns>the updated plugininfo</returns>
+            <exception cref="T:System.NotImplementedException">This not yet implemented</exception>
+        </member>
+        <member name="T:FileFlows.ServerShared.Services.ISystemService">
+            <summary>
+            An interface of the System Service
+            </summary>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.ISystemService.GetVersion">
+            <summary>
+            Gets the version from the server
+            </summary>
+            <returns>the server version</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.ISystemService.GetNodeUpdater">
+            <summary>
+            Gets the node updater binary
+            </summary>
+            <returns>the node updater binary</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.ISystemService.GetNodeUpdateIfAvailable(System.String)">
+            <summary>
+            Gets an node update available
+            </summary>
+            <param name="version">the current version of the node</param>
+            <returns>if there is a node update available, returns the update</returns>
+        </member>
+        <member name="T:FileFlows.ServerShared.Services.SystemService">
+            <summary>
+            A System Service
+            </summary>
+        </member>
+        <member name="P:FileFlows.ServerShared.Services.SystemService.Loader">
+            <summary>
+            Gets or sets the loader for SystemService
+            </summary>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.SystemService.Load">
+            <summary>
+            Loads an instance of SystemService
+            </summary>
+            <returns>an instance of SystemService</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.SystemService.GetVersion">
+            <summary>
+            Gets the version from the server
+            </summary>
+            <returns>the server version</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.SystemService.GetNodeUpdater">
+            <summary>
+            Gets the node updater binary
+            </summary>
+            <returns>the node updater binary</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.SystemService.GetNodeUpdateIfAvailable(System.String)">
+            <summary>
+            Gets an node update available
+            </summary>
+            <param name="version">the current version of the node</param>
+            <returns>if there is a node update available, returns the update</returns>
+        </member>
     </members>
 </doc>

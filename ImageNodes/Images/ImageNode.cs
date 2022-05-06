@@ -10,7 +10,7 @@ using SixLabors.ImageSharp.Formats.Webp;
 
 namespace FileFlows.ImageNodes.Images;
 
-public abstract class ImageNode : Node
+public abstract class ImageNode : ImageBaseNode
 {
     [Select(nameof(FormatOptions), 1)]
     public string Format { get; set; }
@@ -24,6 +24,7 @@ public abstract class ImageNode : Node
             {
                 _FormatOptions = new List<ListOption>
                 {
+                    new ListOption { Value = "", Label = "Same as source"},
                     new ListOption { Value = IMAGE_FORMAT_BMP, Label = "Bitmap"},
                     new ListOption { Value = IMAGE_FORMAT_GIF, Label = "GIF"},
                     new ListOption { Value = IMAGE_FORMAT_JPEG, Label = "JPEG"},
@@ -85,9 +86,14 @@ public abstract class ImageNode : Node
         return (format, newFile);
     }
 
-    protected void SaveImage(Image img, string file, IImageFormat format)
+    protected void SaveImage(NodeParameters args, Image img, string file, IImageFormat format, bool updateWorkingFile = true)
     {
         using Stream outStream = new FileStream(file, FileMode.Create);
         img.Save(outStream, format);
+        if (updateWorkingFile)
+        {
+            args.SetWorkingFile(file);
+            UpdateImageInfo(args, img, format, Variables);
+        }
     }
 }

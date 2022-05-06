@@ -15,8 +15,7 @@ public class ImageFormat: ImageNode
         using var image = Image.Load(args.WorkingFile, out IImageFormat format);
         
         var formatOpts = GetFormat(args);
-        SaveImage(image, formatOpts.file, formatOpts.format ?? format);
-        args.SetWorkingFile(formatOpts.file);
+        SaveImage(args, image, formatOpts.file, formatOpts.format ?? format);
         return 1;
     }
 }

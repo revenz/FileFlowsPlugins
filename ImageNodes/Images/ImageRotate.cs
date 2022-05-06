@@ -36,8 +36,7 @@ public class ImageRotate: ImageNode
         using var image = Image.Load(args.WorkingFile, out IImageFormat format);
         image.Mutate(c => c.Rotate(Angle));
         var formatOpts = GetFormat(args);
-        SaveImage(image, formatOpts.file, formatOpts.format ?? format);
-        args.SetWorkingFile(formatOpts.file);
+        SaveImage(args, image, formatOpts.file, formatOpts.format ?? format);
         
         return 1;
     }

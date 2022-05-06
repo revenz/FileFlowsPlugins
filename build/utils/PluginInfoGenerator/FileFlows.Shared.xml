@@ -4,6 +4,31 @@
         <name>FileFlows.Shared</name>
     </assembly>
     <members>
+        <member name="T:FileFlows.Shared.Helpers.ObjectCloner">
+            <summary>
+            Clones an object
+            </summary>
+        </member>
+        <member name="T:FileFlows.Shared.Helpers.ReferenceEqualityComparer">
+            <summary>
+            Checks if objects are teh same reference
+            </summary>
+        </member>
+        <member name="M:FileFlows.Shared.Helpers.ReferenceEqualityComparer.Equals(System.Object,System.Object)">
+            <summary>
+            Checks if two objects are equal
+            </summary>
+            <param name="x">first object</param>
+            <param name="y">second object</param>
+            <returns>If the objects are ruqla</returns>
+        </member>
+        <member name="M:FileFlows.Shared.Helpers.ReferenceEqualityComparer.GetHashCode(System.Object)">
+            <summary>
+            Gets a hashcode of an object
+            </summary>
+            <param name="obj">the object</param>
+            <returns>the objec hashcode</returns>
+        </member>
         <member name="P:FileFlows.Shared.Models.ElementField.Placeholder">
             <summary>
             Gets or sets optional place holder text, this can be a translation key

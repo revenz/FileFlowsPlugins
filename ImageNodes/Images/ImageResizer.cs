@@ -14,9 +14,9 @@ namespace FileFlows.ImageNodes.Images;
 public class ImageResizer: ImageNode
 {
     public override int Inputs => 1;
-    public override int Outputs => 2;
+    public override int Outputs => 1;
     public override FlowElementType Type => FlowElementType.Process; 
-    public override string Icon => "fas fa-image";
+    public override string Icon => "fas fa-expand";
     
     
     [Select(nameof(ResizeModes), 2)]
@@ -42,12 +42,15 @@ public class ImageResizer: ImageNode
     }
     
     [NumberInt(3)]
-    [Range(0, int.MaxValue)]
+    [Range(1, int.MaxValue)]
     public int Width { get; set; }
     [NumberInt(4)]
-    [Range(0, int.MaxValue)]
+    [Range(1, int.MaxValue)]
     public int Height { get; set; }
-    
+
+    [Boolean(5)]
+    public bool Percent { get; set; }
+
     public override int Execute(NodeParameters args)
     {
         using var image = Image.Load(args.WorkingFile, out IImageFormat format);
@@ -65,15 +68,22 @@ public class ImageResizer: ImageNode
         }
 
         var formatOpts = GetFormat(args);
+
+        float w = Width;
+        float h = Height;
+        if (Percent)
+        {
+            w = (int)(image.Width * (w / 100f));
+            h = (int)(image.Height * (h / 100f));
+        }
         
         image.Mutate(c => c.Resize(new ResizeOptions()
         {
-            Size = new Size(Width, Height),
+            Size = new Size((int)w, (int)h),
             Mode = rzMode
         }));
         
-        SaveImage(image, formatOpts.file, formatOpts.format ?? format);
-        args.SetWorkingFile(formatOpts.file);
+        SaveImage(args, image, formatOpts.file, formatOpts.format ?? format);
         return 1;
     }
 }
