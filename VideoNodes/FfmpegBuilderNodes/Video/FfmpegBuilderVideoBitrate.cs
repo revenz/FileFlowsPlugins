@@ -43,7 +43,6 @@ public class FfmpegBuilderVideoBitrate : FfmpegBuilderNode
         float br = Bitrate;
         if (Percent)
             br = currentBitrate * (Bitrate / 100f);
-        
 
         int minimum = (int)(br * 0.75f);
         int maximum = (int)(br * 1.25f);
