@@ -386,8 +386,10 @@
           },
           "Fields": {
             "Bitrate": "Bitrate",
-            "Bitrate-Suffix": "KB",
-            "Bitrate-Help": "The target bitrate of the video in kilobytes"
+            "Bitrate-Suffix": "KB / %",
+            "Bitrate-Help": "The target bitrate of the video in kilobytes",
+            "Percent": "Percent",
+            "Percent-Help": "When selected the bitrate will be calculated as a percentage of the current bitrate."
           }
         },
         "FfmpegBuilderVideoCodec": {
@@ -505,25 +507,23 @@
             "Language-Help": "Optional ISO 639-2 language code to use.  Will attempt to find an audio track with this language code if not the best audio track will be used.\nhttps://en.wikipedia.org/wiki/List_of_ISO_639-2_codes"
           }
         },
-        "Video_H265_AC3": {
-          "Description": "This will ensure all videos are encoded in H265 (if not already encoded) and that AC3 audio is the first audio channel\n\nOutput 1: Video was processed\nOutput 2: No processing required",
+        "VideoHasStream": {
+          "Description": "Tests if a video file contains a stream",
           "Outputs": {
-            "1": "Video re-encoded to temporary file",
-            "2": "Video not re-encoded"
+            "1": "Contains the matching stream",
+            "2": "Does not contain the matching stream"
           },
           "Fields": {
+            "Stream": "Type",
+            "Stream-Help": "The type of stream to look for",
+            "Title": "Title",
+            "Title-Help": "A regular expression used to test the stream title",
+            "Codec": "Codec",
+            "Codec-Help": "A regular expression used to test the stream codec",
             "Language": "Language",
-            "Language-Help": "Optional ISO 639-2 language code to use.  Will attempt to find an audio track with this language code if not the best audio track will be used.\nhttps://en.wikipedia.org/wiki/List_of_ISO_639-2_codes",
-            "Crf": "Constant Rate Factor",
-            "Crf-Help": "Refer to ffmpeg for more details, the lower the value the bigger the file.  A good value is around 19-23.  Default is 21.",
-            "NvidiaEncoding": "NVIDIA Encoding",
-            "NvidiaEncoding-Help": "If NVIDIA hardware encoding should be used.  If you do not have a supported NVIDIA card the encoding will fail.",
-            "Threads": "Threads",
-            "Threads-Help": "Only used if not using NVIDIA.  If set to 0, the threads will use FFMpegs defaults.",
-            "NormalizeAudio": "Normalize Audio",
-            "NormalizeAudio-Help": "If the audio track should have its volume level normalized",
-            "ForceRencode": "Force Re-Encode",
-            "ForceRencode-Help": "If the video should always be re-encoded regardless if it already is in H265/AC3"
+            "Language-Help": "A regular expression used to test the stream language",
+            "Channels": "Channels",
+            "Channels-Help": "The number of channels to test for.  Set to 0 to ignore this check"
           }
         },
         "VideoScaler": {
