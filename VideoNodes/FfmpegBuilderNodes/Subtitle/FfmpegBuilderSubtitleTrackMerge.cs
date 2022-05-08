@@ -24,10 +24,12 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
                 _Options = new List<ListOption>
                 {
                     new ListOption { Value = "ass", Label = "ass: Advanced SubStation Alpha"},
+                    new ListOption { Value = "idx", Label = "idx: IDX"},
                     new ListOption { Value = "srt", Label = "srt: SubRip subtitle"},
                     new ListOption { Value = "ssa", Label = "ssa: SubStation Alpha"},
                     new ListOption { Value = "sub", Label = "sub: SubStation Alpha"},
-                    new ListOption { Value = "text", Label = "txt: Raw text subtitle"}                        
+                    new ListOption { Value = "sup", Label = "sup: SubPicture"},
+                    new ListOption { Value = "txt", Label = "txt: Raw text subtitle"}                        
                 };
             }
             return _Options;
