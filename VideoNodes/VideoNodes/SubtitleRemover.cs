@@ -19,6 +19,7 @@
         public bool RemoveAll { get; set; }
 
         [Checklist(nameof(Options), 2)]
+        [ConditionEquals(nameof(RemoveAll), false)]
         public List<string> SubtitlesToRemove { get; set; }
 
         private static List<ListOption> _Options;

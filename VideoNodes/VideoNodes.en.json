@@ -168,6 +168,19 @@
             "HardwareDecoding-Help": "If the executor should attempt to use hardware decoding.  If not available the execution will proceed just without hardware decoding enabled."
           }
         },
+        "FfmpegBuilderAddInputFile": {
+          "Label": "FFMPEG Builder: Add Input File",
+          "Outputs": {
+            "1": "File found and added",
+            "2": "No file found"
+          },
+          "Fields": {
+            "Pattern": "Pattern",
+            "Pattern-Help": "A regular expression used to search for input files",
+            "UseSourceDirectory": "Use Source Directory",
+            "UseSourceDirectory-Help": "If checked the original source directory will be searched, otherwise the working directory will be used."
+          }
+        },
         "FfmpegBuilderAudioAddTrack": {
           "Label": "FFMPEG Builder: Audio Add Track",
           "Outputs": {
@@ -330,6 +343,19 @@
             "NotMatching-Help": "If subtitles NOT matching the pattern should be removed",
             "UseLanguageCode": "Use Language Code",
             "UseLanguageCode-Help": "If the language code of the audio track should be used instead of the title"
+          }
+        },
+        "FfmpegBuilderSubtitleTrackMerge": {
+          "Label": "FFMPEG Builder: Subtitle Track Merge",
+          "Outputs": {
+            "1": "Subtitles found and added",
+            "2": "No subtitles found"
+          },
+          "Fields": {
+            "Subtitles": "Subtitles",
+            "Subtitles-Help": "Select which subtitles to search for to add",
+            "UseSourceDirectory": "Use Source Directory",
+            "UseSourceDirectory-Help": "If checked the original source directory will be searched, otherwise the working directory will be used."
           }
         },
         "FfmpegBuilderCropBlackBars": {
