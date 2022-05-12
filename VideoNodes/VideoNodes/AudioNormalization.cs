@@ -147,6 +147,7 @@ public class AudioNormalization: EncodingNode
         int index = output.LastIndexOf("{");
         if (index == -1)
             throw new Exception("Failed to detected json in output");
+
         string json = output.Substring(index);
         json = json.Substring(0, json.IndexOf("}") + 1);
         if (string.IsNullOrEmpty(json))
@@ -154,6 +155,13 @@ public class AudioNormalization: EncodingNode
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
         LoudNormStats stats = JsonSerializer.Deserialize<LoudNormStats>(json);
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+
+        if (stats.input_i == "-inf" || stats.input_lra == "-inf" || stats.input_tp == "-inf" || stats.input_thresh == "-inf" || stats.target_offset == "-inf")
+        {
+            args.Logger?.WLog("-inf detected in loud norm two pass, falling back to single pass loud norm");
+            return $"loudnorm={LOUDNORM_TARGET}";
+        }
+
         string ar = $"loudnorm=print_format=summary:linear=true:{LOUDNORM_TARGET}:measured_I={stats.input_i}:measured_LRA={stats.input_lra}:measured_tp={stats.input_tp}:measured_thresh={stats.input_thresh}:offset={stats.target_offset}";
         return ar;
     }

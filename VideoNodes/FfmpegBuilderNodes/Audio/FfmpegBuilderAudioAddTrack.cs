@@ -133,6 +133,12 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
 
     internal AudioStream GetBestAudioTrack(NodeParameters args, IEnumerable<AudioStream> streams)
     {
+        Regex? rgxLanguage = null;
+        try
+        {
+            rgxLanguage = new Regex(this.Language, RegexOptions.IgnoreCase);
+        }
+        catch (Exception) { }
 #pragma warning disable IL2026 // Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code
         var bestAudio = streams.Where(x => System.Text.Json.JsonSerializer.Serialize(x).ToLower().Contains("commentary") == false)
 #pragma warning restore IL2026 // Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code
@@ -143,6 +149,8 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
                 args.Logger?.ILog("Language: " + x.Language, x);
                 if (string.IsNullOrEmpty(x.Language))
                     return 50; // no language specified
+                if (rgxLanguage != null && rgxLanguage.IsMatch(x.Language))
+                    return 0;
                 if (x.Language.ToLower() != Language)
                     return 100; // low priority not the desired language
             }
