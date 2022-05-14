@@ -52,7 +52,9 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
                 {
                     new ListOption { Label = "Same as source", Value = 0},
                     new ListOption { Label = "Mono", Value = 1f},
-                    new ListOption { Label = "Stereo", Value = 2f}
+                    new ListOption { Label = "Stereo", Value = 2f},
+                    new ListOption { Label = "5.1", Value = 6},
+                    new ListOption { Label = "7.1", Value = 8}
                 };
             }
             return _ChannelsOptions;

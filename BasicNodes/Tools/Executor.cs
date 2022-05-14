@@ -45,10 +45,12 @@
 
         private NodeParameters args;
 
-        public override async Task Cancel()
+        public override Task Cancel()
         {
             args?.Process?.Cancel();
+            return Task.CompletedTask;
         }
+
         public override int Execute(NodeParameters args)
         {
             this.args = args;

@@ -80,11 +80,11 @@ namespace FileFlows.BasicNodes.File
                 dest = Path.Combine(destDir!, destFile);
             }
 
-            bool copied = args.CopyFile(dest);
+            bool copied = args.CopyFile(args.WorkingFile, dest, updateWorkingFile: true);
             if (!copied)
                 return -1;
 
-            var srcDir = AdditionalFilesFromOriginal ? new FileInfo(args.FileName).DirectoryName : new FileInfo(args.WorkingFile).DirectoryName;
+            var srcDir = AdditionalFilesFromOriginal ? new FileInfo(args.MapPath(args.FileName)).DirectoryName : new FileInfo(args.MapPath(args.WorkingFile)).DirectoryName;
 
             if (AdditionalFiles?.Any() == true)
             {
@@ -98,11 +98,11 @@ namespace FileFlows.BasicNodes.File
                             try
                             {
                                 string addFileDest = Path.Combine(destDir, addFile.Name);
-                                System.IO.File.Copy(addFile.FullName, addFileDest, true);
-                                
+                                args.CopyFile(addFile.FullName, addFileDest, updateWorkingFile: false);
+
                                 FileHelper.ChangeOwner(args.Logger, addFileDest, file: true);
 
-                                args.Logger?.ILog("Copyied file: \"" + addFile.FullName + "\" to \"" + addFileDest + "\"");
+                                args.Logger?.ILog("Copied file: \"" + addFile.FullName + "\" to \"" + addFileDest + "\"");
                             }
                             catch (Exception ex)
                             {

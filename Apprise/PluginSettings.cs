@@ -1,18 +1,25 @@
-﻿namespace FileFlows.Apprise
+﻿namespace FileFlows.Apprise;
+
+using FileFlows.Plugin;
+using FileFlows.Plugin.Attributes;
+using System.ComponentModel.DataAnnotations;
+
+/// <summary>
+/// The plugin settings for Apprise
+/// </summary>
+public class PluginSettings:IPluginSettings
 {
-    using FileFlows.Plugin;
-    using FileFlows.Plugin.Attributes;
-    using System;
-    using System.ComponentModel.DataAnnotations;
+    /// <summary>
+    /// Gets or sets the URL of the Apprise server
+    /// </summary>
+    [Text(1)]
+    [Required]
+    public string ServerUrl { get; set; } = string.Empty;
 
-    public class PluginSettings:IPluginSettings
-    {
-        [Text(1)]
-        [Required]
-        public string ServerUrl { get; set; }
-
-        [Text(2)]
-        [Required]
-        public string Endpoint { get; set; }
-    }
+    /// <summary>
+    /// Gets or sets the endpoint of the Apprise server
+    /// </summary>
+    [Text(2)]
+    [Required]
+    public string Endpoint { get; set; } = string.Empty;
 }

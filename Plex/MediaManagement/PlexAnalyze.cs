@@ -9,7 +9,7 @@ public class PlexAnalyze : PlexNode
     protected override int ExecuteActual(NodeParameters args, PlexDirectory directory, string baseUrl, string mappedPath, string accessToken)
     {
         string filename = new FileInfo(args.WorkingFile).Name;
-        string mappedFile = mappedPath + (mappedPath.IndexOf("/") >= 0 ? "/" : "\\") + filename;
+        string mappedFile = mappedPath + (mappedPath.IndexOf("/") >= 0 ? "/" : @"\") + filename;
 
         using var httpClient = new HttpClient();
         string itemId = GetItemId(httpClient, args, baseUrl, $"library/sections/{directory.Key}/all?includeCollections=1&includeAdvanced=1", accessToken, mappedFile);

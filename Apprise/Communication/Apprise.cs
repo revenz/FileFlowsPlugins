@@ -13,16 +13,16 @@ public class Apprise: Node
 
     [Required]
     [TextVariable(1)]
-    public string Message { get; set; }
+    public string Message { get; set; } = string.Empty;
 
     [StringArray(2)]
-    public string[] Tag { get; set; }
+    public string[] Tag { get; set; } = new string[] { };
 
     [DefaultValue("info")]
     [Select(nameof(MessageTypeOptions), 3)]
-    public string MessageType { get; set; }
+    public string MessageType { get; set; } = string.Empty;
 
-    private static List<ListOption> _MessageTypeOptions;
+    private static List<ListOption> _MessageTypeOptions = new List<ListOption>();
     public static List<ListOption> MessageTypeOptions
     {
         get
@@ -78,7 +78,11 @@ public class Apprise: Node
             type = this.MessageType?.EmptyAsNull() ?? "info"
         };
 
-        var content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json");
+#pragma warning disable IL2026 // Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code
+        var json = JsonSerializer.Serialize(data);
+#pragma warning restore IL2026 // Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code
+
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
 
         using var httpClient = new HttpClient();    
         var response = httpClient.PostAsync(url, content).Result;

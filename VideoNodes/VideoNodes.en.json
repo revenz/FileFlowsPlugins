@@ -191,7 +191,7 @@
             "Index": "Index",
             "Index-Help": "The index where to insert the new audio track.  0 based, so to insert the new audio track as the first track set this to 0.",
             "Channels": "Channels",
-            "Channels-Help": "The number of channels to convert this audio track to.",
+            "Channels-Help": "The number of channels this new audio track will be.\nIf you specify more channels than the source, FFMPEG will automatically upmix it.\nIf you specify fewer channels than the source, FFMPEG will automatically down mix it.",
             "Bitrate": "Bitrate",
             "Bitrate-Help": "Bitrate of the new audio track",
             "Language": "Language",

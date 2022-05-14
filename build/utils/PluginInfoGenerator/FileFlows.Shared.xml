@@ -4,6 +4,41 @@
         <name>FileFlows.Shared</name>
     </assembly>
     <members>
+        <member name="T:FileFlows.Shared.ExtensionMethods">
+            <summary>
+            Extension methods used by FileFlows
+            </summary>
+        </member>
+        <member name="M:FileFlows.Shared.ExtensionMethods.ToJson(System.Object)">
+            <summary>
+            Converts an object to a json string
+            </summary>
+            <param name="o">the object to convert</param>
+            <returns>the object as json, or empty if object was null</returns>
+        </member>
+        <member name="M:FileFlows.Shared.ExtensionMethods.EmptyAsNull(System.String)">
+            <summary>
+            Returns an empty string as null, otherwise returns the original string
+            </summary>
+            <param name="str">the input string</param>
+            <returns>the string or null if empty</returns>
+        </member>
+        <member name="M:FileFlows.Shared.ExtensionMethods.TryMatch(System.Text.RegularExpressions.Regex,System.String,System.Text.RegularExpressions.Match@)">
+            <summary>
+            Tries to find a match 
+            </summary>
+            <param name="regex">The regex to use to find the match</param>
+            <param name="input">The input string to find the match in</param>
+            <param name="match">The match if found</param>
+            <returns>true if found, false otherwise</returns>
+        </member>
+        <member name="M:FileFlows.Shared.ExtensionMethods.ToLowerExplicit(System.String)">
+            <summary>
+            Lower cases UPPER case characters, but does not touch umlauts etc
+            </summary>
+            <param name="input">the string to lowercase</param>
+            <returns>the lowercased string</returns>
+        </member>
         <member name="T:FileFlows.Shared.Helpers.ObjectCloner">
             <summary>
             Clones an object
@@ -82,6 +117,175 @@
         <member name="P:FileFlows.Shared.Models.LibraryFile.ExecutedNodes">
             <summary>
             Gets or sets a list of nodes that were executed against this library file
+            </summary>
+        </member>
+        <member name="T:FileFlows.Shared.Models.NextLibraryFileArgs">
+            <summary>
+            Arguments for hte Next Library File request
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.NextLibraryFileArgs.NodeName">
+            <summary>
+            Gets or sets the name of the node
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.NextLibraryFileArgs.NodeUid">
+            <summary>
+            Gets or sets the Uid of the node
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.NextLibraryFileArgs.NodeVersion">
+            <summary>
+            Gets or sets the Version of the node
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.NextLibraryFileArgs.WorkerUid">
+            <summary>
+            Gets or sets the worker UID
+            </summary>
+        </member>
+        <member name="T:FileFlows.Shared.Models.ProcessingNode">
+            <summary>
+            A processing node used by FileFlows to process Library Files
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.ProcessingNode.TempPath">
+            <summary>
+            Gets or sets the temporary path used by this node
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.ProcessingNode.Address">
+            <summary>
+            Gets or sets the address this node is located at, hostname or ip address
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.ProcessingNode.Enabled">
+            <summary>
+            Gets or sets if this node is enabled
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.ProcessingNode.OperatingSystem">
+            <summary>
+            Gets or sets the type of operating system this node is running on
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.ProcessingNode.Version">
+            <summary>
+            Gets or sets the FileFlows version of this node
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.ProcessingNode.FlowRunners">
+            <summary>
+            Gets or sets the number of flow runners this node can run simultaneously 
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.ProcessingNode.SignalrUrl">
+            <summary>
+            Gets or sets the SignalrUrl this node uses
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.ProcessingNode.Mappings">
+            <summary>
+            Gets or sets the mappings for this node
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.ProcessingNode.Schedule">
+            <summary>
+            Gets or sets the schedule for this node
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.ProcessingNode.DontChangeOwner">
+            <summary>
+            Gets or sets if the owner should not be changed
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.ProcessingNode.DontSetPermissions">
+            <summary>
+            Gets or sets if permissions should not be set
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.ProcessingNode.Permissions">
+            <summary>
+            Gets or sets the permissions to set
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.ProcessingNode.AllLibraries">
+            <summary>
+            Gets or sets if this node can process all libraries
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.ProcessingNode.Libraries">
+            <summary>
+            Gets or sets the libraries this node can process
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.ProcessingNode.MaxFileSizeMb">
+            <summary>
+            Gets or sets the maximum file size this node can process
+            </summary>
+        </member>
+        <member name="F:FileFlows.Shared.Models.ProcessingNode.DirectorySeperatorChar">
+            <summary>
+            The directory separator used by this node
+            </summary>
+        </member>
+        <member name="M:FileFlows.Shared.Models.ProcessingNode.Map(System.String)">
+            <summary>
+            Maps a path locally for this node
+            </summary>
+            <param name="path">The path to map</param>
+            <returns>The path mapped locally for this node</returns>
+        </member>
+        <member name="M:FileFlows.Shared.Models.ProcessingNode.UnMap(System.String)">
+            <summary>
+            Unmaps a path for this node
+            </summary>
+            <param name="path">The mapped path</param>
+            <returns>The unmapped path</returns>
+        </member>
+        <member name="P:FileFlows.Shared.Models.Settings.AutoUpdatePlugins">
+            <summary>
+            Gets or sets if plugins should automatically be updated when new version are available online
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.Settings.AutoUpdate">
+            <summary>
+            Gets or sets if the server should automatically update when a new version is available online
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.Settings.AutoUpdateNodes">
+            <summary>
+            Gets or sets if nodes should be automatically updated when the server is updated
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.Settings.DisableTelemetry">
+            <summary>
+            Gets or sets if telemetry should be disabled
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.Settings.CompressLibraryFileLogs">
+            <summary>
+            Gets or sets if the library file logs should be saved in a compressed format to reduce file size
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.Settings.PluginRepositoryUrls">
+            <summary>
+            Gets or sets a list of available URLs to additional plugin repositories
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.Settings.IsWindows">
+            <summary>
+            Gets or sets if this is running on Windows
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.Settings.IsDocker">
+            <summary>
+            Gets or sets if this is running inside Docker
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.Settings.Version">
+            <summary>
+            Gets or sets the FileFlows version number
             </summary>
         </member>
         <member name="T:FileFlows.Shared.Validators.DefaultValidator">

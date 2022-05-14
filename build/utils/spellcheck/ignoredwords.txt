@@ -85,3 +85,5 @@ Fenrus
 Plex-Token
 analyze
 px
+upmix
+downmix

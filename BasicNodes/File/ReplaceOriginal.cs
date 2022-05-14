@@ -29,7 +29,7 @@
                 if(moved == false)
                 {
                     args.Logger?.ELog("Failed to move file to: "+ args.FileName);
-                    return -11;
+                    return -1;
                 }
             }
             else
