@@ -44,12 +44,14 @@ public class FfmpegBuilderVideoBitrate : FfmpegBuilderNode
         if (Percent)
             br = currentBitrate * (Bitrate / 100f);
 
+        args.Logger?.ILog($"Source bitrate: {currentBitrate}k");
+        args.Logger?.ILog($"Setting video bitrate to: {br}k");
         int minimum = (int)(br * 0.75f);
         int maximum = (int)(br * 1.25f);
         
         video.AdditionalParameters.AddRange(new[]
         {
-            "-b:v:{index}", Bitrate + "k",
+            "-b:v:{index}", br + "k",
             "-minrate", minimum + "k",
             "-maxrate", maximum + "k",
             "-bufsize", currentBitrate + "k"
