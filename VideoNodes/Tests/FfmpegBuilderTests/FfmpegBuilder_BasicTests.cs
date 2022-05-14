@@ -866,7 +866,8 @@ namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests
             ffEncode.Execute(args);
 
             FfmpegBuilderVideoBitrate ffBitrate = new();
-            ffBitrate.Bitrate = 1_000;
+            ffBitrate.Bitrate = 50;
+            ffBitrate.Percent = true;
             ffBitrate.Execute(args);
 
             FfmpegBuilderExecutor ffExecutor = new();
@@ -914,6 +915,55 @@ namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests
             string log = logger.ToString();
             Assert.AreEqual(1, result);
         }
+
+
+        [TestMethod]
+        public void FfmpegBuilder_AddAc3Aac_AV1()
+        {
+            const string file = @"D:\videos\testfiles\av1.mkv";
+            var logger = new TestLogger();
+            const string ffmpeg = @"C:\utils\ffmpeg5\ffmpeg.exe";
+            VideoInfoHelper.ProbeSize = 1000;
+            var vi = new VideoInfoHelper(ffmpeg, logger);
+            var vii = vi.Read(file);
+            var args = new NodeParameters(file, logger, false, string.Empty);
+            args.GetToolPathActual = (string tool) => ffmpeg;
+            args.TempPath = @"D:\videos\temp";
+            args.Parameters.Add("VideoInfo", vii);
+
+
+            FfmpegBuilderStart ffStart = new();
+            
+            Assert.AreEqual(1, ffStart.Execute(args));
+
+            FfmpegBuilderAudioTrackRemover ffAudioRemove = new();
+            ffAudioRemove.RemoveAll = true;
+            ffAudioRemove.Execute(args);
+
+            //FfmpegBuilderAudioAddTrack ffAddAudio = new();
+            //ffAddAudio.Codec = "ac3";
+            //ffAddAudio.Language = "eng";
+            //ffAddAudio.Index = 0;
+            //ffAddAudio.Execute(args);
+
+            FfmpegBuilderAudioAddTrack ffAddAudio2 = new();
+            ffAddAudio2.Codec = "aac";
+            ffAddAudio2.Language = "deu";
+            ffAddAudio2.Index = 1;
+            ffAddAudio2.Execute(args);
+
+            FfmpegBuilderSubtitleFormatRemover ffSubtitle= new();
+            ffSubtitle.RemoveAll = true;
+            ffSubtitle.Execute(args);
+
+            FfmpegBuilderExecutor ffExecutor = new();
+            
+            int result = ffExecutor.Execute(args);
+
+            string log = logger.ToString();
+            Assert.AreEqual(1, result);
+        }
+
     }
 }
 

@@ -37,10 +37,15 @@
             set => _InputFiles = value ?? new List<string>();
         }
 
+        /// <summary>
+        /// Gets or sets the video information for this video file
+        /// </summary>
+        public VideoInfo VideoInfo { get; set; }
 
         internal static FfmpegModel CreateModel(VideoInfo info)
         {
             var model = new FfmpegModel();
+            model.VideoInfo = info;
             model.InputFiles.Add(info.FileName);
             foreach (var item in info.VideoStreams.Select((stream, index) => (stream, index)))
             {

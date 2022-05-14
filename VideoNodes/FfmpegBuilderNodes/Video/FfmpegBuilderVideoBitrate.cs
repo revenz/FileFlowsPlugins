@@ -30,28 +30,34 @@ public class FfmpegBuilderVideoBitrate : FfmpegBuilderNode
             args.Logger?.ELog("Minimum birate not set");
             return -1;
         }
-        
         float currentBitrate = (int)(video.Stream.Bitrate / 1024f);
-        if(currentBitrate <= 0)
+        if (currentBitrate <= 0 && Model.VideoInfo.Bitrate > 0)
+            currentBitrate = (int)(Model.VideoInfo.Bitrate/ 1024f);
+        if (currentBitrate <= 0)
         {
             // need to work it out                
-            currentBitrate = (float)(args.WorkingFileSize / video.Stream.Duration.TotalSeconds);
+            currentBitrate = args.WorkingFileSize;
+            //currentBitrate /= 1024f;
+            currentBitrate = (float)(currentBitrate / video.Stream.Duration.TotalSeconds);
             // rough estimate of 75% of the file is video
             currentBitrate *= 0.75f;
+            currentBitrate /= 100;
         }
 
         float br = Bitrate;
         if (Percent)
             br = currentBitrate * (Bitrate / 100f);
 
-        args.Logger?.ILog($"Source bitrate: {currentBitrate}k");
-        args.Logger?.ILog($"Setting video bitrate to: {br}k");
+        br = (int)Math.Round((double)br, 0);
+        currentBitrate = ((int)Math.Round((double)currentBitrate, 0));
         int minimum = (int)(br * 0.75f);
         int maximum = (int)(br * 1.25f);
-        
+        args.Logger?.ILog($"Source bitrate: {currentBitrate}k");
+        args.Logger?.ILog($"Setting video bitrate to: {br}k");
+
         video.AdditionalParameters.AddRange(new[]
         {
-            "-b:v:{index}", br + "k",
+            "-b:v:{index}",  br + "k",
             "-minrate", minimum + "k",
             "-maxrate", maximum + "k",
             "-bufsize", currentBitrate + "k"
