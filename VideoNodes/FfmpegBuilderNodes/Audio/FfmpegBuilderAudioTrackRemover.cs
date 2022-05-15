@@ -10,17 +10,19 @@ public class FfmpegBuilderAudioTrackRemover: FfmpegBuilderNode
 
     [Boolean(1)]
     public bool RemoveAll { get; set; }
+    [NumberInt(2)]
+    public int RemoveIndex { get; set; }
 
 
-    [TextVariable(2)]
+    [TextVariable(3)]
     [ConditionEquals(nameof(RemoveAll), false)]
     public string Pattern { get; set; }
 
-    [Boolean(3)]
+    [Boolean(4)]
     [ConditionEquals(nameof(RemoveAll), false)]
     public bool NotMatching { get; set; }
 
-    [Boolean(4)]
+    [Boolean(5)]
     [ConditionEquals(nameof(RemoveAll), false)]
     public bool UseLanguageCode { get; set; }
 
@@ -29,8 +31,17 @@ public class FfmpegBuilderAudioTrackRemover: FfmpegBuilderNode
         this.Init(args);
         bool removing = false;
         Regex? regex = null;
+        int index = -1;
         foreach(var audio in Model.AudioStreams)
         {
+            if (audio.Deleted == false)
+            {
+                // only record indexes of tracks that have not been deleted
+                ++index;
+                if (index < RemoveIndex)
+                    continue;
+            }
+
             if (RemoveAll)
             {
                 audio.Deleted = true;
