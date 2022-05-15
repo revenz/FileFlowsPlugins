@@ -4,6 +4,97 @@
         <name>FileFlows.ServerShared</name>
     </assembly>
     <members>
+        <member name="T:FileFlows.ServerShared.ConsoleLogger">
+            <summary>
+            A logger that outputs to the console
+            </summary>
+        </member>
+        <member name="M:FileFlows.ServerShared.ConsoleLogger.ILog(System.Object[])">
+            <summary>
+            Logs an information message
+            </summary>
+            <param name="args">Any arguments for the log message</param>
+        </member>
+        <member name="M:FileFlows.ServerShared.ConsoleLogger.DLog(System.Object[])">
+            <summary>
+            Logs an debug message
+            </summary>
+            <param name="args">Any arguments for the log message</param>
+        </member>
+        <member name="M:FileFlows.ServerShared.ConsoleLogger.WLog(System.Object[])">
+            <summary>
+            Logs an warning message
+            </summary>
+            <param name="args">Any arguments for the log message</param>
+        </member>
+        <member name="M:FileFlows.ServerShared.ConsoleLogger.ELog(System.Object[])">
+            <summary>
+            Logs an error message
+            </summary>
+            <param name="args">Any arguments for the log message</param>
+        </member>
+        <member name="M:FileFlows.ServerShared.ConsoleLogger.GetTail(System.Int32)">
+            <summary>
+            Gets a tail of the log
+            NOTE: NOT IMPLEMENTED
+            </summary>
+            <param name="length">The number of lines to fetch</param>
+            <returns>NOT IMPLEMENTED</returns>
+        </member>
+        <member name="P:FileFlows.ServerShared.ConsoleLogger.Instance">
+            <summary>
+            Gets the instance of the ILogger being used
+            </summary>
+        </member>
+        <member name="T:FileFlows.ServerShared.FileLogger">
+            <summary>
+            A Logger that writes its output to file
+            </summary>
+        </member>
+        <member name="M:FileFlows.ServerShared.FileLogger.#ctor(System.String,System.String)">
+            <summary>
+            Creates a file logger
+            </summary>
+            <param name="loggingPath">The path where to save the log file to</param>
+            <param name="logPrefix">The prefix to use for the log file name</param>
+        </member>
+        <member name="M:FileFlows.ServerShared.FileLogger.ILog(System.Object[])">
+            <summary>
+            Logs an information message
+            </summary>
+            <param name="args">Any arguments for the log message</param>
+        </member>
+        <member name="M:FileFlows.ServerShared.FileLogger.DLog(System.Object[])">
+            <summary>
+            Logs an debug message
+            </summary>
+            <param name="args">Any arguments for the log message</param>
+        </member>
+        <member name="M:FileFlows.ServerShared.FileLogger.WLog(System.Object[])">
+            <summary>
+            Logs an warning message
+            </summary>
+            <param name="args">Any arguments for the log message</param>
+        </member>
+        <member name="M:FileFlows.ServerShared.FileLogger.ELog(System.Object[])">
+            <summary>
+            Logs an error message
+            </summary>
+            <param name="args">Any arguments for the log message</param>
+        </member>
+        <member name="P:FileFlows.ServerShared.FileLogger.Instance">
+            <summary>
+            Gets an isntance of the ILogger being used
+            </summary>
+        </member>
+        <member name="M:FileFlows.ServerShared.FileLogger.GetTail(System.Int32)">
+            <summary>
+            Gets a tail of the log
+            NOTE: NOT IMPLEMENTED
+            </summary>
+            <param name="length">The number of lines to fetch</param>
+            <returns>NOT IMPLEMENTED</returns>
+        </member>
         <member name="T:FileFlows.ServerShared.Globals">
             <summary>
             Globals variables
@@ -48,6 +139,13 @@
             <summary>
             Gets if this is a Node or Server
             </summary>
+        </member>
+        <member name="M:FileFlows.ServerShared.Helpers.DirectoryHelper.Init(System.Boolean,System.Boolean)">
+            <summary>
+            Initializes the Directory Helper
+            </summary>
+            <param name="isDocker">True if running inside a docker</param>
+            <param name="isNode">True if running on a node</param>
         </member>
         <member name="P:FileFlows.ServerShared.Helpers.DirectoryHelper.BaseDirectory">
             <summary>
@@ -105,6 +203,11 @@
             Gets the location of the node configuration file
             </summary>
         </member>
+        <member name="T:FileFlows.ServerShared.Helpers.FileHelper">
+            <summary>
+            A helper for interacting with files 
+            </summary>
+        </member>
         <member name="M:FileFlows.ServerShared.Helpers.FileHelper.RemoveIllegalCharacters(System.String)">
             <summary>
             Removes illegal file/path characters from a string
@@ -119,18 +222,507 @@
             <param name="file">The filename</param>
             <returns>The fingerprint</returns>
         </member>
+        <member name="T:FileFlows.ServerShared.Helpers.FormHelper">
+            <summary>
+            Helper used for UI Forms
+            </summary>
+        </member>
+        <member name="M:FileFlows.ServerShared.Helpers.FormHelper.GetFields(System.Type,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Gets the form fields of a give type of object
+            </summary>
+            <param name="type">The type of object to load the form fields of</param>
+            <param name="model">The model used to bind to the form fields</param>
+            <returns>A list of all form fields</returns>
+        </member>
         <member name="T:FileFlows.ServerShared.Helpers.PluginHelper">
             <summary>
             This class will allow hot reloading of an plugin assembly so they can be update
             This class should return nothing from a Plugin assembly and just common C# objects
             </summary>
         </member>
+        <member name="M:FileFlows.ServerShared.Helpers.PluginHelper.GetPluginDirectories">
+            <summary>
+            Gets a list of all the plugins directories
+            </summary>
+            <returns>a list of all the plugins directories</returns>
+        </member>
         <member name="M:FileFlows.ServerShared.Helpers.PluginHelper.LoadNode(FileFlows.Shared.Models.FlowPart)">
             <summary>
             This needs to return an instance so the FlowExecutor can use it...
             </summary>
             <param name="part">The flow part</param>
-            <returns>an insstance of the plugin node</returns>
+            <returns>an instance of the plugin node</returns>
+        </member>
+        <member name="T:FileFlows.ServerShared.Helpers.TimeHelper">
+            <summary>
+            The time helper provides help methods regarding scheduling
+            </summary>
+        </member>
+        <member name="M:FileFlows.ServerShared.Helpers.TimeHelper.GetCurrentQuarter">
+            <summary>
+            Gets the integer index of the current time quarter
+            A time quarter is a 15minute block, starting on Sunday at midnight.
+            </summary>
+            <returns>The integer index of the current time quater</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Helpers.TimeHelper.InSchedule(System.String)">
+            <summary>
+            Checks if the current time is in the supplied schedule
+            </summary>
+            <param name="schedule">The schedule to check</param>
+            <returns>true if the current time is within the schedule</returns>
+        </member>
+        <member name="T:FileFlows.ServerShared.Logger">
+            <summary>
+            A logger that outputs to the console
+            </summary>
+        </member>
+        <member name="M:FileFlows.ServerShared.Logger.ILog(System.Object[])">
+            <summary>
+            Logs an information message
+            </summary>
+            <param name="args">Any arguments for the log message</param>
+        </member>
+        <member name="M:FileFlows.ServerShared.Logger.DLog(System.Object[])">
+            <summary>
+            Logs an debug message
+            </summary>
+            <param name="args">Any arguments for the log message</param>
+        </member>
+        <member name="M:FileFlows.ServerShared.Logger.WLog(System.Object[])">
+            <summary>
+            Logs an warning message
+            </summary>
+            <param name="args">Any arguments for the log message</param>
+        </member>
+        <member name="M:FileFlows.ServerShared.Logger.ELog(System.Object[])">
+            <summary>
+            Logs an error message
+            </summary>
+            <param name="args">Any arguments for the log message</param>
+        </member>
+        <member name="M:FileFlows.ServerShared.Logger.GetTail(System.Int32)">
+            <summary>
+            Gets a tail of the log
+            NOTE: NOT IMPLEMENTED
+            </summary>
+            <param name="length">The number of lines to fetch</param>
+            <returns>NOT IMPLEMENTED</returns>
+        </member>
+        <member name="P:FileFlows.ServerShared.Logger.Instance">
+            <summary>
+            Gets the instance of the ILogger being used
+            </summary>
+        </member>
+        <member name="T:FileFlows.ServerShared.Models.RegisterModel">
+            <summary>
+            The registration model data used when registering a node with the FileFlows server
+            </summary>
+        </member>
+        <member name="P:FileFlows.ServerShared.Models.RegisterModel.Address">
+            <summary>
+            Gets or sets the address (hostname or IP aaddres) of the node
+            </summary>
+        </member>
+        <member name="P:FileFlows.ServerShared.Models.RegisterModel.TempPath">
+            <summary>
+            Gets or sets the temporary path used by this node
+            </summary>
+        </member>
+        <member name="P:FileFlows.ServerShared.Models.RegisterModel.FlowRunners">
+            <summary>
+            Gets or sets the number of flow runners this node can run
+            </summary>
+        </member>
+        <member name="P:FileFlows.ServerShared.Models.RegisterModel.Enabled">
+            <summary>
+            Gets or sets if this node is enabled
+            </summary>
+        </member>
+        <member name="P:FileFlows.ServerShared.Models.RegisterModel.Mappings">
+            <summary>
+            Gets or sets any mappings this node uses
+            Mappings allow a file or folder local to the Server to be mapped to a location local to the Node
+            </summary>
+        </member>
+        <member name="P:FileFlows.ServerShared.Models.RegisterModel.OperatingSystem">
+            <summary>
+            Gets or sets the type of operating system this node is running on
+            </summary>
+        </member>
+        <member name="P:FileFlows.ServerShared.Models.RegisterModel.Version">
+            <summary>
+            Gets or sets the version of this node
+            </summary>
+        </member>
+        <member name="T:FileFlows.ServerShared.Models.RegisterModelMapping">
+            <summary>
+            Mapping for server files and folders to files and folders local to a node 
+            </summary>
+        </member>
+        <member name="P:FileFlows.ServerShared.Models.RegisterModelMapping.Server">
+            <summary>
+            Gets or sets the address on the server to map
+            </summary>
+        </member>
+        <member name="P:FileFlows.ServerShared.Models.RegisterModelMapping.Local">
+            <summary>
+            Gets or sets the local equivalent path on the node
+            </summary>
+        </member>
+        <member name="T:FileFlows.ServerShared.Services.IFlowRunnerService">
+            <summary>
+            Interface for a Flow Runner, which is responsible for executing a flow and processing files
+            </summary>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.IFlowRunnerService.Start(FileFlows.Shared.Models.FlowExecutorInfo)">
+            <summary>
+            Called when a flow execution starts
+            </summary>
+            <param name="info">The information about the flow execution</param>
+            <returns>The updated information</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.IFlowRunnerService.Complete(FileFlows.Shared.Models.FlowExecutorInfo)">
+            <summary>
+            Called when the flow execution has completed
+            </summary>
+            <param name="info">The information about the flow execution</param>
+            <returns>a completed task</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.IFlowRunnerService.Update(FileFlows.Shared.Models.FlowExecutorInfo)">
+            <summary>
+            Called to update the status of the flow execution on the server
+            </summary>
+            <param name="info">The information about the flow execution</param>
+            <returns>a completed task</returns>
+        </member>
+        <member name="T:FileFlows.ServerShared.Services.FlowRunnerService">
+            <summary>
+            A flow runner which is responsible for executing a flow and processing files
+            </summary>
+        </member>
+        <member name="P:FileFlows.ServerShared.Services.FlowRunnerService.Loader">
+            <summary>
+            Gets or sets the function that will load the flow runner when Load is called
+            This is used in unit testing to mock this runner
+            </summary>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.FlowRunnerService.Load">
+            <summary>
+            Loads a Flow Runner instance and returns it
+            </summary>
+            <returns>a flow runner instance</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.FlowRunnerService.Complete(FileFlows.Shared.Models.FlowExecutorInfo)">
+            <summary>
+            Called when a flow execution starts
+            </summary>
+            <param name="info">The information about the flow execution</param>
+            <returns>The updated information</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.FlowRunnerService.Start(FileFlows.Shared.Models.FlowExecutorInfo)">
+            <summary>
+            Called when the flow execution has completed
+            </summary>
+            <param name="info">The information about the flow execution</param>
+            <returns>a completed task</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.FlowRunnerService.Update(FileFlows.Shared.Models.FlowExecutorInfo)">
+            <summary>
+            Called to update the status of the flow execution on the server
+            </summary>
+            <param name="info">The information about the flow execution</param>
+            <returns>a completed task</returns>
+        </member>
+        <member name="T:FileFlows.ServerShared.Services.IFlowService">
+            <summary>
+            Interface for communicating with FileFlows server for flows
+            </summary>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.IFlowService.Get(System.Guid)">
+            <summary>
+            Gets a flow by its UID
+            </summary>
+            <param name="uid">The UID of the flow</param>
+            <returns>An instance of the flow if found, otherwise null</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.IFlowService.GetFailureFlow(System.Guid)">
+            <summary>
+            Gets the Failure Flow for a specific library
+            This is the flow that is called if the flow fails 
+            </summary>
+            <param name="libraryUid">The UID of the library</param>
+            <returns>An instance of the Failure Flow if found</returns>
+        </member>
+        <member name="T:FileFlows.ServerShared.Services.FlowService">
+            <summary>
+            Service for communicating with FileFlows server for flows
+            </summary>
+        </member>
+        <member name="P:FileFlows.ServerShared.Services.FlowService.Loader">
+            <summary>
+            Gets or sets the function used to load an instance of the IFlowService
+            </summary>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.FlowService.Load">
+            <summary>
+            Loads an instance of the IFlowService
+            </summary>
+            <returns>an instance of the IFlowService</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.FlowService.Get(System.Guid)">
+            <summary>
+            Gets a flow by its UID
+            </summary>
+            <param name="uid">The UID of the flow</param>
+            <returns>An instance of the flow if found, otherwise null</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.FlowService.GetFailureFlow(System.Guid)">
+            <summary>
+            Gets the Failure Flow for a specific library
+            This is the flow that is called if the flow fails 
+            </summary>
+            <param name="libraryUid">The UID of the library</param>
+            <returns>An instance of the Failure Flow if found</returns>
+        </member>
+        <member name="T:FileFlows.ServerShared.Services.ILibraryFileService">
+            <summary>
+            Interface for communicating with FileFlows server for library files
+            </summary>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.ILibraryFileService.GetNext(System.String,System.Guid,System.Guid)">
+            <summary>
+            Gets the next library file queued for processing
+            </summary>
+            <param name="nodeName">The name of the node requesting a library file</param>
+            <param name="nodeUid">The UID of the node</param>
+            <param name="workerUid">The UID of the worker on the node</param>
+            <returns>If found, the next library file to process, otherwise null</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.ILibraryFileService.Get(System.Guid)">
+            <summary>
+            Gets a library file by its UID
+            </summary>
+            <param name="uid">The UID of the library file</param>
+            <returns>The library file if found, otherwise null</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.ILibraryFileService.Delete(System.Guid)">
+            <summary>
+            Deletes a library file
+            </summary>
+            <param name="uid">The UID of the library file</param>
+            <returns>a completed task</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.ILibraryFileService.Update(FileFlows.Shared.Models.LibraryFile)">
+            <summary>
+            Updates a library file
+            </summary>
+            <param name="libraryFile">The library file to update</param>
+            <returns>The newly updated library file</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.ILibraryFileService.SaveFullLog(System.Guid,System.String)">
+            <summary>
+            Saves the full library file log
+            </summary>
+            <param name="uid">The UID of the library file</param>
+            <param name="log">The full plain text log to save</param>
+            <returns>If it was successfully saved or not</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.ILibraryFileService.ExistsOnServer(System.Guid)">
+            <summary>
+            Tests if a library file exists on server.
+            This is used to test if a mapping issue exists on the node, and will be called if a Node cannot find the library file
+            </summary>
+            <param name="uid">The UID of the library file</param>
+            <returns>True if it exists on the server, otherwise false</returns>
+        </member>
+        <member name="T:FileFlows.ServerShared.Services.LibraryFileService">
+            <summary>
+            Service for communicating with FileFlows server for library files
+            </summary>
+        </member>
+        <member name="P:FileFlows.ServerShared.Services.LibraryFileService.Loader">
+            <summary>
+            Gets or sets a function to load an instance of ILibraryFileService by the Load function
+            </summary>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.LibraryFileService.Load">
+            <summary>
+            Loads an instance of the ILibraryFileService
+            </summary>
+            <returns>an instance of the ILibraryFileService</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.LibraryFileService.Delete(System.Guid)">
+            <summary>
+            Deletes a library file
+            </summary>
+            <param name="uid">The UID of the library file</param>
+            <returns>a completed task</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.LibraryFileService.ExistsOnServer(System.Guid)">
+            <summary>
+            Tests if a library file exists on server.
+            This is used to test if a mapping issue exists on the node, and will be called if a Node cannot find the library file
+            </summary>
+            <param name="uid">The UID of the library file</param>
+            <returns>True if it exists on the server, otherwise false</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.LibraryFileService.Get(System.Guid)">
+            <summary>
+            Gets a library file by its UID
+            </summary>
+            <param name="uid">The UID of the library file</param>
+            <returns>The library file if found, otherwise null</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.LibraryFileService.GetNext(System.String,System.Guid,System.Guid)">
+            <summary>
+            Gets the next library file queued for processing
+            </summary>
+            <param name="nodeName">The name of the node requesting a library file</param>
+            <param name="nodeUid">The UID of the node</param>
+            <param name="workerUid">The UID of the worker on the node</param>
+            <returns>If found, the next library file to process, otherwise null</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.LibraryFileService.SaveFullLog(System.Guid,System.String)">
+            <summary>
+            Saves the full library file log
+            </summary>
+            <param name="uid">The UID of the library file</param>
+            <param name="log">The full plain text log to save</param>
+            <returns>If it was successfully saved or not</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.LibraryFileService.Update(FileFlows.Shared.Models.LibraryFile)">
+            <summary>
+            Updates a library file
+            </summary>
+            <param name="libraryFile">The library file to update</param>
+            <returns>The newly updated library file</returns>
+        </member>
+        <member name="T:FileFlows.ServerShared.Services.ILibraryService">
+            <summary>
+            Interface for communicating with FileFlows server for libraries
+            </summary>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.ILibraryService.Get(System.Guid)">
+            <summary>
+            Gets a library by its UID
+            </summary>
+            <param name="uid">The UID of the library</param>
+            <returns>An instance of the library if found</returns>
+        </member>
+        <member name="T:FileFlows.ServerShared.Services.LibraryService">
+            <summary>
+            Service for communicating with FileFlows server for libraries
+            </summary>
+        </member>
+        <member name="P:FileFlows.ServerShared.Services.LibraryService.Loader">
+            <summary>
+            Gets or sets a function to load an instance of a ILibraryService
+            </summary>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.LibraryService.Load">
+            <summary>
+            Loads an instance of the library service
+            </summary>
+            <returns>an instance of the library service</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.LibraryService.Get(System.Guid)">
+            <summary>
+            Gets a library by its UID
+            </summary>
+            <param name="uid">The UID of the library</param>
+            <returns>An instance of the library if found</returns>
+        </member>
+        <member name="T:FileFlows.ServerShared.Services.INodeService">
+            <summary>
+            An interface for communicating with the server for all Processing Node related actions
+            </summary>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.INodeService.GetByAddress(System.String)">
+            <summary>
+            Gets a processing node by its physical address
+            </summary>
+            <param name="address">The address (hostname or IP address) of the node</param>
+            <returns>An instance of the processing node</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.INodeService.GetServerNode">
+            <summary>
+            Gets an instance of the internal processing node
+            </summary>
+            <returns>an instance of the internal processing node</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.INodeService.GetToolPath(System.String)">
+            <summary>
+            Gets a tool path by name
+            </summary>
+            <param name="name">The name of the tool</param>
+            <returns>a tool path</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.INodeService.ClearWorkers(System.Guid)">
+            <summary>
+            Clears all workers on the node.
+            This is called when a node first starts up, if a node crashed when workers were running this will reset them
+            </summary>
+            <param name="nodeUid">The UID of the node</param>
+            <returns>a completed task</returns>
+        </member>
+        <member name="T:FileFlows.ServerShared.Services.NodeService">
+            <summary>
+            An Service for communicating with the server for all Processing Node related actions
+            </summary>
+        </member>
+        <member name="P:FileFlows.ServerShared.Services.NodeService.Loader">
+            <summary>
+            Gets or sets a function used to load new instances of the service
+            </summary>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.NodeService.Load">
+            <summary>
+            Loads an instance of the node service
+            </summary>
+            <returns>an instance of the node service</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.NodeService.ClearWorkers(System.Guid)">
+            <summary>
+            Clears all workers on the node.
+            This is called when a node first starts up, if a node crashed when workers were running this will reset them
+            </summary>
+            <param name="nodeUid">The UID of the node</param>
+            <returns>a completed task</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.NodeService.GetServerNode">
+            <summary>
+            Gets an instance of the internal processing node
+            </summary>
+            <returns>an instance of the internal processing node</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.NodeService.GetToolPath(System.String)">
+            <summary>
+            Gets a tool path by name
+            </summary>
+            <param name="name">The name of the tool</param>
+            <returns>a tool path</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.NodeService.GetByAddress(System.String)">
+            <summary>
+            Gets a processing node by its physical address
+            </summary>
+            <param name="address">The address (hostname or IP address) of the node</param>
+            <returns>An instance of the processing node</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.NodeService.Register(System.String,System.String,System.String,System.Int32,System.Boolean,System.Collections.Generic.List{FileFlows.ServerShared.Models.RegisterModelMapping})">
+            <summary>
+            Registers a node with FileFlows
+            </summary>
+            <param name="serverUrl">The URL of the FileFlows Server</param>
+            <param name="address">The address (Hostname or IP Address) of the node</param>
+            <param name="tempPath">The temporary path location of the node</param>
+            <param name="runners">The amount of flow runners this node can execute</param>
+            <param name="enabled">If this node is enabled or not</param>
+            <param name="mappings">Any mappings for the node</param>
+            <returns>An instance of the registered node</returns>
+            <exception cref="T:System.Exception">If fails to register, an exception will be thrown</exception>
         </member>
         <member name="T:FileFlows.ServerShared.Services.IPluginService">
             <summary>
@@ -169,6 +761,11 @@
             Plugin service
             </summary>
         </member>
+        <member name="P:FileFlows.ServerShared.Services.PluginService.Loader">
+            <summary>
+            Gets or sets a function used to load new instances of the service
+            </summary>
+        </member>
         <member name="M:FileFlows.ServerShared.Services.PluginService.Load">
             <summary>
             Loads an instance of the plugin service
@@ -202,6 +799,49 @@
             <param name="pluginInfo">the plugin info</param>
             <returns>the updated plugininfo</returns>
             <exception cref="T:System.NotImplementedException">This not yet implemented</exception>
+        </member>
+        <member name="T:FileFlows.ServerShared.Services.Service">
+            <summary>
+            A service lets you communicate with the FileFLows server
+            </summary>
+        </member>
+        <member name="P:FileFlows.ServerShared.Services.Service.ServiceBaseUrl">
+            <summary>
+            Gets or sets the Base URL of the FileFlows server
+            </summary>
+        </member>
+        <member name="T:FileFlows.ServerShared.Services.ISettingsService">
+            <summary>
+            Interface for the Settings service which allows accessing of all the system settings
+            </summary>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.ISettingsService.Get">
+            <summary>
+            Gets the system settings
+            </summary>
+            <returns>the system settings</returns>
+        </member>
+        <member name="T:FileFlows.ServerShared.Services.SettingsService">
+            <summary>
+            An instance of the Settings Service which allows accessing of the system settings
+            </summary>
+        </member>
+        <member name="P:FileFlows.ServerShared.Services.SettingsService.Loader">
+            <summary>
+            A loader to load an instance of the Settings
+            </summary>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.SettingsService.Load">
+            <summary>
+            Loads an instance of the settings service
+            </summary>
+            <returns>an instance of the settings service</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.SettingsService.Get">
+            <summary>
+            Gets the system settings
+            </summary>
+            <returns>the system settings</returns>
         </member>
         <member name="T:FileFlows.ServerShared.Services.ISystemService">
             <summary>
@@ -295,6 +935,12 @@
             </summary>
             <returns>A update has been downloaded</returns>
         </member>
+        <member name="M:FileFlows.ServerShared.Workers.UpdaterWorker.PrepareApplicationShutdown">
+            <summary>
+            Prepares the application to be shutdown
+            Called after the update has been downloaded, but before it has run
+            </summary>
+        </member>
         <member name="M:FileFlows.ServerShared.Workers.UpdaterWorker.DownloadUpdateBinary">
             <summary>
             Downloads an update
@@ -306,6 +952,67 @@
             Gets if auto updates are enabled
             </summary>
             <returns>if auto updates are enabled</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Workers.UpdaterWorker.DownloadFile(System.String,System.String)">
+            <summary>
+            Downloads a file and saves it
+            </summary>
+            <param name="url">The url of the file to download</param>
+            <param name="file">the location to save the file</param>
+            <exception cref="T:System.Exception">throws if the file fails to download</exception>
+        </member>
+        <member name="T:FileFlows.ServerShared.Workers.Worker">
+            <summary>
+            A worker that will run at a set schedule
+            </summary>
+        </member>
+        <member name="T:FileFlows.ServerShared.Workers.Worker.ScheduleType">
+            <summary>
+            Available schedule types
+            </summary>
+        </member>
+        <member name="P:FileFlows.ServerShared.Workers.Worker.Seconds">
+            <summary>
+            Gets or sets the amount seconds between each execution of this worker
+            </summary>
+        </member>
+        <member name="P:FileFlows.ServerShared.Workers.Worker.Schedule">
+            <summary>
+            Gets or sets the schedule of this worker
+            </summary>
+        </member>
+        <member name="M:FileFlows.ServerShared.Workers.Worker.#ctor(FileFlows.ServerShared.Workers.Worker.ScheduleType,System.Int32)">
+            <summary>
+            Creates an instance of a worker
+            </summary>
+            <param name="schedule">the type of schedule this worker runs at</param>
+            <param name="interval">the interval of this worker</param>
+        </member>
+        <member name="M:FileFlows.ServerShared.Workers.Worker.Start">
+            <summary>
+            Start the worker
+            </summary>
+        </member>
+        <member name="M:FileFlows.ServerShared.Workers.Worker.Stop">
+            <summary>
+            Stop the worker
+            </summary>
+        </member>
+        <member name="T:FileFlows.Server.Workers.WorkerManager">
+            <summary>
+            A manager for the workers that run in the system
+            </summary>
+        </member>
+        <member name="M:FileFlows.Server.Workers.WorkerManager.StartWorkers(FileFlows.ServerShared.Workers.Worker[])">
+            <summary>
+            Starts a list of workers and keeps track of them 
+            </summary>
+            <param name="workers">A list of workers to start</param>
+        </member>
+        <member name="M:FileFlows.Server.Workers.WorkerManager.StopWorkers">
+            <summary>
+            Stops all the currently running workers
+            </summary>
         </member>
     </members>
 </doc>
