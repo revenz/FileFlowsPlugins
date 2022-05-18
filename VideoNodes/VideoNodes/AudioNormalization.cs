@@ -39,10 +39,6 @@ public class AudioNormalization: EncodingNode
             if (videoInfo == null)
                 return -1;
 
-            string ffmpegExe = GetFFMpegExe(args);
-            if (string.IsNullOrEmpty(ffmpegExe))
-                return -1;
-
             if (videoInfo.AudioStreams?.Any() != true)
             {
                 args.Logger?.ILog("No audio streams detected");
@@ -82,7 +78,7 @@ public class AudioNormalization: EncodingNode
                 {
                     if (TwoPass)
                     {
-                        string twoPass = DoTwoPass(this, args, ffmpegExe, j);
+                        string twoPass = DoTwoPass(this, args, FFMPEG, j);
                         ffArgs.AddRange(new[] { "-map", $"0:a:{j}", "-c:a:" + j, audio.Codec, "-filter:a:" + j, twoPass });
                     }
                     else
@@ -113,7 +109,7 @@ public class AudioNormalization: EncodingNode
             if (extension.StartsWith("."))
                 extension = extension.Substring(1);
 
-            if (Encode(args, ffmpegExe, ffArgs, extension) == false)
+            if (Encode(args, FFMPEG, ffArgs, extension) == false)
                 return -1;
             
             return 1;

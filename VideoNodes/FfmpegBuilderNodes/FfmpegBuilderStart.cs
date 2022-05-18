@@ -11,13 +11,11 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
 
         public override int Execute(NodeParameters args)
         {
-            this.args = args;
             VideoInfo videoInfo = GetVideoInfo(args);
             if (videoInfo == null)
                 return -1;
 
             this.Model = Models.FfmpegModel.CreateModel(videoInfo);
-            this.Init(args);
             return 1;
         }
     }

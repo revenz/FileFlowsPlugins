@@ -38,11 +38,7 @@
                 VideoInfo videoInfo = GetVideoInfo(args);
                 if (videoInfo == null)
                     return -1;
-
-                string ffmpegExe = GetFFMpegExe(args);
-                if (string.IsNullOrEmpty(ffmpegExe))
-                    return -1;
-
+                
                 // ffmpeg -i input.mkv -map "0:m:language:eng" -map "-0:v" -map "-0:a" output.srt
                 var subTrack = videoInfo.SubtitleStreams?.Where(x => string.IsNullOrEmpty(Language) || x.Language?.ToLower() == Language.ToLower()).FirstOrDefault();
                 if (subTrack == null)
@@ -74,7 +70,7 @@
                 //bool textSubtitles = Regex.IsMatch(OutputFile, @"\.(sup)$") == false;
 
 
-                var extracted = ExtractSubtitle(args, ffmpegExe, "0:s:" + subTrack.TypeIndex, OutputFile);
+                var extracted = ExtractSubtitle(args, FFMPEG, "0:s:" + subTrack.TypeIndex, OutputFile);
                 if(extracted)
                 {
                     args.UpdateVariables(new Dictionary<string, object>

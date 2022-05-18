@@ -24,12 +24,6 @@ public class FfmpegBuilderAudioAdjustVolume : FfmpegBuilderNode
 
     public override int Execute(NodeParameters args)
     {
-        base.Init(args);
-
-        string ffmpegExe = GetFFMpegExe(args);
-        if (string.IsNullOrEmpty(ffmpegExe))
-            return -1;
-
         if (Model.AudioStreams?.Any() != true)
         {
             args.Logger?.ILog("No audio streams detected");

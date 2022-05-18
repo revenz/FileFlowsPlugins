@@ -23,15 +23,13 @@
 
         public override int Execute(NodeParameters args)
         {
-            base.Init(args);
-
             string codec = args.ReplaceVariables(VideoCodec ?? string.Empty);
             string parameters = args.ReplaceVariables(VideoCodecParameters ?? codec);
             
             if (string.IsNullOrWhiteSpace(parameters))
                 return 1; // nothing to do
 
-            parameters = CheckVideoCodec(ffmpegExe, parameters);
+            parameters = CheckVideoCodec(FFMPEG, parameters);
 
             bool encoding = false;
             foreach (var item in Model.VideoStreams.Select((x, index) => (stream: x, index)))

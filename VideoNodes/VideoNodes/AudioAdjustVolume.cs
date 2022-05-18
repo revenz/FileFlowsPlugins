@@ -26,11 +26,7 @@
                 VideoInfo videoInfo = GetVideoInfo(args);
                 if (videoInfo == null)
                     return -1;
-
-                string ffmpegExe = GetFFMpegExe(args);
-                if (string.IsNullOrEmpty(ffmpegExe))
-                    return -1;
-
+                
                 if (videoInfo.AudioStreams?.Any() != true)
                 {
                     args.Logger?.ILog("No audio streams detected");
@@ -39,7 +35,7 @@
 
                 if(VolumePercent == 100)
                 {
-                    args.Logger?.ILog("Volume percent set to 100, no adjustment necassary");
+                    args.Logger?.ILog("Volume percent set to 100, no adjustment necessary");
                     return 2;
                 }
 
@@ -63,7 +59,7 @@
                 if(extension.StartsWith("."))
                     extension = extension.Substring(1); 
 
-                if (Encode(args, ffmpegExe, ffArgs, extension) == false)
+                if (Encode(args, FFMPEG, ffArgs, extension) == false)
                     return -1;
 
                 return 1;

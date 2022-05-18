@@ -20,7 +20,6 @@ public class FfmpegBuilderSubtitleTrackRemover : FfmpegBuilderNode
 
     public override int Execute(NodeParameters args)
     {
-        this.Init(args);
         bool removing = false;
         var regex = new Regex(this.Pattern, RegexOptions.IgnoreCase);
         foreach(var stream in Model.SubtitleStreams)

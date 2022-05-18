@@ -36,12 +36,6 @@ public class FfmpegBuilderScaler : FfmpegBuilderNode
     public override int Outputs => 2;
     public override int Execute(NodeParameters args)
     {
-        base.Init(args);
-
-        string ffmpeg = GetFFMpegExe(args);
-        if (string.IsNullOrEmpty(ffmpeg))
-            return -1;
-
         var videoInfo = GetVideoInfo(args);
         if (videoInfo == null || videoInfo.VideoStreams?.Any() != true)
             return -1;

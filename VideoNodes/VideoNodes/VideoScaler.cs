@@ -89,7 +89,6 @@ namespace FileFlows.VideoNodes
 
         public override int Execute(NodeParameters args)
         {
-            this.args = args;
             Extension = args.ReplaceVariables(Extension)?.EmptyAsNull() ?? "mkv";
 
             try
@@ -111,12 +110,7 @@ namespace FileFlows.VideoNodes
                     else if (resolution == ResolutionHelper.Resolution.r480p && Resolution.StartsWith("640"))
                         return 2;
                 }
-
-
-                string ffmpegExe = GetFFMpegExe(args);
-                if (string.IsNullOrEmpty(ffmpegExe))
-                    return -1;
-
+                
                 List<string> ffArgs = new List<string>()
                 {
                     "-vf", $"scale={Resolution}:flags=lanczos",
@@ -124,7 +118,7 @@ namespace FileFlows.VideoNodes
                 };
 
                 string codec = VideoCodec == "Custom" && string.IsNullOrWhiteSpace(VideoCodecParameters) == false ?
-                               VideoCodecParameters : CheckVideoCodec(ffmpegExe, VideoCodec);
+                               VideoCodecParameters : CheckVideoCodec(FFMPEG, VideoCodec);
 
                 foreach (string c in codec.Split(" "))
                 {
@@ -133,7 +127,7 @@ namespace FileFlows.VideoNodes
                     ffArgs.Add(c.Trim());
                 }
 
-                if (Encode(args, ffmpegExe, ffArgs, Extension) == false)
+                if (Encode(args, FFMPEG, ffArgs, Extension) == false)
                     return -1;
 
                 return 1;

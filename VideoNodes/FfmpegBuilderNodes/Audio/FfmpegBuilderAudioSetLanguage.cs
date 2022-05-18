@@ -16,8 +16,6 @@ public class FfmpegBuilderAudioSetLanguage : FfmpegBuilderNode
 
     public override int Execute(NodeParameters args)
     {
-        base.Init(args);
-
         bool changes = false;
         foreach (var at in Model.AudioStreams)
         {

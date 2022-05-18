@@ -43,8 +43,6 @@ public class FfmpegBuilderSubtitleFormatRemover : FfmpegBuilderNode
 
     public override int Execute(NodeParameters args)
     {
-        this.Init(args);
-
         if (RemoveAll)
         {
             if (Model.SubtitleStreams.Any() == false)

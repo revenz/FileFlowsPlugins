@@ -32,16 +32,12 @@ namespace FileFlows.VideoNodes
 
         public override int Execute(NodeParameters args)
         {
-            string ffmpeg = GetFFMpegExe(args);
-            if (string.IsNullOrEmpty(ffmpeg))
-                return -1;
-
             var videoInfo = GetVideoInfo(args);
             if (videoInfo == null || videoInfo.VideoStreams?.Any() != true)
                 return -1;
 
 
-            string crop = Detect(ffmpeg, videoInfo, args, this.CroppingThreshold);
+            string crop = Detect(FFMPEG, videoInfo, args, this.CroppingThreshold);
             if (crop == string.Empty)
                 return 2;
 

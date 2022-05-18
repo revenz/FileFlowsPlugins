@@ -42,14 +42,10 @@ namespace FileFlows.VideoNodes
 
         public override int Execute(NodeParameters args)
         {
-            string ffmpegExe = GetFFMpegExe(args);
-            if (string.IsNullOrEmpty(ffmpegExe))
-                return -1;
-
             try
             {
 
-                var videoInfo = new VideoInfoHelper(ffmpegExe, args.Logger).Read(args.WorkingFile);
+                var videoInfo = new VideoInfoHelper(FFMPEG, args.Logger).Read(args.WorkingFile);
                 if (videoInfo.VideoStreams.Any() == false)
                 {
                     args.Logger.ILog("No video streams detected.");

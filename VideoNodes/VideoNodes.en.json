@@ -438,6 +438,20 @@
             "DisableOtherVideoStreams-Help": "When checked if there are multiple video streams in the file, this will remove all but the first video stream from the file once executed."
           }
         },
+        "FfmpegBuilderVideoEncode": {
+          "Label": "FFMPEG Builder: Video Encode",
+          "Description": "Sets the FFMPEG Builder to encode the video with simple to use presets",
+          "Outputs": {
+            "1": "FFMPEG Builder video streams set to encode"
+          },
+          "Fields": {
+            "Codec": "Codec",
+            "HardwareEncoding": "Hardware Encode",
+            "HardwareEncoding-Help": "When checked, will test to see if hardware encoders are found on the Processing Node, and if found will use hardware encoding, otherwise will fallback to CPU encoding.",
+            "Quality": "Quality",
+            "Quality-Help": "Sets the quality of the video"
+          }
+        },
         "RemuxToMKV": {
           "Descritption": "Remuxes a video file into a MKV container.  All streams will be copied to the new container",
           "Outputs": {

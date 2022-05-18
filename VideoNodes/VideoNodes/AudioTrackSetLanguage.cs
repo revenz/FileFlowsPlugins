@@ -24,10 +24,6 @@
                 if (videoInfo == null)
                     return -1;
 
-                string ffmpegExe = GetFFMpegExe(args);
-                if (string.IsNullOrEmpty(ffmpegExe))
-                    return -1;
-
                 List<string> ffArgs = new List<string>();
 
                 int index = 0;
@@ -54,7 +50,7 @@
                 args.Logger?.DLog("Working file: " + args.WorkingFile);
                 args.Logger?.DLog("Extension: " + extension);
 
-                if (Encode(args, ffmpegExe, ffArgs, extension) == false)
+                if (Encode(args, FFMPEG, ffArgs, extension) == false)
                     return -1;
 
                 return 1;

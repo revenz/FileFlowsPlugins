@@ -41,12 +41,8 @@ namespace FileFlows.VideoNodes
                 args.Logger.ELog("Command Line not set");
                 return -1;
             }
-            this.args = args;
             try
             {
-                string ffmpegExe = GetFFMpegExe(args);
-                if (string.IsNullOrEmpty(ffmpegExe))
-                    return -1;
 
                 if (string.IsNullOrEmpty(Extension))
                     Extension = "mkv";
@@ -54,7 +50,7 @@ namespace FileFlows.VideoNodes
                 string outputFile = Path.Combine(args.TempPath, Guid.NewGuid().ToString() + "." + Extension);
                 var ffArgs = GetFFMPEGArgs(args, outputFile);
 
-                if (Encode(args, ffmpegExe, ffArgs, updateWorkingFile: false, dontAddInputFile: true, dontAddOutputFile: true) == false)
+                if (Encode(args, FFMPEG, ffArgs, updateWorkingFile: false, dontAddInputFile: true, dontAddOutputFile: true) == false)
                     return -1;
 
                 if (File.Exists(outputFile))

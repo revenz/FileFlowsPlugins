@@ -56,7 +56,6 @@ namespace FileFlows.VideoNodes
             VideoCodec = VideoCodec.ToLower();
             AudioCodec = AudioCodec.ToLower();
 
-            this.args = args;
             try
             {
                 VideoInfo videoInfo = GetVideoInfo(args);
@@ -64,10 +63,6 @@ namespace FileFlows.VideoNodes
                     return -1;
 
                 Language = Language?.ToLower() ?? "";
-
-                string ffmpegExe = GetFFMpegExe(args);
-                if (string.IsNullOrEmpty(ffmpegExe))
-                    return -1;
 
                 // ffmpeg is one based for stream index, so video should be 1, audio should be 2
 
@@ -88,7 +83,7 @@ namespace FileFlows.VideoNodes
 
                     if (videoIsRightCodec == null || crop != string.Empty)
                     {
-                        string codecParameters = CheckVideoCodec(ffmpegExe, VideoCodecParameters);
+                        string codecParameters = CheckVideoCodec(FFMPEG, VideoCodecParameters);
                         encodeVideoParameters = $"-map 0:v:0 -c:v {codecParameters} {crop}";
                     }
                     Extension = args.ReplaceVariables(Extension)?.EmptyAsNull() ?? "mkv";
@@ -162,7 +157,7 @@ namespace FileFlows.VideoNodes
                 }
 
 
-                if (Encode(args, ffmpegExe, ffArgs, Extension) == false)
+                if (Encode(args, FFMPEG, ffArgs, Extension) == false)
                     return -1;
 
                 return 1;

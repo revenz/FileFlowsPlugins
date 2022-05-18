@@ -13,17 +13,12 @@
 
         public override int Execute(NodeParameters args)
         {
-            string ffmpegExe = GetFFMpegExe(args);
-            if (string.IsNullOrEmpty(ffmpegExe))
-                return -1;
-
-
             if (Force == false && args.WorkingFile?.ToLower()?.EndsWith(".mkv") == true)
                 return 2;
 
             try 
             { 
-                if (Encode(args, ffmpegExe, new List<string> { "-c", "copy", "-map", "0" }, "mkv") == false)
+                if (Encode(args, FFMPEG, new List<string> { "-c", "copy", "-map", "0" }, "mkv") == false)
                     return -1;
 
                 return 1;
@@ -45,16 +40,12 @@
 
         public override int Execute(NodeParameters args)
         {
-            string ffmpegExe = GetFFMpegExe(args);
-            if (string.IsNullOrEmpty(ffmpegExe))
-                return -1;
-
             if (Force == false && args.WorkingFile?.ToLower()?.EndsWith(".mp4") == true)
                 return 2;
 
             try
             {
-                if (Encode(args, ffmpegExe, new List<string> { "-c", "copy", "-map", "0" }, "mp4") == false)
+                if (Encode(args, FFMPEG, new List<string> { "-c", "copy", "-map", "0" }, "mp4") == false)
                     return -1;
 
                 return 1;

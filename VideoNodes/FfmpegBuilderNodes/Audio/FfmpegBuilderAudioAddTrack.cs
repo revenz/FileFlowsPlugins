@@ -95,8 +95,6 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
 
     public override int Execute(NodeParameters args)
     {
-        base.Init(args);
-
         var audio = new FfmpegAudioStream();
 
         var bestAudio = GetBestAudioTrack(args, Model.AudioStreams.Select(x => x.Stream));

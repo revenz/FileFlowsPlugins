@@ -28,7 +28,6 @@ public class FfmpegBuilderAudioTrackRemover: FfmpegBuilderNode
 
     public override int Execute(NodeParameters args)
     {
-        this.Init(args);
         bool removing = false;
         Regex? regex = null;
         int index = -1;

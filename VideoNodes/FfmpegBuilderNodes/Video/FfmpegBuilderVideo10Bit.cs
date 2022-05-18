@@ -8,8 +8,6 @@
 
         public override int Execute(NodeParameters args)
         {
-            base.Init(args);
-
             var videoInfo = GetVideoInfo(args);
             if (videoInfo == null || videoInfo.VideoStreams?.Any() != true)
                 return -1;

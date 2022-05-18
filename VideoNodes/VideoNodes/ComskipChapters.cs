@@ -15,9 +15,6 @@
 
         public override int Execute(NodeParameters args)
         {
-            string ffmpegExe = GetFFMpegExe(args);
-            if (string.IsNullOrEmpty(ffmpegExe))
-                return -1;
             VideoInfo videoInfo = GetVideoInfo(args);
             if (videoInfo == null)
                 return -1;
@@ -27,7 +24,7 @@
                 return 2;
 
             string[] ffArgs = new[] { "-i", tempMetaDataFile, "-map_metadata", "1", "-codec", "copy", "-max_muxing_queue_size", "1024" };
-            if (Encode(args, ffmpegExe, ffArgs.ToList()))
+            if (Encode(args, FFMPEG, ffArgs.ToList()))
             {
                 args.Logger?.ILog($"Added chapters to file");
                 return 1;

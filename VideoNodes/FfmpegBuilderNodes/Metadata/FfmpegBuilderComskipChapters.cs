@@ -7,8 +7,6 @@ public class FfmpegBuilderComskipChapters : FfmpegBuilderNode
 
     public override int Execute(NodeParameters args)
     {
-        base.Init(args);
-
         VideoInfo videoInfo = GetVideoInfo(args);
         if (videoInfo == null)
             return -1;

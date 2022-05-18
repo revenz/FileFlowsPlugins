@@ -30,10 +30,6 @@
                 if (videoInfo == null)
                     return -1;
 
-                string ffmpegExe = GetFFMpegExe(args);
-                if (string.IsNullOrEmpty(ffmpegExe))
-                    return -1;
-
                 List<string> ffArgs = new List<string>
                 {
                     "-c", "copy",
@@ -74,7 +70,7 @@
                 if(extension.StartsWith("."))
                     extension = extension.Substring(1); 
 
-                if (Encode(args, ffmpegExe, ffArgs, extension) == false)
+                if (Encode(args, FFMPEG, ffArgs, extension) == false)
                     return -1;
 
                 return 1;

@@ -20,8 +20,6 @@ public class FfmpegBuilderAudioTrackReorder : FfmpegBuilderNode
 
     public override int Execute(NodeParameters args)
     {
-        base.Init(args);
-
         OrderedTracks = OrderedTracks?.Select(x => x.ToLower())?.ToList() ?? new();
 
         var reordered = Reorder(Model.AudioStreams);

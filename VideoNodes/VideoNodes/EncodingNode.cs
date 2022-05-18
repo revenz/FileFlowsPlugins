@@ -14,8 +14,6 @@ namespace FileFlows.VideoNodes
 
         protected TimeSpan TotalTime;
 
-        protected NodeParameters args;
-
         private FFMpegEncoder Encoder;
 
         public bool Encode(NodeParameters args, string ffmpegExe, List<string> ffmpegParameters, string extension = "mkv", string outputFile = "", bool updateWorkingFile = true, bool dontAddInputFile = false, bool dontAddOutputFile = false)
@@ -29,7 +27,6 @@ namespace FileFlows.VideoNodes
             if (string.IsNullOrEmpty(extension))
                 extension = "mkv";
 
-            this.args = args;
             Encoder = new FFMpegEncoder(ffmpegExe, args.Logger);
             Encoder.AtTime += AtTimeEvent;
 
@@ -73,25 +70,13 @@ namespace FileFlows.VideoNodes
         {
             if (TotalTime.TotalMilliseconds == 0)
             {
-                args?.Logger?.DLog("Can't report time progress as total time is 0");
+                Args?.Logger?.DLog("Can't report time progress as total time is 0");
                 return;
             }
             float percent = (float)((time.TotalMilliseconds / TotalTime.TotalMilliseconds) * 100);
-            if(args?.PartPercentageUpdate != null)
-                args.PartPercentageUpdate(percent);
+            if(Args?.PartPercentageUpdate != null)
+                Args.PartPercentageUpdate(percent);
         }
-
-
-#if (DEBUG)
-        /// <summary>
-        /// Used for unit tests
-        /// </summary>
-        /// <param name="args">the args</param>
-        public void SetArgs(NodeParameters args)
-        {
-            this.args = args;
-        }
-#endif
 
         public string CheckVideoCodec(string ffmpeg, string vidparams)
         {
@@ -128,7 +113,7 @@ namespace FileFlows.VideoNodes
                 if (canProcess == false)
                 {
                     // change to cpu encoding 
-                    args.Logger?.ILog("Can't encode using hevc_nvenc, falling back to CPU encoding H265 (libx265)");
+                    Args.Logger?.ILog("Can't encode using hevc_nvenc, falling back to CPU encoding H265 (libx265)");
                     return "libx265";
                 }
                 return vidparams;
@@ -140,7 +125,7 @@ namespace FileFlows.VideoNodes
                 if (canProcess == false)
                 {
                     // change to cpu encoding 
-                    args.Logger?.ILog("Can't encode using h264_nvenc, falling back to CPU encoding H264 (libx264)");
+                    Args.Logger?.ILog("Can't encode using h264_nvenc, falling back to CPU encoding H264 (libx264)");
                     return "libx264";
                 }
                 return vidparams;
@@ -152,7 +137,7 @@ namespace FileFlows.VideoNodes
                 if (canProcess == false)
                 {
                     // change to cpu encoding 
-                    args.Logger?.ILog("Can't encode using hevc_qsv, falling back to CPU encoding H265 (libx265)");
+                    Args.Logger?.ILog("Can't encode using hevc_qsv, falling back to CPU encoding H265 (libx265)");
                     return "libx265";
                 }
                 return vidparams;
@@ -164,7 +149,7 @@ namespace FileFlows.VideoNodes
                 if (canProcess == false)
                 {
                     // change to cpu encoding 
-                    args.Logger?.ILog("Can't encode using h264_qsv, falling back to CPU encoding H264 (libx264)");
+                    Args.Logger?.ILog("Can't encode using h264_qsv, falling back to CPU encoding H264 (libx264)");
                     return "libx264";
                 }
                 return vidparams;
@@ -177,7 +162,7 @@ namespace FileFlows.VideoNodes
             //ffmpeg -loglevel error -f lavfi -i color=black:s=1080x1080 -vframes 1 -an -c:v hevc_nven2c -preset hq -f null -"
 
             string cmdArgs = $"-loglevel error -f lavfi -i color=black:s=1080x1080 -vframes 1 -an -c:v {encodingParams} -f null -\"";
-            var cmd = args.Process.ExecuteShellCommand(new ExecuteArgs
+            var cmd = Args.Process.ExecuteShellCommand(new ExecuteArgs
             {
                 Command = ffmpeg,
                 Arguments = cmdArgs,
@@ -185,7 +170,7 @@ namespace FileFlows.VideoNodes
             }).Result;
             if (cmd.ExitCode != 0 || string.IsNullOrWhiteSpace(cmd.Output) == false)
             {
-                args.Logger?.WLog($"Cant process '{encodingParams}': {cmd.Output ?? ""}");
+                Args.Logger?.WLog($"Cant process '{encodingParams}': {cmd.Output ?? ""}");
                 return false;
             }
             return true;
@@ -197,7 +182,7 @@ namespace FileFlows.VideoNodes
             {
                 if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
                 {
-                    var cmd = args.Process.ExecuteShellCommand(new ExecuteArgs
+                    var cmd = Args.Process.ExecuteShellCommand(new ExecuteArgs
                     {
                         Command = "wmic",
                         Arguments = "path win32_VideoController get name"
@@ -222,7 +207,7 @@ namespace FileFlows.VideoNodes
                 }
 
                 // check cuda in ffmpeg itself
-                var result = args.Process.ExecuteShellCommand(new ExecuteArgs
+                var result = Args.Process.ExecuteShellCommand(new ExecuteArgs
                 {
                     Command = ffmpeg,
                     Arguments = "-hide_banner -init_hw_device list"
@@ -231,7 +216,7 @@ namespace FileFlows.VideoNodes
             }
             catch (Exception ex)
             {
-                args.Logger?.ELog("Failed to detect NVIDIA card: " + ex.Message + Environment.NewLine + ex.StackTrace);
+                Args.Logger?.ELog("Failed to detect NVIDIA card: " + ex.Message + Environment.NewLine + ex.StackTrace);
                 return false;
             }
         }

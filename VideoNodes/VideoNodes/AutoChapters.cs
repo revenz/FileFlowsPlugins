@@ -25,9 +25,6 @@
 
         public override int Execute(NodeParameters args)
         {
-            string ffmpegExe = GetFFMpegExe(args);
-            if (string.IsNullOrEmpty(ffmpegExe))
-                return -1;
             VideoInfo videoInfo = GetVideoInfo(args);
             if (videoInfo == null)
                 return -1;
@@ -38,12 +35,12 @@
                 return 2;
             }
 
-            string tempMetaDataFile = GenerateMetaDataFile(this, args, videoInfo, ffmpegExe, this.Percent, this.MinimumLength);
+            string tempMetaDataFile = GenerateMetaDataFile(this, args, videoInfo, FFMPEG, this.Percent, this.MinimumLength);
             if (string.IsNullOrEmpty(tempMetaDataFile))
                 return 2; 
 
             string[] ffArgs = new[] { "-i", tempMetaDataFile, "-map_metadata", "1", "-codec", "copy", "-max_muxing_queue_size", "1024" };
-            if (Encode(args, ffmpegExe, ffArgs.ToList())) 
+            if (Encode(args, FFMPEG, ffArgs.ToList())) 
             {
                 args.Logger?.ILog($"Adding chapters to file");
                 return 1;

@@ -42,7 +42,6 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
     
     public override int Execute(NodeParameters args)
     {
-        this.Init(args);
         var dir = new FileInfo(UseSourceDirectory ? args.FileName : args.WorkingFile).Directory;
         if (dir.Exists == false)
         {

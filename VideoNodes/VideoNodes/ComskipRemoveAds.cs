@@ -15,9 +15,6 @@
 
         public override int Execute(NodeParameters args)
         {
-            string ffmpegExe = GetFFMpegExe(args);
-            if (string.IsNullOrEmpty(ffmpegExe))
-                return -1;
             VideoInfo videoInfo = GetVideoInfo(args);
             if (videoInfo == null)
                 return -1;
@@ -109,7 +106,7 @@
                 "-c", "copy"
             };
 
-            bool concatResult = Encode(args, ffmpegExe, ffArgs, dontAddInputFile: true, extension: extension);
+            bool concatResult = Encode(args, FFMPEG, ffArgs, dontAddInputFile: true, extension: extension);
 
             foreach(string segment in segments.Union(new[] { concatList }))
             {
@@ -140,7 +137,7 @@
                     "-t", duration.ToString(),
                     "-c", "copy"
                 };
-                if (Encode(args, ffmpegExe, ffArgs, outputFile: segment, updateWorkingFile: false))
+                if (Encode(args, FFMPEG, ffArgs, outputFile: segment, updateWorkingFile: false))
                 {
                     segments.Add(segment);
                     segmentsInfo.Add(DebugString(start, end));

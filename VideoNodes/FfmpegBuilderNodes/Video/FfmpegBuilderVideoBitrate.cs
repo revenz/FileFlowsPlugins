@@ -17,8 +17,6 @@ public class FfmpegBuilderVideoBitrate : FfmpegBuilderNode
 
     public override int Execute(NodeParameters args)
     {
-        base.Init(args);
-
         var video = Model.VideoStreams?.Where(x => x.Deleted == false)?.FirstOrDefault();
         if (video?.Stream == null)
         {

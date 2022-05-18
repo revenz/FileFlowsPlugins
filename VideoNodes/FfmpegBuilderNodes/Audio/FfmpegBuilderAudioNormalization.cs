@@ -24,12 +24,6 @@ public class FfmpegBuilderAudioNormalization : FfmpegBuilderNode
     [RequiresUnreferencedCode("")]
     public override int Execute(NodeParameters args)
     {
-        base.Init(args);
-
-        string ffmpegExe = GetFFMpegExe(args);
-        if (string.IsNullOrEmpty(ffmpegExe))
-            return -1;
-
         if (Model.AudioStreams?.Any() != true)
         {
             args.Logger?.ILog("No audio streams detected");
@@ -60,7 +54,7 @@ public class FfmpegBuilderAudioNormalization : FfmpegBuilderNode
                     item.stream.Filter.Add(normalizedTracks[audio.TypeIndex]);
                 else
                 {
-                    string twoPass = AudioNormalization.DoTwoPass(this, args, ffmpegExe, audio.TypeIndex);
+                    string twoPass = AudioNormalization.DoTwoPass(this, args, FFMPEG, audio.TypeIndex);
                     item.stream.Filter.Add(twoPass);
                     normalizedTracks.Add(audio.TypeIndex, twoPass); 
                 }

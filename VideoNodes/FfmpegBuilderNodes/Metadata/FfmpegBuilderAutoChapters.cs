@@ -15,8 +15,6 @@
 
         public override int Execute(NodeParameters args)
         {
-            base.Init(args);
-
             VideoInfo videoInfo = GetVideoInfo(args);
             if (videoInfo == null)
                 return -1;
@@ -27,7 +25,7 @@
                 return 2;
             }
 
-            string tempMetaDataFile = AutoChapters.GenerateMetaDataFile(this, args, videoInfo, ffmpegExe, this.Percent, this.MinimumLength);
+            string tempMetaDataFile = AutoChapters.GenerateMetaDataFile(this, args, videoInfo, FFMPEG, this.Percent, this.MinimumLength);
             if (string.IsNullOrEmpty(tempMetaDataFile))
                 return 2;
 
