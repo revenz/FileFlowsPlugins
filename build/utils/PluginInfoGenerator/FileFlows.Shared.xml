@@ -75,6 +75,26 @@
             A special flow that is executed when a flow fails during execution
             </summary>
         </member>
+        <member name="T:FileFlows.Shared.ProcessingLibraries">
+            <summary>
+            The available processing libraries options
+            </summary>
+        </member>
+        <member name="F:FileFlows.Shared.ProcessingLibraries.Only">
+            <summary>
+            Only process the libraries specified
+            </summary>
+        </member>
+        <member name="F:FileFlows.Shared.ProcessingLibraries.All">
+            <summary>
+            Process all libraries
+            </summary>
+        </member>
+        <member name="F:FileFlows.Shared.ProcessingLibraries.AllExcept">
+            <summary>
+            Process all libraries except those specified
+            </summary>
+        </member>
         <member name="T:FileFlows.Shared.ExtensionMethods">
             <summary>
             Extension methods used by FileFlows
@@ -503,6 +523,11 @@
             Gets or sets the parameters of the field
             </summary>
         </member>
+        <member name="P:FileFlows.Shared.Models.ElementField.ChangeValues">
+            <summary>
+            Gets a list of change values for this field
+            </summary>
+        </member>
         <member name="P:FileFlows.Shared.Models.ElementField.Validators">
             <summary>
             Gets or sets the validators for the field
@@ -649,6 +674,62 @@
             Test if the condition matches the given object value
             </summary>
             <param name="value">the value to test the condition against</param>
+            <returns>true if the condition is matches</returns>
+        </member>
+        <member name="T:FileFlows.Shared.Models.ChangeValue">
+            <summary>
+            Changes a value when the conditions are met
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.ChangeValue.Field">
+            <summary>
+            Get or sets the Field this condition is attached to
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.ChangeValue.Property">
+            <summary>
+            Gets or sets the property to change
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.ChangeValue.Value">
+            <summary>
+            Gets or sets the value to set in the property
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.ChangeValue.WhenValue">
+            <summary>
+            Gets or sets when to change the value, when this value equals a value
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.ChangeValue.WhenValueIsNot">
+            <summary>
+            Gets or sets if the value should be set when this value does not equal the WhenValue
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.ChangeValue.Owner">
+            <summary>
+            Gets or sets the owner who owns this condition
+            </summary>
+        </member>
+        <member name="M:FileFlows.Shared.Models.ChangeValue.#ctor">
+            <summary>
+            Constructs a condition
+            </summary>
+        </member>
+        <member name="M:FileFlows.Shared.Models.ChangeValue.#ctor(System.String,System.Object,System.Object,System.Boolean)">
+            <summary>
+            Constructs a change value
+            </summary>
+            <param name="property">the property to change</param>
+            <param name="value">the value to set in the property</param>
+            <param name="whenValue">when to change the value, when this value equals a value</param>
+            <param name="whenValueIsNot">the value should be set when this value does not equal the WhenValue</param>
+        </member>
+        <member name="M:FileFlows.Shared.Models.ChangeValue.Matches(System.Object)">
+            <summary>
+            Test if the change value condition matches the given object value
+            </summary>
+            <param name="value">the value of the field</param>
             <returns>true if the condition is matches</returns>
         </member>
         <member name="T:FileFlows.Shared.Models.FileBrowserItem">
@@ -1324,6 +1405,12 @@
             When the library was last scanned
             </summary>
         </member>
+        <member name="P:FileFlows.Shared.Models.Library.ReprocessRecreatedFiles">
+            <summary>
+            Gets or sets if recreated files (files with a different creation time) should be automatically reprocessed
+            This is helpful if you download the same file multiple times and want to reprocess it again
+            </summary>
+        </member>
         <member name="P:FileFlows.Shared.Models.Library.LastScannedAgo">
             <summary>
             The timespan of when this was last scanned
@@ -1464,6 +1551,16 @@
         <member name="P:FileFlows.Shared.Models.LibraryFile.ProcessingTime">
             <summary>
             Gets the total processing time of the library file
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.LibraryFile.CreationTime">
+            <summary>
+            Gets or sets when the file was created
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.LibraryFile.LastWriteTime">
+            <summary>
+            Gets or sets when the file was written to
             </summary>
         </member>
         <member name="T:FileFlows.Shared.Models.FileStatus">
@@ -1861,11 +1958,6 @@
         <member name="P:FileFlows.Shared.Models.Settings.DisableTelemetry">
             <summary>
             Gets or sets if telemetry should be disabled
-            </summary>
-        </member>
-        <member name="P:FileFlows.Shared.Models.Settings.CompressLibraryFileLogs">
-            <summary>
-            Gets or sets if the library file logs should be saved in a compressed format to reduce file size
             </summary>
         </member>
         <member name="P:FileFlows.Shared.Models.Settings.PluginRepositoryUrls">

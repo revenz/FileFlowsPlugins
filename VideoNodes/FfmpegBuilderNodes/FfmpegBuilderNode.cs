@@ -19,8 +19,9 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
             if (base.PreExecute(args) == false)
                 return false;
             
-            if (Model == null)
+            if(this is FfmpegBuilderStart == false && Model == null)
                 throw new Exception("FFMPEG Builder Model not set, use the \"FFMPEG Builder Start\" node to first");
+
             return true;
         }
 

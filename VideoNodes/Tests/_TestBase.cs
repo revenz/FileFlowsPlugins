@@ -52,6 +52,10 @@ public abstract class TestBase
     protected string TestFile_BasicMkv => Path.Combine(TestPath, "basic.mkv");
     protected string TestFile_Pgs => Path.Combine(TestPath, "pgs.mkv");
     protected string TestFile_TwoPassNegInifinity => Path.Combine(TestPath, "audio_normal_neg_infinity.mkv");
+    protected string TestFile_4k_h264mov => Path.Combine(TestPath, "4k_h264.mov");
+
+    protected string TestFile_50_mbps_hd_h264 => Path.Combine(TestPath, "50-mbps-hd-h264.mkv");
+    protected string TestFile_120_mbps_4k_uhd_hevc_10bit => Path.Combine(TestPath, "120-mbps-4k-uhd-hevc-10bit.mkv");
 
     private class TestSettings
     {
