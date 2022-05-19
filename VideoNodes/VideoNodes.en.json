@@ -3,6 +3,8 @@
     "264": "H.264",
     "265": "H.265"
   },
+  "5": { "1": "5.1" },
+  "7": { "1": "7.1" },
   "Flow": {
     "Parts": {
       "AudioAddTrack": {
@@ -198,6 +200,8 @@
           "Channels-Help": "The number of channels this new audio track will be.\nIf you specify more channels than the source, FFMPEG will automatically upmix it.\nIf you specify fewer channels than the source, FFMPEG will automatically down mix it.",
           "Bitrate": "Bitrate",
           "Bitrate-Help": "Bitrate of the new audio track",
+          "Codec": "Codec",
+          "Codec-Help": "The codec to use to encode the audio",
           "Language": "Language",
           "Language-Help": "Optional ISO 639-2 language code to use.  Will attempt to find an audio track with this language code if not the best audio track will be used.\nhttps://en.wikipedia.org/wiki/List_of_ISO_639-2_codes"
         }
