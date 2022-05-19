@@ -7,6 +7,9 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 /// </summary>
 public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
 {
+    /// <summary>
+    /// The number of outputs for this node
+    /// </summary>
     public override int Outputs => 1;
 
     internal const string CODEC_H264 = "h264";
@@ -14,8 +17,14 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
     internal const string CODEC_H265 = "h265";
     internal const string CODEC_H265_10BIT = "h265 10BIT";
 
+    /// <summary>
+    /// The Help URL for this node
+    /// </summary>
     public override string HelpUrl => "https://github.com/revenz/FileFlows/wiki/FFMPEG-Builder:-Video-Encode";
 
+    /// <summary>
+    /// Gets or sets the codec used to encode
+    /// </summary>
     [DefaultValue(CODEC_H264_10BIT)]
     [ChangeValue(nameof(Quality), 23, CODEC_H264)]
     [ChangeValue(nameof(Quality), 23, CODEC_H265_10BIT)]
@@ -25,6 +34,9 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
     public string Codec { get; set; }
 
     private static List<ListOption> _CodecOptions;
+    /// <summary>
+    /// Gets or sets the codec options
+    /// </summary>
     public static List<ListOption> CodecOptions
     {
         get
@@ -43,10 +55,16 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         }
     }
 
+    /// <summary>
+    /// Gets or sets if hardware encoding should be used if possible
+    /// </summary>
     [DefaultValue(true)]
     [Boolean(2)]
     public bool HardwareEncoding { get; set; }
 
+    /// <summary>
+    /// Gets or sets the quality of the video encode
+    /// </summary>
     [Slider(3, inverse: true)]
     [Range(0, 51)]
     [DefaultValue(28)]
@@ -54,7 +72,11 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
 
     private string bit10Filter = "yuv420p10le";
 
-
+    /// <summary>
+    /// Executes the node
+    /// </summary>
+    /// <param name="args">The node arguments</param>
+    /// <returns>the output return</returns>
     public override int Execute(NodeParameters args)
     {
         var stream = Model.VideoStreams.Where(x => x.Deleted == false).First();
@@ -63,11 +85,13 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         else if (Codec == CODEC_H265 || Codec == CODEC_H265_10BIT)
             H265(stream, Codec == CODEC_H265_10BIT);
         else
+        {
+            args.Logger?.ILog("Unknown codec: " + Codec);
             return 2;
+        }
 
         stream.ForcedChange = true;
-        bool encoding = false;
-        return encoding ? 1 : 2;
+        return 1;
     }
 
     private void H264(FfmpegVideoStream stream, bool tenBit)
@@ -157,5 +181,4 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
             "-preset", "p6",
         });
     }
-
 }
