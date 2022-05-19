@@ -16,7 +16,7 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
 
     public override string HelpUrl => "https://github.com/revenz/FileFlows/wiki/FFMPEG-Builder:-Video-Encode";
 
-    [DefaultValue("h265")]
+    [DefaultValue(CODEC_H264_10BIT)]
     [ChangeValue(nameof(Quality), 23, CODEC_H264)]
     [ChangeValue(nameof(Quality), 23, CODEC_H265_10BIT)]
     [ChangeValue(nameof(Quality), 28, CODEC_H265)]
@@ -49,7 +49,7 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
 
     [Slider(3, inverse: true)]
     [Range(0, 51)]
-    [DefaultValue(23)]
+    [DefaultValue(28)]
     public int Quality { get; set; }
 
     private string bit10Filter = "yuv420p10le";
