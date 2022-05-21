@@ -24,6 +24,7 @@ namespace FileFlows.BasicNodes.File
             }
             try
             {
+                file = args.MapPath(file);
                 var fileInfo = new FileInfo(file);
                 if (fileInfo.Exists)
                 {
