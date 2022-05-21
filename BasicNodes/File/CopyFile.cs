@@ -80,6 +80,7 @@ namespace FileFlows.BasicNodes.File
                 dest = Path.Combine(destDir!, destFile);
             }
 
+            args.Logger.DLog($"CopyFileArgs: '{args.WorkingFile}', '{dest}'");
             bool copied = args.CopyFile(args.WorkingFile, dest, updateWorkingFile: true);
             if (!copied)
                 return -1;
