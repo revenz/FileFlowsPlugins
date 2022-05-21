@@ -51,18 +51,23 @@ namespace FileFlows.BasicNodes.File
         {
             Canceled = false;
             string dest = args.ReplaceVariables(DestinationPath, true);
+
+            args.Logger.ILog($"CopyFile.Dest[0] '{dest}'");
             dest = dest.Replace("\\", Path.DirectorySeparatorChar.ToString());
             dest = dest.Replace("/", Path.DirectorySeparatorChar.ToString());
+            args.Logger.ILog($"CopyFile.Dest[1] '{dest}'");
             if (string.IsNullOrEmpty(dest))
             {
                 args.Logger?.ELog("No destination specified");
                 return -1;
             }
 
+            args.Logger.ILog($"CopyFile.Dest[2] '{dest}'");
             if (CopyFolder)
                 dest = Path.Combine(dest, args.RelativeFile);
             else
                 dest = Path.Combine(dest, new FileInfo(args.FileName).Name);
+            args.Logger.ILog($"CopyFile.Dest[3] '{dest}'");
 
             var fiDest = new FileInfo(dest);
             var fiWorking = new FileInfo(args.WorkingFile);
@@ -70,6 +75,7 @@ namespace FileFlows.BasicNodes.File
             {
                 dest = dest.Substring(0, dest.LastIndexOf(".")) + fiWorking.Extension;
             }
+            args.Logger.ILog($"CopyFile.Dest[5] '{dest}'");
 
             var destDir = new FileInfo(dest).DirectoryName;
             args.CreateDirectoryIfNotExists(destDir ?? String.Empty);
@@ -79,8 +85,9 @@ namespace FileFlows.BasicNodes.File
                 string destFile = args.ReplaceVariables(DestinationFile);
                 dest = Path.Combine(destDir!, destFile);
             }
+            args.Logger.ILog($"CopyFile.Dest[6] '{dest}'");
 
-            args.Logger.DLog($"CopyFileArgs: '{args.WorkingFile}', '{dest}'");
+            args.Logger.ILog($"CopyFileArgs: '{args.WorkingFile}', '{dest}'");
             bool copied = args.CopyFile(args.WorkingFile, dest, updateWorkingFile: true);
             if (!copied)
                 return -1;
