@@ -88,6 +88,7 @@ namespace FileFlows.BasicNodes.File
             args.Logger.ILog($"CopyFile.Dest[6] '{dest}'");
 
             args.Logger.ILog($"CopyFileArgs: '{args.WorkingFile}', '{dest}'");
+            
             bool copied = args.CopyFile(args.WorkingFile, dest, updateWorkingFile: true);
             if (!copied)
                 return -1;
