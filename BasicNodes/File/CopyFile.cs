@@ -77,8 +77,10 @@ namespace FileFlows.BasicNodes.File
             }
             args.Logger.ILog($"CopyFile.Dest[5] '{dest}'");
 
-            var destDir = new FileInfo(dest).DirectoryName;
-            args.CreateDirectoryIfNotExists(destDir ?? String.Empty);
+            // cant use new FileInfo(dest).Directory.Name here since
+            // if the folder is a linux folder and this node is running on windows
+            // /mnt, etc will be converted to c:\mnt and break the destination
+            var destDir = dest.Substring(0, dest.Replace("\\", "/").LastIndexOf("/"));
 
             if(string.IsNullOrEmpty(DestinationFile) == false)
             {
