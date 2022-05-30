@@ -203,6 +203,17 @@
             Gets the location of the node configuration file
             </summary>
         </member>
+        <member name="P:FileFlows.ServerShared.Helpers.DirectoryHelper.ServerConfigFile">
+            <summary>
+            Gets the location of the server configuration file
+            </summary>
+        </member>
+        <member name="M:FileFlows.ServerShared.Helpers.DirectoryHelper.CleanDirectory(System.String)">
+            <summary>
+            Deletes all files and folders from a directory
+            </summary>
+            <param name="path">the path of the directory</param>
+        </member>
         <member name="T:FileFlows.ServerShared.Helpers.FileHelper">
             <summary>
             A helper for interacting with files 
@@ -800,6 +811,41 @@
             <returns>the updated plugininfo</returns>
             <exception cref="T:System.NotImplementedException">This not yet implemented</exception>
         </member>
+        <member name="T:FileFlows.ServerShared.Services.IScriptService">
+            <summary>
+            Script Service interface
+            </summary>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.IScriptService.GetCode(System.Guid)">
+            <summary>
+            Get the code for a script
+            </summary>
+            <param name="uid">The UID identifying the script</param>
+            <returns>the code for the script</returns>
+        </member>
+        <member name="T:FileFlows.ServerShared.Services.ScriptService">
+            <summary>
+            A service used to get script data from the FileFlows server
+            </summary>
+        </member>
+        <member name="P:FileFlows.ServerShared.Services.ScriptService.Loader">
+            <summary>
+            Gets or sets a function used to load new instances of the service
+            </summary>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.ScriptService.Load">
+            <summary>
+            Loads an instance of the script service
+            </summary>
+            <returns>an instance of the script service</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.ScriptService.GetCode(System.Guid)">
+            <summary>
+            Get the code for a script
+            </summary>
+            <param name="uid">The UID identifying the script</param>
+            <returns>the code for the script</returns>
+        </member>
         <member name="T:FileFlows.ServerShared.Services.Service">
             <summary>
             A service lets you communicate with the FileFLows server
@@ -952,14 +998,6 @@
             Gets if auto updates are enabled
             </summary>
             <returns>if auto updates are enabled</returns>
-        </member>
-        <member name="M:FileFlows.ServerShared.Workers.UpdaterWorker.DownloadFile(System.String,System.String)">
-            <summary>
-            Downloads a file and saves it
-            </summary>
-            <param name="url">The url of the file to download</param>
-            <param name="file">the location to save the file</param>
-            <exception cref="T:System.Exception">throws if the file fails to download</exception>
         </member>
         <member name="T:FileFlows.ServerShared.Workers.Worker">
             <summary>

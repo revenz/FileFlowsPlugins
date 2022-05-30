@@ -256,11 +256,20 @@
             <param name="data">any data to send with the request</param>
             <returns>the request result</returns>
         </member>
-        <member name="M:FileFlows.Shared.Helpers.HttpHelper.Log(System.String)">
+        <member name="M:FileFlows.Shared.Helpers.HttpHelper.DownloadFile(System.String,System.String)">
+            <summary>
+            Downloads a file from a URL
+            </summary>
+            <param name="url">the URL of the download</param>
+            <param name="destination">where the download should be saved</param>
+            <exception cref="T:System.Exception">throws if the file fails to download</exception>
+        </member>
+        <member name="M:FileFlows.Shared.Helpers.HttpHelper.Log(System.String,System.Boolean)">
             <summary>
             Logs a message to the log
             </summary>
             <param name="message">the message to log</param>
+            <param name="error">if the message is an error message or info</param>
         </member>
         <member name="M:FileFlows.Shared.Helpers.HttpHelper.MakeRequest``1(System.Net.Http.HttpMethod,System.String,System.Object,System.Int32,System.Boolean)">
             <summary>
@@ -500,6 +509,12 @@
         <member name="P:FileFlows.Shared.Models.ElementField.Placeholder">
             <summary>
             Gets or sets optional place holder text, this can be a translation key
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.ElementField.Description">
+            <summary>
+            Gets or sets the description of the element, if this is set, this will be used instead of the HelpHint
+            Note: this is used by the Script which the user defines the description for
             </summary>
         </member>
         <member name="P:FileFlows.Shared.Models.ElementField.InputType">
@@ -922,6 +937,11 @@
         <member name="P:FileFlows.Shared.Models.FlowElement.Name">
             <summary>
             Gets or sets the name of the element
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.FlowElement.Description">
+            <summary>
+            Gets or sets a description for this element, only used by scripts where the description is user defined 
             </summary>
         </member>
         <member name="P:FileFlows.Shared.Models.FlowElement.DisplayName">
@@ -1638,6 +1658,21 @@
             Gets or sets the output from this node
             </summary>
         </member>
+        <member name="T:FileFlows.Shared.Models.LibraryFileDatalistModel">
+            <summary>
+            Model class for the Library Files page
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.LibraryFileDatalistModel.LibraryFiles">
+            <summary>
+            Gets or sets a list of library files to show in the UI
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.LibraryFileDatalistModel.Status">
+            <summary>
+            Gets or sets the status data for the libraries
+            </summary>
+        </member>
         <member name="T:FileFlows.Shared.Models.LibraryStatus">
             <summary>
             Library status
@@ -1935,6 +1970,16 @@
             Gets or sets the parsed response object 
             </summary>
         </member>
+        <member name="T:FileFlows.Shared.Models.Script">
+            <summary>
+            A script is a special function node that lets you reuse them
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.Script.Code">
+            <summary>
+            Gets or sets the javascript code of the script
+            </summary>
+        </member>
         <member name="T:FileFlows.Shared.Models.Settings">
             <summary>
             Settings for FileFlows
@@ -2052,6 +2097,21 @@
         <member name="P:FileFlows.Shared.Models.ExecutedNodeOutput.Duration">
             <summary>
             Gets or sets the processing time of the executed node
+            </summary>
+        </member>
+        <member name="T:FileFlows.Shared.Models.SystemInfo">
+            <summary>
+            Gets the system information about FileFlows
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.SystemInfo.MemoryUsage">
+            <summary>
+            Gets the amount of memory used by FileFlows
+            </summary>
+        </member>
+        <member name="P:FileFlows.Shared.Models.SystemInfo.CpuUsage">
+            <summary>
+            Gets the how much CPU is used by FileFlows
             </summary>
         </member>
         <member name="T:FileFlows.Shared.Models.Tool">
@@ -2195,6 +2255,18 @@
             </summary>
             <param name="value">The value to validate</param>
             <returns>true if the value has a propre value</returns>
+        </member>
+        <member name="T:FileFlows.Shared.Validators.ScriptValidator">
+            <summary>
+            Validator that checks a Script object is valid
+            </summary>
+        </member>
+        <member name="M:FileFlows.Shared.Validators.ScriptValidator.Validate(System.Object)">
+            <summary>
+            Validates a Script
+            </summary>
+            <param name="value">the Script code to validate</param>
+            <returns>true if valid, otherwise false</returns>
         </member>
         <member name="T:FileFlows.Shared.Validators.Validator">
             <summary>
