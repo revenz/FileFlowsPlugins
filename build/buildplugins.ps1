@@ -23,7 +23,7 @@ $output = $output | Resolve-Path
 Remove-Item Builds  -Recurse -ErrorAction SilentlyContinue
 
 $revision = (git rev-list --count --first-parent HEAD) -join "`n"
-$version = "0.6.3.$revision"
+$version = "0.7.0.$revision"
 
 $json = "[`n"
 
