@@ -1,5 +1,6 @@
 ﻿using FileFlows.Plugin;
 using Jint;
+using Jint.Runtime;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -71,12 +72,27 @@ internal class JavascriptExecutor
             })
             .SetValue("Logger", args.Logger)
             .SetValue("Variables", args.Variables)
-            .SetValue("Flow", args);
+            .SetValue("Flow", args)
+            .SetValue(nameof(FileInfo), new Func<string, FileInfo>((string file) => new FileInfo(file)))
+            .SetValue(nameof(DirectoryInfo), new Func<string, DirectoryInfo>((string path) => new DirectoryInfo(path))); ;
             foreach (var arg in execArgs.AdditionalArguments)
                 engine.SetValue(arg.Key, arg.Value);
 
             var result = int.Parse(engine.Evaluate(tcode).ToObject().ToString());
             return result;
+        }
+        catch(JavaScriptException ex)
+        {
+            // print out the code block for debugging
+            int lineNumber = 0;
+            var lines = execArgs.Code.Split('\n');
+            string pad = "D" + (lines.ToString().Length);
+            args.Logger.DLog("Code: " + Environment.NewLine +
+                string.Join("\n", lines.Select(x => (++lineNumber).ToString("D3") + ": " + x)));
+
+            args.Logger?.ELog($"Failed executing script [{ex.LineNumber}, {ex.Column}]: {ex.Message}");
+            return -1;
+
         }
         catch (Exception ex)
         {

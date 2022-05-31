@@ -816,6 +816,13 @@
             Script Service interface
             </summary>
         </member>
+        <member name="M:FileFlows.ServerShared.Services.IScriptService.Get(System.Guid)">
+            <summary>
+            Get a script
+            </summary>
+            <param name="uid">The UID identifying the script</param>
+            <returns>the script</returns>
+        </member>
         <member name="M:FileFlows.ServerShared.Services.IScriptService.GetCode(System.Guid)">
             <summary>
             Get the code for a script
@@ -838,6 +845,13 @@
             Loads an instance of the script service
             </summary>
             <returns>an instance of the script service</returns>
+        </member>
+        <member name="M:FileFlows.ServerShared.Services.ScriptService.Get(System.Guid)">
+            <summary>
+            Get a script
+            </summary>
+            <param name="uid">The UID identifying the script</param>
+            <returns>the script</returns>
         </member>
         <member name="M:FileFlows.ServerShared.Services.ScriptService.GetCode(System.Guid)">
             <summary>

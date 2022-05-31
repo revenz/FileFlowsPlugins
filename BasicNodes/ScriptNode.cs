@@ -45,7 +45,8 @@ public class ScriptNode:Node
         var execArgs = new JavascriptExecutionArgs
         {
             Args = args,
-            Code = Code + "\n\n" + entryPoint
+            //Code = ("try\n{\n\t" + Code.Replace("\n", "\n\t") + "\n\n\t" + entryPoint + "\n} catch (err) { \n\tLogger.ELog(`Error in script [${err.line}]: ${err}`);\n\treturn -1;\n}").Replace("\t", "   ")
+            Code = (Code + "\n\n" + entryPoint).Replace("\t", "   ").Trim()
         };
 
         if (script.Parameters?.Any() == true)
