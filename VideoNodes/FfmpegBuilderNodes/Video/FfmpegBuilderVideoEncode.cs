@@ -178,7 +178,7 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         stream.EncodingParameters.AddRange(new[]
         {
             "-qp", Quality.ToString(),
-            "-preset", "p6",
+            "-preset", "slower",
         });
     }
 }
