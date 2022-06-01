@@ -16,6 +16,25 @@
           "PluginInfoGenerator.dll": {}
         }
       },
+      "Esprima/2.1.2": {
+        "runtime": {
+          "lib/netstandard2.1/Esprima.dll": {
+            "assemblyVersion": "2.1.2.0",
+            "fileVersion": "2.1.2.0"
+          }
+        }
+      },
+      "Jint/3.0.0-beta-2038": {
+        "dependencies": {
+          "Esprima": "2.1.2"
+        },
+        "runtime": {
+          "lib/netstandard2.1/Jint.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.0.0"
+          }
+        }
+      },
       "MessageFormat/5.0.1": {
         "dependencies": {
           "Microsoft.Extensions.ObjectPool": "5.0.5"
@@ -43,7 +62,8 @@
       "FileFlows.ServerShared/1.0.0": {
         "dependencies": {
           "FileFlows.Plugin": "1.0.0",
-          "FileFlows.Shared": "1.0.0"
+          "FileFlows.Shared": "1.0.0",
+          "Jint": "3.0.0-beta-2038"
         },
         "runtime": {
           "FileFlows.ServerShared.dll": {}
@@ -65,6 +85,20 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "Esprima/2.1.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-JAiCTRsb90Rt7Yhk39mfS9KF7Eb7CxMMJ6/n9H4LRBfYlAmq9FI3oxmb0iNxtME4EhV6oQx1F/IsvDtGYwOHqg==",
+      "path": "esprima/2.1.2",
+      "hashPath": "esprima.2.1.2.nupkg.sha512"
+    },
+    "Jint/3.0.0-beta-2038": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-RNCrRzThi4nTum4EQ/v8deKyZwySv5vt0HEzGjI7Nru2b+gppDx0UsU7p5RN75P2EQjl7lwxmXtW1zVN04aT3A==",
+      "path": "jint/3.0.0-beta-2038",
+      "hashPath": "jint.3.0.0-beta-2038.nupkg.sha512"
     },
     "MessageFormat/5.0.1": {
       "type": "package",

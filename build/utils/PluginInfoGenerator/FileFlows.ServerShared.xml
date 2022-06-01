@@ -382,6 +382,25 @@
             Gets or sets the local equivalent path on the node
             </summary>
         </member>
+        <member name="T:FileFlows.ServerShared.ScriptExecution.ScriptExecutor">
+            <summary>
+            A Javascript code executor
+            </summary>
+            
+        </member>
+        <member name="T:FileFlows.ServerShared.ScriptExecution.ScriptExecutor.LogDelegate">
+            <summary>
+            Delegate used by the executor so log messages can be passed from the javascript code into the flow runner
+            </summary>
+            <param name="values">the parameters for the logger</param>
+        </member>
+        <member name="M:FileFlows.ServerShared.ScriptExecution.ScriptExecutor.Execute(FileFlows.Plugin.Models.ScriptExecutionArgs)">
+            <summary>
+            Executes javascript
+            </summary>
+            <param name="execArgs">the execution arguments</param>
+            <returns>the output to be called next</returns>
+        </member>
         <member name="T:FileFlows.ServerShared.Services.IFlowRunnerService">
             <summary>
             Interface for a Flow Runner, which is responsible for executing a flow and processing files

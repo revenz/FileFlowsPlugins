@@ -42,7 +42,7 @@ public class ScriptNode:Node
         // all scripts must contain the "Script" method we then add this to call that 
         string entryPoint = $"Script({epParams});";
 
-        var execArgs = new JavascriptExecutionArgs
+        var execArgs = new FileFlows.Plugin.Models.ScriptExecutionArgs
         {
             Args = args,
             //Code = ("try\n{\n\t" + Code.Replace("\n", "\n\t") + "\n\n\t" + entryPoint + "\n} catch (err) { \n\tLogger.ELog(`Error in script [${err.line}]: ${err}`);\n\treturn -1;\n}").Replace("\t", "   ")
@@ -59,6 +59,6 @@ public class ScriptNode:Node
             }
         }
 
-        return JavascriptExecutor.Execute(execArgs);
+        return args.ScriptExecutor.Execute(execArgs);
     }
 }
