@@ -107,6 +107,13 @@
           "Percent-Help": "The threshold percentage value to use for scene detection changes.  A good value is 45%"
         }
       },
+      "CanUseHardwareEncoding": {
+        "Description": "Checks if the specified hardware encoder is currently available to the Flow.",
+        "Fields": {
+          "Encoder": "Encoder",
+          "Encoder-Help": "The hardware decoder to check"
+        }
+      },
       "ComskipChapters": {
         "Description": "Uses a comskip EDL file and will create chapters given that EDL comskip file.",
         "Outputs": {

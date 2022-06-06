@@ -79,34 +79,34 @@ namespace VideoNodes.Tests
 
             Assert.IsTrue(result);
         }
-        [TestMethod]
-        public void VideoInfoTest_CanEncodeNvidia()
-        {
-            const string file = @"D:\videos\unprocessed\Bourne.mkv";
-            const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
-            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
-            //args.Process = new FileFlows.Plugin.ProcessHelper(args.Logger);
+        //[TestMethod]
+        //public void VideoInfoTest_CanEncodeNvidia()
+        //{
+        //    const string file = @"D:\videos\unprocessed\Bourne.mkv";
+        //    const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+        //    var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
+        //    //args.Process = new FileFlows.Plugin.ProcessHelper(args.Logger);
 
-            var node = new VideoEncode();
-            node.SetArgs(args);
-            bool result = node.CanProcessEncoder(ffmpeg, "hevc_nvenc -preset hq");
+        //    var node = new VideoEncode();
+        //    node.SetArgs(args);
+        //    bool result = node.CanProcessEncoder(ffmpeg, "hevc_nvenc -preset hq");
 
-            Assert.IsTrue(result);
-        }
-        [TestMethod]
-        public void VideoInfoTest_CanEncodeIntel()
-        {
-            const string file = @"D:\videos\unprocessed\Bourne.mkv";
-            const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
-            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
-            //args.Process = new FileFlows.Plugin.ProcessHelper(args.Logger);
+        //    Assert.IsTrue(result);
+        //}
+        //[TestMethod]
+        //public void VideoInfoTest_CanEncodeIntel()
+        //{
+        //    const string file = @"D:\videos\unprocessed\Bourne.mkv";
+        //    const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+        //    var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
+        //    //args.Process = new FileFlows.Plugin.ProcessHelper(args.Logger);
 
-            var node = new VideoEncode();
-            node.SetArgs(args);
-            bool result = node.CanProcessEncoder(ffmpeg, "h264_qsv");
+        //    var node = new VideoEncode();
+        //    node.SetArgs(args);
+        //    bool result = node.CanProcessEncoder(ffmpeg, "h264_qsv");
 
-            Assert.IsTrue(result);
-        }
+        //    Assert.IsTrue(result);
+        //}
 
 
         [TestMethod]

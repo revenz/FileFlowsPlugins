@@ -22,7 +22,7 @@ namespace FileFlows.VideoNodes
             return Encode(args, ffmpegExe, ffmpegParameters, out output, extension, outputFile, updateWorkingFile, dontAddInputFile: dontAddInputFile, dontAddOutputFile: dontAddOutputFile);
         }
 
-        public bool Encode(NodeParameters args, string ffmpegExe, List<string> ffmpegParameters, out string ouput, string extension = "mkv", string outputFile = "", bool updateWorkingFile = true, bool dontAddInputFile = false, bool dontAddOutputFile = false)
+        public bool Encode(NodeParameters args, string ffmpegExe, List<string> ffmpegParameters, out string output, string extension = "mkv", string outputFile = "", bool updateWorkingFile = true, bool dontAddInputFile = false, bool dontAddOutputFile = false)
         {
             if (string.IsNullOrEmpty(extension))
                 extension = "mkv";
@@ -55,7 +55,7 @@ namespace FileFlows.VideoNodes
             }
             Encoder.AtTime -= AtTimeEvent;
             Encoder = null;
-            ouput = success.output;
+            output = success.output;
             return success.successs;
         }
 
@@ -88,7 +88,7 @@ namespace FileFlows.VideoNodes
                 // try find best hevc encoder
                 foreach(string vidparam in new [] { "hevc_nvenc -preset hq", "hevc_qsv -global_quality 28 -load_plugin hevc_hw", "hevc_amf", "hevc_vaapi" })
                 {
-                    bool canProcess = CanProcessEncoder(ffmpeg, vidparam);
+                    bool canProcess = CanUseHardwareEncoding.CanProcess(Args, ffmpeg, vidparam);
                     if (canProcess)
                         return vidparam;
                 }
@@ -99,7 +99,7 @@ namespace FileFlows.VideoNodes
                 // try find best hevc encoder
                 foreach (string vidparam in new[] { "h264_nvenc", "h264_qsv", "h264_amf", "h264_vaapi" })
                 {
-                    bool canProcess = CanProcessEncoder(ffmpeg, vidparam);
+                    bool canProcess = CanUseHardwareEncoding.CanProcess(Args, ffmpeg, vidparam);
                     if (canProcess)
                         return vidparam;
                 }
@@ -109,7 +109,7 @@ namespace FileFlows.VideoNodes
             if (vidparams.ToLower().Contains("hevc_nvenc"))
             {
                 // nvidia h265 encoding, check can
-                bool canProcess = CanProcessEncoder(ffmpeg, vidparams);
+                bool canProcess = CanUseHardwareEncoding.CanProcess(Args, ffmpeg, vidparams);
                 if (canProcess == false)
                 {
                     // change to cpu encoding 
@@ -121,7 +121,7 @@ namespace FileFlows.VideoNodes
             else if (vidparams.ToLower().Contains("h264_nvenc"))
             {
                 // nvidia h264 encoding, check can
-                bool canProcess = CanProcessEncoder(ffmpeg, vidparams);
+                bool canProcess = CanUseHardwareEncoding.CanProcess(Args, ffmpeg, vidparams);
                 if (canProcess == false)
                 {
                     // change to cpu encoding 
@@ -133,7 +133,7 @@ namespace FileFlows.VideoNodes
             else if (vidparams.ToLower().Contains("hevc_qsv"))
             {
                 // nvidia h265 encoding, check can
-                bool canProcess = CanProcessEncoder(ffmpeg, vidparams);
+                bool canProcess = CanUseHardwareEncoding.CanProcess(Args, ffmpeg, vidparams);
                 if (canProcess == false)
                 {
                     // change to cpu encoding 
@@ -145,7 +145,7 @@ namespace FileFlows.VideoNodes
             else if (vidparams.ToLower().Contains("h264_qsv"))
             {
                 // nvidia h264 encoding, check can
-                bool canProcess = CanProcessEncoder(ffmpeg, vidparams);
+                bool canProcess = CanUseHardwareEncoding.CanProcess(Args, ffmpeg, vidparams);
                 if (canProcess == false)
                 {
                     // change to cpu encoding 
@@ -155,25 +155,6 @@ namespace FileFlows.VideoNodes
                 return vidparams;
             }
             return vidparams;
-        }
-
-        public bool CanProcessEncoder(string ffmpeg, string encodingParams)
-        {
-            //ffmpeg -loglevel error -f lavfi -i color=black:s=1080x1080 -vframes 1 -an -c:v hevc_nven2c -preset hq -f null -"
-
-            string cmdArgs = $"-loglevel error -f lavfi -i color=black:s=1080x1080 -vframes 1 -an -c:v {encodingParams} -f null -\"";
-            var cmd = Args.Process.ExecuteShellCommand(new ExecuteArgs
-            {
-                Command = ffmpeg,
-                Arguments = cmdArgs,
-                Silent = true
-            }).Result;
-            if (cmd.ExitCode != 0 || string.IsNullOrWhiteSpace(cmd.Output) == false)
-            {
-                Args.Logger?.WLog($"Cant process '{encodingParams}': {cmd.Output ?? ""}");
-                return false;
-            }
-            return true;
         }
 
         public bool HasNvidiaCard(string ffmpeg)

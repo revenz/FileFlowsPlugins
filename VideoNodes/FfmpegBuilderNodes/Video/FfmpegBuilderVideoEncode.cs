@@ -98,10 +98,14 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
     {
         if (HardwareEncoding == false)
             H26x_CPU(stream);
-        else if (SupportsHardwareNvidia264())
+        else if (CanUseHardwareEncoding.CanProcess_Nvidia_H264(Args))
             H26x_Nvidia(stream, false);
-        else if (SupportsHardwareQsv264())
+        else if (CanUseHardwareEncoding.CanProcess_Qsv_H264(Args))
             H26x_Qsv(stream, false);
+        else if (CanUseHardwareEncoding.CanProcess_Amd_H264(Args))
+            H26x_Amd(stream, false);
+        else if (CanUseHardwareEncoding.CanProcess_Vaapi_H264(Args))
+            H26x_Vaapi(stream, false);
         else 
             H26x_CPU(stream);
 
@@ -114,10 +118,14 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         // hevc_qsv -load_plugin hevc_hw -pix_fmt p010le -profile:v main10 -global_quality 21 -g 24 -look_ahead 1 -look_ahead_depth 60
         if (HardwareEncoding == false)
             H26x_CPU(stream);
-        else if (SupportsHardwareNvidia265())
+        else if (CanUseHardwareEncoding.CanProcess_Nvidia_Hevc(Args))
             H26x_Nvidia(stream, true);
-        else if (SupportsHardwareQsv265())
+        else if (CanUseHardwareEncoding.CanProcess_Qsv_Hevc(Args))
             H26x_Qsv(stream, true);
+        else if (CanUseHardwareEncoding.CanProcess_Amd_Hevc(Args))
+            H26x_Amd(stream, true);
+        else if (CanUseHardwareEncoding.CanProcess_Vaapi_Hevc(Args))
+            H26x_Vaapi(stream, true);
         else 
             H26x_CPU(stream);
 
@@ -180,5 +188,40 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
             "-qp", Quality.ToString(),
             "-preset", "slower",
         });
+    }
+
+    private void H26x_Amd(FfmpegVideoStream stream, bool h265)
+    {
+        stream.EncodingParameters.Clear();
+        stream.EncodingParameters.AddRange(new[]
+        {
+            h265 ? "amf_nvenc" : "amf_nvenc",
+            "-rc", "constqp",
+            "-qp", Quality.ToString(),
+            //"-b:v", "0K", // this would do a two-pass... slower
+            "-preset", "slower",
+            // https://www.reddit.com/r/ffmpeg/comments/gg5szi/what_is_spatial_aq_and_temporal_aq_with_nvenc/
+            "-spatial-aq", "1"
+        });
+
+        if (Codec == CODEC_H264_10BIT)
+            bit10Filter = "yuv420p";
+    }
+    private void H26x_Vaapi(FfmpegVideoStream stream, bool h265)
+    {
+        stream.EncodingParameters.Clear();
+        stream.EncodingParameters.AddRange(new[]
+        {
+            h265 ? "amf_nvenc" : "amf_nvenc",
+            "-rc", "constqp",
+            "-qp", Quality.ToString(),
+            //"-b:v", "0K", // this would do a two-pass... slower
+            "-preset", "slower",
+            // https://www.reddit.com/r/ffmpeg/comments/gg5szi/what_is_spatial_aq_and_temporal_aq_with_nvenc/
+            "-spatial-aq", "1"
+        });
+
+        if (Codec == CODEC_H264_10BIT)
+            bit10Filter = "yuv420p";
     }
 }
