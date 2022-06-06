@@ -44,7 +44,7 @@ public class VideoHasStream : VideoNode
     public string Language { get; set; }
     
     [ConditionEquals(nameof(Stream), "Audio")]
-    [NumberInt(5)]
+    [NumberFloat(5)]
     public float Channels { get; set; }
 
     public override int Execute(NodeParameters args)
