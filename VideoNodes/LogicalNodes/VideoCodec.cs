@@ -12,6 +12,8 @@ namespace FileFlows.VideoNodes
         public override int Outputs => 2;
         public override FlowElementType Type => FlowElementType.Logic;
 
+        public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/logical-nodes/video-codec";
+
         [StringArray(1)]
         [Required]
         public string[] Codecs { get; set; }

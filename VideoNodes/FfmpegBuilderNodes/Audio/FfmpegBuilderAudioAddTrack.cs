@@ -6,7 +6,7 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
 {
     public override string Icon => "fas fa-volume-off";
 
-    public override string HelpUrl => "https://github.com/revenz/FileFlows/wiki/FFMPEG-Builder:-Audio-Add-Track";
+    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/add-audio-track";
 
     [NumberInt(1)]
     [Range(0, 100)]

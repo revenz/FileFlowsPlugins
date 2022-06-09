@@ -9,6 +9,8 @@ namespace FileFlows.VideoNodes
         public override int Outputs => 1;
         public override FlowElementType Type => FlowElementType.Input;
 
+        public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/video-file";
+
         public override bool NoEditorOnAdd => true;
 
         [DefaultValue(25)]

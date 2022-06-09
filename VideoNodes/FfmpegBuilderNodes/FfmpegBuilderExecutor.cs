@@ -10,6 +10,8 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
         public override int Outputs => 2;
         public override FlowElementType Type => FlowElementType.BuildEnd;
 
+        public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder";
+
         public override bool NoEditorOnAdd => true;
 
         [DefaultValue(true)]

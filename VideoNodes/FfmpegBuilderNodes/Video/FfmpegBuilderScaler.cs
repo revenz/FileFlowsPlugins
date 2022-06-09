@@ -2,7 +2,7 @@
 
 public class FfmpegBuilderScaler : FfmpegBuilderNode
 {
-    public override string HelpUrl => "https://github.com/revenz/FileFlows/wiki/FFMPEG-Builder:-Video-Scaler";
+    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/video-scaler";
 
     [Boolean(2)]
     public bool Force { get; set; }

@@ -9,6 +9,8 @@ public class FfmpegBuilderAudioTrackReorder : FfmpegBuilderNode
 
     public override string Icon => "fas fa-volume-off";
 
+    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/audio-track-reorder";
+
     [StringArray(1)]
     public List<string> Languages { get; set; }
 

@@ -5,7 +5,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 
 public class FfmpegBuilderAudioNormalization : FfmpegBuilderNode
 {
-    public override string HelpUrl => "https://github.com/revenz/FileFlows/wiki/FFMPEG-Builder:-Audio-Normalization";
+    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/audio-normalization";
     public override string Icon => "fas fa-volume-up";
     public override int Outputs => 2;
 

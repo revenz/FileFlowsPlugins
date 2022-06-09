@@ -2,7 +2,7 @@
 
 public class FfmpegBuilderRemuxToMkv : FfmpegBuilderNode
 {
-    public override string HelpUrl => "https://github.com/revenz/FileFlows/wiki/FFMPEG-Builder:-Remux-to-MKV";
+    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/remux-to-mkv";
 
     public override int Execute(NodeParameters args)
     {

@@ -15,7 +15,7 @@ namespace FileFlows.BasicNodes.Functions
         public override string Icon => "fas fa-code";
         public override bool FailureNode => true;
 
-        public override string HelpUrl => "https://github.com/revenz/FileFlows/wiki/Function-Node"; 
+        public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/function"; 
 
         [DefaultValue(1)]
         [NumberInt(1)]

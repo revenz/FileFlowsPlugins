@@ -20,7 +20,7 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
     /// <summary>
     /// The Help URL for this node
     /// </summary>
-    public override string HelpUrl => "https://github.com/revenz/FileFlows/wiki/FFMPEG-Builder:-Video-Encode";
+    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/video-encode";
 
     /// <summary>
     /// Gets or sets the codec used to encode

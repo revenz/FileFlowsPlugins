@@ -8,6 +8,8 @@ public class CanUseHardwareEncoding:Node
     public override int Inputs => 1;
     public override int Outputs => 2;
 
+    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/logical-nodes/can-use-hardware-encoding";
+
     public override string Icon => "fas fa-eye";
 
     public override FlowElementType Type => FlowElementType.Logic;

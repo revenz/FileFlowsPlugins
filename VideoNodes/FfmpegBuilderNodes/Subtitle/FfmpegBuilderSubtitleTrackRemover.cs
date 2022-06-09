@@ -2,7 +2,7 @@
 
 public class FfmpegBuilderSubtitleTrackRemover : FfmpegBuilderNode
 {
-    public override string HelpUrl => "https://github.com/revenz/FileFlows/wiki/FFMPEG-Builder:-Subtitle-Track-Remover";
+    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/subtitle-track-remover";
 
     public override string Icon => "fas fa-comment";
 

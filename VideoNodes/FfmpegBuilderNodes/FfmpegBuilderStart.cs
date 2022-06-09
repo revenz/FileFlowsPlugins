@@ -5,7 +5,9 @@
 /// </summary>
 public class FfmpegBuilderStart: FfmpegBuilderNode
 {
-    
+
+    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder";
+
     /// <summary>
     /// The number of inputs into this node
     /// </summary>

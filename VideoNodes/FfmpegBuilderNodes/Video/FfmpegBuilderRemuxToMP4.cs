@@ -2,7 +2,7 @@
 
 public class FfmpegBuilderRemuxToMP4: FfmpegBuilderNode
 {
-    public override string HelpUrl => "https://github.com/revenz/FileFlows/wiki/FFMPEG-Builder:-Remux-to-MP4";
+    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/remux-to-mp4";
 
     public override int Execute(NodeParameters args)
     {

@@ -2,7 +2,7 @@
 
 public class FfmpegBuilderAudioTrackRemover: FfmpegBuilderNode
 {
-    public override string HelpUrl => "https://github.com/revenz/FileFlows/wiki/FFMPEG-Builder:-Audio-Track-Remover";
+    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/audio-track-remover";
 
     public override string Icon => "fas fa-volume-off";
 

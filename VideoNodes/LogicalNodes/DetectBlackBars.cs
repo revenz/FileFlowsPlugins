@@ -12,6 +12,9 @@ namespace FileFlows.VideoNodes
         public override int Outputs => 2;
         public override int Inputs => 1;
         public override FlowElementType Type => FlowElementType.Logic;
+
+        public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/logical-nodes/detect-black-bars";
+
         public override string Icon => "fas fa-film";
 
         internal const string CROP_KEY = "VideoCrop";
