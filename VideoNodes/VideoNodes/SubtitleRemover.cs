@@ -42,6 +42,7 @@
                         new ListOption { Value = "subrip", Label = "SubRip subtitle"},
                         new ListOption { Value = "srt", Label = "SubRip subtitle (codec subrip)"},
                         new ListOption { Value = "ttml", Label = "TTML subtitle"},
+                        new ListOption { Value = "mov_text", Label = "TX3G (mov_text)"},
                         new ListOption { Value = "webvtt", Label = "WebVTT subtitle"},
                     };
                 }

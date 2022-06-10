@@ -964,6 +964,32 @@ public class FfmpegBuilder_BasicTests
         Assert.AreEqual(1, result);
     }
 
+
+
+
+    [TestMethod]
+    public void FfmpegBuilder_RemoveSubtitleFormat_MovText()
+    {
+        const string file = @"D:\videos\testfiles\movtext.mp4";
+        var logger = new TestLogger();
+        const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+        var vi = new VideoInfoHelper(ffmpeg, logger);
+        var vii = vi.Read(file);
+        var args = new NodeParameters(file, logger, false, string.Empty);
+        args.GetToolPathActual = (string tool) => ffmpeg;
+        args.TempPath = @"D:\videos\temp";
+        args.Parameters.Add("VideoInfo", vii);
+
+
+        FfmpegBuilderStart ffStart = new();
+        ffStart.PreExecute(args);
+        Assert.AreEqual(1, ffStart.Execute(args));
+
+        FfmpegBuilderSubtitleFormatRemover ffSubRemover= new();
+        ffSubRemover.SubtitlesToRemove = new List<string> { "mov_text" };
+        ffSubRemover.PreExecute(args);
+        Assert.AreEqual(1, ffSubRemover.Execute(args));
+    }
 }
 
 #endif
