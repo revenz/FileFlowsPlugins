@@ -195,7 +195,7 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         stream.EncodingParameters.Clear();
         stream.EncodingParameters.AddRange(new[]
         {
-            h265 ? "amf_nvenc" : "amf_nvenc",
+            h265 ? "hevc_amf" : "hevc_amf",
             "-rc", "constqp",
             "-qp", Quality.ToString(),
             //"-b:v", "0K", // this would do a two-pass... slower
@@ -212,7 +212,7 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         stream.EncodingParameters.Clear();
         stream.EncodingParameters.AddRange(new[]
         {
-            h265 ? "amf_nvenc" : "amf_nvenc",
+            h265 ? "hevc_amf" : "hevc_amf",
             "-rc", "constqp",
             "-qp", Quality.ToString(),
             //"-b:v", "0K", // this would do a two-pass... slower
