@@ -160,6 +160,31 @@ public class VideoHasStreamTests : TestBase
 
         Assert.AreEqual(2, output);
     }
+
+
+    [TestMethod]
+    public void VideoHasStream_Video_Tag()
+    {
+        string file = TestFile_Tag;
+        var vi = new VideoInfoHelper(FfmpegPath, new TestLogger());
+        var vii = vi.Read(file);
+
+        VideoHasStream node = new();
+        node.Codec = "h264";
+        node.Stream = "Video";
+
+        var args = new NodeParameters(file, new TestLogger(), false, string.Empty);
+        args.GetToolPathActual = (string tool) => FfmpegPath;
+        args.TempPath = TempPath;
+
+        var vf = new VideoFile();
+        vf.PreExecute(args);
+        Assert.AreEqual(1, vf.Execute(args));
+
+        int output = node.Execute(args);
+
+        Assert.AreEqual(1, output);
+    }
 }
 
 
