@@ -147,23 +147,44 @@ public class CanUseHardwareEncoding:Node
             args.Logger.ELog("FFMpeg tool not found.");
             return false;
         }
+
         return CanProcess(args, ffmpeg, encodingParams);
     }
 
+    /// <summary>
+    /// Tests if the encoding parameters can be executed
+    /// </summary>
+    /// <param name="args">the node paramterse</param>
+    /// <param name="ffmpeg">the location of ffmpeg</param>
+    /// <param name="encodingParams">the encoding parameter to test</param>
+    /// <returns>true if can be processed</returns>
     internal static bool CanProcess(NodeParameters args, string ffmpeg, string encodingParams)
     {
-        string cmdArgs = $"-loglevel error -f lavfi -i color=black:s=1080x1080 -vframes 1 -an -c:v {encodingParams} -f null -\"";
-        var cmd = args.Process.ExecuteShellCommand(new ExecuteArgs
+        bool can = CanExecute();
+        if (can == false && encodingParams?.Contains("amf") == true)
         {
-            Command = ffmpeg,
-            Arguments = cmdArgs,
-            Silent = true
-        }).Result;
-        if (cmd.ExitCode != 0 || string.IsNullOrWhiteSpace(cmd.Output) == false)
-        {
-            args.Logger?.WLog($"Cant process '{encodingParams}': {cmd.Output ?? ""}");
-            return false;
+            // AMD/AMF has a issue where it reports false at first but then passes
+            // https://github.com/revenz/FileFlows/issues/106
+            Thread.Sleep(2000);
+            can = CanExecute();
         }
-        return true;
+        return can;
+
+        bool CanExecute()
+        {
+            string cmdArgs = $"-loglevel error -f lavfi -i color=black:s=1080x1080 -vframes 1 -an -c:v {encodingParams} -f null -\"";
+            var cmd = args.Process.ExecuteShellCommand(new ExecuteArgs
+            {
+                Command = ffmpeg,
+                Arguments = cmdArgs,
+                Silent = true
+            }).Result;
+            if (cmd.ExitCode != 0 || string.IsNullOrWhiteSpace(cmd.Output) == false)
+            {
+                args.Logger?.WLog($"Cant process '{encodingParams}': {cmd.Output ?? ""}");
+                return false;
+            }
+            return true;
+        }
     }
 }
