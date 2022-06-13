@@ -7,41 +7,83 @@ public class FfmpegBuilderAudioTrackReorder : FfmpegBuilderNode
 {
     public override int Outputs => 2;
 
-    public override string Icon => "fas fa-volume-off";
+    public override string Icon => "fas fa-sort-alpha-down";
 
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/audio-track-reorder";
+    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/track-reorder";
 
-    [StringArray(1)]
-    public List<string> Languages { get; set; }
+
+    [Select(nameof(StreamTypeOptions), 1)]
+    public string StreamType { get; set; }
 
     [StringArray(2)]
-    public List<string> OrderedTracks { get; set; }
+    public List<string> Languages { get; set; }
 
     [StringArray(3)]
+    public List<string> OrderedTracks { get; set; }
+
+    [StringArray(4)]
+    [ConditionEquals(nameof(StreamType), "Subtitle", inverse: true)]
     public List<string> Channels { get; set; }
+
+    private static List<ListOption> _StreamTypeOptions;
+    public static List<ListOption> StreamTypeOptions
+    {
+        get
+        {
+            if (_StreamTypeOptions == null)
+            {
+                _StreamTypeOptions = new List<ListOption>
+                {
+                    new ListOption { Label = "Audio", Value = "Audio" },
+                    new ListOption { Label = "Subtitle", Value = "Subtitle" }
+                };
+            }
+            return _StreamTypeOptions;
+        }
+    }
 
     public override int Execute(NodeParameters args)
     {
         OrderedTracks = OrderedTracks?.Select(x => x.ToLower())?.ToList() ?? new();
 
-        var reordered = Reorder(Model.AudioStreams);
-
-        bool same = AreSame(Model.AudioStreams, reordered);
-
-        if (same)
+        if (StreamType == "Subtitle")
         {
-            args.Logger?.ILog("No audio tracks need reordering");
-            return 2;
+            var reordered = Reorder(Model.SubtitleStreams);
+
+            bool same = AreSame(Model.SubtitleStreams, reordered);
+
+            if (same)
+            {
+                args.Logger?.ILog("No subtitle tracks need reordering");
+                return 2;
+            }
+
+            Model.SubtitleStreams = reordered;
+
+            return 1;
+
         }
+        else
+        {
+            var reordered = Reorder(Model.AudioStreams);
 
-        Model.AudioStreams = reordered;
-        // set the first audio track as the default track
-        Model.MetadataParameters.AddRange(new[] { "-disposition:a:0", "default" });
+            bool same = AreSame(Model.AudioStreams, reordered);
 
-        return 1;
+            if (same)
+            {
+                args.Logger?.ILog("No audio tracks need reordering");
+                return 2;
+            }
+
+            Model.AudioStreams = reordered;
+            // set the first audio track as the default track
+            Model.MetadataParameters.AddRange(new[] { "-disposition:a:0", "default" });
+
+            return 1;
+        }
     }
 
-    public List<FfmpegAudioStream> Reorder(List<FfmpegAudioStream> input)
+    public List<T> Reorder<T>(List<T> input) where T : FfmpegStream
     {
         Languages ??= new List<string>();
         OrderedTracks ??= new List<string>();
@@ -65,9 +107,21 @@ public class FfmpegBuilderAudioTrackReorder : FfmpegBuilderNode
         var debug = new StringBuilder();
         var data = input.OrderBy(x =>
         {
-            int langIndex = Languages.IndexOf(x.Stream.Language?.ToLower() ?? String.Empty);
-            int codecIndex = OrderedTracks.IndexOf(x.Stream.Codec?.ToLower() ?? String.Empty);
-            int channelIndex = actualChannels.IndexOf(x.Stream.Channels);
+            int langIndex = 0;
+            int codecIndex = 0;
+            int channelIndex = 0;
+
+            if (x is FfmpegAudioStream audioStream)
+            {
+                langIndex = Languages.IndexOf(audioStream.Stream.Language?.ToLower() ?? String.Empty);
+                codecIndex = OrderedTracks.IndexOf(audioStream.Stream.Codec?.ToLower() ?? String.Empty);
+                channelIndex = actualChannels.IndexOf(audioStream.Stream.Channels);
+            }
+            else if (x is FfmpegSubtitleStream subStream)
+            {
+                langIndex = Languages.IndexOf(subStream.Stream.Language?.ToLower() ?? String.Empty);
+                codecIndex = OrderedTracks.IndexOf(subStream.Stream.Codec?.ToLower() ?? String.Empty);
+            }
 
             int result = base_number;
             if (langIndex >= 0)
@@ -89,7 +143,7 @@ public class FfmpegBuilderAudioTrackReorder : FfmpegBuilderNode
 
         return data;
     }
-    public bool AreSame(List<FfmpegAudioStream> original, List<FfmpegAudioStream> reordered)
+    public bool AreSame<T>(List<T> original, List<T> reordered) where T: FfmpegStream
     {
         for (int i = 0; i < reordered.Count; i++)
         {

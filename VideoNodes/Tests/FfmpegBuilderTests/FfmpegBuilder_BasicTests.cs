@@ -1,6 +1,7 @@
 ﻿#if(DEBUG)
 
 using FileFlows.VideoNodes.FfmpegBuilderNodes;
+using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VideoNodes.Tests;
 
@@ -592,20 +593,53 @@ public class FfmpegBuilder_BasicTests
         args.Parameters.Add("VideoInfo", vii);
 
         FfmpegBuilderStart ffStart = new();
+        ffStart.PreExecute(args);
         Assert.AreEqual(1, ffStart.Execute(args));
 
         FfmpegBuilderAudioTrackReorder ffAudioReorder= new();
         ffAudioReorder.Channels = new List<string> { "1.0", "5.1", "2.0" };
         ffAudioReorder.Languages = new List<string> { "fre", "deu" };
+        ffAudioReorder.PreExecute(args);
         ffAudioReorder.Execute(args);
 
         FfmpegBuilderExecutor ffExecutor = new();
+        ffExecutor.PreExecute(args);
         int result = ffExecutor.Execute(args);
 
         string log = logger.ToString();
         Assert.AreEqual(1, result);
     }
 
+
+    [TestMethod]
+    public void FfmpegBuilder_SubtitleTrackReorder()
+    {
+        const string file =  @"D:\videos\testfiles\movtext.mp4";
+        var logger = new TestLogger();
+        const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+        var vi = new VideoInfoHelper(ffmpeg, logger);
+        var vii = vi.Read(file);
+        var args = new NodeParameters(file, logger, false, string.Empty);
+        args.GetToolPathActual = (string tool) => ffmpeg;
+        args.TempPath = @"D:\videos\temp";
+        args.Parameters.Add("VideoInfo", vii);
+
+        FfmpegBuilderStart ffStart = new();
+        ffStart.PreExecute(args);
+        Assert.AreEqual(1, ffStart.Execute(args));
+        var model = (FfmpegModel)args.Variables["FFMPEG_BUILDER_MODEL"];
+
+        Assert.AreNotEqual("eng", model.SubtitleStreams[0].Language);
+
+        FfmpegBuilderAudioTrackReorder ffAudioReorder = new();
+        ffAudioReorder.StreamType = "Subtitle";
+        ffAudioReorder.Languages = new List<string> { "eng", "deu" };
+        ffAudioReorder.PreExecute(args);
+        ffAudioReorder.Execute(args);
+
+        Assert.AreEqual("eng", model.SubtitleStreams[0].Language);
+
+    }
 
     [TestMethod]
     public void FfmpegBuilder_AddAc3AacMp4NoSubs_BlackBars_Normalize_AutoChapters_Upscale4k()

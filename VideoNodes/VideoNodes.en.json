@@ -70,7 +70,7 @@
           "1": "Audio tracks re-ordered in new temporary file",
           "2": "Audio tracks NOT re-ordered"
         },
-        "Description": "Allows you to reorder audio tracks in the preferred order.\n\nEnter the languages/audio codecs/channels in the order you want.  Any not listed will be ordered after the ones entered in their original order.\nIf there are multiple tracks with same language/codec/channels, they will be ordered first by the order you entered, then in their original order.\n\nOutput 1: Audio tracks were reordered\nOutput 2: Audio tracks did not need reordering",
+        "Description": "Allows you to reorder audio tracks in the preferred order.\n\nEnter the languages/audio codecs/channels in the order you want.  Any not listed will be ordered after the ones entered in their original order.\nIf there are multiple tracks with same language/codec/channels, they will be ordered first by the order you entered, then in their original order.\n\nOutput 1: Tracks were reordered\nOutput 2: Tracks did not need reordering",
         "Fields": {
           "OrderedTracks": "Ordered Audio Codecs",
           "OrderedTracks-Help": "The order of audio codecs to the audio tracks by.  This is done after the languages (if any)",
@@ -274,17 +274,19 @@
         }
       },
       "FfmpegBuilderAudioTrackReorder": {
-        "Label": "FFMPEG Builder: Audio Track Reorder",
+        "Label": "FFMPEG Builder: Track Reorder",
         "Outputs": {
-          "1": "Audio tracks re-ordered in FFMPEG Builder",
-          "2": "Audio tracks NOT re-ordered"
+          "1": "Tracks re-ordered in FFMPEG Builder",
+          "2": "Tracks NOT re-ordered"
         },
-        "Description": "Allows you to reorder audio tracks in the preferred order.\n\nEnter the languages/audio codecs/channels in the order you want.  Any not listed will be ordered after the ones entered in their original order.\nIf there are multiple tracks with same language/codec/channels, they will be ordered first by the order you entered, then in their original order.\n\nOutput 1: Audio tracks were reordered\nOutput 2: Audio tracks did not need reordering",
+        "Description": "Allows you to reorder tracks in the preferred order.\n\nEnter the languages/audio codecs/channels in the order you want.  Any not listed will be ordered after the ones entered in their original order.\nIf there are multiple tracks with same language/codec/channels, they will be ordered first by the order you entered, then in their original order.\n\nOutput 1: Tracks were reordered\nOutput 2: Tracks did not need reordering",
         "Fields": {
-          "OrderedTracks": "Ordered Audio Codecs",
-          "OrderedTracks-Help": "The order of audio codecs to the audio tracks by.  This is done after the languages (if any)",
+          "StreamType": "Type",
+          "StreamType-Help": "The type of tracks to reorder in the FFMPEG Builder",
+          "OrderedTracks": "Ordered Codecs",
+          "OrderedTracks-Help": "The order of codecs to the tracks by.  This is done after the languages (if any)",
           "Languages": "Languages",
-          "Languages-Help": "The order of languages to sort the audio tracks by.  This sorting is done before the codec.",
+          "Languages-Help": "The order of languages to sort the tracks by.  This sorting is done before the codec.",
           "Channels": "Channels",
           "Channels-Help": "The order of audio channels to sort the audio tracks by.  This sorting is done before languages.\nFor example \"5.1\",\"7.1\",\"6.2\",\"2\""
         }
