@@ -14,7 +14,7 @@
 
             var stream = Model?.VideoStreams?.Where(x => x.Deleted == false)?.FirstOrDefault();
             if (stream != null)
-                stream.OptionalEncodingParameters.AddRange(new[] { "-pix_fmt:v:{index}", "yuv420p10le" });
+                stream.OptionalEncodingParameters.AddRange(new[] { "-pix_fmt:v:{index}", "p010le", "-profile:v:{index}", "main10" });
 
             return 1;
         }

@@ -23,6 +23,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
             var model = this.Model;
             List<string> ffArgs = new List<string>();
             ffArgs.AddRange(new[] { "-strict", "-2" }); // allow experimental stuff
+            ffArgs.AddRange(new[] { "-fflags", "+genpts" }); //Generate missing PTS if DTS is present.
             bool hasChange = false;
             int actualIndex = 0;
             int currentType = 0;
