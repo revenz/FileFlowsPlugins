@@ -1056,6 +1056,39 @@ public class FfmpegBuilder_BasicTests
         string log = logger.ToString();
         Assert.AreEqual(1, result);
     }
+
+
+
+    [TestMethod]
+    public void FfmpegBuilder_CustomParameters()
+    {
+        const string file = @"D:\videos\testfiles\basic.mkv";
+        var logger = new TestLogger();
+        const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+        var vi = new VideoInfoHelper(ffmpeg, logger);
+        var vii = vi.Read(file);
+        var args = new NodeParameters(file, logger, false, string.Empty);
+        args.GetToolPathActual = (string tool) => ffmpeg;
+        args.TempPath = @"D:\videos\temp";
+        args.Parameters.Add("VideoInfo", vii);
+
+        FfmpegBuilderStart ffStart = new();
+        ffStart.PreExecute(args);
+        Assert.AreEqual(1, ffStart.Execute(args));
+
+        FfmpegBuilderCustomParameters ffCustom = new();
+        ffCustom.Parameters = "this is a \"testing bobby drake\" blah";
+        ffCustom.ForceEncode = true;
+        ffCustom.PreExecute(args);
+        ffCustom.Execute(args);
+
+        FfmpegBuilderExecutor ffExecutor = new();
+        ffExecutor.PreExecute(args);
+        int result = ffExecutor.Execute(args);
+
+        string log = logger.ToString();
+        Assert.IsTrue(log.Contains("this is a \"testing bobby drake\" blah"));
+    }
 }
 
 #endif

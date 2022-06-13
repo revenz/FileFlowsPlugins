@@ -24,6 +24,10 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
             List<string> ffArgs = new List<string>();
             ffArgs.AddRange(new[] { "-strict", "-2" }); // allow experimental stuff
             ffArgs.AddRange(new[] { "-fflags", "+genpts" }); //Generate missing PTS if DTS is present.
+
+            if(model.CustomParameters?.Any() == true)
+                ffArgs.AddRange(model.CustomParameters);
+
             bool hasChange = false;
             int actualIndex = 0;
             int currentType = 0;
@@ -53,7 +57,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
                 ffArgs.AddRange(model.MetadataParameters);
             }
 
-            if (hasChange == false && (string.IsNullOrWhiteSpace(model.Extension) || args.WorkingFile.ToLower().EndsWith("." + model.Extension.ToLower())))
+            if (model.ForceEncode == false && hasChange == false && (string.IsNullOrWhiteSpace(model.Extension) || args.WorkingFile.ToLower().EndsWith("." + model.Extension.ToLower())))
                 return 2; // nothing to do 
 
             string extension = model.Extension?.EmptyAsNull() ?? "mkv";

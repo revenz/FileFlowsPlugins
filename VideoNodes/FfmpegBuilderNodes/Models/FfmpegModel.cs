@@ -37,6 +37,22 @@
             set => _InputFiles = value ?? new List<string>();
         }
 
+        private List<string> _CustomParameters = new List<string>();
+
+        /// <summary>
+        /// Gets or sets custom parameters to use in the FFMPEG Builder
+        /// </summary>
+        public List<string> CustomParameters
+        {
+            get => _CustomParameters;
+            set => _CustomParameters = value ?? new List<string>();
+        }
+
+        /// <summary>
+        /// Gets or sets if the builder should forcable execute even if nothing appears to have changed
+        /// </summary>
+        public bool ForceEncode { get; set; }
+
         /// <summary>
         /// Gets or sets the video information for this video file
         /// </summary>
