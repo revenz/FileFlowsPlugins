@@ -254,23 +254,25 @@
         }
       },
       "FfmpegBuilderAudioTrackRemover": {
-        "Label": "FFMPEG Builder: Audio Track Remover",
+        "Label": "FFMPEG Builder: Track Remover",
         "Outputs": {
-          "1": "Audio tracks set to remove",
-          "2": "Audio tracks NOT set to removed"
+          "1": "Tracks set to remove",
+          "2": "Tracks NOT set to removed"
         },
-        "Description": "Allows you to remove audio tracks based on either their title or their language codes.\n\nAny title (or language code if set to \"Use Language Code\") that is blank will NOT be removed regardless of the pattern.",
+        "Description": "Allows you to remove tracks based on either their title or their language codes.\n\nAny title (or language code if set to \"Use Language Code\") that is blank will NOT be removed regardless of the pattern.",
         "Fields": {
+          "StreamType": "Type",
+          "StreamType-Help": "The type of tracks to reorder in the FFMPEG Builder",
           "RemoveAll": "Remove All",
-          "RemoveAll-Help": "Remove all current tracks from the output file.  You can use Add Audio Track afterwards to add tracks of specific codecs",
+          "RemoveAll-Help": "Remove all current tracks from the output file.  You can use Add Track afterwards to add tracks of specific codecs",
           "Pattern": "Pattern",
           "Pattern-Help": "A regular expression to match against, eg \"commentary\" to remove commentary tracks",
           "NotMatching": "Not Matching",
           "NotMatching-Help": "If audio tracks NOT matching the pattern should be removed",
           "UseLanguageCode": "Use Language Code",
-          "UseLanguageCode-Help": "If the language code of the audio track should be used instead of the title",
+          "UseLanguageCode-Help": "If the language code of the track should be used instead of the title",
           "RemoveIndex": "Remove Index",
-          "RemoveIndex-Help": "The start index where to remove the audio tracks from.  This allows you to remove all, or all matching, audio streams after the starting index.\nSet to zero to remove all matching the parameters.\nSet to 1 to keep the first audio track and remove any after the first matching the parameters"
+          "RemoveIndex-Help": "The start index where to remove the tracks from.  This allows you to remove all, or all matching, tracks after the starting index.\nSet to zero to remove all matching the parameters.\nSet to 1 to keep the first track and remove any after the first matching the parameters"
         }
       },
       "FfmpegBuilderAudioTrackReorder": {

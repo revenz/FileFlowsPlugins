@@ -1089,6 +1089,49 @@ public class FfmpegBuilder_BasicTests
         string log = logger.ToString();
         Assert.IsTrue(log.Contains("this is a \"testing bobby drake\" blah"));
     }
+
+
+    [TestMethod]
+    public void FfmpegBuilder_ImageStream()
+    {
+        const string file = @"D:\videos\testfiles\img_stream.mp4";
+        var logger = new TestLogger();
+        const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+        var vi = new VideoInfoHelper(ffmpeg, logger);
+        var vii = vi.Read(file);
+        var args = new NodeParameters(file, logger, false, string.Empty);
+        args.GetToolPathActual = (string tool) => ffmpeg;
+        args.TempPath = @"D:\videos\temp";
+        args.Parameters.Add("VideoInfo", vii);
+
+        FfmpegBuilderStart ffStart = new();
+        ffStart.PreExecute(args);
+        Assert.AreEqual(1, ffStart.Execute(args));
+
+        FfmpegBuilderRemuxToMkv ffMkv = new();
+        ffMkv.PreExecute(args);
+        Assert.AreEqual(1, ffMkv.Execute(args));
+
+        FfmpegBuilderAudioTrackRemover ffRemover = new();
+        ffRemover.StreamType = "Video";
+        ffRemover.RemoveIndex = 1;
+        ffRemover.PreExecute(args);
+        Assert.AreEqual(1, ffRemover.Execute(args));
+
+
+        FfmpegBuilderAudioTrackRemover ffRemoverSubtitles = new();
+        ffRemoverSubtitles.StreamType = "Subtitle";
+        ffRemoverSubtitles.RemoveAll = true;
+        ffRemoverSubtitles.PreExecute(args);
+        Assert.AreEqual(1, ffRemoverSubtitles.Execute(args));
+
+        FfmpegBuilderExecutor ffExecutor = new();
+        ffExecutor.PreExecute(args);
+        int result = ffExecutor.Execute(args);
+
+        string log = logger.ToString();
+        Assert.AreEqual(1, result);
+    }
 }
 
 #endif
