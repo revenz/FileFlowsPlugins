@@ -151,32 +151,39 @@ public class FfmpegBuilder_BasicTests
 
 
         FfmpegBuilderStart ffStart = new();
+        ffStart.PreExecute(args);
         Assert.AreEqual(1, ffStart.Execute(args));
 
         FfmpegBuilderVideoCodec ffEncode = new();
         ffEncode.VideoCodec = "h264";
+        ffEncode.PreExecute(args);
         ffEncode.Execute(args);
 
         FfmpegBuilderAudioTrackRemover ffAudioRemover = new();
         ffAudioRemover.RemoveAll = true;
+        ffAudioRemover.PreExecute(args);
         ffAudioRemover.Execute(args);
 
         FfmpegBuilderAudioAddTrack  ffAddAudio = new();
         ffAddAudio.Codec = "ac3";
         ffAddAudio.Index = 1;
+        ffAddAudio.PreExecute(args);
         ffAddAudio.Execute(args);
 
         FfmpegBuilderAudioAddTrack  ffAddAudio2 = new();
         ffAddAudio2.Codec = "aac";
         ffAddAudio2.Index = 2;
+        ffAddAudio2.PreExecute(args);
         ffAddAudio2.Execute(args);
 
         FfmpegBuilderAudioNormalization ffAudioNormalize = new();
         ffAudioNormalize.TwoPass = false;
         ffAudioNormalize.AllAudio = true;
+        ffAudioNormalize.PreExecute(args);
         ffAudioNormalize.Execute(args);
 
         FfmpegBuilderExecutor ffExecutor = new();
+        ffExecutor.PreExecute(args);
         int result = ffExecutor.Execute(args);
 
         string log = logger.ToString();
@@ -608,6 +615,10 @@ public class FfmpegBuilder_BasicTests
 
         string log = logger.ToString();
         Assert.AreEqual(1, result);
+
+
+        var vi2 = new VideoInfoHelper(ffmpeg, logger);
+        var vii2 = vi.Read(args.WorkingFile);
     }
 
 
@@ -1089,6 +1100,8 @@ public class FfmpegBuilder_BasicTests
         string log = logger.ToString();
         Assert.IsTrue(log.Contains("this is a \"testing bobby drake\" blah"));
     }
+
+
 }
 
 #endif
