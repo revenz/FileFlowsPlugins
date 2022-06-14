@@ -70,7 +70,11 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
     [DefaultValue(28)]
     public int Quality { get; set; }
 
-    private string bit10Filter = "yuv420p10le";
+    //private string bit10Filter = "yuv420p10le";
+    private string[] bit10Filters = new[]
+    {
+        "-pix_fmt:v:{index}", "p010le", "-profile:v:{index}", "main10"
+    };
 
     /// <summary>
     /// Executes the node
@@ -110,7 +114,7 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
             H26x_CPU(stream);
 
         if (tenBit)
-            stream.EncodingParameters.AddRange(new[] { "-pix_fmt:v:{index}", bit10Filter });
+            stream.EncodingParameters.AddRange(bit10Filters);
     }
     
     private void H265(FfmpegVideoStream stream, bool tenBit)
@@ -130,7 +134,7 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
             H26x_CPU(stream);
 
         if (tenBit)
-            stream.EncodingParameters.AddRange(new[] { "-pix_fmt:v:{index}", bit10Filter });
+            stream.EncodingParameters.AddRange(bit10Filters);
     }
 
 
@@ -158,9 +162,6 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
             // https://www.reddit.com/r/ffmpeg/comments/gg5szi/what_is_spatial_aq_and_temporal_aq_with_nvenc/
             "-spatial-aq", "1"
         });
-
-        if (Codec == CODEC_H264_10BIT)
-            bit10Filter = "yuv420p";
     }
 
     private void H26x_Qsv(FfmpegVideoStream stream, bool h265)
@@ -202,9 +203,6 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
             // https://www.reddit.com/r/ffmpeg/comments/gg5szi/what_is_spatial_aq_and_temporal_aq_with_nvenc/
             "-spatial-aq", "1"
         });
-
-        if (Codec == CODEC_H264_10BIT)
-            bit10Filter = "yuv420p";
     }
     private void H26x_Vaapi(FfmpegVideoStream stream, bool h265)
     {
@@ -218,8 +216,5 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
             // https://www.reddit.com/r/ffmpeg/comments/gg5szi/what_is_spatial_aq_and_temporal_aq_with_nvenc/
             "-spatial-aq", "1"
         });
-
-        if (Codec == CODEC_H264_10BIT)
-            bit10Filter = "yuv420p";
     }
 }
