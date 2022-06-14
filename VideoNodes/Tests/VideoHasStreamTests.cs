@@ -185,6 +185,57 @@ public class VideoHasStreamTests : TestBase
 
         Assert.AreEqual(1, output);
     }
+
+
+    [TestMethod]
+    public void VideoHasStream_Audio_Lang_Pass()
+    {
+        string file = TestFile_MovText_Mp4;
+        var vi = new VideoInfoHelper(FfmpegPath, new TestLogger());
+        var vii = vi.Read(file);
+
+        VideoHasStream node = new();
+        node.Language = "ita";
+        node.Stream = "Audio";
+
+        var args = new NodeParameters(file, new TestLogger(), false, string.Empty);
+        args.GetToolPathActual = (string tool) => FfmpegPath;
+        args.TempPath = TempPath;
+
+        var vf = new VideoFile();
+        vf.PreExecute(args);
+        Assert.AreEqual(1, vf.Execute(args));
+
+        node.PreExecute(args);
+        int output = node.Execute(args);
+
+        Assert.AreEqual(1, output);
+    }
+
+    [TestMethod]
+    public void VideoHasStream_Audio_Lang_Fail()
+    {
+        string file = TestFile_MovText_Mp4;
+        var vi = new VideoInfoHelper(FfmpegPath, new TestLogger());
+        var vii = vi.Read(file);
+
+        VideoHasStream node = new();
+        node.Language = "mao";
+        node.Stream = "Audio";
+
+        var args = new NodeParameters(file, new TestLogger(), false, string.Empty);
+        args.GetToolPathActual = (string tool) => FfmpegPath;
+        args.TempPath = TempPath;
+
+        var vf = new VideoFile();
+        vf.PreExecute(args);
+        Assert.AreEqual(1, vf.Execute(args));
+
+        node.PreExecute(args);
+        int output = node.Execute(args);
+
+        Assert.AreEqual(2, output);
+    }
 }
 
 

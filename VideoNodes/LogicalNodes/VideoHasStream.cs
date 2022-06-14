@@ -73,7 +73,7 @@ public class VideoHasStream : VideoNode
                     return false;
                 if (CodecMatches(x.Codec) == MatchResult.NoMatch)
                     return false;
-                if (LanguageMatches(x.Codec) == MatchResult.NoMatch)
+                if (LanguageMatches(x.Language) == MatchResult.NoMatch)
                     return false;
                 if (this.Channels > 0 && Math.Abs(x.Channels - this.Channels) > 0.05f)
                     return false;
@@ -88,7 +88,7 @@ public class VideoHasStream : VideoNode
                     return false;
                 if (CodecMatches(x.Codec) == MatchResult.NoMatch)
                     return false;
-                if (LanguageMatches(x.Codec) == MatchResult.NoMatch)
+                if (LanguageMatches(x.Language) == MatchResult.NoMatch)
                     return false;
                 return true;
             }).Any();
