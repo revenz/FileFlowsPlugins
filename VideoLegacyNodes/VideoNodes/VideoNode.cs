@@ -10,6 +10,7 @@ namespace FileFlows.VideoNodes
         /// </summary>
         protected NodeParameters Args { get; private set; }
 
+
         /// <summary>
         /// Gets if this node is obsolete and should be phased out
         /// </summary>
