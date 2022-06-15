@@ -1,6 +1,7 @@
 namespace FileFlows.VideoNodes
 {
     using FileFlows.Plugin;
+    using System.Text.Json;
 
     public abstract class VideoNode : Node
     {
@@ -121,13 +122,31 @@ namespace FileFlows.VideoNodes
                 args.Logger.WLog("No codec information loaded, use a 'VideoFile' node first");
                 return null;
             }
-            var result = args.Parameters[VIDEO_INFO] as VideoInfo;
-            if (result == null)
+
+            if (args.Parameters[VIDEO_INFO] == null)
             {
                 args.Logger.WLog("VideoInfo not found for file");
                 return null;
             }
-            return result;
+            var result = args.Parameters[VIDEO_INFO] as VideoInfo;
+            if (result != null)
+                return result;
+
+            // may be from non Legacy VideoNodes
+            try
+            {
+                string json = JsonSerializer.Serialize(args.Parameters[VIDEO_INFO]);
+                var vi = JsonSerializer.Deserialize<VideoInfo>(json);
+                if (vi == null)
+                    throw new Exception("Failed to deserailize object");
+                return vi;
+
+            }
+            catch (Exception ex)
+            {
+                args.Logger.WLog("VideoInfo could not be deserialized: " + ex.Message);
+                return null;
+            }
         }
 
 

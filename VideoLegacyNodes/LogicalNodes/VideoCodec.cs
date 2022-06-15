@@ -8,6 +8,9 @@ namespace FileFlows.VideoNodes
 
     public class VideoCodec : VideoNode
     {
+
+        public override string ObsoleteMessage => "This node has been combined into 'Video Has Track'";
+
         public override int Inputs => 1;
         public override int Outputs => 2;
         public override FlowElementType Type => FlowElementType.Logic;
