@@ -222,6 +222,29 @@
           "2": "No HDR stream found"
         }
       },
+      "FfmpegBuilderMetadataRemover": {
+        "Label": "FFMPEG Builder: Metadata Remover",
+        "Description": "Removes metadata from the FFMPEG Builder so when the file is processed the selected metadata will be removed.\n\nNote: Only the metadata when this node is effected, if metadata is added after this node runs, that will not be effected.",
+        "Outputs": {
+          "1": "Metadata removed from FFMPEG Builder"
+        },
+        "Fields": {
+          "Video": "Video",
+          "Video-Help": "If video tracks should have this metadata removed",
+          "Audio": "Audio",
+          "Audio-Help": "If audio tracks should have this metadata removed",
+          "Subtitle": "Subtitle",
+          "Subtitle-Help": "If subtitle tracks should have this metadata removed",
+          "RemoveImages": "Remove Images",
+          "RemoveImages-Help": "If any images found in the metadata should be removed",
+          "RemoveTitle": "Remove Title",
+          "RemoveTitle-Help": "If the title should be removed from the tracks",
+          "RemoveLanguage": "Remove Language",
+          "RemoveLanguage-Help": "If the language should be removed from the tracks",
+          "RemoveAdditionalMetadata": "Remove Additional Metadata",
+          "RemoveAdditionalMetadata-Help": "If additional metadata should be removed.  Additional metadata is non-standard metadata that may have been added to a video file, eg by iTunes."
+        }
+      },
       "FfmpegBuilderSubtitleFormatRemover": {
         "Label": "FFMPEG Builder: Subtitle Format Remover",
         "Description": "Removes subtitles from a video file if found.",

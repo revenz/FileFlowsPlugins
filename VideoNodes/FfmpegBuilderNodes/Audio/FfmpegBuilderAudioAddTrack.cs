@@ -95,6 +95,11 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
 
     public override int Execute(NodeParameters args)
     {
+        if (string.IsNullOrEmpty(Codec) || Codec == "ORIGINAL")
+        {
+            // this is a special case we use in the templates, to not add an audio track and use original
+            return 1;
+        }
         var audio = new FfmpegAudioStream();
 
         var bestAudio = GetBestAudioTrack(args, Model.AudioStreams.Select(x => x.Stream));

@@ -220,6 +220,8 @@ namespace FileFlows.VideoNodes
             // Stream #0:0(eng): Video: h264 (High), yuv420p(tv, bt709/unknown/unknown, progressive), 1920x1080 [SAR 1:1 DAR 16:9], 23.98 fps, 23.98 tbr, 1k tbn (default)
             string line = info.Split(new string[] { "\r\n", "\n", "\r" }, StringSplitOptions.RemoveEmptyEntries).First();
             VideoStream vs = new VideoStream();
+            vs.IsImage = info.Contains("(attached pic)");
+
             vs.Codec = line.Substring(line.IndexOf("Video: ") + "Video: ".Length).Replace(",", "").Trim().Split(' ').First().ToLower();
             var dimensions = Regex.Match(line, @"([\d]{3,})x([\d]{3,})");
             if (int.TryParse(dimensions.Groups[1].Value, out int width))
