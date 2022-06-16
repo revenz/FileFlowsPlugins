@@ -147,6 +147,10 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
             "-preset", "slow",
             "-crf", Quality.ToString()
         });
+        bit10Filters = new[]
+        {
+            "-pix_fmt:v:{index}", "yuv420p10le", "-profile:v:{index}", "main10"
+        };
     }
 
     private void H26x_Nvidia(FfmpegVideoStream stream, bool h265)
