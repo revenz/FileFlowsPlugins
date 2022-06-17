@@ -1,6 +1,6 @@
 ﻿namespace FileFlows.VideoNodes;
 
-class CanUseHardwareEncoding
+class CanUseHardwareEncodingChecker
 {
     public enum HardwareEncoder
     {

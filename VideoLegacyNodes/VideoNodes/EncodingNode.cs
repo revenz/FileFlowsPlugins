@@ -88,7 +88,7 @@ namespace FileFlows.VideoNodes
                 // try find best hevc encoder
                 foreach(string vidparam in new [] { "hevc_nvenc -preset hq", "hevc_qsv -global_quality 28 -load_plugin hevc_hw", "hevc_amf", "hevc_vaapi" })
                 {
-                    bool canProcess = CanUseHardwareEncoding.CanProcess(Args, ffmpeg, vidparam);
+                    bool canProcess = CanUseHardwareEncodingChecker.CanProcess(Args, ffmpeg, vidparam);
                     if (canProcess)
                         return vidparam;
                 }
@@ -99,7 +99,7 @@ namespace FileFlows.VideoNodes
                 // try find best hevc encoder
                 foreach (string vidparam in new[] { "h264_nvenc", "h264_qsv", "h264_amf", "h264_vaapi" })
                 {
-                    bool canProcess = CanUseHardwareEncoding.CanProcess(Args, ffmpeg, vidparam);
+                    bool canProcess = CanUseHardwareEncodingChecker.CanProcess(Args, ffmpeg, vidparam);
                     if (canProcess)
                         return vidparam;
                 }
@@ -109,7 +109,7 @@ namespace FileFlows.VideoNodes
             if (vidparams.ToLower().Contains("hevc_nvenc"))
             {
                 // nvidia h265 encoding, check can
-                bool canProcess = CanUseHardwareEncoding.CanProcess(Args, ffmpeg, vidparams);
+                bool canProcess = CanUseHardwareEncodingChecker.CanProcess(Args, ffmpeg, vidparams);
                 if (canProcess == false)
                 {
                     // change to cpu encoding 
@@ -121,7 +121,7 @@ namespace FileFlows.VideoNodes
             else if (vidparams.ToLower().Contains("h264_nvenc"))
             {
                 // nvidia h264 encoding, check can
-                bool canProcess = CanUseHardwareEncoding.CanProcess(Args, ffmpeg, vidparams);
+                bool canProcess = CanUseHardwareEncodingChecker.CanProcess(Args, ffmpeg, vidparams);
                 if (canProcess == false)
                 {
                     // change to cpu encoding 
@@ -133,7 +133,7 @@ namespace FileFlows.VideoNodes
             else if (vidparams.ToLower().Contains("hevc_qsv"))
             {
                 // nvidia h265 encoding, check can
-                bool canProcess = CanUseHardwareEncoding.CanProcess(Args, ffmpeg, vidparams);
+                bool canProcess = CanUseHardwareEncodingChecker.CanProcess(Args, ffmpeg, vidparams);
                 if (canProcess == false)
                 {
                     // change to cpu encoding 
@@ -145,7 +145,7 @@ namespace FileFlows.VideoNodes
             else if (vidparams.ToLower().Contains("h264_qsv"))
             {
                 // nvidia h264 encoding, check can
-                bool canProcess = CanUseHardwareEncoding.CanProcess(Args, ffmpeg, vidparams);
+                bool canProcess = CanUseHardwareEncodingChecker.CanProcess(Args, ffmpeg, vidparams);
                 if (canProcess == false)
                 {
                     // change to cpu encoding 
