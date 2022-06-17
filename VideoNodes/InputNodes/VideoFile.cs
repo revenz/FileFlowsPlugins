@@ -61,8 +61,8 @@ namespace FileFlows.VideoNodes
                 var videoInfo = new VideoInfoHelper(FFMPEG, args.Logger).Read(args.WorkingFile);
                 if (videoInfo.VideoStreams.Any() == false)
                 {
-                    args.Logger.ILog("No video streams detected.");
-                    return 0;
+                    args.Logger.ELog("No video streams detected.");
+                    return -1;
                 }
                 foreach (var vs in videoInfo.VideoStreams)
                 {
