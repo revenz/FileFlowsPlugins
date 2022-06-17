@@ -234,7 +234,8 @@
             "1": "File renamed"
           },
           "Fields": {
-            "Pattern": "Pattern",
+            "Pattern": "New Name",
+            "Pattern-Help": "The new name of the file.  Can use variables. Any empty () and '{}' will be removed.",
             "DestinationPath": "Destination Folder",
             "DestinationPath-Help": "If the file should be moved to a different folder.",
             "LogOnly": "Log Only",
