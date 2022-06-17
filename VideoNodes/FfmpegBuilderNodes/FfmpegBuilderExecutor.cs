@@ -96,28 +96,42 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
         internal string[] GetHardwareDecodingArgs()
         {
             string testFile = Path.Combine(Args.TempPath, Guid.NewGuid() + ".hwtest.mkv");
+            var video = this.Model.VideoStreams.Where(x => x.Stream.IsImage == false).FirstOrDefault();
+            if (string.IsNullOrWhiteSpace(video?.Stream?.Codec))
+                return new string[] { };
+            bool isH264 = video.Stream.Codec.Contains("264");
+            bool isHevc = video.Stream.Codec.Contains("265") || video.Stream.Codec.ToLower().Contains("hevc");
+
             foreach(var hw in new [] { "cuda", "qsv", "dxva2", "d3d11va", "opencl" })
             {
                 // ffmpeg -y -hwaccel qsvf -f lavfi -i color=color=red -frames:v 10 test.mkv
+                string hwCodec = (isHevc ? "hevc_" + hw :
+                                  isH264 ? "h264_" + hw :
+                                  string.Empty);
+                if(hwCodec == string.Empty)
                 try
                 {
                     var result = Args.Execute(new ExecuteArgs
                     {
                         Command = FFMPEG,                        
-                        ArgumentList = new[]
+                        ArgumentList = new []
                         {
                             "-y",
                             "-hwaccel", hw,
+                            hwCodec == string.Empty ? string.Empty: "-c:v",
+                            hwCodec == string.Empty ? string.Empty : hwCodec,
                             "-f", "lavfi",
                             "-i", "color=color=red",
                             "-frames:v", "10",
                             testFile
-                        }
+                        }.Where(x => x != string.Empty).ToArray()
                     });
                     if (result.ExitCode == 0)
                     {
                         Args.Logger?.ILog("Supported hardware decoding detected: " + hw);
-                        return new[] { "-hwaccel", hw };
+                        if(hwCodec == string.Empty)
+                            return new[] { "-hwaccel", hw, };
+                        return new[] { "-hwaccel", hw, "-c:v", hwCodec };
                     }
                 }
                 catch (Exception) { }
