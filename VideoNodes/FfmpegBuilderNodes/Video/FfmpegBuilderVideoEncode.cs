@@ -101,7 +101,7 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
     private void H264(FfmpegVideoStream stream, bool tenBit)
     {
         if (HardwareEncoding == false)
-            H26x_CPU(stream);
+            H26x_CPU(stream, false);
         else if (CanUseHardwareEncoding.CanProcess_Nvidia_H264(Args))
             H26x_Nvidia(stream, false);
         else if (CanUseHardwareEncoding.CanProcess_Qsv_H264(Args))
@@ -111,7 +111,7 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         else if (CanUseHardwareEncoding.CanProcess_Vaapi_H264(Args))
             H26x_Vaapi(stream, false);
         else 
-            H26x_CPU(stream);
+            H26x_CPU(stream, false);
 
         if (tenBit)
             stream.EncodingParameters.AddRange(bit10Filters);
@@ -121,7 +121,7 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
     {
         // hevc_qsv -load_plugin hevc_hw -pix_fmt p010le -profile:v main10 -global_quality 21 -g 24 -look_ahead 1 -look_ahead_depth 60
         if (HardwareEncoding == false)
-            H26x_CPU(stream);
+            H26x_CPU(stream, true);
         else if (CanUseHardwareEncoding.CanProcess_Nvidia_Hevc(Args))
             H26x_Nvidia(stream, true);
         else if (CanUseHardwareEncoding.CanProcess_Qsv_Hevc(Args))
@@ -131,19 +131,19 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         else if (CanUseHardwareEncoding.CanProcess_Vaapi_Hevc(Args))
             H26x_Vaapi(stream, true);
         else 
-            H26x_CPU(stream);
+            H26x_CPU(stream, true);
 
         if (tenBit)
             stream.EncodingParameters.AddRange(bit10Filters);
     }
 
 
-    private void H26x_CPU(FfmpegVideoStream stream)
+    private void H26x_CPU(FfmpegVideoStream stream, bool h265)
     {
         stream.EncodingParameters.Clear();
         stream.EncodingParameters.AddRange(new []
         {
-            Codec == CODEC_H265 ? "libx265" : "libx264",
+            h265 ? "libx265" : "libx264",
             "-preset", "slow",
             "-crf", Quality.ToString()
         });
