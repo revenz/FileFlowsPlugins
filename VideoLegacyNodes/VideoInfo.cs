@@ -39,14 +39,6 @@ namespace FileFlows.VideoNodes
         /// </summary>
         public string Codec { get; set; } = "";
 
-        /// <summary>
-        /// If this stream is an image
-        /// </summary>
-        public bool IsImage { get; set; }
-
-        /// <summary>
-        /// Gets or sets the index string of this track
-        /// </summary>
         public string IndexString { get; set; }
 
         /// <summary>

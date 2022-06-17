@@ -7,6 +7,8 @@ namespace FileFlows.VideoNodes
         public override string Icon => "fas fa-video";
         public override int Outputs => 2;
 
+        public override FlowElementType Type => FlowElementType.Logic;
+
         private Dictionary<string, object> _Variables;
         public override Dictionary<string, object> Variables => _Variables;
         public ReadVideoInfo()

@@ -22,8 +22,6 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
         {
             var model = this.Model;
             List<string> ffArgs = new List<string>();
-            ffArgs.AddRange(new[] { "-strict", "-2" }); // allow experimental stuff
-            ffArgs.AddRange(new[] { "-fflags", "+genpts" }); //Generate missing PTS if DTS is present.
 
             if(model.CustomParameters?.Any() == true)
                 ffArgs.AddRange(model.CustomParameters);
@@ -68,6 +66,9 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
             else
                 model.InputFiles[0] = args.WorkingFile;
 
+            startArgs.AddRange(new[] { "-strict", "-2" }); // allow experimental stuff
+            startArgs.AddRange(new[] { "-fflags", "+genpts" }); //Generate missing PTS if DTS is present.
+
             startArgs.AddRange(new[] {
                 "-probesize", VideoInfoHelper.ProbeSize + "M"
             });
@@ -95,7 +96,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
         internal string[] GetHardwareDecodingArgs()
         {
             string testFile = Path.Combine(Args.TempPath, Guid.NewGuid() + ".hwtest.mkv");
-            foreach(var hw in new [] { "cuda", "dxva2", "qsv", "d3d11va", "opencl" })
+            foreach(var hw in new [] { "cuda", "qsv", "dxva2", "d3d11va", "opencl" })
             {
                 // ffmpeg -y -hwaccel qsvf -f lavfi -i color=color=red -frames:v 10 test.mkv
                 try

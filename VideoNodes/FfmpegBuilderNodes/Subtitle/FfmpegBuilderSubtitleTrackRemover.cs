@@ -6,7 +6,17 @@ public class FfmpegBuilderSubtitleTrackRemover : FfmpegBuilderNode
 
     public override string Icon => "fas fa-comment";
 
-    public override int Outputs => 2; 
+    public override int Outputs => 2;
+
+    /// <summary>
+    /// This node is obsolete
+    /// </summary>
+    public override bool Obsolete => true;
+
+    /// <summary>
+    /// Gets the obsolete message
+    /// </summary>
+    public override string ObsoleteMessage => "This node has been merged into FFMPEG Builder: Track Remover.";
 
 
     [TextVariable(1)]

@@ -9,8 +9,17 @@ namespace FileFlows.VideoNodes
         /// Gets the Node Parameters
         /// </summary>
         protected NodeParameters Args { get; private set; }
-        
 
+
+        /// <summary>
+        /// Gets if this node is obsolete and should be phased out
+        /// </summary>
+        public override bool Obsolete => true;
+
+        /// <summary>
+        /// Gets a message to show when the user tries to use this obsolete node
+        /// </summary>
+        public override string ObsoleteMessage => "This node has been replaced by the FFMPEG Builder version";
 
 #if (DEBUG)
         /// <summary>
@@ -123,7 +132,7 @@ namespace FileFlows.VideoNodes
                 return null;
             }
 
-            if (args.Parameters[VIDEO_INFO] == null)
+            if(args.Parameters[VIDEO_INFO] == null)
             {
                 args.Logger.WLog("VideoInfo not found for file");
                 return null;
@@ -140,9 +149,9 @@ namespace FileFlows.VideoNodes
                 if (vi == null)
                     throw new Exception("Failed to deserailize object");
                 return vi;
-
+                    
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 args.Logger.WLog("VideoInfo could not be deserialized: " + ex.Message);
                 return null;
