@@ -13,6 +13,8 @@ namespace FileFlows.BasicNodes.File
         public override FlowElementType Type => FlowElementType.Process;
         public override string Icon => "fas fa-file-export";
 
+        public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/move-file";
+
         [Required]
         [Folder(1)]
         public string DestinationPath { get; set; }
