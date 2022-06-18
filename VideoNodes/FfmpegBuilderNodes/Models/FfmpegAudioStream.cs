@@ -60,12 +60,12 @@
             if (string.IsNullOrWhiteSpace(this.Title) == false)
             {
                 results.Add($"-metadata:s:a:{outputIndex}");
-                results.Add($"title={this.Title}");
+                results.Add($"title={(this.Title == FfmpegStream.REMOVED ? "" : this.Title)}");
             }
             if(string.IsNullOrWhiteSpace(this.Language) == false)
             {
                 results.Add($"-metadata:s:a:{outputIndex}");
-                results.Add($"language={this.Language}");
+                results.Add($"language={(this.Language == FfmpegStream.REMOVED ? "" : this.Language)}");
             }
 
             if (Metadata.Any())
