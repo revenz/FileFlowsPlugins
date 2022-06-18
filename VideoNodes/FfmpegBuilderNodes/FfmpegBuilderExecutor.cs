@@ -102,36 +102,36 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
             bool isH264 = video.Stream.Codec.Contains("264");
             bool isHevc = video.Stream.Codec.Contains("265") || video.Stream.Codec.ToLower().Contains("hevc");
 
-            foreach(var hw in new [] { "cuda", "qsv", "dxva2", "d3d11va", "opencl" })
+            var decoders = isH264 ? Decoders_h264() :
+                            isHevc ? Decoders_hevc() :
+                            Decoders_Default();
+
+            foreach(var hw in decoders)
             {
-                // ffmpeg -y -hwaccel qsvf -f lavfi -i color=color=red -frames:v 10 test.mkv
-                string hwCodec = (isHevc ? "hevc_" + hw :
-                                  isH264 ? "h264_" + hw :
-                                  string.Empty);
-                if(hwCodec == string.Empty)
                 try
                 {
+                    var arguments = new List<string>()
+                    {
+                        "-y",
+                    };
+                    arguments.AddRange(hw);
+                    arguments.AddRange(new[]
+                    {
+                        "-f", "lavfi",
+                        "-i", "color=color=red",
+                        "-frames:v", "10",
+                        testFile
+                    });
+
                     var result = Args.Execute(new ExecuteArgs
                     {
                         Command = FFMPEG,                        
-                        ArgumentList = new []
-                        {
-                            "-y",
-                            "-hwaccel", hw,
-                            hwCodec == string.Empty ? string.Empty: "-c:v",
-                            hwCodec == string.Empty ? string.Empty : hwCodec,
-                            "-f", "lavfi",
-                            "-i", "color=color=red",
-                            "-frames:v", "10",
-                            testFile
-                        }.Where(x => x != string.Empty).ToArray()
+                        ArgumentList = arguments.ToArray()
                     });
                     if (result.ExitCode == 0)
                     {
                         Args.Logger?.ILog("Supported hardware decoding detected: " + hw);
-                        if(hwCodec == string.Empty)
-                            return new[] { "-hwaccel", hw, };
-                        return new[] { "-hwaccel", hw, "-c:v", hwCodec };
+                        return hw;
                     }
                 }
                 catch (Exception) { }
@@ -140,5 +140,46 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
             Args.Logger?.ILog("No hardware decoding availble");
             return new string[] { };
         }
+
+
+        private string[][] Decoders_h264()
+        {
+            return new[]
+            {
+                new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "cuda" },
+                new [] { "-hwaccel", "cuda" },
+                new [] { "-hwaccel", "qsv", "-c:v","h264_qsv" },
+                new [] { "-hwaccel", "dxva2" },
+                new [] { "-hwaccel", "d3d11va" },
+                new [] { "-hwaccel", "opencl" },
+            };
+        }
+
+        private string[][] Decoders_hevc()
+        {
+            return new[]
+            {
+                new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "cuda" },
+                new [] { "-hwaccel", "cuda" },
+                new [] { "-hwaccel", "qsv", "-c:v", "hevc_qsv" },
+                new [] { "-hwaccel", "dxva2" },
+                new [] { "-hwaccel", "d3d11va" },
+                new [] { "-hwaccel", "opencl" },
+            };
+        }
+
+        private string[][] Decoders_Default()
+        {
+            return new[]
+            {
+                new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "cuda" },
+                new [] { "-hwaccel", "cuda" },
+                new [] { "-hwaccel", "qsv" },
+                new [] { "-hwaccel", "dxva2" },
+                new [] { "-hwaccel", "d3d11va" },
+                new [] { "-hwaccel", "opencl" },
+            };
+        }
+
     }
 }
