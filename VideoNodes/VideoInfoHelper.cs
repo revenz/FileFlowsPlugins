@@ -93,7 +93,7 @@ namespace FileFlows.VideoNodes
             {
                 Logger.ELog(ex.Message, ex.StackTrace.ToString());
             }
-
+            vi.FileName = filename;
             return vi;
         }
 

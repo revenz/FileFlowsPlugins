@@ -12,6 +12,8 @@ namespace FileFlows.BasicNodes.File
         public override FlowElementType Type => FlowElementType.Process;
         public override string Icon => "far fa-copy";
 
+        public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/copy-file";
+
         private string _DestinationPath = string.Empty;
         private string _DestinationFile = string.Empty;
 

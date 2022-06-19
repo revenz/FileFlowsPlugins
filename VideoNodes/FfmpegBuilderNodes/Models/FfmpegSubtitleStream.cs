@@ -17,6 +17,17 @@
                 results.Add("copy");
             }
 
+            if (string.IsNullOrWhiteSpace(this.Title) == false)
+            {
+                results.Add($"-metadata:s:s:{outputIndex}");
+                results.Add($"title={(this.Title == FfmpegStream.REMOVED ? "" : this.Title)}");
+            }
+            if (string.IsNullOrWhiteSpace(this.Language) == false)
+            {
+                results.Add($"-metadata:s:s:{outputIndex}");
+                results.Add($"language={(this.Language == FfmpegStream.REMOVED ? "" : this.Language)}");
+            }
+
             if (Metadata.Any())
             {
                 results.AddRange(Metadata.Select(x => x.Replace("{index}", outputIndex.ToString())));

@@ -71,19 +71,20 @@ public class FfmpegBuilderMetadataRemover : FfmpegBuilderNode
     /// <returns>the output number to execute next</returns>
     public override int Execute(NodeParameters args)
     {
+        bool removed = false;
         if (Video)
-            Process(Model.VideoStreams);
+            removed |= Process(Model.VideoStreams);
 
         if (Audio)
-            Process(Model.AudioStreams);
+            removed |= Process(Model.AudioStreams);
 
         if (Subtitle)
-            Process(Model.SubtitleStreams);
+            removed |= Process(Model.SubtitleStreams);
 
         if (RemoveAdditionalMetadata)
         {
+            removed = true;
             Model.CustomParameters.AddRange(new[] { "-map_metadata", "-1" });
-            Model.ForceEncode = true;
         }
 
 
@@ -92,37 +93,56 @@ public class FfmpegBuilderMetadataRemover : FfmpegBuilderNode
             foreach (var video in Model.VideoStreams)
             {
                 if (video.Stream.IsImage)
+                {
                     video.Deleted = true;
+                    removed = true;
+                }
             }
         }
+
+        if (removed)
+            Model.ForceEncode = true;
+
 
         return 1;
     }
 
-    private void Process<T>(List<T> streams) where T : FfmpegStream
+    private bool Process<T>(List<T> streams) where T : FfmpegStream
     {
         if (streams == null)
-            return;
+            return false;
+        bool removed = false;
         foreach (var stream in streams)
-            Process(stream);
+            removed |= Process(stream);
+        return removed;
     }
 
-    private void Process(FfmpegStream stream)
+    private bool Process(FfmpegStream stream)
     {
+        bool removed = false;   
         if (RemoveTitle)
         {
-            stream.Title = string.Empty;
+            if (string.IsNullOrEmpty(stream.Title) == false)
+                removed = true;
+
+            stream.Title = FfmpegStream.REMOVED;
         }
         
         if (stream is FfmpegAudioStream audio)
         {
+            if (string.IsNullOrEmpty(audio.Language) == false)
+                removed = true;
+
             if (RemoveLanguage)
-                audio.Language = string.Empty;
+                audio.Language = FfmpegStream.REMOVED;
         }
         else if (stream is FfmpegSubtitleStream sub)
-        {            
+        {
+            if (string.IsNullOrEmpty(sub.Language) == false)
+                removed = true;
             if (RemoveLanguage)
-                sub.Language = string.Empty;
+                sub.Language = FfmpegStream.REMOVED;
         }
+        return removed;
     }
 }

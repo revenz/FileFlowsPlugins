@@ -74,16 +74,11 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
                 _BitrateOptions = new List<ListOption>
                 {
                     new ListOption { Label = "Automatic", Value = 0},
-                    new ListOption { Label = "64 Kbps", Value = 64},
-                    new ListOption { Label = "96 Kbps", Value = 96},
-                    new ListOption { Label = "128 Kbps", Value = 128},
-                    new ListOption { Label = "160 Kbps", Value = 160},
-                    new ListOption { Label = "192 Kbps", Value = 192},
-                    new ListOption { Label = "224 Kbps", Value = 224},
-                    new ListOption { Label = "256 Kbps", Value = 256},
-                    new ListOption { Label = "288 Kbps", Value = 288},
-                    new ListOption { Label = "320 Kbps", Value = 320},
                 };
+                for (int i = 64; i <= 2048; i += 32)
+                {
+                    _BitrateOptions.Add(new ListOption { Label = i + " Kbps", Value = i });
+                }
             }
             return _BitrateOptions;
         }

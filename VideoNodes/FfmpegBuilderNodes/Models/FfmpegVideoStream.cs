@@ -98,6 +98,12 @@
                 }
             }
 
+            if (string.IsNullOrWhiteSpace(this.Title) == false)
+            {
+                results.Add($"-metadata:s:v:{outputIndex}");
+                results.Add($"title={(this.Title == FfmpegStream.REMOVED ? "" : this.Title)}");
+            }
+
             if (Metadata.Any())
             {
                 results.AddRange(Metadata.Select(x => x.Replace("{index}", outputIndex.ToString())));
