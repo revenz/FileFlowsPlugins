@@ -148,7 +148,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
             {
                 //new [] { "-hwaccel", "nvdec", "-hwaccel_output_format", "cuda" },
                 new [] { "-hwaccel", "cuda" },
-                new [] { "-hwaccel", "qsv", "-c:v","h264_qsv" },
+                new [] { "-hwaccel", "qsv" },
                 new [] { "-hwaccel", "dxva2" },
                 new [] { "-hwaccel", "d3d11va" },
                 new [] { "-hwaccel", "opencl" },
@@ -161,7 +161,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
             {
                 //new [] { "-hwaccel", "nvdec", "-hwaccel_output_format", "cuda" },
                 new [] { "-hwaccel", "cuda" },
-                new [] { "-hwaccel", "qsv", "-c:v", "hevc_qsv" },
+                new [] { "-hwaccel", "qsv" },
                 new [] { "-hwaccel", "dxva2" },
                 new [] { "-hwaccel", "d3d11va" },
                 new [] { "-hwaccel", "opencl" },
