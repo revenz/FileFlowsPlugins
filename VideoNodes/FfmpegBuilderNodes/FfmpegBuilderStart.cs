@@ -40,8 +40,16 @@ public class FfmpegBuilderStart: FfmpegBuilderNode
         VideoInfo videoInfo = GetVideoInfo(args);
         if (videoInfo == null)
             return -1;
-
         this.Model = Models.FfmpegModel.CreateModel(videoInfo);
+
+        args.Logger.ILog("FFMPEG Builder File: " + videoInfo.FileName);
+        foreach (var track in videoInfo.VideoStreams)
+            args.Logger.ILog($"Video Track '{track.Codec}' ({track.Width}x{track.Height}");
+        foreach (var track in videoInfo.AudioStreams)
+            args.Logger.ILog("Audio Track: " + track.Codec);
+        foreach (var track in videoInfo.SubtitleStreams)
+            args.Logger.ILog("Subtitle Track: " + track.Codec);
+
         return 1;
     }
 }
