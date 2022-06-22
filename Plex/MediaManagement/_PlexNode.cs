@@ -48,9 +48,9 @@ public abstract class PlexNode:Node
         args.Logger?.ILog("Working File (Unmapped): " + path);
         if (args.IsDirectory == false)
         {
-            bool windows = path.StartsWith("\\") || Regex.IsMatch(path, @"^[a-zA-Z]:\\");
-            string pathSeparator = windows ? "\\" : "/";
-            path = path.Substring(0, path.LastIndexOf(pathSeparator));
+            // juse use /
+            path = path.Replace("\\", "/");
+            path = path.Substring(0, path.LastIndexOf("/"));
         }
 
         if (serverUrl.EndsWith("/") == false)
