@@ -91,7 +91,7 @@ public abstract class PlexNode:Node
         string pathLower = path.Replace("\\", "/").ToLower();
         if (pathLower.EndsWith("/"))
             pathLower = pathLower[..^1];
-        args.Logger?.WLog("Testing Plex Path: " + pathLower);
+        args.Logger?.ILog("Testing Plex Path: " + pathLower);
         var section = sections?.MediaContainer?.Directory?.Where(x => {
             if (x.Location?.Any() != true)
                 return false;
@@ -99,6 +99,7 @@ public abstract class PlexNode:Node
             {
                 if (loc.Path == null)
                     continue;
+                args.Logger?.ILog("Plex section path: " + loc.Path);
                 if (pathLower.StartsWith(loc.Path.Replace("\\", "/").ToLower()))
                     return true;
             }
