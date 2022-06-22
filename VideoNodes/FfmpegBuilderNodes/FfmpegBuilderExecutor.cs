@@ -130,7 +130,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
                     });
                     if (result.ExitCode == 0)
                     {
-                        Args.Logger?.ILog("Supported hardware decoding detected: " + hw);
+                        Args.Logger?.ILog("Supported hardware decoding detected: " + string.Join(" ", hw));
                         return hw;
                     }
                 }
