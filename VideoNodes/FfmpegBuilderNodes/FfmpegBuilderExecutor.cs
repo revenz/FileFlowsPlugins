@@ -161,7 +161,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
             return new[]
             {
                 new [] { "-hwaccel", "nvdec", "-hwaccel_output_format", "cuda" },
-                new [] { "-hwaccel", "cuda" },rep
+                new [] { "-hwaccel", "cuda" },
                 new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "qsv" },
                 new [] { "-hwaccel", "vaapi", "-hwaccel_output_format", "vaapi" },
                 new [] { "-hwaccel", "dxva2" },
