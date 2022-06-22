@@ -43,7 +43,9 @@ public abstract class PlexNode:Node
 
         // get the path
         string path = args.WorkingFile;
+        args.Logger?.ILog("Working File: " + path);
         path = args.UnMapPath(path);
+        args.Logger?.ILog("Working File (Unmapped): " + path);
         if (args.IsDirectory == false)
         {
             bool windows = path.StartsWith("\\") || Regex.IsMatch(path, @"^[a-zA-Z]:\\");
@@ -77,13 +79,14 @@ public abstract class PlexNode:Node
             args.Logger?.ELog("Failed deserializing sections json: " + ex.Message);
             return 2;
         }
-
+        args.Logger?.ILog("Path before plex mapping: " + path);
         foreach (var map in mapping)
         {
             if (string.IsNullOrEmpty(map.Key))
                 continue;
             path = path.Replace(map.Key, map.Value ?? string.Empty);
         }
+        args.Logger?.ILog("Path after plex mapping: " + path);
 
         string pathLower = path.Replace("\\", "/").ToLower();
         if (pathLower.EndsWith("/"))
