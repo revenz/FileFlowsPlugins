@@ -14,7 +14,7 @@ namespace FileFlows.VideoNodes
         [TextVariable(1)]
         public string VideoCodec { get; set; }
 
-        [DefaultValue("hevc_nvenc -preset hq -crf 23 -pix_fmt:v:0 yuv420p10le")]
+        [DefaultValue("hevc")]
         [TextVariable(2)]
         public string VideoCodecParameters { get; set; }
 
