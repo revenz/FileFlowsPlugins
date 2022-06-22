@@ -43,17 +43,9 @@ namespace FileFlows.MusicNodes
 
             try
             {
-
-                var musicInfo = new MusicInfoHelper(ffmpegExe, args.Logger).Read(args.WorkingFile);
-                if (musicInfo.Duration == 0)
-                {
-                    args.Logger.ILog("Failed to load music information.");
-                    return 0;
-                }
-
-                SetMusicInfo(args, musicInfo, Variables);
-
-                return 1;
+                if (ReadMusicFileInfo(args, ffmpegExe, args.WorkingFile))
+                    return 1;
+                return 0;
             }
             catch (Exception ex)
             {

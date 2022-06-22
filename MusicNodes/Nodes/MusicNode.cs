@@ -91,5 +91,19 @@ namespace FileFlows.MusicNodes
             }
             return result;
         }
+
+        protected bool ReadMusicFileInfo(NodeParameters args, string ffmpegExe, string filename)
+        {
+
+            var musicInfo = new MusicInfoHelper(ffmpegExe, args.Logger).Read(filename);
+            if (musicInfo.Duration == 0)
+            {
+                args.Logger?.ILog("Failed to load music information.");
+                return false;
+            }
+
+            SetMusicInfo(args, musicInfo, Variables);
+            return true;
+        }
     }
 }
