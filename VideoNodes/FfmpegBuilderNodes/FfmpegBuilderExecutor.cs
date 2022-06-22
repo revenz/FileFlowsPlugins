@@ -146,9 +146,10 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
         {
             return new[]
             {
-                //new [] { "-hwaccel", "nvdec", "-hwaccel_output_format", "cuda" },
+                new [] { "-hwaccel", "nvdec", "-hwaccel_output_format", "cuda" },
                 new [] { "-hwaccel", "cuda" },
-                new [] { "-hwaccel", "qsv" },
+                new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "qsv" },
+                new [] { "-hwaccel", "vaapi", "-hwaccel_output_format", "vaapi" },
                 new [] { "-hwaccel", "dxva2" },
                 new [] { "-hwaccel", "d3d11va" },
                 new [] { "-hwaccel", "opencl" },
@@ -159,9 +160,10 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
         {
             return new[]
             {
-                //new [] { "-hwaccel", "nvdec", "-hwaccel_output_format", "cuda" },
+                new [] { "-hwaccel", "nvdec", "-hwaccel_output_format", "cuda" },
                 new [] { "-hwaccel", "cuda" },
-                new [] { "-hwaccel", "qsv" },
+                new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "qsv" },
+                new [] { "-hwaccel", "vaapi", "-hwaccel_output_format", "vaapi" },
                 new [] { "-hwaccel", "dxva2" },
                 new [] { "-hwaccel", "d3d11va" },
                 new [] { "-hwaccel", "opencl" },
@@ -172,9 +174,10 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
         {
             return new[]
             {
-                //new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "cuda" },
+                new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "cuda" },
                 new [] { "-hwaccel", "cuda" },
-                new [] { "-hwaccel", "qsv" },
+                new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "qsv" },
+                new [] { "-hwaccel", "vaapi", "-hwaccel_output_format", "vaapi" },
                 new [] { "-hwaccel", "dxva2" },
                 new [] { "-hwaccel", "d3d11va" },
                 new [] { "-hwaccel", "opencl" },
