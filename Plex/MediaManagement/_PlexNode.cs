@@ -85,7 +85,10 @@ public abstract class PlexNode:Node
             path = path.Replace(map.Key, map.Value ?? string.Empty);
         }
 
-        string pathLower = path.ToLower();
+        string pathLower = path.Replace("\\", "/").ToLower();
+        if (pathLower.EndsWith("/"))
+            pathLower = pathLower[..^1];
+        args.Logger?.WLog("Testing Plex Path: " + pathLower);
         var section = sections?.MediaContainer?.Directory?.Where(x => {
             if (x.Location?.Any() != true)
                 return false;
@@ -93,7 +96,7 @@ public abstract class PlexNode:Node
             {
                 if (loc.Path == null)
                     continue;
-                if (pathLower.StartsWith(loc.Path.ToLower()))
+                if (pathLower.StartsWith(loc.Path.Replace("\\", "/").ToLower()))
                     return true;
             }
             return false;
