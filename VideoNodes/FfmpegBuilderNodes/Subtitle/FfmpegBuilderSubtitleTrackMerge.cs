@@ -48,19 +48,26 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
             args.Logger?.ILog("Directory does not exist: " + dir.FullName);
             return 2;
         }
-        bool added = false;
+        foreach(var sub in Subtitles)
+        {
+            args.Logger.ILog("Add Subtitle Extension: " + sub);
+        }
+
+        int count = 0;
         foreach (var file in dir.GetFiles())
         {
             string ext = file.Extension;
             if (string.IsNullOrEmpty(ext) || ext.Length < 2)
                 continue;
             ext = ext.Substring(1).ToLower();// remove .
-            if (Subtitles.Contains(ext))
+            if (Subtitles.Contains(ext) == false)
                 continue;
-            
+
+            args.Logger.ILog("Adding file: " + file.FullName + " [" + ext + "]");
             this.Model.InputFiles.Add(file.FullName);
-            added = true;
+            ++count;
         }
-        return added ? 1 : 2;
+        args.Logger.ILog("Subtitles added: " + count);
+        return count > 0 ? 1 : 2;
     }
 }
