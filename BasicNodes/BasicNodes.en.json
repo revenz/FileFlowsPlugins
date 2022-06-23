@@ -209,6 +209,7 @@
           }
         },
         "PatternReplacer": {
+          "Title": "Filename Pattern Replacer",
           "Description": "Lets you make replacements in the filename.  Can use regular expressions for replacements, or simple string replacements.\n\nOutput 1: Replacement done\nOutput 2: No replacement done",
           "Outputs": {
             "1": "Replacement done",
