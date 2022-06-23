@@ -98,7 +98,7 @@ namespace FileFlows.VideoNodes
                 };
 
                 if (resName != null)
-                    args.RecordStatistic("RESOLUTION", resName);
+                    args.RecordStatistic("VIDEO_RESOLUTION", resName);
 
                 string extension = new FileInfo(args.FileName).Extension.ToLower()[1..];
                 var container = extension switch
