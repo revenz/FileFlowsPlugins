@@ -12,6 +12,8 @@ public class PatternReplacer : Node
     public override FlowElementType Type => FlowElementType.Process;
     public override string Icon => "fas fa-exchange-alt";
 
+    public string Group => "File";
+
     public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/filename-pattern-replacer";
 
     internal bool UnitTest = false;
