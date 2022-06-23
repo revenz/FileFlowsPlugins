@@ -72,14 +72,53 @@ namespace FileFlows.VideoNodes
                 foreach (var stream in videoInfo.VideoStreams)
                 {
                     if (string.IsNullOrEmpty(stream.Codec) == false)
+                    {
                         args.RecordStatistic("CODEC", stream.Codec);
+                        args.RecordStatistic("VIDEO_CODEC", stream.Codec);
+                    }
                 }
 
                 foreach (var stream in videoInfo.AudioStreams)
                 {
                     if (string.IsNullOrEmpty(stream.Codec) == false)
+                    {
                         args.RecordStatistic("CODEC", stream.Codec);
+                        args.RecordStatistic("AUDIO_CODEC", stream.Codec);
+                    }
                 }
+
+                var resolution = ResolutionHelper.GetResolution(videoInfo);
+                var resName = resolution switch
+                {
+                    ResolutionHelper.Resolution.r1080p => "1080p",
+                    ResolutionHelper.Resolution.r480p => "480p",
+                    ResolutionHelper.Resolution.r720p => "720p",
+                    ResolutionHelper.Resolution.r4k => "4k",
+                    _ => null
+                };
+
+                if (resName != null)
+                    args.RecordStatistic("RESOLUTION", resName);
+
+                string extension = new FileInfo(args.FileName).Extension.ToLower()[1..];
+                var container = extension switch
+                {
+                    "mkv" => "MKV",
+                    "mk3d" => "MKV",
+                    "mp4" => "MP4",
+                    "mpeg4" => "MP4",
+                    "mp4v" => "MP4",
+                    "m4v" => "MP4",
+                    "mpg" => "MPEG",
+                    "mpeg" => "MPEG",
+                    "mov" => "MOV",
+                    "qt" => "MOV",
+                    "asf" => "ASF",
+                    "wmv" => "ASF",
+                    _ => extension.ToUpper()
+                };
+                if(string.IsNullOrEmpty(container) == false)
+                    args.RecordStatistic("VIDEO_CONTAINER", container);
 
 
                 foreach (var vs in videoInfo.AudioStreams)
