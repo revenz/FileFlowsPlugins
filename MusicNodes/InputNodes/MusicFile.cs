@@ -45,6 +45,12 @@ namespace FileFlows.MusicNodes
             {
                 if (ReadMusicFileInfo(args, ffmpegExe, args.WorkingFile))
                     return 1;
+
+                var musicInfo = GetMusicInfo(args);
+
+                if (string.IsNullOrEmpty(musicInfo.Codec) == false)
+                    args.RecordStatistic("CODEC", musicInfo.Codec);
+
                 return 0;
             }
             catch (Exception ex)

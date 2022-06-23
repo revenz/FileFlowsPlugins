@@ -69,6 +69,17 @@ namespace FileFlows.VideoNodes
                     args.Logger.ILog($"Video stream '{vs.Codec}' '{vs.Index}'");
                 }
 
+                foreach (var stream in videoInfo.VideoStreams)
+                {
+                    if (string.IsNullOrEmpty(stream.Codec) == false)
+                        args.RecordStatistic("CODEC", stream.Codec);
+                }
+
+                foreach (var stream in videoInfo.AudioStreams)
+                {
+                    if (string.IsNullOrEmpty(stream.Codec) == false)
+                        args.RecordStatistic("CODEC", stream.Codec);
+                }
 
 
                 foreach (var vs in videoInfo.AudioStreams)
