@@ -98,7 +98,10 @@ namespace FileFlows.VideoNodes
                 };
 
                 if (resName != null)
+                {
+                    args.Logger?.ILog("Video Resolution: " + resName);
                     args.RecordStatistic("VIDEO_RESOLUTION", resName);
+                }
 
                 string extension = new FileInfo(args.FileName).Extension.ToLower()[1..];
                 var container = extension switch
@@ -117,8 +120,11 @@ namespace FileFlows.VideoNodes
                     "wmv" => "ASF",
                     _ => extension.ToUpper()
                 };
-                if(string.IsNullOrEmpty(container) == false)
+                if (string.IsNullOrEmpty(container) == false)
+                {
+                    args.Logger?.ILog("Video Container: " + container);
                     args.RecordStatistic("VIDEO_CONTAINER", container);
+                }
 
 
                 foreach (var vs in videoInfo.AudioStreams)
