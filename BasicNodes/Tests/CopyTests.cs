@@ -34,6 +34,20 @@ public class CopyTests
         Assert.AreEqual(2, result);
     }
 
+    [TestMethod]
+    public void CopyTests_Dir_DateReplacements()
+    {
+        var logger = new TestLogger();
+        var args = new FileFlows.Plugin.NodeParameters(@"D:\videos\testfiles\bigbuckbunny_480p_30s.mp4", logger, false, string.Empty);
+        args.PathMapper = s => Map(s);
+
+        CopyFile node = new();
+        node.CopyFolder = true;
+        node.DestinationPath = @"D:\videos\converted";
+        node.DestinationFile = "{file.Orig.FileName}-{file.Create.Month:00}-{file.Create.Year}{ext}";
+        var result = node.Execute(args);
+        Assert.AreEqual(1, result);
+    }
 
     string Map(string path)
     {
