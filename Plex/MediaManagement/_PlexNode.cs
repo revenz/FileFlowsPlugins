@@ -43,12 +43,14 @@ public abstract class PlexNode:Node
 
         // get the path
         string path = args.WorkingFile;
+        args.Logger?.ILog("Working File: " + path);
         path = args.UnMapPath(path);
+        args.Logger?.ILog("Working File (Unmapped): " + path);
         if (args.IsDirectory == false)
         {
-            bool windows = path.StartsWith("\\") || Regex.IsMatch(path, @"^[a-zA-Z]:\\");
-            string pathSeparator = windows ? "\\" : "/";
-            path = path.Substring(0, path.LastIndexOf(pathSeparator));
+            // juse use /
+            path = path.Replace("\\", "/");
+            path = path.Substring(0, path.LastIndexOf("/"));
         }
 
         if (serverUrl.EndsWith("/") == false)
@@ -77,15 +79,19 @@ public abstract class PlexNode:Node
             args.Logger?.ELog("Failed deserializing sections json: " + ex.Message);
             return 2;
         }
-
+        args.Logger?.ILog("Path before plex mapping: " + path);
         foreach (var map in mapping)
         {
             if (string.IsNullOrEmpty(map.Key))
                 continue;
             path = path.Replace(map.Key, map.Value ?? string.Empty);
         }
+        args.Logger?.ILog("Path after plex mapping: " + path);
 
-        string pathLower = path.ToLower();
+        string pathLower = path.Replace("\\", "/").ToLower();
+        if (pathLower.EndsWith("/"))
+            pathLower = pathLower[..^1];
+        args.Logger?.ILog("Testing Plex Path: " + pathLower);
         var section = sections?.MediaContainer?.Directory?.Where(x => {
             if (x.Location?.Any() != true)
                 return false;
@@ -93,7 +99,8 @@ public abstract class PlexNode:Node
             {
                 if (loc.Path == null)
                     continue;
-                if (pathLower.StartsWith(loc.Path.ToLower()))
+                args.Logger?.ILog("Plex section path: " + loc.Path);
+                if (pathLower.StartsWith(loc.Path.Replace("\\", "/").ToLower()))
                     return true;
             }
             return false;

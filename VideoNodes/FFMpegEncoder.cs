@@ -46,9 +46,9 @@ namespace FileFlows.VideoNodes
             }
 
             string argsString = String.Join(" ", arguments.Select(x => x.IndexOf(" ") > 0 ? "\"" + x + "\"" : x));
-            Logger.ILog(new string('=', ("FFMpeg.Arguments: " + argsString).Length));
+            Logger.ILog(new string('-', ("FFMpeg.Arguments: " + argsString).Length));
             Logger.ILog("FFMpeg.Arguments: " + argsString);
-            Logger.ILog(new string('=', ("FFMpeg.Arguments: " + argsString).Length));
+            Logger.ILog(new string('-', ("FFMpeg.Arguments: " + argsString).Length));
 
             var task = ExecuteShellCommand(ffMpegExe, arguments, 0);
             task.Wait();

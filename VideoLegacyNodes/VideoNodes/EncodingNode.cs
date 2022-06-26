@@ -83,7 +83,9 @@ namespace FileFlows.VideoNodes
             if (string.IsNullOrEmpty(vidparams))
                 return string.Empty;
 
-            if(vidparams.ToLower() == "hevc" || vidparams.ToLower() == "h265")
+            var splitParams = vidparams.ToLower().Split(" ");
+
+            if(splitParams.Contains("hevc") || splitParams.Contains("h265"))
             {
                 // try find best hevc encoder
                 foreach(string vidparam in new [] { "hevc_nvenc -preset hq", "hevc_qsv -global_quality 28 -load_plugin hevc_hw", "hevc_amf", "hevc_vaapi" })
@@ -94,7 +96,7 @@ namespace FileFlows.VideoNodes
                 }
                 return "libx265";
             }
-            if (vidparams.ToLower() == "h264")
+            if (splitParams.Contains("h264"))
             {
                 // try find best hevc encoder
                 foreach (string vidparam in new[] { "h264_nvenc", "h264_qsv", "h264_amf", "h264_vaapi" })
@@ -106,54 +108,55 @@ namespace FileFlows.VideoNodes
                 return "libx264";
             }
 
-            if (vidparams.ToLower().Contains("hevc_nvenc"))
-            {
-                // nvidia h265 encoding, check can
-                bool canProcess = CanUseHardwareEncodingChecker.CanProcess(Args, ffmpeg, vidparams);
-                if (canProcess == false)
-                {
-                    // change to cpu encoding 
-                    Args.Logger?.ILog("Can't encode using hevc_nvenc, falling back to CPU encoding H265 (libx265)");
-                    return "libx265";
-                }
-                return vidparams;
-            }
-            else if (vidparams.ToLower().Contains("h264_nvenc"))
-            {
-                // nvidia h264 encoding, check can
-                bool canProcess = CanUseHardwareEncodingChecker.CanProcess(Args, ffmpeg, vidparams);
-                if (canProcess == false)
-                {
-                    // change to cpu encoding 
-                    Args.Logger?.ILog("Can't encode using h264_nvenc, falling back to CPU encoding H264 (libx264)");
-                    return "libx264";
-                }
-                return vidparams;
-            }
-            else if (vidparams.ToLower().Contains("hevc_qsv"))
-            {
-                // nvidia h265 encoding, check can
-                bool canProcess = CanUseHardwareEncodingChecker.CanProcess(Args, ffmpeg, vidparams);
-                if (canProcess == false)
-                {
-                    // change to cpu encoding 
-                    Args.Logger?.ILog("Can't encode using hevc_qsv, falling back to CPU encoding H265 (libx265)");
-                    return "libx265";
-                }
-                return vidparams;
-            }
-            else if (vidparams.ToLower().Contains("h264_qsv"))
-            {
-                // nvidia h264 encoding, check can
-                bool canProcess = CanUseHardwareEncodingChecker.CanProcess(Args, ffmpeg, vidparams);
-                if (canProcess == false)
-                {
-                    // change to cpu encoding 
-                    Args.Logger?.ILog("Can't encode using h264_qsv, falling back to CPU encoding H264 (libx264)");
-                    return "libx264";
-                }
-                return vidparams;
-            }
+            // removed in FF-137 
+            //if (vidparams.ToLower().Contains("hevc_nvenc"))
+            //{
+            //    // nvidia h265 encoding, check can
+            //    bool canProcess = CanUseHardwareEncodingChecker.CanProcess(Args, ffmpeg, vidparams);
+            //    if (canProcess == false)
+            //    {
+            //        // change to cpu encoding 
+            //        Args.Logger?.ILog("Can't encode using hevc_nvenc, falling back to CPU encoding H265 (libx265)");
+            //        return "libx265";
+            //    }
+            //    return vidparams;
+            //}
+            //else if (vidparams.ToLower().Contains("h264_nvenc"))
+            //{
+            //    // nvidia h264 encoding, check can
+            //    bool canProcess = CanUseHardwareEncodingChecker.CanProcess(Args, ffmpeg, vidparams);
+            //    if (canProcess == false)
+            //    {
+            //        // change to cpu encoding 
+            //        Args.Logger?.ILog("Can't encode using h264_nvenc, falling back to CPU encoding H264 (libx264)");
+            //        return "libx264";
+            //    }
+            //    return vidparams;
+            //}
+            //else if (vidparams.ToLower().Contains("hevc_qsv"))
+            //{
+            //    // nvidia h265 encoding, check can
+            //    bool canProcess = CanUseHardwareEncodingChecker.CanProcess(Args, ffmpeg, vidparams);
+            //    if (canProcess == false)
+            //    {
+            //        // change to cpu encoding 
+            //        Args.Logger?.ILog("Can't encode using hevc_qsv, falling back to CPU encoding H265 (libx265)");
+            //        return "libx265";
+            //    }
+            //    return vidparams;
+            //}
+            //else if (vidparams.ToLower().Contains("h264_qsv"))
+            //{
+            //    // nvidia h264 encoding, check can
+            //    bool canProcess = CanUseHardwareEncodingChecker.CanProcess(Args, ffmpeg, vidparams);
+            //    if (canProcess == false)
+            //    {
+            //        // change to cpu encoding 
+            //        Args.Logger?.ILog("Can't encode using h264_qsv, falling back to CPU encoding H264 (libx264)");
+            //        return "libx264";
+            //    }
+            //    return vidparams;
+            //}
             return vidparams;
         }
 

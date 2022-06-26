@@ -115,7 +115,18 @@ namespace FileFlows.VideoNodes
             args.UpdateVariables(variables);
         }
 
-        protected VideoInfo GetVideoInfo(NodeParameters args)
+        protected VideoInfo GetVideoInfo(NodeParameters args, bool refreshIfFileChanged = true)
+        {
+            var vi = GetVideoInfoActual(args);
+            if (refreshIfFileChanged == false || vi.FileName == args.FileName)
+                return vi;
+
+            vi = new VideoInfoHelper(FFMPEG, args.Logger).Read(args.WorkingFile);
+            SetVideoInfo(args, vi, Variables);
+            return vi;
+        }
+
+        private VideoInfo GetVideoInfoActual(NodeParameters args)
         {
             if (args.Parameters.ContainsKey(VIDEO_INFO) == false)
             {

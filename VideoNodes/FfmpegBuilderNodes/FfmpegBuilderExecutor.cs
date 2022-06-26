@@ -130,7 +130,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
                     });
                     if (result.ExitCode == 0)
                     {
-                        Args.Logger?.ILog("Supported hardware decoding detected: " + hw);
+                        Args.Logger?.ILog("Supported hardware decoding detected: " + string.Join(" ", hw));
                         return hw;
                     }
                 }
@@ -146,9 +146,10 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
         {
             return new[]
             {
-                //new [] { "-hwaccel", "nvdec", "-hwaccel_output_format", "cuda" },
+                //new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "cuda" }, // this fails with Impossible to convert between the formats supported by the filter 'Parsed_crop_0' and the filter 'auto_scale_0'
                 new [] { "-hwaccel", "cuda" },
-                new [] { "-hwaccel", "qsv" },
+                new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "qsv" },
+                new [] { "-hwaccel", "vaapi", "-hwaccel_output_format", "vaapi" },
                 new [] { "-hwaccel", "dxva2" },
                 new [] { "-hwaccel", "d3d11va" },
                 new [] { "-hwaccel", "opencl" },
@@ -159,9 +160,10 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
         {
             return new[]
             {
-                //new [] { "-hwaccel", "nvdec", "-hwaccel_output_format", "cuda" },
+                //new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "cuda" }, // this fails with Impossible to convert between the formats supported by the filter 'Parsed_crop_0' and the filter 'auto_scale_0'
                 new [] { "-hwaccel", "cuda" },
-                new [] { "-hwaccel", "qsv" },
+                new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "qsv" },
+                new [] { "-hwaccel", "vaapi", "-hwaccel_output_format", "vaapi" },
                 new [] { "-hwaccel", "dxva2" },
                 new [] { "-hwaccel", "d3d11va" },
                 new [] { "-hwaccel", "opencl" },
@@ -172,9 +174,10 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
         {
             return new[]
             {
-                //new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "cuda" },
+                //new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "cuda" }, // this fails with Impossible to convert between the formats supported by the filter 'Parsed_crop_0' and the filter 'auto_scale_0'
                 new [] { "-hwaccel", "cuda" },
-                new [] { "-hwaccel", "qsv" },
+                new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "qsv" },
+                new [] { "-hwaccel", "vaapi", "-hwaccel_output_format", "vaapi" },
                 new [] { "-hwaccel", "dxva2" },
                 new [] { "-hwaccel", "d3d11va" },
                 new [] { "-hwaccel", "opencl" },

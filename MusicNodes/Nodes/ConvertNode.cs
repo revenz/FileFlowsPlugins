@@ -258,7 +258,12 @@ namespace FileFlows.MusicNodes
             //CopyMetaData(outputFile, args.FileName);
 
             args.SetWorkingFile(outputFile);
-            return 1;
+
+            // update the music file info
+            if (ReadMusicFileInfo(args, ffmpegExe, args.WorkingFile))
+                return 1;
+
+            return -1;
         }
 
         //private void CopyMetaData(string outputFile, string originalFile)
