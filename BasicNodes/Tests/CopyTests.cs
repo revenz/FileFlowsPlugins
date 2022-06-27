@@ -44,7 +44,7 @@ public class CopyTests
         CopyFile node = new();
         node.CopyFolder = true;
         node.DestinationPath = @"D:\videos\converted";
-        node.DestinationFile = "{file.Orig.FileName}-{file.Create.Month:00}-{file.Create.Year}{ext}";
+        node.DestinationFile = "{file.Orig.FileName}-{file.Create.Month:00}-{file.Create.Year}{ext!}";
         var result = node.Execute(args);
         Assert.AreEqual(1, result);
     }

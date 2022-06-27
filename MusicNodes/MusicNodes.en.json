@@ -2,7 +2,7 @@
   "Flow":{
     "Parts": {
       "MusicFile": {
-        "Description": "An input music file that has had its MusicInformation read and can be processed",
+        "Description": "An input music file that has had its Music Information read and can be processed",
         "Outputs": {
           "1": "Music file from library"
         }
