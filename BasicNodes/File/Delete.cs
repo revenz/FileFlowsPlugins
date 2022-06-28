@@ -9,6 +9,7 @@ namespace FileFlows.BasicNodes.File
         public override int Outputs => 1;
         public override FlowElementType Type => FlowElementType.Process;
         public override string Icon => "far fa-trash-alt";
+        public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/delete";
 
         [TextVariable(1)]
         public string FileName { get; set; }
