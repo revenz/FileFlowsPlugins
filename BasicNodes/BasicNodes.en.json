@@ -267,7 +267,7 @@
             "Method": "Method",
             "Method-Help": "The web method to use when sending this request",
             "ContentType": "Content Type",
-            "ContentType-Help": "The Content-Type of the message to send.",
+            "ContentType-Help": "The Content-Type of the message to send",
             "Headers": "Headers",
             "Headers-Help": "Optional headers to send with the request",
             "HeadersKey": "Key",
