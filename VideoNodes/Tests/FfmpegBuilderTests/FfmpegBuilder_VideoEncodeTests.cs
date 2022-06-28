@@ -78,6 +78,69 @@ public class FfmpegBuilder_VideoEncode_VideoEncodeTests: TestBase
     public void FfmpegBuilder_VideoEncode_H264() => TestEncode(false, false, false);
     [TestMethod]
     public void FfmpegBuilder_VideoEncode_H264_10bit() => TestEncode(false, false, true);
+
+
+    [TestMethod]
+    public void FfmpegBuilder_VideoEncode_FailIfNoHardware()
+    {
+        var logger = new TestLogger();
+        const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+        var vi = new VideoInfoHelper(ffmpeg, logger);
+        var vii = vi.Read(TestFile_120_mbps_4k_uhd_hevc_10bit);
+        var args = new NodeParameters(TestFile_50_mbps_hd_h264, logger, false, string.Empty);
+        args.GetToolPathActual = (string tool) => ffmpeg;
+        args.TempPath = @"D:\videos\temp";
+        args.Parameters.Add("VideoInfo", vii);
+
+
+        FfmpegBuilderStart ffStart = new();
+        ffStart.PreExecute(args);
+        Assert.AreEqual(1, ffStart.Execute(args));
+
+        FfmpegBuilderVideoCodec ffCodec = new();
+        ffCodec.VideoCodec = "h265";
+        ffCodec.VideoCodecParameters = "hevc_qsv";
+        ffCodec.PreExecute(args);
+        ffCodec.Execute(args);
+
+        FfmpegBuilderExecutor ffExecutor = new();
+        ffExecutor.PreExecute(args);
+        int result = ffExecutor.Execute(args);
+        string log = logger.ToString();
+        Assert.AreEqual(-1, result);
+
+    }
+
+    [TestMethod]
+    public void FfmpegBuilder_VideoEncode_AutoUseHardware()
+    {
+        var logger = new TestLogger();
+        const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+        var vi = new VideoInfoHelper(ffmpeg, logger);
+        var vii = vi.Read(TestFile_120_mbps_4k_uhd_hevc_10bit);
+        var args = new NodeParameters(TestFile_50_mbps_hd_h264, logger, false, string.Empty);
+        args.GetToolPathActual = (string tool) => ffmpeg;
+        args.TempPath = @"D:\videos\temp";
+        args.Parameters.Add("VideoInfo", vii);
+
+
+        FfmpegBuilderStart ffStart = new();
+        ffStart.PreExecute(args);
+        Assert.AreEqual(1, ffStart.Execute(args));
+
+        FfmpegBuilderVideoCodec ffCodec = new();
+        ffCodec.VideoCodec = "h265";
+        ffCodec.VideoCodecParameters = "h265";
+        ffCodec.PreExecute(args);
+        ffCodec.Execute(args);
+
+        FfmpegBuilderExecutor ffExecutor = new();
+        ffExecutor.PreExecute(args);
+        int result = ffExecutor.Execute(args);
+        string log = logger.ToString();
+        Assert.AreEqual(1, result);
+
+    }
 }
 
 #endif
