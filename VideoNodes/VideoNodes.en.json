@@ -22,7 +22,7 @@
         }
       },
       "VideoFile": {
-        "Description": "An input video file that has had its VideoInformation read and can be processed",
+        "Description": "An input video file that has had its Video Information read and can be processed",
         "Outputs": {
           "1": "Video file from library"
         },
@@ -101,6 +101,28 @@
           "NotMatching-Help": "If audio tracks NOT matching the pattern should be removed",
           "UseLanguageCode": "Use Language Code",
           "UseLanguageCode-Help": "If the language code of the audio track should be used instead of the title"
+        }
+      },
+      "FfmpegBuilderAudioConverter": {
+        "Label": "FFMPEG Builder: Audio Converter",
+        "Outputs": {
+          "1": "Tracks to be converted",
+          "2": "No tracks to be converted"
+        },
+        "Description": "Allows you to convert all tracks matching the parameters to be converted.",
+        "Fields": {
+          "Channels": "Channels",
+          "Channels-Help": "The number of channels this new audio track will be.\nIf you specify more channels than the source, FFMPEG will automatically upmix it.\nIf you specify fewer channels than the source, FFMPEG will automatically down mix it.",
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "Bitrate of the audio track",
+          "Codec": "Codec",
+          "Codec-Help": "The codec to use to encode the audio",
+          "Pattern": "Pattern",
+          "Pattern-Help": "A regular expression to match against, eg \"commentary\" to match commentary tracks",
+          "NotMatching": "Not Matching",
+          "NotMatching-Help": "If audio tracks NOT matching the pattern should be converted",
+          "UseLanguageCode": "Use Language Code",
+          "UseLanguageCode-Help": "If the language code of the track should be used instead of the title"
         }
       },
       "FfmpegBuilderAudioNormalization": {

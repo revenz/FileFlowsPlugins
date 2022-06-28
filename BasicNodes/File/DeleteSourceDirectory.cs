@@ -11,6 +11,7 @@ namespace FileFlows.BasicNodes.File
         public override int Outputs => 2;
         public override FlowElementType Type => FlowElementType.Process;
         public override string Icon => "far fa-trash-alt";
+        public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/delete-source-directory";
 
         [Boolean(1)]
         public bool IfEmpty { get; set; }

@@ -121,7 +121,7 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
         }
         else
         {
-            audio.EncodingParameters.AddRange(GetNewAudioTrackParameters("0:a:" + (bestAudio.TypeIndex)));
+            audio.EncodingParameters.AddRange(GetNewAudioTrackParameters("0:a:" + (bestAudio.TypeIndex), Codec, Channels, Bitrate));
         }
         if (Index > Model.AudioStreams.Count - 1)
             Model.AudioStreams.Add(audio);
@@ -188,47 +188,47 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
     }
 
 
-    private string[] GetNewAudioTrackParameters(string source)
+    internal static string[] GetNewAudioTrackParameters(string source, string codec, float channels, int bitrate)
     {
-        if (Channels == 0)
+        if (channels == 0)
         {
             // same as source
-            if (Bitrate == 0)
+            if (bitrate == 0)
             {
                 return new[]
                 {
                     "-map", source, 
                     "-c:a:{index}",
-                    Codec
+                    codec
                 };
             }
             return new[]
             {
                 "-map", source,
                 "-c:a:{index}",
-                Codec,
-                "-b:a:{index}", Bitrate + "k"
+                codec,
+                "-b:a:{index}", bitrate + "k"
             };
         }
         else
         {
-            if (Bitrate == 0)
+            if (bitrate == 0)
             {
                 return new[]
                 {
                     "-map", source,
                     "-c:a:{index}",
-                    Codec,
-                    "-ac:a:{index}", Channels.ToString()
+                    codec,
+                    "-ac:a:{index}", channels.ToString()
                 };
             }
             return new[]
             {
                 "-map", source,
                 "-c:a:{index}",
-                Codec,
-                "-ac:a:{index}", Channels.ToString(),
-                "-b:a:{index}", Bitrate + "k"
+                codec,
+                "-ac:a:{index}", channels.ToString(),
+                "-b:a:{index}", bitrate + "k"
             };
         }
     }
