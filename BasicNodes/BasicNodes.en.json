@@ -245,6 +245,16 @@
             "CsvFile-Help": "Will append to this file the original name and the renamed file.  Useful when using ''Log Only'' to test the renamer before changing files."
           }
         },
+        "Sleep": {
+          "Description": "Pauses the flow",
+          "Outputs": {
+            "1": "Flow resumed"
+          },
+          "Fields": {
+            "Milliseconds": "Milliseconds",
+            "Milliseconds-Help": "How long to sleep the flow for.  Must be between 1 millisecond and 1 hour"
+          }
+        },
         "Touch": {
           "Description": "Touches a file or directory and sets the last write time to now.",
           "Outputs": {
