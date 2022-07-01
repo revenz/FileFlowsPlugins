@@ -168,7 +168,6 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         });
     }
 
-
     private void H26x_Qsv(FfmpegVideoStream stream, bool h265)
     {
         //hevc_qsv -load_plugin hevc_hw -pix_fmt p010le -profile:v main10 -global_quality 21 -g 24 -look_ahead 1 -look_ahead_depth 60
