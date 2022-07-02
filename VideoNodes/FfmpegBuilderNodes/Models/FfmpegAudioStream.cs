@@ -52,6 +52,12 @@
                 }
                 if (Filter.Any())
                 {
+                    if (EncodingParameters.Any() == false && Filter.Any(x => x?.Contains("loudnorm") == true) == true)
+                    {
+                        // normalized.  we must set the codec
+                        results.AddRange(new[] { $"-c:a:{outputIndex}", Stream.Codec });
+                    }
+
                     results.Add("-filter:a:" + outputIndex);
                     results.Add(String.Join(", ", Filter));
                 }
