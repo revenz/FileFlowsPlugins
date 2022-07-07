@@ -108,6 +108,9 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
 
             foreach(var hw in decoders)
             {
+
+                if (CanUseHardwareEncoding.DisabledByVariables(Args, string.Join(" ", hw)))
+                    continue;
                 try
                 {
                     var arguments = new List<string>()
