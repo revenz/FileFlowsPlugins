@@ -10,6 +10,7 @@
         public override int Outputs => 1;
         public override string Icon => "fas fa-file";
         public override FlowElementType Type => FlowElementType.Logic;
+        public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/original-file";
 
         public override int Execute(NodeParameters args)
         {

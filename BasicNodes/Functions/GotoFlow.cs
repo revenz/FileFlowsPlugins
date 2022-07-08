@@ -9,6 +9,7 @@
         public override int Outputs => 0;
 
         public override FlowElementType Type => FlowElementType.Logic;
+        public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/goto-flow"; 
         public override string Icon => "fas fa-sitemap";
 
         [Select("FLOW_LIST", 1)]

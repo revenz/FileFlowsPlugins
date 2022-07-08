@@ -9,6 +9,8 @@ public class Touch : Node
     public override int Outputs => 1;
     public override FlowElementType Type => FlowElementType.Process;
     public override string Icon => "fas fa-hand-point-right";
+    public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/touch"; 
+
 
     [TextVariable(1)]
     public string FileName { get; set; }

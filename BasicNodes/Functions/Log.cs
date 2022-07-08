@@ -13,6 +13,7 @@ public class Log : Node
     public override int Outputs => 1;
     public override FlowElementType Type => FlowElementType.Logic;
     public override string Icon => "far fa-file-alt";
+    public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/log"; 
 
     [Enum(1, LogType.Info, LogType.Debug, LogType.Warning, LogType.Error)]
     public LogType LogType { get; set; }

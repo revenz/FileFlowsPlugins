@@ -10,7 +10,7 @@
     "Flow":{
       "Parts": {
         "InputFile": {
-          "Description": "An input node for a library file.  This is required and is the starting point of a flow.  Any input node can be used, just one is required.",
+          "Description": "An input node for a file.  This is required and is the starting point of a flow.  Any input node can be used, just one is required.",
           "Outputs": {
             "1": "Library File"
           }
@@ -73,7 +73,7 @@
             "Timeout-Suffix": "seconds",
             "OutputVariable": "Output Variable",
             "OutputVariable-Help": "An optional variable name to store the process output into",
-            "OutputErrorVariable": "Output Variable",
+            "OutputErrorVariable": "Output Error Variable",
             "OutputErrorVariable-Help": "An optional variable name to store the process error output into"
           }
         },
