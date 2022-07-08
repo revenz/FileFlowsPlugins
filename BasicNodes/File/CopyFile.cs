@@ -5,6 +5,9 @@ namespace FileFlows.BasicNodes.File
     using FileFlows.Plugin.Attributes;
     using FileFlows.Plugin.Helpers;
 
+    /// <summary>
+    /// Node that copies a file
+    /// </summary>
     public class CopyFile : Node
     {
         public override int Inputs => 1;
