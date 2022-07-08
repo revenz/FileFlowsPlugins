@@ -30,6 +30,9 @@ namespace FileFlows.BasicNodes.File
         /// </summary>
         public override string Icon => "far fa-copy";
 
+        /// <summary>
+        /// Gets the help URL
+        /// </summary>
         public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/copy-file";
 
         private string _DestinationPath = string.Empty;
