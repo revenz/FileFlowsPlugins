@@ -10,6 +10,8 @@ namespace FileFlows.BasicNodes.File
         public override int Outputs => 3;
         public override FlowElementType Type => FlowElementType.Logic;
         public override string Icon => "fas fa-sitemap";
+        public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/file-size-compare";
+
 
         public override int Execute(NodeParameters args)
         {
