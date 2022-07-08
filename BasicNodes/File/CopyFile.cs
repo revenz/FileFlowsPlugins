@@ -14,7 +14,15 @@ namespace FileFlows.BasicNodes.File
         /// Gets the number of inputs
         /// </summary>
         public override int Inputs => 1;
+        
+        /// <summary>
+        /// Gets the number of outputs
+        /// </summary>
         public override int Outputs => 1;
+        
+        /// <summary>
+        /// Gets the type of node 
+        /// </summary>
         public override FlowElementType Type => FlowElementType.Process;
         public override string Icon => "far fa-copy";
 
