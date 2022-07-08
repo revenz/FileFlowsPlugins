@@ -10,6 +10,9 @@ namespace FileFlows.BasicNodes.File
     /// </summary>
     public class CopyFile : Node
     {
+        /// <summary>
+        /// Gets the number of inputs
+        /// </summary>
         public override int Inputs => 1;
         public override int Outputs => 1;
         public override FlowElementType Type => FlowElementType.Process;
