@@ -24,6 +24,10 @@ namespace FileFlows.BasicNodes.File
         /// Gets the type of node 
         /// </summary>
         public override FlowElementType Type => FlowElementType.Process;
+        
+        /// <summary>
+        /// Gets the icon for this node
+        /// </summary>
         public override string Icon => "far fa-copy";
 
         public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/copy-file";
