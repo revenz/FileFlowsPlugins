@@ -22,7 +22,7 @@ public class Apprise: Node
     [Select(nameof(MessageTypeOptions), 3)]
     public string MessageType { get; set; } = string.Empty;
 
-    private static List<ListOption> _MessageTypeOptions = new List<ListOption>();
+    private static List<ListOption> _MessageTypeOptions;
     public static List<ListOption> MessageTypeOptions
     {
         get

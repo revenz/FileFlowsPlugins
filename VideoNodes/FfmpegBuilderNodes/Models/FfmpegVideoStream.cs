@@ -62,15 +62,15 @@
         public override bool HasChange => EncodingParameters.Any() || Filter.Any() || AdditionalParameters.Any();
 
 
-        public override string[] GetParameters(int outputIndex)
+        public override string[] GetParameters(GetParametersArgs args)
         {
             if (Deleted)
                 return new string[] { };
 
-            var results = new List<string> { "-map", "0:v:" + outputIndex };
+            var results = new List<string> { "-map", "0:v:{sourceTypeIndex}" };
             if (Filter.Any() == false && EncodingParameters.Any() == false && AdditionalParameters.Any() == false)
             {
-                results.Add("-c:v:" + Stream.TypeIndex);
+                results.Add("-c:v:{index}");
                 results.Add("copy");
                 return results.ToArray();
             }
@@ -79,9 +79,9 @@
                 if (EncodingParameters.Any())
                 {
                     results.Add("-c:v:" + Stream.TypeIndex);
-                    results.AddRange(EncodingParameters.Select(x => x.Replace("{index}", outputIndex.ToString())));
+                    results.AddRange(EncodingParameters.Select(x => x.Replace("{index}", args.OutputTypeIndex.ToString())));
                     if(OptionalEncodingParameters.Any())
-                        results.AddRange(OptionalEncodingParameters.Select(x => x.Replace("{index}", outputIndex.ToString())));
+                        results.AddRange(OptionalEncodingParameters.Select(x => x.Replace("{index}", args.OutputTypeIndex.ToString())));
                 }
                 else
                 {
@@ -89,24 +89,24 @@
                     //results.Add("copy");
                 }
                 if (AdditionalParameters.Any())
-                    results.AddRange(AdditionalParameters.Select(x => x.Replace("{index}", outputIndex.ToString())));
+                    results.AddRange(AdditionalParameters.Select(x => x.Replace("{index}", args.OutputTypeIndex.ToString())));
 
                 if (Filter.Any() || OptionalFilter.Any())
                 {
-                    results.Add("-filter:v:" + outputIndex);
-                    results.Add(String.Join(", ", Filter.Concat(OptionalFilter)).Replace("{index}", outputIndex.ToString()));
+                    results.Add("-filter:v:" + args.OutputTypeIndex);
+                    results.Add(String.Join(", ", Filter.Concat(OptionalFilter)).Replace("{index}", args.OutputTypeIndex.ToString()));
                 }
             }
 
             if (string.IsNullOrWhiteSpace(this.Title) == false)
             {
-                results.Add($"-metadata:s:v:{outputIndex}");
+                results.Add($"-metadata:s:v:{args.OutputTypeIndex}");
                 results.Add($"title={(this.Title == FfmpegStream.REMOVED ? "" : this.Title)}");
             }
 
             if (Metadata.Any())
             {
-                results.AddRange(Metadata.Select(x => x.Replace("{index}", outputIndex.ToString())));
+                results.AddRange(Metadata.Select(x => x.Replace("{index}", args.OutputTypeIndex.ToString())));
             }
 
             return results.ToArray();

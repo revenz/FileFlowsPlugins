@@ -12,7 +12,12 @@ public abstract class FfmpegStream
     public abstract bool HasChange { get; }
     public bool ForcedChange { get; set; }
 
-    public abstract string[] GetParameters(int outputIndex);
+    /// <summary>
+    /// Gets the parameters for the stream
+    /// </summary>
+    /// <param name="args">the arguments</param>
+    /// <returns>the parameters for this stream</returns>
+    public abstract string[] GetParameters(GetParametersArgs args);
 
     private List<string> _Metadata = new List<string>();
     public List<string> Metadata
@@ -23,4 +28,32 @@ public abstract class FfmpegStream
             _Metadata = value ?? new List<string>();
         }
     }
+
+    /// <summary>
+    /// Args passed to get parameters
+    /// </summary>
+    public class GetParametersArgs
+    {
+        /// <summary>
+        /// Gets or sets the overall index for all streams
+        /// </summary>
+        public int OutputOverallIndex { get; set; }
+
+        /// <summary>
+        /// the index for just this type of streams
+        /// </summary>
+        public int OutputTypeIndex { get; set; }
+
+        /// <summary>
+        /// Gets or sets the source extension
+        /// </summary>
+        public string SourceExtension { get; set; }
+
+        /// <summary>
+        /// Gets or sets the destination extension
+        /// </summary>
+        public string DestinationExtension { get; set; }
+    }
 }
+
+

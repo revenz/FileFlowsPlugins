@@ -88,6 +88,9 @@ namespace FileFlows.VideoNodes
                 // try find best hevc encoder
                 foreach(string vidparam in new [] { "hevc_nvenc -preset hq", "hevc_qsv -global_quality 28 -load_plugin hevc_hw", "hevc_amf", "hevc_vaapi" })
                 {
+                    if (CanUseHardwareEncoding.DisabledByVariables(Args, vidparam))
+                        continue;
+
                     bool canProcess = CanUseHardwareEncoding.CanProcess(Args, ffmpeg, vidparam);
                     if (canProcess)
                         return vidparam;
