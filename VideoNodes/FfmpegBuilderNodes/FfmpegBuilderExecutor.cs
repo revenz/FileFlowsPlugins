@@ -28,7 +28,12 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
 
             bool hasChange = false;
             int actualIndex = 0;
+            int overallIndex = 0;
             int currentType = 0;
+
+            string sourceExtension = model.VideoInfo.FileName.Substring(model.VideoInfo.FileName.LastIndexOf(".") + 1).ToLower();
+            string extension = (model.Extension?.EmptyAsNull() ?? "mkv").ToLower();
+
             foreach (var item in model.VideoStreams.Select((x, index) => (stream: (FfmpegStream)x, index, type: 1)).Union(
                                  model.AudioStreams.Select((x, index) => (stream: (FfmpegStream)x, index, type: 2))).Union(
                                  model.SubtitleStreams.Select((x, index) => (stream: (FfmpegStream)x, index, type: 3))))
@@ -43,10 +48,29 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
                     actualIndex = 0;
                     currentType = item.type;    
                 }
-                
-                ffArgs.AddRange(item.stream.GetParameters(actualIndex));
+
+                VideoFileStream vfs = item.stream is FfmpegVideoStream ? ((FfmpegVideoStream)item.stream).Stream :
+                    item.stream is FfmpegAudioStream ? ((FfmpegAudioStream)item.stream).Stream :
+                    ((FfmpegSubtitleStream)item.stream).Stream;
+
+
+                var streamArgs = item.stream.GetParameters(new FfmpegStream.GetParametersArgs()
+                {
+                    OutputOverallIndex = overallIndex,
+                    OutputTypeIndex = actualIndex,
+                    SourceExtension = sourceExtension,
+                    DestinationExtension = extension
+                });
+                for(int i = 0; i < streamArgs.Length; i++)
+                {
+                    streamArgs[i] = streamArgs[i].Replace("{sourceTypeIndex}", vfs.TypeIndex.ToString());
+                    streamArgs[i] = streamArgs[i].Replace("{index}", actualIndex.ToString());
+                }
+                    
+                ffArgs.AddRange(streamArgs);
                 hasChange |= item.stream.HasChange | item.stream.ForcedChange;
                 ++actualIndex;
+                ++overallIndex;
             }
 
             if(model.MetadataParameters?.Any() == true)
@@ -58,7 +82,6 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
             if (model.ForceEncode == false && hasChange == false && (string.IsNullOrWhiteSpace(model.Extension) || args.WorkingFile.ToLower().EndsWith("." + model.Extension.ToLower())))
                 return 2; // nothing to do 
 
-            string extension = model.Extension?.EmptyAsNull() ?? "mkv";
 
             List<string> startArgs = new List<string>();
             if (model.InputFiles?.Any() == false)
