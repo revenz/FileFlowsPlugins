@@ -75,6 +75,7 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
     {
         "-pix_fmt:v:{index}", "p010le", "-profile:v:{index}", "main10"
     };
+    private string[] non10BitFilters = new string[]{};
 
     /// <summary>
     /// Executes the node
@@ -135,6 +136,8 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
 
         if (tenBit)
             stream.EncodingParameters.AddRange(bit10Filters);
+        else if(non10BitFilters?.Any() == true)
+            stream.EncodingParameters.AddRange(non10BitFilters);        
     }
 
 
@@ -166,6 +169,9 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
             // https://www.reddit.com/r/ffmpeg/comments/gg5szi/what_is_spatial_aq_and_temporal_aq_with_nvenc/
             "-spatial-aq", "1"
         });
+        if (h265 == false) {
+            non10BitFilters = new[] { "-pix_fmt:v:{index}", "yuv420p" };
+        }
     }
 
     private void H26x_Qsv(FfmpegVideoStream stream, bool h265)
