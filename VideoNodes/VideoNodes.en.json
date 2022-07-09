@@ -369,6 +369,18 @@
           "Percent-Help": "When selected the bitrate will be calculated as a percentage of the current bitrate."
         }
       },
+      "FfmpegBuilderVideoMaxBitrate": {
+        "Label": "FFMPEG Builder: Video Max Bitrate",
+        "Description": "Sets FFMPEG Builder limit the bitrate of video",
+        "Outputs": {
+          "1": "FFMPEG Builder video streams updated"
+        },
+        "Fields": {
+          "Bitrate": "Maximum Bitrate",
+          "Bitrate-Suffix": "KB",
+          "Bitrate-Help": "The maximum bitrate of the video in kilobytes"
+        }
+      },
       "FfmpegBuilderVideoCodec": {
         "Label": "FFMPEG Builder: Video Codec",
         "Description": "Sets FFMPEG Builder to encode the video streams in the specified codec",
