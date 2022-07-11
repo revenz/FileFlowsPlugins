@@ -39,6 +39,9 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
     [Boolean(2)]
     [DefaultValue(true)]
     public bool UseSourceDirectory { get; set; } = true;
+
+    [Boolean(3)]
+    public bool MatchFilename { get; set; }
     
     public override int Execute(NodeParameters args)
     {
@@ -64,11 +67,39 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
             if (Subtitles.Contains(ext) == false)
                 continue;
 
+            if (MatchFilename)
+            {
+                var origFile = new FileInfo(args.FileName);
+                string origFilename = origFile.Name.Replace(origFile.Extension, "");
+                bool matchesOriginal = file.Name.Replace(file.Extension, string.Empty).ToLowerInvariant().Equals(origFilename.ToLowerInvariant());
+
+                var workingFile = new FileInfo(args.WorkingFile);
+                string workingFilename = workingFile.Name.Replace(workingFile.Extension, "");
+                bool matchesWorking = file.Name.Replace(file.Extension, string.Empty).ToLowerInvariant().Equals(workingFilename.ToLowerInvariant());
+
+                if (matchesOriginal == false && matchesWorking == false)
+                    continue;
+            }
+
             args.Logger.ILog("Adding file: " + file.FullName + " [" + ext + "]");
             this.Model.InputFiles.Add(file.FullName);
+            this.Model.SubtitleStreams.Add(new FfmpegSubtitleStream
+            {
+                Stream = new SubtitleStream()
+                {
+                    InputFileIndex = this.Model.InputFiles.Count - 1,
+                    TypeIndex = 0,
+                    Title = file.Name.Replace(file.Extension, ""),
+                    Codec = file.Extension[1..],
+                    IndexString = (this.Model.InputFiles.Count - 1) + ":s:0"
+                },
+                
+            });
             ++count;
         }
         args.Logger.ILog("Subtitles added: " + count);
+        if (count > 0)
+            this.Model.ForceEncode = true;
         return count > 0 ? 1 : 2;
     }
 }

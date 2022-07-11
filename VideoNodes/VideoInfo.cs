@@ -53,6 +53,11 @@ namespace FileFlows.VideoNodes
         /// Gets or sets if the stream is HDR
         /// </summary>
         public bool HDR { get; set; }
+
+        /// <summary>
+        /// Gets or sets the input file index
+        /// </summary>
+        public int InputFileIndex { get; set; } = 0;
     }
 
     public class VideoStream : VideoFileStream

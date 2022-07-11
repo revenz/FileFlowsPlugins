@@ -11,7 +11,7 @@
             if (Deleted)
                 return new string[] { };
 
-            var results = new List<string> { "-map", "0:s:{sourceTypeIndex}", "-c:s:{index}" };
+            List<string> results= new List<string> { "-map", Stream.InputFileIndex + ":s:{sourceTypeIndex}", "-c:s:{index}" };
 
             if(args.DestinationExtension == "mkv" && Stream.Codec == "mov_text")
             {
