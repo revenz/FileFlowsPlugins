@@ -249,7 +249,9 @@ namespace FileFlows.VideoNodes
                 logger?.ILog("Failed to read duration for VideoStream: " + info);
             }
 
-            vs.HDR = info.Contains("bt2020nc") && info.Contains("smpte2084");
+            // As per https://video.stackexchange.com/a/33827
+            // "HDR is only the new transfer function" (PQ or HLG)
+            vs.HDR = info.Contains("arib-std-b67") || info.Contains("smpte2084");
 
             return vs;
         }
