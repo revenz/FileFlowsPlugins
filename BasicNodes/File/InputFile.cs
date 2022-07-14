@@ -10,6 +10,8 @@ namespace FileFlows.BasicNodes.File
         public override FlowElementType Type => FlowElementType.Input;
         public override string Icon => "far fa-file";
 
+        public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/input-file";
+
         public override int Execute(NodeParameters args)
         {
             try

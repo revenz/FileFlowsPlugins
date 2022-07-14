@@ -10,6 +10,7 @@ public class Apprise: Node
     public override FlowElementType Type => FlowElementType.Communication; 
     public override string Icon => "fas fa-bell";
     public override bool FailureNode => true;
+    public override string HelpUrl => "https://docs.fileflows.com/plugins/apprise/apprise";
 
     [Required]
     [TextVariable(1)]
@@ -22,7 +23,7 @@ public class Apprise: Node
     [Select(nameof(MessageTypeOptions), 3)]
     public string MessageType { get; set; } = string.Empty;
 
-    private static List<ListOption> _MessageTypeOptions = new List<ListOption>();
+    private static List<ListOption> _MessageTypeOptions;
     public static List<ListOption> MessageTypeOptions
     {
         get

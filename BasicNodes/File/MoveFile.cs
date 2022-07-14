@@ -112,7 +112,7 @@ namespace FileFlows.BasicNodes.File
 
             if (DeleteOriginal && args.FileName != args.WorkingFile)
             {
-                args.Logger?.ILog("Deleting orginal file: " + args.FileName);
+                args.Logger?.ILog("Deleting original file: " + args.FileName);
                 try
                 {
                     System.IO.File.Delete(args.FileName);

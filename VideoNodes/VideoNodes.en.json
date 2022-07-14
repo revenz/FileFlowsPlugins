@@ -306,7 +306,9 @@
           "Subtitles": "Subtitles",
           "Subtitles-Help": "Select which subtitles to search for to add",
           "UseSourceDirectory": "Use Source Directory",
-          "UseSourceDirectory-Help": "If checked the original source directory will be searched, otherwise the working directory will be used."
+          "UseSourceDirectory-Help": "If checked the original source directory will be searched, otherwise the working directory will be used.",
+          "MatchFilename": "Match Filename",
+          "MatchFilename-Help": "When checked only subtitles with the same filename as the input file or the working file will be merged"
         }
       },
       "FfmpegBuilderCropBlackBars": {
@@ -367,6 +369,18 @@
           "Bitrate-Help": "The target bitrate of the video in kilobytes",
           "Percent": "Percent",
           "Percent-Help": "When selected the bitrate will be calculated as a percentage of the current bitrate."
+        }
+      },
+      "FfmpegBuilderVideoMaxBitrate": {
+        "Label": "FFMPEG Builder: Video Max Bitrate",
+        "Description": "Sets FFMPEG Builder limit the bitrate of video",
+        "Outputs": {
+          "1": "FFMPEG Builder video streams updated"
+        },
+        "Fields": {
+          "Bitrate": "Maximum Bitrate",
+          "Bitrate-Suffix": "KB",
+          "Bitrate-Help": "The maximum bitrate of the video in kilobytes"
         }
       },
       "FfmpegBuilderVideoCodec": {

@@ -11,6 +11,7 @@ namespace FileFlows.BasicNodes.Functions
         public override int Outputs => 2;
         public override FlowElementType Type => FlowElementType.Logic;
         public override string Icon => "fas fa-equals";
+        public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/pattern-match"; 
 
         [DefaultValue("")]
         [Text(1)]

@@ -139,8 +139,48 @@ public class CanUseHardwareEncoding:Node
     /// <returns>true if can use it, otherwise false</returns>
     internal static bool CanProcess_Vaapi_H264(NodeParameters args) => CanProcess(args, "h264_vaapi");
 
+
+    /// <summary>
+    /// Gets if a encoder/decoder has been disabled by a variable
+    /// </summary>
+    /// <param name="args">the node parameters</param>
+    /// <param name="parameters">the parameters to check</param>
+    /// <returns>if a encoder/decoder has been disabled by a variable</returns>
+    internal static bool DisabledByVariables(NodeParameters args, string parameters)
+    {
+
+        if (parameters.ToLower().Contains("nvenc"))
+        {
+            if (args.GetVariable("NoNvidia") as bool? == true)
+                return true;
+            if (args.GetVariable("NoNVIDIA") as bool? == true)
+                return true;
+        }
+        else if (parameters.ToLower().Contains("qsv"))
+        {
+            if (args.GetVariable("NoQSV") as bool? == true)
+                return true;
+        }
+        else if (parameters.ToLower().Contains("vaapi"))
+        {
+            if (args.GetVariable("NoVAAPI") as bool? == true)
+                return true;
+        }
+        else if (parameters.ToLower().Contains("amf"))
+        {
+            if (args.GetVariable("NoAMF") as bool? == true)
+                return true;
+            if (args.GetVariable("NoAMD") as bool? == true)
+                return true;
+        }
+        return false;
+    }
+
     private static bool CanProcess(NodeParameters args, string encodingParams)
     {
+        if (DisabledByVariables(args, encodingParams))
+            return false;
+
         string ffmpeg = args.GetToolPath("FFMpeg");
         if (string.IsNullOrEmpty(ffmpeg))
         {

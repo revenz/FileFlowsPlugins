@@ -5,13 +5,34 @@ namespace FileFlows.BasicNodes.File
     using FileFlows.Plugin.Attributes;
     using FileFlows.Plugin.Helpers;
 
+    /// <summary>
+    /// Node that copies a file
+    /// </summary>
     public class CopyFile : Node
     {
+        /// <summary>
+        /// Gets the number of inputs
+        /// </summary>
         public override int Inputs => 1;
+        
+        /// <summary>
+        /// Gets the number of outputs
+        /// </summary>
         public override int Outputs => 1;
+        
+        /// <summary>
+        /// Gets the type of node 
+        /// </summary>
         public override FlowElementType Type => FlowElementType.Process;
+        
+        /// <summary>
+        /// Gets the icon for this node
+        /// </summary>
         public override string Icon => "far fa-copy";
 
+        /// <summary>
+        /// Gets the help URL
+        /// </summary>
         public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/copy-file";
 
         private string _DestinationPath = string.Empty;

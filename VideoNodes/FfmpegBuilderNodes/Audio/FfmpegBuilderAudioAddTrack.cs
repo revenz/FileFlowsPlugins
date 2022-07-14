@@ -197,14 +197,14 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
             {
                 return new[]
                 {
-                    "-map", source, 
+                    "-map", "0:a:{sourceTypeIndex}", 
                     "-c:a:{index}",
                     codec
                 };
             }
             return new[]
             {
-                "-map", source,
+                "-map", "0:a:{sourceTypeIndex}",
                 "-c:a:{index}",
                 codec,
                 "-b:a:{index}", bitrate + "k"
@@ -216,7 +216,7 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
             {
                 return new[]
                 {
-                    "-map", source,
+                    "-map", "0:a:{sourceTypeIndex}",
                     "-c:a:{index}",
                     codec,
                     "-ac:a:{index}", channels.ToString()
@@ -224,7 +224,7 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
             }
             return new[]
             {
-                "-map", source,
+                "-map", "0:a:{sourceTypeIndex}",
                 "-c:a:{index}",
                 codec,
                 "-ac:a:{index}", channels.ToString(),
