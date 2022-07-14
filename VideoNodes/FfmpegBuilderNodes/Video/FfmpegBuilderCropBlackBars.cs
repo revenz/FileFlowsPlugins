@@ -48,10 +48,29 @@ public class FfmpegBuilderCropBlackBars : FfmpegBuilderNode
             args.Logger?.ELog("Failed to find video height");
             return string.Empty;
         }
-        return Execute(ffmpeg, args.WorkingFile, args, vidWidth, vidHeight, threshold);
+        return Execute(ffmpeg, args.WorkingFile, args, vidWidth, vidHeight, threshold, (int)videoInfo.VideoStreams[0].Duration.TotalSeconds);
     }
 
-    string Execute(string ffplay, string file, NodeParameters args, int vidWidth, int vidHeight, int threshold)
+    private int[] GetTimeIntervals(int seconds)
+    {
+        if (seconds < 2)
+            return new int[] { };
+        if (seconds < 10)
+            return new int[] { 1 };
+        if (seconds > 360)
+            return new int[] { 60, 120, 240, 360 };
+
+        int increment = seconds / 5;
+        return new int[]
+        {
+            increment,
+            increment + increment,
+            increment + increment + increment,
+            increment + increment + increment + increment,
+        };            
+    }
+
+    string Execute(string ffplay, string file, NodeParameters args, int vidWidth, int vidHeight, int threshold, int seconds)
     {
         try
         {
@@ -59,7 +78,10 @@ public class FfmpegBuilderCropBlackBars : FfmpegBuilderNode
             int y = int.MaxValue;
             int width = 0;
             int height = 0;
-            foreach (int ss in new int[] { 60, 120, 240, 360 })  // check at multiple times
+            var intervals = GetTimeIntervals(seconds);
+            if (intervals.Length == 0)
+                return string.Empty;
+            foreach (int ss in intervals)  // check at multiple times
             {
                 using (var process = new Process())
                 {
@@ -99,12 +121,12 @@ public class FfmpegBuilderCropBlackBars : FfmpegBuilderNode
             if (width == 0 || height == 0)
             {
                 args.Logger?.WLog("Width/Height not detected: " + width + "x" + height);
-                return String.Empty;
+                return string.Empty;
             }
             if (x == 0 && y == 0)
             {
                 // nothing to do
-                return String.Empty;
+                return string.Empty;
             }
 
             if (x == int.MaxValue)

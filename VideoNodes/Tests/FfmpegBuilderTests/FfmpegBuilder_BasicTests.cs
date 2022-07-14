@@ -1219,6 +1219,98 @@ public class FfmpegBuilder_BasicTests
         string log = logger.ToString();
         Assert.AreEqual(1, result);
     }
+
+
+    [TestMethod]
+    public void FfmpegBuilder_BlackBars_Short()
+    {
+        const string file = @"D:\videos\testfiles\tag.mp4";
+        var logger = new TestLogger();
+        const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+        var vi = new VideoInfoHelper(ffmpeg, logger);
+        var vii = vi.Read(file);
+        var args = new NodeParameters(file, logger, false, string.Empty);
+        args.GetToolPathActual = (string tool) => ffmpeg;
+        args.TempPath = @"D:\videos\temp";
+        args.Parameters.Add("VideoInfo", vii);
+
+
+        FfmpegBuilderStart ffStart = new();
+        ffStart.PreExecute(args);
+        Assert.AreEqual(1, ffStart.Execute(args));
+
+        FfmpegBuilderCropBlackBars ffCropBlackBars = new();
+        ffCropBlackBars.CroppingThreshold = 10;
+        ffCropBlackBars.PreExecute(args);
+        ffCropBlackBars.Execute(args);
+
+        string log = logger.ToString();
+        Assert.IsTrue(log.Contains($"-ss 2 -i \"{file}\" -hide_banner -vframes 25 -vf cropdetect -f null -"));
+        Assert.IsTrue(log.Contains($"-ss 4 -i \"{file}\" -hide_banner -vframes 25 -vf cropdetect -f null -"));
+        Assert.IsTrue(log.Contains($"-ss 6 -i \"{file}\" -hide_banner -vframes 25 -vf cropdetect -f null -"));
+        Assert.IsTrue(log.Contains($"-ss 8 -i \"{file}\" -hide_banner -vframes 25 -vf cropdetect -f null -"));
+    }
+
+    [TestMethod]
+    public void FfmpegBuilder_BlackBars_30sec()
+    {
+        const string file = @"D:\videos\testfiles\50-mbps-hd-h264.mkv";
+        var logger = new TestLogger();
+        const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+        var vi = new VideoInfoHelper(ffmpeg, logger);
+        var vii = vi.Read(file);
+        var args = new NodeParameters(file, logger, false, string.Empty);
+        args.GetToolPathActual = (string tool) => ffmpeg;
+        args.TempPath = @"D:\videos\temp";
+        args.Parameters.Add("VideoInfo", vii);
+
+
+        FfmpegBuilderStart ffStart = new();
+        ffStart.PreExecute(args);
+        Assert.AreEqual(1, ffStart.Execute(args));
+
+        FfmpegBuilderCropBlackBars ffCropBlackBars = new();
+        ffCropBlackBars.CroppingThreshold = 10;
+        ffCropBlackBars.PreExecute(args);
+        ffCropBlackBars.Execute(args);
+
+        string log = logger.ToString();
+        Assert.IsTrue(log.Contains($"-ss 6 -i \"{file}\" -hide_banner -vframes 25 -vf cropdetect -f null -"));
+        Assert.IsTrue(log.Contains($"-ss 12 -i \"{file}\" -hide_banner -vframes 25 -vf cropdetect -f null -"));
+        Assert.IsTrue(log.Contains($"-ss 18 -i \"{file}\" -hide_banner -vframes 25 -vf cropdetect -f null -"));
+        Assert.IsTrue(log.Contains($"-ss 24 -i \"{file}\" -hide_banner -vframes 25 -vf cropdetect -f null -"));
+    }
+
+
+    [TestMethod]
+    public void FfmpegBuilder_BlackBars_LongVideo()
+    {
+        const string file = @"D:\videos\testfiles\sitcom.mkv";
+        var logger = new TestLogger();
+        const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+        var vi = new VideoInfoHelper(ffmpeg, logger);
+        var vii = vi.Read(file);
+        var args = new NodeParameters(file, logger, false, string.Empty);
+        args.GetToolPathActual = (string tool) => ffmpeg;
+        args.TempPath = @"D:\videos\temp";
+        args.Parameters.Add("VideoInfo", vii);
+
+
+        FfmpegBuilderStart ffStart = new();
+        ffStart.PreExecute(args);
+        Assert.AreEqual(1, ffStart.Execute(args));
+
+        FfmpegBuilderCropBlackBars ffCropBlackBars = new();
+        ffCropBlackBars.CroppingThreshold = 10;
+        ffCropBlackBars.PreExecute(args);
+        ffCropBlackBars.Execute(args);
+
+        string log = logger.ToString();
+        Assert.IsTrue(log.Contains($"-ss 60 -i \"{file}\" -hide_banner -vframes 25 -vf cropdetect -f null -"));
+        Assert.IsTrue(log.Contains($"-ss 120 -i \"{file}\" -hide_banner -vframes 25 -vf cropdetect -f null -"));
+        Assert.IsTrue(log.Contains($"-ss 240 -i \"{file}\" -hide_banner -vframes 25 -vf cropdetect -f null -"));
+        Assert.IsTrue(log.Contains($"-ss 360 -i \"{file}\" -hide_banner -vframes 25 -vf cropdetect -f null -"));
+    }
 }
 
 #endif
