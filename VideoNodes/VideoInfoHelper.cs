@@ -222,6 +222,14 @@ namespace FileFlows.VideoNodes
             VideoStream vs = new VideoStream();
             vs.IsImage = info.Contains("(attached pic)");
 
+            var matchCodecTag = new Regex(@": Video: [^(,]+\([^)]+\)[^(,]+\(([^)]+)\)").Match(line);
+            if (matchCodecTag.Success)
+            {
+                vs.CodecTag = matchCodecTag.Groups[1].Value;
+                if (vs.CodecTag.IndexOf(" /") > 0)
+                    vs.CodecTag = vs.CodecTag.Substring(0, vs.CodecTag.IndexOf(" /")).Trim();
+            }
+
             vs.Codec = line.Substring(line.IndexOf("Video: ") + "Video: ".Length).Replace(",", "").Trim().Split(' ').First().ToLower();
             var dimensions = Regex.Match(line, @"([\d]{3,})x([\d]{3,})");
             if (int.TryParse(dimensions.Groups[1].Value, out int width))

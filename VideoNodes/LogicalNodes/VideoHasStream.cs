@@ -60,6 +60,8 @@ public class VideoHasStream : VideoNode
             {
                 if (TitleMatches(x.Title) == MatchResult.NoMatch)
                     return false;
+                if (string.IsNullOrWhiteSpace(x.CodecTag) == false && CodecMatches(x.CodecTag) == MatchResult.Matched)
+                    return true;
                 if (CodecMatches(x.Codec) == MatchResult.NoMatch)
                     return false;
                 return true;

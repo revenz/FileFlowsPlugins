@@ -40,6 +40,11 @@ namespace FileFlows.VideoNodes
         public string Codec { get; set; } = "";
 
         /// <summary>
+        /// The codec tag of the stream
+        /// </summary>
+        public string CodecTag { get; set; } = "";
+
+        /// <summary>
         /// If this stream is an image
         /// </summary>
         public bool IsImage { get; set; }

@@ -57,7 +57,6 @@ namespace FileFlows.VideoNodes
 
             try
             {
-
                 var videoInfo = new VideoInfoHelper(FFMPEG, args.Logger).Read(args.WorkingFile);
                 if (videoInfo.VideoStreams.Any() == false)
                 {
