@@ -15,6 +15,7 @@ namespace FileFlows.VideoNodes
         static Regex rgxDuration = new Regex(@"(?<=((^[\s]+DURATION(\-[\w]+)?[\s]+:[\s])))([\d]+:?)+\.[\d]{1,7}", RegexOptions.Multiline);
         static Regex rgxDuration2 = new Regex(@"(?<=((^[\s]+Duration:[\s])))([\d]+:?)+\.[\d]{1,7}", RegexOptions.Multiline);
         static Regex rgxAudioSampleRate = new Regex(@"(?<=((,|\s)))[\d]+(?=([\s]?hz))", RegexOptions.IgnoreCase);
+        static Regex rgxAudioBitrate = new Regex(@"(?<=(, ))([\d]+)(?=( kb\/s))", RegexOptions.IgnoreCase);
 
         static int _ProbeSize = 25;
         internal static int ProbeSize 
@@ -308,6 +309,8 @@ namespace FileFlows.VideoNodes
 
             if (rgxDuration.IsMatch(info))
                 audio.Duration = TimeSpan.Parse(rgxDuration.Match(info).Value);
+            if (rgxAudioBitrate.IsMatch(line))
+                audio.Bitrate = int.Parse(rgxAudioBitrate.Match(line).Value) * 1024;
 
 
             return audio;

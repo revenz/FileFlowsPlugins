@@ -1285,7 +1285,7 @@ public class FfmpegBuilder_BasicTests
     [TestMethod]
     public void FfmpegBuilder_BlackBars_LongVideo()
     {
-        const string file = @"D:\videos\testfiles\sitcom.mkv";
+        const string file = @"D:\videos\testfiles\pgs.mkv";
         var logger = new TestLogger();
         const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
         var vi = new VideoInfoHelper(ffmpeg, logger);
