@@ -9,8 +9,8 @@
 	<PublishTrimmed>true</PublishTrimmed>
 	<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
 	<PublishSingleFile>true</PublishSingleFile>
-	<FileVersion>0.8.4.152</FileVersion>
-	<ProductVersion>0.8.4.152</ProductVersion>
+	<FileVersion>0.9.1.157</FileVersion>
+	<ProductVersion>0.9.1.157</ProductVersion>
 	<PublishTrimmed>true</PublishTrimmed>
 	<Company>FileFlows</Company>
 	<Authors>John Andrews</Authors>

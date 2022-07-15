@@ -6,7 +6,7 @@ namespace FileFlows.BasicNodes
     {
         public Guid Uid => new Guid("789b5213-4ca5-42da-816e-f2117f00cd16");
         public string Name => "Basic Nodes";
-        public string MinimumVersion => "0.8.3.1487";
+        public string MinimumVersion => "0.9.0.1487";
 
         public void Init() { }
     }

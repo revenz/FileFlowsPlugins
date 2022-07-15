@@ -4,7 +4,7 @@ public class Plugin : FileFlows.Plugin.IPlugin
 {
     public Guid Uid => new Guid("a6ddeee5-4c5a-46c5-80d5-e48552dd6a9b");
     public string Name => "Image Nodes";
-    public string MinimumVersion => "0.8.3.1487";
+    public string MinimumVersion => "0.9.0.1487";
 
     public void Init()
     {
