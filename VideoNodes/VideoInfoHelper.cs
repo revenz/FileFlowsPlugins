@@ -278,7 +278,12 @@ namespace FileFlows.VideoNodes
             // this isnt type index, this is overall index
             audio.TypeIndex = int.Parse(Regex.Match(line, @"#([\d]+):([\d]+)").Groups[2].Value) - 1;
             audio.Codec = parts[0].Substring(parts[0].IndexOf("Audio: ") + "Audio: ".Length).Trim().Split(' ').First().ToLower() ?? "";
-            audio.Language = Regex.Match(line, @"(?<=(Stream\s#[\d]+:[\d]+)\()[^\)]+").Value?.ToLower() ?? "";
+
+            var langSection = Regex.Match(line, @"(?<=(Stream\s#[\d]+:[\d]+))[^:]+");
+            if(langSection.Success)
+            {
+                audio.Language = Regex.Match(langSection.Value, @"(?<=\()[^)]+").Value?.ToLower() ?? string.Empty;
+            }
             if (info.IndexOf("0 channels") >= 0)
             {
                 audio.Channels = 0;

@@ -515,6 +515,39 @@ Input #0, matroska,webm, from 'D:\downloads\sabnzbd\complete\movies\Cast.Away.20
             Assert.AreEqual(6, vi.Chapters?.Count ?? 0);
             Assert.AreEqual("Chapter 29", vi.Chapters[2].Title);
         }
+
+        [TestMethod]
+        public void AudioParsingTest()
+        {
+            string audioInfo = @"Stream #0:1[0x2](fre): Audio: eac3 (ec-3 / 0x332D6365), 48000 Hz, 5.1(side), fltp, 640 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+    Side data:
+      audio service type: main";
+            var audio = VideoInfoHelper.ParseAudioStream(audioInfo);
+            Assert.AreEqual("fre", audio.Language);
+
+            string audioInfo2 = @"Stream #0:1(eng): Audio: ac3, 48000 Hz, stereo, fltp, 192 kb/s (default)
+    Metadata:
+      BPS             : 192000
+      BPS-eng         : 192000
+      DURATION        : 00:43:19.456000000
+      DURATION-eng    : 00:43:19.456000000
+      NUMBER_OF_FRAMES: 81233
+      NUMBER_OF_FRAMES-eng: 81233
+      NUMBER_OF_BYTES : 62386944
+      NUMBER_OF_BYTES-eng: 62386944
+      _STATISTICS_WRITING_APP: DVDFab 10.0.6.6
+      _STATISTICS_WRITING_APP-eng: DVDFab 10.0.6.6
+      _STATISTICS_WRITING_DATE_UTC: 2018-01-06 22:12:14
+      _STATISTICS_WRITING_DATE_UTC-eng: 2018-01-06 22:12:14
+      _STATISTICS_TAGS: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+      _STATISTICS_TAGS-eng: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES";
+            var audio2 = VideoInfoHelper.ParseAudioStream(audioInfo2);
+            Assert.AreEqual("eng", audio2.Language);
+
+        }
     }
 }
 
