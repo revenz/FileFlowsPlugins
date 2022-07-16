@@ -44,7 +44,7 @@ public class FfmpegBuilderStart: FfmpegBuilderNode
 
         args.Logger.ILog("FFMPEG Builder File: " + videoInfo.FileName);
         foreach (var track in videoInfo.VideoStreams)
-            args.Logger.ILog($"Video Track '{track.Codec}' ({track.Width}x{track.Height}");
+            args.Logger.ILog($"Video Track '{track.Codec}' ({track.Width}x{track.Height})");
         foreach (var track in videoInfo.AudioStreams)
             args.Logger.ILog("Audio Track: " + track.Codec);
         foreach (var track in videoInfo.SubtitleStreams)
