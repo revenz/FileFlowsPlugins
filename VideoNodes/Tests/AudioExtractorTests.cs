@@ -21,7 +21,7 @@ public class AudioExtractorTests : TestBase
         var vi = new VideoInfoHelper(FfmpegPath, logger);
         var vii = vi.Read(file);
 
-        VideoAudioExtractor node = new();
+        VideoExtractAudio node = new();
         node.OutputFile = Path.Combine(TempPath, "Audio");
         node.OutputCodec = "mp3";
 
@@ -47,7 +47,7 @@ public class AudioExtractorTests : TestBase
         var vi = new VideoInfoHelper(FfmpegPath, logger);
         var vii = vi.Read(file);
 
-        VideoAudioExtractor node = new();
+        VideoExtractAudio node = new();
         node.OutputFile = Path.Combine(TempPath, "Audio");
         node.Language = "en";
         node.OutputCodec = "mp3";
@@ -75,7 +75,7 @@ public class AudioExtractorTests : TestBase
         var vi = new VideoInfoHelper(FfmpegPath, logger);
         var vii = vi.Read(file);
 
-        VideoAudioExtractor node = new();
+        VideoExtractAudio node = new();
         node.OutputFile = Path.Combine(TempPath, "Audio");
         node.Codec = "eac3";
         node.OutputCodec = "mp3";
@@ -102,7 +102,7 @@ public class AudioExtractorTests : TestBase
         var vi = new VideoInfoHelper(FfmpegPath, logger);
         var vii = vi.Read(file);
 
-        VideoAudioExtractor node = new();
+        VideoExtractAudio node = new();
         node.OutputFile = Path.Combine(TempPath, "Audio_eac3");
         node.Codec = "eac3";
         node.OutputCodec = "mp3";
@@ -130,7 +130,7 @@ public class AudioExtractorTests : TestBase
         var vi = new VideoInfoHelper(FfmpegPath, logger);
         var vii = vi.Read(file);
 
-        VideoAudioExtractor node = new();
+        VideoExtractAudio node = new();
         node.OutputFile = Path.Combine(TempPath, "Audio_2048.aac");
         node.OutputCodec = "aac";
         node.OutputBitrate = 2048;
@@ -158,7 +158,7 @@ public class AudioExtractorTests : TestBase
         var vi = new VideoInfoHelper(FfmpegPath, logger);
         var vii = vi.Read(file);
 
-        VideoAudioExtractor node = new();
+        VideoExtractAudio node = new();
         node.OutputFile = Path.Combine(TempPath, "Audio_128.aac");
         node.OutputCodec = "aac";
         node.OutputBitrate = 128;
