@@ -21,6 +21,21 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
         public override int Execute(NodeParameters args)
         {
             var model = this.Model;
+            if(model == null)
+            {
+                args.Logger.ELog("FFMPEG Builder model is null");
+                return -1;
+            }
+            else if (model.VideoInfo == null)
+            {
+                args.Logger.ELog("FFMPEG Builder VideoInfo is null");
+                return -1;
+            }
+            else if (model.VideoInfo.FileName == null)
+            {
+                args.Logger.ELog("FFMPEG Builder VideoInfo Filename is null");
+                return -1;
+            }
             List<string> ffArgs = new List<string>();
 
             if(model.CustomParameters?.Any() == true)
