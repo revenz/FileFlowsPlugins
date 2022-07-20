@@ -5,23 +5,13 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
 {
     public abstract class FfmpegBuilderNode: EncodingNode
     {
-        private const string MODEL_KEY = "FfmpegBuilderModel";
+        protected const string MODEL_KEY = "FfmpegBuilderModel";
 
         public override int Inputs => 1;
         public override int Outputs => 1;
         public override string Icon => "far fa-file-video";
         public override FlowElementType Type => FlowElementType.BuildPart;
         public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder";
-
-        private Dictionary<string, object> _Variables;
-        public override Dictionary<string, object> Variables => _Variables;
-        public FfmpegBuilderNode()
-        {
-            _Variables = new Dictionary<string, object>()
-            {
-                { MODEL_KEY, new FfmpegModel() }
-            };
-        }
 
 
         public override bool PreExecute(NodeParameters args)
@@ -31,6 +21,9 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
             
             if(this is FfmpegBuilderStart == false && Model == null)
                 throw new Exception("FFMPEG Builder Model not set, you must add and use the \"FFMPEG Builder Start\" node first");
+
+            if (this is FfmpegBuilderStart == false && Model.VideoInfo == null)
+                throw new Exception("FFMPEG Builder VideoInfo is null");
 
             return true;
         }

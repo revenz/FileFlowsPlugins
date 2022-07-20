@@ -1,4 +1,6 @@
-﻿namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
+﻿using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
+
+namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 
 /// <summary>
 /// Node that starts the FFMPEG Builder
@@ -29,6 +31,17 @@ public class FfmpegBuilderStart: FfmpegBuilderNode
     /// </summary>
     public override FlowElementType Type => FlowElementType.BuildStart;
 
+
+
+    private Dictionary<string, object> _Variables;
+    public override Dictionary<string, object> Variables => _Variables;
+    public FfmpegBuilderStart()
+    {
+        _Variables = new Dictionary<string, object>()
+        {
+            { MODEL_KEY, new FfmpegModel(new VideoInfo()) }
+        };
+    }
 
     /// <summary>
     /// Executes the node

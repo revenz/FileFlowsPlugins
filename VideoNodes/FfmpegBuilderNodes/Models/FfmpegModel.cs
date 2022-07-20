@@ -56,12 +56,17 @@
         /// <summary>
         /// Gets or sets the video information for this video file
         /// </summary>
-        public VideoInfo VideoInfo { get; set; }
+        public VideoInfo VideoInfo => _VideoInfo;
+        readonly VideoInfo _VideoInfo;
+
+        public FfmpegModel(VideoInfo info)
+        {
+            this._VideoInfo = info;
+        }
 
         internal static FfmpegModel CreateModel(VideoInfo info)
         {
-            var model = new FfmpegModel();
-            model.VideoInfo = info;
+            var model = new FfmpegModel(info);
             model.InputFiles.Add(info.FileName);
             foreach (var item in info.VideoStreams.Select((stream, index) => (stream, index)))
             {
