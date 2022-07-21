@@ -67,16 +67,24 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
             if (Subtitles.Contains(ext) == false)
                 continue;
 
+            string language = string.Empty;
+
             if (MatchFilename)
             {
-                bool matchesOriginal = FilenameMatches(args.FileName, file.FullName);
-                bool matchesWorking = FilenameMatches(args.WorkingFile, file.FullName);
+                string lang1, lang2;
+                bool matchesOriginal = FilenameMatches(args.FileName, file.FullName, out lang1);
+                bool matchesWorking = FilenameMatches(args.WorkingFile, file.FullName, out lang2);
 
                 if (matchesOriginal == false && matchesWorking == false)
                     continue;
+
+                if (string.IsNullOrEmpty(lang1) == false)
+                    language = lang1;
+                if (string.IsNullOrEmpty(lang2) == false)
+                    language = lang2;
             }
 
-            args.Logger.ILog("Adding file: " + file.FullName + " [" + ext + "]");
+            args.Logger.ILog("Adding file: " + file.FullName + " [" + ext + "]" + (string.IsNullOrEmpty(language) == false ? " (Language: " + language + ")" : ""));
             this.Model.InputFiles.Add(file.FullName);
             this.Model.SubtitleStreams.Add(new FfmpegSubtitleStream
             {
@@ -84,6 +92,7 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
                 {
                     InputFileIndex = this.Model.InputFiles.Count - 1,
                     TypeIndex = 0,
+                    Language = language,
                     Title = file.Name.Replace(file.Extension, ""),
                     Codec = file.Extension[1..],
                     IndexString = (this.Model.InputFiles.Count - 1) + ":s:0"
@@ -98,8 +107,9 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
         return count > 0 ? 1 : 2;
     }
 
-    internal bool FilenameMatches(string input, string other)
+    internal bool FilenameMatches(string input, string other, out string languageCode)
     {
+        languageCode = String.Empty;
         var inputFile = new FileInfo(input);
         string inputName = inputFile.Name.Replace(inputFile.Extension, "");
 
@@ -113,6 +123,24 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
         {
             string stripLang = Regex.Replace(otherName, @"(\.[a-zA-Z]{2,3}){1,2}$", string.Empty).Replace("  ", " ").Trim();
 
+            var rgxLanguage = new Regex("(?<=(\\.))(" + string.Join("|", LanguageCodes.Codes.Keys) + ")");
+            if (rgxLanguage.IsMatch(otherName))
+            {
+                string key = rgxLanguage.Match(otherName).Value;
+                languageCode = LanguageCodes.Codes[key];   
+            }
+
+            if (string.IsNullOrEmpty(languageCode) == false)
+            {
+                if (Regex.IsMatch(otherName, @"\.hi(\.|$)"))
+                    languageCode += " (HI)";
+                if (Regex.IsMatch(otherName, @"\.cc(\.|$)"))
+                    languageCode += " (CC)";
+                if (Regex.IsMatch(otherName, @"\.sdh(\.|$)"))
+                    languageCode += " (SDH)";
+            }
+
+
             if (inputName.ToLowerInvariant().Equals(stripLang.ToLowerInvariant()))
                 return true;
         }
@@ -121,6 +149,23 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
         {
             string stripLang = Regex.Replace(otherName, @"\([a-zA-Z]{2,3}\)", string.Empty).Replace("  ", " ").Trim();
 
+            var rgxLanguage = new Regex("(?<=(\\())(" + string.Join("|", LanguageCodes.Codes.Keys) + ")(?!=\\))");
+            if (rgxLanguage.IsMatch(otherName))
+            {
+                string key = rgxLanguage.Match(otherName).Value;
+                languageCode = LanguageCodes.Codes[key];
+            }
+
+
+            if (string.IsNullOrEmpty(languageCode) == false)
+            {
+                if (other.ToLower().Contains("(hi)"))
+                    languageCode += " (HI)";
+                else if (other.ToLower().Contains("(cc)"))
+                    languageCode += " (CC)";
+                else if (other.ToLower().Contains("(sdh)"))
+                    languageCode += " (SDH)";
+            }
             if (inputName.ToLowerInvariant().Equals(stripLang.ToLowerInvariant()))
                 return true;
         }
