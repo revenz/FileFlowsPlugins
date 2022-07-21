@@ -69,13 +69,8 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
 
             if (MatchFilename)
             {
-                var origFile = new FileInfo(args.FileName);
-                string origFilename = origFile.Name.Replace(origFile.Extension, "");
-                bool matchesOriginal = file.Name.Replace(file.Extension, string.Empty).ToLowerInvariant().Equals(origFilename.ToLowerInvariant());
-
-                var workingFile = new FileInfo(args.WorkingFile);
-                string workingFilename = workingFile.Name.Replace(workingFile.Extension, "");
-                bool matchesWorking = file.Name.Replace(file.Extension, string.Empty).ToLowerInvariant().Equals(workingFilename.ToLowerInvariant());
+                bool matchesOriginal = FilenameMatches(args.FileName, file.FullName);
+                bool matchesWorking = FilenameMatches(args.WorkingFile, file.FullName);
 
                 if (matchesOriginal == false && matchesWorking == false)
                     continue;
@@ -101,5 +96,35 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
         if (count > 0)
             this.Model.ForceEncode = true;
         return count > 0 ? 1 : 2;
+    }
+
+    internal bool FilenameMatches(string input, string other)
+    {
+        var inputFile = new FileInfo(input);
+        string inputName = inputFile.Name.Replace(inputFile.Extension, "");
+
+        var otherFile = new FileInfo(other);
+        string otherName = otherFile.Name.Replace(otherFile.Extension, "");
+
+        if (inputName.ToLowerInvariant().Equals(otherName.ToLowerInvariant()))
+            return true;
+
+        if(Regex.IsMatch(otherName, @"(\.[a-zA-Z]{2,3}){1,2}$"))
+        {
+            string stripLang = Regex.Replace(otherName, @"(\.[a-zA-Z]{2,3}){1,2}$", string.Empty).Replace("  ", " ").Trim();
+
+            if (inputName.ToLowerInvariant().Equals(stripLang.ToLowerInvariant()))
+                return true;
+        }
+
+        if (Regex.IsMatch(otherName, @"\([a-zA-Z]{2,3}\)"))
+        {
+            string stripLang = Regex.Replace(otherName, @"\([a-zA-Z]{2,3}\)", string.Empty).Replace("  ", " ").Trim();
+
+            if (inputName.ToLowerInvariant().Equals(stripLang.ToLowerInvariant()))
+                return true;
+        }
+
+        return false;
     }
 }

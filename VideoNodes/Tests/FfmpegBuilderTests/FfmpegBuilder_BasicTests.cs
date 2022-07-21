@@ -1220,6 +1220,27 @@ public class FfmpegBuilder_BasicTests
         Assert.AreEqual(1, result);
     }
 
+    [TestMethod]
+    public void FfmpegBuilder_SubtitleTrackMerge_FileMatchesTests()
+    {
+        FfmpegBuilderSubtitleTrackMerge ffSubMerge = new();
+        Assert.IsTrue(ffSubMerge.FilenameMatches("Test.mkv", "test.srt"));
+        Assert.IsTrue(ffSubMerge.FilenameMatches("Test.mkv", "test.en.srt"));
+        Assert.IsTrue(ffSubMerge.FilenameMatches("Test.mkv", "test(en).srt"));
+        Assert.IsTrue(ffSubMerge.FilenameMatches("Test.mkv", "test (en).srt"));
+        Assert.IsTrue(ffSubMerge.FilenameMatches("Test.mkv", "test.en.hi.srt"));
+        Assert.IsTrue(ffSubMerge.FilenameMatches("Test.mkv", "test.en.sdh.srt"));
+        Assert.IsTrue(ffSubMerge.FilenameMatches("Test.mkv", "test.en.cc.srt"));
+        Assert.IsTrue(ffSubMerge.FilenameMatches("Test.mkv", "test.deu.srt"));
+        Assert.IsTrue(ffSubMerge.FilenameMatches("Test.mkv", "test(deu).srt"));
+        Assert.IsTrue(ffSubMerge.FilenameMatches("Test.mkv", "test (deu).srt"));
+
+
+        Assert.IsFalse(ffSubMerge.FilenameMatches("Test.mkv", "nomatch.srt"));
+        Assert.IsFalse(ffSubMerge.FilenameMatches("Test.mkv", "nomatch.en.srt"));
+        Assert.IsFalse(ffSubMerge.FilenameMatches("Test.mkv", "nomatch(en).srt"));
+        Assert.IsFalse(ffSubMerge.FilenameMatches("Test.mkv", "nomatch (en).srt"));
+    }
 
     [TestMethod]
     public void FfmpegBuilder_BlackBars_Short()
