@@ -40,7 +40,11 @@ namespace FileFlows.VideoNodes
             if (dontAddOutputFile == false)
             {
                 if (arguments.Last() != "-")
+                {
+                    // strict -2 needs to be just before the output file
+                    arguments.AddRange(new[] { "-strict", "-2" }); // allow experimental stuff
                     arguments.Add(output);
+                }
                 else
                     Logger.ILog("Last argument '-' skipping adding output file");
             }

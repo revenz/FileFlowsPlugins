@@ -104,7 +104,6 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
             else
                 model.InputFiles[0] = args.WorkingFile;
 
-            startArgs.AddRange(new[] { "-strict", "-2" }); // allow experimental stuff
             startArgs.AddRange(new[] { "-fflags", "+genpts" }); //Generate missing PTS if DTS is present.
 
             startArgs.AddRange(new[] {
