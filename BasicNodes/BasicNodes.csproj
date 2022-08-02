@@ -4,8 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <FileVersion>0.9.4.168</FileVersion>
-    <ProductVersion>0.9.4.168</ProductVersion>
+    <FileVersion>1.0.0.169</FileVersion>
+    <ProductVersion>1.0.0.169</ProductVersion>
 	  <PublishTrimmed>true</PublishTrimmed>
 	  <Company>FileFlows</Company>
 	  <Authors>John Andrews</Authors>

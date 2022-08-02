@@ -6,8 +6,8 @@
     <Nullable>enable</Nullable>
 	<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
 	<PublishSingleFile>true</PublishSingleFile>
-    <FileVersion>0.9.4.168</FileVersion>
-    <ProductVersion>0.9.4.168</ProductVersion>
+    <FileVersion>1.0.0.169</FileVersion>
+    <ProductVersion>1.0.0.169</ProductVersion>
 	<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 	<PublishTrimmed>true</PublishTrimmed>
 	<Company>FileFlows</Company>
