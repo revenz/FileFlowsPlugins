@@ -347,6 +347,8 @@
         "Fields": {
           "Force": "Force",
           "Force-Help": "When checked the video will be force scaled even if the working file is already in this resolution (or near this resolution).",
+          "OnlyIfLarger": "Only If Larger",
+          "OnlyIfLarger-Help": "The video will only be scaled to this resolution if the video is currently larger than this resolution",
           "Resolution": "Resolution"
         }
       },

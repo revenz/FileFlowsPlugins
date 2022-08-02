@@ -4,13 +4,17 @@ public class FfmpegBuilderScaler : FfmpegBuilderNode
 {
     public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/video-scaler";
 
-    [Boolean(2)]
-    public bool Force { get; set; }
-
 
     [Select(nameof(ResolutionOptions), 1)]
     public string Resolution { get; set; }
+    public override int Outputs => 2;
 
+    [Boolean(2)]
+    public bool Force { get; set; }
+
+    [ConditionEquals(nameof(Force), true, inverse: true)]
+    [Boolean(3)]
+    public bool OnlyIfLarger { get; set; }
 
 
     private static List<ListOption> _ResolutionOptions;
@@ -33,28 +37,50 @@ public class FfmpegBuilderScaler : FfmpegBuilderNode
             return _ResolutionOptions;
         }
     }
-    public override int Outputs => 2;
     public override int Execute(NodeParameters args)
     {
         var videoInfo = GetVideoInfo(args);
         if (videoInfo == null || videoInfo.VideoStreams?.Any() != true)
             return -1;
 
+        bool scale1920 = Resolution.StartsWith("1920");
+        bool scale4k= Resolution.StartsWith("3840");
+        bool scale720 = Resolution.StartsWith("1280");
+        bool scale480 = Resolution.StartsWith("640");
+        int width = videoInfo.VideoStreams[0].Width;
+
         if (Force == false)
         {
             var resolution = ResolutionHelper.GetResolution(videoInfo);
-            if (resolution == ResolutionHelper.Resolution.r1080p && Resolution.StartsWith("1920"))
+
+            if (OnlyIfLarger)
+            {
+                if (scale4k && width > 3840)
+                    return Scale();
+                if (scale1920 && width > 1920)
+                    return Scale();
+                if (scale720 && width > 1280)
+                    return Scale();
+                if (scale480 && width > 640)
+                    return Scale();
                 return 2;
-            else if (resolution == ResolutionHelper.Resolution.r4k && Resolution.StartsWith("3840"))
+            }
+            
+            if (resolution == ResolutionHelper.Resolution.r1080p && scale1920)
                 return 2;
-            else if (resolution == ResolutionHelper.Resolution.r720p && Resolution.StartsWith("1280"))
+            else if (resolution == ResolutionHelper.Resolution.r4k && scale4k)
                 return 2;
-            else if (resolution == ResolutionHelper.Resolution.r480p && Resolution.StartsWith("640"))
+            else if (resolution == ResolutionHelper.Resolution.r720p && scale720)
+                return 2;
+            else if (resolution == ResolutionHelper.Resolution.r480p && scale480)
                 return 2;
         }
+        return Scale();
 
-        Model.VideoStreams[0].Filter.AddRange(new[] { $"scale={Resolution}:flags=lanczos" });
-
-        return 1;
+        int Scale()
+        {
+            Model.VideoStreams[0].Filter.AddRange(new[] { $"scale={Resolution}:flags=lanczos" });
+            return 1;
+        }
     }
 }

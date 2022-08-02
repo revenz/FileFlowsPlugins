@@ -1,12 +1,12 @@
-namespace FileFlows.MusicNodes;
+namespace FileFlows.AudioNodes;
 
 using System.ComponentModel.DataAnnotations;
 using FileFlows.Plugin.Attributes;
 
 public class Plugin : FileFlows.Plugin.IPlugin
 {
-    public Guid Uid => new Guid("d84fbd06-f0e3-4827-8de0-6b0ef20dd883");
-    public string Name => "Music Nodes (Obsolete)";
+    public Guid Uid => new Guid("d951a39e-4296-4801-ab41-4070b0789465");
+    public string Name => "Audio Nodes";
     public string MinimumVersion => "0.9.0.1487";
 
     public void Init()

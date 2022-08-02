@@ -4,6 +4,7 @@ namespace FileFlows.MusicNodes
 
     public abstract class MusicNode : Node
     {
+        public override bool Obsolete => true;
         public override string Icon => "fas fa-music";
 
         protected string GetFFMpegExe(NodeParameters args)

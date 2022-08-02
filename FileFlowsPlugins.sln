@@ -29,7 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apprise", "Apprise\Apprise.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageNodes", "ImageNodes\ImageNodes.csproj", "{3C6B9933-B6BC-4C00-9247-71F575AA276B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoLegacyNodes", "VideoLegacyNodes\VideoLegacyNodes.csproj", "{4339720B-5061-431F-9080-FC087ACFDB3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VideoLegacyNodes", "VideoLegacyNodes\VideoLegacyNodes.csproj", "{4339720B-5061-431F-9080-FC087ACFDB3B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioNodes", "AudioNodes\AudioNodes.csproj", "{600204C7-94F1-4793-9D02-D836A1B15B60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +95,10 @@ Global
 		{4339720B-5061-431F-9080-FC087ACFDB3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4339720B-5061-431F-9080-FC087ACFDB3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4339720B-5061-431F-9080-FC087ACFDB3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{600204C7-94F1-4793-9D02-D836A1B15B60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{600204C7-94F1-4793-9D02-D836A1B15B60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{600204C7-94F1-4793-9D02-D836A1B15B60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{600204C7-94F1-4793-9D02-D836A1B15B60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

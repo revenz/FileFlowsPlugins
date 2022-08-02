@@ -8,7 +8,7 @@ using VideoNodes.Tests;
 namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests;
 
 [TestClass]
-public class FfmpegBuilder_BasicTests
+public class FfmpegBuilder_BasicTests : TestBase
 {
     [TestMethod]
     public void FfmpegBuilder_Basic_h265()
@@ -1340,6 +1340,45 @@ public class FfmpegBuilder_BasicTests
         Assert.IsTrue(log.Contains($"-ss 120 -i \"{file}\" -hide_banner -vframes 25 -vf cropdetect -f null -"));
         Assert.IsTrue(log.Contains($"-ss 240 -i \"{file}\" -hide_banner -vframes 25 -vf cropdetect -f null -"));
         Assert.IsTrue(log.Contains($"-ss 360 -i \"{file}\" -hide_banner -vframes 25 -vf cropdetect -f null -"));
+    }
+
+
+
+    [TestMethod]
+    public void FfmpegBuilder_Scale()
+    {
+        var logger = new TestLogger();
+        const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+        var vi = new VideoInfoHelper(ffmpeg, logger);
+        var vii = vi.Read(TestFile_120_mbps_4k_uhd_hevc_10bit);
+        var args = new NodeParameters(TestFile_50_mbps_hd_h264, logger, false, string.Empty);
+        args.GetToolPathActual = (string tool) => ffmpeg;
+        args.TempPath = @"D:\videos\temp";
+        args.Parameters.Add("VideoInfo", vii);
+
+
+        FfmpegBuilderStart ffStart = new();
+        ffStart.PreExecute(args);
+        Assert.AreEqual(1, ffStart.Execute(args));
+
+        FfmpegBuilderVideoCodec ffCodec = new();
+        ffCodec.VideoCodec = "h265";
+        ffCodec.VideoCodecParameters = "h265";
+        ffCodec.PreExecute(args);
+        ffCodec.Execute(args);
+
+        FfmpegBuilderScaler ffScaler = new();
+        ffScaler.Resolution = "640:-2";
+        ffScaler.Force = true;
+        ffScaler.PreExecute(args);
+        ffScaler.Execute(args);
+
+        FfmpegBuilderExecutor ffExecutor = new();
+        ffExecutor.PreExecute(args);
+        int result = ffExecutor.Execute(args);
+        string log = logger.ToString();
+        Assert.AreEqual(1, result);
+
     }
 }
 

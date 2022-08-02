@@ -1,9 +1,9 @@
 ﻿#if(DEBUG)
 
 
-namespace FileFlows.MusicNodes.Tests
+namespace FileFlows.AudioNodes.Tests
 {
-    using FileFlows.MusicNodes;
+    using FileFlows.AudioNodes;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System;
     using System.Collections.Generic;
@@ -24,7 +24,7 @@ namespace FileFlows.MusicNodes.Tests
             var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
             args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\music\temp";
-            new MusicFile().Execute(args); // need to read the music info and set it
+            new AudioFile().Execute(args); // need to read the Audio info and set it
             int output = node.Execute(args);
 
             Assert.AreEqual(1, output);
@@ -40,7 +40,7 @@ namespace FileFlows.MusicNodes.Tests
             var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
             args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\music\temp";
-            new MusicFile().Execute(args); // need to read the music info and set it
+            new AudioFile().Execute(args); // need to read the Audio info and set it
             int output = node.Execute(args);
 
             Assert.AreEqual(1, output);
@@ -55,7 +55,7 @@ namespace FileFlows.MusicNodes.Tests
             var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
             args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\music\temp";
-            new MusicFile().Execute(args); // need to read the music info and set it
+            new AudioFile().Execute(args); // need to read the Audio info and set it
             int output = node.Execute(args);
 
             Assert.AreEqual(1, output);
@@ -71,7 +71,7 @@ namespace FileFlows.MusicNodes.Tests
             var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
             args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\music\temp";
-            new MusicFile().Execute(args); // need to read the music info and set it
+            new AudioFile().Execute(args); // need to read the Audio info and set it
             int output = node.Execute(args);
 
             Assert.AreEqual(1, output);
@@ -88,7 +88,7 @@ namespace FileFlows.MusicNodes.Tests
             var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
             args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\music\temp";
-            new MusicFile().Execute(args); // need to read the music info and set it
+            new AudioFile().Execute(args); // need to read the Audio info and set it
             int output = node.Execute(args);
 
             Assert.AreEqual(1, output);
@@ -98,7 +98,7 @@ namespace FileFlows.MusicNodes.Tests
         public void Convert_Mp3_AlreadyMp3()
         {
 
-            const string file = @"D:\videos\music\13-the_cranberries-why.mp3";
+            const string file = @"D:\videos\Audio\13-the_cranberries-why.mp3";
 
             ConvertAudio node = new();
             node.SkipIfCodecMatches = true;
@@ -108,7 +108,7 @@ namespace FileFlows.MusicNodes.Tests
             var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
             args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\music\temp";
-            new MusicFile().Execute(args); // need to read the music info and set it
+            new AudioFile().Execute(args); // need to read the Audio info and set it
             int output = node.Execute(args);
 
             Assert.AreEqual(2, output);
@@ -124,7 +124,7 @@ namespace FileFlows.MusicNodes.Tests
             var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
             args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\music\temp";
-            //new MusicFile().Execute(args); // need to read the music info and set it
+            //new AudioFile().Execute(args); // need to read the Audio info and set it
             node.PreExecute(args);
             int output = node.Execute(args);
 
@@ -141,9 +141,50 @@ namespace FileFlows.MusicNodes.Tests
             var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
             args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\music\temp";
-            //new MusicFile().Execute(args); // need to read the music info and set it
+            //new AudioFile().Execute(args); // need to read the Audio info and set it
             node.PreExecute(args);
             int output = node.Execute(args);
+
+            Assert.AreEqual(1, output);
+        }
+
+
+        [TestMethod]
+        public void Convert_TwoPass()
+        {
+
+            const string file = @"D:\music\flacs\01-billy_joel-you_may_be_right.flac";
+
+            ConvertToAAC node = new();
+            var logger = new TestLogger();
+            var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty);
+            args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
+            args.TempPath = @"D:\music\temp";
+            new AudioFile().Execute(args); // need to read the Audio info and set it
+            node.Normalize = true;
+            int output = node.Execute(args);
+
+            string log = logger.ToString();
+
+            Assert.AreEqual(1, output);
+        }
+
+        [TestMethod]
+        public void Convert_TwoPass_VideoFile()
+        {
+
+            const string file = @"D:\videos\testfiles\basic.mkv";
+
+            ConvertToAAC node = new();
+            var logger = new TestLogger();
+            var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty);
+            args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
+            args.TempPath = @"D:\music\temp";
+            new AudioFile().Execute(args); // need to read the Audio info and set it
+            node.Normalize = true;
+            int output = node.Execute(args);
+
+            string log = logger.ToString();
 
             Assert.AreEqual(1, output);
         }

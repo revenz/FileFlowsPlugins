@@ -1,18 +1,17 @@
-namespace FileFlows.MusicNodes
+namespace FileFlows.AudioNodes
 {
     using System.ComponentModel;
     using FileFlows.Plugin;
     using FileFlows.Plugin.Attributes;
 
-    public class MusicFile : MusicNode
+    public class AudioFile : AudioNode
     {
-        public override bool Obsolete => true; 
         public override int Outputs => 1;
         public override FlowElementType Type => FlowElementType.Input;
 
         private Dictionary<string, object> _Variables;
         public override Dictionary<string, object> Variables => _Variables;
-        public MusicFile()
+        public AudioFile()
         {
             _Variables = new Dictionary<string, object>()
             {
@@ -44,19 +43,19 @@ namespace FileFlows.MusicNodes
 
             try
             {
-                if (ReadMusicFileInfo(args, ffmpegExe, args.WorkingFile))
+                if (ReadAudioFileInfo(args, ffmpegExe, args.WorkingFile))
                     return 1;
 
-                var musicInfo = GetMusicInfo(args);
+                var AudioInfo = GetAudioInfo(args);
 
-                if (string.IsNullOrEmpty(musicInfo.Codec) == false)
-                    args.RecordStatistic("CODEC", musicInfo.Codec);
+                if (string.IsNullOrEmpty(AudioInfo.Codec) == false)
+                    args.RecordStatistic("CODEC", AudioInfo.Codec);
 
                 return 0;
             }
             catch (Exception ex)
             {
-                args.Logger.ELog("Failed processing MusicFile: " + ex.Message);
+                args.Logger.ELog("Failed processing AudioFile: " + ex.Message);
                 return -1;
             }
         }

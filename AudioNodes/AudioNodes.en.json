@@ -1,0 +1,85 @@
+{
+  "Flow":{
+    "Parts": {
+      "AudioFile": {
+        "Description": "An input Audio file that has had its Audio Information read and can be processed",
+        "Outputs": {
+          "1": "Audio file from library"
+        }
+      },
+      "AudioFileNormalization": {
+        "Description": "Normalizes an audio file using two passes of FFMPEGs loudnorm filter",
+        "Outputs": {
+          "1": "Audio file normalized and saved to temporary file"
+        }
+      },
+      "ConvertAudio": {
+        "Description": "Convert a Audio file to the specified audio codec",
+        "Outputs": {
+          "1": "Audio converted and saved to temporary file",
+          "2": "Audio already in codec, no conversion done"
+        },
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "The bitrate for the new file, the higher the bitrate the better the quality but larger the file.",
+          "Codec": "Codec",
+          "Codec-Help": "The audio codec to convert the file into.",
+          "Normalize": "Normalize",
+          "Normalize-Help": "If the audio should be normalized with two pass audio normalization",
+          "SkipIfCodecMatches": "Skip If Codec Matches",
+          "SkipIfCodecMatches-Help": "If the existing audio codec matches, this file will not be processed regardless of the bitrate.  Otherwise if off, the bitrate must be less than or equal to for it to skip."
+        }
+      },
+      "ConvertToAAC": {
+        "Description": "Convert a Audio file to AAC",
+        "Outputs": {
+          "1": "Audio converted and saved to temporary file"
+        },
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "The bitrate for the new AAC file, the higher the bitrate the better the quality but larger the file.  192 Kbps is the recommended rate."
+        }
+      },
+      "ConvertToFLAC": {
+        "Description": "Convert a Audio file to FLAC",
+        "Outputs": {
+          "1": "Audio converted and saved to temporary file"
+        },
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "The bitrate for the new FLAC file, the higher the bitrate the better the quality but larger the file.  128 Kbps is the recommended rate."
+        }
+      },
+      "ConvertToMP3": {
+        "Description": "Convert a Audio file to MP3",
+        "Outputs": {
+          "1": "Audio converted and saved to temporary file"
+        },
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "The bitrate for the new MP3 file, the higher the bitrate the better the quality but larger the file.  192 Kbps is the recommended rate."
+        }
+      },
+      "ConvertToOGG": {
+        "Description": "Convert a Audio file to OGG",
+        "Outputs": {
+          "1": "Audio converted and saved to temporary file"
+        },
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "The bitrate for the new OGG file, the higher the bitrate the better the quality but larger the file.  128 Kbps is the recommended rate."
+        }
+      },
+      "ConvertToWAV": {
+        "Description": "Convert a Audio file to WAV",
+        "Outputs": {
+          "1": "Audio converted and saved to temporary file"
+        },
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "The bitrate for the new WAV file, the higher the bitrate the better the quality but larger the file.  128 Kbps is the recommended rate."
+        }
+      }
+    }
+  }
+}

@@ -7,11 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileFlows.MusicNodes
+namespace FileFlows.AudioNodes
 {
     public class ConvertToMP3 : ConvertNode
     {
-        public override bool Obsolete => true;
         protected override string Extension => "mp3";
         public static List<ListOption> BitrateOptions => ConvertNode.BitrateOptions;
         protected override List<string> GetArguments()
@@ -100,7 +99,8 @@ namespace FileFlows.MusicNodes
         [Select(nameof(CodecOptions), 0)]
         public string Codec { get; set; }
 
-        [Boolean(3)]
+        [Boolean(4)]
+        [ConditionEquals(nameof(Normalize), true, inverse: true)]
         public bool SkipIfCodecMatches { get; set; }
 
         public override int Outputs => 2; 
@@ -144,21 +144,25 @@ namespace FileFlows.MusicNodes
 
         public override int Execute(NodeParameters args)
         {
-            MusicInfo musicInfo = GetMusicInfo(args);
-            if (musicInfo == null)
+            AudioInfo AudioInfo = GetAudioInfo(args);
+            if (AudioInfo == null)
                 return -1;
 
-            if(musicInfo.Codec?.ToLower() == Codec?.ToLower())
+            string ffmpegExe = GetFFMpegExe(args);
+            if (string.IsNullOrEmpty(ffmpegExe))
+                return -1;
+
+            if(Normalize == false && AudioInfo.Codec?.ToLower() == Codec?.ToLower())
             {
                 if (SkipIfCodecMatches)
                 {
-                    args.Logger?.ILog($"Music file already '{Codec}' at bitrate '{musicInfo.BitRate}', and set to skip if codec matches");
+                    args.Logger?.ILog($"Audio file already '{Codec}' at bitrate '{AudioInfo.BitRate}', and set to skip if codec matches");
                     return 2;
                 }
 
-                if(musicInfo.BitRate <= Bitrate)
+                if(AudioInfo.BitRate <= Bitrate)
                 {
-                    args.Logger?.ILog($"Music file already '{Codec}' at bitrate '{musicInfo.BitRate}'");
+                    args.Logger?.ILog($"Audio file already '{Codec}' at bitrate '{AudioInfo.BitRate}'");
                     return 2;
                 }
             }
@@ -167,7 +171,7 @@ namespace FileFlows.MusicNodes
         }
     }
 
-    public abstract class ConvertNode:MusicNode
+    public abstract class ConvertNode:AudioNode
     {
         protected abstract string Extension { get; }
 
@@ -191,6 +195,9 @@ namespace FileFlows.MusicNodes
 
         [Select(nameof(BitrateOptions), 1)]
         public int Bitrate { get; set; }
+
+        [Boolean(3)]
+        public bool Normalize { get; set; }
 
         private static List<ListOption> _BitrateOptions;
         public static List<ListOption> BitrateOptions
@@ -223,8 +230,8 @@ namespace FileFlows.MusicNodes
             if (string.IsNullOrEmpty(ffmpegExe))
                 return -1;
 
-            //MusicInfo musicInfo = GetMusicInfo(args);
-            //if (musicInfo == null)
+            //AudioInfo AudioInfo = GetAudioInfo(args);
+            //if (AudioInfo == null)
             //    return -1;
 
             if (Bitrate < 64 || Bitrate > 320)
@@ -232,6 +239,8 @@ namespace FileFlows.MusicNodes
                 args.Logger?.ILog("Bitrate not set or invalid, setting to 192kbps");
                 Bitrate = 192;
             }
+
+
 
             string outputFile = Path.Combine(args.TempPath, Guid.NewGuid().ToString() + "." + Extension);
 
@@ -241,6 +250,15 @@ namespace FileFlows.MusicNodes
             ffArgs.Insert(2, "-i");
             ffArgs.Insert(3, args.WorkingFile);
             ffArgs.Insert(4, "-vn"); // disables video
+
+
+            if (Normalize)
+            {
+                string twoPass = AudioFileNormalization.DoTwoPass(args, ffmpegExe);
+                ffArgs.Add("-af");
+                ffArgs.Add(twoPass);
+            }
+
             ffArgs.Add(outputFile);
 
             args.Logger?.ILog("FFArgs: " + String.Join(" ", ffArgs.Select(x => x.IndexOf(" ") > 0 ? "\"" + x + "\"" : x).ToArray()));
@@ -261,8 +279,8 @@ namespace FileFlows.MusicNodes
 
             args.SetWorkingFile(outputFile);
 
-            // update the music file info
-            if (ReadMusicFileInfo(args, ffmpegExe, args.WorkingFile))
+            // update the Audio file info
+            if (ReadAudioFileInfo(args, ffmpegExe, args.WorkingFile))
                 return 1;
 
             return -1;

@@ -12,9 +12,9 @@
 	<PublishTrimmed>true</PublishTrimmed>
 	<Company>FileFlows</Company>
 	<Authors>John Andrews</Authors>
-	<Product>Music Nodes</Product>
+	<Product>Audio Nodes</Product>
 	<PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
-	<Description>OBSOLETE.  This plugin has been replaced by the Audio Nodes plugin.</Description>
+	<Description>Nodes for processing Audio files.  This plugin contains nodes to convert Audio files to different formats.  Node to parse the Audio information from a file.</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -34,7 +34,7 @@
 	</ItemGroup>
 
   <ItemGroup>
-    <Content Include="MusicNodes.en.json">
+    <Content Include="AudioNodes.en.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>  
   </ItemGroup>

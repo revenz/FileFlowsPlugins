@@ -2,11 +2,10 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
-namespace FileFlows.MusicNodes;
+namespace FileFlows.AudioNodes;
 
-public class AudioFileNormalization : MusicNode
+public class AudioFileNormalization : AudioNode
 {
-    public override bool Obsolete => true;
     public override int Inputs => 1;
     public override int Outputs => 1;
     public override FlowElementType Type => FlowElementType.Process;
@@ -24,17 +23,17 @@ public class AudioFileNormalization : MusicNode
             if (string.IsNullOrEmpty(ffmpegExe))
                 return -1;
 
-            MusicInfo musicInfo = GetMusicInfo(args);
-            if (musicInfo == null)
+            AudioInfo AudioInfo = GetAudioInfo(args);
+            if (AudioInfo == null)
                 return -1;
 
             List<string> ffArgs = new List<string>();
 
 
-            long sampleRate = musicInfo.Frequency > 0 ? musicInfo.Frequency : 48_000;
+            long sampleRate = AudioInfo.Frequency > 0 ? AudioInfo.Frequency : 48_000;
             
             string twoPass = DoTwoPass(args, ffmpegExe);
-            ffArgs.AddRange(new[] { "-i", args.WorkingFile, "-c:a", musicInfo.Codec, "-ar", sampleRate.ToString(), "-af", twoPass });
+            ffArgs.AddRange(new[] { "-i", args.WorkingFile, "-c:a", AudioInfo.Codec, "-ar", sampleRate.ToString(), "-af", twoPass });
 
             string extension = new FileInfo(args.WorkingFile).Extension;
             if (extension.StartsWith("."))
@@ -59,7 +58,7 @@ public class AudioFileNormalization : MusicNode
     }
 
     [UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "<Pending>")]
-    public string DoTwoPass(NodeParameters args, string ffmpegExe)
+    public static string DoTwoPass(NodeParameters args, string ffmpegExe)
     {
         //-af loudnorm=I=-24:LRA=7:TP=-2.0"
         var result = args.Execute(new ExecuteArgs

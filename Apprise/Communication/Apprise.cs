@@ -75,7 +75,7 @@ public class Apprise: Node
         object data = new
         {
             body = message,
-            tag= Tag?.Any() != true ? "all" : String.Join(";", this.Tag),
+            tag = Tag?.Any() != true ? "all" : String.Join(";", this.Tag),
             type = this.MessageType?.EmptyAsNull() ?? "info"
         };
 

@@ -69,14 +69,14 @@ public class VideoExtractAudio : AudioSelectionEncodingNode
             var track = GetTrack(videoInfo);
             if (track == null)
             {
-                args.Logger.WLog("Unable to find matchiung audio track to extract");
+                args.Logger.WLog("Unable to find matching audio track to extract");
                 return 2;
             }
 
             string outputFile = GetOutputFile(args);
             var parameters = GetAudioTrackParameters(track);
 
-            var extracted = ExtractSubtitle(args, FFMPEG, parameters, outputFile);
+            var extracted = ExtractAudio(args, FFMPEG, parameters, outputFile);
             if(extracted)
             {
                 args.UpdateVariables(new Dictionary<string, object>
@@ -142,7 +142,7 @@ public class VideoExtractAudio : AudioSelectionEncodingNode
         };
     }
 
-    internal bool ExtractSubtitle(NodeParameters args, string ffmpegExe, string[] parameters, string output)
+    internal bool ExtractAudio(NodeParameters args, string ffmpegExe, string[] parameters, string output)
     {
         if (File.Exists(output))
         {
