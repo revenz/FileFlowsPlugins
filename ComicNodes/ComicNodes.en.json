@@ -6,7 +6,7 @@
           "1": "Comic was converted and saved as temporary file",
           "2": "Comic was already in desired format"
         },
-        "Description": "Converts a comic to a different comic book format",
+        "Description": "Converts a comic to a different comic book format.\n\nSupports converting from CBZ, CBR, CB7, PDF, GZ, BZ2",
         "Fields": {
           "Format": "Format",
           "Format-Help": "The format to convert the comic into"
