@@ -1,0 +1,27 @@
+{
+  "Flow": {
+    "Parts": {
+      "ComicConverter": {
+        "Outputs": {
+          "1": "Comic was converted and saved as temporary file",
+          "2": "Comic was already in desired format"
+        },
+        "Description": "Converts a comic to a different comic book format",
+        "Fields": {
+          "Format": "Format",
+          "Format-Help": "The format to convert the comic into"
+        }
+      },
+      "ComicExtractor": {
+        "Outputs": {
+          "1": "Comic was extracted"
+        },
+        "Description": "Extracts all files from a comic book format and saves them to them to a specific folder",
+        "Fields": {
+          "DestinationPath": "Destination Path",
+          "DestinationPath-Help": "The folder to save the extract comic book files to"
+        }
+      }
+    }
+  }
+}

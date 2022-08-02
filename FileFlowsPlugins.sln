@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VideoLegacyNodes", "VideoLe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioNodes", "AudioNodes\AudioNodes.csproj", "{600204C7-94F1-4793-9D02-D836A1B15B60}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComicNodes", "ComicNodes\ComicNodes.csproj", "{45568FCB-00FF-4AEA-AA43-DC569D667B04}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,10 @@ Global
 		{600204C7-94F1-4793-9D02-D836A1B15B60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{600204C7-94F1-4793-9D02-D836A1B15B60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{600204C7-94F1-4793-9D02-D836A1B15B60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45568FCB-00FF-4AEA-AA43-DC569D667B04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45568FCB-00FF-4AEA-AA43-DC569D667B04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45568FCB-00FF-4AEA-AA43-DC569D667B04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45568FCB-00FF-4AEA-AA43-DC569D667B04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
