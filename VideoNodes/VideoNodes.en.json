@@ -7,6 +7,20 @@
   "7": { "1": "7.1" },
   "Flow": {
     "Parts": {
+      "AudioToVideo": {
+        "Description": "Converts an audio file into a video file and generates a video based on the audio",
+        "Fields": {
+          "Visualisation": "Visualisation",
+          "Visualisation-Help": "The visualation to use in the generated video.  See Help for examples",
+          "Container": "Container",
+          "Resolution": "Resolution",
+          "Codec": "Codec",
+          "HardwareEncoding": "Hardware Encode",
+          "HardwareEncoding-Help": "When checked, will test to see if hardware encoders are found on the Processing Node, and if found will use hardware encoding, otherwise will fallback to CPU encoding.",
+          "Color": "Color",
+          "Color-Help": "Optional #RRGGBB color code to use for the sound waves, must be in the format #RRGGBB, for example #FF0090"
+        }
+      },
       "CanUseHardwareEncoding": {
         "Description": "Checks if the specified hardware encoder is currently available to the Flow.",
         "Fields": {

@@ -118,6 +118,8 @@ namespace FileFlows.VideoNodes
         protected VideoInfo GetVideoInfo(NodeParameters args, bool refreshIfFileChanged = true)
         {
             var vi = GetVideoInfoActual(args);
+            if(vi == null) return null;
+
             if (refreshIfFileChanged == false || vi.FileName == args.FileName)
                 return vi;
 
