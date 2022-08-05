@@ -13,18 +13,33 @@
 
             List<string> results= new List<string> { "-map", Stream.InputFileIndex + ":s:{sourceTypeIndex}", "-c:s:{index}" };
 
-            if(args.DestinationExtension == "mkv" && Stream.Codec == "mov_text")
+            switch (args.DestinationExtension)
             {
-                results.Add("srt");
-            }
-            else
-            {
-                results.Add("copy");
+                case "mkv":
+                    {
+                        if(Stream.Codec == "mov_text")
+                            results.Add("srt");
+                        else
+                            results.Add("copy");
+                    }
+                    break;
+                case "mp4":
+                    {
+                        results.Add("mov_text");
+                    }
+                    break;
+                default:
+                    {
+                        results.Add("copy");
+                    }
+                    break;
             }
            
 
             if (string.IsNullOrWhiteSpace(this.Title) == false)
             {
+                // first s: means stream speicific, this is suppose to have :s:s
+                // https://stackoverflow.com/a/21059838
                 results.Add($"-metadata:s:s:{args.OutputTypeIndex}");
                 results.Add($"title={(this.Title == FfmpegStream.REMOVED ? "" : this.Title)}");
             }

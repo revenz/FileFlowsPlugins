@@ -75,23 +75,21 @@ namespace FileFlows.AudioNodes
             variables.AddOrUpdate("audio.TotalDiscs", AudioInfo.TotalDiscs < 1 ? 1 : AudioInfo.TotalDiscs);
 
 
-            if (args.OriginalMetadata == null)
-            {
-                args.OriginalMetadata = new Dictionary<string, object>();
-                args.OriginalMetadata.Add("Duration", AudioInfo.Duration);
-                args.OriginalMetadata.Add("Codec", AudioInfo.Codec);
-                args.OriginalMetadata.Add("Bitrate", AudioInfo.Bitrate);
-                args.OriginalMetadata.Add("Channels", AudioInfo.Channels);
-                AddIfSet(args.OriginalMetadata, "Date", AudioInfo.Date);
-                AddIfSet(args.OriginalMetadata, "Frequency", AudioInfo.Frequency);
-                AddIfSet(args.OriginalMetadata, "Encoder", AudioInfo.Encoder);
-                AddIfSet(args.OriginalMetadata, "Genres", AudioInfo.Genres);
-                AddIfSet(args.OriginalMetadata, "Language", AudioInfo.Language);
-                AddIfSet(args.OriginalMetadata, "Title", AudioInfo.Title);
-                AddIfSet(args.OriginalMetadata, "Track", AudioInfo.Track);
-                AddIfSet(args.OriginalMetadata, "Disc", AudioInfo.Disc);
-                AddIfSet(args.OriginalMetadata, "TotalDiscs", AudioInfo.TotalDiscs);
-            }
+            var metadata = new Dictionary<string, object>();
+            metadata.Add("Duration", AudioInfo.Duration);
+            metadata.Add("Codec", AudioInfo.Codec);
+            metadata.Add("Bitrate", AudioInfo.Bitrate);
+            metadata.Add("Channels", AudioInfo.Channels);
+            AddIfSet(metadata, "Date", AudioInfo.Date);
+            AddIfSet(metadata, "Frequency", AudioInfo.Frequency);
+            AddIfSet(metadata, "Encoder", AudioInfo.Encoder);
+            AddIfSet(metadata, "Genres", AudioInfo.Genres);
+            AddIfSet(metadata, "Language", AudioInfo.Language);
+            AddIfSet(metadata, "Title", AudioInfo.Title);
+            AddIfSet(metadata, "Track", AudioInfo.Track);
+            AddIfSet(metadata, "Disc", AudioInfo.Disc);
+            AddIfSet(metadata, "TotalDiscs", AudioInfo.TotalDiscs);
+            args.SetMetadata(metadata);
 
             args.UpdateVariables(variables);
         }

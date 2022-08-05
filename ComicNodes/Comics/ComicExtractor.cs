@@ -1,4 +1,6 @@
-﻿namespace FileFlows.ComicNodes.Comics;
+﻿using System.Text.RegularExpressions;
+
+namespace FileFlows.ComicNodes.Comics;
 
 public class ComicExtractor : Node
 { 
@@ -23,6 +25,12 @@ public class ComicExtractor : Node
             return -1;
         }
         Helpers.ComicExtractor.Extract(args, args.WorkingFile, dest, halfProgress: false);
+
+        var metadata = new Dictionary<string, object>();
+        metadata.Add("Format", args.WorkingFile.Substring(args.WorkingFile.LastIndexOf(".") + 1));
+        var rgxImages = new Regex(@"\.(jpeg|jpg|jpe|png|bmp|tiff|webp|gif)$");
+        metadata.Add("Pages", Directory.GetFiles(dest, "*.*", SearchOption.AllDirectories).Where(x => rgxImages.IsMatch(x)).Count());
+        args.SetMetadata(metadata);
 
         return 1;
     }

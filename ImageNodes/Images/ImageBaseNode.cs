@@ -16,6 +16,12 @@ public abstract class ImageBaseNode:Node
             Format = format.Name
         };
 
+        var metadata = new Dictionary<string, object>();
+        metadata.Add("Format", imageInfo.Format);
+        metadata.Add("Width", imageInfo.Width);
+        metadata.Add("Height", imageInfo.Height);
+        args.SetMetadata(metadata);
+
         variables ??= new Dictionary<string, object>();
         if (args.Parameters.ContainsKey(IMAGE_INFO))
             args.Parameters[IMAGE_INFO] = imageInfo;
@@ -58,7 +64,7 @@ public abstract class ImageBaseNode:Node
     {
         if (args.Parameters.ContainsKey(IMAGE_INFO) == false)
         {
-            args.Logger?.WLog("No codec information loaded, use a 'Image File' node first");
+            args.Logger?.WLog("No image information loaded, use a 'Image File' node first");
             return null;
         }
         var result = args.Parameters[IMAGE_INFO] as ImageInfo;

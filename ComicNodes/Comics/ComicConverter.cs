@@ -45,13 +45,10 @@ public class ComicConverter: Node
             currentFormat = currentFormat[1..]; // remove the dot
         currentFormat = currentFormat.ToLower();
 
-
-        if (args.OriginalMetadata == null)
-        {
-            args.OriginalMetadata = new Dictionary<string, object>();
-            args.OriginalMetadata.Add("Format", currentFormat);
-            args.OriginalMetadata.Add("Pages", GetPageCount(currentFormat, args.WorkingFile));
-        }
+        var metadata = new Dictionary<string, object>();
+        metadata.Add("Format", currentFormat);
+        metadata.Add("Pages", GetPageCount(currentFormat, args.WorkingFile));
+        args.SetMetadata(metadata);
 
         if (currentFormat == Format)
         {

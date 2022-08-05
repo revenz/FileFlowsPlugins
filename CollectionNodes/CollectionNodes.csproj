@@ -4,8 +4,8 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<FileVersion>1.0.0.170</FileVersion>
-		<ProductVersion>1.0.0.170</ProductVersion>
+		<FileVersion>1.0.0.171</FileVersion>
+		<ProductVersion>1.0.0.171</ProductVersion>
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 		<PublishTrimmed>true</PublishTrimmed>
 		<Company>FileFlows</Company>

@@ -279,11 +279,7 @@ namespace FileFlows.VideoNodes
             audio.TypeIndex = int.Parse(Regex.Match(line, @"#([\d]+):([\d]+)").Groups[2].Value) - 1;
             audio.Codec = parts[0].Substring(parts[0].IndexOf("Audio: ") + "Audio: ".Length).Trim().Split(' ').First().ToLower() ?? "";
 
-            var langSection = Regex.Match(line, @"(?<=(Stream\s#[\d]+:[\d]+))[^:]+");
-            if(langSection.Success)
-            {
-                audio.Language = Regex.Match(langSection.Value, @"(?<=\()[^)]+").Value?.ToLower() ?? string.Empty;
-            }
+            audio.Language = GetLanguage(line);
             if (info.IndexOf("0 channels") >= 0)
             {
                 audio.Channels = 0;
@@ -340,13 +336,24 @@ namespace FileFlows.VideoNodes
             SubtitleStream sub = new SubtitleStream();
             sub.TypeIndex = int.Parse(Regex.Match(line, @"#([\d]+):([\d]+)").Groups[2].Value);
             sub.Codec = line.Substring(line.IndexOf("Subtitle: ") + "Subtitle: ".Length).Trim().Split(' ').First().ToLower();
-            sub.Language = Regex.Match(line, @"(?<=(Stream\s#[\d]+:[\d]+)\()[^\)]+").Value?.ToLower() ?? "";
+            sub.Language = GetLanguage(line);
 
             if (rgxTitle.IsMatch(info))
                 sub.Title = rgxTitle.Match(info).Value.Trim();
 
             sub.Forced = info.ToLower().Contains("forced");
             return sub;
+        }
+
+        private static string GetLanguage(string line)
+        {
+            var langSection = Regex.Match(line, @"(?<=(Stream\s#[\d]+:[\d]+))[^:]+");
+            if (langSection.Success == false)
+                return string.Empty;
+            var lang = Regex.Match(langSection.Value, @"(?<=\()[^)]+").Value?.ToLower() ?? string.Empty;
+            if (lang == "und")
+                return string.Empty;
+            return lang;
         }
     }
 }
