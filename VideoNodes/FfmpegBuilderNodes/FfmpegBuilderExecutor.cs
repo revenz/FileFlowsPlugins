@@ -121,6 +121,10 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
                 startArgs.Add(file);
             }
             startArgs.Add("-y");
+            if (extension.ToLower() == "mp4" && ffArgs.IndexOf("-movflags") < 0 && startArgs.IndexOf("-movflgs") < 0)
+            {
+                startArgs.AddRange(new[] { "-movflags", "+faststart" });
+            }
             ffArgs = startArgs.Concat(ffArgs).ToList();
 
 

@@ -132,6 +132,9 @@ public class AudioToVideo : EncodingNode
         List<string> ffArgs = new List<string>();
         var encodingParameters = FfmpegBuilderVideoEncode.GetEncodingParameters(args, this.Codec, 28, HardwareEncoding);
 
+        if (Container.ToLower() == "mp4")
+            ffArgs.AddRange(new[] { "-movflags", "+faststart" });
+
         switch (Visualization)
         {
             case VisualizationStyle.Waves:

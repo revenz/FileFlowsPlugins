@@ -70,7 +70,7 @@ namespace FileFlows.VideoNodes
         {
             if (TotalTime.TotalMilliseconds == 0)
             {
-                Args?.Logger?.DLog("Can't report time progress as total time is 0");
+                //Args?.Logger?.DLog("Can't report time progress as total time is 0");
                 return;
             }
             float percent = (float)((time.TotalMilliseconds / TotalTime.TotalMilliseconds) * 100);

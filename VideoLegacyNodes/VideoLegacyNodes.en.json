@@ -89,7 +89,7 @@
         "Description": "Allows you to set the language for any audio tracks that have no language set.  If the audio track does have a language set, it will be skipped.\n\nOutput 1: Audio Tracks were updated\nOutput 2: No audio tracks were needing to be updated",
         "Fields": {
           "Language": "Language",
-          "Language-Help": "The ISO 639-2 language code to use. \nhttps://en.wikipedia.org/wiki/List_of_ISO_639-2_codes"
+          "Language-Help": "The [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) language code to use."
         }
       },
       "AutoChapters": {
@@ -209,7 +209,7 @@
           "AudioCodec": "Audio Codec",
           "AudioCodec-Help": "The audio codec to encode the video with.\nIf left empty all original audio tracks will be copied.",
           "Language": "Language",
-          "Language-Help": "Optional ISO 639-2 language code to use.  Will attempt to find an audio track with this language code if not the best audio track will be used.\nhttps://en.wikipedia.org/wiki/List_of_ISO_639-2_codes"
+          "Language-Help": "Optional [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) language code to use.  Will attempt to find an audio track with this language code if not the best audio track will be used."
         }
       },
       "VideoHasStream": {
