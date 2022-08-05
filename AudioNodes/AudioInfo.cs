@@ -13,7 +13,7 @@ namespace FileFlows.AudioNodes
         public string[] Genres { get; set; }
         public string Encoder { get; set; }
         public long Duration { get; set; }
-        public long BitRate { get; set; }
+        public long Bitrate { get; set; }
         public string Codec { get; set; }
         public long Channels { get; set; }
         public long Frequency { get; set; }

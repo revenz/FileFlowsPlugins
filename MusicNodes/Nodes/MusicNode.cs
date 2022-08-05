@@ -59,7 +59,7 @@ namespace FileFlows.MusicNodes
                 variables.AddOrUpdate("mi.ArtistThe", musicInfo.Artist);
 
             variables.AddOrUpdate("mi.Album", musicInfo.Album);
-            variables.AddOrUpdate("mi.BitRate", musicInfo.BitRate);
+            variables.AddOrUpdate("mi.Bitrate", musicInfo.Bitrate);
             variables.AddOrUpdate("mi.Channels", musicInfo.Channels);
             variables.AddOrUpdate("mi.Codec", musicInfo.Codec);
             variables.AddOrUpdate("mi.Date", musicInfo.Date);

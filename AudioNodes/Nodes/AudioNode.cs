@@ -59,7 +59,7 @@ namespace FileFlows.AudioNodes
                 variables.AddOrUpdate("audio.ArtistThe", AudioInfo.Artist);
 
             variables.AddOrUpdate("audio.Album", AudioInfo.Album);
-            variables.AddOrUpdate("audio.BitRate", AudioInfo.BitRate);
+            variables.AddOrUpdate("audio.Bitrate", AudioInfo.Bitrate);
             variables.AddOrUpdate("audio.Channels", AudioInfo.Channels);
             variables.AddOrUpdate("audio.Codec", AudioInfo.Codec);
             variables.AddOrUpdate("audio.Date", AudioInfo.Date);
@@ -74,7 +74,43 @@ namespace FileFlows.AudioNodes
             variables.AddOrUpdate("audio.Disc", AudioInfo.Disc < 1 ? 1 : AudioInfo.Disc);
             variables.AddOrUpdate("audio.TotalDiscs", AudioInfo.TotalDiscs < 1 ? 1 : AudioInfo.TotalDiscs);
 
+
+            if (args.OriginalMetadata == null)
+            {
+                args.OriginalMetadata = new Dictionary<string, object>();
+                args.OriginalMetadata.Add("Duration", AudioInfo.Duration);
+                args.OriginalMetadata.Add("Codec", AudioInfo.Codec);
+                args.OriginalMetadata.Add("Bitrate", AudioInfo.Bitrate);
+                args.OriginalMetadata.Add("Channels", AudioInfo.Channels);
+                AddIfSet(args.OriginalMetadata, "Date", AudioInfo.Date);
+                AddIfSet(args.OriginalMetadata, "Frequency", AudioInfo.Frequency);
+                AddIfSet(args.OriginalMetadata, "Encoder", AudioInfo.Encoder);
+                AddIfSet(args.OriginalMetadata, "Genres", AudioInfo.Genres);
+                AddIfSet(args.OriginalMetadata, "Language", AudioInfo.Language);
+                AddIfSet(args.OriginalMetadata, "Title", AudioInfo.Title);
+                AddIfSet(args.OriginalMetadata, "Track", AudioInfo.Track);
+                AddIfSet(args.OriginalMetadata, "Disc", AudioInfo.Disc);
+                AddIfSet(args.OriginalMetadata, "TotalDiscs", AudioInfo.TotalDiscs);
+            }
+
             args.UpdateVariables(variables);
+        }
+
+        private void AddIfSet(Dictionary<string, object> dict, string name, object value)
+        {
+            if (value == null)
+                return;
+            if (value is string sValue && string.IsNullOrWhiteSpace(sValue))
+                return;
+            if (value is int iValue && iValue < 1)
+                return;
+            if (value is TimeSpan tsValue && tsValue.TotalSeconds < 1)
+                return;
+            if (value is DateTime dtValue && dtValue.Year <= 1900)
+                return;
+            if (value is IEnumerable<string> strList && strList.Any() == false)
+                return;
+            dict.Add(name, value);  
         }
 
         protected AudioInfo GetAudioInfo(NodeParameters args)

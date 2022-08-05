@@ -25,4 +25,10 @@ internal class GenericExtractor
         if (args?.PartPercentageUpdate != null)
             args?.PartPercentageUpdate(halfProgress ? 50 : 100);
     }
+
+    internal static int GetImageCount(string workingFile)
+    {
+        var rgxImages = new Regex(@"\.(jpeg|jpg|jpe|png|bmp|tiff|webp|gif)$");
+        return ArchiveFactory.GetFileParts(workingFile).Where(x => rgxImages.IsMatch(x)).Count();
+    }
 }

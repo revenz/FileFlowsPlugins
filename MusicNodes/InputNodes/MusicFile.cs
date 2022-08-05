@@ -19,7 +19,7 @@ namespace FileFlows.MusicNodes
                 { "mi.Album", "Album" },
                 { "mi.Artist", "Artist" },
                 { "mi.ArtistThe", "Artist, The" },
-                { "mi.BitRate", 845 },
+                { "mi.Bitrate", 845 },
                 { "mi.Channels", 2 },
                 { "mi.Codec", "flac" },
                 { "mi.Date", new DateTime(2020, 05, 23) },

@@ -163,7 +163,7 @@ namespace FileFlows.MusicNodes
                             {
                                 br = br.Substring(0, br.IndexOf(" "));
                                 if (long.TryParse(br, out long value))
-                                    mi.BitRate = value;
+                                    mi.Bitrate = value;
                             }
                         }
 

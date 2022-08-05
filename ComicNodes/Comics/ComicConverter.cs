@@ -45,7 +45,15 @@ public class ComicConverter: Node
             currentFormat = currentFormat[1..]; // remove the dot
         currentFormat = currentFormat.ToLower();
 
-        if(currentFormat == Format)
+
+        if (args.OriginalMetadata == null)
+        {
+            args.OriginalMetadata = new Dictionary<string, object>();
+            args.OriginalMetadata.Add("Format", currentFormat);
+            args.OriginalMetadata.Add("Pages", GetPageCount(currentFormat, args.WorkingFile));
+        }
+
+        if (currentFormat == Format)
         {
             args.Logger?.ILog($"Already in the target format of '{Format}'");
             return 2;
@@ -61,6 +69,20 @@ public class ComicConverter: Node
         args.SetWorkingFile(newFile);   
 
         return 1;
+    }
+
+    private int GetPageCount(string format, string workingFile)
+    {
+        if (format == null)
+            return 0;
+        format = format.ToLower().Trim();
+        switch (format)
+        {
+            case "pdf":
+                return Helpers.PdfHelper.GetPageCount(workingFile);
+            default:
+                return Helpers.GenericExtractor.GetImageCount(workingFile);
+        }
     }
 
     private string CreateComic(NodeParameters args, string directory, string format)

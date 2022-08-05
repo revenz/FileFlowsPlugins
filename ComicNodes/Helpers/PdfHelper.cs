@@ -115,4 +115,16 @@ internal class PdfHelper
         if (args?.PartPercentageUpdate != null)
             args?.PartPercentageUpdate(100);
     }
+
+    /// <summary>
+    /// Gets the number of pages in a PDF
+    /// </summary>
+    /// <param name="pdfFile">the PDF file</param>
+    /// <returns>the number of pages in the PDF</returns>
+    internal static int GetPageCount(string pdfFile)
+    {
+        using var library = DocLib.Instance;
+        using var docReader = library.GetDocReader(pdfFile, new PageDimensions(1080, 1920));
+        return docReader.GetPageCount();
+    }
 }

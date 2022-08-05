@@ -113,6 +113,41 @@ namespace FileFlows.VideoNodes
                 variables.AddOrUpdate("vi.Resolution", videoInfo.VideoStreams[0].Width + "x" + videoInfo.VideoStreams[0].Height);
 
             args.UpdateVariables(variables);
+
+            if(args.OriginalMetadata == null)
+            {
+                args.OriginalMetadata = new Dictionary<string, object>();
+                args.OriginalMetadata.Add("Duration", videoInfo.VideoStreams[0].Duration);
+                foreach (var (stream, i) in videoInfo.VideoStreams.Select((value, i) => (value, i)))
+                {
+                    string prefix = "Video" + (i == 0 ? "" : " " + (i + 1)) + " ";
+                    args.OriginalMetadata.Add(prefix + "Codec", stream.Codec);
+                    args.OriginalMetadata.Add(prefix + "Resolution", stream.Width + "x" + stream.Height + (stream.HDR ? " (HDR)" : string.Empty));
+                    if(stream.Bitrate > 0)
+                        args.OriginalMetadata.Add(prefix + "Bitrate", stream.Bitrate);
+                }
+                foreach (var (stream, i) in videoInfo.AudioStreams.Select((value, i) => (value, i)))
+                {
+                    string prefix = "Audio" + (i == 0 ? "" : " " + (i + 1)) + " ";
+                    args.OriginalMetadata.Add(prefix + "Codec", stream.Codec);
+                    args.OriginalMetadata.Add(prefix + "Channels", stream.Channels);
+                    if (string.IsNullOrEmpty(stream.Title) == false)
+                        args.OriginalMetadata.Add(prefix + "Title", stream.Title);
+                    if(string.IsNullOrEmpty(stream.Language) == false)
+                        args.OriginalMetadata.Add(prefix + "Language", stream.Language);
+                    if (stream.Bitrate > 0)
+                        args.OriginalMetadata.Add(prefix + "Bitrate", stream.Bitrate);
+                }
+                foreach (var (strream, i) in videoInfo.SubtitleStreams.Select((value, i) => (value, i)))
+                {
+                    string prefix = "Audio" + (i == 0 ? "" : " " + (i + 1)) + " ";
+                    args.OriginalMetadata.Add(prefix + "Codec", strream.Codec);
+                    if (string.IsNullOrEmpty(strream.Title) == false)
+                        args.OriginalMetadata.Add(prefix + "Title", strream.Title);
+                    if (string.IsNullOrEmpty(strream.Language) == false)
+                        args.OriginalMetadata.Add(prefix + "Language", strream.Language);
+                }
+            }
         }
 
         protected VideoInfo GetVideoInfo(NodeParameters args, bool refreshIfFileChanged = true)

@@ -152,13 +152,13 @@ namespace FileFlows.MusicNodes
             {
                 if (SkipIfCodecMatches)
                 {
-                    args.Logger?.ILog($"Music file already '{Codec}' at bitrate '{musicInfo.BitRate}', and set to skip if codec matches");
+                    args.Logger?.ILog($"Music file already '{Codec}' at bitrate '{musicInfo.Bitrate}', and set to skip if codec matches");
                     return 2;
                 }
 
-                if(musicInfo.BitRate <= Bitrate)
+                if(musicInfo.Bitrate <= Bitrate)
                 {
-                    args.Logger?.ILog($"Music file already '{Codec}' at bitrate '{musicInfo.BitRate}'");
+                    args.Logger?.ILog($"Music file already '{Codec}' at bitrate '{musicInfo.Bitrate}'");
                     return 2;
                 }
             }
