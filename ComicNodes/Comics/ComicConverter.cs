@@ -49,6 +49,7 @@ public class ComicConverter: Node
         metadata.Add("Format", currentFormat);
         metadata.Add("Pages", GetPageCount(currentFormat, args.WorkingFile));
         args.SetMetadata(metadata);
+        args.Logger?.ILog("Setting metadata: " + currentFormat);
 
         if (currentFormat == Format)
         {
@@ -103,6 +104,7 @@ public class ComicConverter: Node
         metadata.Add("Format", format);
         metadata.Add("Pages", GetPageCount(format, file));
         args.SetMetadata(metadata);
+        args.Logger?.ILog("Setting metadata: " + format);
 
         return file;
     }
