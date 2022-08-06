@@ -21,7 +21,8 @@
       },
       "ImageFormat": {
         "Outputs": {
-          "1": "Image converted, saved to new temporary file"
+          "1": "Image converted, saved to new temporary file",
+          "2": "Image already in target format"
         },
         "Description": "Converts an image to the specified format",
         "Fields": {

@@ -6,6 +6,24 @@ public abstract class ImageBaseNode:Node
 {
 
     private const string IMAGE_INFO = "ImageInfo";
+    protected IImageFormat CurrentFormat { get; private set; }
+    protected int CurrentWidth{ get; private set; }
+    protected int CurrentHeight { get; private set; }
+
+    public override bool PreExecute(NodeParameters args)
+    {
+        using var image = Image.Load(args.WorkingFile, out IImageFormat format);
+        CurrentHeight = image.Height;
+        CurrentWidth = image.Width;
+        CurrentFormat = format;
+        var metadata = new Dictionary<string, object>();
+        metadata.Add("Format", CurrentFormat.Name);
+        metadata.Add("Width", CurrentWidth);
+        metadata.Add("Height", CurrentHeight);
+        args.SetMetadata(metadata);
+        return true;
+    }
+
     protected void UpdateImageInfo(NodeParameters args, Dictionary<string, object> variables = null)
     {
         using var image = Image.Load(args.WorkingFile, out IImageFormat format);
@@ -56,6 +74,13 @@ public abstract class ImageBaseNode:Node
         variables.AddOrUpdate("img.Format", imageInfo.Format);
         variables.AddOrUpdate("img.IsPortrait", imageInfo.IsPortrait);
         variables.AddOrUpdate("img.IsLandscape", imageInfo.IsLandscape);
+
+        var metadata = new Dictionary<string, object>();
+        metadata.Add("Format", imageInfo.Format);
+        metadata.Add("Width", imageInfo.Width);
+        metadata.Add("Height", imageInfo.Height);
+        args.SetMetadata(metadata);
+
 
         args.UpdateVariables(variables);
     }

@@ -97,6 +97,13 @@ public class ComicConverter: Node
         Directory.Delete(directory, true);
         args.Logger?.ILog("Created comic: " + file);
         args.Logger?.ILog("Deleted temporary extraction directory: " + directory);
+
+
+        var metadata = new Dictionary<string, object>();
+        metadata.Add("Format", format);
+        metadata.Add("Pages", GetPageCount(format, file));
+        args.SetMetadata(metadata);
+
         return file;
     }
 }

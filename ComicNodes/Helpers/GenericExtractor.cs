@@ -28,7 +28,9 @@ internal class GenericExtractor
 
     internal static int GetImageCount(string workingFile)
     {
-        var rgxImages = new Regex(@"\.(jpeg|jpg|jpe|png|bmp|tiff|webp|gif)$");
-        return ArchiveFactory.GetFileParts(workingFile).Where(x => rgxImages.IsMatch(x)).Count();
+        var rgxImages = new Regex(@"\.(jpeg|jpg|jpe|png|bmp|tiff|webp|gif)$", RegexOptions.IgnoreCase);
+        using var archive = ArchiveFactory.Open(workingFile);
+        var files = archive.Entries.Where(entry => !entry.IsDirectory).ToArray();
+        return files.Where(x => rgxImages.IsMatch(x.Key)).Count();
     }
 }
