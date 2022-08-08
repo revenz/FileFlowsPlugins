@@ -7,6 +7,8 @@ public class ImageIsLandscape: ImageBaseNode
     public override FlowElementType Type => FlowElementType.Logic; 
     public override string Icon => "fas fa-image";
 
+    public override string HelpUrl => "https://docs.fileflows.com/plugins/image-nodes/image-is-landscape";
+
 
     public override int Execute(NodeParameters args)
     {

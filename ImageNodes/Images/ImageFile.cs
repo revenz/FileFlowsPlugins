@@ -6,6 +6,7 @@ public class ImageFile : ImageBaseNode
 {
     public override int Outputs => 1;
     public override FlowElementType Type => FlowElementType.Input;
+    public override string HelpUrl => "https://docs.fileflows.com/plugins/image-nodes/image-file";
 
     public override string Icon => "fas fa-file-image";
 
@@ -16,7 +17,7 @@ public class ImageFile : ImageBaseNode
         _Variables = new Dictionary<string, object>()
         {
             { "img.Width", 1920 },
-            { "img.Heigh", 1080 },
+            { "img.Height", 1080 },
             { "img.Format", "PNG" },
             { "img.IsPortrait", true },
             { "img.IsLandscape", false }

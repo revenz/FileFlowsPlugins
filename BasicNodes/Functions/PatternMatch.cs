@@ -1,40 +1,57 @@
-namespace FileFlows.BasicNodes.Functions
+namespace FileFlows.BasicNodes.Functions;
+
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
+using FileFlows.Plugin;
+using FileFlows.Plugin.Attributes;
+public class PatternMatch : Node
 {
-    using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
-    using System.Text.RegularExpressions;
-    using FileFlows.Plugin;
-    using FileFlows.Plugin.Attributes;
-    public class PatternMatch : Node
+    public override int Inputs => 1;
+    public override int Outputs => 2;
+    public override FlowElementType Type => FlowElementType.Logic;
+    public override string Icon => "fas fa-equals";
+    public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/pattern-match";
+
+    private Dictionary<string, object> _Variables;
+    public override Dictionary<string, object> Variables => _Variables;
+    public PatternMatch()
     {
-        public override int Inputs => 1;
-        public override int Outputs => 2;
-        public override FlowElementType Type => FlowElementType.Logic;
-        public override string Icon => "fas fa-equals";
-        public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/pattern-match"; 
-
-        [DefaultValue("")]
-        [Text(1)]
-        [Required]
-        public string Pattern { get; set; }
-
-        public override int Execute(NodeParameters args)
+        _Variables = new Dictionary<string, object>()
         {
-            if (string.IsNullOrEmpty(Pattern))
-                return 1; // no pattern, matches everything
+            { "PatternMatch", "match from pattern" }
+        };
+    }
 
-            try
+    [DefaultValue("")]
+    [Text(1)]
+    [Required]
+    public string Pattern { get; set; }
+
+    public override int Execute(NodeParameters args)
+    {
+        if (string.IsNullOrEmpty(Pattern))
+            return 1; // no pattern, matches everything
+
+        try
+        {
+            var rgx = new Regex(Pattern);
+            if (rgx.IsMatch(args.WorkingFile))
             {
-                var rgx = new Regex(Pattern);
-                if (rgx.IsMatch(args.WorkingFile) || rgx.IsMatch(args.FileName))
-                    return 1;
-                return 2;
+                args.Variables.Add("PatternMatch", rgx.Match(args.WorkingFile).Value);
+                return 1;
             }
-            catch (Exception ex)
+            if (rgx.IsMatch(args.FileName))
             {
-                args.Logger?.ELog("Pattern error: " + ex.Message);
-                return -1;
+                args.Variables.Add("PatternMatch", rgx.Match(args.FileName).Value);
+                return 1;
             }
+            return 2;
+        }
+        catch (Exception ex)
+        {
+            args.Logger?.ELog("Pattern error: " + ex.Message);
+            return -1;
         }
     }
 }

@@ -6,7 +6,9 @@ public class ImageFormat: ImageNode
 {
     public override int Inputs => 1;
     public override int Outputs => 2;
-    public override FlowElementType Type => FlowElementType.Process; 
+    public override FlowElementType Type => FlowElementType.Process;
+
+    public override string HelpUrl => "https://docs.fileflows.com/plugins/image-nodes/image-format";
     public override string Icon => "fas fa-file-image";
 
     public override int Execute(NodeParameters args)
