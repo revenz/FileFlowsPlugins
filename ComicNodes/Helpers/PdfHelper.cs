@@ -9,7 +9,7 @@ namespace FileFlows.ComicNodes.Helpers;
 
 internal class PdfHelper
 {
-    public static void Extract(NodeParameters args, string pdfFile, string destinationDirectory, string filePrefix, bool halfProgress = true)
+    public static void Extract(NodeParameters args, string pdfFile, string destinationDirectory, string filePrefix, bool halfProgress, CancellationToken cancellation)
     {
         using var library = DocLib.Instance;
         using var docReader = library.GetDocReader(pdfFile, new PageDimensions(1080, 1920));
@@ -37,6 +37,8 @@ internal class PdfHelper
                     percent = (percent / 2);
                 args?.PartPercentageUpdate(percent);
             }
+            if (cancellation.IsCancellationRequested)
+                return;
         }
         if (args?.PartPercentageUpdate != null)
             args?.PartPercentageUpdate(halfProgress ? 50 : 0);

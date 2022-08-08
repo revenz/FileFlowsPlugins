@@ -25,7 +25,14 @@
                     break;
                 case "mp4":
                     {
-                        results.Add("mov_text");
+                        if (Helpers.SubtitleHelper.IsImageSubtitle(Stream.Codec))
+                        {
+                            results.Add("copy");
+                        }
+                        else
+                        {
+                            results.Add("mov_text");
+                        }
                     }
                     break;
                 default:

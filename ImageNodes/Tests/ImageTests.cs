@@ -12,6 +12,7 @@ public class ImageNodesTests
     string TestImage1;
     string TestImage2;
     string TempDir;
+    string TestCropImage1, TestCropImage2, TestCropImage3, TestCropImageNoCrop;
 
     public ImageNodesTests()
     {
@@ -21,6 +22,10 @@ public class ImageNodesTests
             TestImage1 = @"D:\videos\pictures\image1.jpg";
             TestImage2 = @"D:\videos\pictures\image2.png";
             TempDir = @"D:\videos\temp";
+            TestCropImage1 = @"D:\images\testimages\crop01.jpg";
+            TestCropImage2 = @"D:\images\testimages\crop02.jpg";
+            TestCropImage3 = @"D:\images\testimages\crop03.jpg";
+            TestCropImageNoCrop = @"D:\images\testimages\nocrop.jpg";
         }
         else
         {
@@ -108,6 +113,72 @@ public class ImageNodesTests
         var node = new ImageRotate();
         node.Angle = 270;
         Assert.AreEqual(1, node.Execute(args));
+    }
+
+
+    [TestMethod]
+    public void ImageNodes_Basic_AutoCrop_01()
+    {
+        var logger = new TestLogger();
+        var args = new NodeParameters(TestCropImage1, logger, false, string.Empty)
+        {
+            TempPath = TempDir
+        };
+
+        var node = new AutoCropImage();
+        int result = node.Execute(args);
+        
+        string log = logger.ToString();
+        Assert.AreEqual(1, result);
+    }
+
+    [TestMethod]
+    public void ImageNodes_Basic_AutoCrop_02()
+    {
+        var logger = new TestLogger();
+        var args = new NodeParameters(TestCropImage2, logger, false, string.Empty)
+        {
+            TempPath = TempDir
+        };
+
+        var node = new AutoCropImage();
+        node.Threshold = 95;
+        int result = node.Execute(args);
+
+        string log = logger.ToString();
+        Assert.AreEqual(1, result);
+    }
+
+    [TestMethod]
+    public void ImageNodes_Basic_AutoCrop_03()
+    {
+        var logger = new TestLogger();
+        var args = new NodeParameters(TestCropImage3, logger, false, string.Empty)
+        {
+            TempPath = TempDir
+        };
+
+        var node = new AutoCropImage();
+        int result = node.Execute(args);
+
+        string log = logger.ToString();
+        Assert.AreEqual(1, result);
+    }
+
+    [TestMethod]
+    public void ImageNodes_Basic_AutoCrop_NoCrop()
+    {
+        var logger = new TestLogger();
+        var args = new NodeParameters(TestCropImageNoCrop, logger, false, string.Empty)
+        {
+            TempPath = TempDir
+        };
+
+        var node = new AutoCropImage();
+        int result = node.Execute(args);
+
+        string log = logger.ToString();
+        Assert.AreEqual(2, result);
     }
 }
 

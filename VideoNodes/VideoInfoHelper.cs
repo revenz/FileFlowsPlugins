@@ -277,7 +277,9 @@ namespace FileFlows.VideoNodes
             audio.Title = "";
             // this isnt type index, this is overall index
             audio.TypeIndex = int.Parse(Regex.Match(line, @"#([\d]+):([\d]+)").Groups[2].Value) - 1;
-            audio.Codec = parts[0].Substring(parts[0].IndexOf("Audio: ") + "Audio: ".Length).Trim().Split(' ').First().ToLower() ?? "";
+            audio.Codec = parts[0].Substring(parts[0].IndexOf("Audio: ") + "Audio: ".Length).Trim().Split(' ').First().ToLower() ?? string.Empty;
+            if (audio.Codec.EndsWith(","))
+                audio.Codec = audio.Codec[..^1].Trim();
 
             audio.Language = GetLanguage(line);
             if (info.IndexOf("0 channels") >= 0)
@@ -336,6 +338,8 @@ namespace FileFlows.VideoNodes
             SubtitleStream sub = new SubtitleStream();
             sub.TypeIndex = int.Parse(Regex.Match(line, @"#([\d]+):([\d]+)").Groups[2].Value);
             sub.Codec = line.Substring(line.IndexOf("Subtitle: ") + "Subtitle: ".Length).Trim().Split(' ').First().ToLower();
+            if (sub.Codec.EndsWith(","))
+                sub.Codec = sub.Codec[..^1].Trim();
             sub.Language = GetLanguage(line);
 
             if (rgxTitle.IsMatch(info))

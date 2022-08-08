@@ -10,6 +10,7 @@ public class ComicConverter: Node
     public override string Icon => "fas fa-book";
     public override bool FailureNode => true;
 
+    CancellationTokenSource cancellation = new CancellationTokenSource();
 
     [DefaultValue("cbz")]
     [Select(nameof(FormatOptions), 1)]
@@ -24,9 +25,9 @@ public class ComicConverter: Node
             {
                 _FormatOptions = new List<ListOption>
                     {
-                        new ListOption { Label = "CBZ", Value = "cbz"},
+                        new ListOption { Label = "CBZ", Value = "CBZ"},
                         //new ListOption { Label = "CB7", Value = "cb7"},
-                        new ListOption { Label = "PDF", Value = "pdf" }
+                        new ListOption { Label = "PDF", Value = "PDF" }
                     };
             }
             return _FormatOptions;
@@ -41,9 +42,11 @@ public class ComicConverter: Node
             args.Logger?.ELog("Could not detect format for: " + args.WorkingFile);
             return -1;
         }
-        if(currentFormat[0] == '.')
+        Format = Format?.ToUpper() ?? string.Empty;
+
+        if (currentFormat[0] == '.')
             currentFormat = currentFormat[1..]; // remove the dot
-        currentFormat = currentFormat.ToLower();
+        currentFormat = currentFormat.ToUpper();
 
 
         var metadata = new Dictionary<string, object>();
@@ -62,8 +65,9 @@ public class ComicConverter: Node
         }
 
         string destinationPath = Path.Combine(args.TempPath, Guid.NewGuid().ToString());
+        
         Directory.CreateDirectory(destinationPath);
-        if (Helpers.ComicExtractor.Extract(args, args.WorkingFile, destinationPath, halfProgress: true) == false)
+        if (Helpers.ComicExtractor.Extract(args, args.WorkingFile, destinationPath, halfProgress: true, cancellation: cancellation.Token) == false)
             return -1;
 
         string newFile = CreateComic(args, destinationPath, this.Format);
@@ -73,14 +77,20 @@ public class ComicConverter: Node
         return 1;
     }
 
+    public override Task Cancel()
+    {
+        cancellation.Cancel();
+        return base.Cancel();
+    }
+
     private int GetPageCount(string format, string workingFile)
     {
         if (format == null)
             return 0;
-        format = format.ToLower().Trim();
+        format = format.ToUpper().Trim();
         switch (format)
         {
-            case "pdf":
+            case "PDF":
                 return Helpers.PdfHelper.GetPageCount(workingFile);
             default:
                 return Helpers.GenericExtractor.GetImageCount(workingFile);

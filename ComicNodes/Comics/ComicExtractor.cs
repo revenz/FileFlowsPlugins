@@ -9,6 +9,8 @@ public class ComicExtractor : Node
     public override FlowElementType Type => FlowElementType.Process;
     public override string Icon => "fas fa-file-pdf";
 
+    CancellationTokenSource cancellation = new CancellationTokenSource();
+
     [Required]
     [Folder(1)]
     public string DestinationPath { get; set; }
@@ -24,14 +26,19 @@ public class ComicExtractor : Node
             args.Result = NodeResult.Failure;
             return -1;
         }
-        Helpers.ComicExtractor.Extract(args, args.WorkingFile, dest, halfProgress: false);
+        Helpers.ComicExtractor.Extract(args, args.WorkingFile, dest, halfProgress: false, cancellation: cancellation.Token);
 
         var metadata = new Dictionary<string, object>();
-        metadata.Add("Format", args.WorkingFile.Substring(args.WorkingFile.LastIndexOf(".") + 1));
+        metadata.Add("Format", args.WorkingFile.Substring(args.WorkingFile.LastIndexOf(".") + 1).ToUpper());
         var rgxImages = new Regex(@"\.(jpeg|jpg|jpe|png|bmp|tiff|webp|gif)$");
         metadata.Add("Pages", Directory.GetFiles(dest, "*.*", SearchOption.AllDirectories).Where(x => rgxImages.IsMatch(x)).Count());
         args.SetMetadata(metadata);
 
         return 1;
+    }
+    public override Task Cancel()
+    {
+        cancellation.Cancel();
+        return base.Cancel();
     }
 }
