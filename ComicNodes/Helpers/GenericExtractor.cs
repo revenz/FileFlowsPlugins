@@ -19,8 +19,17 @@ internal class GenericExtractor
         if (args?.PartPercentageUpdate != null)
             args?.PartPercentageUpdate(halfProgress ? 50 : 0);
 
-        ArchiveFactory.WriteToDirectory(workingFile, destinationPath);
-        PageNameHelper.FixPageNames(destinationPath);
+        bool isRar = workingFile.ToLowerInvariant().EndsWith(".cbr");
+        try
+        {
+
+            ArchiveFactory.WriteToDirectory(workingFile, destinationPath);
+            PageNameHelper.FixPageNames(destinationPath);
+        }
+        catch (Exception ex) when (isRar && ex.Message.Contains("Unknown Rar Header"))
+        {
+            UnrarCommandLine.Extract(args, workingFile, destinationPath, halfProgress: halfProgress);
+        }
 
         if (args?.PartPercentageUpdate != null)
             args?.PartPercentageUpdate(halfProgress ? 50 : 100);
@@ -28,9 +37,17 @@ internal class GenericExtractor
 
     internal static int GetImageCount(string workingFile)
     {
-        var rgxImages = new Regex(@"\.(jpeg|jpg|jpe|png|bmp|tiff|webp|gif)$", RegexOptions.IgnoreCase);
-        using var archive = ArchiveFactory.Open(workingFile);
-        var files = archive.Entries.Where(entry => !entry.IsDirectory).ToArray();
-        return files.Where(x => rgxImages.IsMatch(x.Key)).Count();
+        bool isRar = workingFile.ToLowerInvariant().EndsWith(".cbr");
+        try
+        {
+            var rgxImages = new Regex(@"\.(jpeg|jpg|jpe|png|bmp|tiff|webp|gif)$", RegexOptions.IgnoreCase);
+            using var archive = ArchiveFactory.Open(workingFile);
+            var files = archive.Entries.Where(entry => !entry.IsDirectory).ToArray();
+            return files.Where(x => rgxImages.IsMatch(x.Key)).Count();
+        }
+        catch(Exception ex) when (isRar && ex.Message.Contains("Unknown Rar Header"))
+        {
+            return UnrarCommandLine.GetImageCount(workingFile); 
+        }
     }
 }
