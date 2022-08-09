@@ -25,6 +25,7 @@ internal class UnrarCommandLine
         var process = new Process();
         process.StartInfo.FileName = "unrar";
         process.StartInfo.ArgumentList.Add("x");
+        process.StartInfo.ArgumentList.Add("-o+");
         process.StartInfo.ArgumentList.Add(workingFile);
         process.StartInfo.ArgumentList.Add(destinationPath);
         process.StartInfo.UseShellExecute = false;
