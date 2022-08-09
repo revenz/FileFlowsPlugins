@@ -17,7 +17,8 @@ internal class UnrarCommandLine
             args?.PartPercentageUpdate(halfProgress ? 50 : 0);
 
         var process = new Process();
-        process.StartInfo.FileName = "unrar";
+        string unrar = args.GetToolPath("unrar")?.EmptyAsNull() ?? "unrar";
+        process.StartInfo.FileName = unrar;
         process.StartInfo.ArgumentList.Add("x");
         process.StartInfo.ArgumentList.Add("-o+");
         process.StartInfo.ArgumentList.Add(workingFile);
@@ -44,12 +45,13 @@ internal class UnrarCommandLine
             args?.PartPercentageUpdate(halfProgress ? 50 : 100);
     }
 
-    internal static int GetImageCount(string workingFile)
+    internal static int GetImageCount(NodeParameters args, string workingFile)
     {
         var rgxImages = new Regex(@"\.(jpeg|jpg|jpe|png|bmp|tiff|webp|gif)$", RegexOptions.IgnoreCase);
 
         var process = new Process();
-        process.StartInfo.FileName = "unrar";
+        string unrar = args.GetToolPath("unrar")?.EmptyAsNull() ?? "unrar";
+        process.StartInfo.FileName = unrar;
         process.StartInfo.ArgumentList.Add("list");
         process.StartInfo.ArgumentList.Add(workingFile);
         process.StartInfo.UseShellExecute = false;

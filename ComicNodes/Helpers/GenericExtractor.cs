@@ -35,7 +35,7 @@ internal class GenericExtractor
             args?.PartPercentageUpdate(halfProgress ? 50 : 100);
     }
 
-    internal static int GetImageCount(string workingFile)
+    internal static int GetImageCount(NodeParameters args, string workingFile)
     {
         bool isRar = workingFile.ToLowerInvariant().EndsWith(".cbr");
         try
@@ -47,7 +47,7 @@ internal class GenericExtractor
         }
         catch(Exception ex) when (isRar && ex.Message.Contains("Unknown Rar Header"))
         {
-            return UnrarCommandLine.GetImageCount(workingFile); 
+            return UnrarCommandLine.GetImageCount(args, workingFile); 
         }
     }
 }

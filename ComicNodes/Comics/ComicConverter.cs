@@ -50,7 +50,7 @@ public class ComicConverter: Node
 
 
         var metadata = new Dictionary<string, object>();
-        int pageCount = GetPageCount(currentFormat, args.WorkingFile);
+        int pageCount = GetPageCount(args, currentFormat, args.WorkingFile);
         metadata.Add("Format", currentFormat);
         metadata.Add("Pages", pageCount);
         args.RecordStatistic("COMIC_FORMAT", currentFormat);
@@ -83,7 +83,7 @@ public class ComicConverter: Node
         return base.Cancel();
     }
 
-    private int GetPageCount(string format, string workingFile)
+    private int GetPageCount(NodeParameters args, string format, string workingFile)
     {
         if (format == null)
             return 0;
@@ -93,7 +93,7 @@ public class ComicConverter: Node
             case "PDF":
                 return Helpers.PdfHelper.GetPageCount(workingFile);
             default:
-                return Helpers.GenericExtractor.GetImageCount(workingFile);
+                return Helpers.GenericExtractor.GetImageCount(args, workingFile);
         }
     }
 
@@ -116,7 +116,7 @@ public class ComicConverter: Node
 
         var metadata = new Dictionary<string, object>();
         metadata.Add("Format", format);
-        metadata.Add("Pages", GetPageCount(format, file));
+        metadata.Add("Pages", GetPageCount(args, format, file));
         args.SetMetadata(metadata);
         args.Logger?.ILog("Setting metadata: " + format);
 
