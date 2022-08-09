@@ -101,11 +101,11 @@ public class ComicConverter: Node
     {
         string file = Path.Combine(args.TempPath, Guid.NewGuid().ToString() + "." + format);
         args.Logger?.ILog("Creating comic: " + file);
-        if (format == "cbz")
+        if (format == "CBZ")
             Helpers.ZipHelper.Compress(args, directory, file);
-        //else if (format == "cb7")
+        //else if (format == "CB7")
         //    Helpers.SevenZipHelper.Compress(args, directory, file + ".7z");
-        else if (format == "pdf")
+        else if (format == "PDF")
             Helpers.PdfHelper.Create(args, directory, file);
         else
             throw new Exception("Unknown format:" + format);
