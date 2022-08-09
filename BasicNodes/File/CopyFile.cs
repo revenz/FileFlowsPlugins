@@ -107,7 +107,12 @@ namespace FileFlows.BasicNodes.File
 
             if(string.IsNullOrEmpty(DestinationFile) == false)
             {
-                string destFile = args.ReplaceVariables(DestinationFile);
+                // FF-154 - changed file.Name and file.Orig.Filename to be the full short filename including the extension
+                string destFile = DestinationFile;
+                destFile = destFile.Replace("{file.Orig.FileName}{file.Orig.Extension}", "{file.Orig.FileName}");
+                destFile = destFile.Replace("{file.Name}{file.Extension}", "{file.Name}");
+                destFile = destFile.Replace("{file.Name}{ext}", "{file.Name}");
+                destFile = args.ReplaceVariables(destFile);
                 dest = Path.Combine(destDir!, destFile);
             }
             args.Logger.ILog($"CopyFile.Dest[6] '{dest}'");

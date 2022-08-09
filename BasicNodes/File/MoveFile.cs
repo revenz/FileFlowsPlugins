@@ -36,44 +36,12 @@ namespace FileFlows.BasicNodes.File
 
         public override int Execute(NodeParameters args)
         {
-            string dest = args.ReplaceVariables(DestinationPath, true);
-            dest = dest.Replace("\\", Path.DirectorySeparatorChar.ToString());
-            dest = dest.Replace("/", Path.DirectorySeparatorChar.ToString());
-            if (string.IsNullOrEmpty(dest))
-            {
-                args.Logger?.ELog("No destination specified");
-                args.Result = NodeResult.Failure;
+            var dest = GetDesitnationPath(args, DestinationPath, DestinationFile, MoveFolder);
+            if (dest == null)
                 return -1;
-            }
-            args.Result = NodeResult.Failure;
 
-            if (MoveFolder)
-                dest = Path.Combine(dest, args.RelativeFile);
-            else
-                dest = Path.Combine(dest, new FileInfo(args.FileName).Name);
+            string destDir = new FileInfo(dest).DirectoryName;
 
-            var fiDest = new FileInfo(dest);
-            var fiWorking = new FileInfo(args.WorkingFile);
-            if (string.IsNullOrEmpty(fiDest.Extension) == false && fiDest.Extension != fiWorking.Extension)
-            {
-                dest = dest.Substring(0, dest.LastIndexOf(".")) + fiWorking.Extension;
-            }
-
-            if (string.IsNullOrEmpty(DestinationFile) == false)
-            {
-                string destFile = args.ReplaceVariables(DestinationFile);
-                dest = Path.Combine(new FileInfo(dest).DirectoryName!, destFile);
-            }
-
-            fiDest = new FileInfo(dest);
-            var fiWorkingFile = new FileInfo(args.WorkingFile);
-            if (fiDest.Extension != fiWorkingFile.Extension)
-            {
-                dest = dest.Replace(fiDest.Extension, fiWorkingFile.Extension);
-                fiDest = new FileInfo(dest);
-            }
-
-            var destDir = fiDest.DirectoryName;
             args.CreateDirectoryIfNotExists(destDir ?? String.Empty);
 
             var srcDir = AdditionalFilesFromOriginal ? new FileInfo(args.FileName).DirectoryName : new FileInfo(args.WorkingFile).DirectoryName;
@@ -123,6 +91,52 @@ namespace FileFlows.BasicNodes.File
                 }
             }
             return 1;
+        }
+
+        internal static string  GetDesitnationPath(NodeParameters args, string destinationPath, string destinationFile = null, bool moveFolder = false)
+        {
+            string dest = args.ReplaceVariables(destinationPath, true);
+            dest = dest.Replace("\\", Path.DirectorySeparatorChar.ToString());
+            dest = dest.Replace("/", Path.DirectorySeparatorChar.ToString());
+            if (string.IsNullOrEmpty(dest))
+            {
+                args.Logger?.ELog("No destination specified");
+                args.Result = NodeResult.Failure;
+                return null;
+            }
+            args.Result = NodeResult.Failure;
+
+            if (moveFolder)
+                dest = Path.Combine(dest, args.RelativeFile);
+            else
+                dest = Path.Combine(dest, new FileInfo(args.FileName).Name);
+
+            var fiDest = new FileInfo(dest);
+            var fiWorking = new FileInfo(args.WorkingFile);
+            if (string.IsNullOrEmpty(fiDest.Extension) == false && fiDest.Extension != fiWorking.Extension)
+            {
+                dest = dest.Substring(0, dest.LastIndexOf(".")) + fiWorking.Extension;
+            }
+
+            if (string.IsNullOrEmpty(destinationFile) == false)
+            {
+                // FF-154 - changed file.Name and file.Orig.Filename to be the full short filename including the extension
+                destinationFile = destinationFile.Replace("{file.Orig.FileName}{file.Orig.Extension}", "{file.Orig.FileName}");
+                destinationFile = destinationFile.Replace("{file.Name}{file.Extension}", "{file.Name}");
+                destinationFile = destinationFile.Replace("{file.Name}{ext}", "{file.Name}");
+                string destFile = args.ReplaceVariables(destinationFile);
+                dest = Path.Combine(new FileInfo(dest).DirectoryName!, destFile);
+            }
+
+            fiDest = new FileInfo(dest);
+            var fiWorkingFile = new FileInfo(args.WorkingFile);
+            if (fiDest.Extension != fiWorkingFile.Extension)
+            {
+                dest = dest.Replace(fiDest.Extension, fiWorkingFile.Extension);
+                fiDest = new FileInfo(dest);
+            }
+
+            return dest;
         }
     }
 }
