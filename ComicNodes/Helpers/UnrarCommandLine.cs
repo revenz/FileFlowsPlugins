@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 
 namespace FileFlows.ComicNodes.Helpers;
 
@@ -38,11 +32,13 @@ internal class UnrarCommandLine
         process.WaitForExit();
 
         args.Logger?.ILog("Unrar output:\n" + output);
-        if(string.IsNullOrWhiteSpace(error) == false)
+        if (string.IsNullOrWhiteSpace(error) == false)
             args.Logger?.ELog("Unrar error:\n" + error);
 
         if (process.ExitCode != 0)
-            PageNameHelper.FixPageNames(destinationPath);
+            throw new Exception(error?.EmptyAsNull() ?? "Failed to extract rar file");
+
+        PageNameHelper.FixPageNames(destinationPath);
 
         if (args?.PartPercentageUpdate != null)
             args?.PartPercentageUpdate(halfProgress ? 50 : 100);
@@ -66,7 +62,7 @@ internal class UnrarCommandLine
         process.WaitForExit();
 
         if (process.ExitCode != 0)
-            return 0;
+            throw new Exception(error?.EmptyAsNull() ?? "Failed to open rar file");
 
         var lines = output.Split('\n', StringSplitOptions.RemoveEmptyEntries);
         return lines.Where(x => rgxImages.IsMatch(x.Trim())).Count();
