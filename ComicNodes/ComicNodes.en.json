@@ -16,7 +16,7 @@
         "Outputs": {
           "1": "Comic was extracted"
         },
-        "Description": "Extracts all files from a comic book format and saves them to them to a specific folder.\n\nSupports converting from CBZ, CBR, CB7, PDF, GZ, BZ2",
+        "Description": "Extracts all files from a comic book format and saves them to them to a specific folder.\n\nSupports extracting CBZ, CBR, CB7, PDF, GZ, BZ2",
         "Fields": {
           "DestinationPath": "Destination Path",
           "DestinationPath-Help": "The folder to save the extract comic book files to"
