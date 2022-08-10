@@ -99,7 +99,7 @@ public class ComicConverter: Node
 
     private string CreateComic(NodeParameters args, string directory, string format)
     {
-        string file = Path.Combine(args.TempPath, Guid.NewGuid().ToString() + "." + format);
+        string file = Path.Combine(args.TempPath, Guid.NewGuid().ToString() + "." + format.ToLower());
         args.Logger?.ILog("Creating comic: " + file);
         if (format == "CBZ")
             Helpers.ZipHelper.Compress(args, directory, file);
