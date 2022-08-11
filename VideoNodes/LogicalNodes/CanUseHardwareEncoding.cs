@@ -41,6 +41,10 @@ public class CanUseHardwareEncoding:Node
                     new ListOption { Label = "VAAPI", Value = "###GROUP###" },
                     new ListOption { Label = "VAAPI H.264", Value = HardwareEncoder.Vaapi_H264 },
                     new ListOption { Label = "VAAPI H.265", Value = HardwareEncoder.Vaapi_Hevc },
+
+                    new ListOption { Label = "VideoToolbox (MacOS)", Value = "###GROUP###" },
+                    new ListOption { Label = "VideoToolbox H.264", Value = HardwareEncoder.VideoToolbox_H264},
+                    new ListOption { Label = "VideoToolbox H.265", Value = HardwareEncoder.VideoToolbox_Hevc },
                 };
             }
             return _EncoderOptions;
@@ -53,11 +57,13 @@ public class CanUseHardwareEncoding:Node
         Amd_H264 = 2,
         Qsv_H264 = 3,
         Vaapi_H264 = 4,
+        VideoToolbox_H264 = 5,
 
         Nvidia_Hevc = 11,
         Amd_Hevc = 12,
         Qsv_Hevc = 13,
         Vaapi_Hevc = 14,
+        VideoToolbox_Hevc = 15,
     }
 
     public override int Execute(NodeParameters args)
@@ -77,6 +83,9 @@ public class CanUseHardwareEncoding:Node
 
             case HardwareEncoder.Vaapi_H264: canProcess = CanProcess_Vaapi_H264(args); break;
             case HardwareEncoder.Vaapi_Hevc: canProcess = CanProcess_Vaapi_Hevc(args); break;
+
+            case HardwareEncoder.VideoToolbox_H264: canProcess = CanProcess_VideoToolbox_H264(args); break;
+            case HardwareEncoder.VideoToolbox_Hevc: canProcess = CanProcess_VideoToolbox_Hevc(args); break;
         }
 
         return canProcess ? 1 : 2;
@@ -95,6 +104,20 @@ public class CanUseHardwareEncoding:Node
     /// <param name="args">the node parameters</param>
     /// <returns>true if can use it, otherwise false</returns>
     internal static bool CanProcess_Nvidia_H264(NodeParameters args) => CanProcess(args, "h264_nvenc");
+
+    /// <summary>
+    /// Checks if this flow runner can use VideoToolbox HEVC encoder
+    /// </summary>
+    /// <param name="args">the node parameters</param>
+    /// <returns>true if can use it, otherwise false</returns>
+    internal static bool CanProcess_VideoToolbox_Hevc(NodeParameters args) => CanProcess(args, "hevc_videotoolbox");
+
+    /// <summary>
+    /// Checks if this flow runner can use VideoToolbox H.264 encoder
+    /// </summary>
+    /// <param name="args">the node parameters</param>
+    /// <returns>true if can use it, otherwise false</returns>
+    internal static bool CanProcess_VideoToolbox_H264(NodeParameters args) => CanProcess(args, "h264_videotoolbox");
 
     /// <summary>
     /// Checks if this flow runner can use AND HEVC encoder
@@ -171,6 +194,11 @@ public class CanUseHardwareEncoding:Node
             if (args.GetVariable("NoAMF") as bool? == true)
                 return true;
             if (args.GetVariable("NoAMD") as bool? == true)
+                return true;
+        }
+        else if (parameters.ToLower().Contains("videotoolbox"))
+        {
+            if (args.GetVariable("NoVideoToolbox") as bool? == true)
                 return true;
         }
         return false;

@@ -1,4 +1,5 @@
 ﻿using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
+using System.Runtime.InteropServices;
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 
@@ -112,6 +113,8 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
 
     }
 
+    private static readonly bool IsMac = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
+
     private static IEnumerable<string> H264(NodeParameters args, bool tenBit, int quality, bool useHardwareEncoding)
     {
         List<string> parameters = new List<string>();
@@ -119,6 +122,8 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         string[] non10BitFilters = null;
         if (useHardwareEncoding == false)
             parameters.AddRange(H26x_CPU(false, quality, out bit10Filters));
+        else if(IsMac && CanUseHardwareEncoding.CanProcess_VideoToolbox_H264(args))
+            parameters.AddRange(H26x_VideoToolbox(false, quality));
         else if (CanUseHardwareEncoding.CanProcess_Nvidia_H264(args))
             parameters.AddRange(H26x_Nvidia(false, quality, out non10BitFilters));
         else if (CanUseHardwareEncoding.CanProcess_Qsv_H264(args))
@@ -143,6 +148,8 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         string[] non10BitFilters = null;
         if (useHardwareEncoding == false)
             parameters.AddRange(H26x_CPU(true, quality, out bit10Filters));
+        else if (IsMac && CanUseHardwareEncoding.CanProcess_VideoToolbox_Hevc(args))
+            parameters.AddRange(H26x_VideoToolbox(true, quality));
         else if (CanUseHardwareEncoding.CanProcess_Nvidia_Hevc(args))
             parameters.AddRange(H26x_Nvidia(true, quality, out non10BitFilters));
         else if (CanUseHardwareEncoding.CanProcess_Qsv_Hevc(args))
@@ -244,6 +251,17 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
             //"-b:v", "0K", // this would do a two-pass... slower
             "-preset", "slower",
             // https://www.reddit.com/r/ffmpeg/comments/gg5szi/what_is_spatial_aq_and_temporal_aq_with_nvenc/
+            "-spatial-aq", "1"
+        };
+    }
+    private static IEnumerable<string> H26x_VideoToolbox(bool h265, int quality)
+    {
+        return new[]
+        {
+            h265 ? "hevc_videotoolbox" : "h264_videotoolbox",
+            "-qp", quality.ToString(),
+            //"-b:v", "0K", // this would do a two-pass... slower
+            "-preset", "slower",
             "-spatial-aq", "1"
         };
     }

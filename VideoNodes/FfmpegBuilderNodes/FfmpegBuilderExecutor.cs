@@ -1,5 +1,6 @@
 ﻿using FileFlows.Plugin;
 using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
+using System.Runtime.InteropServices;
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes
 {
@@ -149,7 +150,8 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
 
             foreach(var hw in decoders)
             {
-
+                if (hw == null)
+                    continue;
                 if (CanUseHardwareEncoding.DisabledByVariables(Args, string.Join(" ", hw)))
                     continue;
                 try
@@ -185,12 +187,15 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
             return new string[] { };
         }
 
+        private static readonly bool IsMac = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
+
 
         private string[][] Decoders_h264()
         {
             return new[]
             {
                 //new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "cuda" }, // this fails with Impossible to convert between the formats supported by the filter 'Parsed_crop_0' and the filter 'auto_scale_0'
+                IsMac ? new [] { "-hwaccel", "videotoolbox" } : null,
                 new [] { "-hwaccel", "cuda" },
                 new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "qsv" },
                 new [] { "-hwaccel", "vaapi", "-hwaccel_output_format", "vaapi" },
@@ -205,6 +210,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
             return new[]
             {
                 //new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "cuda" }, // this fails with Impossible to convert between the formats supported by the filter 'Parsed_crop_0' and the filter 'auto_scale_0'
+                IsMac ? new [] { "-hwaccel", "videotoolbox" } : null,
                 new [] { "-hwaccel", "cuda" },
                 new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "qsv" },
                 new [] { "-hwaccel", "vaapi", "-hwaccel_output_format", "vaapi" },
