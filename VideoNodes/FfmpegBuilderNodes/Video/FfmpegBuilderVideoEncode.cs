@@ -262,7 +262,7 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
             "-qp", quality.ToString(),
             //"-b:v", "0K", // this would do a two-pass... slower
             "-preset", "slower",
-            "-spatial-aq", "1"
+            //"-spatial-aq", "1"
         };
     }
 }
