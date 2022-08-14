@@ -63,8 +63,9 @@ public class FfmpegBuilderSubtitleFormatRemover : FfmpegBuilderNode
         bool removing = false;
         foreach (var sub in Model.SubtitleStreams)
         {
-            args.Logger?.ILog("Subtitle found: " + sub.Stream.Codec + ", " + sub.Stream.Title);
-            if (removeCodecs.Contains(sub.Stream.Codec.ToLower()))
+            string subCodec = sub.Stream.Codec.Replace("dvd_subtitle", "dvdsub").Replace("dvb_subtitle", "dvbsub").ToLower();
+            args.Logger?.ILog("Subtitle found: " + subCodec + ", " + sub.Stream.Title);
+            if (removeCodecs.Contains(subCodec))
             {
                 sub.Deleted = true;
                 removing = true;
