@@ -36,6 +36,7 @@ public class FfmpegBuilderSubtitleFormatRemover : FfmpegBuilderNode
                     new ListOption { Value = "ttml", Label = "TTML subtitle"},
                     new ListOption { Value = "mov_text", Label = "TX3G (mov_text)"},
                     new ListOption { Value = "webvtt", Label = "WebVTT subtitle"},
+                    new ListOption { Value = "OTHER", Label = "Unknown/Other"},
                 };
             }
             return _Options;
@@ -55,7 +56,9 @@ public class FfmpegBuilderSubtitleFormatRemover : FfmpegBuilderNode
         }
 
 
-        var removeCodecs = SubtitlesToRemove?.Where(x => string.IsNullOrWhiteSpace(x) == false)?.Select(x => x.ToLower())?.ToList() ?? new List<string>();
+        var removeCodecs = SubtitlesToRemove?.Where(x => x != "OTHER" && string.IsNullOrWhiteSpace(x) == false)?.Select(x => x.ToLower())?.ToList() ?? new List<string>();
+        bool removeOthers = SubtitlesToRemove.Any(x => x == "OTHER");
+        var known = Options.Where(x => x.Value.ToString() != "OTHER").Select(x => x.Value.ToString().ToLower()).ToList();
 
         if (removeCodecs.Count == 0)
             return 2; // nothing to remove
@@ -71,6 +74,14 @@ public class FfmpegBuilderSubtitleFormatRemover : FfmpegBuilderNode
                 sub.Deleted = true;
                 removing = true;
                 continue;
+            }
+            if(removeOthers && known.Contains(subCodec) == false)
+            {
+                args.Logger.ILog("Removing unknown subtitle: " + subCodec);
+                sub.Deleted = true;
+                removing = true;
+                continue;
+
             }
         }
 

@@ -1415,6 +1415,40 @@ public class FfmpegBuilder_BasicTests : TestBase
         Assert.AreEqual(1, result1);
         Assert.AreEqual(1, result);
     }
+
+
+    [TestMethod]
+    public void FfmpegBuilder_SubtitleFormatRemover_Unknown()
+    {
+        const string file = @"D:\videos\testfiles\pgs.mkv";
+        var logger = new TestLogger();
+        const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+        var vi = new VideoInfoHelper(ffmpeg, logger);
+        var vii = vi.Read(file);
+        var args = new NodeParameters(file, logger, false, string.Empty);
+        args.GetToolPathActual = (string tool) => ffmpeg;
+        args.TempPath = @"D:\videos\temp";
+        args.Parameters.Add("VideoInfo", vii);
+
+        FfmpegBuilderStart ffStart = new();
+        ffStart.PreExecute(args);
+        Assert.AreEqual(1, ffStart.Execute(args));
+
+
+        FfmpegBuilderSubtitleFormatRemover ffSubRemover = new();
+        ffSubRemover.SubtitlesToRemove = new List<string> { "UNKNOWN" };
+        ffSubRemover.PreExecute(args);
+        int result1 = ffSubRemover.Execute(args);
+
+
+        FfmpegBuilderExecutor ffExecutor = new();
+        ffExecutor.PreExecute(args);
+        int result = ffExecutor.Execute(args);
+
+        string log = logger.ToString();
+        Assert.AreEqual(2, result1);
+        Assert.AreEqual(2, result);
+    }
 }
 
 #endif
