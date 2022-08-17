@@ -5,8 +5,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>FileFlows.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
-    <FileVersion>1.0.0.177</FileVersion>
-    <ProductVersion>1.0.0.177</ProductVersion>
+    <FileVersion>1.0.1.179</FileVersion>
+    <ProductVersion>1.0.1.179</ProductVersion>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <PublishTrimmed>true</PublishTrimmed>
     <Company>FileFlows</Company>

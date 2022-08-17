@@ -29,6 +29,7 @@ public class FfmpegBuilderSubtitleFormatRemover : FfmpegBuilderNode
                     new ListOption { Value = "dvbsub", Label = "DVB subtitles (codec dvb_subtitle)"},
                     new ListOption { Value = "dvdsub", Label = "DVD subtitles (codec dvd_subtitle)"},
                     new ListOption { Value = "dvb_teletext", Label = "DVB/Teletext Format"},
+                    new ListOption { Value = "hdmv_pgs_subtitle", Label = "Presentation Grapic Stream (PGS)"},
                     new ListOption { Value = "text", Label = "Raw text subtitle"},
                     new ListOption { Value = "subrip", Label = "SubRip subtitle"},
                     new ListOption { Value = "srt", Label = "SubRip subtitle (codec subrip)"},
