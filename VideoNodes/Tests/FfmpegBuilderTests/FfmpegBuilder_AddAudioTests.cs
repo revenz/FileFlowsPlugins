@@ -60,6 +60,7 @@ public class FfmpegBuilder_AddAudioTests
 
 
         FfmpegBuilderStart ffStart = new();
+        ffStart.PreExecute(args);
         Assert.AreEqual(1, ffStart.Execute(args));
     }
 

@@ -88,6 +88,13 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
     [TextVariable(4)]
     public string Language { get; set; }
 
+    [Boolean(5)]
+    public bool RemoveTitle { get; set; }
+
+    [TextVariable(6)]
+    [ConditionEquals(nameof(RemoveTitle), false)]
+    public string NewTitle { get; set; }
+
     public override int Execute(NodeParameters args)
     {
         if (string.IsNullOrEmpty(Codec) || Codec == "ORIGINAL")
@@ -123,6 +130,12 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
         {
             audio.EncodingParameters.AddRange(GetNewAudioTrackParameters("0:a:" + (bestAudio.TypeIndex), Codec, Channels, Bitrate));
         }
+
+        if (RemoveTitle)
+            audio.Title = FfmpegStream.REMOVED;
+        else if(string.IsNullOrWhiteSpace(NewTitle) == false)
+            audio.Title = args.ReplaceVariables(NewTitle, stripMissing: true);
+
         if (Index > Model.AudioStreams.Count - 1)
             Model.AudioStreams.Add(audio);
         else 

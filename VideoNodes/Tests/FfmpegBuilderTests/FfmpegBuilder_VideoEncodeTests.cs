@@ -51,7 +51,6 @@ public class FfmpegBuilder_VideoEncode_VideoEncodeTests: TestBase
         {
             string codec = h265 && bit10 ? FfmpegBuilderVideoEncode.CODEC_H265_10BIT :
                            h265 ? FfmpegBuilderVideoEncode.CODEC_H265 :
-                           bit10 ? FfmpegBuilderVideoEncode.CODEC_H264_10BIT :
                            FfmpegBuilderVideoEncode.CODEC_H264;
 
             var result = Encode(codec, quality, hardware, TestFile_120_mbps_4k_uhd_hevc_10bit,
@@ -71,13 +70,9 @@ public class FfmpegBuilder_VideoEncode_VideoEncodeTests: TestBase
 
 
     [TestMethod]
-    public void FfmpegBuilder_VideoEncode_H264_10bit_Hardware() => TestEncode(false, true, true);
-    [TestMethod]
     public void FfmpegBuilder_VideoEncode_H264_Hardware() => TestEncode(false, false, true);
     [TestMethod]
     public void FfmpegBuilder_VideoEncode_H264() => TestEncode(false, false, false);
-    [TestMethod]
-    public void FfmpegBuilder_VideoEncode_H264_10bit() => TestEncode(false, false, true);
 
 
     [TestMethod]

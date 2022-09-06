@@ -94,7 +94,11 @@
           "Codec": "Codec",
           "Codec-Help": "The codec to use to encode the audio",
           "Language": "Language",
-          "Language-Help": "Optional [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) language code to use.  Will attempt to find an audio track with this language code if not the best audio track will be used."
+          "Language-Help": "Optional [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) language code to use.  Will attempt to find an audio track with this language code if not the best audio track will be used.",
+          "NewTitle": "New Title",
+          "NewTitle-Help": "Optional title for the newly created audio track.  If left blank the source title will be used",
+          "RemoveTitle": "Remove Title",
+          "RemoveTitle-Help": "If the source title should be removed and the track should have no title"
         }
       },
       "FfmpegBuilderAudioAdjustVolume": {

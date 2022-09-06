@@ -47,7 +47,7 @@ public class FfmpegBuilder_BasicTests : TestBase
     [TestMethod]
     public void FfmpegBuilder_AddAc3Aac()
     {
-        const string file = @"D:\videos\unprocessed\basic.mkv";
+        const string file = @"D:\videos\unprocessed\multi_audio.mkv";
         var logger = new TestLogger();
         const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
         var vi = new VideoInfoHelper(ffmpeg, logger);
@@ -70,13 +70,17 @@ public class FfmpegBuilder_BasicTests : TestBase
 
         FfmpegBuilderAudioAddTrack  ffAddAudio = new ();
         ffAddAudio.Codec = "ac3";
+        ffAddAudio.NewTitle = "new ac3";
+        ffAddAudio.Channels = 2;
         ffAddAudio.Index = 0;
         ffAddAudio.PreExecute(args);
         ffAddAudio.Execute(args);
 
         FfmpegBuilderAudioAddTrack  ffAddAudio2 = new();
         ffAddAudio2.Codec = "aac";
+        ffAddAudio2.RemoveTitle = true;
         ffAddAudio2.Index = 1;
+        ffAddAudio.Channels = 2;
         ffAddAudio2.PreExecute(args);
         ffAddAudio2.Execute(args);
 

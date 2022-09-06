@@ -14,7 +14,6 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
     public override int Outputs => 1;
 
     internal const string CODEC_H264 = "h264";
-    internal const string CODEC_H264_10BIT = "h264 10BIT";
     internal const string CODEC_H265 = "h265";
     internal const string CODEC_H265_10BIT = "h265 10BIT";
 
@@ -26,9 +25,8 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
     /// <summary>
     /// Gets or sets the codec used to encode
     /// </summary>
-    [DefaultValue(CODEC_H264_10BIT)]
+    [DefaultValue(CODEC_H264)]
     [ChangeValue(nameof(Quality), 23, CODEC_H264)]
-    [ChangeValue(nameof(Quality), 23, CODEC_H265_10BIT)]
     [ChangeValue(nameof(Quality), 28, CODEC_H265)]
     [ChangeValue(nameof(Quality), 28, CODEC_H265_10BIT)]
     [Select(nameof(CodecOptions), 1)]
@@ -47,7 +45,7 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
                 _CodecOptions = new List<ListOption>
                 {
                     new () { Label = "H.264", Value = CODEC_H264 },
-                    new () { Label = "H.264 (10-Bit)", Value = CODEC_H264_10BIT },
+                    // new () { Label = "H.264 (10-Bit)", Value = CODEC_H264_10BIT },
                     new () { Label = "H.265", Value = CODEC_H265 },
                     new () { Label = "H.265 (10-Bit)", Value = CODEC_H265_10BIT },
                 };
@@ -89,8 +87,8 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
 
         stream.EncodingParameters.Clear();        
 
-        if (Codec == CODEC_H264 || Codec == CODEC_H264_10BIT)
-            stream.EncodingParameters.AddRange(H264(args, Codec == CODEC_H264_10BIT, Quality, HardwareEncoding));
+        if (Codec == CODEC_H264)
+            stream.EncodingParameters.AddRange(H264(args, false, Quality, HardwareEncoding));
         else if (Codec == CODEC_H265 || Codec == CODEC_H265_10BIT)
             stream.EncodingParameters.AddRange(H265(args, Codec == CODEC_H265_10BIT, Quality, HardwareEncoding));
         else
@@ -105,8 +103,8 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
 
     internal static IEnumerable<string> GetEncodingParameters(NodeParameters args, string codec, int quality, bool useHardwareEncoder)
     {
-        if (codec == CODEC_H264 || codec == CODEC_H264_10BIT)
-            return H264(args, codec == CODEC_H264_10BIT, quality, useHardwareEncoder).Select(x => x.Replace("{index}", "0"));
+        if (codec == CODEC_H264)
+            return H264(args, false, quality, useHardwareEncoder).Select(x => x.Replace("{index}", "0"));
         else if (codec == CODEC_H265 || codec == CODEC_H265_10BIT)
             return H265(args, codec == CODEC_H265_10BIT, quality, useHardwareEncoder).Select(x => x.Replace("{index}", "0"));
         throw new Exception("Unsupported codec: " + codec);
