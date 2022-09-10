@@ -12,7 +12,7 @@ public class ImageNodesTests
     string TestImage1;
     string TestImage2;
     string TempDir;
-    string TestCropImage1, TestCropImage2, TestCropImage3, TestCropImageNoCrop;
+    string TestCropImage1, TestCropImage2, TestCropImage3, TestCropImage4, TestCropImageNoCrop;
 
     public ImageNodesTests()
     {
@@ -25,6 +25,7 @@ public class ImageNodesTests
             TestCropImage1 = @"D:\images\testimages\crop01.jpg";
             TestCropImage2 = @"D:\images\testimages\crop02.jpg";
             TestCropImage3 = @"D:\images\testimages\crop03.jpg";
+            TestCropImage4 = @"D:\images\testimages\crop04.jpg";
             TestCropImageNoCrop = @"D:\images\testimages\nocrop.jpg";
         }
         else
@@ -126,6 +127,8 @@ public class ImageNodesTests
         };
 
         var node = new AutoCropImage();
+        node.Threshold = 50;
+        node.PreExecute(args);
         int result = node.Execute(args);
         
         string log = logger.ToString();
@@ -159,6 +162,32 @@ public class ImageNodesTests
         };
 
         var node = new AutoCropImage();
+        node.Threshold = 50;
+        node.PreExecute(args);                
+        int result = node.Execute(args);
+
+        string log = logger.ToString();
+        Assert.AreEqual(1, result);
+    }
+
+    [TestMethod]
+    public void ImageNodes_Basic_AutoCrop_04()
+    {
+        var logger = new TestLogger();
+        var args = new NodeParameters(TestCropImage4, logger, false, string.Empty)
+        {
+            TempPath = TempDir
+        };
+
+        //var rotate = new ImageRotate();
+        //rotate.Angle = 270;
+        //rotate.PreExecute(args);
+        //rotate.Execute(args);
+
+
+        var node = new AutoCropImage();
+        node.Threshold = 70;
+        node.PreExecute(args);
         int result = node.Execute(args);
 
         string log = logger.ToString();
@@ -175,6 +204,8 @@ public class ImageNodesTests
         };
 
         var node = new AutoCropImage();
+        node.Threshold = 50;
+        node.PreExecute(args);
         int result = node.Execute(args);
 
         string log = logger.ToString();
