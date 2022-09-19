@@ -182,7 +182,9 @@
           "UseLanguageCode": "Use Language Code",
           "UseLanguageCode-Help": "If the language code of the track should be used instead of the title",
           "RemoveIndex": "Remove Index",
-          "RemoveIndex-Help": "The start index where to remove the tracks from.  This allows you to remove all, or all matching, tracks after the starting index.\nSet to zero to remove all matching the parameters.\nSet to 1 to keep the first track and remove any after the first matching the parameters"
+          "RemoveIndex-Help": "The start index where to remove the tracks from.  This allows you to remove all, or all matching, tracks after the starting index.\nSet to zero to remove all matching the parameters.\nSet to 1 to keep the first track and remove any after the first matching the parameters",
+          "MatchType": "Matches",
+          "MatchType-Help": "The value to match against."
         }
       },
       "FfmpegBuilderAudioTrackReorder": {

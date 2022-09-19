@@ -30,9 +30,47 @@ public class FfmpegBuilderAudioTrackRemover: FfmpegBuilderNode
     [ConditionEquals(nameof(RemoveAll), false)]
     public bool NotMatching { get; set; }
 
-    [Boolean(6)]
+    [Required]
+    [Select(nameof(MatchTypes), 6)]
     [ConditionEquals(nameof(RemoveAll), false)]
-    public bool UseLanguageCode { get; set; }
+    public MatchTypeOption MatchType { get; set; }
+
+    private static List<ListOption> _MatchTypes;
+    public static List<ListOption> MatchTypes
+    {
+        get
+        {
+            if (_MatchTypes == null)
+            {
+                _MatchTypes = new List<ListOption>
+                {
+                    new ListOption { Label = "Title", Value = MatchTypeOption.Title },
+                    new ListOption { Label = "Language", Value = MatchTypeOption.Language },
+                    new ListOption { Label = "Codec", Value = MatchTypeOption.Codec }
+                };
+            }
+            return _MatchTypes;
+        }
+    }
+
+    /// <summary>
+    /// Left in for legacy reasons, will be removed later
+    /// </summary>
+    [Obsolete]
+    public bool? UseLanguageCode
+    {
+        get => false;
+        set
+        {
+            if ((int)this.MatchType > 0)
+                return; // we can now ignore this value
+
+            if (value == true)
+                this.MatchType = MatchTypeOption.Language;
+            else if(value == false)
+                this.MatchType = MatchTypeOption.Title;
+        }
+    }
 
     private static List<ListOption> _StreamTypeOptions;
     public static List<ListOption> StreamTypeOptions
@@ -68,6 +106,7 @@ public class FfmpegBuilderAudioTrackRemover: FfmpegBuilderNode
         bool removing = false;
         Regex? regex = null;
         int index = -1;
+        Args.Logger.ILog("Using match type: " + MatchType);
         foreach (var track in tracks)
         {
             if (track.Deleted == false)
@@ -87,13 +126,20 @@ public class FfmpegBuilderAudioTrackRemover: FfmpegBuilderNode
 
             if (regex == null)
                 regex = new Regex(this.Pattern, RegexOptions.IgnoreCase);
+
             string str = "";
             if(track is FfmpegAudioStream audio)
-                str = UseLanguageCode ? audio.Stream.Language : audio.Stream.Title;
+                str = MatchType == MatchTypeOption.Language ? audio.Stream.Language  :
+                      MatchType == MatchTypeOption.Codec ? audio.Stream.Codec :
+                      audio.Stream.Title;
             else if (track is FfmpegSubtitleStream subtitle)
-                str = UseLanguageCode ? subtitle.Stream.Language : subtitle.Stream.Title;
+                str = MatchType == MatchTypeOption.Language ? subtitle.Stream.Language :
+                      MatchType == MatchTypeOption.Codec ? subtitle.Stream.Codec :
+                      subtitle.Stream.Title;
             else if (track is FfmpegVideoStream video)
-                str = video.Stream.Title;
+                str = MatchType == MatchTypeOption.Codec ? video.Stream.Codec : video.Stream.Title;
+
+            Args.Logger.ILog("Testing string: " + str);
             if (string.IsNullOrEmpty(str) == false) // if empty we always use this since we have no info to go on
             {
                 bool matches = regex.IsMatch(str);
@@ -109,3 +155,11 @@ public class FfmpegBuilderAudioTrackRemover: FfmpegBuilderNode
         return removing;
     }
 }
+
+
+public enum MatchTypeOption
+{
+    Title = 1,
+    Language = 2,
+    Codec = 3
+};
