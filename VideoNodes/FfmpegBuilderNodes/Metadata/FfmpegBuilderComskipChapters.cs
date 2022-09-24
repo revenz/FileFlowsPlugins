@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
+using System.Text;
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 
@@ -23,7 +24,7 @@ public class FfmpegBuilderComskipChapters : FfmpegBuilderNode
         if (string.IsNullOrEmpty(tempMetaDataFile))
             return 2;
 
-        Model.InputFiles.Add(tempMetaDataFile);
+        Model.InputFiles.Add(new InputFile(tempMetaDataFile));
         Model.MetadataParameters.AddRange(new[] { "-map_metadata", (Model.InputFiles.Count - 1).ToString() });
         return 1;
     }

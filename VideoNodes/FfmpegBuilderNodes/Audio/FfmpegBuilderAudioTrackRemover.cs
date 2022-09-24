@@ -12,6 +12,7 @@ public class FfmpegBuilderAudioTrackRemover: FfmpegBuilderNode
 
 
     [Select(nameof(StreamTypeOptions), 1)]
+    [ChangeValue(nameof(RemoveAll), false, "Video")]
     public string StreamType { get; set; }
 
     [Boolean(2)]
@@ -32,6 +33,7 @@ public class FfmpegBuilderAudioTrackRemover: FfmpegBuilderNode
 
     [Required]
     [Select(nameof(MatchTypes), 6)]
+    [DefaultValue(MatchTypeOption.Title)]
     [ConditionEquals(nameof(RemoveAll), false)]
     public MatchTypeOption MatchType { get; set; }
 

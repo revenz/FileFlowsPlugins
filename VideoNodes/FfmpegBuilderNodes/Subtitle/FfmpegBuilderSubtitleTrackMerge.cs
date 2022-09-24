@@ -42,6 +42,9 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
 
     [Boolean(3)]
     public bool MatchFilename { get; set; }
+
+    [Boolean(4)]
+    public bool DeleteAfterwards { get; set; }
     
     public override int Execute(NodeParameters args)
     {
@@ -85,15 +88,22 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
             }
 
             args.Logger.ILog("Adding file: " + file.FullName + " [" + ext + "]" + (string.IsNullOrEmpty(language) == false ? " (Language: " + language + ")" : ""));
-            this.Model.InputFiles.Add(file.FullName);
+            this.Model.InputFiles.Add(new InputFile(file.FullName) { DeleteAfterwards = this.DeleteAfterwards });
+
+            string subTitle = language;
+            if (string.IsNullOrEmpty(subTitle))
+                subTitle = file.Name.Replace(file.Extension, "");
+
             this.Model.SubtitleStreams.Add(new FfmpegSubtitleStream
             {
+                Title = subTitle,
+                Language = string.IsNullOrEmpty(language) ? null : Regex.Replace(language, @" \([\w]+\)$", string.Empty).Trim(),                
                 Stream = new SubtitleStream()
                 {
                     InputFileIndex = this.Model.InputFiles.Count - 1,
                     TypeIndex = 0,
                     Language = language,
-                    Title = file.Name.Replace(file.Extension, ""),
+                    Title = subTitle,
                     Codec = file.Extension[1..],
                     IndexString = (this.Model.InputFiles.Count - 1) + ":s:0"
                 },

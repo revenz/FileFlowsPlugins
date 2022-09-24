@@ -32,7 +32,7 @@ public class FfmpegBuilderAddInputFile : FfmpegBuilderNode
         {
             if (regex.IsMatch(file.Name) == false)
                 continue;
-            this.Model.InputFiles.Add(file.FullName);
+            this.Model.InputFiles.Add(new InputFile(file.FullName));
             added = true;
         }
         return added ? 1 : 2;

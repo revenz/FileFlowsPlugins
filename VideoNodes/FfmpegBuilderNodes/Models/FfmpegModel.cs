@@ -30,11 +30,11 @@
 
         public string Extension { get; set; }
 
-        private List<string> _InputFiles = new List<string>();
-        public List<string> InputFiles
+        private List<InputFile> _InputFiles = new List<InputFile>();
+        public List<InputFile> InputFiles
         {
             get => _InputFiles;
-            set => _InputFiles = value ?? new List<string>();
+            set => _InputFiles = value ?? new List<InputFile>();
         }
 
         private List<string> _CustomParameters = new List<string>();
@@ -67,7 +67,7 @@
         internal static FfmpegModel CreateModel(VideoInfo info)
         {
             var model = new FfmpegModel(info);
-            model.InputFiles.Add(info.FileName);
+            model.InputFiles.Add(new InputFile(info.FileName));
             foreach (var item in info.VideoStreams.Select((stream, index) => (stream, index)))
             {
                 model.VideoStreams.Add(new FfmpegVideoStream
@@ -104,6 +104,26 @@
                 model.Extension = info.FileName.Substring(info.FileName.LastIndexOf(".") + 1);
 
             return model;
+        }
+    }
+
+    /// <summary>
+    /// Input file 
+    /// </summary>
+    public class InputFile
+    {
+        /// <summary>
+        /// Gets or sets the filename of the file
+        /// </summary>
+        public string FileName { get; set; }    
+        /// <summary>
+        /// Gets or sets if the file should be deleted after processing
+        /// </summary>
+        public bool DeleteAfterwards { get; set; }
+
+        public InputFile(string fileName)
+        {
+            FileName = fileName;
         }
     }
 }

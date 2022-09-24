@@ -328,7 +328,9 @@
           "UseSourceDirectory": "Use Source Directory",
           "UseSourceDirectory-Help": "If checked the original source directory will be searched, otherwise the working directory will be used.",
           "MatchFilename": "Match Filename",
-          "MatchFilename-Help": "When checked only subtitles with the same filename as the input file or the working file will be merged"
+          "MatchFilename-Help": "When checked only subtitles with the same filename as the input file or the working file will be merged",
+          "DeleteAfterwards": "Delete After Merging",
+          "DeleteAfterwards-Help": "If the subtitle file should be deleted after being merged"
         }
       },
       "FfmpegBuilderCropBlackBars": {

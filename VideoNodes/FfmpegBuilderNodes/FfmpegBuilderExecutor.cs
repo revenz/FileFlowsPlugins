@@ -101,9 +101,9 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
 
             List<string> startArgs = new List<string>();
             if (model.InputFiles?.Any() == false)
-                model.InputFiles.Add(args.WorkingFile);
+                model.InputFiles.Add(new InputFile(args.WorkingFile));
             else
-                model.InputFiles[0] = args.WorkingFile;
+                model.InputFiles[0].FileName = args.WorkingFile;
 
             startArgs.AddRange(new[] { "-fflags", "+genpts" }); //Generate missing PTS if DTS is present.
 
@@ -116,10 +116,10 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
                 startArgs.AddRange(GetHardwareDecodingArgs());
             }
 
-            foreach (string file in model.InputFiles)
+            foreach (var file in model.InputFiles)
             {
                 startArgs.Add("-i");
-                startArgs.Add(file);
+                startArgs.Add(file.FileName);
             }
             startArgs.Add("-y");
             if (extension.ToLower() == "mp4" && ffArgs.IndexOf("-movflags") < 0 && startArgs.IndexOf("-movflgs") < 0)
@@ -131,6 +131,25 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
 
             if (Encode(args, FFMPEG, ffArgs, extension, dontAddInputFile: true) == false)
                 return -1;
+
+            foreach (var file in model.InputFiles)
+            {
+                if (file.DeleteAfterwards)
+                {
+                    if (File.Exists(file.FileName) == false)
+                        continue;
+
+                    args.Logger.ILog("Deleting file: " + file.FileName);
+                    try
+                    {
+                        File.Delete(file.FileName);
+                    }
+                    catch (Exception ex)
+                    {
+                        args.Logger.WLog("Failed to delete file: " + ex.Message);
+                    }
+                }
+            }
 
             return 1;
         }

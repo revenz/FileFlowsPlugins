@@ -93,6 +93,49 @@ public class FfmpegBuilder_BasicTests : TestBase
         Assert.AreEqual(1, result);
     }
 
+
+    [TestMethod]
+    public void FfmpegBuilder_AudioT064kbps()
+    {
+        const string file = @"D:\videos\testfiles\basic.mkv";
+        var logger = new TestLogger();
+        const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+        var vi = new VideoInfoHelper(ffmpeg, logger);
+        var vii = vi.Read(file);
+        var args = new NodeParameters(file, logger, false, string.Empty);
+        args.GetToolPathActual = (string tool) => ffmpeg;
+        args.TempPath = @"D:\videos\temp";
+        args.Parameters.Add("VideoInfo", vii);
+
+
+        FfmpegBuilderStart ffStart = new();
+        ffStart.PreExecute(args);
+        Assert.AreEqual(1, ffStart.Execute(args));
+
+        FfmpegBuilderAudioTrackRemover ffRemover = new();
+        ffRemover.RemoveAll = true;
+        ffRemover.StreamType = "Audio";
+        ffRemover.PreExecute(args);
+        ffRemover.Execute(args);    
+
+
+        FfmpegBuilderAudioAddTrack ffAddAudio = new();
+        ffAddAudio.Codec = "aac";
+        ffAddAudio.Bitrate = 640;
+        ffAddAudio.Channels = 0;
+        ffAddAudio.Index = 0;
+        ffAddAudio.PreExecute(args);
+        ffAddAudio.Execute(args);
+
+        FfmpegBuilderExecutor ffExecutor = new();
+        ffExecutor.HardwareDecoding = true;
+        ffExecutor.PreExecute(args);
+        int result = ffExecutor.Execute(args);
+
+        string log = logger.ToString();
+        Assert.AreEqual(1, result);
+    }
+
     [TestMethod]
     public void FfmpegBuilder_AddAudioTracks()
     {
