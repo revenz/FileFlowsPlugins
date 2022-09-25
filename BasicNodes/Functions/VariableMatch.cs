@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BasicNodes.Functions;
+namespace FileFlows.BasicNodes.Functions;
 
 /// <summary>
 /// Tests if an input value is matched by a variable
@@ -33,7 +33,8 @@ public class VariableMatch : Node
 
     public override int Execute(NodeParameters args)
     {
-        bool matches = args.MatchesVariable(Variable?.Name, Input);
+        string test= args.ReplaceVariables(Input, stripMissing: true);
+        bool matches = args.MatchesVariable(Variable.Name, test);
         return matches ? 1 : 2;
     }
 }
