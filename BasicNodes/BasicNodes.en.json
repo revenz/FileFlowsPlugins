@@ -265,6 +265,19 @@
             "FileName-Help": "Full filename of file or folder to touch.\nIf left blank the working file will be used."
           }
         },
+        "VariableMatch": {
+          "Description": "Tests if a input matches a stored Variable",
+          "Fields": {
+            "Variable": "Variable",
+            "Variable-Help": "The variable to match against",
+            "Input": "Input",
+            "Input-Help": "The input to match the variable against."
+          },
+          "Outputs": {
+            "1": "Input matched variable",
+            "2": "Input did not match variable"
+          }
+        },
         "WebRequest": {
           "Description": "Allows you to send a web request",
           "Outputs": {
