@@ -166,44 +166,56 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
             var decoders = isH264 ? Decoders_h264() :
                             isHevc ? Decoders_hevc() :
                             Decoders_Default();
-
-            foreach(var hw in decoders)
+            try
             {
-                if (hw == null)
-                    continue;
-                if (CanUseHardwareEncoding.DisabledByVariables(Args, string.Join(" ", hw)))
-                    continue;
-                try
+                foreach (var hw in decoders)
                 {
-                    var arguments = new List<string>()
+                    if (hw == null)
+                        continue;
+                    if (CanUseHardwareEncoding.DisabledByVariables(Args, string.Join(" ", hw)))
+                        continue;
+                    try
+                    {
+                        var arguments = new List<string>()
                     {
                         "-y",
                     };
-                    arguments.AddRange(hw);
-                    arguments.AddRange(new[]
-                    {
+                        arguments.AddRange(hw);
+                        arguments.AddRange(new[]
+                        {
                         "-f", "lavfi",
                         "-i", "color=color=red",
                         "-frames:v", "10",
                         testFile
                     });
 
-                    var result = Args.Execute(new ExecuteArgs
-                    {
-                        Command = FFMPEG,                        
-                        ArgumentList = arguments.ToArray()
-                    });
-                    if (result.ExitCode == 0)
-                    {
-                        Args.Logger?.ILog("Supported hardware decoding detected: " + string.Join(" ", hw));
-                        return hw;
+                        var result = Args.Execute(new ExecuteArgs
+                        {
+                            Command = FFMPEG,
+                            ArgumentList = arguments.ToArray()
+                        });
+                        if (result.ExitCode == 0)
+                        {
+                            Args.Logger?.ILog("Supported hardware decoding detected: " + string.Join(" ", hw));
+
+                            return hw;
+                        }
                     }
+                    catch (Exception) { }
+                }
+
+                Args.Logger?.ILog("No hardware decoding availble");
+                return new string[] { };
+            }
+            finally
+            {
+                try
+                {
+                    if (File.Exists(testFile))
+                        File.Delete(testFile);
                 }
                 catch (Exception) { }
             }
-
-            Args.Logger?.ILog("No hardware decoding availble");
-            return new string[] { };
         }
 
         private static readonly bool IsMac = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);

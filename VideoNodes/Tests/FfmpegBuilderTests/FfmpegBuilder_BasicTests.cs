@@ -44,6 +44,41 @@ public class FfmpegBuilder_BasicTests : TestBase
         Assert.AreEqual(1, result);
     }
 
+
+    [TestMethod]
+    public void FfmpegBuilder_Basic_Av1()
+    {
+        const string file = @"D:\videos\unprocessed\basic.mkv";
+        var logger = new TestLogger();
+        const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+        var vi = new VideoInfoHelper(ffmpeg, logger);
+        var vii = vi.Read(file);
+        var args = new NodeParameters(file, logger, false, string.Empty);
+        args.GetToolPathActual = (string tool) => ffmpeg;
+        args.TempPath = @"D:\videos\temp";
+        args.Parameters.Add("VideoInfo", vii);
+
+
+        FfmpegBuilderStart ffStart = new();
+        ffStart.PreExecute(args);
+        Assert.AreEqual(1, ffStart.Execute(args));
+
+        FfmpegBuilderVideoEncode ffEncode = new();
+        ffEncode.Codec = "av1 10BIT";
+        ffEncode.Quality = 28;
+        ffEncode.HardwareEncoding = false;
+        ffEncode.PreExecute(args);
+        ffEncode.Execute(args);
+
+        FfmpegBuilderExecutor ffExecutor = new();
+        ffExecutor.HardwareDecoding = true;
+        ffExecutor.PreExecute(args);
+        int result = ffExecutor.Execute(args);
+
+        string log = logger.ToString();
+        Assert.AreEqual(1, result);
+    }
+
     [TestMethod]
     public void FfmpegBuilder_AddAc3Aac()
     {
