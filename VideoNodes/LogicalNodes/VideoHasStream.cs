@@ -117,7 +117,7 @@ public class VideoHasStream : VideoNode
             if(rgx.IsMatch(value))
                 return MatchResult.Matched;
 
-            if (value.ToLower() == "hevc" && pattern.ToLower() == "h265")
+            if (value.ToLower() == "hevc" && (pattern.ToLower() == "h265" || pattern == "265" || pattern.ToLower() == "h.265"))
                 return MatchResult.Matched; // special case
 
             return MatchResult.NoMatch;
