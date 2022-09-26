@@ -16,6 +16,7 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
     internal const string CODEC_H264 = "h264";
     internal const string CODEC_H265 = "h265";
     internal const string CODEC_H265_10BIT = "h265 10BIT";
+    internal const string CODEC_AV1 = "av1";
 
     /// <summary>
     /// The Help URL for this node
@@ -29,6 +30,7 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
     [ChangeValue(nameof(Quality), 23, CODEC_H264)]
     [ChangeValue(nameof(Quality), 28, CODEC_H265)]
     [ChangeValue(nameof(Quality), 28, CODEC_H265_10BIT)]
+    [ChangeValue(nameof(Quality), 35, CODEC_AV1)]
     [Select(nameof(CodecOptions), 1)]
     public string Codec { get; set; }
 
@@ -48,6 +50,7 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
                     // new () { Label = "H.264 (10-Bit)", Value = CODEC_H264_10BIT },
                     new () { Label = "H.265", Value = CODEC_H265 },
                     new () { Label = "H.265 (10-Bit)", Value = CODEC_H265_10BIT },
+                    new () { Label = "AV1", Value = CODEC_AV1 },
                 };
             }
             return _CodecOptions;
@@ -59,6 +62,7 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
     /// </summary>
     [DefaultValue(true)]
     [Boolean(2)]
+    [ConditionEquals(nameof(Codec), CODEC_AV1, inverse: true)]
     public bool HardwareEncoding { get; set; }
 
     /// <summary>
@@ -104,9 +108,12 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
     internal static IEnumerable<string> GetEncodingParameters(NodeParameters args, string codec, int quality, bool useHardwareEncoder)
     {
         if (codec == CODEC_H264)
-            return H264(args, false, quality, useHardwareEncoder).Select(x => x.Replace("{index}", "0"));
-        else if (codec == CODEC_H265 || codec == CODEC_H265_10BIT)
+            return H264(args, false, quality, useHardwareEncoder).Select(x => x.Replace("{index}", "0")); 
+        if (codec == CODEC_H265 || codec == CODEC_H265_10BIT)
             return H265(args, codec == CODEC_H265_10BIT, quality, useHardwareEncoder).Select(x => x.Replace("{index}", "0"));
+        if(codec == CODEC_AV1)
+            return AV1(args, quality).Select(x => x.Replace("{index}", "0")); 
+            
         throw new Exception("Unsupported codec: " + codec);
 
     }
@@ -164,6 +171,25 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         else if(non10BitFilters?.Any() == true)
             parameters.AddRange(non10BitFilters);
         return parameters;
+    }
+
+    
+    private static IEnumerable<string> AV1(NodeParameters args, int quality)
+    {
+        // hevc_qsv -load_plugin hevc_hw -pix_fmt p010le -profile:v main10 -global_quality 21 -g 24 -look_ahead 1 -look_ahead_depth 60
+        List<string> parameters = new List<string>();
+        parameters.AddRange(AV1_CPU(quality));
+        return parameters;
+    }
+
+    private static IEnumerable<string> AV1_CPU(int quality)
+    {
+        return new []
+        {
+            "libsvtav1",
+            "-preset", "8",
+            "-crf", quality.ToString()
+        };
     }
 
 
