@@ -22,7 +22,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
         public override int Execute(NodeParameters args)
         {
             var model = this.Model;
-            if(model == null)
+            if (model == null)
             {
                 args.Logger.ELog("FFMPEG Builder model is null");
                 return -1;
@@ -39,7 +39,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
             }
             List<string> ffArgs = new List<string>();
 
-            if(model.CustomParameters?.Any() == true)
+            if (model.CustomParameters?.Any() == true)
                 ffArgs.AddRange(model.CustomParameters);
 
             bool hasChange = false;
@@ -62,7 +62,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
                 if (currentType != item.type)
                 {
                     actualIndex = 0;
-                    currentType = item.type;    
+                    currentType = item.type;
                 }
 
                 VideoFileStream vfs = item.stream is FfmpegVideoStream ? ((FfmpegVideoStream)item.stream).Stream :
@@ -77,19 +77,19 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
                     SourceExtension = sourceExtension,
                     DestinationExtension = extension
                 });
-                for(int i = 0; i < streamArgs.Length; i++)
+                for (int i = 0; i < streamArgs.Length; i++)
                 {
                     streamArgs[i] = streamArgs[i].Replace("{sourceTypeIndex}", vfs.TypeIndex.ToString());
                     streamArgs[i] = streamArgs[i].Replace("{index}", actualIndex.ToString());
                 }
-                    
+
                 ffArgs.AddRange(streamArgs);
                 hasChange |= item.stream.HasChange | item.stream.ForcedChange;
                 ++actualIndex;
                 ++overallIndex;
             }
 
-            if(model.MetadataParameters?.Any() == true)
+            if (model.MetadataParameters?.Any() == true)
             {
                 hasChange = true;
                 ffArgs.AddRange(model.MetadataParameters);
@@ -127,9 +127,15 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
                 startArgs.AddRange(new[] { "-movflags", "+faststart" });
             }
             ffArgs = startArgs.Concat(ffArgs).ToList();
+            var ffmpeg = FFMPEG;
+            if (args.IsDocker && (ffArgs.Contains("libaom-av1") || ffArgs.Contains("libsvtav1")))
+            {
+                if (File.Exists(ffmpeg + "-av1"))
+                    ffmpeg = ffmpeg + "-av1";
+            }
 
 
-            if (Encode(args, FFMPEG, ffArgs, extension, dontAddInputFile: true) == false)
+            if (Encode(args, ffmpeg, ffArgs, extension, dontAddInputFile: true) == false)
                 return -1;
 
             foreach (var file in model.InputFiles)
