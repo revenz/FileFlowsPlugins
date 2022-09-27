@@ -194,7 +194,7 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
     {
         return new []
         {
-            "libsvtav1",
+            "libaom-av1",
             "-preset", "8",
             "-crf", quality.ToString()
         };
