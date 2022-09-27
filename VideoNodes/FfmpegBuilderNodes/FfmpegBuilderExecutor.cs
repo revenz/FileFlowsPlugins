@@ -130,8 +130,12 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
             var ffmpeg = FFMPEG;
             if (args.IsDocker && (ffArgs.Contains("libaom-av1") || ffArgs.Contains("libsvtav1")))
             {
+                args.Logger.DLog("Using AV1 on docker");
                 if (File.Exists(ffmpeg + "-av1"))
                     ffmpeg = ffmpeg + "-av1";
+                else
+                    args.Logger.DLog("Did not find custom FFMPEG AV1: " + ffmpeg + "-av1");
+                
             }
 
 
