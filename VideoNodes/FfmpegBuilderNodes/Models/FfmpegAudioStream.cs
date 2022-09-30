@@ -77,6 +77,11 @@
             if (Metadata.Any())
                 results.AddRange(Metadata.Select(x => x.Replace("{index}", args.OutputTypeIndex.ToString())));
 
+            if (args.UpdateDefaultFlag)
+            {
+                results.AddRange(new[] { "-disposition:a:" + args.OutputTypeIndex, this.IsDefault ? "default" : "0" });
+            }
+
             return results.ToArray();
         }
     }

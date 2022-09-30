@@ -9,6 +9,8 @@ public abstract class FfmpegStream
     public string Title { get; set; }
     public string Language { get; set; }
 
+    public bool IsDefault { get; set; }
+
     public abstract bool HasChange { get; }
     public bool ForcedChange { get; set; }
 
@@ -53,6 +55,11 @@ public abstract class FfmpegStream
         /// Gets or sets the destination extension
         /// </summary>
         public string DestinationExtension { get; set; }
+
+        /// <summary>
+        /// Gets or sets if the default flag should be set
+        /// </summary>
+        public bool UpdateDefaultFlag { get; set; }
     }
 }
 

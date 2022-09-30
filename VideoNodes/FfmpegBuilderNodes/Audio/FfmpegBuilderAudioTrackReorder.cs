@@ -74,10 +74,13 @@ public class FfmpegBuilderAudioTrackReorder : FfmpegBuilderNode
                 args.Logger?.ILog("No audio tracks need reordering");
                 return 2;
             }
+            for(int i = 0; i < reordered.Count; i++)
+            {
+                reordered[i].IsDefault = i == 0;
+            }
 
             Model.AudioStreams = reordered;
-            // set the first audio track as the default track
-            Model.MetadataParameters.AddRange(new[] { "-disposition:a:0", "default" });
+            Model.ForceEncode = true;
 
             return 1;
         }

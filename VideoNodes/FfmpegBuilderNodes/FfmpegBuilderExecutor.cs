@@ -50,9 +50,9 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
             string sourceExtension = model.VideoInfo.FileName.Substring(model.VideoInfo.FileName.LastIndexOf(".") + 1).ToLower();
             string extension = (model.Extension?.EmptyAsNull() ?? "mkv").ToLower();
 
-            foreach (var item in model.VideoStreams.Select((x, index) => (stream: (FfmpegStream)x, index, type: 1)).Union(
-                                 model.AudioStreams.Select((x, index) => (stream: (FfmpegStream)x, index, type: 2))).Union(
-                                 model.SubtitleStreams.Select((x, index) => (stream: (FfmpegStream)x, index, type: 3))))
+            foreach (var item in model.VideoStreams.Select((x, index) => (stream: (FfmpegStream)x, index, type: 1, list: model.VideoStreams.Select(x => (FfmpegStream)x).ToList())).Union(
+                                 model.AudioStreams.Select((x, index) => (stream: (FfmpegStream)x, index, type: 2, list: model.AudioStreams.Select(x => (FfmpegStream)x).ToList()))).Union(
+                                 model.SubtitleStreams.Select((x, index) => (stream: (FfmpegStream)x, index, type: 3, list: model.SubtitleStreams.Select(x => (FfmpegStream)x).ToList()))))
             {
                 if (item.stream.Deleted)
                 {
@@ -75,7 +75,8 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
                     OutputOverallIndex = overallIndex,
                     OutputTypeIndex = actualIndex,
                     SourceExtension = sourceExtension,
-                    DestinationExtension = extension
+                    DestinationExtension = extension,
+                    UpdateDefaultFlag = item.list.Any(x => x.Deleted == false && x.IsDefault)
                 });
                 for (int i = 0; i < streamArgs.Length; i++)
                 {
@@ -126,6 +127,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
             {
                 startArgs.AddRange(new[] { "-movflags", "+faststart" });
             }
+
             ffArgs = startArgs.Concat(ffArgs).ToList();
             var ffmpeg = FFMPEG;
             string strFfArgs = string.Join(" ", ffArgs);
