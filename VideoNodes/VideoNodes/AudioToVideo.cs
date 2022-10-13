@@ -130,7 +130,12 @@ public class AudioToVideo : EncodingNode
     public override int Execute(NodeParameters args)
     {
         List<string> ffArgs = new List<string>();
-        var encodingParameters = FfmpegBuilderVideoEncode.GetEncodingParameters(args, this.Codec, 28, HardwareEncoding);
+
+        bool useHardwareEncoding = HardwareEncoding;
+        if (Environment.GetEnvironmentVariable("HW_OFF") == "1")
+            useHardwareEncoding = false;
+        
+        var encodingParameters = FfmpegBuilderVideoEncode.GetEncodingParameters(args, this.Codec, 28, useHardwareEncoding);
 
         if (Container.ToLower() == "mp4")
             ffArgs.AddRange(new[] { "-movflags", "+faststart" });

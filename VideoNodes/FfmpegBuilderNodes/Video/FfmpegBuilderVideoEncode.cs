@@ -93,12 +93,16 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
     {
         var stream = Model.VideoStreams.Where(x => x.Deleted == false).First();
 
-        stream.EncodingParameters.Clear();        
+        stream.EncodingParameters.Clear();    
+        
+        bool useHardwareEncoding = HardwareEncoding;
+        if (Environment.GetEnvironmentVariable("HW_OFF") == "1")
+            useHardwareEncoding = false;
 
         if (Codec == CODEC_H264)
-            stream.EncodingParameters.AddRange(H264(args, false, Quality, HardwareEncoding));
+            stream.EncodingParameters.AddRange(H264(args, false, Quality, useHardwareEncoding));
         else if (Codec == CODEC_H265 || Codec == CODEC_H265_10BIT)
-            stream.EncodingParameters.AddRange(H265(args, Codec == CODEC_H265_10BIT, Quality, HardwareEncoding));
+            stream.EncodingParameters.AddRange(H265(args, Codec == CODEC_H265_10BIT, Quality, useHardwareEncoding));
         else if (Codec == CODEC_AV1 || Codec == CODEC_AV1_10BIT)
             stream.EncodingParameters.AddRange(AV1(args, Codec == CODEC_AV1_10BIT, Quality));
         else
