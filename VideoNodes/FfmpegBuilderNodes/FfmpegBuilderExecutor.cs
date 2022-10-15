@@ -112,7 +112,11 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
                 "-probesize", VideoInfoHelper.ProbeSize + "M"
             });
 
-            if (HardwareDecoding)
+            
+            bool useHardwareEncoding = HardwareDecoding;
+            if (Environment.GetEnvironmentVariable("HW_OFF") == "1")
+                useHardwareEncoding = false;
+            if (useHardwareEncoding)
             {
                 startArgs.AddRange(GetHardwareDecodingArgs());
             }
