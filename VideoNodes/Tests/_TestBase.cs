@@ -24,8 +24,8 @@ public abstract class TestBase
         {
             LoadSettings("../../../test.settings.json");
         }
-        this.TestPath = this.TestPath?.EmptyAsNull() ?? @"C:\videos\testfiles";
-        this.TempPath = this.TempPath?.EmptyAsNull() ?? @"C:\videos\temp";
+        this.TestPath = this.TestPath?.EmptyAsNull() ?? @"d:\videos\testfiles";
+        this.TempPath = this.TempPath?.EmptyAsNull() ?? @"d:\videos\temp";
         this.FfmpegPath = this.FfmpegPath?.EmptyAsNull() ?? @"C:\utils\ffmpeg\ffmpeg.exe";
         if (Directory.Exists(this.TempPath) == false)
             Directory.CreateDirectory(this.TempPath);
