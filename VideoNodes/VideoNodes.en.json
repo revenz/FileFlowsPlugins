@@ -359,18 +359,11 @@
           "1": "FFMPEG Builder set to remux to MP4"
         }
       },
-      "FfmpegBuilderRemuxToMov": {
+      "FfmpegBuilderRemuxToMOV": {
         "Label": "FFMPEG Builder: Remux to MOV",
         "Descritption": "Remuxes a video file into a MOV container.",
         "Outputs": {
           "1": "FFMPEG Builder set to remux to MOV"
-        }
-      },
-      "FfmpegBuilderRemuxToWebm": {
-        "Label": "FFMPEG Builder: Remux to WEBM",
-        "Descritption": "Remuxes a video file into a WEGM container.",
-        "Outputs": {
-          "1": "FFMPEG Builder set to remux to WEGM"
         }
       },
       "FfmpegBuilderScaler": {
