@@ -359,6 +359,13 @@
           "1": "FFMPEG Builder set to remux to MP4"
         }
       },
+      "FfmpegBuilderRemuxToMOV": {
+        "Label": "FFMPEG Builder: Remux to MOV",
+        "Descritption": "Remuxes a video file into a MOV container.",
+        "Outputs": {
+          "1": "FFMPEG Builder set to remux to MOV"
+        }
+      },
       "FfmpegBuilderScaler": {
         "Label": "FFMPEG Builder: Video Scaler",
         "Description": "This allows you to scale a video to the specified dimensions.  It will retain the aspect ratio of the video so if the video was 1920x1000 it would scale to 1280x668 if you select 720P.",
