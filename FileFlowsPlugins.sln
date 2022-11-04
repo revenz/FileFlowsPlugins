@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChecksumNodes", "ChecksumNo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CollectionNodes", "CollectionNodes\CollectionNodes.csproj", "{4211AAE9-0764-4626-B0F2-089A466E002A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicNodes", "MusicNodes\MusicNodes.csproj", "{A7D498A4-5C67-45E9-9D33-20E8F570C25A}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailNodes", "EmailNodes\EmailNodes.csproj", "{8F2739B8-2BD6-4AAC-A54B-2EE1B4AAF559}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gotify", "Gotify\Gotify.csproj", "{18E7013A-BF85-47FA-806C-934267C7BCA5}"
@@ -28,8 +26,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apprise", "Apprise\Apprise.csproj", "{CA750701-C4CF-482F-B5F3-A40E188F3E14}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageNodes", "ImageNodes\ImageNodes.csproj", "{3C6B9933-B6BC-4C00-9247-71F575AA276B}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VideoLegacyNodes", "VideoLegacyNodes\VideoLegacyNodes.csproj", "{4339720B-5061-431F-9080-FC087ACFDB3B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioNodes", "AudioNodes\AudioNodes.csproj", "{600204C7-94F1-4793-9D02-D836A1B15B60}"
 EndProject
@@ -61,10 +57,6 @@ Global
 		{4211AAE9-0764-4626-B0F2-089A466E002A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4211AAE9-0764-4626-B0F2-089A466E002A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4211AAE9-0764-4626-B0F2-089A466E002A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A7D498A4-5C67-45E9-9D33-20E8F570C25A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A7D498A4-5C67-45E9-9D33-20E8F570C25A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A7D498A4-5C67-45E9-9D33-20E8F570C25A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A7D498A4-5C67-45E9-9D33-20E8F570C25A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8F2739B8-2BD6-4AAC-A54B-2EE1B4AAF559}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8F2739B8-2BD6-4AAC-A54B-2EE1B4AAF559}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F2739B8-2BD6-4AAC-A54B-2EE1B4AAF559}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -93,10 +85,6 @@ Global
 		{3C6B9933-B6BC-4C00-9247-71F575AA276B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C6B9933-B6BC-4C00-9247-71F575AA276B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C6B9933-B6BC-4C00-9247-71F575AA276B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4339720B-5061-431F-9080-FC087ACFDB3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4339720B-5061-431F-9080-FC087ACFDB3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4339720B-5061-431F-9080-FC087ACFDB3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4339720B-5061-431F-9080-FC087ACFDB3B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{600204C7-94F1-4793-9D02-D836A1B15B60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{600204C7-94F1-4793-9D02-D836A1B15B60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{600204C7-94F1-4793-9D02-D836A1B15B60}.Release|Any CPU.ActiveCfg = Release|Any CPU

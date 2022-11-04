@@ -1,5 +1,6 @@
 ﻿#if(DEBUG)
 
+using System.Runtime.InteropServices;
 using FileFlows.VideoNodes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Text.Json;
@@ -12,6 +13,9 @@ public abstract class TestBase
     public string TestPath { get; private set; }
     public string TempPath { get; private set; }
     public string FfmpegPath { get; private set; }
+    
+    public readonly bool IsWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+    public readonly bool IsLinux = RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
 
     [TestInitialize]
     public void TestInitialize()
@@ -24,9 +28,15 @@ public abstract class TestBase
         {
             LoadSettings("../../../test.settings.json");
         }
-        this.TestPath = this.TestPath?.EmptyAsNull() ?? @"d:\videos\testfiles";
-        this.TempPath = this.TempPath?.EmptyAsNull() ?? @"d:\videos\temp";
-        this.FfmpegPath = this.FfmpegPath?.EmptyAsNull() ?? @"C:\utils\ffmpeg\ffmpeg.exe";
+        this.TestPath = this.TestPath?.EmptyAsNull() ?? (IsLinux ? "~/src/ff-files/test-files" : @"d:\videos\testfiles");
+        this.TempPath = this.TempPath?.EmptyAsNull() ?? (IsLinux ? "~/src/ff-files/temp" : @"d:\videos\temp");
+        this.FfmpegPath = this.FfmpegPath?.EmptyAsNull() ?? (IsLinux ? "/usr/bin/ffmpeg" :  @"C:\utils\ffmpeg\ffmpeg.exe");
+        
+        
+        this.TestPath = this.TestPath.Replace("~/", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/");
+        this.TempPath = this.TempPath.Replace("~/", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/");
+        this.FfmpegPath = this.FfmpegPath.Replace("~/", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/");
+        
         if (Directory.Exists(this.TempPath) == false)
             Directory.CreateDirectory(this.TempPath);
     }
@@ -35,6 +45,9 @@ public abstract class TestBase
     {
         try
         {
+            if (File.Exists(filename) == false)
+                return;
+            
             string json = File.ReadAllText(filename);
             var settings = JsonSerializer.Deserialize<TestSettings>(json);
             this.TestPath = settings.TestPath;

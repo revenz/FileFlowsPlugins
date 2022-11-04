@@ -109,6 +109,39 @@ public class FfmpegBuilder_MetadataTests: TestBase
         string log = logger.ToString();
         Assert.AreEqual(1, result);
     }
+    
+    
+    [TestMethod]
+    public void FfmpegBuilder_Metadata_Remover_BitrateFromConvetted()
+    {
+        string file = TestFile_BasicMkv;
+        var logger = new TestLogger();
+        var vi = new VideoInfoHelper(FfmpegPath, logger);
+        var vii = vi.Read(file);
+        var args = new NodeParameters(file, logger, false, string.Empty);
+        args.GetToolPathActual = (string tool) => FfmpegPath;
+        args.TempPath = TempPath;
+        args.Parameters.Add("VideoInfo", vii);
+
+
+        FfmpegBuilderStart ffStart = new();
+        Assert.IsTrue(ffStart.PreExecute(args));
+        Assert.AreEqual(1, ffStart.Execute(args));
+
+        FfmpegBuilderVideoEncode ffEncode = new();
+        ffEncode.Codec = "h265";
+        ffEncode.Quality = 30;
+        ffEncode.HardwareEncoding = false;
+        ffEncode.PreExecute(args);
+        ffEncode.Execute(args);
+
+        FfmpegBuilderExecutor ffExecutor = new();
+        ffExecutor.PreExecute(args);
+        int result = ffExecutor.Execute(args);
+
+        string log = logger.ToString();
+        Assert.AreEqual(1, result);
+    }
 }
 
 #endif

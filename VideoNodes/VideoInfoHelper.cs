@@ -42,6 +42,10 @@ namespace FileFlows.VideoNodes
         public static string GetFFMpegPath(NodeParameters args) => args.GetToolPath("FFMpeg");
         public VideoInfo Read(string filename)
         {
+            #if(DEBUG) // UNIT TESTING
+            filename = filename.Replace("~/", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/");
+            #endif
+            
             var vi = new VideoInfo();
             vi.FileName = filename;
             if (File.Exists(filename) == false)

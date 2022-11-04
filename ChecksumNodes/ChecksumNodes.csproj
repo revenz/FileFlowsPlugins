@@ -5,8 +5,8 @@
 		<Nullable>enable</Nullable>
 		<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
 		<PublishSingleFile>true</PublishSingleFile>
-		<FileVersion>1.0.4.189</FileVersion>
-		<ProductVersion>1.0.4.189</ProductVersion>
+		<FileVersion>1.0.6.495</FileVersion>
+		<ProductVersion>1.0.6.495</ProductVersion>
 		<PublishTrimmed>true</PublishTrimmed>
 		<Company>FileFlows</Company>
 		<Authors>John Andrews</Authors>
