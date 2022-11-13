@@ -191,6 +191,18 @@
             "AdditionalFilesFromOriginal-Help": "If the additional files should be moved from the working directory or from the original directory.  Turn on for original directory."
           }
         },
+        "OlderThan": {
+          "Description": "Checks if a folder is older than the range specified",
+          "Outputs": {
+            "1": "File is older",
+            "2": "File is not older"
+          },
+          "Fields": {
+            "Number": "Number",
+            "Unit": "Unit",
+            "Date": "Date"
+          }
+        },
         "OriginalFile": {
           "Description": "Sets the current working file in the flow to the original file that started the flow",
           "Outputs": {
