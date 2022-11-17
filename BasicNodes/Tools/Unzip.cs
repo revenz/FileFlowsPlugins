@@ -46,7 +46,7 @@ public class Unzip : Node
 
             string destDir = args.ReplaceVariables(DestinationPath, stripMissing: true, cleanSpecialCharacters: true);
             
-            ZipFile.ExtractToDirectory(zip, destDir);
+            ZipFile.ExtractToDirectory(zip, destDir, true);
             return 1;
         }
         catch (Exception ex)
