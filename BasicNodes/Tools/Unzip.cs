@@ -36,7 +36,7 @@ public class Unzip : Node
     {
         try
         {
-            var zip = args.ReplaceVariables(Zip ?? string.Empty, stripMissing: true)?.EmptyAsNull() ?? args.WorkingFile);
+            var zip = args.ReplaceVariables(Zip ?? string.Empty, stripMissing: true)?.EmptyAsNull() ?? args.WorkingFile;
             
             if (System.IO.File.Exists(zip) == false)
             {
