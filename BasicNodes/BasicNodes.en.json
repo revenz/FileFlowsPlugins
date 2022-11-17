@@ -311,6 +311,18 @@
             "Body-Help": "The body of the request being sent.  Variables can be used in this field."
           }
         },
+        "Unzip": {
+          "Description": "Allows you to unzip a file",
+          "Outputs": {
+            "1": "File Unzipped"
+          },
+          "Fields": {
+            "DestinationPath": "Destination Folder",
+            "DestinationPath-Help": "The destination folder where to extract the zip file.",
+            "Zip": "Zip File",
+            "Zip-Help": "The filename of the zip to extract.  Can be left blank and if so the current working file will be used."
+          }
+        },,
         "Zip": {
           "Description": "Allows you to zip the input",
           "Outputs": {
