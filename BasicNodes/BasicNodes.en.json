@@ -322,7 +322,7 @@
             "Zip": "Zip File",
             "Zip-Help": "The filename of the zip to extract.  Can be left blank and if so the current working file will be used."
           }
-        },,
+        },
         "Zip": {
           "Description": "Allows you to zip the input",
           "Outputs": {
