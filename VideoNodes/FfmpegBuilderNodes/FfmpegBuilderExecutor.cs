@@ -1,6 +1,7 @@
 ﻿using FileFlows.Plugin;
 using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
 using System.Runtime.InteropServices;
+using FileFlows.VideoNodes.Helpers;
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes
 {
@@ -112,9 +113,19 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
                 "-probesize", VideoInfoHelper.ProbeSize + "M"
             });
 
-            if (HardwareDecoding)
+            
+            bool useHardwareEncoding = HardwareDecoding;
+            if (Environment.GetEnvironmentVariable("HW_OFF") == "1")
+                useHardwareEncoding = false;
+            if (useHardwareEncoding)
             {
                 startArgs.AddRange(GetHardwareDecodingArgs());
+            }
+            
+            if (ffArgs.Any(x => x.Contains("vaapi") && Helpers.VaapiHelper.VaapiLinux))
+            {
+                startArgs.Add("-vaapi_device");
+                startArgs.Add(VaapiHelper.VaapiRenderDevice);
             }
 
             foreach (var file in model.InputFiles)
@@ -194,7 +205,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
                 {
                     if (hw == null)
                         continue;
-                    if (CanUseHardwareEncoding.DisabledByVariables(Args, string.Join(" ", hw)))
+                    if (CanUseHardwareEncoding.DisabledByVariables(Args, hw))
                         continue;
                     try
                     {

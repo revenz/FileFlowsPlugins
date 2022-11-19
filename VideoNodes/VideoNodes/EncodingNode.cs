@@ -88,10 +88,10 @@ namespace FileFlows.VideoNodes
                 // try find best hevc encoder
                 foreach(string vidparam in new [] { "hevc_nvenc -preset hq", "hevc_qsv -global_quality 28 -load_plugin hevc_hw", "hevc_amf", "hevc_vaapi" })
                 {
-                    if (CanUseHardwareEncoding.DisabledByVariables(Args, vidparam))
+                    if (CanUseHardwareEncoding.DisabledByVariables(Args, vidparam.Split(' ')))
                         continue;
 
-                    bool canProcess = CanUseHardwareEncoding.CanProcess(Args, ffmpeg, vidparam);
+                    bool canProcess = CanUseHardwareEncoding.CanProcess(Args, ffmpeg, vidparam.Split(' '));
                     if (canProcess)
                         return vidparam;
                 }
@@ -102,7 +102,7 @@ namespace FileFlows.VideoNodes
                 // try find best hevc encoder
                 foreach (string vidparam in new[] { "h264_nvenc", "h264_qsv", "h264_amf", "h264_vaapi" })
                 {
-                    bool canProcess = CanUseHardwareEncoding.CanProcess(Args, ffmpeg, vidparam);
+                    bool canProcess = CanUseHardwareEncoding.CanProcess(Args, ffmpeg, new [] { vidparam });
                     if (canProcess)
                         return vidparam;
                 }

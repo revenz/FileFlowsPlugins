@@ -191,6 +191,18 @@
             "AdditionalFilesFromOriginal-Help": "If the additional files should be moved from the working directory or from the original directory.  Turn on for original directory."
           }
         },
+        "OlderThan": {
+          "Description": "Checks if a folder is older than the range specified",
+          "Outputs": {
+            "1": "File is older",
+            "2": "File is not older"
+          },
+          "Fields": {
+            "Number": "Number",
+            "Unit": "Unit",
+            "Date": "Date"
+          }
+        },
         "OriginalFile": {
           "Description": "Sets the current working file in the flow to the original file that started the flow",
           "Outputs": {
@@ -297,6 +309,18 @@
             "HeadersValue": "Value",
             "Body": "Body",
             "Body-Help": "The body of the request being sent.  Variables can be used in this field."
+          }
+        },
+        "Unzip": {
+          "Description": "Allows you to unzip a file",
+          "Outputs": {
+            "1": "File Unzipped"
+          },
+          "Fields": {
+            "DestinationPath": "Destination Folder",
+            "DestinationPath-Help": "The destination folder where to extract the zip file.",
+            "Zip": "Zip File",
+            "Zip-Help": "The filename of the zip to extract.  Can be left blank and if so the current working file will be used."
           }
         },
         "Zip": {
