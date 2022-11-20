@@ -8,12 +8,37 @@ namespace FileFlows.AudioNodes.AudioBooks;
 /// </summary>
 public class CreateAudioBook: AudioNode
 {
+    /// <summary>
+    /// Gets the icon
+    /// </summary>
     public override string Icon => "fas fa-book";
 
+    /// <summary>
+    /// Gets the number of inputs
+    /// </summary>
     public override int Inputs => 1;
     
+    /// <summary>
+    /// Gets the number of outputs
+    /// </summary>
     public override int Outputs => 2;
 
+    /// <summary>
+    /// Gets the Help URL
+    /// </summary>
+    public override string HelpUrl => "https://docs.fileflows.com/plugins/audio-nodes/create-audio-book";
+
+    /// <summary>
+    /// Gets the node type
+    /// </summary>
+    public override FlowElementType Type => FlowElementType.Process;
+
+    
+    /// <summary>
+    /// Executes the node
+    /// </summary>
+    /// <param name="args">the node parameters</param>
+    /// <returns>the result of the execution</returns>
     public override int Execute(NodeParameters args)
     {
         var ffmpeg = GetFFmpeg(args);
