@@ -1,7 +1,7 @@
 using System.Text.RegularExpressions;
 using FileFlows.Plugin;
 
-namespace FileFlows.AudioNodes.AudioBooks;
+namespace FileFlows.AudioNodes;
 
 /// <summary>
 /// Creates an audio book from audio files in a directory
