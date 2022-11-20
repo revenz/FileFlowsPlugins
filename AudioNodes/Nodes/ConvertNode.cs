@@ -153,7 +153,7 @@ namespace FileFlows.AudioNodes
             if (AudioInfo == null)
                 return -1;
 
-            string ffmpegExe = GetFFMpegExe(args);
+            string ffmpegExe = GetFFmpeg(args);
             if (string.IsNullOrEmpty(ffmpegExe))
                 return -1;
 
@@ -231,7 +231,7 @@ namespace FileFlows.AudioNodes
 
         public override int Execute(NodeParameters args)
         {
-            string ffmpegExe = GetFFMpegExe(args);
+            string ffmpegExe = GetFFmpeg(args);
             if (string.IsNullOrEmpty(ffmpegExe))
                 return -1;
 

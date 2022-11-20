@@ -20,7 +20,7 @@ public class AudioFileNormalization : AudioNode
     {
         try
         {
-            string ffmpegExe = GetFFMpegExe(args);
+            string ffmpegExe = GetFFmpeg(args);
             if (string.IsNullOrEmpty(ffmpegExe))
                 return -1;
 

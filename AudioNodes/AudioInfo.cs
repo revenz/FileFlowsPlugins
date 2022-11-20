@@ -12,6 +12,9 @@ namespace FileFlows.AudioNodes
         public DateTime Date { get; set; }
         public string[] Genres { get; set; }
         public string Encoder { get; set; }
+        /// <summary>
+        /// Gets or sets duration in SECONDS
+        /// </summary>
         public long Duration { get; set; }
         public long Bitrate { get; set; }
         public string Codec { get; set; }

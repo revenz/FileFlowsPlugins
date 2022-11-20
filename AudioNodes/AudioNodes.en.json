@@ -79,6 +79,13 @@
           "Bitrate": "Bitrate",
           "Bitrate-Help": "The bitrate for the new WAV file, the higher the bitrate the better the quality but larger the file.  128 Kbps is the recommended rate."
         }
+      },
+      "CreateAudioBook": {
+        "Description": "Creates a audio book from audio files found in input directory",
+        "Outputs": {
+          "1": "Audio book created",
+          "2": "Audio book not created"          
+        }
       }
     }
   }

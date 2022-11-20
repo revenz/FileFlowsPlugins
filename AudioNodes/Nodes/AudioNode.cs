@@ -6,18 +6,18 @@ namespace FileFlows.AudioNodes
     {
         public override string Icon => "fas fa-music";
 
-        protected string GetFFMpegExe(NodeParameters args)
+        protected string GetFFmpeg(NodeParameters args)
         {
             string ffmpeg = args.GetToolPath("FFMpeg");
             if (string.IsNullOrEmpty(ffmpeg))
             {
-                args.Logger.ELog("FFMpeg tool not found.");
+                args.Logger.ELog("FFmpeg tool not found.");
                 return "";
             }
             var fileInfo = new FileInfo(ffmpeg);
             if (fileInfo.Exists == false)
             {
-                args.Logger.ELog("FFMpeg tool configured by ffmpeg file does not exist.");
+                args.Logger.ELog("FFmpeg tool configured by ffmpeg file does not exist.");
                 return "";
             }
             return fileInfo.FullName;
@@ -34,7 +34,7 @@ namespace FileFlows.AudioNodes
             var fileInfo = new FileInfo(ffmpeg);
             if (fileInfo.Exists == false)
             {
-                args.Logger.ELog("FFMpeg tool configured by ffmpeg file does not exist.");
+                args.Logger.ELog("FFmpeg tool configured by ffmpeg file does not exist.");
                 return "";
             }
             return fileInfo.DirectoryName;
