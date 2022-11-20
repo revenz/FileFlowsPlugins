@@ -24,6 +24,7 @@ public class CreateAudioBookTests
         const string folder = @"/home/john/Music/Audio Books/Charlie and the Great Glass Elevator";
         RunTest(folder);
     }
+    
     [TestMethod]
     public void CreateAudioBookTest_03()
     {
