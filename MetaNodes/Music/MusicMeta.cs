@@ -12,6 +12,7 @@ namespace MetaNodes.Music
 
         private Dictionary<string, object> _Variables;
         public override Dictionary<string, object> Variables => _Variables;
+        public override FlowElementType Type => FlowElementType.Process;
         public override string Icon => "fas fa-music";
 
         public MusicMeta()

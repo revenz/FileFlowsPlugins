@@ -7,6 +7,7 @@ public class ComicExtractor : Node
     public override int Inputs => 1;
     public override int Outputs => 1;
     public override FlowElementType Type => FlowElementType.Process;
+
     public override string Icon => "fas fa-file-pdf";
     public override string HelpUrl => "https://docs.fileflows.com/plugins/comic-nodes/comic-extractor";
 
