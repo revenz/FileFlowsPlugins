@@ -123,6 +123,10 @@ namespace FileFlows.VideoNodes
                 metadata.Add(prefix + "Resolution", stream.Width + "x" + stream.Height + (stream.HDR ? " (HDR)" : string.Empty));
                 if(stream.Bitrate > 0)
                     metadata.Add(prefix + "Bitrate", stream.Bitrate);
+                if(stream.HDR)
+                    metadata.Add(prefix + "HDR", true);
+                if(stream.DolbyVision)
+                    metadata.Add(prefix + "DolbyVision", true);
             }
             foreach (var (stream, i) in videoInfo.AudioStreams.Select((value, i) => (value, i)))
             {

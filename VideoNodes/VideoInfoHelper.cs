@@ -55,7 +55,7 @@ namespace FileFlows.VideoNodes
             }
             if (string.IsNullOrEmpty(ffMpegExe) || File.Exists(ffMpegExe) == false)
             {
-                Logger.ELog("FFMpeg not found: " + (ffMpegExe ?? "not passed in"));
+                Logger.ELog("FFmpeg not found: " + (ffMpegExe ?? "not passed in"));
                 return vi;
             }
 
@@ -269,6 +269,8 @@ namespace FileFlows.VideoNodes
             // "HDR is only the new transfer function" (PQ or HLG)
             vs.HDR = info.Contains("arib-std-b67") || info.Contains("smpte2084");
 
+            vs.DolbyVision = info.Contains("DOVI configuration record");
+            
             return vs;
         }
 
