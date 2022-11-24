@@ -55,7 +55,7 @@ namespace FileFlows.VideoNodes
             }
             if (string.IsNullOrEmpty(ffMpegExe) || File.Exists(ffMpegExe) == false)
             {
-                Logger.ELog("FFMpeg not found: " + (ffMpegExe ?? "not passed in"));
+                Logger.ELog("FFmpeg not found: " + (ffMpegExe ?? "not passed in"));
                 return vi;
             }
 
