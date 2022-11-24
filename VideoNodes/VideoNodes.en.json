@@ -193,7 +193,7 @@
           "1": "Tracks re-ordered in FFMPEG Builder",
           "2": "Tracks NOT re-ordered"
         },
-        "Description": "Allows you to reorder tracks in the preferred order.\n\nEnter the languages/audio codecs/channels in the order you want.  Any not listed will be ordered after the ones entered in their original order.\nIf there are multiple tracks with same language/codec/channels, they will be ordered first by the order you entered, then in their original order.\n\nOutput 1: Tracks were reordered\nOutput 2: Tracks did not need reordering",
+        "Description": "Allows you to reorder tracks in the preferred order.\n\nEnter the languages/audio codecs/channels in the order you want.  Any not listed will be ordered after the ones entered in their original order.\nIf there are multiple tracks with same language/codec/channels, they will be ordered first by the order you entered, then in their original order.\n\nNote the first track after reordering will be set as the default track..\n\nOutput 1: Tracks were reordered\nOutput 2: Tracks did not need reordering",
         "Fields": {
           "StreamType": "Type",
           "StreamType-Help": "The type of tracks to reorder in the FFMPEG Builder",
@@ -359,7 +359,7 @@
           "1": "FFMPEG Builder set to remux to MP4"
         }
       },
-      "FfmpegBuilderRemuxToMOV": {
+      "FfmpegBuilderRemuxToMov": {
         "Label": "FFMPEG Builder: Remux to MOV",
         "Descritption": "Remuxes a video file into a MOV container.",
         "Outputs": {

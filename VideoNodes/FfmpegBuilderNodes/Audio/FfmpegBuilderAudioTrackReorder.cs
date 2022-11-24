@@ -52,6 +52,11 @@ public class FfmpegBuilderAudioTrackReorder : FfmpegBuilderNode
 
             bool same = AreSame(Model.SubtitleStreams, reordered);
 
+            for(int i = 0; i < reordered.Count; i++)
+            {
+                reordered[i].IsDefault = i == 0;
+            }
+            
             if (same)
             {
                 args.Logger?.ILog("No subtitle tracks need reordering");
@@ -69,14 +74,15 @@ public class FfmpegBuilderAudioTrackReorder : FfmpegBuilderNode
 
             bool same = AreSame(Model.AudioStreams, reordered);
 
+            for(int i = 0; i < reordered.Count; i++)
+            {
+                reordered[i].IsDefault = i == 0;
+            }
+            
             if (same)
             {
                 args.Logger?.ILog("No audio tracks need reordering");
                 return 2;
-            }
-            for(int i = 0; i < reordered.Count; i++)
-            {
-                reordered[i].IsDefault = i == 0;
             }
 
             Model.AudioStreams = reordered;
