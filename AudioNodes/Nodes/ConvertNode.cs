@@ -12,7 +12,7 @@ namespace FileFlows.AudioNodes
         {
             if (Bitrate == 0)
             {
-                // same as source
+                // automatic
                 return new List<string>
                 {
                     "-c:a",
@@ -37,7 +37,7 @@ namespace FileFlows.AudioNodes
         {
             if (Bitrate == 0)
             {
-                // same as source
+                // automatic
                 return new List<string>
                 {
                     "-c:a",
@@ -66,7 +66,7 @@ namespace FileFlows.AudioNodes
         {
             if (Bitrate == 0)
             {
-                // same as source
+                // automatic
                 return new List<string>
                 {
                     "-c:a",
@@ -91,7 +91,7 @@ namespace FileFlows.AudioNodes
         {
             if (Bitrate == 0)
             {
-                // same as source
+                // automatic
                 return new List<string>
                 {
                     "-c:a",
@@ -116,7 +116,7 @@ namespace FileFlows.AudioNodes
     //    {
     //        if (Bitrate == 0)
     //        {
-    //            // same as source
+    //            // automatic
     //            return new List<string>
     //            {
     //                "-c:a",
@@ -180,7 +180,7 @@ namespace FileFlows.AudioNodes
 
             if (Bitrate == 0)
             {
-                // same as source
+                // automatic
                 return new List<string>
                 {
                     "-c:a",
@@ -239,7 +239,7 @@ namespace FileFlows.AudioNodes
         {
             if (Bitrate == 0)
             {
-                // same as source
+                // automatic
                 return new List<string>
                 {
                     "-map_metadata",
@@ -273,7 +273,7 @@ namespace FileFlows.AudioNodes
                 {
                     _BitrateOptions = new List<ListOption>
                     {
-                        new () { Label = "Same as source", Value = 0 },
+                        new () { Label = "Automatic", Value = 0 },
                         new () { Label = "64 Kbps", Value = 64},
                         new () { Label = "96 Kbps", Value = 96},
                         new () { Label = "128 Kbps", Value = 128},
