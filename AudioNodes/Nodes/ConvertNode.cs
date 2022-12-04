@@ -1,11 +1,5 @@
 ﻿using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FileFlows.AudioNodes
 {
@@ -16,6 +10,15 @@ namespace FileFlows.AudioNodes
         public static List<ListOption> BitrateOptions => ConvertNode.BitrateOptions;
         protected override List<string> GetArguments()
         {
+            if (Bitrate == 0)
+            {
+                // same as source
+                return new List<string>
+                {
+                    "-c:a",
+                    "mp3"
+                };
+            }
             return new List<string>
             {
                 "-c:a",
@@ -32,6 +35,15 @@ namespace FileFlows.AudioNodes
         public static List<ListOption> BitrateOptions => ConvertNode.BitrateOptions;
         protected override List<string> GetArguments()
         {
+            if (Bitrate == 0)
+            {
+                // same as source
+                return new List<string>
+                {
+                    "-c:a",
+                    "pcm_s16le"
+                };
+            }
             return new List<string>
             {
                 "-c:a",
@@ -52,6 +64,15 @@ namespace FileFlows.AudioNodes
 
         protected override List<string> GetArguments()
         {
+            if (Bitrate == 0)
+            {
+                // same as source
+                return new List<string>
+                {
+                    "-c:a",
+                    "aac"
+                };
+            }
             return new List<string>
             {
                 "-c:a",
@@ -68,6 +89,15 @@ namespace FileFlows.AudioNodes
         public static List<ListOption> BitrateOptions => ConvertNode.BitrateOptions;
         protected override List<string> GetArguments()
         {
+            if (Bitrate == 0)
+            {
+                // same as source
+                return new List<string>
+                {
+                    "-c:a",
+                    "libvorbis"
+                };
+            }
             return new List<string>
             {
                 "-c:a",
@@ -84,6 +114,16 @@ namespace FileFlows.AudioNodes
     //    public static List<ListOption> BitrateOptions => ConvertNode.BitrateOptions;
     //    protected override List<string> GetArguments()
     //    {
+    //        if (Bitrate == 0)
+    //        {
+    //            // same as source
+    //            return new List<string>
+    //            {
+    //                "-c:a",
+    //                "c:a",
+    //                //            "flac"
+    //            };
+    //        }
     //        return new List<string>
     //        {
     //            "-c:a",
@@ -138,6 +178,16 @@ namespace FileFlows.AudioNodes
                 _ => Codec.ToLower()
             };
 
+            if (Bitrate == 0)
+            {
+                // same as source
+                return new List<string>
+                {
+                    "-c:a",
+                    codec
+                };
+            }
+            
             return new List<string>
             {
                 "-c:a",
@@ -187,6 +237,16 @@ namespace FileFlows.AudioNodes
 
         protected virtual List<string> GetArguments()
         {
+            if (Bitrate == 0)
+            {
+                // same as source
+                return new List<string>
+                {
+                    "-map_metadata",
+                    "0:0"
+                };
+            }
+
             return new List<string>
             {
                 "-map_metadata",
@@ -213,15 +273,16 @@ namespace FileFlows.AudioNodes
                 {
                     _BitrateOptions = new List<ListOption>
                     {
-                        new ListOption { Label = "64 Kbps", Value = 64},
-                        new ListOption { Label = "96 Kbps", Value = 96},
-                        new ListOption { Label = "128 Kbps", Value = 128},
-                        new ListOption { Label = "160 Kbps", Value = 160},
-                        new ListOption { Label = "192 Kbps", Value = 192},
-                        new ListOption { Label = "224 Kbps", Value = 224},
-                        new ListOption { Label = "256 Kbps", Value = 256},
-                        new ListOption { Label = "288 Kbps", Value = 288},
-                        new ListOption { Label = "320 Kbps", Value = 320},
+                        new () { Label = "Same as source", Value = 0 },
+                        new () { Label = "64 Kbps", Value = 64},
+                        new () { Label = "96 Kbps", Value = 96},
+                        new () { Label = "128 Kbps", Value = 128},
+                        new () { Label = "160 Kbps", Value = 160},
+                        new () { Label = "192 Kbps", Value = 192},
+                        new () { Label = "224 Kbps", Value = 224},
+                        new () { Label = "256 Kbps", Value = 256},
+                        new () { Label = "288 Kbps", Value = 288},
+                        new () { Label = "320 Kbps", Value = 320},
                     };
                 }
                 return _BitrateOptions;
@@ -239,7 +300,7 @@ namespace FileFlows.AudioNodes
             //if (AudioInfo == null)
             //    return -1;
 
-            if (Bitrate < 64 || Bitrate > 320)
+            if (Bitrate != 0 && (Bitrate < 64 || Bitrate > 320))
             {
                 args.Logger?.ILog("Bitrate not set or invalid, setting to 192kbps");
                 Bitrate = 192;
