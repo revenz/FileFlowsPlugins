@@ -211,13 +211,13 @@ namespace FileFlows.AudioNodes
             {
                 if (SkipIfCodecMatches)
                 {
-                    args.Logger?.ILog($"Audio file already '{Codec}' at bitrate '{AudioInfo.Bitrate}', and set to skip if codec matches");
+                    args.Logger?.ILog($"Audio file already '{Codec}' at bitrate '{AudioInfo.Bitrate} bps', and set to skip if codec matches");
                     return 2;
                 }
 
-                if(AudioInfo.Bitrate <= Bitrate)
+                if(AudioInfo.Bitrate <= Bitrate * 1024) // this bitrate is in Kbps, whereas AudioInfo.Bitrate is bytes per second
                 {
-                    args.Logger?.ILog($"Audio file already '{Codec}' at bitrate '{AudioInfo.Bitrate}'");
+                    args.Logger?.ILog($"Audio file already '{Codec}' at bitrate '{AudioInfo.Bitrate} bps'");
                     return 2;
                 }
             }

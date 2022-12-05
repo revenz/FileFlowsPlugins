@@ -161,9 +161,12 @@ namespace FileFlows.AudioNodes
                             string br = line.Substring(line.ToLower().IndexOf("bitrate:") + "bitrate:".Length).Trim();
                             if (br.IndexOf(" ") > 0)
                             {
+                                int multiplier = br.ToLower().IndexOf("kb/s", StringComparison.Ordinal) > 0 ? 1024 : 
+                                                 br.ToLower().IndexOf("mb/s", StringComparison.Ordinal) > 0 ? 1024 * 1024 : 
+                                                 1; 
                                 br = br.Substring(0, br.IndexOf(" "));
                                 if (long.TryParse(br, out long value))
-                                    mi.Bitrate = value;
+                                    mi.Bitrate = value * multiplier;
                             }
                         }
 

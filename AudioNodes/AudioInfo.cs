@@ -16,6 +16,9 @@ namespace FileFlows.AudioNodes
         /// Gets or sets duration in SECONDS
         /// </summary>
         public long Duration { get; set; }
+        /// <summary>
+        /// Gets or sets the bitrate (in bytes per second)
+        /// </summary>
         public long Bitrate { get; set; }
         public string Codec { get; set; }
         public long Channels { get; set; }
