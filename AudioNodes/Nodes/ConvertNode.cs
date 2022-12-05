@@ -8,7 +8,7 @@ namespace FileFlows.AudioNodes
         public override string HelpUrl => "https://docs.fileflows.com/plugins/audio-nodes/convert-to-mp3";
         protected override string Extension => "mp3";
         public static List<ListOption> BitrateOptions => ConvertNode.BitrateOptions;
-        protected override List<string> GetArguments()
+        protected override List<string> GetArguments(NodeParameters args)
         {
             if (Bitrate == 0)
             {
@@ -24,7 +24,7 @@ namespace FileFlows.AudioNodes
                 "-c:a",
                 "mp3",
                 "-ab",
-                Bitrate + "k"
+                (Bitrate == -1 ? GetSourceBitrate(args).ToString() : Bitrate + "k")
             };
         }
     }
@@ -33,7 +33,7 @@ namespace FileFlows.AudioNodes
         public override string HelpUrl => "https://docs.fileflows.com/plugins/audio-nodes/convert-to-wav";
         protected override string Extension => "wav";
         public static List<ListOption> BitrateOptions => ConvertNode.BitrateOptions;
-        protected override List<string> GetArguments()
+        protected override List<string> GetArguments(NodeParameters args)
         {
             if (Bitrate == 0)
             {
@@ -49,7 +49,7 @@ namespace FileFlows.AudioNodes
                 "-c:a",
                 "pcm_s16le",
                 "-ab",
-                Bitrate + "k"
+                (Bitrate == -1 ? GetSourceBitrate(args).ToString() : Bitrate + "k")
             };
         }
     }
@@ -62,7 +62,7 @@ namespace FileFlows.AudioNodes
 
         protected override bool SetId3Tags => true;
 
-        protected override List<string> GetArguments()
+        protected override List<string> GetArguments(NodeParameters args)
         {
             if (Bitrate == 0)
             {
@@ -78,7 +78,7 @@ namespace FileFlows.AudioNodes
                 "-c:a",
                 "aac",
                 "-ab",
-                Bitrate + "k"
+                (Bitrate == -1 ? GetSourceBitrate(args).ToString() : Bitrate + "k")
             };
         }
     }
@@ -87,7 +87,7 @@ namespace FileFlows.AudioNodes
         public override string HelpUrl => "https://docs.fileflows.com/plugins/audio-nodes/convert-to-ogg";
         protected override string Extension => "ogg";
         public static List<ListOption> BitrateOptions => ConvertNode.BitrateOptions;
-        protected override List<string> GetArguments()
+        protected override List<string> GetArguments(NodeParameters args)
         {
             if (Bitrate == 0)
             {
@@ -103,7 +103,7 @@ namespace FileFlows.AudioNodes
                 "-c:a",
                 "libvorbis",
                 "-ab",
-                Bitrate + "k"
+                (Bitrate == -1 ? GetSourceBitrate(args).ToString() : Bitrate + "k")
             };
         }
     }
@@ -169,7 +169,7 @@ namespace FileFlows.AudioNodes
             }
         }
 
-        protected override List<string> GetArguments()
+        protected override List<string> GetArguments(NodeParameters args)
         {
             string codec = Codec switch 
             {
@@ -193,7 +193,7 @@ namespace FileFlows.AudioNodes
                 "-c:a",
                 codec,
                 "-ab",
-                Bitrate + "k"
+                (Bitrate == -1 ? GetSourceBitrate(args).ToString() : Bitrate + "k")
             };
         }
 
@@ -230,12 +230,18 @@ namespace FileFlows.AudioNodes
     {
         protected abstract string Extension { get; }
 
+        protected long GetSourceBitrate(NodeParameters args)
+        {
+            var info = GetAudioInfo(args);
+            return info.Bitrate;
+        }
+
         protected virtual bool SetId3Tags => false;
 
         public override int Inputs => 1;
         public override int Outputs => 1;
 
-        protected virtual List<string> GetArguments()
+        protected virtual List<string> GetArguments(NodeParameters args)
         {
             if (Bitrate == 0)
             {
@@ -252,7 +258,7 @@ namespace FileFlows.AudioNodes
                 "-map_metadata",
                 "0:0",
                 "-ab",
-                Bitrate + "k"
+                (Bitrate == -1 ? GetSourceBitrate(args).ToString() : Bitrate + "k")
             };
         }
 
@@ -274,6 +280,7 @@ namespace FileFlows.AudioNodes
                     _BitrateOptions = new List<ListOption>
                     {
                         new () { Label = "Automatic", Value = 0 },
+                        new () { Label = "Same as source", Value = -1 },
                         new () { Label = "64 Kbps", Value = 64},
                         new () { Label = "96 Kbps", Value = 96},
                         new () { Label = "128 Kbps", Value = 128},
@@ -300,7 +307,7 @@ namespace FileFlows.AudioNodes
             //if (AudioInfo == null)
             //    return -1;
 
-            if (Bitrate != 0 && (Bitrate < 64 || Bitrate > 320))
+            if (Bitrate != 0 && Bitrate != -1 && (Bitrate < 64 || Bitrate > 320))
             {
                 args.Logger?.ILog("Bitrate not set or invalid, setting to 192kbps");
                 Bitrate = 192;
@@ -310,7 +317,7 @@ namespace FileFlows.AudioNodes
 
             string outputFile = Path.Combine(args.TempPath, Guid.NewGuid().ToString() + "." + Extension);
 
-            var ffArgs = GetArguments();
+            var ffArgs = GetArguments(args);
             ffArgs.Insert(0, "-hide_banner");
             ffArgs.Insert(1, "-y"); // tells ffmpeg to replace the file if already exists, which it shouldnt but just incase
             ffArgs.Insert(2, "-i");
