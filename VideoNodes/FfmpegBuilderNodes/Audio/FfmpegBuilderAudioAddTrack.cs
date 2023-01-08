@@ -31,6 +31,7 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
                     new ListOption { Label = "AC3", Value = "ac3"},
                     new ListOption { Label = "EAC3", Value = "eac3" },
                     new ListOption { Label = "MP3", Value = "mp3"},
+                    new ListOption { Label = "OPUS", Value = "opus"},
                 };
             }
             return _CodecOptions;
@@ -203,6 +204,9 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
 
     internal static string[] GetNewAudioTrackParameters(string source, string codec, float channels, int bitrate)
     {
+        if (codec == "opus")
+            codec = "libopus";
+
         if (channels == 0)
         {
             // same as source

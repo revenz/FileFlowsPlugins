@@ -29,6 +29,7 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
                     new ListOption { Label = "AC3", Value = "ac3"},
                     new ListOption { Label = "EAC3", Value = "eac3" },
                     new ListOption { Label = "MP3", Value = "mp3"},
+                    new ListOption { Label = "OPUS", Value = "opus"},
                 };
             }
             return _CodecOptions;

@@ -8,16 +8,15 @@ using VideoNodes.Tests;
 namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests;
 
 [TestClass]
-public class FfmpegBuilder_AudioConverterTests
+public class FfmpegBuilder_AudioConverterTests: TestBase
 {
     VideoInfo vii;
     NodeParameters args;
     private void Prepare()
     {
-        const string file = @"D:\videos\unprocessed\basic.mkv";
+        string file = Path.Combine(TestPath, "basic.mkv");
         var logger = new TestLogger();
-        const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
-        var vi = new VideoInfoHelper(ffmpeg, logger);
+        var vi = new VideoInfoHelper(FfmpegPath, logger);
         vii = vi.Read(file);
         vii.AudioStreams = new List<AudioStream>
         {
@@ -60,8 +59,8 @@ public class FfmpegBuilder_AudioConverterTests
             }
         };
         args = new NodeParameters(file, logger, false, string.Empty);
-        args.GetToolPathActual = (string tool) => ffmpeg;
-        args.TempPath = @"D:\videos\temp";
+        args.GetToolPathActual = (string tool) => FfmpegPath;
+        args.TempPath = TempPath;
         args.Parameters.Add("VideoInfo", vii);
 
 
@@ -233,6 +232,40 @@ public class FfmpegBuilder_AudioConverterTests
     //    Assert.AreEqual("AAC", best.Codec);
     //    Assert.AreEqual(2f, best.Channels);
     //}
+    
+    [TestMethod]
+    public void FfmpegBuilder_AudioConverter_Opus_All()
+    {
+        string file = Path.Combine(TestPath, "basic.mkv");
+        var logger = new TestLogger();
+        var vi = new VideoInfoHelper(FfmpegPath, logger);
+        var vii = vi.Read(file);
+        var args = new NodeParameters(file, logger, false, string.Empty);
+        args.GetToolPathActual = (string tool) => FfmpegPath;
+        args.TempPath = TempPath;
+        args.Parameters.Add("VideoInfo", vii);
+
+        FfmpegBuilderStart ffStart = new();
+        ffStart.PreExecute(args);
+        Assert.AreEqual(1, ffStart.Execute(args));
+
+        FfmpegBuilderAudioConverter ffAudioConvert = new();
+        ffAudioConvert.Codec = "opus";
+        ffAudioConvert.PreExecute(args);
+        int result = ffAudioConvert.Execute(args);
+        Assert.AreEqual(1, result);
+        
+        FfmpegBuilderExecutor ffExecutor = new();
+        ffExecutor.HardwareDecoding = true;
+        ffExecutor.PreExecute(args);
+        result = ffExecutor.Execute(args);
+
+        string log = logger.ToString();
+        Assert.AreEqual(1, result);
+
+        var newInfo = vi.Read(args.WorkingFile);
+        Assert.AreEqual("opus", newInfo.AudioStreams[0].Codec);
+    }
 }
 
 #endif
