@@ -9,7 +9,7 @@ namespace FileFlows.BasicNodes.File
     public class MoveFile : Node
     {
         public override int Inputs => 1;
-        public override int Outputs => 1;
+        public override int Outputs => 2;
         public override FlowElementType Type => FlowElementType.Process;
         public override string Icon => "fas fa-file-export";
 
@@ -73,7 +73,7 @@ namespace FileFlows.BasicNodes.File
                 }
                 catch(Exception ex)
                 {
-                    args.Logger.WLog("Error moving additinoal files: " + ex.Message);
+                    args.Logger.WLog("Error moving additional files: " + ex.Message);
                 }
             }
 
@@ -88,6 +88,7 @@ namespace FileFlows.BasicNodes.File
                 catch(Exception ex)
                 {
                     args.Logger?.WLog("Failed to delete original file: " + ex.Message);
+                    return 2;
                 }
             }
             return 1;

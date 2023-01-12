@@ -174,7 +174,8 @@
         "MoveFile": {
           "Description": "Moves a file to the destination folder",
           "Outputs": {
-            "1": "File moved"
+            "1": "File moved",
+            "2": "File moved, however original file could not be deleted"
           },
           "Fields": {
             "DestinationPath": "Destination Folder",
