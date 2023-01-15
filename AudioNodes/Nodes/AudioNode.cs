@@ -41,7 +41,7 @@ namespace FileFlows.AudioNodes
         }
 
         private const string Audio_INFO = "AudioInfo";
-        protected void SetAudioInfo(NodeParameters args, AudioInfo AudioInfo, Dictionary<string, object> variables)
+        internal void SetAudioInfo(NodeParameters args, AudioInfo AudioInfo, Dictionary<string, object> variables)
         {
             if (args.Parameters.ContainsKey(Audio_INFO))
                 args.Parameters[Audio_INFO] = AudioInfo;
@@ -129,7 +129,6 @@ namespace FileFlows.AudioNodes
 
         protected bool ReadAudioFileInfo(NodeParameters args, string ffmpegExe, string filename)
         {
-
             var AudioInfo = new AudioInfoHelper(ffmpegExe, args.Logger).Read(filename);
             if (AudioInfo.Duration == 0)
             {

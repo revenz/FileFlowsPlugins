@@ -159,10 +159,10 @@ namespace FileFlows.AudioNodes
                 {
                     _CodecOptions = new List<ListOption>
                     {
-                        new ListOption { Label = "AAC", Value = "aac"},
-                        new ListOption { Label = "MP3", Value = "MP3"},
-                        new ListOption { Label = "OGG", Value = "ogg"},
-                        new ListOption { Label = "WAV", Value = "wav"},
+                        new () { Label = "AAC", Value = "aac"},
+                        new () { Label = "MP3", Value = "MP3"},
+                        new () { Label = "OGG", Value = "ogg"},
+                        new () { Label = "WAV", Value = "wav"},
                     };
                 }
                 return _CodecOptions;
@@ -215,9 +215,10 @@ namespace FileFlows.AudioNodes
                     return 2;
                 }
 
+                args.Logger?.ILog($"Comparing bitrate {AudioInfo.Bitrate} is less than or equal to {(Bitrate * 1024)}");
                 if(AudioInfo.Bitrate <= Bitrate * 1024) // this bitrate is in Kbps, whereas AudioInfo.Bitrate is bytes per second
                 {
-                    args.Logger?.ILog($"Audio file already '{Codec}' at bitrate '{AudioInfo.Bitrate} bps'");
+                    args.Logger?.ILog($"Audio file already '{Codec}' at bitrate '{AudioInfo.Bitrate} bps ({(AudioInfo.Bitrate / 1024)} KiBps)'");
                     return 2;
                 }
             }
