@@ -33,6 +33,11 @@ public class VideoInfo
     /// Gets or sets the chapters in the file
     /// </summary>
     public List<Chapter> Chapters { get; set; } = new List<Chapter>();
+
+    /// <summary>
+    /// Gets or sets the attachments in the file
+    /// </summary>
+    public List<AttachmentStream> Attachments { get; set; } = new();
 }
 
 /// <summary>
@@ -179,4 +184,19 @@ public class Chapter
     /// Gets or sets the end of the chapter
     /// </summary>
     public TimeSpan End { get; set; }
+}
+
+/// <summary>
+/// Attachment stream
+/// </summary>
+public class AttachmentStream: VideoFileStream
+{
+    /// <summary>
+    /// Gets or sets the filename of the attachment
+    /// </summary>
+    public string FileName { get; set; }
+    /// <summary>
+    /// Gets or sets the mime type of the attachment
+    /// </summary>
+    public string MimeType { get; set; }
 }
