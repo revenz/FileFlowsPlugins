@@ -49,7 +49,6 @@ namespace FileFlows.VideoNodes
                 Args.Logger.ELog("FFmpeg variable not found.");
                 return string.Empty;
             }
-            if(ffmpeg == "/usr/lib/jellyfin-ffmpeg/ffmpeg")
             var fileInfo = new FileInfo(ffmpeg);
             if (fileInfo.Exists == false)
             {
