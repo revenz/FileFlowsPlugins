@@ -30,30 +30,31 @@ namespace FileFlows.VideoNodes
         public override string Icon => "fas fa-video";
 
         /// <summary>
-        /// Executed before execute, sets ffmpegexe etc
+        /// Executed before execute, sets ffmpeg executable etc
         /// </summary>
-        /// <param name="args">the node parametes</param>
+        /// <param name="args">the node parameters</param>
         /// <returns>true if successfully</returns>
         public override bool PreExecute(NodeParameters args)
         {
             this.Args = args;
-            this.FFMPEG = GetFFMpegExe();
+            this.FFMPEG = GetFFmpegExecutable();
             return string.IsNullOrEmpty(this.FFMPEG) == false;
         }
 
-        private string GetFFMpegExe()
+        private string GetFFmpegExecutable()
         {
-            string ffmpeg = Args.GetToolPath("FFMpeg");
+            string ffmpeg = Args.GetToolPath("FFmpeg")?.Trim() ?? string.Empty;
             if (string.IsNullOrEmpty(ffmpeg))
             {
-                Args.Logger.ELog("FFMpeg tool not found.");
-                return "";
+                Args.Logger.ELog("FFmpeg variable not found.");
+                return string.Empty;
             }
+            if(ffmpeg == "/usr/lib/jellyfin-ffmpeg/ffmpeg")
             var fileInfo = new FileInfo(ffmpeg);
             if (fileInfo.Exists == false)
             {
-                Args.Logger.ELog("FFMpeg tool configured by ffmpeg.exe file does not exist.");
-                return "";
+                Args.Logger.ELog("FFmpeg does not exist: " + ffmpeg);
+                return string.Empty;
             }
             return fileInfo.FullName;
         }

@@ -54,7 +54,7 @@ public class EmbyUpdater: Node
         {
             bool windows = path.StartsWith("\\") || Regex.IsMatch(path, @"^[a-zA-Z]:\\");
             string pathSeparator = windows ? "\\" : "/";
-            path = path.Substring(0, path.LastIndexOf(pathSeparator));
+            path = path.Substring(0, path.LastIndexOf(pathSeparator, StringComparison.Ordinal));
         }
 
 
@@ -62,6 +62,9 @@ public class EmbyUpdater: Node
         if (url.EndsWith("/") == false)
             url += "/";
         url += "Library/Media/Updated";
+        
+        args.Logger?.ILog("Url to call: " + url);
+        args.Logger?.ILog("Path to update: " + path);
 
         string body = System.Text.Json.JsonSerializer.Serialize(new {
             Updates = new object [] { new { Path = path } }
@@ -76,6 +79,7 @@ public class EmbyUpdater: Node
                 args.Logger?.WLog("Failed to update Emby:" + updateResponse.body);
             return 2;
         }
+        args.Logger?.DLog("Body response: " + (updateResponse.body ?? string.Empty));
         return 1;
     }
 
