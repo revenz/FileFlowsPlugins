@@ -79,7 +79,7 @@ public class EmbyUpdater: Node
                 args.Logger?.WLog("Failed to update Emby:" + updateResponse.body);
             return 2;
         }
-        args.Logger?.DLog("Body response: " + (updateResponse.body ?? string.Empty));
+        args.Logger?.ILog("Body response: " + (updateResponse.body ?? string.Empty));
         return 1;
     }
 
