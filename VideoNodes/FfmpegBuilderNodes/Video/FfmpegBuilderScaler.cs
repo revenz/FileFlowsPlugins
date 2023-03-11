@@ -31,6 +31,7 @@ public class FfmpegBuilderScaler : FfmpegBuilderNode
                     new ListOption { Value = "640:-2", Label = "480P"},
                     new ListOption { Value = "1280:-2", Label = "720P"},
                     new ListOption { Value = "1920:-2", Label = "1080P"},
+                    new ListOption { Value = "2560:-2", Label = "1440P"},
                     new ListOption { Value = "3840:-2", Label = "4K" }
                 };
             }
@@ -44,6 +45,7 @@ public class FfmpegBuilderScaler : FfmpegBuilderNode
             return -1;
 
         bool scale1920 = Resolution.StartsWith("1920");
+        bool scale2560 = Resolution.StartsWith("2560");
         bool scale4k= Resolution.StartsWith("3840");
         bool scale720 = Resolution.StartsWith("1280");
         bool scale480 = Resolution.StartsWith("640");
@@ -59,6 +61,8 @@ public class FfmpegBuilderScaler : FfmpegBuilderNode
                     return Scale();
                 if (scale1920 && width > 1920)
                     return Scale();
+                if (scale2560 && width > 2560)
+                    return Scale();
                 if (scale720 && width > 1280)
                     return Scale();
                 if (scale480 && width > 640)
@@ -67,6 +71,8 @@ public class FfmpegBuilderScaler : FfmpegBuilderNode
             }
             
             if (resolution == ResolutionHelper.Resolution.r1080p && scale1920)
+                return 2;
+            else if (resolution == ResolutionHelper.Resolution.r1440p && scale2560)
                 return 2;
             else if (resolution == ResolutionHelper.Resolution.r4k && scale4k)
                 return 2;
