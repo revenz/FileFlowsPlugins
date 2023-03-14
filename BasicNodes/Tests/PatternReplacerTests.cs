@@ -40,6 +40,20 @@ namespace BasicNodes.Tests
             Assert.AreEqual(1, result);
             Assert.AreEqual(@"c:\test\Seinfeld 3x06.mkv", args.WorkingFile);
         }
+        [TestMethod]    
+        public void PatternReplacer_Empty()
+        {
+            PatternReplacer node = new PatternReplacer();
+            node.Replacements = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>(@"\.h265", "EMPTY")
+            };
+            node.UnitTest = true;
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\Seinfeld.h265.mkv", new TestLogger(), false, string.Empty);
+
+            var result = node.RunReplacements(args.WorkingFile);
+            Assert.AreEqual(@"c:\test\Seinfeld.mkv", result);
+        }
     }
 }
 
