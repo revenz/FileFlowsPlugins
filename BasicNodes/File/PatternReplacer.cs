@@ -36,14 +36,17 @@ public class PatternReplacer : Node
         {
             foreach(var replacement in Replacements)
             {
+                var value = replacement.Value ?? string.Empty;
+                if (value == "EMPTY")
+                    value = string.Empty;
                 try
                 {
                     // this might not be a regex, but try it first
-                    updated = Regex.Replace(updated, replacement.Key, replacement.Value, RegexOptions.IgnoreCase);
+                    updated = Regex.Replace(updated, replacement.Key, value, RegexOptions.IgnoreCase);
                 }
                 catch (Exception ex) { }
 
-                updated = updated.Replace(replacement.Key, replacement.Value);
+                updated = updated.Replace(replacement.Key, value);
             }
 
             if (updated == filename)
