@@ -51,7 +51,7 @@ namespace BasicNodes.Tests
             node.UnitTest = true;
             var args = new FileFlows.Plugin.NodeParameters(@"c:\test\Seinfeld.h265.mkv", new TestLogger(), false, string.Empty);
 
-            var result = node.RunReplacements(args.WorkingFile);
+            var result = node.RunReplacements(args, args.WorkingFile);
             Assert.AreEqual(@"c:\test\Seinfeld.mkv", result);
         }
     }

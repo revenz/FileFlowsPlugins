@@ -33,7 +33,7 @@ public class PatternReplacer : Node
         try
         {
             string filename = new FileInfo(UseWorkingFileName ? args.WorkingFile : args.FileName).Name;
-            string updated = RunReplacements(filename);
+            string updated = RunReplacements(args, filename);
             
             if (updated == filename)
             {
@@ -69,16 +69,25 @@ public class PatternReplacer : Node
     /// <summary>
     /// Run replacements on a filename
     /// </summary>
+    /// <param name="args">The node parameters</param>
     /// <param name="filename">the filename to replacement</param>
     /// <returns>the replaced files</returns>
-    internal string RunReplacements(string filename)
+    internal string RunReplacements(NodeParameters args, string filename)
     {
         string updated = filename;
         foreach(var replacement in Replacements)
         {
             var value = replacement.Value ?? string.Empty;
             if (value == "EMPTY")
+            {
+                args?.Logger?.ILog("Using an EMPTY replacement");
                 value = string.Empty;
+            }
+            else
+            {
+                
+                args?.Logger?.ILog("Using replacement value: \"" + value + "\"");
+            }
             try
             {
                 // this might not be a regex, but try it first
