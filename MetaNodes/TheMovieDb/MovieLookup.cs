@@ -138,6 +138,7 @@
             md.Year = movie.ReleaseDate.Year;
             md.Subtitle = movie.Tagline;
             md.ReleaseDate = movie.ReleaseDate;
+            md.OriginalLanguage = movie.OriginalLanguage;
             if (string.IsNullOrWhiteSpace(movie.PosterPath) == false)
             {
                 try
