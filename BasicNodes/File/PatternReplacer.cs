@@ -30,22 +30,11 @@ public class PatternReplacer : Node
         if (Replacements?.Any() != true)
             return 2; // no replacements
 
-        string filename = new FileInfo(UseWorkingFileName ? args.WorkingFile : args.FileName).Name;
-        string updated = filename;
         try
         {
-            foreach(var replacement in Replacements)
-            {
-                try
-                {
-                    // this might not be a regex, but try it first
-                    updated = Regex.Replace(updated, replacement.Key, replacement.Value, RegexOptions.IgnoreCase);
-                }
-                catch (Exception ex) { }
-
-                updated = updated.Replace(replacement.Key, replacement.Value);
-            }
-
+            string filename = new FileInfo(UseWorkingFileName ? args.WorkingFile : args.FileName).Name;
+            string updated = RunReplacements(args, filename);
+            
             if (updated == filename)
             {
                 args.Logger?.ILog("No replacements found in file: " + filename);
@@ -75,5 +64,40 @@ public class PatternReplacer : Node
             args.Logger?.ELog("Pattern error: " + ex.Message);
             return -1;
         }
+    }
+
+    /// <summary>
+    /// Run replacements on a filename
+    /// </summary>
+    /// <param name="args">The node parameters</param>
+    /// <param name="filename">the filename to replacement</param>
+    /// <returns>the replaced files</returns>
+    internal string RunReplacements(NodeParameters args, string filename)
+    {
+        string updated = filename;
+        foreach(var replacement in Replacements)
+        {
+            var value = replacement.Value ?? string.Empty;
+            if (value == "EMPTY")
+            {
+                args?.Logger?.ILog("Using an EMPTY replacement");
+                value = string.Empty;
+            }
+            else
+            {
+                
+                args?.Logger?.ILog("Using replacement value: \"" + value + "\"");
+            }
+            try
+            {
+                // this might not be a regex, but try it first
+                updated = Regex.Replace(updated, replacement.Key, value, RegexOptions.IgnoreCase);
+            }
+            catch (Exception ex) { }
+
+            updated = updated.Replace(replacement.Key, value);
+        }
+
+        return updated;
     }
 }
