@@ -1,4 +1,4 @@
-﻿namespace FileFlows.VideoNodes
+namespace FileFlows.VideoNodes
 {
     internal class ResolutionHelper
     {
@@ -8,6 +8,7 @@
             r480p,
             r720p,
             r1080p,
+            r1440p,
             r4k,
         }
 
@@ -27,6 +28,8 @@
 
             if (Between(w, 1860, 1980))
                 return Resolution.r1080p;
+            else if (Between(w, 2500, 2620))
+                return Resolution.r1440p;
             else if (Between(w, 3780, 3900))
                 return Resolution.r4k;
             else if (Between(w, 1220, 1340))
