@@ -24,7 +24,7 @@
         public override int Execute(NodeParameters args)
         {
             string codec = args.ReplaceVariables(VideoCodec ?? string.Empty);
-            string parameters = args.ReplaceVariables(VideoCodecParameters ?? codec);
+            string parameters = args.ReplaceVariables(VideoCodecParameters?.EmptyAsNull() ?? codec);
             
             if (string.IsNullOrWhiteSpace(parameters))
                 return 1; // nothing to do
