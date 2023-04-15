@@ -109,6 +109,9 @@
             "FileName-Help": "If left blank the current working file will be deleted, or folder if library is folder based."
           }
         },
+        "FailFlow": {
+          "Description": "Fails a flow immediately, useful if you want a certain path to just fail."
+        },
         "FileSize": {
           "Description": "Checks if the file size matches the configured parameters. The values are in megabytes.\n\nOutput 1: Matches\nOutput 2: Does not match",
           "Outputs": {
