@@ -1,4 +1,5 @@
-﻿using SixLabors.ImageSharp.Formats;
+﻿using ImageMagick;
+using SixLabors.ImageSharp.Formats;
 
 namespace FileFlows.ImageNodes.Images;
 
@@ -15,14 +16,26 @@ public class ImageFormat: ImageNode
     {
         var formatOpts = GetFormat(args);
         
-        if(formatOpts.format?.Name == CurrentFormat.Name)
+        if(formatOpts.format?.Name == CurrentFormat)
         {
             args.Logger?.ILog("File already in format: " + formatOpts.format.Name);
             return 2;
         }
 
-        using var image = Image.Load(args.WorkingFile, out IImageFormat format);
-        SaveImage(args, image, formatOpts.file, formatOpts.format ?? format);
-        return 1;
+        string extension = new FileInfo(args.WorkingFile).Extension[1..].ToLowerInvariant();
+        if (extension == "heic")
+        {
+            // special case have to use imagemagick
+            
+            using var image = new MagickImage(args.WorkingFile);
+            SaveImage(args, image, formatOpts.file);
+            return 1;
+        }
+        else
+        {
+            using var image = Image.Load(args.WorkingFile, out IImageFormat format);
+            SaveImage(args, image, formatOpts.file, formatOpts.format ?? format);
+            return 1;
+        }
     }
 }

@@ -17,7 +17,8 @@ public class ImageFlip: ImageNode
 
     public override int Execute(NodeParameters args)
     {
-        using var image = Image.Load(args.WorkingFile, out IImageFormat format);
+        var input = ConvertImageIfNeeded(args);
+        using var image = Image.Load(input, out IImageFormat format);
         image.Mutate(c => c.Flip(Vertical ? FlipMode.Vertical : FlipMode.Horizontal));
         var formatOpts = GetFormat(args);
         SaveImage(args, image, formatOpts.file, formatOpts.format ?? format);

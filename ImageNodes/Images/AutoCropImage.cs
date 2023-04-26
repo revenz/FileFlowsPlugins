@@ -2,6 +2,7 @@
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using System.ComponentModel;
+using ImageMagick;
 
 namespace FileFlows.ImageNodes.Images;
 
@@ -18,8 +19,28 @@ public class AutoCropImage : ImageNode
     [DefaultValue(50)]
     public int Threshold { get; set; }
 
-
     public override int Execute(NodeParameters args)
+        => ExecuteImageMagick(args);
+
+    private int ExecuteImageMagick(NodeParameters args)
+    {
+        using MagickImage image = new MagickImage(args.WorkingFile);
+        (int originalWidth, int originalHeight) = (image.Width, image.Height);
+        
+        // image magick threshold is reversed, 100 means dont trim much, 1 means trim a lot
+        image.Trim(new Percentage(100 - Threshold));
+
+        if (image.Width == originalWidth && image.Height == originalHeight)
+            return 2;
+        
+        var formatOpts = GetFormat(args);
+        SaveImage(args, image, formatOpts.file, updateWorkingFile:true);
+        args.Logger?.ILog($"Image cropped from '{originalWidth}x{originalHeight}' to '{image.Width}x{image.Height}'");
+
+        return 1;
+    }
+
+    private int ExecuteImageSharp(NodeParameters args)
     {
         using var image = Image.Load(args.WorkingFile, out IImageFormat format);
         int originalWidth = image.Width;

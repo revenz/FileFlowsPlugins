@@ -35,7 +35,8 @@ public class ImageRotate: ImageNode
 
     public override int Execute(NodeParameters args)
     {
-        using var image = Image.Load(args.WorkingFile, out IImageFormat format);
+        string inputFile = ConvertImageIfNeeded(args);
+        using var image = Image.Load(inputFile, out IImageFormat format);
         image.Mutate(c => c.Rotate(Angle));
         var formatOpts = GetFormat(args);
         SaveImage(args, image, formatOpts.file, formatOpts.format ?? format);

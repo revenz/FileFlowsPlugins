@@ -29,8 +29,8 @@ public class ImageFile : ImageBaseNode
         try
         {
             UpdateImageInfo(args, this.Variables);
-            if(string.IsNullOrEmpty(base.CurrentFormat?.Name) == false)
-                args.RecordStatistic("IMAGE_FORMAT", base.CurrentFormat.Name);
+            if(string.IsNullOrEmpty(base.CurrentFormat) == false)
+                args.RecordStatistic("IMAGE_FORMAT", base.CurrentFormat);
 
             return 1;
         }

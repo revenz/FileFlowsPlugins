@@ -11,6 +11,7 @@ public class ImageNodesTests
 {
     string TestImage1;
     string TestImage2;
+    string TestImageHeic;
     string TempDir;
     string TestCropImage1, TestCropImage2, TestCropImage3, TestCropImage4, TestCropImageNoCrop;
 
@@ -30,6 +31,10 @@ public class ImageNodesTests
         }
         else
         {
+            TestCropImage1 = "/home/john/Pictures/cropme2.jpg";
+            TestCropImage2 = "/home/john/Pictures/cropme.jpg";
+            TestCropImage3 = "/home/john/Pictures/crop.heic";
+            TestImageHeic = "/home/john/Pictures/crop.heic";
             TestImage1 = "/home/john/Pictures/fileflows.png";
             TestImage2 = "/home/john/Pictures/36410427.png";
             TempDir = "/home/john/src/temp/";
@@ -50,9 +55,53 @@ public class ImageNodesTests
     }
 
     [TestMethod]
+    public void ImageNodes_Basic_ImageFormat_Heic()
+    {
+        var args = new NodeParameters(TestImageHeic, new TestLogger(), false, string.Empty)
+        {
+            TempPath = TempDir
+        };
+
+        var node = new ImageFormat();
+        node.Format = "HEIC";
+        Assert.AreEqual(1, node.Execute(args));
+    }
+
+    [TestMethod]
+    public void ImageNodes_Basic_IsLandscape_Heic()
+    {
+        var args = new NodeParameters(TestImageHeic, new TestLogger(), false, string.Empty)
+        {
+            TempPath = TempDir
+        };
+
+        var imageNode = new ImageFile();
+        imageNode.Execute(args);
+
+        var node = new ImageIsLandscape();
+        node.PreExecute(args);
+        Assert.AreEqual(1, node.Execute(args));
+    }
+
+    [TestMethod]
     public void ImageNodes_Basic_Resize()
     {
         var args = new NodeParameters(TestImage1, new TestLogger(), false, string.Empty)
+        {
+            TempPath = TempDir
+        };
+
+        var node = new ImageResizer();
+        node.Width = 1000;
+        node.Height = 500;
+        node.Mode = ResizeMode.Fill;
+        Assert.AreEqual(1, node.Execute(args));
+    }
+
+    [TestMethod]
+    public void ImageNodes_Basic_Resize_Heic()
+    {
+        var args = new NodeParameters(TestImageHeic, new TestLogger(), false, string.Empty)
         {
             TempPath = TempDir
         };
@@ -102,6 +151,19 @@ public class ImageNodesTests
         Assert.AreEqual(1, node.Execute(args));
     }
     
+
+    [TestMethod]
+    public void ImageNodes_Basic_Flip_Heic()
+    {
+        var args = new NodeParameters(TestImageHeic, new TestLogger(), false, string.Empty)
+        {
+            TempPath = TempDir
+        };
+
+        var node = new ImageFlip();
+        node.Vertical = false;
+        Assert.AreEqual(1, node.Execute(args));
+    }
     
     [TestMethod]
     public void ImageNodes_Basic_Rotate()
@@ -116,10 +178,23 @@ public class ImageNodesTests
         Assert.AreEqual(1, node.Execute(args));
     }
 
+    [TestMethod]
+    public void ImageNodes_Basic_Rotate_Heic()
+    {
+        var args = new NodeParameters(TestImageHeic, new TestLogger(), false, string.Empty)
+        {
+            TempPath = TempDir
+        };
+
+        var node = new ImageRotate();
+        node.Angle = 270;
+        Assert.AreEqual(1, node.Execute(args));
+    }
 
     [TestMethod]
     public void ImageNodes_Basic_AutoCrop_01()
     {
+        Assert.IsTrue(File.Exists(TestCropImage1));
         var logger = new TestLogger();
         var args = new NodeParameters(TestCropImage1, logger, false, string.Empty)
         {
@@ -127,7 +202,7 @@ public class ImageNodesTests
         };
 
         var node = new AutoCropImage();
-        node.Threshold = 50;
+        node.Threshold = 30;
         node.PreExecute(args);
         int result = node.Execute(args);
         
@@ -162,7 +237,7 @@ public class ImageNodesTests
         };
 
         var node = new AutoCropImage();
-        node.Threshold = 50;
+        node.Threshold = 30;
         node.PreExecute(args);                
         int result = node.Execute(args);
 
