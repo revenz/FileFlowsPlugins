@@ -281,7 +281,8 @@ public class CanUseHardwareEncoding:Node
                 ArgumentList = arguments.ToArray(),
                 Silent = true
             }).Result;
-            if (cmd.ExitCode != 0 || string.IsNullOrWhiteSpace(cmd.Output) == false)
+            string output = cmd.Output?.Contains("va_openDriver() returns 0") == true ? null : cmd.Output;
+            if (cmd.ExitCode != 0 || string.IsNullOrWhiteSpace(output) == false)
             {
                 string asStr = string.Join(" ", arguments.Select(x => x.Contains(" ") ? "\"" + x + "\"" : x));
                 args.Logger?.WLog($"Cant process '{ffmpeg} {asStr}': {cmd.Output ?? ""}");
