@@ -56,15 +56,18 @@ public class VideoHasStream : VideoNode
             return -1;
 
         bool found = false;
+        string title = args.ReplaceVariables(Title, stripMissing: true);
+        string codec = args.ReplaceVariables(Codec, stripMissing: true);
+        string lang = args.ReplaceVariables(Language, stripMissing: true);
         if (this.Stream == "Video")
         {
             found = videoInfo.VideoStreams.Where(x =>
             {
-                if (TitleMatches(x.Title) == MatchResult.NoMatch)
+                if (ValueMatch(title, x.Title) == MatchResult.NoMatch)
                     return false;
-                if (string.IsNullOrWhiteSpace(x.CodecTag) == false && CodecMatches(x.CodecTag) == MatchResult.Matched)
+                if (string.IsNullOrWhiteSpace(x.CodecTag) == false && ValueMatch(codec, x.CodecTag) == MatchResult.Matched)
                     return true;
-                if (CodecMatches(x.Codec) == MatchResult.NoMatch)
+                if (ValueMatch(codec, x.Codec) == MatchResult.NoMatch)
                     return false;
                 return true;
             }).Any();
@@ -73,11 +76,11 @@ public class VideoHasStream : VideoNode
         {
             found = videoInfo.AudioStreams.Where(x =>
             {
-                if (TitleMatches(x.Title) == MatchResult.NoMatch)
+                if (ValueMatch(title, x.Title) == MatchResult.NoMatch)
                     return false;
-                if (CodecMatches(x.Codec) == MatchResult.NoMatch)
+                if (ValueMatch(codec, x.Codec) == MatchResult.NoMatch)
                     return false;
-                if (LanguageMatches(x.Language) == MatchResult.NoMatch)
+                if (ValueMatch(lang, x.Language) == MatchResult.NoMatch)
                     return false;
                 if (this.Channels > 0 && Math.Abs(x.Channels - this.Channels) > 0.05f)
                     return false;
@@ -88,11 +91,11 @@ public class VideoHasStream : VideoNode
         {   
             found = videoInfo.SubtitleStreams.Where(x =>
             {
-                if (TitleMatches(x.Title) == MatchResult.NoMatch)
+                if (ValueMatch(title, x.Title) == MatchResult.NoMatch)
                     return false;
-                if (CodecMatches(x.Codec) == MatchResult.NoMatch)
+                if (ValueMatch(codec, x.Codec) == MatchResult.NoMatch)
                     return false;
-                if (LanguageMatches(x.Language) == MatchResult.NoMatch)
+                if (ValueMatch(lang, x.Language) == MatchResult.NoMatch)
                     return false;
                 return true;
             }).Any();
@@ -101,9 +104,6 @@ public class VideoHasStream : VideoNode
         return found ? 1 : 2;
     }
 
-    private MatchResult TitleMatches(string value) => ValueMatch(this.Title, value);
-    private MatchResult CodecMatches(string value) => ValueMatch(this.Codec, value);
-    private MatchResult LanguageMatches(string value) => ValueMatch(this.Language, value);
     private MatchResult ValueMatch(string pattern, string value)
     {
         if (string.IsNullOrWhiteSpace(pattern))
