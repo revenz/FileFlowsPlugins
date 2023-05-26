@@ -18,3 +18,4 @@ Emby/settings.json
 VideoNodes/test.settings.dev.json
 Apprise/settings.json
 build/utils/PluginInfoGenerator/
+.idea/

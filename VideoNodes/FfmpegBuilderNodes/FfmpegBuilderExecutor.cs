@@ -141,25 +141,25 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
 
             ffArgs = startArgs.Concat(ffArgs).ToList();
             var ffmpeg = FFMPEG;
-            string strFfArgs = string.Join(" ", ffArgs);
-            if ((strFfArgs.Contains("libaom-av1") || strFfArgs.Contains("libsvtav1")))
-            {
-                args.Logger.DLog("Using AV1");
-                if (File.Exists(ffmpeg + "-av1"))
-                {
-                    ffmpeg = ffmpeg + "-av1";
-                    if(ffArgs.IndexOf("-hwaccel") > 0)
-                    {
-                        ffArgs.RemoveRange(ffArgs.IndexOf("-hwaccel"), 2);
-                        if(ffArgs.IndexOf("-hwaccel_output_format") > 0)
-                        {
-                            ffArgs.RemoveRange(ffArgs.IndexOf("-hwaccel_output_format"), 2);
-                        }
-                    }
-                }
-                else
-                    args.Logger.DLog("Did not find custom FFMPEG AV1: " + ffmpeg + "-av1");
-            }
+            // string strFfArgs = string.Join(" ", ffArgs);
+            // if ((strFfArgs.Contains("libaom-av1") || strFfArgs.Contains("libsvtav1")))
+            // {
+            //     args.Logger.DLog("Using AV1");
+            //     if (File.Exists(ffmpeg + "-av1"))
+            //     {
+            //         ffmpeg = ffmpeg + "-av1";
+            //         if(ffArgs.IndexOf("-hwaccel") > 0)
+            //         {
+            //             ffArgs.RemoveRange(ffArgs.IndexOf("-hwaccel"), 2);
+            //             if(ffArgs.IndexOf("-hwaccel_output_format") > 0)
+            //             {
+            //                 ffArgs.RemoveRange(ffArgs.IndexOf("-hwaccel_output_format"), 2);
+            //             }
+            //         }
+            //     }
+            //     else
+            //         args.Logger.DLog("Did not find custom FFMPEG AV1: " + ffmpeg + "-av1");
+            // }
 
 
             if (Encode(args, ffmpeg, ffArgs, extension, dontAddInputFile: true) == false)
