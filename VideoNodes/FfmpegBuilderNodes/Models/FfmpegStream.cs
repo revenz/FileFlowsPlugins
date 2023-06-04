@@ -60,6 +60,11 @@ public abstract class FfmpegStream
         /// Gets or sets if the default flag should be set
         /// </summary>
         public bool UpdateDefaultFlag { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the logger
+        /// </summary>
+        public ILogger Logger { get; set; }
     }
 }
 

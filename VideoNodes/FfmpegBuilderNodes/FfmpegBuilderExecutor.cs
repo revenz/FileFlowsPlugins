@@ -71,8 +71,9 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
                     ((FfmpegSubtitleStream)item.stream).Stream;
 
 
-                var streamArgs = item.stream.GetParameters(new FfmpegStream.GetParametersArgs()
+                var streamArgs = item.stream.GetParameters(new ()
                 {
+                    Logger = args.Logger,
                     OutputOverallIndex = overallIndex,
                     OutputTypeIndex = actualIndex,
                     SourceExtension = sourceExtension,

@@ -1,72 +1,67 @@
-﻿namespace FileFlows.VideoNodes.FfmpegBuilderNodes.Models
+﻿using FileFlows.VideoNodes.Helpers;
+
+namespace FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
+
+public class FfmpegSubtitleStream : FfmpegStream
 {
-    public class FfmpegSubtitleStream : FfmpegStream
+    /// <summary>
+    /// Gets or sets the source subtitle stream
+    /// </summary>
+    public SubtitleStream Stream { get; set; }
+
+    /// <summary>
+    /// Gets or sets if this stream has changed
+    /// </summary>
+    public override bool HasChange => false;
+
+    /// <summary>
+    /// Gets the parameters for this stream
+    /// </summary>
+    /// <param name="args">the arguments</param>
+    /// <returns>the parameters to pass to FFmpeg for this stream</returns>
+    public override string[] GetParameters(GetParametersArgs args)
     {
-        public SubtitleStream Stream { get; set; }
+        if (Deleted)
+            return new string[] { };
 
-        public override bool HasChange => false;
-
-        public override string[] GetParameters(GetParametersArgs args)
+        bool containerSame =
+            string.Equals(args.SourceExtension, args.DestinationExtension, StringComparison.InvariantCultureIgnoreCase);
+        
+        string destCodec;
+        if(containerSame)
+            destCodec = "copy";
+        else
         {
-            if (Deleted)
+            destCodec = SubtitleHelper.GetSubtitleCodec(args.DestinationExtension, Stream.Codec);
+            if (string.IsNullOrEmpty(destCodec))
+            {
+                // this subtitle is not supported by the new container, remove it.
+                args.Logger?.WLog($"Subtitle stream is not supported in destination container, removing: {Stream.Codec} {Stream.Title ?? string.Empty}");
                 return new string[] { };
-
-            List<string> results= new List<string> { "-map", Stream.InputFileIndex + ":s:{sourceTypeIndex}", "-c:s:{index}" };
-
-            switch (args.DestinationExtension)
-            {
-                case "mkv":
-                    {
-                        if(Stream.Codec == "mov_text")
-                            results.Add("srt");
-                        else
-                            results.Add("copy");
-                    }
-                    break;
-                case "mp4":
-                    {
-                        if (Helpers.SubtitleHelper.IsImageSubtitle(Stream.Codec))
-                        {
-                            results.Add("copy");
-                        }
-                        else
-                        {
-                            results.Add("mov_text");
-                        }
-                    }
-                    break;
-                default:
-                    {
-                        results.Add("copy");
-                    }
-                    break;
             }
-           
-
-            if (string.IsNullOrWhiteSpace(this.Title) == false)
-            {
-                // first s: means stream speicific, this is suppose to have :s:s
-                // https://stackoverflow.com/a/21059838
-                results.Add($"-metadata:s:s:{args.OutputTypeIndex}");
-                results.Add($"title={(this.Title == FfmpegStream.REMOVED ? "" : this.Title)}");
-            }
-            if (string.IsNullOrWhiteSpace(this.Language) == false)
-            {
-                results.Add($"-metadata:s:s:{args.OutputTypeIndex}");
-                results.Add($"language={(this.Language == FfmpegStream.REMOVED ? "" : this.Language)}");
-            }
-
-            if (Metadata.Any())
-            {
-                results.AddRange(Metadata.Select(x => x.Replace("{index}", args.OutputTypeIndex.ToString())));
-            }
-            
-            if (args.UpdateDefaultFlag)
-            {
-                results.AddRange(new[] { "-disposition:a:" + args.OutputTypeIndex, this.IsDefault ? "default" : "0" });
-            }
-
-            return results.ToArray();
         }
+
+        List<string> results= new List<string> { "-map", Stream.InputFileIndex + ":s:{sourceTypeIndex}", "-c:s:{index}", destCodec };
+
+        if (string.IsNullOrWhiteSpace(this.Title) == false)
+        {
+            // first s: means stream specific, this is suppose to have :s:s
+            // https://stackoverflow.com/a/21059838
+            results.Add($"-metadata:s:s:{args.OutputTypeIndex}");
+            results.Add($"title={(this.Title == FfmpegStream.REMOVED ? "" : this.Title)}");
+        }
+        if (string.IsNullOrWhiteSpace(this.Language) == false)
+        {
+            results.Add($"-metadata:s:s:{args.OutputTypeIndex}");
+            results.Add($"language={(this.Language == FfmpegStream.REMOVED ? "" : this.Language)}");
+        }
+
+        if (Metadata.Any())
+            results.AddRange(Metadata.Select(x => x.Replace("{index}", args.OutputTypeIndex.ToString())));
+        
+        if (args.UpdateDefaultFlag)
+            results.AddRange(new[] { "-disposition:a:" + args.OutputTypeIndex, this.IsDefault ? "default" : "0" });
+
+        return results.ToArray();
     }
 }
