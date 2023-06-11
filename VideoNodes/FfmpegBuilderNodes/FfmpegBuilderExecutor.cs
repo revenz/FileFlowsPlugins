@@ -144,6 +144,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
             // FF-378: keep attachments (fonts etc)
             ffArgs.AddRange(new[] { "-map", "0:t?", "-c:t", "copy" });
             var ffmpeg = FFMPEG;
+            
             // string strFfArgs = string.Join(" ", ffArgs);
             // if ((strFfArgs.Contains("libaom-av1") || strFfArgs.Contains("libsvtav1")))
             // {
