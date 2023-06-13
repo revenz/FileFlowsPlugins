@@ -67,6 +67,13 @@ public class VideoFile : VideoNode
                 args.Logger.ILog($"Video stream '{vs.Codec}' '{vs.Index}'");
             }
 
+            var fileInfo = new FileInfo(args.WorkingFile);
+            if (fileInfo.Exists)
+            {
+                args.Variables.Add("ORIGINAL_CREATE_UTC", fileInfo.CreationTimeUtc);
+                args.Variables.Add("ORIGINAL_LAST_WRITE_UTC", fileInfo.LastWriteTimeUtc);
+            }
+
             foreach (var stream in videoInfo.VideoStreams)
             {
                 if (string.IsNullOrEmpty(stream.Codec) == false)

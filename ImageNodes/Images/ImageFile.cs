@@ -28,6 +28,13 @@ public class ImageFile : ImageBaseNode
     {
         try
         {
+            var fileInfo = new FileInfo(args.WorkingFile);
+            if (fileInfo.Exists)
+            {
+                args.Variables.Add("ORIGINAL_CREATE_UTC", fileInfo.CreationTimeUtc);
+                args.Variables.Add("ORIGINAL_LAST_WRITE_UTC", fileInfo.LastWriteTimeUtc);
+            }
+
             UpdateImageInfo(args, this.Variables);
             if(string.IsNullOrEmpty(base.CurrentFormat) == false)
                 args.RecordStatistic("IMAGE_FORMAT", base.CurrentFormat);

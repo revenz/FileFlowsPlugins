@@ -43,6 +43,13 @@ namespace FileFlows.AudioNodes
             if (string.IsNullOrEmpty(ffmpegExe))
                 return -1;
 
+            var fileInfo = new FileInfo(args.WorkingFile);
+            if (fileInfo.Exists)
+            {
+                args.Variables.Add("ORIGINAL_CREATE_UTC", fileInfo.CreationTimeUtc);
+                args.Variables.Add("ORIGINAL_LAST_WRITE_UTC", fileInfo.LastWriteTimeUtc);
+            }
+            
             try
             {
                 if (ReadAudioFileInfo(args, ffmpegExe, args.WorkingFile))

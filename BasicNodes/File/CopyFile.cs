@@ -61,6 +61,12 @@ namespace FileFlows.BasicNodes.File
         [Boolean(5)]
         public bool AdditionalFilesFromOriginal { get; set; }
 
+        /// <summary>
+        /// Gets or sets if the original files creation and last write time dates should be preserved
+        /// </summary>
+        [Boolean(6)]
+        public bool PreserverOriginalDates { get; set; }
+
         private bool Canceled;
 
         public override Task Cancel()
@@ -122,6 +128,15 @@ namespace FileFlows.BasicNodes.File
             bool copied = args.CopyFile(args.WorkingFile, dest, updateWorkingFile: true);
             if (!copied)
                 return -1;
+
+
+            if(PreserverOriginalDates && args.Variables.TryGetValue("ORIGINAL_CREATE_UTC", out object oCreateTimeUtc) &&
+               args.Variables.TryGetValue("ORIGINAL_LAST_WRITE_UTC", out object oLastWriteUtc) &&
+               oCreateTimeUtc is DateTime dtCreateTimeUtc && oLastWriteUtc is DateTime dtLastWriteUtc)
+            {
+                Helpers.FileHelper.SetCreationTime(dest, dtCreateTimeUtc);
+                Helpers.FileHelper.SetLastWriteTime(dest, dtLastWriteUtc);
+            }
 
             var srcDir = AdditionalFilesFromOriginal ? new FileInfo(args.MapPath(args.FileName)).DirectoryName : new FileInfo(args.MapPath(args.WorkingFile)).DirectoryName;
 
