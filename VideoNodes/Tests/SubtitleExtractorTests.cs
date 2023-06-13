@@ -45,9 +45,10 @@ namespace VideoNodes.Tests
             var vi = new VideoInfoHelper(FfmpegPath, new TestLogger());
             var vii = vi.Read(file);
 
-            foreach (string ext in new[] { String.Empty, ".srt", ".sup" })
+            foreach (string ext in new[] { string.Empty, ".srt", ".sup" })
             {
                 SubtitleExtractor node = new();
+                node.ForcedOnly = true;
                 node.OutputFile = Path.Combine(TempPath, "subtitle.en" + ext);
                 node.Language = "eng";
 
@@ -55,7 +56,9 @@ namespace VideoNodes.Tests
                 args.GetToolPathActual = (string tool) => FfmpegPath;
                 args.TempPath = TempPath;
 
-                Assert.AreEqual(1, new VideoFile().Execute(args));
+                var vf = new VideoFile();
+                vf.PreExecute(args);
+                Assert.AreEqual(1, vf.Execute(args));
 
                 int output = node.Execute(args);
 

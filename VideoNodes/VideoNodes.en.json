@@ -498,7 +498,9 @@
           "OutputFile": "Output File",
           "OutputFile-Help": "Where to save the the output file to, e.g. \"'{folder.Orig.FullName}\\{file.Orig.FileName}.srt'\" to save it with the original file as a srt output.\nIf left blank an srt subtitle will be created in the same folder as the original input file.",
           "SetWorkingFile": "Set as Working File",
-          "SetWorkingFile-Help": "When this is checked, if a subtitle is extracted, the working file will be changed to this extracted subtitle.  The original working file will NOT be deleted."
+          "SetWorkingFile-Help": "When this is checked, if a subtitle is extracted, the working file will be changed to this extracted subtitle.  The original working file will NOT be deleted.",
+          "ForcedOnly": "Forced Only",
+          "ForcedOnly-Help": "If only forced subtitles should be extracted."
         }
       },
       "VideoHasStream": {

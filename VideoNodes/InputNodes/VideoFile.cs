@@ -154,6 +154,8 @@ public class VideoFile : VideoNode
     /// <param name="args">the node parameters</param>
     private void PrintFFmpegVersion(NodeParameters args)
     {
+        if(string.IsNullOrEmpty(FFMPEG))
+            return;
         string firstLine = string.Empty;
 
         try
