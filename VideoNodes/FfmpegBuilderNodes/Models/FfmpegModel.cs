@@ -95,6 +95,8 @@
                     Title = item.stream.Title,
                     Language = item.stream.Language,
                     Stream = item.stream,
+                    IsDefault = item.stream.Default,
+                    IsForced = item.stream.Forced
                 });
             }
 

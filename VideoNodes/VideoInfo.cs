@@ -163,6 +163,11 @@ public class SubtitleStream : VideoFileStream
     /// If this is a forced subtitle
     /// </summary>
     public bool Forced { get; set; }
+
+    /// <summary>
+    /// If this is a the default subtitle track
+    /// </summary>
+    public bool Default { get; set; }
 }
 
 /// <summary>

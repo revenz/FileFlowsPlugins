@@ -8,6 +8,11 @@ public class FfmpegSubtitleStream : FfmpegStream
     /// Gets or sets the source subtitle stream
     /// </summary>
     public SubtitleStream Stream { get; set; }
+    
+    /// <summary>
+    /// Gets or sets if this is a forced subtitle
+    /// </summary>
+    public bool IsForced { get; set; }
 
     /// <summary>
     /// Gets or sets if this stream has changed
@@ -59,8 +64,15 @@ public class FfmpegSubtitleStream : FfmpegStream
         if (Metadata.Any())
             results.AddRange(Metadata.Select(x => x.Replace("{index}", args.OutputTypeIndex.ToString())));
         
-        if (args.UpdateDefaultFlag)
-            results.AddRange(new[] { "-disposition:a:" + args.OutputTypeIndex, this.IsDefault ? "default" : "0" });
+        //if (args.UpdateDefaultFlag) // we always update the default flags for subtitles FF-381
+        if(this.IsDefault && this.IsForced)
+            results.AddRange(new[] { "-disposition:s:" + args.OutputTypeIndex, "+default+forced" });
+        else if(this.IsDefault)
+            results.AddRange(new[] { "-disposition:s:" + args.OutputTypeIndex, "default" });
+        else if(this.IsForced)
+            results.AddRange(new[] { "-disposition:s:" + args.OutputTypeIndex, "forced" });
+        else
+            results.AddRange(new[] { "-disposition:s:" + args.OutputTypeIndex, "0" });
 
         return results.ToArray();
     }

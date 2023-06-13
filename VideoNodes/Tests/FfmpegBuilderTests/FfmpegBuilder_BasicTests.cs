@@ -1531,6 +1531,39 @@ public class FfmpegBuilder_BasicTests : TestBase
         Assert.AreEqual(2, result1);
         Assert.AreEqual(2, result);
     }
+    
+    
+    [TestMethod]
+    public void FfmpegBuilder_SubtitleClearDefault()
+    {
+        var logger = new TestLogger();
+        var vi = new VideoInfoHelper(FfmpegPath, logger);
+        var vii = vi.Read(TestFile_DefaultIsForcedSub);
+        var args = new NodeParameters(TestFile_DefaultIsForcedSub, logger, false, string.Empty);
+        args.GetToolPathActual = (string tool) => FfmpegPath;
+        args.TempPath = TempPath;
+        args.Parameters.Add("VideoInfo", vii);
+
+        FfmpegBuilderStart ffStart = new();
+        ffStart.PreExecute(args);
+        Assert.AreEqual(1, ffStart.Execute(args));
+        
+        
+        FfmpegBuilderSubtitleClearDefault ffClearDefault = new();
+        ffClearDefault.LeaveForced = true;
+        ffClearDefault.PreExecute(args);
+        int result1 = ffClearDefault.Execute(args);
+        Assert.AreEqual(1, result1);
+
+        FfmpegBuilderExecutor ffExecutor = new();
+        ffExecutor.PreExecute(args);
+        int result = ffExecutor.Execute(args);
+
+        string log = logger.ToString();
+        Assert.AreEqual(1, result1);
+        Assert.AreEqual(1, result);
+    }
+
 }
 
 #endif

@@ -287,6 +287,20 @@
           "RemoveAdditionalMetadata-Help": "If additional metadata should be removed.  Additional metadata is non-standard metadata that may have been added to a video file, eg by iTunes."
         }
       },
+      "FfmpegBuilderSubtitleClearDefault": {
+        "Label": "FFMPEG Builder: Subtitle Clear Default",
+        "Description": "This node will clear the default flag from subtitles.",
+        "Fields": {
+          "LeaveForced": "Leave Forced",
+          "LeaveForced-Help": "When checked all forced subtitles will not be touched, they will maintain their original setting.  This is executed prior to 'Set Forced Default' so takes precedent.",
+          "SetForcedDefault": "Set Forced Default",
+          "SetForcedDefault-Help": "When checked the first subtitle that is found with the Forced field set, will be set as default, all others will have their default flag cleared."
+        },
+        "Outputs": {
+          "1": "Subtitles default flags have been changed",
+          "2": "Subtitles had no changes made"
+        }
+      },
       "FfmpegBuilderSubtitleFormatRemover": {
         "Label": "FFMPEG Builder: Subtitle Format Remover",
         "Description": "Removes subtitles from a video file if found.",

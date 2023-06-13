@@ -365,6 +365,7 @@ public class VideoInfoHelper
         if (sub.Codec.EndsWith(","))
             sub.Codec = sub.Codec[..^1].Trim();
         sub.Language = GetLanguage(line);
+        sub.Default = info.Contains("(default)");
 
         if (rgxTitle.IsMatch(info))
             sub.Title = rgxTitle.Match(info).Value.Trim();
