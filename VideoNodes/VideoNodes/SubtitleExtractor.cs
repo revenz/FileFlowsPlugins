@@ -16,6 +16,11 @@ public class SubtitleExtractor : EncodingNode
     /// </summary>
     public override string Icon => "fas fa-comment-dots";
     /// <summary>
+    /// Gets the help URL
+    /// </summary>
+    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/subtitle-extractor";
+
+    /// <summary>
     /// Gets or sets the language to extract
     /// </summary>
     [Text(1)]
