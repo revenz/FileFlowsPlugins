@@ -52,6 +52,11 @@
         /// Gets or sets if the builder should forcable execute even if nothing appears to have changed
         /// </summary>
         public bool ForceEncode { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the code to run prior to FFmpeg Executing 
+        /// </summary>
+        public string PreExecuteCode { get; set; }
 
         /// <summary>
         /// Gets or sets the video information for this video file

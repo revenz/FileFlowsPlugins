@@ -359,30 +359,40 @@
           "CroppingThreshold-Help": "The amount of pixels that must be greater than to crop.   E.g. if there's only 5 pixels detected as black space, you may consider this too small to crop."
         }
       },
+      "FfmpegBuilderPreExecute": {
+        "Label": "FFMPEG Buidler: Pre-Execute",
+        "Description": "This element lets you run custom code just prior to the [FFmpeg Builder: Executor](https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder) executes FFmpeg.\n\nThis allows you to alter the arguments passed into FFmpeg.",
+        "Outputs": {
+          "1": "Pre-Execute set"
+        },
+        "Fields": {
+          "Code": "Code"
+        }
+      },
       "FfmpegBuilderRemuxToMkv": {
         "Label": "FFMPEG Builder: Remux to MKV",
-        "Descritption": "Remuxes a video file into a MKV container.",
+        "Description": "Remuxes a video file into a MKV container.",
         "Outputs": {
           "1": "FFMPEG Builder set to remux to MKV"
         }
       },
       "FfmpegBuilderRemuxToMP4": {
         "Label": "FFMPEG Builder: Remux to MP4",
-        "Descritption": "Remuxes a video file into a MP4 container.",
+        "Description": "Remuxes a video file into a MP4 container.",
         "Outputs": {
           "1": "FFMPEG Builder set to remux to MP4"
         }
       },
       "FfmpegBuilderRemuxToMov": {
         "Label": "FFMPEG Builder: Remux to MOV",
-        "Descritption": "Remuxes a video file into a MOV container.",
+        "Description": "Remuxes a video file into a MOV container.",
         "Outputs": {
           "1": "FFMPEG Builder set to remux to MOV"
         }
       },
       "FfmpegBuilderRemuxToWebm": {
         "Label": "FFMPEG Builder: Remux to WEBM",
-        "Descritption": "Remuxes a video file into a WEGM container.",
+        "Description": "Remuxes a video file into a WEGM container.",
         "Outputs": {
           "1": "FFMPEG Builder set to remux to WEGM"
         }
@@ -480,7 +490,7 @@
         }
       },
       "ReadVideoInfo": {
-        "Descritption": "Reads the video information from the current working file and updates the vi variables.",
+        "Description": "Reads the video information from the current working file and updates the vi variables.",
         "Outputs": {
           "1": "File was a video file and information read into flow",
           "2": "File was not a video file or failed to be read"
