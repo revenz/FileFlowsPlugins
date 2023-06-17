@@ -70,8 +70,8 @@ public class VideoFile : VideoNode
             var fileInfo = new FileInfo(args.WorkingFile);
             if (fileInfo.Exists)
             {
-                args.Variables.Add("ORIGINAL_CREATE_UTC", fileInfo.CreationTimeUtc);
-                args.Variables.Add("ORIGINAL_LAST_WRITE_UTC", fileInfo.LastWriteTimeUtc);
+                args.Variables["ORIGINAL_CREATE_UTC"] = fileInfo.CreationTimeUtc;
+                args.Variables["ORIGINAL_LAST_WRITE_UTC"] = fileInfo.LastWriteTimeUtc;
             }
 
             foreach (var stream in videoInfo.VideoStreams)
