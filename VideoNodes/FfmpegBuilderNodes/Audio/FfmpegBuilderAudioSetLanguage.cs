@@ -4,7 +4,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 
 public class FfmpegBuilderAudioSetLanguage : FfmpegBuilderNode
 {
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/set-language";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/set-language";
 
     public override int Outputs => 2;
 

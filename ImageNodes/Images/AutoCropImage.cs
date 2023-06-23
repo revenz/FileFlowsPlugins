@@ -11,7 +11,7 @@ public class AutoCropImage : ImageNode
     public override int Inputs => 1;
     public override int Outputs => 2;
     public override FlowElementType Type => FlowElementType.Process;
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/image-nodes/auto-crop-image";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/image-nodes/auto-crop-image";
     public override string Icon => "fas fa-crop";
 
     [Slider(1)]

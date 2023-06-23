@@ -14,7 +14,7 @@ public class AudioToVideo : EncodingNode
 {
     public override int Outputs => 1;
     public override int Inputs => 1;
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/audio-to-video";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/audio-to-video";
 
     public override string Icon => "fas fa-headphones";
 

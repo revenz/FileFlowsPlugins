@@ -14,7 +14,7 @@
 
         public override FlowElementType Type => FlowElementType.Logic;
 
-        public override string HelpUrl => "https://docs.fileflows.com/plugins/meta-nodes/movie-lookup";
+        public override string HelpUrl => "https://fileflows.com/docs/plugins/meta-nodes/movie-lookup";
 
         public override string Icon => "fas fa-film";
 

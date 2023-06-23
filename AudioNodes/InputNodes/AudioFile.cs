@@ -9,7 +9,7 @@ namespace FileFlows.AudioNodes
         public override int Outputs => 1;
         public override FlowElementType Type => FlowElementType.Input;
 
-        public override string HelpUrl => "https://docs.fileflows.com/plugins/audio-nodes/audio-file";
+        public override string HelpUrl => "https://fileflows.com/docs/plugins/audio-nodes/audio-file";
 
         private Dictionary<string, object> _Variables;
         public override Dictionary<string, object> Variables => _Variables;

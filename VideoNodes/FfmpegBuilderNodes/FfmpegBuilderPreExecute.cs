@@ -10,7 +10,7 @@ public class FfmpegBuilderPreExecute : FfmpegBuilderNode
     /// <summary>
     /// Gets the Help URL for this node
     /// </summary>
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/pre-execute";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/pre-execute";
 
     /// <summary>
     /// Gets the icon for this node

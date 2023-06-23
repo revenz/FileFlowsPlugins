@@ -10,7 +10,7 @@ public class Discord: Node
     public override FlowElementType Type => FlowElementType.Communication; 
     public override string Icon => "fab fa-discord";
     public override bool FailureNode => true;
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/discord/discord";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/discord/discord";
 
     [Required]
     [TextVariable(1)]

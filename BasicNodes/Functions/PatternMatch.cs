@@ -11,7 +11,7 @@ public class PatternMatch : Node
     public override int Outputs => 2;
     public override FlowElementType Type => FlowElementType.Logic;
     public override string Icon => "fas fa-equals";
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/pattern-match";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/pattern-match";
 
     private Dictionary<string, object> _Variables;
     public override Dictionary<string, object> Variables => _Variables;

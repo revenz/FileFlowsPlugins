@@ -6,7 +6,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
     public class FfmpegBuilderAutoChapters : FfmpegBuilderNode
     {
         public override int Outputs => 2;
-        public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/auto-chapters";
+        public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/auto-chapters";
 
         [NumberInt(1)]
         [DefaultValue(60)]

@@ -18,7 +18,7 @@ public class VariableMatch : Node
     public override int Outputs => 2;
 
     public override FlowElementType Type => FlowElementType.Logic;
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/variable-match";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/variable-match";
     public override string Icon => "fas fa-equals";
 
     [Required]

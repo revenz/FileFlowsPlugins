@@ -4,7 +4,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 
 public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
 {
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/subtitle-track-merge";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/subtitle-track-merge";
     
     public override string Icon => "fas fa-comment-medical";
 

@@ -8,7 +8,7 @@ public class FfmpegBuilderSubtitleClearDefault : FfmpegBuilderNode
     /// <summary>
     /// Gets the help URL
     /// </summary>
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/subtitle-clear-default";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/subtitle-clear-default";
     /// <summary>
     /// Gets the icon
     /// </summary>

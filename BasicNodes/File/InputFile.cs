@@ -22,7 +22,7 @@ public class InputFile : Node
     /// <summary>
     /// Gets the help URL
     /// </summary>
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/input-file";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/input-file";
 
     /// <summary>
     /// Executes the node

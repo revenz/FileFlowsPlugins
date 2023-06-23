@@ -14,7 +14,7 @@
         public override int Outputs => 2;
         public override FlowElementType Type => FlowElementType.Process;
         public override string Icon => "fas fa-terminal";
-        public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/executor";
+        public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/executor";
 
         internal const string VariablePattern = @"(^[\s]*$)|(^([a-zA-Z_]+)[a-zA-Z_0-9]*$)";
 

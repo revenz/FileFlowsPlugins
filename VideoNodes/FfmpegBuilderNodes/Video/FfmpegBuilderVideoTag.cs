@@ -17,7 +17,7 @@ public class FfmpegBuilderVideoTag:FfmpegBuilderNode
     /// <summary>
     /// The Help URL for this node
     /// </summary>
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/video-tag";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/video-tag";
 
 
     /// <summary>

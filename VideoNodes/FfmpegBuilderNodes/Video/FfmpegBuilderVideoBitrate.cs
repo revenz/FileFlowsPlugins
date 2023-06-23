@@ -2,7 +2,7 @@
 
 public class FfmpegBuilderVideoBitrate : FfmpegBuilderNode
 {
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/video-bitrate";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/video-bitrate";
     
     /// <summary>
     /// Gets or sets the bitrate in K

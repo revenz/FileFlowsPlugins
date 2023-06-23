@@ -2,7 +2,7 @@
 
 public class FfmpegBuilderSubtitleFormatRemover : FfmpegBuilderNode
 {
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/subtitle-format-remover";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/subtitle-format-remover";
 
     public override string Icon => "fas fa-comment";
     public override int Outputs => 2;

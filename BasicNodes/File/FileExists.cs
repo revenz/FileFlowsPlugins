@@ -11,7 +11,7 @@ namespace FileFlows.BasicNodes.File
         public override FlowElementType Type => FlowElementType.Logic;
         public override string Icon => "fas fa-question-circle";
 
-        public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/file-exists";
+        public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/file-exists";
 
 
         [TextVariable(1)]

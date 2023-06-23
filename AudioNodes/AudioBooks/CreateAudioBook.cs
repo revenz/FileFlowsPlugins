@@ -26,7 +26,7 @@ public class CreateAudioBook: AudioNode
     /// <summary>
     /// Gets the Help URL
     /// </summary>
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/audio-nodes/create-audio-book";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/audio-nodes/create-audio-book";
 
     /// <summary>
     /// Gets the node type

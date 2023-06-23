@@ -10,7 +10,7 @@ public class ImageRotate: ImageNode
     public override FlowElementType Type => FlowElementType.Process; 
     public override string Icon => "fas fa-undo";
 
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/image-nodes/image-rotate";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/image-nodes/image-rotate";
 
     [Select(nameof(AngleOptions), 2)]
     public int Angle { get; set; }

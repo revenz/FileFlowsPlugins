@@ -14,7 +14,7 @@ public class PatternReplacer : Node
 
     public string Group => "File";
 
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/filename-pattern-replacer";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/filename-pattern-replacer";
 
     internal bool UnitTest = false;
 

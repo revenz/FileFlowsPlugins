@@ -28,7 +28,7 @@ public class MoveFile : Node
     /// <summary>
     /// Gets the help URL
     /// </summary>
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/move-file";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/move-file";
 
     /// <summary>
     /// Gets or sets the destination path

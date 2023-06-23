@@ -22,7 +22,7 @@ public class FailFlow : Node
     /// <summary>
     /// Gets the URL for the help page
     /// </summary>
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/fail-flow";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/fail-flow";
 
     /// <summary>
     /// Executes the node

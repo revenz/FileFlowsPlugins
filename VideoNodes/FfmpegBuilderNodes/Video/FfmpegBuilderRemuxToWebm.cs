@@ -2,7 +2,7 @@
 
 public class FfmpegBuilderRemuxToWebm : FfmpegBuilderNode
 {
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/remux-to-webm";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/remux-to-webm";
 
     public override int Execute(NodeParameters args)
     {

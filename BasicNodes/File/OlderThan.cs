@@ -13,7 +13,7 @@
 //     public override int Outputs => 2;
 //     public override FlowElementType Type => FlowElementType.Logic;
 //     public override string Icon => "fas fa-clock";
-//     public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/older-than";
+//     public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/older-than";
 //
 //     [Period(1)]
 //     public int Minutes { get; set; }

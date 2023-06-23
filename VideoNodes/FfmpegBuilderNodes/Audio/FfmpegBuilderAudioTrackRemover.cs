@@ -4,7 +4,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 
 public class FfmpegBuilderAudioTrackRemover: FfmpegBuilderNode
 {
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/track-remover";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/track-remover";
 
     public override string Icon => "fas fa-eraser";
 

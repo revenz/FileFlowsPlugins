@@ -23,7 +23,7 @@ public class ReplaceOriginal : Node
     /// <summary>
     /// Gets the help URL
     /// </summary>
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/replace-original"; 
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/replace-original"; 
     /// <summary>
     /// Gets the type of flow element
     /// </summary>

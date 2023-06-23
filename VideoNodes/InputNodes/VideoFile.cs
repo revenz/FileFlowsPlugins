@@ -7,7 +7,7 @@ public class VideoFile : VideoNode
     public override int Outputs => 1;
     public override FlowElementType Type => FlowElementType.Input;
 
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/video-file";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/video-file";
 
     public override bool NoEditorOnAdd => true;
 

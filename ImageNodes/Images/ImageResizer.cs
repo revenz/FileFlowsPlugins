@@ -18,7 +18,7 @@ public class ImageResizer: ImageNode
     public override FlowElementType Type => FlowElementType.Process; 
     public override string Icon => "fas fa-expand";
 
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/image-nodes/image-resizer";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/image-nodes/image-resizer";
 
 
     [Select(nameof(ResizeModes), 2)]

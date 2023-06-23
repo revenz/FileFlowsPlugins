@@ -4,7 +4,7 @@
     {
         public override int Outputs => 2;
 
-        public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/video-codec";
+        public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/video-codec";
 
         [DefaultValue("hevc")]
         [TextVariable(1)]

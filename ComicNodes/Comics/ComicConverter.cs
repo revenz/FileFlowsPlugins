@@ -8,7 +8,7 @@ public class ComicConverter: Node
     public override int Outputs => 2;
     public override FlowElementType Type => FlowElementType.Process; 
     public override string Icon => "fas fa-book";
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/comic-nodes/comic-converter";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/comic-nodes/comic-converter";
 
     CancellationTokenSource cancellation = new CancellationTokenSource();
 

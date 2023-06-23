@@ -15,7 +15,7 @@ namespace FileFlows.BasicNodes.File
         [Required]
         public string[] Extensions { get; set; }
         public override FlowElementType Type => FlowElementType.Logic;
-        public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/file-extension";
+        public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/file-extension";
 
 
         public override int Execute(NodeParameters args)

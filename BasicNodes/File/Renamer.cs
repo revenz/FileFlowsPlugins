@@ -14,7 +14,7 @@ public class Renamer : Node
 
     public string _Pattern = string.Empty;
 
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/renamer"; 
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/renamer"; 
 
     public override FlowElementType Type => FlowElementType.Process;
 

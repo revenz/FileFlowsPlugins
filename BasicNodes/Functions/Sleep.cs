@@ -14,7 +14,7 @@ public class Sleep : Node
     public override int Outputs => 1;
     public override FlowElementType Type => FlowElementType.Logic;
     public override string Icon => "fas fa-clock";
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/sleep";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/sleep";
 
 
     [NumberInt(1)]

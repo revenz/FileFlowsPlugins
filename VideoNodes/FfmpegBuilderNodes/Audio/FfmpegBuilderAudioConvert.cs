@@ -4,7 +4,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 
 public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
 {
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/audio-converter";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/audio-converter";
 
     public override string Icon => "fas fa-comments";
 

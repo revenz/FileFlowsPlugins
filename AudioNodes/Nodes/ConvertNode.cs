@@ -5,7 +5,7 @@ namespace FileFlows.AudioNodes
 {
     public class ConvertToMP3 : ConvertNode
     {
-        public override string HelpUrl => "https://docs.fileflows.com/plugins/audio-nodes/convert-to-mp3";
+        public override string HelpUrl => "https://fileflows.com/docs/plugins/audio-nodes/convert-to-mp3";
         protected override string Extension => "mp3";
         public static List<ListOption> BitrateOptions => ConvertNode.BitrateOptions;
         protected override List<string> GetArguments(NodeParameters args)
@@ -30,7 +30,7 @@ namespace FileFlows.AudioNodes
     }
     public class ConvertToWAV : ConvertNode
     {
-        public override string HelpUrl => "https://docs.fileflows.com/plugins/audio-nodes/convert-to-wav";
+        public override string HelpUrl => "https://fileflows.com/docs/plugins/audio-nodes/convert-to-wav";
         protected override string Extension => "wav";
         public static List<ListOption> BitrateOptions => ConvertNode.BitrateOptions;
         protected override List<string> GetArguments(NodeParameters args)
@@ -56,7 +56,7 @@ namespace FileFlows.AudioNodes
 
     public class ConvertToAAC : ConvertNode
     {
-        public override string HelpUrl => "https://docs.fileflows.com/plugins/audio-nodes/convert-to-aac";
+        public override string HelpUrl => "https://fileflows.com/docs/plugins/audio-nodes/convert-to-aac";
         protected override string Extension => "aac";
         public static List<ListOption> BitrateOptions => ConvertNode.BitrateOptions;
 
@@ -84,7 +84,7 @@ namespace FileFlows.AudioNodes
     }
     public class ConvertToOGG: ConvertNode
     {
-        public override string HelpUrl => "https://docs.fileflows.com/plugins/audio-nodes/convert-to-ogg";
+        public override string HelpUrl => "https://fileflows.com/docs/plugins/audio-nodes/convert-to-ogg";
         protected override string Extension => "ogg";
         public static List<ListOption> BitrateOptions => ConvertNode.BitrateOptions;
         protected override List<string> GetArguments(NodeParameters args)
@@ -137,7 +137,7 @@ namespace FileFlows.AudioNodes
     public class ConvertAudio : ConvertNode
     {
         protected override string Extension => Codec;
-        public override string HelpUrl => "https://docs.fileflows.com/plugins/audio-nodes/convert-audio";
+        public override string HelpUrl => "https://fileflows.com/docs/plugins/audio-nodes/convert-audio";
 
         public static List<ListOption> BitrateOptions => ConvertNode.BitrateOptions;
 

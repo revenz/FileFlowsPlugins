@@ -5,7 +5,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 
 public class FfmpegBuilderComskipChapters : FfmpegBuilderNode
 {
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/comskip-chapters";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/comskip-chapters";
     public override int Outputs => 2;
 
     public override int Execute(NodeParameters args)

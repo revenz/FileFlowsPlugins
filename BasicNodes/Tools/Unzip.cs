@@ -13,7 +13,7 @@ public class Unzip : Node
     public override int Outputs => 1;
     public override FlowElementType Type => FlowElementType.Process;
     public override string Icon => "fas fa-file-archive";
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/unzip";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/unzip";
     
     private string _DestinationPath = string.Empty;
     private string _zip = string.Empty;

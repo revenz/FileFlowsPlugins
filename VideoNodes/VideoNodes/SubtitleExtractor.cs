@@ -18,7 +18,7 @@ public class SubtitleExtractor : EncodingNode
     /// <summary>
     /// Gets the help URL
     /// </summary>
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/subtitle-extractor";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/subtitle-extractor";
 
     /// <summary>
     /// Gets or sets the language to extract

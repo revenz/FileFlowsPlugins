@@ -361,7 +361,7 @@
       },
       "FfmpegBuilderPreExecute": {
         "Label": "FFMPEG Buidler: Pre-Execute",
-        "Description": "This element lets you run custom code just prior to the [FFmpeg Builder: Executor](https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder) executes FFmpeg.\n\nThis allows you to alter the arguments passed into FFmpeg.",
+        "Description": "This element lets you run custom code just prior to the [FFmpeg Builder: Executor](https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder) executes FFmpeg.\n\nThis allows you to alter the arguments passed into FFmpeg.",
         "Outputs": {
           "1": "Pre-Execute set"
         },

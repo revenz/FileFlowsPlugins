@@ -12,7 +12,7 @@ public class WebRequest : Node
     public override FlowElementType Type => FlowElementType.Communication;
     public override bool FailureNode => true;
     public override string Icon => "fas fa-globe";
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/web-request";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/web-request";
 
     [TextVariable(1)]
     public string Url { get; set; }

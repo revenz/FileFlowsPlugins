@@ -10,7 +10,7 @@ public class Apprise: Node
     public override FlowElementType Type => FlowElementType.Communication; 
     public override string Icon => "fas fa-bell";
     public override bool FailureNode => true;
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/apprise/apprise";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/apprise/apprise";
 
     [Required]
     [TextVariable(1)]

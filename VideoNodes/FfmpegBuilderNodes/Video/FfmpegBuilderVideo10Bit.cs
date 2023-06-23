@@ -4,7 +4,7 @@
     {
         public override int Outputs => 1;
 
-        public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/video-10-bit";
+        public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/video-10-bit";
 
         public override int Execute(NodeParameters args)
         {

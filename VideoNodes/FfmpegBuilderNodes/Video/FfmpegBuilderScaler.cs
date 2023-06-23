@@ -2,7 +2,7 @@
 
 public class FfmpegBuilderScaler : FfmpegBuilderNode
 {
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/video-scaler";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/video-scaler";
 
 
     [Select(nameof(ResolutionOptions), 1)]

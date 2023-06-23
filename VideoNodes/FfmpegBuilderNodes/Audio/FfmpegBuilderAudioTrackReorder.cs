@@ -9,7 +9,7 @@ public class FfmpegBuilderAudioTrackReorder : FfmpegBuilderNode
 
     public override string Icon => "fas fa-sort-alpha-down";
 
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/track-reorder";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/track-reorder";
 
 
     [Select(nameof(StreamTypeOptions), 1)]

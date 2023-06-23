@@ -6,7 +6,7 @@ public class ImageFile : ImageBaseNode
 {
     public override int Outputs => 1;
     public override FlowElementType Type => FlowElementType.Input;
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/image-nodes/image-file";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/image-nodes/image-file";
 
     public override string Icon => "fas fa-file-image";
 

@@ -33,7 +33,7 @@ namespace FileFlows.BasicNodes.File
         /// <summary>
         /// Gets the help URL
         /// </summary>
-        public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/copy-file";
+        public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/copy-file";
 
         private string _DestinationPath = string.Empty;
         private string _DestinationFile = string.Empty;

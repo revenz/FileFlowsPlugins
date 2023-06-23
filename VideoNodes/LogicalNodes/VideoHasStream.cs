@@ -12,7 +12,7 @@ public class VideoHasStream : VideoNode
     public override int Outputs => 2;
     public override FlowElementType Type => FlowElementType.Logic;
 
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/logical-nodes/video-has-stream";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/logical-nodes/video-has-stream";
 
     [Select(nameof(StreamTypeOptions), 1)]
     public string Stream { get; set; }

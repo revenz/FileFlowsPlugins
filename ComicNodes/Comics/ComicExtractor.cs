@@ -9,7 +9,7 @@ public class ComicExtractor : Node
     public override FlowElementType Type => FlowElementType.Process;
 
     public override string Icon => "fas fa-file-pdf";
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/comic-nodes/comic-extractor";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/comic-nodes/comic-extractor";
 
     CancellationTokenSource cancellation = new CancellationTokenSource();
 

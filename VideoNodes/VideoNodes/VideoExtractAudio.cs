@@ -10,7 +10,7 @@ public class VideoExtractAudio : AudioSelectionEncodingNode
 {
     public override int Outputs => 2;
 
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/video-extract-audio";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/video-extract-audio";
 
     public override string Icon => "fas fa-file-audio";
 

@@ -8,7 +8,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 public class FfmpegBuilderStart: FfmpegBuilderNode
 {
 
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder";
 
     /// <summary>
     /// The number of inputs into this node

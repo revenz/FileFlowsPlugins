@@ -8,7 +8,7 @@ namespace MetaNodes.Music
     {
         public override int Inputs => 1;
         public override int Outputs => 1;
-        public override string HelpUrl => "https://docs.fileflows.com/plugins/meta-nodes/music-meta";
+        public override string HelpUrl => "https://fileflows.com/docs/plugins/meta-nodes/music-meta";
 
         private Dictionary<string, object> _Variables;
         public override Dictionary<string, object> Variables => _Variables;

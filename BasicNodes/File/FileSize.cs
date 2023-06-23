@@ -10,7 +10,7 @@ namespace FileFlows.BasicNodes.File
         public override int Outputs => 2;
         public override FlowElementType Type => FlowElementType.Logic;
         public override string Icon => "fas fa-balance-scale-right";
-        public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/file-size";
+        public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/file-size";
 
 
         [NumberInt(1)]
