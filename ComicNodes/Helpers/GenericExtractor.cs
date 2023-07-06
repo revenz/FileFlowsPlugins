@@ -10,7 +10,7 @@ internal class GenericExtractor
     /// <summary>
     /// Uncompresses a folder
     /// </summary>
-    /// <param name="args">the node paratemers</param>
+    /// <param name="args">the node parameters</param>
     /// <param name="workingFile">the file to extract</param>
     /// <param name="destinationPath">the location to extract to</param>
     /// <param name="halfProgress">if the NodeParameter.PartPercentageUpdate should end at 50%</param>

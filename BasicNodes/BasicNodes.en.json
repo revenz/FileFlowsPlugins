@@ -323,6 +323,18 @@
             "Body-Help": "The body of the request being sent.  Variables can be used in this field."
           }
         },
+        "Unpack": {
+          "Description": "Allows you to unpack an archive (zip, rar, tar, etc)",
+          "Outputs": {
+            "1": "File Unpacked"
+          },
+          "Fields": {
+            "DestinationPath": "Destination Folder",
+            "DestinationPath-Help": "The destination folder where to unpack the file.",
+            "File": "File",
+            "File-Help": "The name of the file to unpack.  Can be left blank and if so the current working file will be used."
+          }
+        },
         "Unzip": {
           "Description": "Allows you to unzip a file",
           "Outputs": {

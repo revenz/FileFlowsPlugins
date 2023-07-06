@@ -30,6 +30,10 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="SharpCompress" Version="0.33.0" />
+    </ItemGroup>
+
+    <ItemGroup>
         <Content Include="BasicNodes.en.json">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
