@@ -53,6 +53,9 @@ public class Unpack: Node
             }
 
             string destDir = args.ReplaceVariables(DestinationPath, stripMissing: true, cleanSpecialCharacters: true);
+            destDir = args.MapPath(destDir);
+            if (Directory.Exists(destDir) == false)
+                Directory.CreateDirectory(destDir);
 
             if (fileInfo.Extension.ToLower() == ".zip")
                 ZipFile.ExtractToDirectory(filename, destDir, true);
