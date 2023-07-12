@@ -26,9 +26,21 @@ namespace FileFlows.VideoNodes
             this.Logger = logger;
         }
 
-        public (bool successs, string output) Encode(string input, string output, List<string> arguments, bool dontAddInputFile = false, bool dontAddOutputFile = false)
+        /// <summary>
+        /// Encodes using FFmpeg
+        /// </summary>
+        /// <param name="input">the input file</param>
+        /// <param name="output">the output file</param>
+        /// <param name="arguments">the FFmpeg arguments</param>
+        /// <param name="dontAddInputFile">if the input file should not be added to the arguments</param>
+        /// <param name="dontAddOutputFile">if the output file should not be added to the arguments</param>
+        /// <param name="strictness">the strictness to use</param>
+        /// <returns>the result and output of the encode</returns>
+        public (bool successs, string output) Encode(string input, string output, List<string> arguments, bool dontAddInputFile = false, bool dontAddOutputFile = false, string strictness = "-2")
         {
             arguments ??= new List<string> ();
+            if (string.IsNullOrWhiteSpace(strictness))
+                strictness = "-2";
 
             // -y means it will overwrite a file if output already exists
             if (dontAddInputFile == false) {
@@ -42,7 +54,7 @@ namespace FileFlows.VideoNodes
                 if (arguments.Last() != "-")
                 {
                     // strict -2 needs to be just before the output file
-                    arguments.AddRange(new[] { "-strict", "-2" }); // allow experimental stuff
+                    arguments.AddRange(new[] { "-strict", strictness }); 
                     arguments.Add(output);
                 }
                 else
