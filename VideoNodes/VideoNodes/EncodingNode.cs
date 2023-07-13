@@ -16,13 +16,40 @@ namespace FileFlows.VideoNodes
 
         private FFMpegEncoder Encoder;
 
-        public bool Encode(NodeParameters args, string ffmpegExe, List<string> ffmpegParameters, string extension = "mkv", string outputFile = "", bool updateWorkingFile = true, bool dontAddInputFile = false, bool dontAddOutputFile = false)
+        /// <summary>
+        /// Encodes a video
+        /// </summary>
+        /// <param name="args">the node parameters</param>
+        /// <param name="ffmpegExe">the FFmpeg executable</param>
+        /// <param name="ffmpegParameters">the FFmpeg parameters</param>
+        /// <param name="extension">the output fil extension</param>
+        /// <param name="outputFile">the output file</param>
+        /// <param name="updateWorkingFile">if the working file should be updated to the newly created file</param>
+        /// <param name="dontAddInputFile">if the input file should not be added to the arguments</param>
+        /// <param name="dontAddOutputFile">if the output file should not be added to the arguments</param>
+        /// <param name="strictness">the strictness to use</param>
+        /// <returns>true if the encode was successful</returns>
+        public bool Encode(NodeParameters args, string ffmpegExe, List<string> ffmpegParameters, string extension = "mkv", string outputFile = "", bool updateWorkingFile = true, bool dontAddInputFile = false, bool dontAddOutputFile = false, string strictness = "-2")
         {
             string output;
-            return Encode(args, ffmpegExe, ffmpegParameters, out output, extension, outputFile, updateWorkingFile, dontAddInputFile: dontAddInputFile, dontAddOutputFile: dontAddOutputFile);
+            return Encode(args, ffmpegExe, ffmpegParameters, out output, extension, outputFile, updateWorkingFile, dontAddInputFile: dontAddInputFile, dontAddOutputFile: dontAddOutputFile, strictness: strictness);
         }
 
-        public bool Encode(NodeParameters args, string ffmpegExe, List<string> ffmpegParameters, out string output, string extension = "mkv", string outputFile = "", bool updateWorkingFile = true, bool dontAddInputFile = false, bool dontAddOutputFile = false)
+        /// <summary>
+        /// Encodes a video
+        /// </summary>
+        /// <param name="args">the node parameters</param>
+        /// <param name="ffmpegExe">the FFmpeg executable</param>
+        /// <param name="ffmpegParameters">the FFmpeg parameters</param>
+        /// <param name="output">the output from the command</param>
+        /// <param name="extension">the output fil extension</param>
+        /// <param name="outputFile">the output file</param>
+        /// <param name="updateWorkingFile">if the working file should be updated to the newly created file</param>
+        /// <param name="dontAddInputFile">if the input file should not be added to the arguments</param>
+        /// <param name="dontAddOutputFile">if the output file should not be added to the arguments</param>
+        /// <param name="strictness">the strictness to use</param>
+        /// <returns>true if the encode was successful</returns>
+        public bool Encode(NodeParameters args, string ffmpegExe, List<string> ffmpegParameters, out string output, string extension = "mkv", string outputFile = "", bool updateWorkingFile = true, bool dontAddInputFile = false, bool dontAddOutputFile = false, string strictness = "-2")
         {
             if (string.IsNullOrEmpty(extension))
                 extension = "mkv";
@@ -43,7 +70,7 @@ namespace FileFlows.VideoNodes
                 }
             }
 
-            var success = Encoder.Encode(args.WorkingFile, outputFile, ffmpegParameters, dontAddInputFile: dontAddInputFile, dontAddOutputFile: dontAddOutputFile);
+            var success = Encoder.Encode(args.WorkingFile, outputFile, ffmpegParameters, dontAddInputFile: dontAddInputFile, dontAddOutputFile: dontAddOutputFile, strictness: strictness);
             args.Logger.ILog("Encoding successful: " + success.successs);
             if (success.successs && updateWorkingFile)
             {

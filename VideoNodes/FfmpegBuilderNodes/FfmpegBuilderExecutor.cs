@@ -16,9 +16,43 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
 
     public override bool NoEditorOnAdd => true;
 
+    /// <summary>
+    /// Gets or sets if hardware decoding should be used
+    /// </summary>
     [DefaultValue(true)]
     [Boolean(1)]
     public bool HardwareDecoding { get; set; }
+    
+    /// <summary>
+    /// Gets or sets the strictness
+    /// </summary>
+    [DefaultValue("experimental")]
+    [Select(nameof(StrictOptions), 2)]
+    public string Strictness { get; set; }
+
+    private static List<ListOption> _StrictOptions;
+    /// <summary>
+    /// Gets the strict options
+    /// </summary>
+    public static List<ListOption> StrictOptions
+    {
+        get
+        {
+            if (_StrictOptions == null)
+            {
+                _StrictOptions = new List<ListOption>
+                {
+                    new () { Label = "Experimental", Value = "experimental" },
+                    new () { Label = "Unofficial", Value = "unofficial" },
+                    new () { Label = "Normal", Value = "normal" },
+                    new () { Label = "Strict", Value = "strict" },
+                    new () { Label = "Very", Value = "very" },
+                };
+            }
+            return _StrictOptions;
+        }
+    }
+
 
     public override int Execute(NodeParameters args)
     {
@@ -145,26 +179,6 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         ffArgs.AddRange(new[] { "-map", "0:t?", "-c:t", "copy" });
         var ffmpeg = FFMPEG;
         
-        // string strFfArgs = string.Join(" ", ffArgs);
-        // if ((strFfArgs.Contains("libaom-av1") || strFfArgs.Contains("libsvtav1")))
-        // {
-        //     args.Logger.DLog("Using AV1");
-        //     if (File.Exists(ffmpeg + "-av1"))
-        //     {
-        //         ffmpeg = ffmpeg + "-av1";
-        //         if(ffArgs.IndexOf("-hwaccel") > 0)
-        //         {
-        //             ffArgs.RemoveRange(ffArgs.IndexOf("-hwaccel"), 2);
-        //             if(ffArgs.IndexOf("-hwaccel_output_format") > 0)
-        //             {
-        //                 ffArgs.RemoveRange(ffArgs.IndexOf("-hwaccel_output_format"), 2);
-        //             }
-        //         }
-        //     }
-        //     else
-        //         args.Logger.DLog("Did not find custom FFMPEG AV1: " + ffmpeg + "-av1");
-        // }
-        
         if(string.IsNullOrWhiteSpace(model.PreExecuteCode) == false)
         {
             var preExecutor = new PreExecutor(args, model.PreExecuteCode, ffArgs);
@@ -178,7 +192,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         }
 
 
-        if (Encode(args, ffmpeg, ffArgs, extension, dontAddInputFile: true) == false)
+        if (Encode(args, ffmpeg, ffArgs, extension, dontAddInputFile: true, strictness: Strictness) == false)
             return -1;
 
         foreach (var file in model.InputFiles)

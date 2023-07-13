@@ -62,7 +62,9 @@
         "Description": "Executes a FFMPEG Builder command created by other FFMPEG Builder nodes.",
         "Fields": {
           "HardwareDecoding": "Hardware Decoding",
-          "HardwareDecoding-Help": "If the executor should attempt to use hardware decoding.  If not available the execution will proceed just without hardware decoding enabled."
+          "HardwareDecoding-Help": "If the executor should attempt to use hardware decoding.  If not available the execution will proceed just without hardware decoding enabled.",
+          "Strictness": "Strictness",
+          "Strictness-Help": "Allows you to customize the strictness of FFmpeg.  This should be left on 'Experimental' for most users."
         }
       },
       "FfmpegBuilderAddInputFile": {

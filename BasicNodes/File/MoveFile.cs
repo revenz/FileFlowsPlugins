@@ -159,10 +159,13 @@ public class MoveFile : Node
         }
         args.Result = NodeResult.Failure;
 
-        if (moveFolder)
-            dest = Path.Combine(dest, args.RelativeFile);
-        else
-            dest = Path.Combine(dest, new FileInfo(args.FileName).Name);
+        if (moveFolder) // we only want the full directory relative to the library, we don't want the original filename
+        {
+            dest = new FileInfo(Path.Combine(dest, args.RelativeFile)).DirectoryName;
+            args.Logger?.ILog("Using relative directory: " + dest);
+        }
+
+        dest = Path.Combine(dest, new FileInfo(args.FileName).Name);
 
         var fiDest = new FileInfo(dest);
         var fiWorking = new FileInfo(args.WorkingFile);
@@ -188,6 +191,8 @@ public class MoveFile : Node
             dest = dest.Replace(fiDest.Extension, fiWorkingFile.Extension);
             fiDest = new FileInfo(dest);
         }
+
+        args.Logger?.ILog("Final destination: " + dest);
 
         return dest;
     }
