@@ -39,8 +39,8 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
         {
             get
             {
-                if (Args.Variables.ContainsKey(MODEL_KEY))
-                    return Args.Variables[MODEL_KEY] as FfmpegModel;
+                if (Args.Variables.TryGetValue(MODEL_KEY, out var variable))
+                    return variable as FfmpegModel;
                 return null;
             }
             set

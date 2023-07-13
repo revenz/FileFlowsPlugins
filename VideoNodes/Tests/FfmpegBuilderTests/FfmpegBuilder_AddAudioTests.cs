@@ -1,6 +1,7 @@
 ﻿#if(DEBUG)
 
 using FileFlows.VideoNodes.FfmpegBuilderNodes;
+using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VideoNodes.Tests;
 
@@ -165,6 +166,42 @@ public class FfmpegBuilder_AddAudioTests
         Assert.AreEqual(3, best.Index);
         Assert.AreEqual("AAC", best.Codec);
         Assert.AreEqual(2f, best.Channels);
+    }
+
+    [TestMethod]
+    public void FfmpegBuilder_AddAudio_Basic()
+    {
+        Prepare();
+
+        FfmpegBuilderAudioAddTrack ffAddAudio = new();
+        ffAddAudio.Codec = "dts";
+        ffAddAudio.Channels = 1;
+        ffAddAudio.Index = 1000;
+        ffAddAudio.PreExecute(args);
+        var output = ffAddAudio.Execute(args);
+        Assert.AreEqual(1, output);
+
+        FfmpegModel model = (FfmpegModel)args.Variables["FfmpegBuilderModel"];
+        var last = model.AudioStreams.Last();
+        Assert.AreEqual(1, last.Channels);
+    }
+
+    [TestMethod]
+    public void FfmpegBuilder_AddAudio_Basic_2()
+    {
+        Prepare();
+
+        FfmpegBuilderAudioAddTrack ffAddAudio = new();
+        ffAddAudio.Codec = "dts";
+        ffAddAudio.Channels = 2;
+        ffAddAudio.Index = 1000;
+        ffAddAudio.PreExecute(args);
+        var output = ffAddAudio.Execute(args);
+        Assert.AreEqual(1, output);
+
+        FfmpegModel model = (FfmpegModel)args.Variables["FfmpegBuilderModel"];
+        var last = model.AudioStreams.Last();
+        Assert.AreEqual(2, last.Channels);
     }
 }
 

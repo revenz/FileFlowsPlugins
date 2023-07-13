@@ -124,22 +124,25 @@ public class FfmpegBuilderAudioTrackReorder : FfmpegBuilderNode
     /// <typeparam name="T">the type to reorder</typeparam>
     /// <returns>the reordered tracks</returns>
     public List<T> Reorder<T>(List<T> input) where T : FfmpegStream
+        => Reorder(Languages, OrderedTracks, Channels, input);
+    
+    public static  List<T> Reorder<T>(List<string> languages, List<string> orderedTracks, List<string> channels, List<T> input) where T : FfmpegStream
     {
-        Languages ??= new List<string>();
-        OrderedTracks ??= new List<string>();
-        Channels ??= new List<string>();
-        List<float> actualChannels = Channels.Select(x =>
+        languages ??= new List<string>();
+        orderedTracks ??= new List<string>();
+        channels ??= new List<string>();
+        List<float> actualChannels = channels.Select(x =>
         {
             if (float.TryParse(x, out float value))
                 return value;
             return -1f;
         }).Where(x => x > 0f).ToList();
 
-        if (Languages.Any() == false && OrderedTracks.Any() == false && actualChannels.Any() == false)
+        if (languages.Any() == false && orderedTracks.Any() == false && actualChannels.Any() == false)
             return input; // nothing to do
 
-        Languages.Reverse();
-        OrderedTracks.Reverse();
+        languages.Reverse();
+        orderedTracks.Reverse();
         actualChannels.Reverse();
 
         const int base_number = 1_000_000_000;
@@ -153,15 +156,15 @@ public class FfmpegBuilderAudioTrackReorder : FfmpegBuilderNode
 
             if (x is FfmpegAudioStream audioStream)
             {
-                langIndex = Languages.IndexOf(audioStream.Stream.Language?.ToLower() ?? String.Empty);
-                codecIndex = OrderedTracks.IndexOf(audioStream.Stream.Codec?.ToLower() ?? String.Empty);
-                float channels = audioStream.Channels > 0 ? audioStream.Channels : audioStream.Stream.Channels;
-                channelIndex = actualChannels.IndexOf(channels);
+                langIndex = languages.IndexOf(audioStream.Stream.Language?.ToLower() ?? String.Empty);
+                codecIndex = orderedTracks.IndexOf(audioStream.Stream.Codec?.ToLower() ?? String.Empty);
+                float asChannels = audioStream.Channels > 0 ? audioStream.Channels : audioStream.Stream.Channels;
+                channelIndex = actualChannels.IndexOf(asChannels);
             }
             else if (x is FfmpegSubtitleStream subStream)
             {
-                langIndex = Languages.IndexOf(subStream.Stream.Language?.ToLower() ?? String.Empty);
-                codecIndex = OrderedTracks.IndexOf(subStream.Stream.Codec?.ToLower() ?? String.Empty);
+                langIndex = languages.IndexOf(subStream.Stream.Language?.ToLower() ?? String.Empty);
+                codecIndex = orderedTracks.IndexOf(subStream.Stream.Codec?.ToLower() ?? String.Empty);
             }
 
             int result = base_number;
