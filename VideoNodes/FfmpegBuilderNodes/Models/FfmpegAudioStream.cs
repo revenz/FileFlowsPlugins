@@ -4,6 +4,13 @@
     {
         public AudioStream Stream { get; set; }
         public override bool HasChange => EncodingParameters.Any() || Filter.Any();
+        
+        /// <summary>
+        /// Gets or sets the channels for this stream
+        /// Note: changing this will not magically change the channels for processing, you must change manually
+        /// down-mix or up-mix then update this channel count, this is intended for sorting only
+        /// </summary>
+        public float Channels { get; set; }
 
         private List<string> _EncodingParameters = new List<string>();
         public List<string> EncodingParameters

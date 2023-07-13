@@ -3,29 +3,49 @@ using System.Text;
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 
+/// <summary>
+/// FFmpeg Builder: Audio Track Reorder
+/// </summary>
 public class FfmpegBuilderAudioTrackReorder : FfmpegBuilderNode
 {
+    /// <summary>
+    /// Gets the number of output nodes
+    /// </summary>
     public override int Outputs => 2;
-
+    /// <summary>
+    /// Gets the icon
+    /// </summary>
     public override string Icon => "fas fa-sort-alpha-down";
-
+    /// <summary>
+    /// Gets the help URL
+    /// </summary>
     public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/track-reorder";
-
-
+    /// <summary>
+    /// Gets or sets the stream type
+    /// </summary>
     [Select(nameof(StreamTypeOptions), 1)]
     public string StreamType { get; set; }
-
+    /// <summary>
+    /// Gets or sets the languages
+    /// </summary>
     [StringArray(2)]
     public List<string> Languages { get; set; }
-
+    /// <summary>
+    /// Gets or sets the ordered tracks
+    /// </summary>
     [StringArray(3)]
     public List<string> OrderedTracks { get; set; }
-
+    /// <summary>
+    /// Gets or sets the channels
+    /// </summary>
     [StringArray(4)]
     [ConditionEquals(nameof(StreamType), "Subtitle", inverse: true)]
     public List<string> Channels { get; set; }
 
     private static List<ListOption> _StreamTypeOptions;
+    /// <summary>
+    /// Gets or sets the stream type options
+    /// </summary>
     public static List<ListOption> StreamTypeOptions
     {
         get
@@ -42,6 +62,11 @@ public class FfmpegBuilderAudioTrackReorder : FfmpegBuilderNode
         }
     }
 
+    /// <summary>
+    /// Executes the flow element
+    /// </summary>
+    /// <param name="args">the node parameters</param>
+    /// <returns>the next output node</returns>
     public override int Execute(NodeParameters args)
     {
         OrderedTracks = OrderedTracks?.Select(x => x.ToLower())?.ToList() ?? new();
@@ -92,6 +117,12 @@ public class FfmpegBuilderAudioTrackReorder : FfmpegBuilderNode
         }
     }
 
+    /// <summary>
+    /// Reorders the tracks
+    /// </summary>
+    /// <param name="input">the inputs to reorder</param>
+    /// <typeparam name="T">the type to reorder</typeparam>
+    /// <returns>the reordered tracks</returns>
     public List<T> Reorder<T>(List<T> input) where T : FfmpegStream
     {
         Languages ??= new List<string>();
@@ -124,7 +155,8 @@ public class FfmpegBuilderAudioTrackReorder : FfmpegBuilderNode
             {
                 langIndex = Languages.IndexOf(audioStream.Stream.Language?.ToLower() ?? String.Empty);
                 codecIndex = OrderedTracks.IndexOf(audioStream.Stream.Codec?.ToLower() ?? String.Empty);
-                channelIndex = actualChannels.IndexOf(audioStream.Stream.Channels);
+                float channels = audioStream.Channels > 0 ? audioStream.Channels : audioStream.Stream.Channels;
+                channelIndex = actualChannels.IndexOf(channels);
             }
             else if (x is FfmpegSubtitleStream subStream)
             {
@@ -152,6 +184,14 @@ public class FfmpegBuilderAudioTrackReorder : FfmpegBuilderNode
 
         return data;
     }
+    
+    /// <summary>
+    /// Tests if two lists are the same
+    /// </summary>
+    /// <param name="original">the original list</param>
+    /// <param name="reordered">the reordered list</param>
+    /// <typeparam name="T">the type of items</typeparam>
+    /// <returns>true if the lists are the same, otherwise false</returns>
     public bool AreSame<T>(List<T> original, List<T> reordered) where T: FfmpegStream
     {
         for (int i = 0; i < reordered.Count; i++)

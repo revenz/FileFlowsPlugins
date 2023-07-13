@@ -90,6 +90,7 @@
                     Title = item.stream.Title,
                     Language = item.stream.Language,
                     Stream = item.stream,
+                    Channels = item.stream.Channels
                 });
             }
             foreach (var item in info.SubtitleStreams.Select((stream, index) => (stream, index)))

@@ -2,23 +2,37 @@
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 
+/// <summary>
+/// FFmpeg Builder: Add Audio Track
+/// </summary>
 public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
 {
+    /// <summary>
+    /// Gets the icon for this flow element
+    /// </summary>
     public override string Icon => "fas fa-volume-off";
-
+    /// <summary>
+    /// Gets the help URL for this flow element
+    /// </summary>
     public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/add-audio-track";
-
+    /// <summary>
+    /// Gets or sets the index to insert this track
+    /// </summary>
     [NumberInt(1)]
     [Range(0, 100)]
     [DefaultValue(1)]
     public int Index { get; set; }
-
-
+    /// <summary>
+    /// Gets or sets the codec to to use
+    /// </summary>
     [DefaultValue("aac")]
     [Select(nameof(CodecOptions), 1)]
     public string Codec { get; set; }
 
     private static List<ListOption> _CodecOptions;
+    /// <summary>
+    /// Gets the codec options
+    /// </summary>
     public static List<ListOption> CodecOptions
     {
         get
@@ -37,12 +51,17 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
             return _CodecOptions;
         }
     }
-
+    /// <summary>
+    /// Gets or sets the audio channels for the new track
+    /// </summary>
     [DefaultValue(2f)]
     [Select(nameof(ChannelsOptions), 2)]
     public float Channels { get; set; }
 
     private static List<ListOption> _ChannelsOptions;
+    /// <summary>
+    /// Gets the channel options
+    /// </summary>
     public static List<ListOption> ChannelsOptions
     {
         get
@@ -61,11 +80,16 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
             return _ChannelsOptions;
         }
     }
-
+    /// <summary>
+    /// Gets or sets the bitrate
+    /// </summary>
     [Select(nameof(BitrateOptions), 3)]
     public int Bitrate { get; set; }
 
     private static List<ListOption> _BitrateOptions;
+    /// <summary>
+    /// Gets the background bitrate options
+    /// </summary>
     public static List<ListOption> BitrateOptions
     {
         get
@@ -84,18 +108,29 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
             return _BitrateOptions;
         }
     }
-
+    /// <summary>
+    /// Gets or sets the language of the nee track
+    /// </summary>
     [DefaultValue("eng")]
     [TextVariable(4)]
     public string Language { get; set; }
-
+    /// <summary>
+    /// Gets or sets if the title of the new track should be removed
+    /// </summary>
     [Boolean(5)]
     public bool RemoveTitle { get; set; }
-
+    /// <summary>
+    /// Gets or sets the title of the new track
+    /// </summary>
     [TextVariable(6)]
     [ConditionEquals(nameof(RemoveTitle), false)]
     public string NewTitle { get; set; }
-
+    
+    /// <summary>
+    /// Executes the flow element
+    /// </summary>
+    /// <param name="args">the node parameters</param>
+    /// <returns>the output node to execute next</returns>
     public override int Execute(NodeParameters args)
     {
         if (string.IsNullOrEmpty(Codec) || Codec == "ORIGINAL")
@@ -113,6 +148,7 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
         }
 
         audio.Stream = bestAudio;
+        audio.Channels = audio.Stream.Channels;
 
         bool directCopy = false;
         if(bestAudio.Codec.ToLower() == this.Codec.ToLower())
@@ -129,7 +165,9 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
         }
         else
         {
-            audio.EncodingParameters.AddRange(GetNewAudioTrackParameters("0:a:" + (bestAudio.TypeIndex), Codec, Channels, Bitrate));
+            audio.EncodingParameters.AddRange(GetNewAudioTrackParameters(Codec, Channels, Bitrate));
+            if (this.Channels > 0)
+                audio.Channels = this.Channels;
         }
 
         if (RemoveTitle)
@@ -145,6 +183,12 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
         return 1;
     }
 
+    /// <summary>
+    /// Gets the best audio track
+    /// </summary>
+    /// <param name="args">the node parameters</param>
+    /// <param name="streams">the possible audio streams</param>
+    /// <returns>the best stream</returns>
     internal AudioStream GetBestAudioTrack(NodeParameters args, IEnumerable<AudioStream> streams)
     {
         Regex? rgxLanguage = null;
@@ -202,8 +246,14 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
         return bestAudio;
     }
 
-
-    internal static string[] GetNewAudioTrackParameters(string source, string codec, float channels, int bitrate)
+    /// <summary>
+    /// Gets hte new audio track parameters
+    /// </summary>
+    /// <param name="codec">the codec of the new track</param>
+    /// <param name="channels">the channels of the new track</param>
+    /// <param name="bitrate">the bitrate of the new track</param>
+    /// <returns>the new track parameters</returns>
+    internal static string[] GetNewAudioTrackParameters(string codec, float channels, int bitrate)
     {
         if (codec == "opus")
             codec = "libopus";
