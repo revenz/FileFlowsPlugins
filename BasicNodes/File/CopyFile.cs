@@ -94,7 +94,8 @@ namespace FileFlows.BasicNodes.File
             args.Logger.ILog($"CopyFile.Dest[2] '{dest}'");
             if (CopyFolder) // we only want the full directory relative to the library, we don't want the original filename
             {
-                dest = new FileInfo(Path.Combine(dest, args.RelativeFile)).DirectoryName;
+                dest = Path.Combine(dest, args.RelativeFile);
+                dest = dest[..dest.LastIndexOf(Path.DirectorySeparatorChar)];
                 args.Logger?.ILog("Using relative directory: " + dest);
             }
             
