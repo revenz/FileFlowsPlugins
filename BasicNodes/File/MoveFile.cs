@@ -180,7 +180,7 @@ public class MoveFile : Node
         destFolder = destFolder.Replace("/", separator);
         string destFilename = args.FileName.Replace("\\", separator)
                                            .Replace("/", separator);
-        destFilename = destFilename.Substring(destFilename.LastIndexOf(separator) + 1);
+        destFilename = destFilename.Substring(destFilename.LastIndexOf(separator, StringComparison.Ordinal) + 1);
         if (string.IsNullOrEmpty(destFolder))
         {
             args.Logger?.ELog("No destination specified");
@@ -195,9 +195,9 @@ public class MoveFile : Node
             string relative = args.RelativeFile.Replace("\\", separator).Replace("/", separator);
             if (relative.StartsWith(separator))
                 relative = relative[1..];
-            if (relative.IndexOf(separator) > 0)
+            if (relative.IndexOf(separator, StringComparison.Ordinal) > 0)
             {
-                destFolder = destFolder + separator + relative.Substring(0, relative.LastIndexOf(separator));
+                destFolder = destFolder + separator + relative.Substring(0, relative.LastIndexOf(separator, StringComparison.Ordinal));
                 args.Logger?.ILog("Using relative directory: " + destFolder);
             }
         }
@@ -217,7 +217,7 @@ public class MoveFile : Node
 
         if (string.IsNullOrEmpty(destExtension) == false && destExtension != workingExtension)
         {
-            destFilename = destFilename.Substring(0, destFilename.LastIndexOf(".")) + workingExtension;
+            destFilename = destFilename.Substring(0, destFilename.LastIndexOf(".", StringComparison.Ordinal)) + workingExtension;
         }
 
         args.Logger?.ILog("Final destination path: " + destFolder);
