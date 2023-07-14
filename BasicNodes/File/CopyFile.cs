@@ -79,55 +79,16 @@ namespace FileFlows.BasicNodes.File
         public override int Execute(NodeParameters args)
         {
             Canceled = false;
-            string dest = args.ReplaceVariables(DestinationPath, true);
-
-            args.Logger.ILog($"CopyFile.Dest[0] '{dest}'");
-            dest = dest.Replace("\\", Path.DirectorySeparatorChar.ToString());
-            dest = dest.Replace("/", Path.DirectorySeparatorChar.ToString());
-            args.Logger.ILog($"CopyFile.Dest[1] '{dest}'");
-            if (string.IsNullOrEmpty(dest))
-            {
-                args.Logger?.ELog("No destination specified");
-                return -1;
-            }
-
-            args.Logger.ILog($"CopyFile.Dest[2] '{dest}'");
-            if (CopyFolder) // we only want the full directory relative to the library, we don't want the original filename
-            {
-                dest = Path.Combine(dest, args.RelativeFile);
-                dest = dest[..dest.LastIndexOf(Path.DirectorySeparatorChar)];
-                args.Logger?.ILog("Using relative directory: " + dest);
-            }
             
-            dest = Path.Combine(dest, new FileInfo(args.FileName).Name);
-            args.Logger.ILog($"CopyFile.Dest[3] '{dest}'");
-
-            var fiDest = new FileInfo(dest);
-            var fiWorking = new FileInfo(args.WorkingFile);
-            if (string.IsNullOrEmpty(fiDest.Extension) == false && fiDest.Extension != fiWorking.Extension)
-            {
-                dest = dest.Substring(0, dest.LastIndexOf(".")) + fiWorking.Extension;
-            }
-            args.Logger.ILog($"CopyFile.Dest[5] '{dest}'");
-
+            var destParts = MoveFile.GetDestinationPathParts(args, DestinationPath, DestinationFile, CopyFolder);
+            if (destParts.Filename == null)
+                return -1;
+            
             // cant use new FileInfo(dest).Directory.Name here since
             // if the folder is a linux folder and this node is running on windows
             // /mnt, etc will be converted to c:\mnt and break the destination
-            var destDir = dest.Substring(0, dest.Replace("\\", "/").LastIndexOf("/"));
-
-            if(string.IsNullOrEmpty(DestinationFile) == false)
-            {
-                // FF-154 - changed file.Name and file.Orig.Filename to be the full short filename including the extension
-                string destFile = DestinationFile;
-                destFile = destFile.Replace("{file.Orig.FileName}{file.Orig.Extension}", "{file.Orig.FileName}");
-                destFile = destFile.Replace("{file.Name}{file.Extension}", "{file.Name}");
-                destFile = destFile.Replace("{file.Name}{ext}", "{file.Name}");
-                destFile = args.ReplaceVariables(destFile);
-                dest = Path.Combine(destDir!, destFile);
-            }
-            args.Logger.ILog($"CopyFile.Dest[6] '{dest}'");
-
-            args.Logger.ILog($"CopyFileArgs: '{args.WorkingFile}', '{dest}'");
+            var destDir = destParts.Path;
+            string dest = destParts.Path + destParts.Separator + destParts.Filename;
             
             bool copied = args.CopyFile(args.WorkingFile, dest, updateWorkingFile: true);
             if (!copied)
@@ -171,7 +132,7 @@ namespace FileFlows.BasicNodes.File
                 }
                 catch (Exception ex)
                 {
-                    args.Logger.WLog("Error copying additinoal files: " + ex.Message);
+                    args.Logger.WLog("Error copying additional files: " + ex.Message);
                 }
             }
 

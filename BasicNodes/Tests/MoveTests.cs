@@ -17,79 +17,79 @@ public class MoveTests
     public void MoveTests_Variable_Filename()
     {
         var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters(@"c:\test\tv4a-starwarsrebels.s01e15-1080p.mkv", logger, false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters(@"/home/user/test/tv4a-starwarsrebels.s01e15-1080p.mkv", logger, false, string.Empty);
 
-        string dest = MoveFile.GetDesitnationPath(args, @"D:\test", "{file.Name}");
+        string dest = MoveFile.GetDestinationPath(args, @"D:\test", "{file.Name}");
 
-        Assert.AreEqual(@"D:\test\tv4a-starwarsrebels.s01e15-1080p.mkv", dest);
+        Assert.AreEqual(@"D:/test/tv4a-starwarsrebels.s01e15-1080p.mkv", dest);
     }
     [TestMethod]
     public void MoveTests_Variable_FilenameExt()
     {
         var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters(@"c:\test\tv4a-starwarsrebels.s01e15-1080p.mkv", logger, false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters(@"/home/user/test/tv4a-starwarsrebels.s01e15-1080p.mkv", logger, false, string.Empty);
 
         // ensure we dont double up the extension after FF-154
-        string dest = MoveFile.GetDesitnationPath(args, @"D:\test", "{file.Name}{file.Extension}");
+        string dest = MoveFile.GetDestinationPath(args, @"D:\test", "{file.Name}{file.Extension}");
 
-        Assert.AreEqual(@"D:\test\tv4a-starwarsrebels.s01e15-1080p.mkv", dest);
+        Assert.AreEqual(@"D:/test/tv4a-starwarsrebels.s01e15-1080p.mkv", dest);
     }
 
     [TestMethod]
     public void MoveTests_Variable_FilenameNoExtension()
     {
         var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters(@"c:\test\tv4a-starwarsrebels.s01e15-1080p.mkv", logger, false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters(@"/home/user/test/tv4a-starwarsrebels.s01e15-1080p.mkv", logger, false, string.Empty);
 
         // ensure we dont double up the extension after FF-154
-        string dest = MoveFile.GetDesitnationPath(args, @"D:\test", "{file.NameNoExtension}");
+        string dest = MoveFile.GetDestinationPath(args, @"D:\test", "{file.NameNoExtension}");
 
-        Assert.AreEqual(@"D:\test\tv4a-starwarsrebels.mkv", dest);
+        Assert.AreEqual(@"D:/test/tv4a-starwarsrebels.mkv", dest);
     }
 
     [TestMethod]
     public void MoveTests_Variable_Ext()
     {
         var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters(@"c:\test\tv4a-starwarsrebels.s01e15-1080p.mkv", logger, false, string.Empty);
+        var args = new NodeParameters(@"/home/user/test/tv4a-starwarsrebels.s01e15-1080p.mkv", logger, false, string.Empty);
 
         // ensure we dont double up the extension after FF-154
-        string dest = MoveFile.GetDesitnationPath(args, @"D:\test", "{file.Name}{ext}");
+        string dest = MoveFile.GetDestinationPath(args, @"D:\test", "{file.Name}{ext}");
 
-        Assert.AreEqual(@"D:\test\tv4a-starwarsrebels.s01e15-1080p.mkv", dest);
+        Assert.AreEqual(@"D:/test/tv4a-starwarsrebels.s01e15-1080p.mkv", dest);
     }
 
     [TestMethod]
     public void MoveTests_Variable_Original_Filename()
     {
         var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters(@"c:\test\tv4a-starwarsrebels.s01e15-1080p.mkv", logger, false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters(@"/home/user/test/tv4a-starwarsrebels.s01e15-1080p.mkv", logger, false, string.Empty);
 
-        string dest = MoveFile.GetDesitnationPath(args, @"D:\test", "{file.Orig.FileName}");
+        string dest = MoveFile.GetDestinationPath(args, @"D:\test", "{file.Orig.FileName}");
 
-        Assert.AreEqual(@"D:\test\tv4a-starwarsrebels.s01e15-1080p.mkv", dest);
+        Assert.AreEqual(@"D:/test/tv4a-starwarsrebels.s01e15-1080p.mkv", dest);
     }
     [TestMethod]
     public void MoveTests_Variable_Original_FilenameExt()
     {
         var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters(@"c:\test\tv4a-starwarsrebels.s01e15-1080p.mkv", logger, false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters(@"/home/user/test/tv4a-starwarsrebels.s01e15-1080p.mkv", logger, false, string.Empty);
 
         // ensure we dont double up the extension after FF-154
-        string dest = MoveFile.GetDesitnationPath(args, @"D:\test", "{file.Orig.FileName}{file.Orig.Extension}");
+        string dest = MoveFile.GetDestinationPath(args, @"D:\test", "{file.Orig.FileName}{file.Orig.Extension}");
 
-        Assert.AreEqual(@"D:\test\tv4a-starwarsrebels.s01e15-1080p.mkv", dest);
+        Assert.AreEqual(@"D:/test/tv4a-starwarsrebels.s01e15-1080p.mkv", dest);
     }
     [TestMethod]
     public void MoveTests_Variable_Original_NoExtension()
     {
         var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters(@"c:\test\tv4a-starwarsrebels.s01e15-1080p.mkv", logger, false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters(@"/home/user/test/tv4a-starwarsrebels.s01e15-1080p.mkv", logger, false, string.Empty);
 
         // ensure we dont double up the extension after FF-154
-        string dest = MoveFile.GetDesitnationPath(args, @"D:\test", "{file.Orig.FileNameNoExtension}");
+        string dest = MoveFile.GetDestinationPath(args, @"D:\test", "{file.Orig.FileNameNoExtension}");
 
-        Assert.AreEqual(@"D:\test\tv4a-starwarsrebels.mkv", dest);
+        Assert.AreEqual(@"D:/test/tv4a-starwarsrebels.mkv", dest);
     }
 }
 
