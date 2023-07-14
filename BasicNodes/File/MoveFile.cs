@@ -191,9 +191,15 @@ public class MoveFile : Node
 
         if (moveFolder) // we only want the full directory relative to the library, we don't want the original filename
         {
-            destFolder = Path.Combine(destFolder, args.RelativeFile);
-            destFolder = destFolder[..destFolder.LastIndexOf(separator)];
-            args.Logger?.ILog("Using relative directory: " + destFolder);
+            args.Logger?.ILog("Relative File: " + args.RelativeFile);
+            string relative = args.RelativeFile.Replace("\\", separator).Replace("/", separator);
+            if (relative.StartsWith(separator))
+                relative = relative[1..];
+            if (relative.IndexOf(separator) > 0)
+            {
+                destFolder = destFolder + separator + relative.Substring(0, relative.LastIndexOf(separator));
+                args.Logger?.ILog("Using relative directory: " + destFolder);
+            }
         }
 
         // dest = Path.Combine(dest, argsFilename);

@@ -91,6 +91,18 @@ public class MoveTests
 
         Assert.AreEqual(@"D:/test/tv4a-starwarsrebels.mkv", dest);
     }
+    
+    [TestMethod]
+    public void MoveTests_MoveFolder()
+    {
+        var logger = new TestLogger();
+        var args = new NodeParameters(@"\\tower\downloads\downloaded\tv\The.Walking.Dead.Dead.City.S01E04\some-file.mkv", logger, false, string.Empty);
+        args.RelativeFile = @"The.Walking.Dead.Dead.City.S01E04\some-file.mkv";
+
+        string dest = MoveFile.GetDestinationPath(args, @"\\tower\downloads\converted\tv", null, moveFolder:true);
+
+        Assert.AreEqual(@"\\tower\downloads\converted\tv\The.Walking.Dead.Dead.City.S01E04\some-file.mkv", dest);
+    }
 }
 
 #endif
