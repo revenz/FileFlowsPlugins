@@ -373,6 +373,13 @@
           "Code": "Code"
         }
       },
+      "FfmpegBuilderRemoveAttachments": {
+        "Label": "FFMPEG Builder: Remove Attachments",
+        "Description": "Removes any attachments from the video, if there are any.",
+        "Outputs": {
+          "1": "FFMPEG Builder set to remove attachments."
+        }
+      },
       "FfmpegBuilderRemuxToMkv": {
         "Label": "FFMPEG Builder: Remux to MKV",
         "Description": "Remuxes a video file into a MKV container.",

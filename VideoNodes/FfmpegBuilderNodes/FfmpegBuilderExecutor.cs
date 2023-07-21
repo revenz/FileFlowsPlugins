@@ -175,8 +175,12 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         }
 
         ffArgs = startArgs.Concat(ffArgs).ToList();
-        // FF-378: keep attachments (fonts etc)
-        ffArgs.AddRange(new[] { "-map", "0:t?", "-c:t", "copy" });
+        if (model.RemoveAttachments != true)
+        {
+            // FF-378: keep attachments (fonts etc)
+            ffArgs.AddRange(new[] { "-map", "0:t?", "-c:t", "copy" });
+        }
+
         var ffmpeg = FFMPEG;
         
         if(string.IsNullOrWhiteSpace(model.PreExecuteCode) == false)
