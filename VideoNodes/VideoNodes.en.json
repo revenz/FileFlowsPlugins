@@ -95,6 +95,8 @@
           "Bitrate-Help": "Bitrate of the new audio track",
           "Codec": "Codec",
           "Codec-Help": "The codec to use to encode the audio",
+          "SampleRate": "Sample Rate",
+          "SampleRate-Help": "The sample rate to use for the new audio track",
           "Language": "Language",
           "Language-Help": "Optional [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) language code to use.  Will attempt to find an audio track with this language code if not the best audio track will be used.",
           "NewTitle": "New Title",

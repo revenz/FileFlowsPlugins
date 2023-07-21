@@ -108,21 +108,56 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
             return _BitrateOptions;
         }
     }
+    
+    
+    /// <summary>
+    /// Gets or sets the sample rate
+    /// </summary>
+    [DefaultValue(0)]
+    [Select(nameof(SampleRateOptions), 4)]
+    public int SampleRate { get; set; }
+
+    private static List<ListOption> _SampleRateOptions;
+    /// <summary>
+    /// Gets the sample rate options
+    /// </summary>
+    public static List<ListOption> SampleRateOptions
+    {
+        get
+        {
+            if (_SampleRateOptions == null)
+            {
+                _SampleRateOptions = new List<ListOption>
+                {
+                    new () { Label = "Automatic", Value = 0},
+                    new () { Label = "Same as source", Value = 1},
+                    new () { Label = "44.1Khz", Value = 44100 },
+                    new () { Label = "48Khz", Value = 48000 },
+                    new () { Label = "88.2Khz", Value = 88200 },
+                    new () { Label = "96Khz", Value = 96000 },
+                    new () { Label = "176.4Khz", Value = 176400 },
+                    new () { Label = "192Khz", Value = 192000 }
+                };
+            }
+            return _SampleRateOptions;
+        }
+    }
+    
     /// <summary>
     /// Gets or sets the language of the nee track
     /// </summary>
     [DefaultValue("eng")]
-    [TextVariable(4)]
+    [TextVariable(5)]
     public string Language { get; set; }
     /// <summary>
     /// Gets or sets if the title of the new track should be removed
     /// </summary>
-    [Boolean(5)]
+    [Boolean(6)]
     public bool RemoveTitle { get; set; }
     /// <summary>
     /// Gets or sets the title of the new track
     /// </summary>
-    [TextVariable(6)]
+    [TextVariable(7)]
     [ConditionEquals(nameof(RemoveTitle), false)]
     public string NewTitle { get; set; }
     
@@ -165,7 +200,8 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
         }
         else
         {
-            audio.EncodingParameters.AddRange(GetNewAudioTrackParameters(Codec, Channels, Bitrate));
+            int sampleRate = SampleRate == 1 ? audio.Stream.SampleRate : SampleRate;
+            audio.EncodingParameters.AddRange(GetNewAudioTrackParameters(Codec, Channels, Bitrate, sampleRate));
             if (this.Channels > 0)
                 audio.Channels = this.Channels;
         }
@@ -252,52 +288,42 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
     /// <param name="codec">the codec of the new track</param>
     /// <param name="channels">the channels of the new track</param>
     /// <param name="bitrate">the bitrate of the new track</param>
+    /// <param name="sampleRate">the sample rate</param>
     /// <returns>the new track parameters</returns>
-    internal static string[] GetNewAudioTrackParameters(string codec, float channels, int bitrate)
+    internal static string[] GetNewAudioTrackParameters(string codec, float channels, int bitrate, int sampleRate)
     {
         if (codec == "opus")
             codec = "libopus";
+        
+        // Prepare the options list
+        var options = new List<string>
+        {
+            "-map", "0:a:{sourceTypeIndex}",
+            "-c:a:{index}",
+            codec
+        };
 
-        if (channels == 0)
+        // Handle channels
+        if (channels > 0)
         {
-            // same as source
-            if (bitrate == 0)
-            {
-                return new[]
-                {
-                    "-map", "0:a:{sourceTypeIndex}", 
-                    "-c:a:{index}",
-                    codec
-                };
-            }
-            return new[]
-            {
-                "-map", "0:a:{sourceTypeIndex}",
-                "-c:a:{index}",
-                codec,
-                "-b:a:{index}", bitrate + "k"
-            };
+            options.Add("-ac:a:{index}");
+            options.Add(channels.ToString());
         }
-        else
+
+        // Handle bitrate
+        if (bitrate > 0)
         {
-            if (bitrate == 0)
-            {
-                return new[]
-                {
-                    "-map", "0:a:{sourceTypeIndex}",
-                    "-c:a:{index}",
-                    codec,
-                    "-ac:a:{index}", channels.ToString()
-                };
-            }
-            return new[]
-            {
-                "-map", "0:a:{sourceTypeIndex}",
-                "-c:a:{index}",
-                codec,
-                "-ac:a:{index}", channels.ToString(),
-                "-b:a:{index}", bitrate + "k"
-            };
+            options.Add("-b:a:{index}");
+            options.Add(bitrate + "k");
         }
+
+        // Handle sample rate
+        if (sampleRate > 0)
+        {
+            options.Add("-ar:a:{index}");
+            options.Add(sampleRate.ToString());
+        }
+
+        return options.ToArray();
     }
 }
