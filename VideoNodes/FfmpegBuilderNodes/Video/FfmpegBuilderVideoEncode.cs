@@ -200,7 +200,7 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         {
             //"libaom-av1",
             "libsvtav1",
-            "-preset", "8",
+            "-preset", "slower",
             "-crf", quality.ToString()
         };
     }
