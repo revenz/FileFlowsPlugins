@@ -82,7 +82,10 @@ public class Unpack: Node
         bool isRar = workingFile.ToLowerInvariant().EndsWith(".cbr");
         try
         {
-            ArchiveFactory.WriteToDirectory(workingFile, destinationPath);
+            ArchiveFactory.WriteToDirectory(workingFile, destinationPath, new ()
+            {
+                ExtractFullPath = true
+            });
         }
         catch (Exception ex) when (isRar && ex.Message.Contains("Unknown Rar Header"))
         {
