@@ -131,12 +131,12 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
                 {
                     new () { Label = "Automatic", Value = 0},
                     new () { Label = "Same as source", Value = 1},
-                    new () { Label = "44.1Khz", Value = 44100 },
-                    new () { Label = "48Khz", Value = 48000 },
-                    new () { Label = "88.2Khz", Value = 88200 },
-                    new () { Label = "96Khz", Value = 96000 },
-                    new () { Label = "176.4Khz", Value = 176400 },
-                    new () { Label = "192Khz", Value = 192000 }
+                    new () { Label = "44100", Value = 44100 },
+                    new () { Label = "48000", Value = 48000 },
+                    new () { Label = "88200", Value = 88200 },
+                    new () { Label = "96000", Value = 96000 },
+                    new () { Label = "176400", Value = 176400 },
+                    new () { Label = "192000", Value = 192000 }
                 };
             }
             return _SampleRateOptions;
