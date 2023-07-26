@@ -201,7 +201,7 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
         else
         {
             int sampleRate = SampleRate == 1 ? audio.Stream.SampleRate : SampleRate;
-            audio.EncodingParameters.AddRange(GetNewAudioTrackParameters(args, Codec, Channels, Bitrate, sampleRate));
+            audio.EncodingParameters.AddRange(GetNewAudioTrackParameters(args, audio, Codec, Channels, Bitrate, sampleRate));
             if (this.Channels > 0)
                 audio.Channels = this.Channels;
         }
@@ -286,12 +286,13 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
     /// Gets hte new audio track parameters
     /// </summary>
     /// <param name="args">the node parameters</param>
+    /// <param name="stream">the input stream</param>
     /// <param name="codec">the codec of the new track</param>
     /// <param name="channels">the channels of the new track</param>
     /// <param name="bitrate">the bitrate of the new track</param>
     /// <param name="sampleRate">the sample rate</param>
     /// <returns>the new track parameters</returns>
-    internal static string[] GetNewAudioTrackParameters(NodeParameters args, string codec, float channels, int bitrate, int sampleRate)
+    internal static string[] GetNewAudioTrackParameters(NodeParameters args, FfmpegAudioStream stream, string codec, float channels, int bitrate, int sampleRate)
     {
         bool opus = codec == "opus"; 
         if (opus)
@@ -315,27 +316,27 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
         {
             // FF-1016: Opus needs this for side by side channel layout
             args.Logger?.ILog("OPUS Audio");
-            if (Math.Abs(channels - 61) < 1)
+            if (Math.Abs(stream.Channels - 61) < 1)
             {
                 args.Logger?.ILog("Channels 61 detected setting to 8");
                 options.AddRange(new[] { "-ac:a:{index}", "8" });
             }
-            else if (channels is > 5 and <= 6 || Math.Abs(channels - 51) < 1)
+            else if (stream.Channels is > 5 and <= 6 || Math.Abs(stream.Channels - 51) < 1)
             {
                 args.Logger?.ILog("Channels between 5 and 6 or 50/51 detected setting to 6");
                 options.AddRange(new[] { "-ac:a:{index}", "6" });
             }
-            else if (channels is >= 4 and <= 5 || Math.Abs(channels - 40) < 2)
+            else if (stream.Channels is >= 4 and <= 5 || Math.Abs(stream.Channels - 40) < 2)
             {
                 args.Logger?.ILog("Channels between 4 and 5 or 40/41 detected setting to 4");
                 options.AddRange(new[] { "-ac:a:{index}", "4" });
             }
-            else if (channels == 0)
+            else if (stream.Channels == 0)
             {
                 args.Logger?.ILog("No channels detected setting to 2");
                 options.AddRange(new[] { "-ac:a:{index}", "2" });
             }
-            else if (Math.Abs(channels - 5) < 0.5)
+            else if (Math.Abs(stream.Channels - 5) < 0.5)
             {
                 args.Logger?.ILog("Channels 5 detected setting to 5");
                 options.AddRange(new[] { "-ac:a:{index}", "5" });

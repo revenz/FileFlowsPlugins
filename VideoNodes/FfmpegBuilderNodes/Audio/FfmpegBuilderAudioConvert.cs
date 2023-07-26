@@ -142,7 +142,7 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
         if (codecSame && channelsSame && bitrateSame)
             return false;
 
-        stream.EncodingParameters.AddRange(FfmpegBuilderAudioAddTrack.GetNewAudioTrackParameters(args, Codec, Channels, Bitrate, 0));
+        stream.EncodingParameters.AddRange(FfmpegBuilderAudioAddTrack.GetNewAudioTrackParameters(args, stream, Codec, Channels, Bitrate, 0));
         return true;
     }
 }
