@@ -315,7 +315,7 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
         else if (opus)
         {
             // FF-1016: Opus needs this for side by side channel layout
-            args.Logger?.ILog("OPUS Audio");
+            args.Logger?.ILog("OPUS Audio: " + stream.Channels);
             if (Math.Abs(stream.Channels - 61) < 1)
             {
                 args.Logger?.ILog("Channels 61 detected setting to 8");
