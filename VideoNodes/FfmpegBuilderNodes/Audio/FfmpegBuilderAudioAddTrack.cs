@@ -332,7 +332,7 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
             }
             else if (channels == 0)
             {
-                args.Logger?.ILog("No channels detected setting to 4");
+                args.Logger?.ILog("No channels detected setting to 2");
                 options.AddRange(new[] { "-ac:a:{index}", "2" });
             }
             else if (Math.Abs(channels - 5) < 0.5)
