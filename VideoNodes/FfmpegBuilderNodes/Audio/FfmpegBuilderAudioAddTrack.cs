@@ -201,7 +201,7 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
         else
         {
             int sampleRate = SampleRate == 1 ? audio.Stream.SampleRate : SampleRate;
-            audio.EncodingParameters.AddRange(GetNewAudioTrackParameters(Codec, Channels, Bitrate, sampleRate));
+            audio.EncodingParameters.AddRange(GetNewAudioTrackParameters(args, Codec, Channels, Bitrate, sampleRate));
             if (this.Channels > 0)
                 audio.Channels = this.Channels;
         }
@@ -285,14 +285,16 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
     /// <summary>
     /// Gets hte new audio track parameters
     /// </summary>
+    /// <param name="args">the node parameters</param>
     /// <param name="codec">the codec of the new track</param>
     /// <param name="channels">the channels of the new track</param>
     /// <param name="bitrate">the bitrate of the new track</param>
     /// <param name="sampleRate">the sample rate</param>
     /// <returns>the new track parameters</returns>
-    internal static string[] GetNewAudioTrackParameters(string codec, float channels, int bitrate, int sampleRate)
+    internal static string[] GetNewAudioTrackParameters(NodeParameters args, string codec, float channels, int bitrate, int sampleRate)
     {
-        if (codec == "opus")
+        bool opus = codec == "opus"; 
+        if (opus)
             codec = "libopus";
         
         // Prepare the options list
@@ -309,6 +311,36 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
             options.Add("-ac:a:{index}");
             options.Add(channels.ToString());
         }
+        else if (opus)
+        {
+            // FF-1016: Opus needs this for side by side channel layout
+            args.Logger?.ILog("OPUS Audio");
+            if (Math.Abs(channels - 61) < 1)
+            {
+                args.Logger?.ILog("Channels 61 detected setting to 8");
+                options.AddRange(new[] { "-ac:a:{index}", "8" });
+            }
+            else if (channels is > 5 and <= 6 || Math.Abs(channels - 51) < 1)
+            {
+                args.Logger?.ILog("Channels between 5 and 6 or 50/51 detected setting to 6");
+                options.AddRange(new[] { "-ac:a:{index}", "6" });
+            }
+            else if (channels is >= 4 and <= 5 || Math.Abs(channels - 40) < 2)
+            {
+                args.Logger?.ILog("Channels between 4 and 5 or 40/41 detected setting to 4");
+                options.AddRange(new[] { "-ac:a:{index}", "4" });
+            }
+            else if (channels == 0)
+            {
+                args.Logger?.ILog("No channels detected setting to 4");
+                options.AddRange(new[] { "-ac:a:{index}", "2" });
+            }
+            else if (Math.Abs(channels - 5) < 0.5)
+            {
+                args.Logger?.ILog("Channels 5 detected setting to 5");
+                options.AddRange(new[] { "-ac:a:{index}", "5" });
+            }
+        }
 
         // Handle bitrate
         if (bitrate > 0)
@@ -323,6 +355,8 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
             options.Add("-ar:a:{index}");
             options.Add(sampleRate.ToString());
         }
+        
+        args.Logger.ILog("New Audo Arguments: " + string.Join(" ", options));
 
         return options.ToArray();
     }

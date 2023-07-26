@@ -104,7 +104,7 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
 
             if (string.IsNullOrEmpty(this.Pattern))
             {
-                converting |= ConvertTrack(track);
+                converting |= ConvertTrack(args, track);
                 continue;
             }
 
@@ -120,14 +120,20 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
                     matches = !matches;
                 if (matches)
                 {
-                    converting |= ConvertTrack(track);
+                    converting |= ConvertTrack(args, track);
                 }
             }
         }
         return converting ? 1: 2;
     }
-
-    private bool ConvertTrack(FfmpegAudioStream stream)
+    
+    /// <summary>
+    /// Converts and audio track
+    /// </summary>
+    /// <param name="args">the node arguments</param>
+    /// <param name="stream">teh stream to convert</param>
+    /// <returns>if the stream had to be converted or not</returns>
+    private bool ConvertTrack(NodeParameters args, FfmpegAudioStream stream)
     {
         bool codecSame = stream.Stream.Codec?.ToLower() == Codec?.ToLower();
         bool channelsSame = Channels == 0 || Channels == stream.Stream.Channels;
@@ -136,7 +142,7 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
         if (codecSame && channelsSame && bitrateSame)
             return false;
 
-        stream.EncodingParameters.AddRange(FfmpegBuilderAudioAddTrack.GetNewAudioTrackParameters(Codec, Channels, Bitrate, 0));
+        stream.EncodingParameters.AddRange(FfmpegBuilderAudioAddTrack.GetNewAudioTrackParameters(args, Codec, Channels, Bitrate, 0));
         return true;
     }
 }
