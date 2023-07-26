@@ -9,8 +9,9 @@ namespace FileFlows.AudioNodes
         public override string HelpUrl => "https://fileflows.com/docs/plugins/audio-nodes/convert-to-mp3";
         protected override string Extension => "mp3";
         public static List<ListOption> BitrateOptions => ConvertNode.BitrateOptions;
-        protected override List<string> GetArguments(NodeParameters args)
+        protected override List<string> GetArguments(NodeParameters args, out string? extension)
         {
+            extension = null;
             if (Bitrate == 0)
             {
                 // automatic
@@ -33,9 +34,37 @@ namespace FileFlows.AudioNodes
     {
         public override string HelpUrl => "https://fileflows.com/docs/plugins/audio-nodes/convert-to-wav";
         protected override string Extension => "wav";
-        public static List<ListOption> BitrateOptions => ConvertNode.BitrateOptions;
-        protected override List<string> GetArguments(NodeParameters args)
+        
+        private static List<ListOption> _BitrateOptions;
+
+        public new static List<ListOption> BitrateOptions
         {
+            get
+            {
+                if (_BitrateOptions == null)
+                {
+                    _BitrateOptions = new List<ListOption>
+                    {
+                        new () { Label = "Automatic", Value = 0 },
+                        new () { Label = "Same as source", Value = -1 },
+                        new () { Label = "64 Kbps", Value = 64},
+                        new () { Label = "96 Kbps", Value = 96},
+                        new () { Label = "128 Kbps", Value = 128},
+                        new () { Label = "160 Kbps", Value = 160},
+                        new () { Label = "192 Kbps", Value = 192},
+                        new () { Label = "224 Kbps", Value = 224},
+                        new () { Label = "256 Kbps", Value = 256},
+                        new () { Label = "288 Kbps", Value = 288},
+                        new () { Label = "320 Kbps", Value = 320},
+                    };
+                }
+                return _BitrateOptions;
+            }
+        }
+        
+        protected override List<string> GetArguments(NodeParameters args, out string? extension)
+        {
+            extension = null;
             if (Bitrate == 0)
             {
                 // automatic
@@ -63,8 +92,9 @@ namespace FileFlows.AudioNodes
 
         protected override bool SetId3Tags => true;
 
-        protected override List<string> GetArguments(NodeParameters args)
+        protected override List<string> GetArguments(NodeParameters args, out string? extension)
         {
+            extension = null;
             if (Bitrate == 0)
             {
                 // automatic
@@ -88,8 +118,9 @@ namespace FileFlows.AudioNodes
         public override string HelpUrl => "https://fileflows.com/docs/plugins/audio-nodes/convert-to-ogg";
         protected override string Extension => "ogg";
         public static List<ListOption> BitrateOptions => ConvertNode.BitrateOptions;
-        protected override List<string> GetArguments(NodeParameters args)
+        protected override List<string> GetArguments(NodeParameters args, out string? extension)
         {
+            extension = null;
             if (Bitrate == 0)
             {
                 // automatic
@@ -149,6 +180,12 @@ namespace FileFlows.AudioNodes
         [ConditionEquals(nameof(Normalize), true, inverse: true)]
         public bool SkipIfCodecMatches { get; set; }
 
+        /// <summary>
+        /// Gets or sets if high efficiency should be used
+        /// </summary>
+        [Boolean(5)]
+        [ConditionEquals(nameof(Codec), "aac")]
+        public bool HighEfficiency { get; set; }
         public override int Outputs => 2; 
 
         private static List<ListOption> _CodecOptions;
@@ -170,8 +207,9 @@ namespace FileFlows.AudioNodes
             }
         }
 
-        protected override List<string> GetArguments(NodeParameters args)
+        protected override List<string> GetArguments(NodeParameters args, out string? extension)
         {
+            extension = null;
             string codec = Codec switch 
             {
                 "ogg" => "libvorbis",
@@ -192,14 +230,21 @@ namespace FileFlows.AudioNodes
                     }
                     
                     args.Logger?.ILog($"Using variable bitrate setting '{bitrate}' for codec '{Codec}'");
-                    
-                    return new List<string>
+
+                    var results = new List<string>
                     {
                         "-c:a",
                         codec,
                         "-qscale:a",
                         bitrate.ToString()
                     };
+                    if (Codec == "aac" && HighEfficiency)
+                    {
+                        extension = "m4a";
+                        results.AddRange(new[] { "-profile:a", "aac_he_v2" });
+                    }
+
+                    return results;
                 }
             }
             else if(bitrate is > 10 and <= 20)
@@ -271,8 +316,9 @@ namespace FileFlows.AudioNodes
         public override int Inputs => 1;
         public override int Outputs => 1;
 
-        protected virtual List<string> GetArguments(NodeParameters args)
+        protected virtual List<string> GetArguments(NodeParameters args, out string? extension)
         {
+            extension = null;
             if (Bitrate == 0)
             {
                 // automatic
@@ -360,9 +406,11 @@ namespace FileFlows.AudioNodes
 
 
 
-            string outputFile = Path.Combine(args.TempPath, Guid.NewGuid().ToString() + "." + Extension);
 
-            var ffArgs = GetArguments(args);
+            var ffArgs = GetArguments(args, out string extension);
+            string outputFile = Path.Combine(args.TempPath,
+                Guid.NewGuid().ToString() + "." + (extension?.EmptyAsNull() ?? Extension));
+            
             ffArgs.Insert(0, "-hide_banner");
             ffArgs.Insert(1, "-y"); // tells ffmpeg to replace the file if already exists, which it shouldnt but just incase
             ffArgs.Insert(2, "-i");

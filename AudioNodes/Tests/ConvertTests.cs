@@ -21,8 +21,9 @@ namespace FileFlows.AudioNodes.Tests
 
             var logger = new TestLogger();
             ConvertAudio node = new ();
-            node.Codec = "ogg";
+            node.Codec = "aac";
             node.Bitrate = 10;
+            node.HighEfficiency = true;
             var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty);
             args.GetToolPathActual = (string tool) => @"/usr/bin/ffmpeg";
             args.TempPath = @"/home/john/temp";

@@ -27,7 +27,9 @@
           "Normalize": "Normalize",
           "Normalize-Help": "If the audio should be normalized with two pass audio normalization",
           "SkipIfCodecMatches": "Skip If Codec Matches",
-          "SkipIfCodecMatches-Help": "If the existing audio codec matches, this file will not be processed regardless of the bitrate.  Otherwise if off, the bitrate must be less than or equal to for it to skip."
+          "SkipIfCodecMatches-Help": "If the existing audio codec matches, this file will not be processed regardless of the bitrate.  Otherwise if off, the bitrate must be less than or equal to for it to skip.",
+          "HighEfficiency": "High Efficiency",
+          "HighEfficiency-Help": "Will use high efficiency mode, this will change the extension to m4a and will reduce supported playback devices, but may reduce the size of the file."
         }
       },
       "ConvertToAAC": {
