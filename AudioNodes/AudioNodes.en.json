@@ -22,6 +22,12 @@
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "The bitrate for the new file, the higher the bitrate the better the quality but larger the file.",
+          "BitrateAac": "Bitrate",
+          "BitrateAac-Help": "The bitrate for the new file, the higher the bitrate the better the quality but larger the file.",
+          "BitrateMp3": "Bitrate",
+          "BitrateMp3-Help": "The bitrate for the new file, the higher the bitrate the better the quality but larger the file.",
+          "BitrateOgg": "Bitrate",
+          "BitrateOgg-Help": "The bitrate for the new file, the higher the bitrate the better the quality but larger the file.",
           "Codec": "Codec",
           "Codec-Help": "The audio codec to convert the file into.",
           "Normalize": "Normalize",

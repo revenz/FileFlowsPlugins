@@ -17,16 +17,20 @@ namespace FileFlows.AudioNodes.Tests
         [TestMethod]
         public void Convert_FlacToAac()
         {
+            const string file = @"/home/john/Music/Aquarium (1997)/Aqua - Aquarium - 03 - Barbie Girl.flac";
 
-            const string file = @"D:\music\unprocessed\01-billy_joel-you_may_be_right.flac";
-
-            ConvertToAAC node = new ();
-            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
-            args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
-            args.TempPath = @"D:\music\temp";
+            var logger = new TestLogger();
+            ConvertAudio node = new ();
+            node.Codec = "ogg";
+            node.BitrateOgg = null;
+            node.Bitrate = 128;
+            var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty);
+            args.GetToolPathActual = (string tool) => @"/usr/bin/ffmpeg";
+            args.TempPath = @"/home/john/temp";
             new AudioFile().Execute(args); // need to read the Audio info and set it
             int output = node.Execute(args);
 
+            var log = logger.ToString();
             Assert.AreEqual(1, output);
         }
 

@@ -1,5 +1,6 @@
 ﻿using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
+using TagLib.Gif;
 
 namespace FileFlows.AudioNodes
 {
@@ -178,7 +179,51 @@ namespace FileFlows.AudioNodes
                 _ => Codec.ToLower()
             };
 
-            if (Bitrate == 0)
+            int bitrate = Bitrate;
+            if (Codec == "mp3")
+            {
+                bitrate = BitrateMp3 ?? Bitrate;
+                if (bitrate is >= 10 and <= 20)
+                {
+                    return new List<string>
+                    {
+                        "-c:a",
+                        codec,
+                        "-qscale:a",
+                        (bitrate - 10).ToString()
+                    };
+                }
+            }
+            else if (Codec == "ogg")
+            {
+                bitrate = BitrateOgg ?? Bitrate;
+                if (bitrate is >= 9 and <= 20)
+                {
+                    return new List<string>
+                    {
+                        "-c:a",
+                        codec,
+                        "-qscale:a",
+                        (bitrate - 10).ToString()
+                    };
+                }
+            }
+            else if (Codec == "aac")
+            {
+                bitrate = BitrateAac ?? Bitrate;
+                if (bitrate is >= 11 and <= 15)
+                {
+                    return new List<string>
+                    {
+                        "-c:a",
+                        "libfdk_aac",
+                        "-vbr",
+                        (bitrate - 10).ToString()
+                    };
+                }
+            }
+
+            if (bitrate == 0)
             {
                 // automatic
                 return new List<string>
@@ -193,7 +238,7 @@ namespace FileFlows.AudioNodes
                 "-c:a",
                 codec,
                 "-ab",
-                (Bitrate == -1 ? GetSourceBitrate(args).ToString() : Bitrate + "k")
+                (bitrate == -1 ? GetSourceBitrate(args).ToString() : bitrate + "k")
             };
         }
 
@@ -266,7 +311,20 @@ namespace FileFlows.AudioNodes
         public override FlowElementType Type => FlowElementType.Process;
 
         [Select(nameof(BitrateOptions), 1)]
+        [ConditionEquals(nameof(Codec), "wav")]
         public int Bitrate { get; set; }
+        
+        [Select(nameof(BitrateOptionsAac), 1)]
+        [ConditionEquals(nameof(Codec), "aac")]
+        public int? BitrateAac { get; set; }
+        
+        [Select(nameof(BitrateOptionsMp3), 1)]
+        [ConditionEquals(nameof(Codec), "MP3")]
+        public int? BitrateMp3 { get; set; }
+        
+        [Select(nameof(BitrateOptionsOgg), 1)]
+        [ConditionEquals(nameof(Codec), "ogg")]
+        public int? BitrateOgg { get; set; }
 
         [Boolean(3)]
         public bool Normalize { get; set; }
@@ -296,7 +354,128 @@ namespace FileFlows.AudioNodes
                 return _BitrateOptions;
             }
         }
+        
+        
+        private static List<ListOption> _BitrateOptionsMp3;
+        public static List<ListOption> BitrateOptionsMp3
+        {
+            get
+            {
+                if (_BitrateOptionsMp3 == null)
+                {
+                    _BitrateOptionsMp3 = new List<ListOption>
+                    {
+                        new () { Label = "Automatic", Value = 0 },
+                        new () { Label = "Same as source", Value = -1 },
+                        
+                        new () { Label = "Constant Bitrate", Value = "###GROUP###" },
+                        new () { Label = "64 Kbps", Value = 64},
+                        new () { Label = "96 Kbps", Value = 96},
+                        new () { Label = "128 Kbps", Value = 128},
+                        new () { Label = "160 Kbps", Value = 160},
+                        new () { Label = "192 Kbps", Value = 192},
+                        new () { Label = "224 Kbps", Value = 224},
+                        new () { Label = "256 Kbps", Value = 256},
+                        new () { Label = "288 Kbps", Value = 288},
+                        new () { Label = "320 Kbps", Value = 320},
+                        
+                        new () { Label = "Variable Bitrate", Value = "###GROUP###" },
+                        new () { Label = "0 (High Quality)", Value = 10},
+                        new () { Label = "1", Value = 11},
+                        new () { Label = "2", Value = 12},
+                        new () { Label = "3", Value = 13},
+                        new () { Label = "4 (Good Quality)", Value = 14},
+                        new () { Label = "5", Value = 15},
+                        new () { Label = "6", Value = 16},
+                        new () { Label = "7", Value = 17},
+                        new () { Label = "8", Value = 18},
+                        new () { Label = "9 (Low Quality", Value = 19},
+                        
+                    };
+                }
+                return _BitrateOptionsMp3;
+            }
+        }
 
+        private static List<ListOption> _BitrateOptionsAac;
+        public static List<ListOption> BitrateOptionsAac
+        {
+            get
+            {
+                if (_BitrateOptionsAac == null)
+                {
+                    _BitrateOptionsAac = new List<ListOption>
+                    {
+                        new () { Label = "Automatic", Value = 0 },
+                        new () { Label = "Same as source", Value = -1 },
+                        
+                        new () { Label = "Constant Bitrate", Value = "###GROUP###" },
+                        new () { Label = "64 Kbps", Value = 64},
+                        new () { Label = "96 Kbps", Value = 96},
+                        new () { Label = "128 Kbps", Value = 128},
+                        new () { Label = "160 Kbps", Value = 160},
+                        new () { Label = "192 Kbps", Value = 192},
+                        new () { Label = "224 Kbps", Value = 224},
+                        new () { Label = "256 Kbps", Value = 256},
+                        new () { Label = "288 Kbps", Value = 288},
+                        new () { Label = "320 Kbps", Value = 320},
+                        
+                        new () { Label = "Variable Bitrate", Value = "###GROUP###" },
+                        new () { Label = "1 (Low Quality)", Value = 11},
+                        new () { Label = "2", Value = 12},
+                        new () { Label = "3", Value = 13},
+                        new () { Label = "4", Value = 14},
+                        new () { Label = "5 (High Quality)", Value = 15}
+                        
+                    };
+                }
+                return _BitrateOptionsAac;
+            }
+        }
+
+        
+        private static List<ListOption> _BitrateOptionsOgg;
+        public static List<ListOption> BitrateOptionsOgg
+        {
+            get
+            {
+                if (_BitrateOptionsOgg == null)
+                {
+                    _BitrateOptionsOgg = new List<ListOption>
+                    {
+                        new () { Label = "Automatic", Value = 0 },
+                        new () { Label = "Same as source", Value = -1 },
+                        
+                        new () { Label = "Constant Bitrate", Value = "###GROUP###" },
+                        new () { Label = "64 Kbps", Value = 64},
+                        new () { Label = "96 Kbps", Value = 96},
+                        new () { Label = "128 Kbps", Value = 128},
+                        new () { Label = "160 Kbps", Value = 160},
+                        new () { Label = "192 Kbps", Value = 192},
+                        new () { Label = "224 Kbps", Value = 224},
+                        new () { Label = "256 Kbps", Value = 256},
+                        new () { Label = "288 Kbps", Value = 288},
+                        new () { Label = "320 Kbps", Value = 320},
+                        
+                        new () { Label = "Variable Bitrate", Value = "###GROUP###" },
+                        new () { Label = "-1 (Low Quality)", Value = 9},
+                        new () { Label = "0", Value = 10},
+                        new () { Label = "1", Value = 11},
+                        new () { Label = "2", Value = 12},
+                        new () { Label = "3 (Good Quality)", Value = 13},
+                        new () { Label = "4", Value = 14},
+                        new () { Label = "5", Value = 15},
+                        new () { Label = "6", Value = 16},
+                        new () { Label = "7", Value = 17},
+                        new () { Label = "8", Value = 18},
+                        new () { Label = "9", Value = 19},
+                        new () { Label = "10 (Highest Quality", Value = 20},
+                        
+                    };
+                }
+                return _BitrateOptionsOgg;
+            }
+        }
 
         public override int Execute(NodeParameters args)
         {
@@ -307,12 +486,11 @@ namespace FileFlows.AudioNodes
             //AudioInfo AudioInfo = GetAudioInfo(args);
             //if (AudioInfo == null)
             //    return -1;
-
-            if (Bitrate != 0 && Bitrate != -1 && (Bitrate < 64 || Bitrate > 320))
-            {
-                args.Logger?.ILog("Bitrate not set or invalid, setting to 192kbps");
-                Bitrate = 192;
-            }
+            // if (Bitrate != 0 && Bitrate != -1 && (Bitrate < 64 || Bitrate > 320))
+            // {
+            //     args.Logger?.ILog("Bitrate not set or invalid, setting to 192kbps");
+            //     Bitrate = 192;
+            // }
 
 
 
