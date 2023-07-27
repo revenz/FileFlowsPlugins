@@ -39,7 +39,9 @@
         },
         "Fields": {
           "Bitrate": "Bitrate",
-          "Bitrate-Help": "The bitrate for the new AAC file, the higher the bitrate the better the quality but larger the file.  192 Kbps is the recommended rate."
+          "Bitrate-Help": "The bitrate for the new AAC file, the higher the bitrate the better the quality but larger the file.  192 Kbps is the recommended rate.",
+          "HighEfficiency": "High Efficiency",
+          "HighEfficiency-Help": "Will use high efficiency mode, this will change the extension to m4a and will reduce supported playback devices, but may reduce the size of the file."
         }
       },
       "ConvertToFLAC": {

@@ -1,6 +1,5 @@
 ﻿using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
-using TagLib.Gif;
 
 namespace FileFlows.AudioNodes
 {
@@ -8,27 +7,6 @@ namespace FileFlows.AudioNodes
     {
         public override string HelpUrl => "https://fileflows.com/docs/plugins/audio-nodes/convert-to-mp3";
         protected override string Extension => "mp3";
-        public static List<ListOption> BitrateOptions => ConvertNode.BitrateOptions;
-        protected override List<string> GetArguments(NodeParameters args, out string? extension)
-        {
-            extension = null;
-            if (Bitrate == 0)
-            {
-                // automatic
-                return new List<string>
-                {
-                    "-c:a",
-                    "mp3"
-                };
-            }
-            return new List<string>
-            {
-                "-c:a",
-                "mp3",
-                "-ab",
-                (Bitrate == -1 ? GetSourceBitrate(args).ToString() : Bitrate + "k")
-            };
-        }
     }
     public class ConvertToWAV : ConvertNode
     {
@@ -36,7 +14,6 @@ namespace FileFlows.AudioNodes
         protected override string Extension => "wav";
         
         private static List<ListOption> _BitrateOptions;
-
         public new static List<ListOption> BitrateOptions
         {
             get
@@ -61,110 +38,27 @@ namespace FileFlows.AudioNodes
                 return _BitrateOptions;
             }
         }
-        
-        protected override List<string> GetArguments(NodeParameters args, out string? extension)
-        {
-            extension = null;
-            if (Bitrate == 0)
-            {
-                // automatic
-                return new List<string>
-                {
-                    "-c:a",
-                    "pcm_s16le"
-                };
-            }
-            return new List<string>
-            {
-                "-c:a",
-                "pcm_s16le",
-                "-ab",
-                (Bitrate == -1 ? GetSourceBitrate(args).ToString() : Bitrate + "k")
-            };
-        }
     }
 
     public class ConvertToAAC : ConvertNode
     {
         public override string HelpUrl => "https://fileflows.com/docs/plugins/audio-nodes/convert-to-aac";
         protected override string Extension => "aac";
-        public static List<ListOption> BitrateOptions => ConvertNode.BitrateOptions;
 
+        /// <summary>
+        /// Gets or sets if high efficiency should be used
+        /// </summary>
+        [Boolean(5)]
+        public bool HighEfficiency { get => base.HighEfficiency; set =>base.HighEfficiency = value; }
+        
         protected override bool SetId3Tags => true;
-
-        protected override List<string> GetArguments(NodeParameters args, out string? extension)
-        {
-            extension = null;
-            if (Bitrate == 0)
-            {
-                // automatic
-                return new List<string>
-                {
-                    "-c:a",
-                    "aac"
-                };
-            }
-            return new List<string>
-            {
-                "-c:a",
-                "aac",
-                "-ab",
-                (Bitrate == -1 ? GetSourceBitrate(args).ToString() : Bitrate + "k")
-            };
-        }
     }
     public class ConvertToOGG: ConvertNode
     {
         public override string HelpUrl => "https://fileflows.com/docs/plugins/audio-nodes/convert-to-ogg";
         protected override string Extension => "ogg";
         public static List<ListOption> BitrateOptions => ConvertNode.BitrateOptions;
-        protected override List<string> GetArguments(NodeParameters args, out string? extension)
-        {
-            extension = null;
-            if (Bitrate == 0)
-            {
-                // automatic
-                return new List<string>
-                {
-                    "-c:a",
-                    "libvorbis"
-                };
-            }
-            return new List<string>
-            {
-                "-c:a",
-                "libvorbis",
-                "-ab",
-                (Bitrate == -1 ? GetSourceBitrate(args).ToString() : Bitrate + "k")
-            };
-        }
     }
-
-    //public class ConvertToFLAC : ConvertNode
-    //{
-    //    protected override string Extension => "flac";
-    //    public static List<ListOption> BitrateOptions => ConvertNode.BitrateOptions;
-    //    protected override List<string> GetArguments()
-    //    {
-    //        if (Bitrate == 0)
-    //        {
-    //            // automatic
-    //            return new List<string>
-    //            {
-    //                "-c:a",
-    //                "c:a",
-    //                //            "flac"
-    //            };
-    //        }
-    //        return new List<string>
-    //        {
-    //            "-c:a",
-    //            "flac",
-    //            "-ab",
-    //            Bitrate + "k"
-    //        };
-    //    }
-    //}
 
     public class ConvertAudio : ConvertNode
     {
@@ -185,7 +79,7 @@ namespace FileFlows.AudioNodes
         /// </summary>
         [Boolean(5)]
         [ConditionEquals(nameof(Codec), "aac")]
-        public bool HighEfficiency { get; set; }
+        public bool HighEfficiency { get => base.HighEfficiency; set =>base.HighEfficiency = value; }
         public override int Outputs => 2; 
 
         private static List<ListOption> _CodecOptions;
@@ -205,70 +99,6 @@ namespace FileFlows.AudioNodes
                 }
                 return _CodecOptions;
             }
-        }
-
-        protected override List<string> GetArguments(NodeParameters args, out string? extension)
-        {
-            extension = null;
-            string codec = Codec switch 
-            {
-                "ogg" => "libvorbis",
-                "wav" => "pcm_s16le",
-                _ => Codec.ToLower()
-            };
-
-            int bitrate = Bitrate;
-            if (Codec.ToLowerInvariant() == "mp3" ||  Codec.ToLowerInvariant() ==  "ogg" || Codec.ToLowerInvariant() == "aac")
-            {
-                if (bitrate is >= 10 and <= 20)
-                {
-                    bitrate = (Bitrate - 10);
-                    if (Codec.ToLowerInvariant() == "mp3")
-                    {
-                        // ogg is reversed
-                        bitrate = 10 - bitrate;
-                    }
-                    
-                    args.Logger?.ILog($"Using variable bitrate setting '{bitrate}' for codec '{Codec}'");
-
-                    var results = new List<string>
-                    {
-                        "-c:a",
-                        codec,
-                        "-qscale:a",
-                        bitrate.ToString()
-                    };
-                    if (Codec == "aac" && HighEfficiency)
-                    {
-                        extension = "m4a";
-                        results.AddRange(new[] { "-profile:a", "aac_he_v2" });
-                    }
-
-                    return results;
-                }
-            }
-            else if(bitrate is > 10 and <= 20)
-            {
-                throw new Exception("Variable bitrate not supported in codec: " + Codec);
-            }
-
-            if (bitrate == 0)
-            {
-                // automatic
-                return new List<string>
-                {
-                    "-c:a",
-                    codec
-                };
-            }
-            
-            return new List<string>
-            {
-                "-c:a",
-                codec,
-                "-ab",
-                (bitrate == -1 ? GetSourceBitrate(args).ToString() : bitrate + "k")
-            };
         }
 
         public override int Execute(NodeParameters args)
@@ -304,6 +134,10 @@ namespace FileFlows.AudioNodes
     public abstract class ConvertNode:AudioNode
     {
         protected abstract string Extension { get; }
+        /// <summary>
+        /// Gets or sets if using high efficiency
+        /// </summary>
+        protected bool HighEfficiency { get; set; }
 
         protected long GetSourceBitrate(NodeParameters args)
         {
@@ -318,23 +152,96 @@ namespace FileFlows.AudioNodes
 
         protected virtual List<string> GetArguments(NodeParameters args, out string? extension)
         {
+            string Codec = Extension;
             extension = null;
-            if (Bitrate == 0)
+            string codecKey = Codec + "_codec";
+            string codec = args.GetToolPathActual(codecKey);
+            if (codec == "mp3")
+                extension = "mp3";
+            if (codec == "libvorbis" || codec == "ogg")
+            {
+                codec = "libvorbis";
+                extension = "ogg";
+            }
+
+            if (codec == codecKey || string.IsNullOrWhiteSpace(codec))
+            {
+                codec = Codec switch
+                {
+                    "ogg" => "libvorbis",
+                    "wav" => "pcm_s16le",
+                    _ => Codec.ToLower()
+                };
+            }
+
+            int bitrate = Bitrate;
+            if (Codec.ToLowerInvariant() == "mp3" ||  Codec.ToLowerInvariant() ==  "ogg" || Codec.ToLowerInvariant() == "aac")
+            {
+                if (bitrate is >= 10 and <= 20)
+                {
+                    bitrate = (Bitrate - 10);
+                    if (Codec.ToLowerInvariant() == "mp3")
+                    {
+                        // ogg is reversed
+                        bitrate = 10 - bitrate;
+                    }
+
+
+                    args.Logger?.ILog($"Using variable bitrate setting '{bitrate}' for codec '{Codec}'");
+
+                    List<string> results;
+
+                    if (codec == "libfdk_aac")
+                    {
+                        results = new()
+                        {
+                            "-c:a",
+                            codec,
+                            "-vbr",
+                            Math.Min(Math.Max(1, bitrate / 2), 5).ToString()
+                        };
+                    }
+                    else
+                    {
+                        results = new()
+                        {
+                            "-c:a",
+                            codec,
+                            "-qscale:a",
+                            bitrate.ToString()
+                        };
+                    }
+
+                    if (Codec == "aac" && HighEfficiency)
+                    {
+                        extension = "m4a";
+                        results.AddRange(new[] { "-profile:a", "aac_he_v2" });
+                    }
+
+                    return results;
+                }
+            }
+            else if(bitrate is > 10 and <= 20)
+            {
+                throw new Exception("Variable bitrate not supported in codec: " + Codec);
+            }
+
+            if (bitrate == 0)
             {
                 // automatic
                 return new List<string>
                 {
-                    "-map_metadata",
-                    "0:0"
+                    "-c:a",
+                    codec
                 };
             }
-
+            
             return new List<string>
             {
-                "-map_metadata",
-                "0:0",
+                "-c:a",
+                codec,
                 "-ab",
-                (Bitrate == -1 ? GetSourceBitrate(args).ToString() : Bitrate + "k")
+                (bitrate == -1 ? GetSourceBitrate(args).ToString() : bitrate + "k")
             };
         }
 
@@ -403,8 +310,6 @@ namespace FileFlows.AudioNodes
             //     args.Logger?.ILog("Bitrate not set or invalid, setting to 192kbps");
             //     Bitrate = 192;
             // }
-
-
 
 
             var ffArgs = GetArguments(args, out string extension);

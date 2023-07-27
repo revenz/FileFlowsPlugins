@@ -19,19 +19,31 @@ namespace FileFlows.AudioNodes.Tests
         {
             const string file = @"/home/john/Music/Aquarium (1997)/Aqua - Aquarium - 03 - Barbie Girl.flac";
 
-            var logger = new TestLogger();
-            ConvertAudio node = new ();
-            node.Codec = "aac";
-            node.Bitrate = 10;
-            node.HighEfficiency = true;
-            var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty);
-            args.GetToolPathActual = (string tool) => @"/usr/bin/ffmpeg";
-            args.TempPath = @"/home/john/temp";
-            new AudioFile().Execute(args); // need to read the Audio info and set it
-            int output = node.Execute(args);
+            foreach (var codec in new[] { "aac", "ogg", "MP3" })
+            {
+                foreach (int quality in new[] { 0, 10 })
+                {
+                    var logger = new TestLogger();
+                    ConvertAudio node = new();
+                    node.Codec = codec;
+                    node.Bitrate = quality + 10;
+                    node.HighEfficiency = true;
+                    var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty);
+                    args.GetToolPathActual = (string tool) =>
+                    {
+                        if(tool.ToLowerInvariant().Contains("ffmpeg")) return @"/usr/bin/ffmpeg";
+                        return tool;
+                    };
+                    args.TempPath = @"/home/john/temp";
+                    new AudioFile().Execute(args); // need to read the Audio info and set it
+                    int output = node.Execute(args);
 
-            var log = logger.ToString();
-            Assert.AreEqual(1, output);
+                    var log = logger.ToString();
+                    Assert.AreEqual(1, output);
+                    var fi = new FileInfo(args.WorkingFile);
+                    File.Move(args.WorkingFile, Path.Combine(fi.DirectoryName, quality + fi.Extension), true);
+                }
+            }
         }
 
         [TestMethod]
