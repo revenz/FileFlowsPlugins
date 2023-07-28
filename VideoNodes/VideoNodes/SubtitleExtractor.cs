@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using FileFlows.VideoNodes.Helpers;
 
 namespace FileFlows.VideoNodes;
 
@@ -40,7 +41,11 @@ public class SubtitleExtractor : EncodingNode
     /// </summary>
     [Boolean(4)]
     public bool ForcedOnly { get; set; }
-    
+    /// <summary>
+    /// Gets or sets if only text subtitles should be extracted
+    /// </summary>
+    [Boolean(5)]
+    public bool OnlyTextSubtitles { get; set; }
     
     private Dictionary<string, object> _Variables;
     /// <summary>
@@ -75,6 +80,9 @@ public class SubtitleExtractor : EncodingNode
             // ffmpeg -i input.mkv -map "0:m:language:eng" -map "-0:v" -map "-0:a" output.srt
             var subTrack = videoInfo.SubtitleStreams?.Where(x =>
             {
+                if (OnlyTextSubtitles && SubtitleHelper.IsImageSubtitle(x.Codec))
+                    return false;
+
                 if (ForcedOnly && x.Forced == false)
                     return false;
                 if(string.IsNullOrEmpty(Language))
@@ -103,7 +111,7 @@ public class SubtitleExtractor : EncodingNode
             OutputFile = args.MapPath(OutputFile);
 
             string extension = "srt";
-            if (subTrack.Codec?.ToLower()?.Contains("pgs") == true)
+            if (SubtitleHelper.IsImageSubtitle(subTrack.Codec))
                 extension = "sup";
             if (OutputFile.ToLower().EndsWith(".srt") || OutputFile.ToLower().EndsWith(".sup"))
                 OutputFile = OutputFile[0..^4];
