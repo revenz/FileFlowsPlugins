@@ -33,10 +33,12 @@ public class ImageResizer: ImageNode
             {
                 _ResizeModes = new List<ListOption>
                 {
-                    new ListOption { Value = Images.ResizeMode.Fill, Label = "Fill (Stretches to fit)"},
-                    new ListOption { Value = Images.ResizeMode.Contain, Label = "Contain (Preserves aspect ratio but contained in bounds)"},
-                    new ListOption { Value = Images.ResizeMode.Cover, Label =  "Cover (Preserves aspect ratio)"},
-                    new ListOption { Value = Images.ResizeMode.None, Label = "None (Not resized)"}
+                    new () { Value = ResizeMode.Fill, Label = "Fill (Stretches to fit)"},
+                    new () { Value = ResizeMode.Contain, Label = "Contain (Preserves aspect ratio but contained in bounds)"},
+                    new () { Value = ResizeMode.Cover, Label =  "Cover (Preserves aspect ratio)"},
+                    new () { Value = ResizeMode.Min, Label = "Min (Resizes the image until the shortest side reaches the set given dimension)"},
+                    new () { Value = ResizeMode.Max, Label = "Max (Constrains the resized image to fit the bounds of its container maintaining the original aspect ratio)"},
+                    new () { Value = ResizeMode.None, Label = "None (Not resized)"}
                 };
             }
             return _ResizeModes;
@@ -65,6 +67,10 @@ public class ImageResizer: ImageNode
             case ResizeMode.Cover: rzMode = SixLabors.ImageSharp.Processing.ResizeMode.Crop;
                 break;
             case ResizeMode.Fill: rzMode = SixLabors.ImageSharp.Processing.ResizeMode.Stretch;
+                break;
+            case ResizeMode.Min: rzMode = SixLabors.ImageSharp.Processing.ResizeMode.Min;
+                break;
+            case ResizeMode.Max: rzMode = SixLabors.ImageSharp.Processing.ResizeMode.Max;
                 break;
             default: rzMode = SixLabors.ImageSharp.Processing.ResizeMode.BoxPad;
                 break;

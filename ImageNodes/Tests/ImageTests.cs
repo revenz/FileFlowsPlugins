@@ -3,6 +3,7 @@
 using FileFlows.ImageNodes.Images;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Runtime.InteropServices;
+using Microsoft.VisualStudio.TestTools.UnitTesting.Logging;
 
 namespace FileFlows.ImageNodes.Tests;
 
@@ -35,9 +36,9 @@ public class ImageNodesTests
             TestCropImage2 = "/home/john/Pictures/cropme.jpg";
             TestCropImage3 = "/home/john/Pictures/crop.heic";
             TestImageHeic = "/home/john/Pictures/crop.heic";
-            TestImage1 = "/home/john/Pictures/fileflows.png";
+            TestImage1 = "/home/john/Pictures/circle.jpg";
             TestImage2 = "/home/john/Pictures/36410427.png";
-            TempDir = "/home/john/src/temp/";
+            TempDir = "/home/john/temp/";
         }
     }
 
@@ -86,16 +87,20 @@ public class ImageNodesTests
     [TestMethod]
     public void ImageNodes_Basic_Resize()
     {
-        var args = new NodeParameters(TestImage1, new TestLogger(), false, string.Empty)
+        var logger = new TestLogger();
+        var args = new NodeParameters(TestImage1, logger, false, string.Empty)
         {
             TempPath = TempDir
         };
 
         var node = new ImageResizer();
-        node.Width = 1000;
-        node.Height = 500;
-        node.Mode = ResizeMode.Fill;
-        Assert.AreEqual(1, node.Execute(args));
+        node.Width = 1920;
+        node.Height = 1080;
+        node.Format = string.Empty; 
+        node.Mode = ResizeMode.Max;
+        var result = node.Execute(args);
+        var log = logger.ToString();
+        Assert.AreEqual(1, result);
     }
 
     [TestMethod]
