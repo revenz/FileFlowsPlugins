@@ -14,7 +14,7 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
     /// <summary>
     /// Gets the help URL for this flow element
     /// </summary>
-    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/add-audio-track";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/audio-add-track";
     /// <summary>
     /// Gets or sets the index to insert this track
     /// </summary>
