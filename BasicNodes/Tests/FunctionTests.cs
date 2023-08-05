@@ -251,8 +251,8 @@ let process = Flow.Execute({
 
 if(process.standardOutput)
 	Logger.ILog('Standard output: ' + process.standardOutput);
-if(process.starndardError)
-	Logger.ILog('Standard error: ' + process.starndardError);
+if(process.standardError)
+	Logger.ILog('Standard error: ' + process.standardError);
 
 if(process.exitCode !== 0){
 	Logger.ELog('Failed processing ffmpeg: ' + process.exitCode);
@@ -498,8 +498,8 @@ let process = Flow.Execute({
 
 if(process.standardOutput)
     Logger.ILog('Standard output: ' + process.standardOutput);
-if(process.starndardError)
-    Logger.ILog('Standard error: ' + process.starndardError);
+if(process.standardError)
+    Logger.ILog('Standard error: ' + process.standardError);
 
 if(process.exitCode !== 0){
 	Logger.ELog('Failed processing ffmpeg: ' + process.exitCode);
