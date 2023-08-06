@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
 using System.Runtime.InteropServices;
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
@@ -7,7 +6,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 /// <summary>
 /// Set a video codec encoding for a video stream based on users settings
 /// </summary>
-public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
+public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
 {
     /// <summary>
     /// The number of outputs for this node
@@ -19,6 +18,7 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
     internal const string CODEC_H265_10BIT = "h265 10BIT";
     internal const string CODEC_AV1 = "av1";
     internal const string CODEC_AV1_10BIT = "av1 10BIT";
+    internal const string CODEC_VP9 = "vp9";
     
 
     /// <summary>
@@ -35,6 +35,7 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
     [ChangeValue(nameof(Quality), 28, CODEC_H265_10BIT)]
     [ChangeValue(nameof(Quality), 28, CODEC_AV1)]
     [ChangeValue(nameof(Quality), 28, CODEC_AV1_10BIT)]
+    [ChangeValue(nameof(Quality), 28, CODEC_VP9)]
     [Select(nameof(CodecOptions), 1)]
     public string Codec { get; set; }
 
@@ -52,10 +53,11 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
                 {
                     new () { Label = "H.264", Value = CODEC_H264 },
                     // new () { Label = "H.264 (10-Bit)", Value = CODEC_H264_10BIT },
-                    new () { Label = "H.265", Value = CODEC_H265 },
-                    new () { Label = "H.265 (10-Bit)", Value = CODEC_H265_10BIT },
+                    new () { Label = "HEVC", Value = CODEC_H265 },
+                    new () { Label = "HEVC (10-Bit)", Value = CODEC_H265_10BIT },
                     new () { Label = "AV1", Value = CODEC_AV1 },
                     new () { Label = "AV1 (10-Bit)", Value = CODEC_AV1_10BIT },
+                    new () { Label = "VP9", Value = CODEC_VP9 },
                 };
             }
             return _CodecOptions;
@@ -106,6 +108,8 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
             stream.EncodingParameters.AddRange(H265(args, Codec == CODEC_H265_10BIT, Quality, useHardwareEncoding, stream.Stream.FramesPerSecond));
         else if (Codec == CODEC_AV1 || Codec == CODEC_AV1_10BIT)
             stream.EncodingParameters.AddRange(AV1(args, Codec == CODEC_AV1_10BIT, Quality));
+        else if(Codec == CODEC_VP9)
+            stream.EncodingParameters.AddRange(VP9(args, Quality, useHardwareEncoding));
         else
         {
             args.Logger?.ILog("Unknown codec: " + Codec);
@@ -193,6 +197,18 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
             parameters.AddRange(new [] { "-pix_fmt:v:{index}", "yuv420p10le" });
         return parameters;
     }
+    
+    private static IEnumerable<string> VP9(NodeParameters args,  int quality, bool useHardwareEncoding)
+    {
+        List<string> parameters = new List<string>();
+        if (useHardwareEncoding == false)
+            parameters.AddRange(VP9_CPU(quality));
+        else if (CanUseHardwareEncoding.CanProcess_Qsv_Hevc(args)) // if can use hevc they can use vp9
+            parameters.AddRange(VP9_Qsv(quality));
+        else
+            parameters.AddRange(VP9_CPU(quality));
+        return parameters;
+    }
 
     private static IEnumerable<string> AV1_CPU(int quality)
     {
@@ -202,106 +218,6 @@ public class FfmpegBuilderVideoEncode:FfmpegBuilderNode
             "libsvtav1",
             "-preset", "4",
             "-crf", quality.ToString()
-        };
-    }
-
-
-    private static IEnumerable<string> H26x_CPU(bool h265, int quality, out string[] bit10Filters)
-    {
-        bit10Filters = new[]
-        {
-            "-pix_fmt:v:{index}", "yuv420p10le", "-profile:v:{index}", "main10"
-        };
-        return new []
-        {
-            h265 ? "libx265" : "libx264",
-            "-preset", "slow",
-            "-crf", quality.ToString()
-        };
-    }
-
-    private static IEnumerable<string> H26x_Nvidia(bool h265, int quality, out string[] non10BitFilters)
-    {
-        if (h265 == false)
-            non10BitFilters = new[] { "-pix_fmt:v:{index}", "yuv420p" };
-        else
-            non10BitFilters = null;
-
-        return new []
-        {
-            h265 ? "hevc_nvenc" : "h264_nvenc",
-            "-rc", "constqp",
-            "-qp", quality.ToString(),
-            //"-b:v", "0K", // this would do a two-pass... slower
-            "-preset", "p6",
-            // https://www.reddit.com/r/ffmpeg/comments/gg5szi/what_is_spatial_aq_and_temporal_aq_with_nvenc/
-            "-spatial-aq", "1"
-        };
-    }
-
-    private static IEnumerable<string> H26x_Qsv(bool h265, int quality, float fps)
-    {
-        //hevc_qsv -load_plugin hevc_hw -pix_fmt p010le -profile:v main10 -global_quality 21 -g 24 -look_ahead 1 -look_ahead_depth 60
-        var parameters = new List<string>();
-        if (h265) 
-        {
-            parameters.AddRange(new[]
-            {
-                "hevc_qsv",
-                "-load_plugin", "hevc_hw",
-                "-g",  (fps < 1 ? 29.97 : fps).ToString(CultureInfo.InvariantCulture)
-            });
-            
-        }
-        else
-        {
-            parameters.AddRange(new[]
-            {
-                "h264_qsv"
-            });
-
-        }
-        parameters.AddRange(new[]
-        {
-            "-global_quality", quality.ToString(),
-            "-preset", "slower",
-        });
-        return parameters;
-    }
-
-    private static IEnumerable<string> H26x_Amd(bool h265, int quality)
-    {
-        return new[]
-        {
-            h265 ? "hevc_amf" : "h264_amf",
-            "-qp", quality.ToString(),
-            //"-b:v", "0K", // this would do a two-pass... slower
-            "-preset", "slower",
-            // https://www.reddit.com/r/ffmpeg/comments/gg5szi/what_is_spatial_aq_and_temporal_aq_with_nvenc/
-            "-spatial-aq", "1"
-        };
-    }
-    private static IEnumerable<string> H26x_Vaapi(bool h265, int quality)
-    {
-        return new[]
-        {
-            h265 ? "hevc_vaapi" : "h264_vaapi",
-            "-qp", quality.ToString(),
-            //"-b:v", "0K", // this would do a two-pass... slower
-            "-preset", "slower",
-            // https://www.reddit.com/r/ffmpeg/comments/gg5szi/what_is_spatial_aq_and_temporal_aq_with_nvenc/
-            "-spatial-aq", "1"
-        };
-    }
-    private static IEnumerable<string> H26x_VideoToolbox(bool h265, int quality)
-    {
-        return new[]
-        {
-            h265 ? "hevc_videotoolbox" : "h264_videotoolbox",
-            "-qp", quality.ToString(),
-            //"-b:v", "0K", // this would do a two-pass... slower
-            "-preset", "slower",
-            //"-spatial-aq", "1"
         };
     }
 }
