@@ -56,12 +56,14 @@
         {
             this.args = args;
             string pArgs = args.ReplaceVariables(Arguments ?? string.Empty);
+            string filename = args.ReplaceVariables(FileName ?? string.Empty, stripMissing: true);
+            string workingDirectory = args.ReplaceVariables(WorkingDirectory ?? string.Empty, stripMissing: true);
             var task = args.Process.ExecuteShellCommand(new ExecuteArgs
             {
-                Command = FileName,
+                Command = filename,
                 Arguments = pArgs,
                 Timeout = Timeout,
-                WorkingDirectory = WorkingDirectory
+                WorkingDirectory = workingDirectory
             });
 
             task.Wait();
