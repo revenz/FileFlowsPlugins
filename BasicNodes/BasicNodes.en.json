@@ -358,6 +358,17 @@
             "DestinationFile": "Destination File",
             "DestinationFile-Help": "The filename of the newly created zip.  If blank, the name of the item will be used as the zip file."
           }
+        },
+        "IfBoolean": {
+          "Description": "Tests if a Variable is true or false",
+          "Outputs": {
+            "1": "True",
+            "2": "False"
+          },
+          "Fields": {
+            "Variable": "Variable",
+            "Variable-Help": "The name of the variable to check"
+          }
         }
       }
     }
