@@ -38,8 +38,8 @@ public abstract class IfBase : Node
     /// </summary>
     /// <param name="args">the node parameters</param>
     /// <param name="value">the variable value</param>
-    /// <returns>true if matches, otherwise false</returns>
-    protected abstract bool DoCheck(NodeParameters args, object value);
+    /// <returns>the output to call next</returns>
+    protected abstract int DoCheck(NodeParameters args, object value);
 
     /// <summary>
     /// Executes the flow element
@@ -61,7 +61,6 @@ public abstract class IfBase : Node
             return 2;
         }
 
-        bool matches = DoCheck(args, value);
-        return matches ? 1 : 2;
+        return DoCheck(args, value);
     }
 }

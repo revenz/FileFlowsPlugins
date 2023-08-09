@@ -369,6 +369,29 @@
             "Variable": "Variable",
             "Variable-Help": "The name of the variable to check"
           }
+        },
+        "IfString": {
+          "Description": "Tests if a Variable is matches a string",
+          "Outputs": {
+            "1": "Matched string 1",
+            "2": "Matched string 2",
+            "3": "Matched string 3",
+            "4": "Matched string 4",
+            "5": "Matched string 5",
+            "6": "Matched string 6",
+            "7": "Matched string 7",
+            "8": "Matched string 8",
+            "9": "Matched string 9",
+            "10": "Matched string 10"
+          },
+          "Fields": {
+            "Variable": "Variable",
+            "Variable-Help": "The name of the variable to check",
+            "Outputs": "Outputs",
+            "Outputs-Help": "This should match the number of options there are",
+            "Options": "Options",
+            "Options-Help": "The string to match against."
+          }
         }
       }
     }

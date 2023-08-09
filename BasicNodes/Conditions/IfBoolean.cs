@@ -19,20 +19,20 @@ public class IfBoolean: IfBase
     /// <param name="args">the node parameters</param>
     /// <param name="value">the variable value</param>
     /// <returns>true if matches, otherwise false</returns>
-    protected override bool DoCheck(NodeParameters args, object value)
+    protected override int DoCheck(NodeParameters args, object value)
     {
-        if (value == null) return false;
-        if (value is bool bValue) return bValue;
-        if (value is string sValue) return sValue.ToLowerInvariant() == "true" || sValue.ToLowerInvariant() == "1";
+        if (value == null) return 2;
+        if (value is bool bValue) return bValue ? 1 : 2;
+        if (value is string sValue) return sValue.ToLowerInvariant() == "true" || sValue.ToLowerInvariant() == "1" ? 1 : 2;
         if (value is JsonElement je)
         {
-            if (je.ValueKind == JsonValueKind.False) return false;
-            if (je.ValueKind == JsonValueKind.True) return true;
-            if (je.ValueKind == JsonValueKind.Null) return false;
-            if (je.ValueKind == JsonValueKind.Number) return je.GetInt32() > 0;
-            if (je.ValueKind == JsonValueKind.String) return je.GetString().ToLowerInvariant() == "true";
+            if (je.ValueKind == JsonValueKind.False) return 2;
+            if (je.ValueKind == JsonValueKind.True) return 1;
+            if (je.ValueKind == JsonValueKind.Null) return 2;
+            if (je.ValueKind == JsonValueKind.Number) return je.GetInt32() > 0 ? 1 : 2;
+            if (je.ValueKind == JsonValueKind.String) return je.GetString().ToLowerInvariant() == "true" ? 1 : 2;
         }
         args?.Logger?.ILog("Value was an unexpected type: " + value.GetType().FullName);
-        return false;
+        return 2;
     }
 }
