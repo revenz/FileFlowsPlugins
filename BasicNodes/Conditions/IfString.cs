@@ -12,7 +12,7 @@ public class IfString: IfBase
     /// <summary>
     /// Gets or sets the URL to the help page
     /// </summary>
-    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/conditions/if-boolean";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/conditions/if-string";
 
     /// <summary>
     /// Gets the number of outputs

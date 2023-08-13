@@ -32,12 +32,12 @@ public class Discord: Node
             {
                 _MessageTypeOptions = new List<ListOption>
                     {
-                        new ListOption { Label = "Information", Value = "Information"},
-                        new ListOption { Label = "Success", Value = "Success"},
-                        new ListOption { Label = "Warning", Value = "Warning" },
-                        new ListOption { Label = "Error", Value = "Error"},
-                        new ListOption { Label = "Failure", Value = "Failure"},
-                        new ListOption { Label = "Basic", Value = "Basic"},
+                        new () { Label = "Information", Value = "Information"},
+                        new () { Label = "Success", Value = "Success"},
+                        new () { Label = "Warning", Value = "Warning" },
+                        new () { Label = "Error", Value = "Error"},
+                        new () { Label = "Failure", Value = "Failure"},
+                        new () { Label = "Basic", Value = "Basic"},
                     };
             }
             return _MessageTypeOptions;
@@ -52,74 +52,86 @@ public class Discord: Node
 
     public override int Execute(NodeParameters args)
     {
-        var settings = args.GetPluginSettings<PluginSettings>();
+        try
+        {
+            var settings = args.GetPluginSettings<PluginSettings>();
 
-        if (string.IsNullOrWhiteSpace(settings?.WebhookId))
-        {
-            args.Logger?.WLog("No webhook id set");
-            return 2;
-        }
-        if (string.IsNullOrWhiteSpace(settings?.WebhookToken))
-        {
-            args.Logger?.WLog("No webhook token set");
-            return 2;
-        }
-
-        string message = args.ReplaceVariables(this.Message);
-        if (string.IsNullOrWhiteSpace(message))
-        {
-            args.Logger?.WLog("No message to send");
-            return 2;
-        }
-        string title = args.ReplaceVariables(this.Title)?.EmptyAsNull() ?? this.MessageType?.EmptyAsNull() ?? "Information";
-
-        object webhook;
-        if (this.MessageType == "Basic")
-        {
-            webhook = new
+            if (string.IsNullOrWhiteSpace(settings?.WebhookId))
             {
-                username = "FileFlows",
-                content = message,
-                avatar_url = "https://fileflows.com/icon.png",
-            };
+                args.Logger?.WLog("No webhook id set");
+                return 2;
+            }
 
-        }
-        else
-        {
-            webhook = new
+            if (string.IsNullOrWhiteSpace(settings?.WebhookToken))
             {
-                username = "FileFlows",
-                avatar_url = "https://fileflows.com/icon.png",
-                embeds = new[]
+                args.Logger?.WLog("No webhook token set");
+                return 2;
+            }
+
+            string message = args.ReplaceVariables(this.Message);
+            if (string.IsNullOrWhiteSpace(message))
+            {
+                args.Logger?.WLog("No message to send");
+                return 2;
+            }
+
+            string title = args.ReplaceVariables(this.Title)?.EmptyAsNull() ??
+                           this.MessageType?.EmptyAsNull() ?? "Information";
+
+            object webhook;
+            if (this.MessageType == "Basic")
+            {
+                webhook = new
                 {
-                    new {
-                        description = message,
-                        title = title,
-                        color = this.MessageType switch
+                    username = "FileFlows",
+                    content = message,
+                    avatar_url = "https://fileflows.com/icon.png",
+                };
+
+            }
+            else
+            {
+                webhook = new
+                {
+                    username = "FileFlows",
+                    avatar_url = "https://fileflows.com/icon.png",
+                    embeds = new[]
+                    {
+                        new
                         {
-                            "Success" => colorSuccess,
-                            "Warning" => colorWarning,
-                            "Error" => colorError,
-                            "Failure" => colorFailure,
-                            _ => colorInfo,
+                            description = message,
+                            title,
+                            color = MessageType switch
+                            {
+                                "Success" => colorSuccess,
+                                "Warning" => colorWarning,
+                                "Error" => colorError,
+                                "Failure" => colorFailure,
+                                _ => colorInfo,
+                            }
                         }
                     }
-                }
-            };
+                };
+            }
+
+
+            string url = $"https://discordapp.com/api/webhooks/{settings.WebhookId}/{settings.WebhookToken}";
+
+            var content = new StringContent(JsonSerializer.Serialize(webhook), Encoding.UTF8, "application/json");
+
+            using var httpClient = new HttpClient();
+            var response = httpClient.PostAsync(url, content).Result;
+            if (response.IsSuccessStatusCode)
+                return 1;
+
+            string error = response.Content.ReadAsStringAsync().Result;
+            args.Logger?.WLog("Error from discord: " + error);
+            return 2;
         }
-
-
-        string url = $"https://discordapp.com/api/webhooks/{settings.WebhookId}/{settings.WebhookToken}";
-
-        var content = new StringContent(JsonSerializer.Serialize(webhook), Encoding.UTF8, "application/json");
-
-        using var httpClient = new HttpClient();    
-        var response = httpClient.PostAsync(url, content).Result;
-        if (response.IsSuccessStatusCode)
-            return 1;
-
-        string error = response.Content.ReadAsStringAsync().Result;
-        args.Logger?.WLog("Error from discord: " + error);
-        return 2;
+        catch (Exception ex)
+        {
+            args.Logger?.WLog("Error sending discord message: " + ex.Message);
+            return 2;
+        }
     }
 }

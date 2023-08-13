@@ -8,7 +8,7 @@ namespace FileFlows.Communication
     public class SendEmail:Node
     {
         public override int Inputs => 1;
-        public override int Outputs => 1;
+        public override int Outputs => 2;
         public override string Icon => "fas fa-envelope";
 
         public override FlowElementType Type => FlowElementType.Communication;
@@ -25,27 +25,36 @@ namespace FileFlows.Communication
 
         public override int Execute(NodeParameters args)
         {
-            var settings = args.GetPluginSettings<PluginSettings>();
-
-            if (string.IsNullOrEmpty(settings?.SmtpServer))
+            try
             {
-                args.Logger?.ELog("No SMTP Server configured, configure this under the 'Plugins > Email Nodes > Edit' page.");
-                return -1;
+                var settings = args.GetPluginSettings<PluginSettings>();
+
+                if (string.IsNullOrEmpty(settings?.SmtpServer))
+                {
+                    args.Logger?.ELog(
+                        "No SMTP Server configured, configure this under the 'Plugins > Email Nodes > Edit' page.");
+                    return -1;
+                }
+
+                args.Logger?.ILog($"Got SMTP Server: {settings.SmtpServer} [{settings.SmtpPort}]");
+
+                string body = RenderBody(args);
+
+                string sender = settings.Sender ?? "fileflows@" + Environment.MachineName;
+                string subject = args.ReplaceVariables(this.Subject ?? String.Empty)?.EmptyAsNull() ??
+                                 "Email from FileFlows";
+
+                SendMailKit(args, settings, sender, subject, body);
+
+                //SendDotNet(args, settings, sender, subject, body);
+
+                return 1;
             }
-
-            args.Logger?.ILog($"Got SMTP Server: {settings.SmtpServer} [{settings.SmtpPort}]");
-
-            string body = RenderBody(args);
-
-            string sender = settings.Sender ?? "fileflows@" + Environment.MachineName;
-            string subject = args.ReplaceVariables(this.Subject ?? String.Empty)?.EmptyAsNull() ?? "Email from FileFlows";
-
-
-            SendMailKit(args, settings, sender, subject, body);
-
-            //SendDotNet(args, settings, sender, subject, body);
-
-            return 1;
+            catch (Exception ex)
+            {
+                args.Logger?.WLog("Error sending message: " + ex.Message);
+                return 2;
+            }
         }
 
         internal string RenderBody(NodeParameters args)

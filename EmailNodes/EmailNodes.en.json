@@ -19,7 +19,8 @@
     "Parts": {
       "SendEmail": {
         "Outputs": {
-          "1": "Email ''{Subject}'' was sent"
+          "1": "Email ''{Subject}'' was sent",
+          "2": "Email failed to send"
         },
         "Description": "Sends an email using the configured SMTP Server",
         "Fields": {

@@ -25,49 +25,59 @@ public class Gotify: Node
 
     public override int Execute(NodeParameters args)
     {
-        var settings = args.GetPluginSettings<PluginSettings>();
-
-        if (string.IsNullOrWhiteSpace(settings?.AccessToken))
+        try
         {
-            args.Logger?.WLog("No access token set");
+            var settings = args.GetPluginSettings<PluginSettings>();
+
+            if (string.IsNullOrWhiteSpace(settings?.AccessToken))
+            {
+                args.Logger?.WLog("No access token set");
+                return 2;
+            }
+
+            if (string.IsNullOrWhiteSpace(settings?.ServerUrl))
+            {
+                args.Logger?.WLog("No server URL set");
+                return 2;
+            }
+
+            string message = args.ReplaceVariables(this.Message);
+            if (string.IsNullOrWhiteSpace(message))
+            {
+                args.Logger?.WLog("No message to send");
+                return 2;
+            }
+
+            string title = args.ReplaceVariables(this.Title)?.EmptyAsNull() ?? "FileFlows";
+
+            object data = new
+            {
+                title = title,
+                message = message,
+                priority = this.Priority < 0 ? 2 : this.Priority,
+            };
+
+            var content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json");
+
+            string url = settings.ServerUrl;
+            if (url.EndsWith("/") == false)
+                url += "/";
+            url += "message";
+
+            using var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("X-Gotify-Key", settings.AccessToken);
+            var response = httpClient.PostAsync(url, content).Result;
+            if (response.IsSuccessStatusCode)
+                return 1;
+
+            string error = response.Content.ReadAsStringAsync().Result;
+            args.Logger?.WLog("Error from Gotify: " + error);
             return 2;
         }
-        if (string.IsNullOrWhiteSpace(settings?.ServerUrl))
+        catch (Exception ex)
         {
-            args.Logger?.WLog("No server URL set");
+            args.Logger?.WLog("Error sending message: " + ex.Message);
             return 2;
-        }
-
-        string message = args.ReplaceVariables(this.Message);
-        if (string.IsNullOrWhiteSpace(message))
-        {
-            args.Logger?.WLog("No message to send");
-            return 2;
-        }
-        string title = args.ReplaceVariables(this.Title)?.EmptyAsNull() ?? "FileFlows";
-
-        object data = new
-        {
-            title = title,
-            message = message,
-            priority = this.Priority < 0 ? 2 : this.Priority,
-        };
-
-        var content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json");
-
-        string url = settings.ServerUrl;
-        if(url.EndsWith("/") == false)
-            url += "/";
-        url += "message";
-
-        using var httpClient = new HttpClient();    
-        httpClient.DefaultRequestHeaders.Add("X-Gotify-Key", settings.AccessToken);
-        var response = httpClient.PostAsync(url, content).Result;
-        if (response.IsSuccessStatusCode)
-            return 1;
-
-        string error = response.Content.ReadAsStringAsync().Result;
-        args.Logger?.WLog("Error from Gotify: " + error);
-        return 2;
+        } 
     }
 }
