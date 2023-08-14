@@ -117,6 +117,7 @@ public class SubtitleExtractor : EncodingNode
                 OutputFile = OutputFile[0..^4];
 
             OutputFile += "." + extension;
+            args.Logger?.ILog($"Extracting subtitle codec '{subTrack.Codec}' to '{OutputFile}'");
             
             var extracted = ExtractSubtitle(args, FFMPEG, "0:s:" + subTrack.TypeIndex, OutputFile);
             if(extracted)

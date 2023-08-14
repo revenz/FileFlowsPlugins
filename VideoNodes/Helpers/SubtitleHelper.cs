@@ -29,7 +29,7 @@ internal class SubtitleHelper
     /// <param name="codec">the subtitle codec</param>
     /// <returns>true if the subtitle is an image based subtitle</returns>
     internal static bool IsImageSubtitle(string codec)
-        => Regex.IsMatch((codec ?? string.Empty).Replace("_", ""), "dvbsub|pgs|xsub|vobsub", RegexOptions.IgnoreCase);
+        => Regex.IsMatch((codec ?? string.Empty).Replace("_", ""), "dvbsub|pgs|xsub|vobsub|dvdsub", RegexOptions.IgnoreCase);
 
     /// <summary>
     /// Determines the appropriate subtitle codec for conversion based on the container type and current subtitle codec.
