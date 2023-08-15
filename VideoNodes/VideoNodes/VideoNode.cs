@@ -121,6 +121,8 @@ namespace FileFlows.VideoNodes
                 string prefix = "Video" + (i == 0 ? "" : " " + (i + 1)) + " ";
                 metadata.Add(prefix + "Codec", stream.Codec);
                 metadata.Add(prefix + "Resolution", stream.Width + "x" + stream.Height + (stream.HDR ? " (HDR)" : string.Empty));
+                if(stream.FramesPerSecond > 0)
+                    metadata.Add(prefix + "FramesPerSecond", stream.FramesPerSecond);
                 if(stream.Bitrate > 0)
                     metadata.Add(prefix + "Bitrate", stream.Bitrate);
                 if(stream.HDR)
