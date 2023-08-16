@@ -261,9 +261,13 @@ public class VideoInfoHelper
         if (int.TryParse(dimensions.Groups[2].Value, out int height))
             vs.Height = height;
 
-        if (Regex.IsMatch(line, @"([\d]+(\.[\d]+)?)\sfps") && float.TryParse(Regex.Match(line, @"([\d]+(\.[\d]+)?)\sfps").Groups[1].Value, out float fps))
+        if (Regex.IsMatch(line, @"([\d]+(\.[\d]+)?)\sfps") &&
+            float.TryParse(Regex.Match(line, @"([\d]+(\.[\d]+)?)\sfps").Groups[1].Value, out float fps))
+        {
+            logger.ILog("Frames Per Second: " + fps);
             vs.FramesPerSecond = fps;
-        
+        }
+
         var rgxBps = new Regex(@"(?<=((BPS(\-[\w]+)?[\s]*:[\s])))([\d]+)");
         if (rgxBps.IsMatch(info) && float.TryParse(rgxBps.Match(info).Value, out float bps))
             vs.Bitrate = bps;
