@@ -345,13 +345,20 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
         }
 
         // Handle bitrate
-        if (bitrate > 0)
+        if (bitrate == 1)
+        {
+            // use same bitrate as the source
+            // but only if that source HAS a bitrate detected
+            if (stream.Stream.Bitrate > 0)
+            {
+                options.Add("-b:a:{index}");
+                options.Add(stream.Stream.Bitrate.ToString());
+            }
+        }
+        else if (bitrate > 0)
         {
             options.Add("-b:a:{index}");
-            if(bitrate == 1) // use same bitrate as the source
-                options.Add(stream.Stream.Bitrate.ToString());
-            else
-                options.Add(bitrate + "k");
+            options.Add(bitrate + "k");
         }
 
         // Handle sample rate
