@@ -25,11 +25,11 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
             {
                 _CodecOptions = new List<ListOption>
                 {
-                    new ListOption { Label = "AAC", Value = "aac"},
-                    new ListOption { Label = "AC3", Value = "ac3"},
-                    new ListOption { Label = "EAC3", Value = "eac3" },
-                    new ListOption { Label = "MP3", Value = "mp3"},
-                    new ListOption { Label = "OPUS", Value = "opus"},
+                    new () { Label = "AAC", Value = "aac"},
+                    new () { Label = "AC3", Value = "ac3"},
+                    new () { Label = "EAC3", Value = "eac3" },
+                    new () { Label = "MP3", Value = "mp3"},
+                    new () { Label = "OPUS", Value = "opus"},
                 };
             }
             return _CodecOptions;
@@ -49,11 +49,11 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
             {
                 _ChannelsOptions = new List<ListOption>
                 {
-                    new ListOption { Label = "Same as source", Value = 0},
-                    new ListOption { Label = "Mono", Value = 1f},
-                    new ListOption { Label = "Stereo", Value = 2f},
-                    new ListOption { Label = "5.1", Value = 6},
-                    new ListOption { Label = "7.1", Value = 8}
+                    new () { Label = "Same as source", Value = 0},
+                    new () { Label = "Mono", Value = 1f},
+                    new () { Label = "Stereo", Value = 2f},
+                    new () { Label = "5.1", Value = 6},
+                    new () { Label = "7.1", Value = 8}
                 };
             }
             return _ChannelsOptions;
@@ -72,7 +72,8 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
             {
                 _BitrateOptions = new List<ListOption>
                 {
-                    new ListOption { Label = "Automatic", Value = 0},
+                    new () { Label = "Automatic", Value = 0},
+                    new () { Label = "Same as source", Value = 1},
                 };
                 for (int i = 64; i <= 2048; i += 32)
                 {

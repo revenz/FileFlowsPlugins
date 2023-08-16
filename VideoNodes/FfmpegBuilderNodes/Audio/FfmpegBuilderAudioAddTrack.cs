@@ -41,11 +41,11 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
             {
                 _CodecOptions = new List<ListOption>
                 {
-                    new ListOption { Label = "AAC", Value = "aac"},
-                    new ListOption { Label = "AC3", Value = "ac3"},
-                    new ListOption { Label = "EAC3", Value = "eac3" },
-                    new ListOption { Label = "MP3", Value = "mp3"},
-                    new ListOption { Label = "OPUS", Value = "opus"},
+                    new () { Label = "AAC", Value = "aac"},
+                    new () { Label = "AC3", Value = "ac3"},
+                    new () { Label = "EAC3", Value = "eac3" },
+                    new () { Label = "MP3", Value = "mp3"},
+                    new () { Label = "OPUS", Value = "opus"},
                 };
             }
             return _CodecOptions;
@@ -70,11 +70,11 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
             {
                 _ChannelsOptions = new List<ListOption>
                 {
-                    new ListOption { Label = "Same as source", Value = 0},
-                    new ListOption { Label = "Mono", Value = 1f},
-                    new ListOption { Label = "Stereo", Value = 2f},
-                    new ListOption { Label = "5.1", Value = 6},
-                    new ListOption { Label = "7.1", Value = 8}
+                    new () { Label = "Same as source", Value = 0},
+                    new () { Label = "Mono", Value = 1f},
+                    new () { Label = "Stereo", Value = 2f},
+                    new () { Label = "5.1", Value = 6},
+                    new () { Label = "7.1", Value = 8}
                 };
             }
             return _ChannelsOptions;
@@ -98,7 +98,8 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
             {
                 _BitrateOptions = new List<ListOption>
                 {
-                    new ListOption { Label = "Automatic", Value = 0},
+                    new() { Label = "Automatic", Value = 0},
+                    new() { Label = "Same as source", Value = 1}
                 };
                 for (int i = 64; i <= 2048; i += 32)
                 {
@@ -144,7 +145,7 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
     }
     
     /// <summary>
-    /// Gets or sets the language of the nee track
+    /// Gets or sets the language of the new track
     /// </summary>
     [DefaultValue("eng")]
     [TextVariable(5)]
@@ -347,7 +348,10 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
         if (bitrate > 0)
         {
             options.Add("-b:a:{index}");
-            options.Add(bitrate + "k");
+            if(bitrate == 1) // use same bitrate as the source
+                options.Add(stream.Stream.Bitrate.ToString());
+            else
+                options.Add(bitrate + "k");
         }
 
         // Handle sample rate

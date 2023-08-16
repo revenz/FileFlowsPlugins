@@ -51,7 +51,7 @@
                 lookupName = lookupName.Substring(0, lookupName.IndexOf(year)).Trim();
             }
 
-            // remove double spaces incase they were added when removing the year
+            // remove double spaces in case they were added when removing the year
             while (lookupName.IndexOf("  ") > 0)
                 lookupName = lookupName.Replace("  ", " ");
 
