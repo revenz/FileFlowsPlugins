@@ -352,7 +352,7 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
             if (stream.Stream.Bitrate > 0)
             {
                 options.Add("-b:a:{index}");
-                options.Add(stream.Stream.Bitrate.ToString());
+                options.Add((stream.Stream.Bitrate / 1000) + "k");
             }
         }
         else if (bitrate > 0)
