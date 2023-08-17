@@ -4,7 +4,8 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 
 public partial class FfmpegBuilderVideoEncode
 {
-    private static IEnumerable<string> H26x_CPU(bool h265, int quality, out string[] bit10Filters)
+    
+    private static IEnumerable<string> H26x_CPU(bool h265, int quality, string speed, out string[] bit10Filters)
     {
         bit10Filters = new[]
         {
@@ -13,12 +14,12 @@ public partial class FfmpegBuilderVideoEncode
         return new []
         {
             h265 ? "libx265" : "libx264",
-            "-preset", "slow",
+            "-preset", speed?.EmptyAsNull() ?? "slow",
             "-crf", quality.ToString()
         };
     }
 
-    private static IEnumerable<string> H26x_Nvidia(bool h265, int quality, out string[] non10BitFilters)
+    private static IEnumerable<string> H26x_Nvidia(bool h265, int quality, string speed, out string[] non10BitFilters)
     {
         if (h265 == false)
             non10BitFilters = new[] { "-pix_fmt:v:{index}", "yuv420p" };
@@ -30,12 +31,12 @@ public partial class FfmpegBuilderVideoEncode
             h265 ? "hevc_nvenc" : "h264_nvenc",
             "-rc", "constqp",
             "-qp", quality.ToString(),
-            "-preset", "p6",
+            "-preset", GetSpeed(speed, nvidia:true),
             "-spatial-aq", "1"
         };
     }
 
-    private static IEnumerable<string> H26x_Qsv(bool h265, int quality, float fps)
+    private static IEnumerable<string> H26x_Qsv(bool h265, int quality, float fps, string speed)
     {
         //hevc_qsv -load_plugin hevc_hw -pix_fmt p010le -profile:v main10 -global_quality 21 -g 24 -look_ahead 1 -look_ahead_depth 60
         var parameters = new List<string>();
@@ -60,38 +61,38 @@ public partial class FfmpegBuilderVideoEncode
         parameters.AddRange(new[]
         {
             "-global_quality", quality.ToString(),
-            "-preset", "slower",
+            "-preset", speed?.EmptyAsNull() ?? "slower",
         });
         return parameters;
     }
 
-    private static IEnumerable<string> H26x_Amd(bool h265, int quality)
+    private static IEnumerable<string> H26x_Amd(bool h265, int quality, string speed)
     {
         return new[]
         {
             h265 ? "hevc_amf" : "h264_amf",
             "-qp", quality.ToString(),
-            "-preset", "slower",
+            "-preset", speed?.EmptyAsNull() ?? "slower",
             "-spatial-aq", "1"
         };
     }
-    private static IEnumerable<string> H26x_Vaapi(bool h265, int quality)
+    private static IEnumerable<string> H26x_Vaapi(bool h265, int quality, string speed)
     {
         return new[]
         {
             h265 ? "hevc_vaapi" : "h264_vaapi",
             "-qp", quality.ToString(),
-            "-preset", "slower",
+            "-preset", speed?.EmptyAsNull() ?? "slower",
             "-spatial-aq", "1"
         };
     }
-    private static IEnumerable<string> H26x_VideoToolbox(bool h265, int quality)
+    private static IEnumerable<string> H26x_VideoToolbox(bool h265, int quality, string speed)
     {
         return new[]
         {
             h265 ? "hevc_videotoolbox" : "h264_videotoolbox",
             "-qp", quality.ToString(),
-            "-preset", "slower"
+            "-preset", speed?.EmptyAsNull() ?? "slower"
         };
     }
 }

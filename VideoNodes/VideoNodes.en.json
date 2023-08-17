@@ -482,6 +482,7 @@
         },
         "Fields": {
           "Codec": "Codec",
+          "Speed": "Speed",
           "HardwareEncoding": "Hardware Encode",
           "HardwareEncoding-Help": "When checked, will test to see if hardware encoders are found on the Processing Node, and if found will use hardware encoding, otherwise will fallback to CPU encoding.",
           "Quality": "Quality",
