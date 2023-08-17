@@ -262,8 +262,8 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         {
             //"libaom-av1",
             "libsvtav1",
-            "-preset", speed,
-            "-crf", preset
+            "-preset", preset,
+            "-crf", quality.ToString()
         };
     }
     
