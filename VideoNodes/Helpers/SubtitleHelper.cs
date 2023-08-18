@@ -54,7 +54,7 @@ internal class SubtitleHelper
                 return "mov_text";
             case "mkv":
                 if (isImageBased)
-                    return "hdmv_pgs_subtitle";
+                    return "copy";
                 if (IsSupportedSubtitleCodecMKV(currentCodec) == false)
                     return "srt"; // or "ssa" or any other supported codec
                 return currentCodec;

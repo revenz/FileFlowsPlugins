@@ -79,7 +79,7 @@ public class Unpack: Node
     /// <param name="destinationPath">the location to extract to</param>
     private void Extract(NodeParameters args, string workingFile, string destinationPath)
     {
-        bool isRar = workingFile.ToLowerInvariant().EndsWith(".cbr");
+        bool isRar = workingFile.ToLowerInvariant().EndsWith(".cbr") || workingFile.ToLowerInvariant().EndsWith(".rar");
         try
         {
             ArchiveFactory.WriteToDirectory(workingFile, destinationPath, new ()
