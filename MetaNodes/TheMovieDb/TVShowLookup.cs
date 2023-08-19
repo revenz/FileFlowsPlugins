@@ -28,7 +28,7 @@ public class TVShowLookup : Node
     /// <summary>
     /// Gets the help URL
     /// </summary>
-    public override string HelpUrl => "https://fileflows.com/docs/plugins/meta-nodes/tv-lookup";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/meta-nodes/tv-show-lookup";
     /// <summary>
     /// Gets the icon
     /// </summary>
