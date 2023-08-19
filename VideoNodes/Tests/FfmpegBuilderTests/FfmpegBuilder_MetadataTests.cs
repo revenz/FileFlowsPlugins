@@ -131,7 +131,7 @@ public class FfmpegBuilder_MetadataTests: TestBase
         FfmpegBuilderVideoEncode ffEncode = new();
         ffEncode.Codec = "h265";
         ffEncode.Quality = 30;
-        ffEncode.HardwareEncoding = false;
+        //ffEncode.HardwareEncoding = false;
         ffEncode.PreExecute(args);
         ffEncode.Execute(args);
 

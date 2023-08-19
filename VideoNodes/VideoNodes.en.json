@@ -483,6 +483,8 @@
         "Fields": {
           "Codec": "Codec",
           "Speed": "Speed",
+          "Encoder": "Encoder",
+          "Encoder-Help": "The encoder to force to use.  If you specify a hardware encoder that is unavailable, the encode will fail.",
           "HardwareEncoding": "Hardware Encode",
           "HardwareEncoding-Help": "When checked, will test to see if hardware encoders are found on the Processing Node, and if found will use hardware encoding, otherwise will fallback to CPU encoding.",
           "Quality": "Quality",

@@ -31,7 +31,7 @@ public class FfmpegBuilder_VideoEncode_VideoEncodeTests: TestBase
         FfmpegBuilderVideoEncode ffEncode = new();
         ffEncode.Codec = codec;
         ffEncode.Quality = quality;
-        ffEncode.HardwareEncoding = hardwareEncoding;
+        //ffEncode.HardwareEncoding = hardwareEncoding;
         ffEncode.PreExecute(args);
         ffEncode.Execute(args);
         

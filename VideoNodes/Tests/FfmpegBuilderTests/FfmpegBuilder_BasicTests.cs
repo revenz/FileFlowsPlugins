@@ -31,7 +31,7 @@ public class FfmpegBuilder_BasicTests : TestBase
         FfmpegBuilderVideoEncode ffEncode = new();
         ffEncode.Codec = "h265 10BIT";
         ffEncode.Quality = 28;
-        ffEncode.HardwareEncoding = true;
+        //ffEncode.HardwareEncoding = true;
         ffEncode.PreExecute(args);
         ffEncode.Execute(args);
 
@@ -66,7 +66,7 @@ public class FfmpegBuilder_BasicTests : TestBase
         FfmpegBuilderVideoEncode ffEncode = new();
         ffEncode.Codec = "av1 10BIT";
         ffEncode.Quality = 28;
-        ffEncode.HardwareEncoding = false;
+        //ffEncode.HardwareEncoding = false;
         ffEncode.PreExecute(args);
         ffEncode.Execute(args);
 

@@ -20,6 +20,12 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
     internal const string CODEC_AV1_10BIT = "av1 10BIT";
     internal const string CODEC_VP9 = "vp9";
     
+    internal const string ENCODER_CPU = "CPU";
+    internal const string ENCODER_NVIDIA = "NVIDIA";
+    internal const string ENCODER_QSV = "Intel QSV";
+    internal const string ENCODER_VAAPI = "VAAPI";
+    internal const string ENCODER_AMF = "AMD AMF";
+    internal const string ENCODER_MAC = "Mac Video Toolbox";
 
     /// <summary>
     /// The Help URL for this node
@@ -65,12 +71,36 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
     }
 
     /// <summary>
-    /// Gets or sets if hardware encoding should be used if possible
+    /// Gets or sets the encoder to use
     /// </summary>
-    [DefaultValue(true)]
-    [Boolean(2)]
+    [Select(nameof(Encoders), 2)]
     [ConditionEquals(nameof(Codec), "/av1/", inverse: true)]
-    public bool HardwareEncoding { get; set; }
+    public string Encoder { get; set; }
+    
+    private static List<ListOption> _Encoders;
+    /// <summary>
+    /// Gets or sets the encoders options
+    /// </summary>
+    public static List<ListOption> Encoders
+    {
+        get
+        {
+            if (_Encoders == null)
+            {
+                _Encoders = new List<ListOption>
+                {
+                    new () { Label = "Automatic", Value = "" },
+                    new () { Label = "CPU", Value = "CPU" },
+                    new () { Label = "NVIDIA", Value = "NVIDIA" },
+                    new () { Label = "Intel QSV", Value = "Intel QSV" },
+                    new () { Label = "VAAPI", Value = "VAAPI" },
+                    new () { Label = "AMD AMF", Value = "AMD AMF" },
+                    new () { Label = "Mac Video Toolbox", Value = "Mac Video Toolbox" },
+                };
+            }
+            return _Encoders;
+        }
+    } 
 
     /// <summary>
     /// Gets or sets the quality of the video encode
@@ -129,20 +159,18 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
     {
         var stream = Model.VideoStreams.Where(x => x.Deleted == false).First();
         
-        stream.EncodingParameters.Clear();    
-        
-        bool useHardwareEncoding = HardwareEncoding;
-        if (Environment.GetEnvironmentVariable("HW_OFF") == "1")
-            useHardwareEncoding = false;
+        stream.EncodingParameters.Clear();
+
+        string encoder = Environment.GetEnvironmentVariable("HW_OFF") == "1" ? ENCODER_CPU : this.Encoder;
 
         if (Codec == CODEC_H264)
-            stream.EncodingParameters.AddRange(H264(args, false, Quality, useHardwareEncoding, Speed));
+            stream.EncodingParameters.AddRange(H264(args, false, Quality, encoder, Speed));
         else if (Codec == CODEC_H265 || Codec == CODEC_H265_10BIT)
-            stream.EncodingParameters.AddRange(H265(args, Codec == CODEC_H265_10BIT, Quality, useHardwareEncoding, stream.Stream.FramesPerSecond, Speed));
+            stream.EncodingParameters.AddRange(H265(args, Codec == CODEC_H265_10BIT, Quality, encoder, stream.Stream.FramesPerSecond, Speed));
         else if (Codec == CODEC_AV1 || Codec == CODEC_AV1_10BIT)
             stream.EncodingParameters.AddRange(AV1(args, Codec == CODEC_AV1_10BIT, Quality, Speed));
         else if(Codec == CODEC_VP9)
-            stream.EncodingParameters.AddRange(VP9(args, Quality, useHardwareEncoding, Speed));
+            stream.EncodingParameters.AddRange(VP9(args, Quality, encoder, Speed));
         else
         {
             args.Logger?.ILog("Unknown codec: " + Codec);
@@ -153,12 +181,12 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         return 1;
     }
 
-    internal static IEnumerable<string> GetEncodingParameters(NodeParameters args, string codec, int quality, bool useHardwareEncoder, float fps, string speed)
+    internal static IEnumerable<string> GetEncodingParameters(NodeParameters args, string codec, int quality, string encoder, float fps, string speed)
     {
         if (codec == CODEC_H264)
-            return H264(args, false, quality, useHardwareEncoder, speed).Select(x => x.Replace("{index}", "0")); 
+            return H264(args, false, quality, encoder, speed).Select(x => x.Replace("{index}", "0")); 
         if (codec == CODEC_H265 || codec == CODEC_H265_10BIT)
-            return H265(args, codec == CODEC_H265_10BIT, quality, useHardwareEncoder, fps, speed).Select(x => x.Replace("{index}", "0"));
+            return H265(args, codec == CODEC_H265_10BIT, quality, encoder, fps, speed).Select(x => x.Replace("{index}", "0"));
         if(codec == CODEC_AV1)
             return AV1(args, codec == CODEC_AV1_10BIT, quality, speed).Select(x => x.Replace("{index}", "0")); 
             
@@ -167,22 +195,22 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
 
     private static readonly bool IsMac = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
 
-    private static IEnumerable<string> H264(NodeParameters args, bool tenBit, int quality, bool useHardwareEncoding, string speed)
+    private static IEnumerable<string> H264(NodeParameters args, bool tenBit, int quality, string encoder, string speed)
     {
         List<string> parameters = new List<string>();
         string[] bit10Filters = null;
         string[] non10BitFilters = null;
-        if (useHardwareEncoding == false)
+        if (encoder == ENCODER_CPU)
             parameters.AddRange(H26x_CPU(false, quality, speed, out bit10Filters));
-        else if(IsMac && CanUseHardwareEncoding.CanProcess_VideoToolbox_H264(args))
+        else if(IsMac && (encoder == ENCODER_MAC || CanUseHardwareEncoding.CanProcess_VideoToolbox_H264(args)))
             parameters.AddRange(H26x_VideoToolbox(false, quality, speed));
-        else if (CanUseHardwareEncoding.CanProcess_Nvidia_H264(args))
+        else if (encoder == ENCODER_NVIDIA || CanUseHardwareEncoding.CanProcess_Nvidia_H264(args))
             parameters.AddRange(H26x_Nvidia(false, quality, speed, out non10BitFilters));
-        else if (CanUseHardwareEncoding.CanProcess_Qsv_H264(args))
+        else if (encoder == ENCODER_QSV || CanUseHardwareEncoding.CanProcess_Qsv_H264(args))
             parameters.AddRange(H26x_Qsv(false, quality, 0, speed));
-        else if (CanUseHardwareEncoding.CanProcess_Amd_H264(args))
+        else if (encoder == ENCODER_AMF || CanUseHardwareEncoding.CanProcess_Amd_H264(args))
             parameters.AddRange(H26x_Amd(false, quality, speed));
-        else if (CanUseHardwareEncoding.CanProcess_Vaapi_H264(args))
+        else if (encoder == ENCODER_VAAPI || CanUseHardwareEncoding.CanProcess_Vaapi_H264(args))
             parameters.AddRange(H26x_Vaapi(false, quality, speed));
         else
             parameters.AddRange(H26x_CPU(false, quality, speed, out bit10Filters));
@@ -192,23 +220,23 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         return parameters;
     }
     
-    private static IEnumerable<string> H265(NodeParameters args, bool tenBit, int quality, bool useHardwareEncoding, float fps, string speed)
+    private static IEnumerable<string> H265(NodeParameters args, bool tenBit, int quality, string encoder, float fps, string speed)
     {
         // hevc_qsv -load_plugin hevc_hw -pix_fmt p010le -profile:v main10 -global_quality 21 -g 24 -look_ahead 1 -look_ahead_depth 60
         List<string> parameters = new List<string>();
         string[] bit10Filters = null;
         string[] non10BitFilters = null;
-        if (useHardwareEncoding == false)
+        if (encoder == ENCODER_CPU)
             parameters.AddRange(H26x_CPU(true, quality, speed, out bit10Filters));
-        else if (IsMac && CanUseHardwareEncoding.CanProcess_VideoToolbox_Hevc(args))
+        else if (IsMac && (encoder == ENCODER_MAC || CanUseHardwareEncoding.CanProcess_VideoToolbox_Hevc(args)))
             parameters.AddRange(H26x_VideoToolbox(true, quality, speed));
-        else if (CanUseHardwareEncoding.CanProcess_Nvidia_Hevc(args))
+        else if (encoder == ENCODER_NVIDIA || CanUseHardwareEncoding.CanProcess_Nvidia_Hevc(args))
             parameters.AddRange(H26x_Nvidia(true, quality, speed, out non10BitFilters));
-        else if (CanUseHardwareEncoding.CanProcess_Qsv_Hevc(args))
+        else if (encoder == ENCODER_QSV || CanUseHardwareEncoding.CanProcess_Qsv_Hevc(args))
             parameters.AddRange(H26x_Qsv(true, quality, fps, speed));
-        else if (CanUseHardwareEncoding.CanProcess_Amd_Hevc(args))
+        else if (encoder == ENCODER_AMF || CanUseHardwareEncoding.CanProcess_Amd_Hevc(args))
             parameters.AddRange(H26x_Amd(true, quality, speed));
-        else if (CanUseHardwareEncoding.CanProcess_Vaapi_Hevc(args))
+        else if (encoder == ENCODER_VAAPI || CanUseHardwareEncoding.CanProcess_Vaapi_Hevc(args))
             parameters.AddRange(H26x_Vaapi(true, quality, speed));
         else
             parameters.AddRange(H26x_CPU(true, quality, speed, out bit10Filters));
@@ -231,12 +259,12 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         return parameters;
     }
     
-    private static IEnumerable<string> VP9(NodeParameters args,  int quality, bool useHardwareEncoding, string speed)
+    private static IEnumerable<string> VP9(NodeParameters args,  int quality, string encoder, string speed)
     {
         List<string> parameters = new List<string>();
-        if (useHardwareEncoding == false)
+        if (encoder == ENCODER_CPU)
             parameters.AddRange(VP9_CPU(quality, speed));
-        else if (CanUseHardwareEncoding.CanProcess_Qsv_Hevc(args)) // if can use hevc they can use vp9
+        else if (encoder == ENCODER_QSV || CanUseHardwareEncoding.CanProcess_Qsv_Hevc(args)) // if can use hevc they can use vp9
             parameters.AddRange(VP9_Qsv(quality, speed));
         else
             parameters.AddRange(VP9_CPU(quality, speed));

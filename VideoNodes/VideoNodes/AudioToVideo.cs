@@ -135,7 +135,7 @@ public class AudioToVideo : EncodingNode
         if (Environment.GetEnvironmentVariable("HW_OFF") == "1")
             useHardwareEncoding = false;
         
-        var encodingParameters = FfmpegBuilderVideoEncode.GetEncodingParameters(args, this.Codec, 28, useHardwareEncoding, 29.97f, speed: "fast");
+        var encodingParameters = FfmpegBuilderVideoEncode.GetEncodingParameters(args, this.Codec, 28, useHardwareEncoding ? string.Empty : "CPU", 29.97f, speed: "fast");
 
         if (Container.ToLower() == "mp4")
             ffArgs.AddRange(new[] { "-movflags", "+faststart" });
