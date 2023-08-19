@@ -2,15 +2,16 @@
 using DM.MovieApi;
 using DM.MovieApi.ApiResponse;
 using DM.MovieApi.MovieDb.Movies;
+using DM.MovieApi.MovieDb.TV;
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
 
 namespace MetaNodes.TheMovieDb;
 
 /// <summary>
-/// Movie Lookup 
+/// TV Show Lookup 
 /// </summary>
-public class MovieLookup : Node
+public class TVShowLookup : Node
 {
     /// <summary>
     /// Gets the number of inputs
@@ -27,11 +28,11 @@ public class MovieLookup : Node
     /// <summary>
     /// Gets the help URL
     /// </summary>
-    public override string HelpUrl => "https://fileflows.com/docs/plugins/meta-nodes/movie-lookup";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/meta-nodes/tv-lookup";
     /// <summary>
     /// Gets the icon
     /// </summary>
-    public override string Icon => "fas fa-film";
+    public override string Icon => "fas fa-tv";
 
     private Dictionary<string, object> _Variables;
     
@@ -43,12 +44,12 @@ public class MovieLookup : Node
     /// <summary>
     /// Constructs a new instance of this flow element
     /// </summary>
-    public MovieLookup()
+    public TVShowLookup()
     {
         _Variables = new Dictionary<string, object>()
         {
-            { "movie.Title", "Batman Begins" },
-            { "movie.Year", 2005 }
+            { "tvshow.Title", "THe Batman" },
+            { "tvshow.Year", 2004 }
         };
     }
 
@@ -68,7 +69,17 @@ public class MovieLookup : Node
     public override int Execute(NodeParameters args)
     {
         var fileInfo = new FileInfo(args.FileName);
-        string lookupName = UseFolderName ? fileInfo.Directory.Name : fileInfo.Name.Substring(0, fileInfo.Name.LastIndexOf(fileInfo.Extension));
+        string lookupName;
+        if (UseFolderName)
+        {
+            lookupName = fileInfo.Directory.Name;
+            if (Regex.IsMatch(lookupName, "^(Season|Staffel|Saison)", RegexOptions.IgnoreCase))
+                lookupName = fileInfo.Directory.Parent.Name;
+        }
+        else
+        {
+            lookupName = GetTVShowInfo(fileInfo.Name.Substring(0, fileInfo.Name.LastIndexOf(fileInfo.Extension))).ShowName;
+        }
         lookupName = lookupName.Replace(".", " ").Replace("_", " ");
 
         // look for year
@@ -87,9 +98,9 @@ public class MovieLookup : Node
         // RegisterSettings only needs to be called one time when your application starts-up.
         MovieDbFactory.RegisterSettings(MovieDbBearerToken);
 
-        var movieApi = MovieDbFactory.Create<IApiMovieRequest>().Value;
+        var movieApi = MovieDbFactory.Create<IApiTVShowRequest>().Value;
 
-        ApiSearchResponse<MovieInfo> response = movieApi.SearchByTitleAsync(lookupName).Result;
+        var response = movieApi.SearchByNameAsync(lookupName).Result;
         
 
         // try find an exact match
@@ -97,54 +108,22 @@ public class MovieLookup : Node
             {
                 if (string.IsNullOrEmpty(year) == false)
                 {
-                    return year == x.ReleaseDate.Year.ToString() ? 0 : 1;
+                    return year == x.FirstAirDate.Year.ToString() ? 0 : 1;
                 }
                 return 0;
             })
-            .ThenBy(x => x.Title.ToLower().Trim().Replace(" ", "") == lookupName.ToLower().Trim().Replace(" ", "") ? 0 : 1)
-            .ThenBy(x =>
-            {
-                // do some fuzzy logic with roman numerals
-                var numMatch = Regex.Match(lookupName, @"[\s]([\d]+)$");
-                if (numMatch.Success == false)
-                    return 0;
-                int number = int.Parse(numMatch.Groups[1].Value);
-                string roman = number switch
-                {
-                    1 => "i",
-                    2 => "ii",
-                    3 => "iii",
-                    4 => "iv",
-                    5 => "v",
-                    6 => "vi,",
-                    7 => "vii",
-                    8 => "viii",
-                    9 => "ix",
-                    10 => "x",
-                    11 => "xi",
-                    12 => "xii",
-                    13 => "xiii",
-                    _ => string.Empty
-                };
-                string ln = lookupName.Substring(0, lookupName.LastIndexOf(number.ToString())).ToLower().Trim().Replace(" ", "");
-                string softTitle = x.Title.ToLower().Replace(" ", "").Trim();
-                if (softTitle == ln + roman)
-                    return 0;
-                if (softTitle.StartsWith(ln) && softTitle.EndsWith(roman))
-                    return 0;
-                return 1;
-             })
-            .ThenBy(x => lookupName.ToLower().Trim().Replace(" ", "").StartsWith(x.Title.ToLower().Trim().Replace(" ", "")) ? 0 : 1)
-            .ThenBy(x => x.Title)
+            .ThenBy(x => x.Name.ToLower().Trim().Replace(" ", "") == lookupName.ToLower().Trim().Replace(" ", "") ? 0 : 1)
+            .ThenBy(x => lookupName.ToLower().Trim().Replace(" ", "").StartsWith(x.Name.ToLower().Trim().Replace(" ", "")) ? 0 : 1)
+            .ThenBy(x => x.Name)
             .FirstOrDefault();
 
         if (result == null)
             return 2; // no match
 
-        args.SetParameter(Globals.MOVIE_INFO, result);
+        args.SetParameter(Globals.TV_SHOW_INFO, result);
 
-        Variables["movie.Title"] = result.Title;
-        Variables["movie.Year"] = result.ReleaseDate.Year;
+        Variables["tvshow.Title"] = result.Name;
+        Variables["tvshow.Year"] = result.FirstAirDate.Year;
         Variables["VideoMetadata"] = GetVideoMetadata(movieApi, result.Id, args.TempPath);
 
         args.UpdateVariables(Variables);
@@ -156,32 +135,29 @@ public class MovieLookup : Node
     /// <summary>
     /// Gets the VideoMetadata
     /// </summary>
-    /// <param name="movieApi">the movie API</param>
+    /// <param name="tvApi">the tv API</param>
     /// <param name="id">the ID of the movie</param>
     /// <param name="tempPath">the temp path to save any images to</param>
     /// <returns>the VideoMetadata</returns>
-    internal static VideoMetadata GetVideoMetadata(IApiMovieRequest movieApi, int id, string tempPath)
+    internal static VideoMetadata GetVideoMetadata(IApiTVShowRequest tvApi, int id, string tempPath)
     {
-        var movie = movieApi.FindByIdAsync(id).Result?.Item;
-        if (movie == null)
+        var tv = tvApi.FindByIdAsync(id).Result?.Item;
+        if (tv == null)
             return null;
-        
-        var credits = movieApi.GetCreditsAsync(id).Result?.Item;
 
         VideoMetadata md = new();
-        md.Title = movie.Title;
-        md.Genres = movie.Genres?.Select(x => x.Name).ToList();
-        md.Description = movie.Overview;
-        md.Year = movie.ReleaseDate.Year;
-        md.Subtitle = movie.Tagline;
-        md.ReleaseDate = movie.ReleaseDate;
-        md.OriginalLanguage = movie.OriginalLanguage;
-        if (string.IsNullOrWhiteSpace(movie.PosterPath) == false)
+        md.Title = tv.Name;
+        md.Genres = tv.Genres?.Select(x => x.Name).ToList();
+        md.Description = tv.Overview;
+        md.Year = tv.FirstAirDate.Year;
+        md.ReleaseDate = tv.FirstAirDate;
+        md.OriginalLanguage = tv.OriginalLanguage;
+        if (string.IsNullOrWhiteSpace(tv.PosterPath) == false)
         {
             try
             {
                 using var httpClient = new HttpClient();
-                using var stream = httpClient.GetStreamAsync("https://image.tmdb.org/t/p/w500" + movie.PosterPath).Result;
+                using var stream = httpClient.GetStreamAsync("https://image.tmdb.org/t/p/w500" + tv.PosterPath).Result;
                 string file = Path.Combine(tempPath, Guid.NewGuid() + ".jpg");
                 using var fileStream = new FileStream(file, FileMode.CreateNew);
                 stream.CopyTo(fileStream);
@@ -192,15 +168,35 @@ public class MovieLookup : Node
 
             }
         }
-        
-        if(credits != null)
-        {
-            md.Actors = credits.CastMembers?.Select(x => x.Name)?.ToList();
-            md.Writers  = credits.CrewMembers?.Where(x => x.Job == "Writer" || x.Job == "Screenplay") ?.Select(x => x.Name)?.ToList();
-            md.Directors = credits.CrewMembers?.Where(x => x.Job == "Director")?.Select(x => x.Name)?.ToList();
-            md.Producers = credits.CrewMembers?.Where(x => x.Job == "Producer")?.Select(x => x.Name)?.ToList();
-        }
 
         return md;
+    }
+
+    /// <summary>
+    /// Gets the tv show name from the text
+    /// </summary>
+    /// <param name="text">the input text</param>
+    /// <returns>the tv show name</returns>
+    internal static (string ShowName, int? Season, int? Episode, int? LastEpisode) GetTVShowInfo(string text)
+    {
+        // Replace "1x02" format with "s1e02"
+        text = Regex.Replace(text, @"(?<season>\d+)x(?<episode>\d+)", "s${season}e${episode}", RegexOptions.IgnoreCase);
+
+        string pattern = @"^(?<showName>[\w\s.-]+)[. _-]?(?:(s|S)(?<season>\d+)(e|E)(?<episode>\d+)(?:-(?<lastEpisode>\d+))?)";
+
+        Match match = Regex.Match(text, pattern);
+
+        if (match.Success == false)
+            return (text, null, null, null);
+        
+        string show = match.Groups["showName"].Value.Replace(".", " ").TrimEnd();
+        if (show.EndsWith(" -"))
+            show = show[..^2];
+        int season = int.Parse(match.Groups["season"].Value);
+        int episode = int.Parse(match.Groups["episode"].Value);
+        string lastEpisodeStr = match.Groups["lastEpisode"].Value;
+        int? lastEpisode = string.IsNullOrEmpty(lastEpisodeStr) ? (int?)null : int.Parse(lastEpisodeStr);
+
+        return (show, season, episode, lastEpisode);
     }
 }

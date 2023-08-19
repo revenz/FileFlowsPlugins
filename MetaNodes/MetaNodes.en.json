@@ -1,31 +1,42 @@
 {
-    "Flow":{
-      "Parts": {
-        "MovieLookup": {
-          "Description": "Looks performs a search on TheMovieDB.org.\nStores the Metadata inside the parameter 'MovieInfo'.\n\nOutputs 1: Movie found\nOutputs 2: Movie not found",
-          "Outputs": {
-            "1": "Movie found",
-            "2": "Movie NOT found"
-          },
-          "Fields": {
-            "UseFolderName": "Use Folder Name",
-            "UseFolderName-Help": "If the folder name should be used instead of the filename."
-          }
+  "Flow":{
+    "Parts": {
+      "MovieLookup": {
+        "Description": "Performs a search on TheMovieDB.org for a movie.\nStores the Metadata inside the parameter 'MovieInfo'.\n\nOutputs 1: Movie found\nOutputs 2: Movie not found",
+        "Outputs": {
+          "1": "Movie found",
+          "2": "Movie NOT found"
         },
-        "MovieRenamer": {
-          "Description": "Renames the working file using the metadata stored in 'MovieInfo'.\nNote: MovieLookup should be executed in the flow before this node to work.\n\nOutput 1: File was renamed\nOutput 2: File failed to be renamed",          
-          "Fields": {
-            "Pattern": "Pattern",
-            "Pattern-Help": "The pattern to use to rename the folder.  '{Title}', '{Year}', '{Extension}'.",
-            "DestinationPath": "Destination Path",
-            "DestinationPath-Help": "If the file should be moved to a different directory.",
-            "LogOnly": "Log Only",
-            "LogOnly-Help": "Turn on if you just want to test this node without it actually renaming the file"
-          }
+        "Fields": {
+          "UseFolderName": "Use Folder Name",
+          "UseFolderName-Help": "If the folder name should be used instead of the filename."
+        }
+      },
+      "MovieRenamer": {
+        "Description": "Renames the working file using the metadata stored in 'MovieInfo'.\nNote: MovieLookup should be executed in the flow before this node to work.\n\nOutput 1: File was renamed\nOutput 2: File failed to be renamed",          
+        "Fields": {
+          "Pattern": "Pattern",
+          "Pattern-Help": "The pattern to use to rename the folder.  '{Title}', '{Year}', '{Extension}'.",
+          "DestinationPath": "Destination Path",
+          "DestinationPath-Help": "If the file should be moved to a different directory.",
+          "LogOnly": "Log Only",
+          "LogOnly-Help": "Turn on if you just want to test this node without it actually renaming the file"
+        }
+      },
+      "MusicMeta": {
+        "Description": "Loads the metadata of a music file into the flow variables."
+      },
+      "TVShowLookup": {
+        "Description": "Performs a search on TheMovieDB.org for a TV Show.\nStores the Metadata inside the parameter 'TVShowInfo'.\n\nOutputs 1: Movie found\nOutputs 2: Movie not found",
+        "Outputs": {
+          "1": "TV Show found",
+          "2": "TV Show NOT found"
         },
-        "MusicMeta": {
-          "Description": "Loads the metadata of a music file into the flow variables."
+        "Fields": {
+          "UseFolderName": "Use Folder Name",
+          "UseFolderName-Help": "If the folder name should be used instead of the filename.\n\nNote if the folder starts with Season or Staffel or Saison the parent folder will be used."
         }
       }
     }
+  }
 }
