@@ -15,7 +15,7 @@ public class FfmpegBuilderAudioSetLanguage : FfmpegBuilderNode
     public string StreamType { get; set; }
 
     [Required]
-    [Text(2)]
+    [TextVariable(2)]
     public string Language { get; set; }
 
     private static List<ListOption> _StreamTypeOptions;
@@ -27,9 +27,9 @@ public class FfmpegBuilderAudioSetLanguage : FfmpegBuilderNode
             {
                 _StreamTypeOptions = new List<ListOption>
                 {
-                    new ListOption { Label = "Audio", Value = "Audio" },
-                    new ListOption { Label = "Subtitle", Value = "Subtitle" },
-                    new ListOption { Label = "Both", Value = "Both" },
+                    new () { Label = "Audio", Value = "Audio" },
+                    new () { Label = "Subtitle", Value = "Subtitle" },
+                    new () { Label = "Both", Value = "Both" },
                 };
             }
             return _StreamTypeOptions;
@@ -39,14 +39,19 @@ public class FfmpegBuilderAudioSetLanguage : FfmpegBuilderNode
     public override int Execute(NodeParameters args)
     {
         bool changes = false;
+        string language = args.ReplaceVariables(Language, stripMissing: true)?.ToLowerInvariant();
+        if (string.IsNullOrWhiteSpace(language))
+        {
+            args.Logger?.WLog("No language set");
+            return 2;
+        }
         if (StreamType == "Subtitle" || StreamType == "Both")
         {
-
             foreach (var at in Model.AudioStreams)
             {
                 if (string.IsNullOrEmpty(at.Language))
                 {
-                    at.Language = Language.ToLower();
+                    at.Language = language;
                     at.ForcedChange = true; // this will ensure the language is set even if there are no changes anywhere else
                     changes = true;
                 }
