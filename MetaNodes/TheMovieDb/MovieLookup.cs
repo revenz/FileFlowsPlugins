@@ -146,6 +146,7 @@ public class MovieLookup : Node
         Variables["movie.Title"] = result.Title;
         Variables["movie.Year"] = result.ReleaseDate.Year;
         Variables["VideoMetadata"] = GetVideoMetadata(movieApi, result.Id, args.TempPath);
+        Variables[Globals.MOVIE_INFO] = result;
 
         args.UpdateVariables(Variables);
         return 1;

@@ -125,8 +125,9 @@ public class TVShowLookup : Node
         Variables["tvshow.Title"] = result.Name;
         Variables["tvshow.Year"] = result.FirstAirDate.Year;
         Variables["VideoMetadata"] = GetVideoMetadata(movieApi, result.Id, args.TempPath);
-
+        Variables[Globals.TV_SHOW_INFO] = result;
         args.UpdateVariables(Variables);
+        
         return 1;
 
     }

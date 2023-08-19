@@ -2,7 +2,7 @@
   "Flow":{
     "Parts": {
       "MovieLookup": {
-        "Description": "Performs a search on TheMovieDB.org for a movie.\nStores the Metadata inside the parameter 'MovieInfo'.\n\nOutputs 1: Movie found\nOutputs 2: Movie not found",
+        "Description": "Performs a search on TheMovieDB.org for a movie.\nStores the Metadata inside the variable 'MovieInfo'.",
         "Outputs": {
           "1": "Movie found",
           "2": "Movie NOT found"
@@ -27,7 +27,7 @@
         "Description": "Loads the metadata of a music file into the flow variables."
       },
       "TVShowLookup": {
-        "Description": "Performs a search on TheMovieDB.org for a TV Show.\nStores the Metadata inside the parameter 'TVShowInfo'.\n\nOutputs 1: Movie found\nOutputs 2: Movie not found",
+        "Description": "Performs a search on TheMovieDB.org for a TV Show.\nStores the Metadata inside the variable 'TVShowInfo'.",
         "Outputs": {
           "1": "TV Show found",
           "2": "TV Show NOT found"
