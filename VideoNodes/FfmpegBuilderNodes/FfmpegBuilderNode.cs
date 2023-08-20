@@ -7,10 +7,25 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
     {
         protected const string MODEL_KEY = "FfmpegBuilderModel";
 
+        /// <summary>
+        /// Gets the number of inputs
+        /// </summary>
         public override int Inputs => 1;
+        /// <summary>
+        /// Gets the number of outputs
+        /// </summary>
         public override int Outputs => 1;
+        /// <summary>
+        /// Gets the icon
+        /// </summary>
         public override string Icon => "far fa-file-video";
+        /// <summary>
+        /// Gets the flow element type
+        /// </summary>
         public override FlowElementType Type => FlowElementType.BuildPart;
+        /// <summary>
+        /// Gets the help URL
+        /// </summary>
         public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder";
 
 
