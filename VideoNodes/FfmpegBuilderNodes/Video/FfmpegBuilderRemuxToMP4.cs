@@ -13,7 +13,7 @@ public class FfmpegBuilderRemuxToMP4: FfmpegBuilderNode
     /// <summary>
     /// Gets if the editor should be shown on add by default
     /// </summary>
-    public override bool NoEditorOnAdd => false;
+    public override bool NoEditorOnAdd => true;
 
     /// <summary>
     /// Gets or sets if hvc1 tag should be added
