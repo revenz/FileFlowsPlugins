@@ -420,6 +420,10 @@
         "Description": "Remuxes a video file into a MP4 container.",
         "Outputs": {
           "1": "FFMPEG Builder set to remux to MP4"
+        },
+        "Fields": {
+          "UseHvc1": "Use HVC1",
+          "UseHvc1-Help": "If HVC1 should be used instead of the default of HEV1"
         }
       },
       "FfmpegBuilderRemuxToMov": {
