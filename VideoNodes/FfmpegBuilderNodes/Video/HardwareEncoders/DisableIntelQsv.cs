@@ -3,7 +3,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 /// <summary>
 /// Disabled Intel QSV encoding
 /// </summary>
-public class DisableIntelQSV:DisableEncoder
+public class DisableIntelQsv:DisableEncoder
 {
     /// <summary>
     /// Gets the encoder variable

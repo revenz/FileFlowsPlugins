@@ -7,6 +7,34 @@
   "7": { "1": "7.1" },
   "Flow": {
     "Parts": {
+      "DisableAmd": {
+        "Label": "Disable AMD",
+        "Description": "Disables AMD AMF hardware encoder",
+        "Outputs": {
+          "1": "Disabled"
+        }
+      },
+      "DisableIntelQsv": {
+        "Label": "Disable Intel QSV",
+        "Description": "Disables Intel QSV hardware encoder",
+        "Outputs": {
+          "1": "Disabled"
+        }
+      },
+      "DisableNvidia": {
+        "Label": "Disable NVIDIA",
+        "Description": "Disables NVIDIA hardware encoder",
+        "Outputs": {
+          "1": "Disabled"
+        }
+      },
+      "DisableVaapi": {
+        "Label": "Disable VAAPI",
+        "Description": "Disables VAAPI hardware encoder",
+        "Outputs": {
+          "1": "Disabled"
+        }
+      },
       "AudioToVideo": {
         "Description": "Converts an audio file into a video file and generates a video based on the audio",
         "Fields": {
@@ -530,7 +558,7 @@
         }
       },
       "VideoHasStream": {
-        "Title": "Video Has Track",
+        "Label": "Video Has Stream",
         "Description": "Tests if a video file contains a track",
         "Outputs": {
           "1": "Contains the matching track",
@@ -550,7 +578,7 @@
         }
       },
       "VideoExtractAudio": {
-        "Title": "Video Extract Audio",
+        "Label": "Video Extract Audio",
         "Description": "Extracts audio from a video file and saves it to a file",
         "Outputs": {
           "1": "Audio extracted and saved to a file",
@@ -576,7 +604,6 @@
           "NotMatching": "Not Matching",
           "NotMatching-Help": "If an audio track NOT matching the pattern should be extracted"
         }
-
       }
     }
   }
