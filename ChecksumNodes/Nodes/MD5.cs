@@ -8,6 +8,10 @@ namespace ChecksumNodes
         public override int Outputs => 1;
         public override FlowElementType Type => FlowElementType.Logic;
         public override string Icon => "fas fa-file-contract";
+        /// <summary>
+        /// Get the help URL
+        /// </summary>
+        public override string HelpUrl => "https://fileflows.com/docs/plugins/checksum-nodes/md5";
 
         private Dictionary<string, object> _Variables;
         public override Dictionary<string, object> Variables => _Variables;

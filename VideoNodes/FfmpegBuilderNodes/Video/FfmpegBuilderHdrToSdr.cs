@@ -4,6 +4,9 @@ public class FfmpegBuilderHdrToSdr : FfmpegBuilderNode
 {
     public override int Outputs => 2;
 
+    /// <summary>
+    /// Get the help URL
+    /// </summary>
     public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/hdr-to-sdr";
 
     public override int Execute(NodeParameters args)

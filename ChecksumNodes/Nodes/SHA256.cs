@@ -8,6 +8,10 @@ namespace ChecksumNodes
         public override int Outputs => 1;
         public override FlowElementType Type => FlowElementType.Logic;
 
+        /// <summary>
+        /// Get the help URL
+        /// </summary>
+        public override string HelpUrl => "https://fileflows.com/docs/plugins/checksum-nodes/sha256";
         public override string Icon => "fas fa-file-contract";
 
         private Dictionary<string, object> _Variables;
