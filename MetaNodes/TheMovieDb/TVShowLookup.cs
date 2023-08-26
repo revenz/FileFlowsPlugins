@@ -99,6 +99,8 @@ public class TVShowLookup : Node
         MovieDbFactory.RegisterSettings(MovieDbBearerToken);
 
         var movieApi = MovieDbFactory.Create<IApiTVShowRequest>().Value;
+        
+        args.Logger?.ILog("Lookup TV Show: " + lookupName);
 
         var response = movieApi.SearchByNameAsync(lookupName).Result;
         

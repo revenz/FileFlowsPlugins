@@ -202,15 +202,25 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         string[] non10BitFilters = null;
         if (encoder == ENCODER_CPU)
             parameters.AddRange(H26x_CPU(false, quality, speed, out bit10Filters));
-        else if(IsMac && (encoder == ENCODER_MAC || CanUseHardwareEncoding.CanProcess_VideoToolbox_H264(args)))
+        else if(IsMac && encoder == ENCODER_MAC)
             parameters.AddRange(H26x_VideoToolbox(false, quality, speed));
-        else if (encoder == ENCODER_NVIDIA || CanUseHardwareEncoding.CanProcess_Nvidia_H264(args))
+        else if (encoder == ENCODER_NVIDIA)
             parameters.AddRange(H26x_Nvidia(false, quality, speed, out non10BitFilters));
-        else if (encoder == ENCODER_QSV || CanUseHardwareEncoding.CanProcess_Qsv_H264(args))
+        else if (encoder == ENCODER_QSV)
             parameters.AddRange(H26x_Qsv(false, quality, 0, speed));
-        else if (encoder == ENCODER_AMF || CanUseHardwareEncoding.CanProcess_Amd_H264(args))
+        else if (encoder == ENCODER_AMF)
             parameters.AddRange(H26x_Amd(false, quality, speed));
-        else if (encoder == ENCODER_VAAPI || CanUseHardwareEncoding.CanProcess_Vaapi_H264(args))
+        else if (encoder == ENCODER_VAAPI)
+            parameters.AddRange(H26x_Vaapi(false, quality, speed));
+        else if(IsMac && CanUseHardwareEncoding.CanProcess_VideoToolbox_H264(args))
+            parameters.AddRange(H26x_VideoToolbox(false, quality, speed));
+        else if (CanUseHardwareEncoding.CanProcess_Nvidia_H264(args))
+            parameters.AddRange(H26x_Nvidia(false, quality, speed, out non10BitFilters));
+        else if (CanUseHardwareEncoding.CanProcess_Qsv_H264(args))
+            parameters.AddRange(H26x_Qsv(false, quality, 0, speed));
+        else if (CanUseHardwareEncoding.CanProcess_Amd_H264(args))
+            parameters.AddRange(H26x_Amd(false, quality, speed));
+        else if (CanUseHardwareEncoding.CanProcess_Vaapi_H264(args))
             parameters.AddRange(H26x_Vaapi(false, quality, speed));
         else
             parameters.AddRange(H26x_CPU(false, quality, speed, out bit10Filters));
@@ -228,15 +238,26 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         string[] non10BitFilters = null;
         if (encoder == ENCODER_CPU)
             parameters.AddRange(H26x_CPU(true, quality, speed, out bit10Filters));
-        else if (IsMac && (encoder == ENCODER_MAC || CanUseHardwareEncoding.CanProcess_VideoToolbox_Hevc(args)))
+        else if (IsMac && encoder == ENCODER_MAC)
             parameters.AddRange(H26x_VideoToolbox(true, quality, speed));
-        else if (encoder == ENCODER_NVIDIA || CanUseHardwareEncoding.CanProcess_Nvidia_Hevc(args))
+        else if (encoder == ENCODER_NVIDIA)
             parameters.AddRange(H26x_Nvidia(true, quality, speed, out non10BitFilters));
-        else if (encoder == ENCODER_QSV || CanUseHardwareEncoding.CanProcess_Qsv_Hevc(args))
+        else if (encoder == ENCODER_QSV)
             parameters.AddRange(H26x_Qsv(true, quality, fps, speed));
-        else if (encoder == ENCODER_AMF || CanUseHardwareEncoding.CanProcess_Amd_Hevc(args))
+        else if (encoder == ENCODER_AMF)
             parameters.AddRange(H26x_Amd(true, quality, speed));
-        else if (encoder == ENCODER_VAAPI || CanUseHardwareEncoding.CanProcess_Vaapi_Hevc(args))
+        else if (encoder == ENCODER_VAAPI)
+            parameters.AddRange(H26x_Vaapi(true, quality, speed));
+        
+        else if (IsMac && CanUseHardwareEncoding.CanProcess_VideoToolbox_Hevc(args))
+            parameters.AddRange(H26x_VideoToolbox(true, quality, speed));
+        else if (CanUseHardwareEncoding.CanProcess_Nvidia_Hevc(args))
+            parameters.AddRange(H26x_Nvidia(true, quality, speed, out non10BitFilters));
+        else if (CanUseHardwareEncoding.CanProcess_Qsv_Hevc(args))
+            parameters.AddRange(H26x_Qsv(true, quality, fps, speed));
+        else if (CanUseHardwareEncoding.CanProcess_Amd_Hevc(args))
+            parameters.AddRange(H26x_Amd(true, quality, speed));
+        else if (CanUseHardwareEncoding.CanProcess_Vaapi_Hevc(args))
             parameters.AddRange(H26x_Vaapi(true, quality, speed));
         else
             parameters.AddRange(H26x_CPU(true, quality, speed, out bit10Filters));
@@ -264,7 +285,9 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         List<string> parameters = new List<string>();
         if (encoder == ENCODER_CPU)
             parameters.AddRange(VP9_CPU(quality, speed));
-        else if (encoder == ENCODER_QSV || CanUseHardwareEncoding.CanProcess_Qsv_Hevc(args)) // if can use hevc they can use vp9
+        else if (encoder == ENCODER_QSV) // if can use hevc they can use vp9
+            parameters.AddRange(VP9_Qsv(quality, speed));
+        else if (CanUseHardwareEncoding.CanProcess_Qsv_Hevc(args)) // if can use hevc they can use vp9
             parameters.AddRange(VP9_Qsv(quality, speed));
         else
             parameters.AddRange(VP9_CPU(quality, speed));

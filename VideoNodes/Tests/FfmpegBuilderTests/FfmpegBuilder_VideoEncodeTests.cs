@@ -15,12 +15,12 @@ public class FfmpegBuilder_VideoEncode_VideoEncodeTests: TestBase
             throw new FileNotFoundException(file);
 
         var logger = new TestLogger();
-        const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+        string ffmpeg = FfmpegPath;
         var vi = new VideoInfoHelper(ffmpeg, logger);
         var vii = vi.Read(file);
         var args = new NodeParameters(file, logger, false, string.Empty);
         args.GetToolPathActual = (string tool) => ffmpeg;
-        args.TempPath = @"D:\videos\temp";
+        args.TempPath = TempPath;
         args.Parameters.Add("VideoInfo", vii);
 
 
@@ -79,12 +79,12 @@ public class FfmpegBuilder_VideoEncode_VideoEncodeTests: TestBase
     public void FfmpegBuilder_VideoEncode_FailIfNoHardware()
     {
         var logger = new TestLogger();
-        const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+        string ffmpeg = FfmpegPath;
         var vi = new VideoInfoHelper(ffmpeg, logger);
         var vii = vi.Read(TestFile_120_mbps_4k_uhd_hevc_10bit);
         var args = new NodeParameters(TestFile_50_mbps_hd_h264, logger, false, string.Empty);
         args.GetToolPathActual = (string tool) => ffmpeg;
-        args.TempPath = @"D:\videos\temp";
+        args.TempPath = TempPath;
         args.Parameters.Add("VideoInfo", vii);
 
 
@@ -109,16 +109,15 @@ public class FfmpegBuilder_VideoEncode_VideoEncodeTests: TestBase
     [TestMethod]
     public void FfmpegBuilder_VideoEncode_AutoUseHardware()
     {
-        var logger = new TestLogger();
-        const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+        var logger = new TestLogger(); 
+        string ffmpeg = FfmpegPath;
         var vi = new VideoInfoHelper(ffmpeg, logger);
-        var vii = vi.Read(TestFile_120_mbps_4k_uhd_hevc_10bit);
-        var args = new NodeParameters(TestFile_50_mbps_hd_h264, logger, false, string.Empty);
+        var vii = vi.Read(TestFile_BasicMkv);
+        var args = new NodeParameters(TestFile_BasicMkv, logger, false, string.Empty);
         args.GetToolPathActual = (string tool) => ffmpeg;
-        args.TempPath = @"D:\videos\temp";
+        args.TempPath = TempPath;
         args.Parameters.Add("VideoInfo", vii);
-
-
+        
         FfmpegBuilderStart ffStart = new();
         ffStart.PreExecute(args);
         Assert.AreEqual(1, ffStart.Execute(args));
@@ -134,7 +133,39 @@ public class FfmpegBuilder_VideoEncode_VideoEncodeTests: TestBase
         int result = ffExecutor.Execute(args);
         string log = logger.ToString();
         Assert.AreEqual(1, result);
+    }
+    
+    
 
+    [TestMethod]
+    public void FfmpegBuilder_VideoEncode_QSV()
+    {
+        var logger = new TestLogger(); 
+        string ffmpeg = FfmpegPath;
+        var vi = new VideoInfoHelper(ffmpeg, logger);
+        var vii = vi.Read(TestFile_BasicMkv);
+        var args = new NodeParameters(TestFile_BasicMkv, logger, false, string.Empty);
+        args.GetToolPathActual = (string tool) => ffmpeg;
+        args.TempPath = TempPath;
+        args.Parameters.Add("VideoInfo", vii);
+        
+        FfmpegBuilderStart ffStart = new();
+        ffStart.PreExecute(args);
+        Assert.AreEqual(1, ffStart.Execute(args));
+
+        FfmpegBuilderVideoEncode ffEncode = new();
+        ffEncode.Quality = 28;
+        ffEncode.Speed = "ultrafast";
+        ffEncode.Encoder = "Intel QSV";
+        ffEncode.Codec = "h265";
+        ffEncode.PreExecute(args);
+        ffEncode.Execute(args);
+
+        FfmpegBuilderExecutor ffExecutor = new();
+        ffExecutor.PreExecute(args);
+        int result = ffExecutor.Execute(args);
+        string log = logger.ToString();
+        Assert.AreEqual(1, result);
     }
 }
 

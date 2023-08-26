@@ -30,7 +30,7 @@ public abstract class TestBase
         }
         this.TestPath = this.TestPath?.EmptyAsNull() ?? (IsLinux ? "~/src/ff-files/test-files" : @"d:\videos\testfiles");
         this.TempPath = this.TempPath?.EmptyAsNull() ?? (IsLinux ? "~/src/ff-files/temp" : @"d:\videos\temp");
-        this.FfmpegPath = this.FfmpegPath?.EmptyAsNull() ?? (IsLinux ? "/usr/bin/ffmpeg" :  @"C:\utils\ffmpeg\ffmpeg.exe");
+        this.FfmpegPath = this.FfmpegPath?.EmptyAsNull() ?? (IsLinux ? "/usr/local/bin/ffmpeg" :  @"C:\utils\ffmpeg\ffmpeg.exe");
         
         
         this.TestPath = this.TestPath.Replace("~/", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/");
