@@ -78,8 +78,9 @@ public class TVShowLookup : Node
         }
         else
         {
-            lookupName = GetTVShowInfo(fileInfo.Name.Substring(0, fileInfo.Name.LastIndexOf(fileInfo.Extension))).ShowName;
+            lookupName = fileInfo.Name.Substring(0, fileInfo.Name.LastIndexOf(fileInfo.Extension));
         }
+        lookupName = GetTVShowInfo(lookupName).ShowName;
         lookupName = lookupName.Replace(".", " ").Replace("_", " ");
 
         // look for year
