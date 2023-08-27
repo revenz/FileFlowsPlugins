@@ -118,6 +118,16 @@ public class TVShowLookupTests
             Assert.AreEqual(item.Item1, result.ShowName);
         }
     }
+
+    [TestMethod]
+    public void TVShowNameLookupTest()
+    {
+        string filename =
+            "/media/downloads/complete/tv/Orange.is.the.New.Black.S01E06.2013.Bluray.1080p.DTS-MA.x264.dvxa-JohnGalt-Obfuscated/fdfdg43tetgfdsfdsfdsf.mkv";
+        
+        (string lookupName, string year) = TVShowLookup.GetLookupName(filename, true);
+        Assert.AreEqual("Orange is the New Black", lookupName);
+    }
 }
 
 

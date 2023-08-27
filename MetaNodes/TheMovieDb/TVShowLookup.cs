@@ -68,33 +68,7 @@ public class TVShowLookup : Node
     /// <returns>the output to call next</returns>
     public override int Execute(NodeParameters args)
     {
-        var fileInfo = new FileInfo(args.FileName);
-        string lookupName;
-        if (UseFolderName)
-        {
-            lookupName = fileInfo.Directory.Name;
-            if (Regex.IsMatch(lookupName, "^(Season|Staffel|Saison)", RegexOptions.IgnoreCase))
-                lookupName = fileInfo.Directory.Parent.Name;
-        }
-        else
-        {
-            lookupName = fileInfo.Name.Substring(0, fileInfo.Name.LastIndexOf(fileInfo.Extension));
-        }
-        lookupName = GetTVShowInfo(lookupName).ShowName;
-        lookupName = lookupName.Replace(".", " ").Replace("_", " ");
-
-        // look for year
-        string year = string.Empty;
-        var match = Regex.Matches(lookupName, @"((19[2-9][0-9])|(20[0-9]{2}))(?=([\.\s_\-\)\]]|$))").LastOrDefault();
-        if (match != null)
-        {
-            year = match.Value;
-            lookupName = lookupName.Substring(0, lookupName.IndexOf(year)).Trim();
-        }
-
-        // remove double spaces in case they were added when removing the year
-        while (lookupName.IndexOf("  ") > 0)
-            lookupName = lookupName.Replace("  ", " ");
+        (string lookupName, string year) = GetLookupName(args.FileName, UseFolderName);
 
         // RegisterSettings only needs to be called one time when your application starts-up.
         MovieDbFactory.RegisterSettings(MovieDbBearerToken);
@@ -132,7 +106,39 @@ public class TVShowLookup : Node
         args.UpdateVariables(Variables);
         
         return 1;
+    }
 
+    internal static (string LookupName, string Year) GetLookupName(string filename, bool useFolderName)
+    {
+        var fileInfo = new FileInfo(filename);
+        string lookupName;
+        if (useFolderName)
+        {
+            lookupName = fileInfo.Directory.Name;
+            if (Regex.IsMatch(lookupName, "^(Season|Staffel|Saison)", RegexOptions.IgnoreCase))
+                lookupName = fileInfo.Directory.Parent.Name;
+        }
+        else
+        {
+            lookupName = fileInfo.Name.Substring(0, fileInfo.Name.LastIndexOf(fileInfo.Extension));
+        }
+        lookupName = GetTVShowInfo(lookupName).ShowName;
+        lookupName = lookupName.Replace(".", " ").Replace("_", " ");
+
+        // look for year
+        string year = string.Empty;
+        var match = Regex.Matches(lookupName, @"((19[2-9][0-9])|(20[0-9]{2}))(?=([\.\s_\-\)\]]|$))").LastOrDefault();
+        if (match != null)
+        {
+            year = match.Value;
+            lookupName = lookupName.Substring(0, lookupName.IndexOf(year)).Trim();
+        }
+
+        // remove double spaces in case they were added when removing the year
+        while (lookupName.IndexOf("  ") > 0)
+            lookupName = lookupName.Replace("  ", " ");
+        
+        return (lookupName, year);
     }
 
 
