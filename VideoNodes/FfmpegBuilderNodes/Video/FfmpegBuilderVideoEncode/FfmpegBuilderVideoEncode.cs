@@ -168,7 +168,7 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         else if (Codec == CODEC_H265 || Codec == CODEC_H265_10BIT)
             stream.EncodingParameters.AddRange(H265(args, Codec == CODEC_H265_10BIT, Quality, encoder, stream.Stream.FramesPerSecond, Speed));
         else if (Codec == CODEC_AV1 || Codec == CODEC_AV1_10BIT)
-            stream.EncodingParameters.AddRange(AV1(args, Codec == CODEC_AV1_10BIT, Quality, Speed));
+            stream.EncodingParameters.AddRange(AV1(args, Codec == CODEC_AV1_10BIT, Quality, encoder, Speed));
         else if(Codec == CODEC_VP9)
             stream.EncodingParameters.AddRange(VP9(args, Quality, encoder, Speed));
         else
@@ -188,7 +188,7 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         if (codec == CODEC_H265 || codec == CODEC_H265_10BIT)
             return H265(args, codec == CODEC_H265_10BIT, quality, encoder, fps, speed).Select(x => x.Replace("{index}", "0"));
         if(codec == CODEC_AV1)
-            return AV1(args, codec == CODEC_AV1_10BIT, quality, speed).Select(x => x.Replace("{index}", "0")); 
+            return AV1(args, codec == CODEC_AV1_10BIT, quality, encoder, speed).Select(x => x.Replace("{index}", "0")); 
             
         throw new Exception("Unsupported codec: " + codec);
     }
@@ -270,11 +270,21 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
     }
 
     
-    private static IEnumerable<string> AV1(NodeParameters args, bool tenBit, int quality, string speed)
+    private static IEnumerable<string> AV1(NodeParameters args, bool tenBit, int quality, string encoder, string speed)
     {
         // hevc_qsv -load_plugin hevc_hw -pix_fmt p010le -profile:v main10 -global_quality 21 -g 24 -look_ahead 1 -look_ahead_depth 60
         List<string> parameters = new List<string>();
-        parameters.AddRange(AV1_CPU(quality, speed));
+        
+        if (encoder == ENCODER_CPU)
+            parameters.AddRange(AV1_CPU(quality, speed));
+        else if(encoder == ENCODER_NVIDIA)
+            parameters.AddRange(AV1_Nvidia(quality, speed));
+        
+        else if (CanUseHardwareEncoding.CanProcess_Nvidia_AV1(args))
+            parameters.AddRange(AV1_Nvidia(quality, speed));
+        else
+            parameters.AddRange(AV1_CPU(quality, speed));
+        
         if (tenBit)
             parameters.AddRange(new [] { "-pix_fmt:v:{index}", "yuv420p10le" });
         return parameters;
@@ -294,29 +304,6 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         return parameters;
     }
 
-    private static IEnumerable<string> AV1_CPU(int quality, string speed)
-    {
-        string preset = "4";
-        switch (speed)
-        {
-            case "ultrafast": preset = "13"; break;
-            case "superfast": preset = "11"; break;
-            case "veryfast":  preset = "10"; break;
-            case "faster": preset = "9"; break;
-            case "fast": preset = "8"; break;
-            case "medium": preset = "6"; break;
-            case "slow": preset = "4"; break;
-            case "slower": preset = "2"; break;
-            case "veryslow": preset = "1"; break;
-        }
-        return new []
-        {
-            //"libaom-av1",
-            "libsvtav1",
-            "-preset", preset,
-            "-crf", quality.ToString()
-        };
-    }
     
     
     /// <summary>

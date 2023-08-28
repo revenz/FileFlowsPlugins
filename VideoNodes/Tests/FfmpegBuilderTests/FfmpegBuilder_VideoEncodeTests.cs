@@ -167,6 +167,38 @@ public class FfmpegBuilder_VideoEncode_VideoEncodeTests: TestBase
         string log = logger.ToString();
         Assert.AreEqual(1, result);
     }
+    
+    
+    [TestMethod]
+    public void FfmpegBuilder_VideoEncode_Av1()
+    {
+        var logger = new TestLogger(); 
+        string ffmpeg = FfmpegPath;
+        var vi = new VideoInfoHelper(ffmpeg, logger);
+        var vii = vi.Read(TestFile_BasicMkv);
+        var args = new NodeParameters(TestFile_BasicMkv, logger, false, string.Empty);
+        args.GetToolPathActual = (string tool) => ffmpeg;
+        args.TempPath = TempPath;
+        args.Parameters.Add("VideoInfo", vii);
+        
+        FfmpegBuilderStart ffStart = new();
+        ffStart.PreExecute(args);
+        Assert.AreEqual(1, ffStart.Execute(args));
+
+        FfmpegBuilderVideoEncode ffEncode = new();
+        ffEncode.Quality = 28;
+        ffEncode.Speed = "veryslow";
+        //ffEncode.Encoder = "Nvid;
+        ffEncode.Codec = "av1 10BIT";
+        ffEncode.PreExecute(args);
+        ffEncode.Execute(args);
+
+        FfmpegBuilderExecutor ffExecutor = new();
+        ffExecutor.PreExecute(args);
+        int result = ffExecutor.Execute(args);
+        string log = logger.ToString();
+        Assert.AreEqual(1, result);
+    }
 }
 
 #endif
