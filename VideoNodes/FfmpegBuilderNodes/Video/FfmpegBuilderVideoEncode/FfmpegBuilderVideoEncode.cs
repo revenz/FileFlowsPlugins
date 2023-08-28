@@ -279,9 +279,13 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
             parameters.AddRange(AV1_CPU(quality, speed));
         else if(encoder == ENCODER_NVIDIA)
             parameters.AddRange(AV1_Nvidia(quality, speed));
+        else if(encoder == ENCODER_AMF)
+            parameters.AddRange(AV1_Amd(quality, speed));
         
         else if (CanUseHardwareEncoding.CanProcess_Nvidia_AV1(args))
             parameters.AddRange(AV1_Nvidia(quality, speed));
+        else if (CanUseHardwareEncoding.CanProcess_Amd_AV1(args))
+            parameters.AddRange(AV1_Amd(quality, speed));
         else
             parameters.AddRange(AV1_CPU(quality, speed));
         

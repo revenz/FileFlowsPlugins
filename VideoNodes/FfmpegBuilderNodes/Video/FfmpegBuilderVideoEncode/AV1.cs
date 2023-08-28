@@ -33,6 +33,23 @@ public partial class FfmpegBuilderVideoEncode
     }
     
     /// <summary>
+    /// AV1 AMD encoding
+    /// </summary>
+    /// <param name="quality">the quality</param>
+    /// <param name="speed">the speed</param>
+    /// <returns>the encoding parameters</returns>
+    private static IEnumerable<string> AV1_Amd(int quality, string speed)
+    {
+        return new[]
+        {
+            "av1_amf",
+            "-qp", quality.ToString(),
+            "-preset", speed?.EmptyAsNull() ?? "slower",
+            "-spatial-aq", "1"
+        };
+    }
+    
+    /// <summary>
     /// AV1 NVIDIA encoding
     /// </summary>
     /// <param name="quality">the quality</param>

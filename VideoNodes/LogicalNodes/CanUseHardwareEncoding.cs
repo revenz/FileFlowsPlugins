@@ -31,6 +31,7 @@ public class CanUseHardwareEncoding:Node
                     new ListOption { Label = "NVIDIA", Value = "###GROUP###" },
                     new ListOption { Label = "NVIDIA H.264", Value = HardwareEncoder.Nvidia_H264 },
                     new ListOption { Label = "NVIDIA H.265", Value = HardwareEncoder.Nvidia_Hevc },
+                    new ListOption { Label = "NVIDIA AV1", Value = HardwareEncoder.Nvidia_Hevc },
 
                     new ListOption { Label = "AMD", Value = "###GROUP###" },
                     new ListOption { Label = "AMD H.264", Value = HardwareEncoder.Amd_H264 },
@@ -66,6 +67,10 @@ public class CanUseHardwareEncoding:Node
         Qsv_Hevc = 13,
         Vaapi_Hevc = 14,
         VideoToolbox_Hevc = 15,
+        
+        Nvidia_AV1 = 21,
+        Amd_AV1 = 22,
+        Qsv_AV1 = 23,
     }
 
     public override int Execute(NodeParameters args)
@@ -76,9 +81,11 @@ public class CanUseHardwareEncoding:Node
         {
             case HardwareEncoder.Nvidia_H264: canProcess = CanProcess_Nvidia_H264(args); break;
             case HardwareEncoder.Nvidia_Hevc: canProcess = CanProcess_Nvidia_Hevc(args); break;
+            case HardwareEncoder.Nvidia_AV1: canProcess = CanProcess_Nvidia_AV1(args); break;
 
             case HardwareEncoder.Amd_H264: canProcess = CanProcess_Amd_H264(args); break;
             case HardwareEncoder.Amd_Hevc: canProcess = CanProcess_Amd_Hevc(args); break;
+            case HardwareEncoder.Amd_AV1: canProcess = CanProcess_Amd_AV1(args); break;
 
             case HardwareEncoder.Qsv_H264: canProcess = CanProcess_Qsv_H264(args); break;
             case HardwareEncoder.Qsv_Hevc: canProcess = CanProcess_Qsv_Hevc(args); break;
@@ -127,6 +134,13 @@ public class CanUseHardwareEncoding:Node
     /// <param name="args">the node parameters</param>
     /// <returns>true if can use it, otherwise false</returns>
     internal static bool CanProcess_VideoToolbox_H264(NodeParameters args) => CanProcess(args, "h264_videotoolbox");
+    
+    /// <summary>
+    /// Checks if this flow runner can use AND AV1 encoder
+    /// </summary>
+    /// <param name="args">the node parameters</param>
+    /// <returns>true if can use it, otherwise false</returns>
+    internal static bool CanProcess_Amd_AV1(NodeParameters args) => CanProcess(args, "hevc_av1");
 
     /// <summary>
     /// Checks if this flow runner can use AND HEVC encoder
