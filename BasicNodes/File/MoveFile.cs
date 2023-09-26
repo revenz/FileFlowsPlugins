@@ -85,12 +85,6 @@ public class MoveFile : Node
         if (dest == null)
             return -1;
 
-        string destDir = new FileInfo(dest).DirectoryName;
-
-        args.CreateDirectoryIfNotExists(destDir ?? String.Empty);
-
-        var srcDir = AdditionalFilesFromOriginal ? new FileInfo(args.FileName).DirectoryName : new FileInfo(args.WorkingFile).DirectoryName;
-
         if (args.MoveFile(dest) == false)
             return -1;
         
@@ -106,6 +100,10 @@ public class MoveFile : Node
         {
             try
             {
+                string destDir = new FileInfo(args.MapPath(dest)).DirectoryName;
+                args.CreateDirectoryIfNotExists(destDir ?? String.Empty);
+                var srcDir = AdditionalFilesFromOriginal ? new FileInfo(args.FileName).DirectoryName : new FileInfo(args.WorkingFile).DirectoryName;
+
                 var diSrc = new DirectoryInfo(srcDir);
                 foreach (var additional in AdditionalFiles)
                 {

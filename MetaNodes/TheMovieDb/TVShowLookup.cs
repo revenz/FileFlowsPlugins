@@ -95,8 +95,12 @@ public class TVShowLookup : Node
             .FirstOrDefault();
 
         if (result == null)
+        {
+            args.Logger?.ILog("No result found for: " + lookupName);
             return 2; // no match
+        }
 
+        args.Logger?.ILog("Found TV Show: " + result.Name);
         args.SetParameter(Globals.TV_SHOW_INFO, result);
 
         Variables["tvshow.Title"] = result.Name;
