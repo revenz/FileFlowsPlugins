@@ -1,4 +1,4 @@
-﻿namespace FileFlows.Apprise;
+namespace MetaNodes;
 
 /// <summary>
 /// Extension methods

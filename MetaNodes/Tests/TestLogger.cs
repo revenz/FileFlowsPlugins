@@ -49,6 +49,9 @@ namespace MetaNodes.Tests
                 return string.Join(Environment.NewLine, Messages);
             return string.Join(Environment.NewLine, Messages.TakeLast(length));
         }
+
+        public override string ToString()
+            => string.Join(Environment.NewLine, Messages);
     }
 }
 

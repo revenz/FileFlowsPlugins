@@ -3,7 +3,7 @@
 namespace DM.MovieApi.MovieDb.TV;
 
 [DataContract]
-public class Season
+public class SeasonInfo
 {
     [DataMember( Name = "id" )]
     public int Id { get; set; }
@@ -11,8 +11,11 @@ public class Season
     [DataMember( Name = "air_date" )]
     public DateTime AirDate { get; set; }
 
-    [DataMember( Name = "episode_count" )]
-    public int EpisodeCount { get; set; }
+    [DataMember( Name = "overview" )]
+    public string Overview { get; set; }
+
+    [DataMember( Name = "name" )]
+    public string Name { get; set; }
 
     [DataMember( Name = "poster_path" )]
     public string PosterPath { get; set; }
@@ -20,15 +23,14 @@ public class Season
     [DataMember( Name = "season_number" )]
     public int SeasonNumber { get; set; }
 
-    public Season( int id, DateTime airDate, int episodeCount, string posterPath, int seasonNumber )
+    [DataMember( Name = "episodes" )]
+    public IReadOnlyList<Episode> Episodes { get; set; }
+
+    public SeasonInfo()
     {
-        Id = id;
-        AirDate = airDate;
-        EpisodeCount = episodeCount;
-        PosterPath = posterPath;
-        SeasonNumber = seasonNumber;
+        Episodes = Array.Empty<Episode>();
     }
 
     public override string ToString()
-        => $"({SeasonNumber} - {AirDate:yyyy-MM-dd})";
+        => $"{Name} - {AirDate:yyyy-MM-dd}";
 }

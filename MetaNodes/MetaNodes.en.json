@@ -36,6 +36,13 @@
           "UseFolderName": "Use Folder Name",
           "UseFolderName-Help": "If the folder name should be used instead of the filename.\n\nNote if the folder starts with Season or Staffel or Saison the parent folder will be used."
         }
+      },
+      "TVEpisodeLookup": {
+        "Description": "Performs a search on TheMovieDB.org for a TV Epsidoe.",
+        "Outputs": {
+          "1": "TV Episode found",
+          "2": "TV Episode NOT found"
+        }
       }
     }
   }

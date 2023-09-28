@@ -83,6 +83,8 @@ public class MovieLookup : Node
         // remove double spaces in case they were added when removing the year
         while (lookupName.IndexOf("  ") > 0)
             lookupName = lookupName.Replace("  ", " ");
+        
+        args.Logger?.ILog("Lookup name: " + lookupName);
 
         // RegisterSettings only needs to be called one time when your application starts-up.
         MovieDbFactory.RegisterSettings(MovieDbBearerToken);
