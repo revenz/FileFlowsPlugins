@@ -47,7 +47,7 @@ public class FfmpegBuilderAudioSetLanguage : FfmpegBuilderNode
         }
         if (StreamType == "Subtitle" || StreamType == "Both")
         {
-            foreach (var at in Model.AudioStreams)
+            foreach (var at in Model.SubtitleStreams)
             {
                 if (string.IsNullOrEmpty(at.Language))
                 {

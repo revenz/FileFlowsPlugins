@@ -134,7 +134,7 @@ public class VideoFile : VideoNode
 
             foreach (var vs in videoInfo.AudioStreams)
             {
-                args.Logger.ILog($"Audio stream '{vs.Codec}' '{vs.Index}' '{vs.Language}");
+                args.Logger.ILog($"Audio stream '{vs.Codec}' '{vs.Index}' 'Language: {vs.Language}' 'Channels: {vs.Channels}'");
             }
 
             SetVideoInfo(args, videoInfo, Variables);
