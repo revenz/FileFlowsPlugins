@@ -81,6 +81,16 @@
         },
         "Description": "Creates an instance of the FFMPEG Builder which can build a FFMPEG argument to then execute with the FFMPEG Executor."
       },
+      "FfmpegBuilderDeinterlace": {
+        "Label": "FFMPEG Builder: Deinterlace",
+        "Outputs": {
+          "1": "Added deinterlace filter to video stream"
+        },
+        "Fields": {
+          "Mode": "Mode",
+          "Mode-Help": "The deinterlacing method to use.  See help for more information."
+        }
+      },
       "FfmpegBuilderExecutor": {
         "Label": "FFMPEG Builder: Executor",
         "Outputs": {
@@ -577,6 +587,18 @@
           "ForcedOnly-Help": "If only forced subtitles should be extracted.",
           "OnlyTextSubtitles": "Only Text Subtitles",
           "OnlyTextSubtitles-Help": "If only text subtitles should be extracted, all image based subtitles will be skipped."
+        }
+      },
+      "VideoIsInterlaced": {
+        "Label": "Video Is Interlaced",
+        "Description": "Tests if a video file is interlaced",
+        "Outputs": {
+          "1": "Video is interlaced",
+          "2": "Video is not interlaced"
+        },
+        "Fields": {
+          "Threshold": "Threshold",
+          "Threshold-Help": "The percentage of frames detected as interlaced the video must have to be considered interlaced"
         }
       },
       "VideoHasStream": {

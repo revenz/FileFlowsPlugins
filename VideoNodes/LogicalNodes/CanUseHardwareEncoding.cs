@@ -232,10 +232,10 @@ public class CanUseHardwareEncoding:Node
         if (DisabledByVariables(args, encodingParams))
             return false;
 
-        string ffmpeg = args.GetToolPath("FFMpeg");
+        string ffmpeg = args.GetToolPath("FFmpeg");
         if (string.IsNullOrEmpty(ffmpeg))
         {
-            args.Logger.ELog("FFMpeg tool not found.");
+            args.Logger.ELog("FFmpeg tool not found.");
             return false;
         }
 

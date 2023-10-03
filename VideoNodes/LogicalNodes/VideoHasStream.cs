@@ -1,23 +1,37 @@
 namespace FileFlows.VideoNodes;
 
-using System.Linq;
-using System.ComponentModel;
-using FileFlows.Plugin;
-using FileFlows.Plugin.Attributes;
-using System.ComponentModel.DataAnnotations;
-
+/// <summary>
+/// Flow element to test if a video has a stream
+/// </summary>
 public class VideoHasStream : VideoNode
 {
+    /// <summary>
+    /// Gets the number of inputs
+    /// </summary>
     public override int Inputs => 1;
+    /// <summary>
+    /// Gets the number of outputs
+    /// </summary>
     public override int Outputs => 2;
+    /// <summary>
+    /// Gets the type of flow element
+    /// </summary>
     public override FlowElementType Type => FlowElementType.Logic;
-
+    /// <summary>
+    /// Gets the help URL 
+    /// </summary>
     public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/logical-nodes/video-has-stream";
 
+    /// <summary>
+    /// Gets or sets the type of stream to check for
+    /// </summary>
     [Select(nameof(StreamTypeOptions), 1)]
     public string Stream { get; set; }
 
     private static List<ListOption> _StreamTypeOptions;
+    /// <summary>
+    /// Gets the types of streams available to check for
+    /// </summary>
     public static List<ListOption> StreamTypeOptions
     {
         get
@@ -35,20 +49,37 @@ public class VideoHasStream : VideoNode
         }
     }
 
+    /// <summary>
+    /// Gets or sets the title to look for
+    /// </summary>
     [TextVariable(2)]
     public string Title { get; set; }
     
+    /// <summary>
+    /// Gets or sets the codec to look for
+    /// </summary>
     [TextVariable(3)]
     public string Codec { get; set; }
     
+    /// <summary>
+    /// Gets or sets the language to look for
+    /// </summary>
     [ConditionEquals(nameof(Stream), "Video", inverse: true)]
     [TextVariable(4)]
     public string Language { get; set; }
     
+    /// <summary>
+    /// Gets or sets the number of channels to look for
+    /// </summary>
     [ConditionEquals(nameof(Stream), "Audio")]
     [NumberFloat(5)]
     public float Channels { get; set; }
 
+    /// <summary>
+    /// Executes the flow element
+    /// </summary>
+    /// <param name="args">the arguments</param>
+    /// <returns>the output to call next</returns>
     public override int Execute(NodeParameters args)
     {
         var videoInfo = GetVideoInfo(args);
@@ -104,6 +135,12 @@ public class VideoHasStream : VideoNode
         return found ? 1 : 2;
     }
 
+    /// <summary>
+    /// Tests if a value matches the pattern
+    /// </summary>
+    /// <param name="pattern">the pattern</param>
+    /// <param name="value">the value</param>
+    /// <returns>the result</returns>
     private MatchResult ValueMatch(string pattern, string value)
     {
         if (string.IsNullOrWhiteSpace(pattern))
@@ -128,10 +165,22 @@ public class VideoHasStream : VideoNode
         }
     }
 
+    /// <summary>
+    /// Match results 
+    /// </summary>
     private enum MatchResult
     {
+        /// <summary>
+        /// No Match
+        /// </summary>
         NoMatch = 0,
+        /// <summary>
+        /// Matched
+        /// </summary>
         Matched = 1,
+        /// <summary>
+        /// Skipped
+        /// </summary>
         Skipped = 2
     }
 }
