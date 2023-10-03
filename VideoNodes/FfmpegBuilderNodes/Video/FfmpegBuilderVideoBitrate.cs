@@ -28,14 +28,14 @@ public class FfmpegBuilderVideoBitrate : FfmpegBuilderNode
             args.Logger?.ELog("Minimum birate not set");
             return -1;
         }
-        float currentBitrate = (int)(video.Stream.Bitrate / 1024f);
+        float currentBitrate = (int)(video.Stream.Bitrate / 1000f);
         if (currentBitrate <= 0 && Model.VideoInfo.Bitrate > 0)
-            currentBitrate = (int)(Model.VideoInfo.Bitrate/ 1024f);
+            currentBitrate = (int)(Model.VideoInfo.Bitrate/ 1000f);
         if (currentBitrate <= 0)
         {
             // need to work it out                
             currentBitrate = args.WorkingFileSize;
-            //currentBitrate /= 1024f;
+            //currentBitrate /= 1000f;
             currentBitrate = (float)(currentBitrate / video.Stream.Duration.TotalSeconds);
             // rough estimate of 75% of the file is video
             currentBitrate *= 0.75f;

@@ -142,14 +142,14 @@ namespace FileFlows.VideoNodes
                 if (stream.Bitrate > 0)
                     metadata.Add(prefix + "Bitrate", stream.Bitrate);
             }
-            foreach (var (strream, i) in videoInfo.SubtitleStreams.Select((value, i) => (value, i)))
+            foreach (var (stream, i) in videoInfo.SubtitleStreams.Select((value, i) => (value, i)))
             {
                 string prefix = "Subtitle" + (i == 0 ? "" : " " + (i + 1)) + " ";
-                metadata.Add(prefix + "Codec", strream.Codec);
-                if (string.IsNullOrEmpty(strream.Title) == false)
-                    metadata.Add(prefix + "Title", strream.Title);
-                if (string.IsNullOrEmpty(strream.Language) == false)
-                    metadata.Add(prefix + "Language", strream.Language);
+                metadata.Add(prefix + "Codec", stream.Codec);
+                if (string.IsNullOrEmpty(stream.Title) == false)
+                    metadata.Add(prefix + "Title", stream.Title);
+                if (string.IsNullOrEmpty(stream.Language) == false)
+                    metadata.Add(prefix + "Language", stream.Language);
             }
             args.SetMetadata(metadata);
         }

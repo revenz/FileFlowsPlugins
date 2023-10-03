@@ -1,4 +1,6 @@
-﻿using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
+﻿using System.Diagnostics;
+using System.Runtime.InteropServices;
+using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 
@@ -85,6 +87,12 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
     /// </summary>
     [Select(nameof(BitrateOptions), 3)]
     public int Bitrate { get; set; }
+    
+    /// <summary>
+    /// Gets or sets if the bitrate specified should be per channel
+    /// </summary>
+    [Boolean(4)]
+    public bool BitratePerChannel { get; set; }
 
     private static List<ListOption> _BitrateOptions;
     /// <summary>
@@ -115,7 +123,7 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
     /// Gets or sets the sample rate
     /// </summary>
     [DefaultValue(0)]
-    [Select(nameof(SampleRateOptions), 4)]
+    [Select(nameof(SampleRateOptions), 5)]
     public int SampleRate { get; set; }
 
     private static List<ListOption> _SampleRateOptions;
@@ -148,17 +156,17 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
     /// Gets or sets the language of the new track
     /// </summary>
     [DefaultValue("eng")]
-    [TextVariable(5)]
+    [TextVariable(6)]
     public string Language { get; set; }
     /// <summary>
     /// Gets or sets if the title of the new track should be removed
     /// </summary>
-    [Boolean(6)]
+    [Boolean(7)]
     public bool RemoveTitle { get; set; }
     /// <summary>
     /// Gets or sets the title of the new track
     /// </summary>
-    [TextVariable(7)]
+    [TextVariable(8)]
     [ConditionEquals(nameof(RemoveTitle), false)]
     public string NewTitle { get; set; }
     
@@ -189,7 +197,7 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
         bool directCopy = false;
         if(bestAudio.Codec.ToLower() == this.Codec.ToLower())
         {
-            if(this.Channels == 0 || this.Channels == bestAudio.Channels)
+            if((Channels == 0 || Channels == bestAudio.Channels) && Bitrate <= 2)
             {
                 directCopy = true;
             }
@@ -202,7 +210,19 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
         else
         {
             int sampleRate = SampleRate == 1 ? audio.Stream.SampleRate : SampleRate;
-            audio.EncodingParameters.AddRange(GetNewAudioTrackParameters(args, audio, Codec, Channels, Bitrate, sampleRate));
+
+            int bitrate = Bitrate;
+            if (BitratePerChannel)
+            {
+                int totalChannels = GetAudioBitrateChannels(audio);
+                args.Logger?.ILog("Total channels: " + totalChannels);
+                args.Logger?.ILog("Bitrate Per Channel: " + bitrate);
+                
+                bitrate = totalChannels * bitrate;
+                args.Logger?.ILog("Total Bitrate: " + bitrate);
+            }
+
+            audio.EncodingParameters.AddRange(GetNewAudioTrackParameters(args, audio, Codec, Channels, bitrate, sampleRate));
             if (this.Channels > 0)
                 audio.Channels = this.Channels;
         }
@@ -218,6 +238,27 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
             Model.AudioStreams.Insert(Math.Max(0, Index), audio);
 
         return 1;
+    }
+
+    /// <summary>
+    /// Gets how many channels there are including sub channels, eg. 5.1 is 6 channels
+    /// </summary>
+    /// <param name="audio">the audio track</param>
+    /// <returns>the number of channels for the bitrate calculation</returns>
+    private int GetAudioBitrateChannels(FfmpegAudioStream audio)
+    {
+        float channels = (Channels > 0 ? Channels : audio.Channels);
+        
+        // Check if there are any decimal parts in the channels
+        float decimalPart = channels - (int)channels;
+
+        // Calculate the additional channels based on the decimal part
+        int additionalChannels = (int)(decimalPart * 10);
+
+        // Total channels including sub-channels
+        int totalChannels = (int)channels + additionalChannels;
+
+        return totalChannels;
     }
 
     /// <summary>
@@ -353,12 +394,16 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
             {
                 options.Add("-b:a:{index}");
                 options.Add((stream.Stream.Bitrate / 1000) + "k");
+                options.Add("-metadata:s:a:{index}");
+                options.Add($"BPS={stream.Stream.Bitrate}");
             }
         }
         else if (bitrate > 0)
         {
             options.Add("-b:a:{index}");
             options.Add(bitrate + "k");
+            options.Add("-metadata:s:a:{index}");
+            options.Add($"BPS={bitrate * 1000}");
         }
 
         // Handle sample rate
@@ -368,7 +413,7 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
             options.Add(sampleRate.ToString());
         }
         
-        args.Logger.ILog("New Audo Arguments: " + string.Join(" ", options));
+        args.Logger.ILog("New Audio Arguments: " + string.Join(" ", options));
 
         return options.ToArray();
     }

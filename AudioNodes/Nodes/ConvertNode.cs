@@ -119,10 +119,10 @@ namespace FileFlows.AudioNodes
                     return 2;
                 }
 
-                args.Logger?.ILog($"Comparing bitrate {AudioInfo.Bitrate} is less than or equal to {(Bitrate * 1024)}");
-                if(AudioInfo.Bitrate <= Bitrate * 1024) // this bitrate is in Kbps, whereas AudioInfo.Bitrate is bytes per second
+                args.Logger?.ILog($"Comparing bitrate {AudioInfo.Bitrate} is less than or equal to {(Bitrate * 1000)}");
+                if(AudioInfo.Bitrate <= Bitrate * 1000) // this bitrate is in Kbps, whereas AudioInfo.Bitrate is bytes per second
                 {
-                    args.Logger?.ILog($"Audio file already '{Codec}' at bitrate '{AudioInfo.Bitrate} bps ({(AudioInfo.Bitrate / 1024)} KiBps)'");
+                    args.Logger?.ILog($"Audio file already '{Codec}' at bitrate '{AudioInfo.Bitrate} bps ({(AudioInfo.Bitrate / 1000)} KBps)'");
                     return 2;
                 }
             }

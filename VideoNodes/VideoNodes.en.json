@@ -130,7 +130,9 @@
           "NewTitle": "New Title",
           "NewTitle-Help": "Optional title for the newly created audio track.  If left blank the source title will be used",
           "RemoveTitle": "Remove Title",
-          "RemoveTitle-Help": "If the source title should be removed and the track should have no title"
+          "RemoveTitle-Help": "If the source title should be removed and the track should have no title",
+          "BitratePerChannel": "Bitrate Per Channel",
+          "BitratePerChannel-Help": "If the bitrate specified should be per channel"
         }
       },
       "FfmpegBuilderAudioAdjustVolume": {
