@@ -1,18 +1,21 @@
-﻿namespace FileFlows.Gotify
+﻿namespace FileFlows.Gotify;
+
+/// <summary>
+/// The plugin settings for this plugin
+/// </summary>
+public class PluginSettings : IPluginSettings
 {
-    using FileFlows.Plugin;
-    using FileFlows.Plugin.Attributes;
-    using System;
-    using System.ComponentModel.DataAnnotations;
+    /// <summary>
+    /// Gets or sets the URL to the server to send messages to
+    /// </summary>
+    [Text(1)]
+    [Required]
+    public string ServerUrl { get; set; }
 
-    public class PluginSettings:IPluginSettings
-    {
-        [Text(1)]
-        [Required]
-        public string ServerUrl { get; set; }
-
-        [Text(2)]
-        [Required]
-        public string AccessToken { get; set; }
-    }
+    /// <summary>
+    /// Gets or sets the Access Token for the server
+    /// </summary>
+    [Text(2)]
+    [Required]
+    public string AccessToken { get; set; }
 }

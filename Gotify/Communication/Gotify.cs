@@ -3,26 +3,58 @@ using System.Text.Json;
 
 namespace FileFlows.Gotify.Communication;
 
+/// <summary>
+/// A Gotify flow element that sends a message
+/// </summary>
 public class Gotify: Node
 {
+    /// <summary>
+    /// Gets the number of inputs to this flow element
+    /// </summary>
     public override int Inputs => 1;
+    /// <summary>
+    /// Gets the number of outputs to this flow element
+    /// </summary>
     public override int Outputs => 2;
-    public override FlowElementType Type => FlowElementType.Communication; 
+    /// <summary>
+    /// Gets the type of flow element
+    /// </summary>
+    public override FlowElementType Type => FlowElementType.Communication;
+    /// <summary>
+    /// Gets the icon for this flow element
+    /// </summary>
     public override string Icon => "fas fa-bell";
+    /// <summary>
+    /// Gets if this can be used in a failure flow
+    /// </summary>
     public override bool FailureNode => true;
 
+    /// <summary>
+    /// Gets or sets the message to send
+    /// </summary>
     [Required]
     [TextVariable(1)]
     public string Message { get; set; }
-
+    
+    /// <summary>
+    /// Gets or sets the title of the message
+    /// </summary>
     [TextVariable(2)]
     public string Title { get; set; }
 
+    /// <summary>
+    /// Gets or sets the priority of the message
+    /// </summary>
     [NumberInt(3)]
     [Range(1, 100)]
     [DefaultValue(2)]
     public int Priority { get; set; } = 2;
 
+    /// <summary>
+    /// Executes the flow element
+    /// </summary>
+    /// <param name="args">the node parameters</param>
+    /// <returns>the output to call next</returns>
     public override int Execute(NodeParameters args)
     {
         try

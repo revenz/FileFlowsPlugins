@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioNodes", "AudioNodes\Au
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComicNodes", "ComicNodes\ComicNodes.csproj", "{45568FCB-00FF-4AEA-AA43-DC569D667B04}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telegram", "Telegram\Telegram.csproj", "{BFAD621E-4C82-47FC-A9C8-03F09FF9926C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{45568FCB-00FF-4AEA-AA43-DC569D667B04}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45568FCB-00FF-4AEA-AA43-DC569D667B04}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45568FCB-00FF-4AEA-AA43-DC569D667B04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFAD621E-4C82-47FC-A9C8-03F09FF9926C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFAD621E-4C82-47FC-A9C8-03F09FF9926C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFAD621E-4C82-47FC-A9C8-03F09FF9926C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFAD621E-4C82-47FC-A9C8-03F09FF9926C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

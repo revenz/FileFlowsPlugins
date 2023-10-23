@@ -1,4 +1,4 @@
-﻿namespace FileFlows.Gotify;
+﻿namespace FileFlows.Telegram;
 
 /// <summary>
 /// Extension methods
