@@ -28,6 +28,11 @@ public class Gotify: Node
     /// Gets if this can be used in a failure flow
     /// </summary>
     public override bool FailureNode => true;
+    
+    /// <summary>
+    /// Gets the Help URL
+    /// </summary>
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/gotify";
 
     /// <summary>
     /// Gets or sets the message to send
