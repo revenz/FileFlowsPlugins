@@ -656,6 +656,16 @@
           "NotMatching": "Not Matching",
           "NotMatching-Help": "If an audio track NOT matching the pattern should be extracted"
         }
+      },
+      "VideoResolution": {
+        "Label": "Video Resolution",
+        "Description": "Determines a video's resolution and outputs accordingly.",
+        "Outputs": {
+          "1": "Video Is 4K",
+          "2": "Video is 1080p",
+          "3": "Video is 720p",
+          "4": "Video is SD"
+        }
       }
     }
   }
