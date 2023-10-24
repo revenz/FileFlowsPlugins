@@ -53,7 +53,7 @@ public class Telegram: Node
             
             var content = new FormUrlEncodedContent(new[]
             {
-                new KeyValuePair<string, string>("chat_id", chatId.ToString()),
+                new KeyValuePair<string, string>("chat_id", chatId),
                 new KeyValuePair<string, string>("text", message)
             });
 

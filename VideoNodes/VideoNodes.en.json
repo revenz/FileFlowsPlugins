@@ -601,6 +601,14 @@
           "Threshold-Help": "The percentage of frames detected as interlaced the video must have to be considered interlaced"
         }
       },
+      "VideoHasErrors": {
+        "Label": "Video Has Errors",
+        "Description": "Tests if a video file contains any errors",
+        "Outputs": {
+          "1": "Contains an error",
+          "2": "Did not detect any errors"
+        }
+      },
       "VideoHasStream": {
         "Label": "Video Has Stream",
         "Description": "Tests if a video file contains a track",
