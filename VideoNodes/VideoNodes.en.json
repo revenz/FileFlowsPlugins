@@ -629,6 +629,18 @@
           "Channels-Help": "The number of channels to test for.  Set to 0 to ignore this check"
         }
       },
+      "VideoBitrateGreaterThan": {
+        "Label": "Video Bitrate Greater Than",
+        "Description": "Tests if a videos bitrate is greater than a given bitrate.",
+        "Outputs": {
+          "1": "Bitrate is greater than",
+          "2": "Bitrate is not greater than"
+        },
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Suffix": "KBps"
+        }
+      },
       "VideoExtractAudio": {
         "Label": "Video Extract Audio",
         "Description": "Extracts audio from a video file and saves it to a file",

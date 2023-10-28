@@ -9,6 +9,7 @@ public class VideoInfo
     /// Gets or sets the full filename of the file
     /// </summary>
     public string FileName { get; set; }
+    
     /// <summary>
     /// Gets or sets the bitrate in bytes per second
     /// </summary>

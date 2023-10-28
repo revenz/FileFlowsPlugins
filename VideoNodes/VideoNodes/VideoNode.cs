@@ -74,7 +74,7 @@ namespace FileFlows.VideoNodes
         //     return fileInfo.DirectoryName;
         // }
 
-        private const string VIDEO_INFO = "VideoInfo";
+        internal const string VIDEO_INFO = "VideoInfo";
         protected void SetVideoInfo(NodeParameters args, VideoInfo videoInfo, Dictionary<string, object> variables)
         {
             if (videoInfo.VideoStreams?.Any() == false)
