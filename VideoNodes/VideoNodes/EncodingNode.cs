@@ -8,8 +8,17 @@ namespace FileFlows.VideoNodes
 
     public abstract class EncodingNode : VideoNode
     {
+        /// <summary>
+        /// Gets the number of outputs
+        /// </summary>
         public override int Outputs => 2;
+        /// <summary>
+        /// Gets the number of inputs
+        /// </summary>
         public override int Inputs => 1;
+        /// <summary>
+        /// Gets the type of flow element this is
+        /// </summary>
         public override FlowElementType Type => FlowElementType.Process;
 
         protected TimeSpan TotalTime;

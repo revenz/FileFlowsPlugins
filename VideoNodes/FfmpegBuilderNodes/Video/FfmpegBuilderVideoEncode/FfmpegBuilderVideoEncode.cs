@@ -9,7 +9,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
 {
     /// <summary>
-    /// The number of outputs for this node
+    /// The number of outputs for this flow element
     /// </summary>
     public override int Outputs => 1;
 
@@ -28,7 +28,7 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
     internal const string ENCODER_MAC = "Mac Video Toolbox";
 
     /// <summary>
-    /// The Help URL for this node
+    /// The Help URL for this flow element
     /// </summary>
     public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/video-encode";
 

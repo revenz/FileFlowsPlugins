@@ -29,6 +29,13 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
         public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder";
 
 
+        /// <summary>
+        /// Runs any code that needs to run before the execution code
+        /// E.g. loads any variables that the Execute will use
+        /// </summary>
+        /// <param name="args">the node parameters</param>
+        /// <returns>true if successful, otherwise false and will fail the flow</returns>
+        /// <exception cref="Exception">throw if the video is not initialized</exception>
         public override bool PreExecute(NodeParameters args)
         {
             if (base.PreExecute(args) == false)

@@ -105,8 +105,7 @@ public class SubtitleExtractor : EncodingNode
             {
                 var file = new FileInfo(args.FileName);
 
-
-                OutputFile = file.FullName.Substring(0, file.FullName.LastIndexOf(file.Extension));
+                OutputFile = file.FullName[..file.FullName.LastIndexOf(file.Extension, StringComparison.Ordinal)];
             }
             OutputFile = args.MapPath(OutputFile);
 

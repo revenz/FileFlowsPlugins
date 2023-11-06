@@ -413,6 +413,19 @@
           "Code": "Code"
         }
       },
+      "FfmpegBuilderProres": {
+        "Label": "FFMPEG Buidler: Prores",
+        "Description": "Encodes the video to the prores format.",
+        "Outputs": {
+          "1": "Video set to use prores"
+        },
+        "Fields": {
+          "Quality": "Quality",
+          "Quality-Help": "0 for maximum quality, 32 for minimum quality.  9 to 13 are good values to use.",
+          "Profile": "Profile",
+          "PixelFormat": "Pixel Format"
+        }
+      },
       "FfmpegBuilderRemoveAttachments": {
         "Label": "FFMPEG Builder: Remove Attachments",
         "Description": "Removes any attachments from the video, if there are any.",
