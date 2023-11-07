@@ -4,15 +4,45 @@ public abstract class FfmpegStream
 {
     public const string REMOVED = "###REMOVED###";
 
+    /// <summary>
+    /// Gets or sets a value indicating whether this item is deleted.
+    /// </summary>
     public bool Deleted { get; set; }
+
+    /// <summary>
+    /// Gets or sets the index of the item.
+    /// </summary>
     public int Index { get; set; }
+
+    /// <summary>
+    /// Gets or sets the title of the item.
+    /// </summary>
     public string Title { get; set; }
+
+    /// <summary>
+    /// Gets or sets the language associated with the item.
+    /// </summary>
     public string Language { get; set; }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether this item is the default stream.
+    /// </summary>
     public bool IsDefault { get; set; }
 
+    /// <summary>
+    /// Gets a value indicating whether there have been changes to this stream.
+    /// </summary>
     public abstract bool HasChange { get; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether changes are being forced for this stream.
+    /// </summary>
     public bool ForcedChange { get; set; }
+    
+    /// <summary>
+    /// Gets or sets the codec this stream will use when run by FFmpeg
+    /// </summary>
+    public string Codec { get; set; }
 
     /// <summary>
     /// Gets the parameters for the stream

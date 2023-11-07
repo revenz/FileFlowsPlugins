@@ -157,20 +157,33 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
     /// <returns>the output return</returns>
     public override int Execute(NodeParameters args)
     {
-        var stream = Model.VideoStreams.Where(x => x.Deleted == false).First();
+        var stream = Model.VideoStreams.First(x => x.Deleted == false);
         
         stream.EncodingParameters.Clear();
 
         string encoder = Environment.GetEnvironmentVariable("HW_OFF") == "1" ? ENCODER_CPU : this.Encoder;
 
         if (Codec == CODEC_H264)
+        {
             stream.EncodingParameters.AddRange(H264(args, false, Quality, encoder, Speed));
+            stream.Codec = CODEC_H264;
+        }
         else if (Codec == CODEC_H265 || Codec == CODEC_H265_10BIT)
-            stream.EncodingParameters.AddRange(H265(args, Codec == CODEC_H265_10BIT, Quality, encoder, stream.Stream.FramesPerSecond, Speed));
+        {
+            stream.EncodingParameters.AddRange(H265(args, Codec == CODEC_H265_10BIT, Quality, encoder,
+                stream.Stream.FramesPerSecond, Speed));
+            stream.Codec = "hevc";
+        }
         else if (Codec == CODEC_AV1 || Codec == CODEC_AV1_10BIT)
+        {
             stream.EncodingParameters.AddRange(AV1(args, Codec == CODEC_AV1_10BIT, Quality, encoder, Speed));
-        else if(Codec == CODEC_VP9)
+            stream.Codec = "av1";
+        }
+        else if (Codec == CODEC_VP9)
+        {
             stream.EncodingParameters.AddRange(VP9(args, Quality, encoder, Speed));
+            stream.Codec = "vp9";
+        }
         else
         {
             args.Logger?.ILog("Unknown codec: " + Codec);

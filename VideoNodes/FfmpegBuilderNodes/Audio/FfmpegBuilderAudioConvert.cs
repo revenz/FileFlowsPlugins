@@ -125,7 +125,7 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
                 }
             }
         }
-        return converting ? 1: 2;
+        return converting ? 1 : 2;
     }
     
     /// <summary>
@@ -137,11 +137,13 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
     private bool ConvertTrack(NodeParameters args, FfmpegAudioStream stream)
     {
         bool codecSame = stream.Stream.Codec?.ToLower() == Codec?.ToLower();
-        bool channelsSame = Channels == 0 || Channels == stream.Stream.Channels;
-        bool bitrateSame = stream.Stream.Bitrate == 0 || stream.Stream.Bitrate == Bitrate;
+        bool channelsSame = Channels == 0 || Math.Abs(Channels - stream.Stream.Channels) < 0.05f;
+        bool bitrateSame = stream.Stream.Bitrate == 0 || Math.Abs(stream.Stream.Bitrate - Bitrate) < 0.05f;
 
         if (codecSame && channelsSame && bitrateSame)
             return false;
+
+        stream.Codec = Codec.ToLowerInvariant();
 
         stream.EncodingParameters.AddRange(FfmpegBuilderAudioAddTrack.GetNewAudioTrackParameters(args, stream, Codec, Channels, Bitrate, 0));
         return true;

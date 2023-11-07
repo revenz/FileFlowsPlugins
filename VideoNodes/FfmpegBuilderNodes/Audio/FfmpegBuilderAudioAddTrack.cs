@@ -205,10 +205,12 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
 
         if (directCopy)
         {
+            audio.Codec = bestAudio.Codec;
             args.Logger?.ILog($"Source audio is already in appropriate format, just copying that track: {bestAudio.IndexString}, Channels: {bestAudio.Channels}, Codec: {bestAudio.Codec}");
         }
         else
         {
+            audio.Codec = Codec;
             int sampleRate = SampleRate == 1 ? audio.Stream.SampleRate : SampleRate;
 
             int bitrate = Bitrate;

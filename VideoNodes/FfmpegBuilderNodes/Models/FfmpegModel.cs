@@ -85,6 +85,7 @@
                     Index = item.index,
                     Title = item.stream.Title,
                     Stream = item.stream,
+                    Codec = item.stream.Codec
                 });
             }
             foreach (var item in info.AudioStreams.Select((stream, index) => (stream, index)))
@@ -95,7 +96,8 @@
                     Title = item.stream.Title,
                     Language = item.stream.Language,
                     Stream = item.stream,
-                    Channels = item.stream.Channels
+                    Channels = item.stream.Channels,
+                    Codec = item.stream.Codec
                 });
             }
             foreach (var item in info.SubtitleStreams.Select((stream, index) => (stream, index)))
@@ -107,7 +109,8 @@
                     Language = item.stream.Language,
                     Stream = item.stream,
                     IsDefault = item.stream.Default,
-                    IsForced = item.stream.Forced
+                    IsForced = item.stream.Forced,
+                    Codec = item.stream.Codec
                 });
             }
 
