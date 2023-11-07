@@ -89,6 +89,17 @@ public class SubtitleExtractor : EncodingNode
                     return true;
                 if (x.Language?.ToLowerInvariant() == Language.ToLowerInvariant())
                     return true;
+
+                try
+                {
+                    var rgx = new Regex(Language, RegexOptions.IgnoreCase);
+                    if (rgx.IsMatch(x.Language))
+                        return true;
+                }
+                catch (Exception)
+                {
+                }
+
                 return false;
             }).FirstOrDefault();
             if (subTrack == null)
