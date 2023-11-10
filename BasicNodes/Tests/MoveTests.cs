@@ -103,6 +103,24 @@ public class MoveTests
 
         Assert.AreEqual(@"\\tower\downloads\converted\tv\The.Walking.Dead.Dead.City.S01E04\some-file.mkv", dest);
     }
+    
+    
+    /// <summary>
+    /// Tests that confirms additional files are moved
+    /// </summary>
+    [TestMethod]
+    public void MoveTests_AdditionalFiles()
+    {
+        var logger = new TestLogger();
+        var args = new NodeParameters(@"/home/john/Videos/move-me/dir/basic.mkv", logger, false, string.Empty);
+
+        var ele = new MoveFile();
+        ele.AdditionalFiles = new[] { "*.srt" };
+        ele.DestinationPath = "/home/john/Videos/converted";
+        var result = ele.Execute(args);
+        var log = logger.ToString();
+        Assert.AreEqual(1, result);
+    }
 }
 
 #endif

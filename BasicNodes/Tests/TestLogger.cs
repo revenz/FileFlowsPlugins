@@ -43,6 +43,9 @@ namespace BasicNodes.Tests
         }
 
         public string GetTail(int length = 50) => "Not implemented";
+        
+        public override string ToString()
+            => string.Join(Environment.NewLine, this.Messages.ToArray());
     }
 }
 

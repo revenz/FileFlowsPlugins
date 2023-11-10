@@ -84,6 +84,9 @@ public class MoveFile : Node
         var dest = GetDestinationPath(args, DestinationPath, DestinationFile, MoveFolder);
         if (dest == null)
             return -1;
+        
+        // store srcDir here before we move and the working file is altered
+        var srcDir = AdditionalFilesFromOriginal ? new FileInfo(args.FileName).DirectoryName : new FileInfo(args.WorkingFile).DirectoryName;
 
         if (args.MoveFile(dest) == false)
             return -1;
@@ -102,15 +105,18 @@ public class MoveFile : Node
             {
                 string destDir = new FileInfo(args.MapPath(dest)).DirectoryName;
                 args.CreateDirectoryIfNotExists(destDir ?? String.Empty);
-                var srcDir = AdditionalFilesFromOriginal ? new FileInfo(args.FileName).DirectoryName : new FileInfo(args.WorkingFile).DirectoryName;
 
                 var diSrc = new DirectoryInfo(srcDir);
+                args.Logger?.ILog("Looking for additional files in directory: " + srcDir);
                 foreach (var additional in AdditionalFiles)
                 {
+                    args.Logger?.ILog("Looking for additional files: " + additional);
                     foreach(var addFile in diSrc.GetFiles(additional))
                     {
                         try
                         {
+                            args.Logger?.ILog("Additional files: " + addFile.FullName);
+                            
                             string addFileDest = Path.Combine(destDir, addFile.Name);
                             System.IO.File.Move(addFile.FullName, addFileDest, true);
                             args.Logger?.ILog("Moved file: \"" + addFile.FullName + "\" to \"" + addFileDest + "\"");
@@ -126,6 +132,10 @@ public class MoveFile : Node
             {
                 args.Logger.WLog("Error moving additional files: " + ex.Message);
             }
+        }
+        else
+        {
+            args.Logger?.ILog("No additional files configured to move");
         }
 
 

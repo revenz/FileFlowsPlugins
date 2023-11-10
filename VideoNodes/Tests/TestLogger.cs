@@ -43,9 +43,7 @@ namespace VideoNodes.Tests
         }
 
         public override string ToString()
-        {
-            return String.Join(Environment.NewLine, this.Messages.ToArray());
-        }
+            => string.Join(Environment.NewLine, this.Messages.ToArray());
 
         public string GetTail(int length = 50)
         {
