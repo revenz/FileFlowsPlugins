@@ -599,7 +599,9 @@
           "ForcedOnly": "Forced Only",
           "ForcedOnly-Help": "If only forced subtitles should be extracted.",
           "OnlyTextSubtitles": "Only Text Subtitles",
-          "OnlyTextSubtitles-Help": "If only text subtitles should be extracted, all image based subtitles will be skipped."
+          "OnlyTextSubtitles-Help": "If only text subtitles should be extracted, all image based subtitles will be skipped.",
+          "ExtractAll": "Extract All",
+          "ExtractAll-Help": "If all matching subtitles should be extracted."
         }
       },
       "VideoIsInterlaced": {

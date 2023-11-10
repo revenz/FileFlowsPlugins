@@ -1,5 +1,4 @@
-﻿using System.Net;
-using FileFlows.VideoNodes.Helpers;
+﻿using FileFlows.VideoNodes.Helpers;
 
 namespace FileFlows.VideoNodes;
 
@@ -27,15 +26,24 @@ public class SubtitleExtractor : EncodingNode
     [Text(1)]
     public string Language { get; set; }
     /// <summary>
+    /// Gets or sets if all subtitles should be extracted
+    /// </summary>
+    [Boolean(2)]
+    public bool ExtractAll { get; set; }
+    /// <summary>
     /// Gets or sets the destination output file
     /// </summary>
-    [File(2)]
+    [File(3)]
+    [ConditionEquals(nameof(ExtractAll), false)]
     public string OutputFile { get; set; }
-    /// <summary>
-    /// Gets or sets if the new file should be set as the current working file
-    /// </summary>
-    [Boolean(3)]
-    public bool SetWorkingFile { get; set; }
+    
+    
+    // /// <summary>
+    // /// Gets or sets if the new file should be set as the current working file
+    // /// </summary>
+    // [Boolean(3)]
+    // public bool SetWorkingFile { get; set; }
+    
     /// <summary>
     /// Gets or sets if only forced subtitles should be extracted
     /// </summary>
@@ -78,14 +86,14 @@ public class SubtitleExtractor : EncodingNode
                 return -1;
             
             // ffmpeg -i input.mkv -map "0:m:language:eng" -map "-0:v" -map "-0:a" output.srt
-            var subTrack = videoInfo.SubtitleStreams?.Where(x =>
+            var subTracks = videoInfo.SubtitleStreams?.Where(x =>
             {
                 if (OnlyTextSubtitles && SubtitleHelper.IsImageSubtitle(x.Codec))
                     return false;
 
                 if (ForcedOnly && x.Forced == false)
                     return false;
-                if(string.IsNullOrEmpty(Language))
+                if(string.IsNullOrWhiteSpace(Language))
                     return true;
                 if (x.Language?.ToLowerInvariant() == Language.ToLowerInvariant())
                     return true;
@@ -101,52 +109,67 @@ public class SubtitleExtractor : EncodingNode
                 }
 
                 return false;
-            }).FirstOrDefault();
-            if (subTrack == null)
+            }).ToArray();
+            if (subTracks?.Any() != true)
             {
                 args.Logger?.ILog("No subtitles found to extract");
                 return 2;
             }
 
-            if (string.IsNullOrEmpty(OutputFile) == false)
-            {
-                OutputFile = args.ReplaceVariables(OutputFile, true);
-            }
-            else
-            {
-                var file = new FileInfo(args.FileName);
+            int extractedCount = 0;
 
-                OutputFile = file.FullName[..file.FullName.LastIndexOf(file.Extension, StringComparison.Ordinal)];
-            }
-            OutputFile = args.MapPath(OutputFile);
-
-            string extension = "srt";
-            if (SubtitleHelper.IsImageSubtitle(subTrack.Codec))
-                extension = "sup";
-            if (OutputFile.ToLower().EndsWith(".srt") || OutputFile.ToLower().EndsWith(".sup"))
-                OutputFile = OutputFile[0..^4];
-
-            OutputFile += "." + extension;
-            args.Logger?.ILog($"Extracting subtitle codec '{subTrack.Codec}' to '{OutputFile}'");
-            
-            var extracted = ExtractSubtitle(args, FFMPEG, "0:s:" + subTrack.TypeIndex, OutputFile);
-            if(extracted)
+            for(int i=0;i<(ExtractAll ? subTracks.Length : 1);i++)
             {
-                args.UpdateVariables(new Dictionary<string, object>
+                var subTrack = subTracks[i];
+                string output;
+                if (ExtractAll == false && string.IsNullOrEmpty(OutputFile) == false)
                 {
-                    { "sub.FileName", OutputFile }
-                });
-                if (SetWorkingFile)
-                    args.SetWorkingFile(OutputFile, dontDelete: true);
+                    output = args.ReplaceVariables(OutputFile, true);
+                    output = args.MapPath(output);
+                }
+                else
+                {
+                    var file = new FileInfo(args.FileName);
+                    output = file.FullName[..file.FullName.LastIndexOf(file.Extension, StringComparison.Ordinal)];
 
-                return 1;
+                    output = output +
+                             (string.IsNullOrWhiteSpace(subTrack.Language) == false ? "." + subTrack.Language  : "") +
+                             (i == 0 ? "" : "." + i);
+                }
+
+
+                if (output.ToLower().EndsWith(".srt") || output.ToLower().EndsWith(".sup"))
+                    output = output[0..^4];
+
+                output = output.TrimEnd('.') + (subTrack.IsImage ? ".sup" : ".srt");
+                
+                args.Logger?.ILog($"Extracting subtitle codec '{subTrack.Codec}' to '{output}'");
+
+                var extracted = ExtractSubtitle(args, FFMPEG, "0:s:" + subTrack.TypeIndex, output);
+                if (extracted)
+                    ++extractedCount;
+                if (extracted && ExtractAll == false)
+                {
+                    args.UpdateVariables(new Dictionary<string, object>
+                    {
+                        { "sub.FileName", output }
+                    });
+                    // if (SetWorkingFile)
+                    //     args.SetWorkingFile(OutputFile, dontDelete: true);
+
+                    return 1;
+                }
+
+                if (ExtractAll == false)
+                    break;
             }
 
-            return -1;
+            args.Logger?.ILog($"Extracted {extractedCount} subtitle{(extractedCount == 1 ? "" : "s")}");
+            return extractedCount > 0 ? 1 : 2;
         }
         catch (Exception ex)
         {
-            args.Logger?.ELog("Failed processing VideoFile: " + ex.Message);
+            args.Logger?.ELog("Failed processing VideoFile: " + ex.Message + Environment.NewLine + ex.StackTrace);
             return -1;
         }
     }
@@ -161,13 +184,13 @@ public class SubtitleExtractor : EncodingNode
     /// <returns>if it was successful or not</returns>
     internal bool ExtractSubtitle(NodeParameters args, string ffmpegExe, string subtitleStream, string output)
     {
-        if (File.Exists(OutputFile))
+        if (File.Exists(output))
         {
-            args.Logger?.ILog("File already exists, deleting file: " + OutputFile);
-            File.Delete(OutputFile);
+            args.Logger?.ILog("File already exists, deleting file: " + output);
+            File.Delete(output);
         }
 
-        bool textSubtitles = Regex.IsMatch(OutputFile.ToLower(), @"\.(sup)$") == false;
+        bool textSubtitles = Regex.IsMatch(output.ToLower(), @"\.(sup)$") == false;
         // -y means it will overwrite a file if output already exists
         var result = args.Process.ExecuteShellCommand(new ExecuteArgs
         {
@@ -188,7 +211,8 @@ public class SubtitleExtractor : EncodingNode
                 }
         }).Result;
 
-        var of = new FileInfo(OutputFile);
+        var of = new FileInfo(output);
+        args.Logger?.ILog("Extraction exit code: " + result.ExitCode);
         if (result.ExitCode != 0)
         {
             args.Logger?.ELog("FFMPEG process failed to extract subtitles");
@@ -206,6 +230,7 @@ public class SubtitleExtractor : EncodingNode
             }
             return false;
         }
+        args.Logger?.ILog("Extracted file successful: " + of.Exists);
         return of.Exists;
     }
 }
