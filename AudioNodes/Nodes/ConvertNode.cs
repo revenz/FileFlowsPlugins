@@ -70,17 +70,12 @@ namespace FileFlows.AudioNodes
         [Select(nameof(CodecOptions), 0)]
         public string Codec { get; set; }
 
-        [Boolean(4)]
-        [ConditionEquals(nameof(Normalize), true, inverse: true)]
-        public bool SkipIfCodecMatches { get; set; }
-
         /// <summary>
         /// Gets or sets if high efficiency should be used
         /// </summary>
         [Boolean(5)]
         [ConditionEquals(nameof(Codec), "aac")]
         public bool HighEfficiency { get => base.HighEfficiency; set =>base.HighEfficiency = value; }
-        public override int Outputs => 2; 
 
         private static List<ListOption> _CodecOptions;
         public static List<ListOption> CodecOptions
@@ -110,22 +105,7 @@ namespace FileFlows.AudioNodes
             string ffmpegExe = GetFFmpeg(args);
             if (string.IsNullOrEmpty(ffmpegExe))
                 return -1;
-
-            if(Normalize == false && AudioInfo.Codec?.ToLower() == Codec?.ToLower())
-            {
-                if (SkipIfCodecMatches)
-                {
-                    args.Logger?.ILog($"Audio file already '{Codec}' at bitrate '{AudioInfo.Bitrate} bps', and set to skip if codec matches");
-                    return 2;
-                }
-
-                args.Logger?.ILog($"Comparing bitrate {AudioInfo.Bitrate} is less than or equal to {(Bitrate * 1000)}");
-                if(AudioInfo.Bitrate <= Bitrate * 1000) // this bitrate is in Kbps, whereas AudioInfo.Bitrate is bytes per second
-                {
-                    args.Logger?.ILog($"Audio file already '{Codec}' at bitrate '{AudioInfo.Bitrate} bps ({(AudioInfo.Bitrate / 1000)} KBps)'");
-                    return 2;
-                }
-            }
+            
             return base.Execute(args);
 
         }
@@ -148,7 +128,7 @@ namespace FileFlows.AudioNodes
         protected virtual bool SetId3Tags => false;
 
         public override int Inputs => 1;
-        public override int Outputs => 1;
+        public override int Outputs => 2;
 
         protected virtual List<string> GetArguments(NodeParameters args, out string? extension)
         {
@@ -245,16 +225,35 @@ namespace FileFlows.AudioNodes
             };
         }
 
+        /// <summary>
+        /// Gets the type of flow element
+        /// </summary>
         public override FlowElementType Type => FlowElementType.Process;
 
+        /// <summary>
+        /// Gets or sets the bitrate for the converted audio
+        /// </summary>
         [Select(nameof(BitrateOptions), 1)]
         public int Bitrate { get; set; }
         
+        /// <summary>
+        /// Gets or sets if the audio should be normalized
+        /// </summary>
         [Boolean(3)]
         public bool Normalize { get; set; }
 
+        /// <summary>
+        /// Gets or sets if it should be skipped if the codec is the same
+        /// </summary>
+        [Boolean(4)]
+        [ConditionEquals(nameof(Normalize), true, inverse: true)]
+        public bool SkipIfCodecMatches { get; set; }
+
         private static List<ListOption> _BitrateOptions;
 
+        /// <summary>
+        /// Gets the bitrate options to show to the user
+        /// </summary>
         public static List<ListOption> BitrateOptions
         {
             get
@@ -296,12 +295,36 @@ namespace FileFlows.AudioNodes
             }
         }
 
+        /// <summary>
+        /// Executes the flow element
+        /// </summary>
+        /// <param name="args">the node parameters</param>
+        /// <returns>the output to call next</returns>
         public override int Execute(NodeParameters args)
         {
+            AudioInfo AudioInfo = GetAudioInfo(args);
+            if (AudioInfo == null)
+                return -1;
+            
             string ffmpegExe = GetFFmpeg(args);
             if (string.IsNullOrEmpty(ffmpegExe))
                 return -1;
 
+            if(Normalize == false && AudioInfo.Codec?.ToLower() == Extension?.ToLower())
+            {
+                if (SkipIfCodecMatches)
+                {
+                    args.Logger?.ILog($"Audio file already '{Extension}' at bitrate '{AudioInfo.Bitrate} bps', and set to skip if codec matches");
+                    return 2;
+                }
+
+                args.Logger?.ILog($"Comparing bitrate {AudioInfo.Bitrate} is less than or equal to {(Bitrate * 1000)}");
+                if(AudioInfo.Bitrate <= Bitrate * 1000) // this bitrate is in Kbps, whereas AudioInfo.Bitrate is bytes per second
+                {
+                    args.Logger?.ILog($"Audio file already '{Extension}' at bitrate '{AudioInfo.Bitrate} bps ({(AudioInfo.Bitrate / 1000)} KBps)'");
+                    return 2;
+                }
+            }
             //AudioInfo AudioInfo = GetAudioInfo(args);
             //if (AudioInfo == null)
             //    return -1;

@@ -35,11 +35,16 @@
       "ConvertToAAC": {
         "Description": "Convert a Audio file to AAC",
         "Outputs": {
-          "1": "Audio converted and saved to temporary file"
+          "1": "Audio converted and saved to temporary file",
+          "2": "Audio already in codec, no conversion done"
         },
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "The bitrate for the new AAC file, the higher the bitrate the better the quality but larger the file.  192 Kbps is the recommended rate.",
+          "Normalize": "Normalize",
+          "Normalize-Help": "If the audio should be normalized with two pass audio normalization",
+          "SkipIfCodecMatches": "Skip If Codec Matches",
+          "SkipIfCodecMatches-Help": "If the existing audio codec matches, this file will not be processed regardless of the bitrate.  Otherwise if off, the bitrate must be less than or equal to for it to skip.",
           "HighEfficiency": "High Efficiency",
           "HighEfficiency-Help": "Will use high efficiency mode, this will change the extension to m4a and will reduce supported playback devices, but may reduce the size of the file."
         }
@@ -47,41 +52,61 @@
       "ConvertToFLAC": {
         "Description": "Convert a Audio file to FLAC",
         "Outputs": {
-          "1": "Audio converted and saved to temporary file"
+          "1": "Audio converted and saved to temporary file",
+          "2": "Audio already in codec, no conversion done"
         },
         "Fields": {
           "Bitrate": "Bitrate",
-          "Bitrate-Help": "The bitrate for the new FLAC file, the higher the bitrate the better the quality but larger the file.  128 Kbps is the recommended rate."
+          "Bitrate-Help": "The bitrate for the new FLAC file, the higher the bitrate the better the quality but larger the file.  128 Kbps is the recommended rate.",
+          "Normalize": "Normalize",
+          "Normalize-Help": "If the audio should be normalized with two pass audio normalization",
+          "SkipIfCodecMatches": "Skip If Codec Matches",
+          "SkipIfCodecMatches-Help": "If the existing audio codec matches, this file will not be processed regardless of the bitrate.  Otherwise if off, the bitrate must be less than or equal to for it to skip."
         }
       },
       "ConvertToMP3": {
         "Description": "Convert a Audio file to MP3",
         "Outputs": {
-          "1": "Audio converted and saved to temporary file"
+          "1": "Audio converted and saved to temporary file",
+          "2": "Audio already in codec, no conversion done"
         },
         "Fields": {
           "Bitrate": "Bitrate",
-          "Bitrate-Help": "The bitrate for the new MP3 file, the higher the bitrate the better the quality but larger the file.  192 Kbps is the recommended rate."
+          "Bitrate-Help": "The bitrate for the new MP3 file, the higher the bitrate the better the quality but larger the file.  192 Kbps is the recommended rate.",
+          "Normalize": "Normalize",
+          "Normalize-Help": "If the audio should be normalized with two pass audio normalization",
+          "SkipIfCodecMatches": "Skip If Codec Matches",
+          "SkipIfCodecMatches-Help": "If the existing audio codec matches, this file will not be processed regardless of the bitrate.  Otherwise if off, the bitrate must be less than or equal to for it to skip."
         }
       },
       "ConvertToOGG": {
         "Description": "Convert a Audio file to OGG",
         "Outputs": {
-          "1": "Audio converted and saved to temporary file"
+          "1": "Audio converted and saved to temporary file",
+          "2": "Audio already in codec, no conversion done"
         },
         "Fields": {
           "Bitrate": "Bitrate",
-          "Bitrate-Help": "The bitrate for the new OGG file, the higher the bitrate the better the quality but larger the file.  128 Kbps is the recommended rate."
+          "Bitrate-Help": "The bitrate for the new OGG file, the higher the bitrate the better the quality but larger the file.  128 Kbps is the recommended rate.",
+          "Normalize": "Normalize",
+          "Normalize-Help": "If the audio should be normalized with two pass audio normalization",
+          "SkipIfCodecMatches": "Skip If Codec Matches",
+          "SkipIfCodecMatches-Help": "If the existing audio codec matches, this file will not be processed regardless of the bitrate.  Otherwise if off, the bitrate must be less than or equal to for it to skip."
         }
       },
       "ConvertToWAV": {
         "Description": "Convert a Audio file to WAV",
         "Outputs": {
-          "1": "Audio converted and saved to temporary file"
+          "1": "Audio converted and saved to temporary file",
+          "2": "Audio already in codec, no conversion done"
         },
         "Fields": {
           "Bitrate": "Bitrate",
-          "Bitrate-Help": "The bitrate for the new WAV file, the higher the bitrate the better the quality but larger the file.  128 Kbps is the recommended rate."
+          "Bitrate-Help": "The bitrate for the new WAV file, the higher the bitrate the better the quality but larger the file.  128 Kbps is the recommended rate.",
+          "Normalize": "Normalize",
+          "Normalize-Help": "If the audio should be normalized with two pass audio normalization",
+          "SkipIfCodecMatches": "Skip If Codec Matches",
+          "SkipIfCodecMatches-Help": "If the existing audio codec matches, this file will not be processed regardless of the bitrate.  Otherwise if off, the bitrate must be less than or equal to for it to skip."
         }
       },
       "CreateAudioBook": {
