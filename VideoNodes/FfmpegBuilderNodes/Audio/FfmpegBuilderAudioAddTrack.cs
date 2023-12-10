@@ -341,6 +341,8 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
         bool opus = codec == "opus"; 
         if (opus)
             codec = "libopus";
+        bool eac3 = codec.ToLowerInvariant() == "eac3";
+        bool dts = codec.ToLowerInvariant().Contains("dts");
         
         // Prepare the options list
         var options = new List<string>
@@ -356,10 +358,10 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
             options.Add("-ac:a:{index}");
             options.Add(channels.ToString());
         }
-        else if (opus)
+        else if (opus || eac3 || dts)
         {
             // FF-1016: Opus needs this for side by side channel layout
-            args.Logger?.ILog("OPUS Audio: " + stream.Channels);
+            args.Logger?.ILog("Original Audio Channels: " + stream.Channels);
             if (Math.Abs(stream.Channels - 61) < 1)
             {
                 args.Logger?.ILog("Channels 61 detected setting to 8");
