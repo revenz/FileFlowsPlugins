@@ -78,6 +78,10 @@ public class Discord: Node
             string title = args.ReplaceVariables(this.Title)?.EmptyAsNull() ??
                            this.MessageType?.EmptyAsNull() ?? "Information";
 
+            // replace new lines
+            message = message.Replace("\\r\\n", "\r\n");
+            message = message.Replace("\\n", "\n");
+
             object webhook;
             if (this.MessageType == "Basic")
             {

@@ -18,8 +18,9 @@ public class DiscordTests
         };
 
         var node = new Discord();
-        node.Message = "a message";
-        Assert.AreEqual(1, node.Execute(args));
+        node.Message = "a message\nwith\nsome\nnewlines";
+        var result = node.Execute(args);
+        Assert.AreEqual(1, result);
     }
 
     [TestMethod]
