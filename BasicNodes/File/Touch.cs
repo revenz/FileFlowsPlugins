@@ -39,7 +39,10 @@ public class Touch : Node
         {
             try
             {
-                System.IO.File.SetLastWriteTimeUtc(filename, DateTime.UtcNow);
+                if (System.IO.File.Exists(filename))
+                    System.IO.File.SetLastWriteTimeUtc(filename, DateTime.UtcNow);
+                else
+                    System.IO.File.Create(filename);
                 return 1;
             }
             catch (Exception ex)
