@@ -359,6 +359,23 @@
             "DestinationFile-Help": "The filename of the newly created zip.  If blank, the name of the item will be used as the zip file."
           }
         },
+        "SevenZip": {
+          "Label": "7-Zip",
+          "Description": "Allows you to 7zip the input",
+          "Outputs": {
+            "1": "7zip created"
+          },
+          "Fields": {
+            "DestinationPath": "Destination Folder",
+            "DestinationPath-Help": "The destination folder where to put the 7zip file.  If blank, the 7zip will be placed in the library root.",
+            "DestinationFile": "Destination File",
+            "DestinationFile-Help": "The filename of the newly created 7zip.  If blank, the name of the item will be used as the 7zip file.",
+            "CompressionLevel": "Compression Level",
+            "CompressionLevel-Help": "The level of compression to use when compressing the level.",
+            "CompressionMethod": "Compression Method",
+            "CompressionMethod-Help": "The compression method used for compression, LZMA2 is recommended."
+          }
+        },
         "IfBoolean": {
           "Description": "Tests if a Variable is true or false",
           "Outputs": {
