@@ -1,9 +1,7 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting.Logging;
-
-namespace FileFlows.BasicNodes.File;
-
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
+
+namespace FileFlows.BasicNodes.File;
 
 public class Touch : Node
 {
