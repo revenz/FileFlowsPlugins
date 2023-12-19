@@ -266,7 +266,7 @@ public class CanUseHardwareEncoding:Node
             bool vaapi = encodingParams.Any(x => x.Contains("vaapi")) && VaapiHelper.VaapiLinux;
             List<string> arguments = encodingParams.ToList();
             if (vaapi)
-                arguments.AddRange(new [] { "-vf", "'format=nv12,hwupload'", "-strict", "-2"});
+                arguments.AddRange(new [] { "-vf", "format=nv12,hwupload", "-strict", "-2"});
             arguments.InsertRange(0, new []
             {
                 "-loglevel",
