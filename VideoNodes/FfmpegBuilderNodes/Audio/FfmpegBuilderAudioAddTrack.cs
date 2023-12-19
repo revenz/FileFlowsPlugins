@@ -358,7 +358,7 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
             options.Add("-ac:a:{index}");
             options.Add(channels.ToString());
         }
-        else if (opus || eac3 || dts)
+        else if ((opus || eac3 || dts) && stream.Channels > 1)
         {
             // FF-1016: Opus needs this for side by side channel layout
             args.Logger?.ILog("Original Audio Channels: " + stream.Channels);

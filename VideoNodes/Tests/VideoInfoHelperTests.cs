@@ -13,63 +13,64 @@ namespace VideoNodes.Tests
     [TestClass]
     public class VideoInfoHelperTests
     {
-        [TestMethod]
-        public void VideoInfoTest_JudgeDreed()
-        {
-            var vi = new VideoInfoHelper(@"C:\utils\ffmpeg\ffmpeg.exe", new TestLogger());
-            var info = vi.Read(@"D:\videos\unprocessed\Injustice.mkv");
-            Assert.IsNotNull(info);
+      [TestMethod]
+      public void VideoInfoTest_JudgeDreed()
+      {
+        var vi = new VideoInfoHelper(@"C:\utils\ffmpeg\ffmpeg.exe", new TestLogger());
+        var info = vi.Read(@"D:\videos\unprocessed\Injustice.mkv");
+        Assert.IsNotNull(info);
 
-        }
+      }
 
-        [TestMethod]
-        public void ComskipTest()
-        {
-            const string file = @"D:\videos\unprocessed\The IT Crowd - 2x04 - The Dinner Party - No English.mkv";
-            const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
-            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
+      [TestMethod]
+      public void ComskipTest()
+      {
+        const string file = @"D:\videos\unprocessed\The IT Crowd - 2x04 - The Dinner Party - No English.mkv";
+        const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
+        var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
 
-            args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
-            args.TempPath = @"D:\videos\temp";
-
-
-            var vi = new VideoInfoHelper(@"C:\utils\ffmpeg\ffmpeg.exe", new TestLogger());
-            var vii = vi.Read(file);
-            args.SetParameter("VideoInfo", vii);
-            //args.Process = new FileFlows.Plugin.ProcessHelper(args.Logger);
-
-            var node = new ComskipRemoveAds();
-            int output = node.Execute(args);
-            Assert.AreEqual(1, output);
-        }
+        args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
+        args.TempPath = @"D:\videos\temp";
 
 
+        var vi = new VideoInfoHelper(@"C:\utils\ffmpeg\ffmpeg.exe", new TestLogger());
+        var vii = vi.Read(file);
+        args.SetParameter("VideoInfo", vii);
+        //args.Process = new FileFlows.Plugin.ProcessHelper(args.Logger);
+
+        var node = new ComskipRemoveAds();
+        int output = node.Execute(args);
+        Assert.AreEqual(1, output);
+      }
 
 
-        [TestMethod]
-        public void VideoInfoTest_Subtitle_Extractor()
-        {
-            const string file = @"D:\videos\Injustice.mkv";
-            var vi = new VideoInfoHelper(@"C:\utils\ffmpeg\ffmpeg.exe", new TestLogger());
-            var vii = vi.Read(file);
 
-            SubtitleExtractor node = new ();
-            //node.OutputFile = file + ".sup";
-            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
-            args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
-            args.TempPath = @"D:\videos\temp";
 
-            new VideoFile().Execute(args);
+      [TestMethod]
+      public void VideoInfoTest_Subtitle_Extractor()
+      {
+        const string file = @"D:\videos\Injustice.mkv";
+        var vi = new VideoInfoHelper(@"C:\utils\ffmpeg\ffmpeg.exe", new TestLogger());
+        var vii = vi.Read(file);
 
-            int output = node.Execute(args);
+        SubtitleExtractor node = new();
+        //node.OutputFile = file + ".sup";
+        var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
+        args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
+        args.TempPath = @"D:\videos\temp";
 
-            Assert.AreEqual(1, output);
-        }
+        new VideoFile().Execute(args);
 
-        [TestMethod]
-        public void VideoInfoTest_AC1()
-        {
-            string ffmpegOutput = @"Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/media/Videos/#-Test Tdarr/Input3/input file.mp4':
+        int output = node.Execute(args);
+
+        Assert.AreEqual(1, output);
+      }
+
+      [TestMethod]
+      public void VideoInfoTest_AC1()
+      {
+        string ffmpegOutput =
+          @"Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/media/Videos/#-Test Tdarr/Input3/input file.mp4':
   Metadata:
     major_brand     : mp42
     minor_version   : 512
@@ -88,16 +89,17 @@ namespace VideoNodes.Tests
       handler_name    : SoundHandler
     Side data:
       audio service type: main";
-            var vi = VideoInfoHelper.ParseOutput(null, ffmpegOutput);
-            Assert.AreEqual(1920, vi.VideoStreams[0].Width);
-            Assert.AreEqual(1080, vi.VideoStreams[0].Height);
-        }
+        var vi = VideoInfoHelper.ParseOutput(null, ffmpegOutput);
+        Assert.AreEqual(1920, vi.VideoStreams[0].Width);
+        Assert.AreEqual(1080, vi.VideoStreams[0].Height);
+      }
 
 
-        [TestMethod]
-        public void VideoInfoTest_Chapters()
-        {
-            string ffmpegOutput = @"[matroska,webm @ 00000263322abdc0] Could not find codec parameters for stream 3 (Subtitle: hdmv_pgs_subtitle (pgssub)): unspecified size
+      [TestMethod]
+      public void VideoInfoTest_Chapters()
+      {
+        string ffmpegOutput =
+          @"[matroska,webm @ 00000263322abdc0] Could not find codec parameters for stream 3 (Subtitle: hdmv_pgs_subtitle (pgssub)): unspecified size
 Consider increasing the value for the 'analyzeduration' (0) and 'probesize' (5000000) options
 [matroska,webm @ 00000263322abdc0] Could not find codec parameters for stream 4 (Subtitle: hdmv_pgs_subtitle (pgssub)): unspecified size
 Consider increasing the value for the 'analyzeduration' (0) and 'probesize' (5000000) options
@@ -253,19 +255,20 @@ Input #0, matroska,webm, from 'D:\downloads\sabnzbd\complete\movies\Cast.Away.20
       _STATISTICS_WRITING_APP: mkvmerge v64.0.0 ('Willows') 64-bit
       _STATISTICS_WRITING_DATE_UTC: 2022-02-02 22:32:47
       _STATISTICS_TAGS: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES";
-            var vi = VideoInfoHelper.ParseOutput(null, ffmpegOutput);
-            Assert.AreEqual(32, vi.Chapters?.Count ?? 0);
-            Assert.AreEqual("Chapter 32", vi.Chapters[31].Title);
-            Assert.AreEqual(TimeSpan.FromSeconds(8214.414000), vi.Chapters[31].Start);
-            Assert.AreEqual(TimeSpan.FromSeconds(8626.656000), vi.Chapters[31].End);
-        }
+        var vi = VideoInfoHelper.ParseOutput(null, ffmpegOutput);
+        Assert.AreEqual(32, vi.Chapters?.Count ?? 0);
+        Assert.AreEqual("Chapter 32", vi.Chapters[31].Title);
+        Assert.AreEqual(TimeSpan.FromSeconds(8214.414000), vi.Chapters[31].Start);
+        Assert.AreEqual(TimeSpan.FromSeconds(8626.656000), vi.Chapters[31].End);
+      }
 
 
 
-        [TestMethod]
-        public void VideoInfoTest_Chapters_NoStart()
-        {
-            string ffmpegOutput = @"[matroska,webm @ 00000263322abdc0] Could not find codec parameters for stream 3 (Subtitle: hdmv_pgs_subtitle (pgssub)): unspecified size
+      [TestMethod]
+      public void VideoInfoTest_Chapters_NoStart()
+      {
+        string ffmpegOutput =
+          @"[matroska,webm @ 00000263322abdc0] Could not find codec parameters for stream 3 (Subtitle: hdmv_pgs_subtitle (pgssub)): unspecified size
 Consider increasing the value for the 'analyzeduration' (0) and 'probesize' (5000000) options
 [matroska,webm @ 00000263322abdc0] Could not find codec parameters for stream 4 (Subtitle: hdmv_pgs_subtitle (pgssub)): unspecified size
 Consider increasing the value for the 'analyzeduration' (0) and 'probesize' (5000000) options
@@ -421,15 +424,17 @@ Input #0, matroska,webm, from 'D:\downloads\sabnzbd\complete\movies\Cast.Away.20
       _STATISTICS_WRITING_APP: mkvmerge v64.0.0 ('Willows') 64-bit
       _STATISTICS_WRITING_DATE_UTC: 2022-02-02 22:32:47
       _STATISTICS_TAGS: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES";
-            var vi = VideoInfoHelper.ParseOutput(null, ffmpegOutput);
-            Assert.AreEqual(32, vi.Chapters?.Count ?? 0);
-            Assert.AreEqual(TimeSpan.FromSeconds(0), vi.Chapters[0].Start);
-            Assert.AreEqual(TimeSpan.FromSeconds(110.819000), vi.Chapters[0].End);
-        }
-        [TestMethod]
-        public void VideoInfoTest_Chapters_Bad()
-        {
-            string ffmpegOutput = @"[matroska,webm @ 00000263322abdc0] Could not find codec parameters for stream 3 (Subtitle: hdmv_pgs_subtitle (pgssub)): unspecified size
+        var vi = VideoInfoHelper.ParseOutput(null, ffmpegOutput);
+        Assert.AreEqual(32, vi.Chapters?.Count ?? 0);
+        Assert.AreEqual(TimeSpan.FromSeconds(0), vi.Chapters[0].Start);
+        Assert.AreEqual(TimeSpan.FromSeconds(110.819000), vi.Chapters[0].End);
+      }
+
+      [TestMethod]
+      public void VideoInfoTest_Chapters_Bad()
+      {
+        string ffmpegOutput =
+          @"[matroska,webm @ 00000263322abdc0] Could not find codec parameters for stream 3 (Subtitle: hdmv_pgs_subtitle (pgssub)): unspecified size
 Consider increasing the value for the 'analyzeduration' (0) and 'probesize' (5000000) options
 [matroska,webm @ 00000263322abdc0] Could not find codec parameters for stream 4 (Subtitle: hdmv_pgs_subtitle (pgssub)): unspecified size
 Consider increasing the value for the 'analyzeduration' (0) and 'probesize' (5000000) options
@@ -511,24 +516,25 @@ Input #0, matroska,webm, from 'D:\downloads\sabnzbd\complete\movies\Cast.Away.20
       _STATISTICS_WRITING_APP: mkvmerge v64.0.0 ('Willows') 64-bit
       _STATISTICS_WRITING_DATE_UTC: 2022-02-02 22:32:47
       _STATISTICS_TAGS: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES";
-            var vi = VideoInfoHelper.ParseOutput(null, ffmpegOutput);
-            Assert.AreEqual(6, vi.Chapters?.Count ?? 0);
-            Assert.AreEqual("Chapter 29", vi.Chapters[2].Title);
-        }
+        var vi = VideoInfoHelper.ParseOutput(null, ffmpegOutput);
+        Assert.AreEqual(6, vi.Chapters?.Count ?? 0);
+        Assert.AreEqual("Chapter 29", vi.Chapters[2].Title);
+      }
 
-        [TestMethod]
-        public void AudioParsingTest()
-        {
-            string audioInfo = @"Stream #0:1[0x2](fre): Audio: eac3 (ec-3 / 0x332D6365), 48000 Hz, 5.1(side), fltp, 640 kb/s (default)
+      [TestMethod]
+      public void AudioParsingTest()
+      {
+        string audioInfo =
+          @"Stream #0:1[0x2](fre): Audio: eac3 (ec-3 / 0x332D6365), 48000 Hz, 5.1(side), fltp, 640 kb/s (default)
     Metadata:
       handler_name    : SoundHandler
       vendor_id       : [0][0][0][0]
     Side data:
       audio service type: main";
-            var audio = VideoInfoHelper.ParseAudioStream(audioInfo);
-            Assert.AreEqual("fre", audio.Language);
+        var audio = VideoInfoHelper.ParseAudioStream(audioInfo);
+        Assert.AreEqual("fre", audio.Language);
 
-            string audioInfo2 = @"Stream #0:1(eng): Audio: ac3, 48000 Hz, stereo, fltp, 192 kb/s (default)
+        string audioInfo2 = @"Stream #0:1(eng): Audio: ac3, 48000 Hz, stereo, fltp, 192 kb/s (default)
     Metadata:
       BPS             : 192000
       BPS-eng         : 192000
@@ -544,10 +550,332 @@ Input #0, matroska,webm, from 'D:\downloads\sabnzbd\complete\movies\Cast.Away.20
       _STATISTICS_WRITING_DATE_UTC-eng: 2018-01-06 22:12:14
       _STATISTICS_TAGS: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
       _STATISTICS_TAGS-eng: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES";
-            var audio2 = VideoInfoHelper.ParseAudioStream(audioInfo2);
-            Assert.AreEqual("eng", audio2.Language);
+        var audio2 = VideoInfoHelper.ParseAudioStream(audioInfo2);
+        Assert.AreEqual("eng", audio2.Language);
 
+      }
+
+
+      /// <summary>
+      /// A test that testes the audio parsing of a ffmpeg output
+      /// This is from a user who was getting 0 channels for all 3 audio streams
+      /// </summary>
+      [TestMethod]
+      public void AudioChannelsParsingTest()
+      {
+        string ffmpegOutput =
+          @"Input #0, matroska,webm, from 'W:\\tvshows\test\HEVC\Game of Thrones - S06E06 - Blood of My Blood Bluray-1080p Remux AVC.mkv':
+  Metadata:
+    title           : Game of Thrones  (S06E06) - Blood of My Blood - ZQ
+    encoder         : libebml v1.3.4 + libmatroska v1.4.5
+    creation_time   : 2016-11-03T04:12:51.000000Z
+  Duration: 00:51:27.62, start: 0.000000, bitrate: 24656 kb/s
+  Chapters:
+    Chapter #0:0: start 0.000000, end 116.533000
+      Metadata:
+        title           : Chapter 1
+    Chapter #0:1: start 116.533000, end 850.767000
+      Metadata:
+        title           : Chapter 2
+    Chapter #0:2: start 850.767000, end 1425.090000
+      Metadata:
+        title           : Chapter 3
+    Chapter #0:3: start 1425.090000, end 1949.906000
+      Metadata:
+        title           : Chapter 4
+    Chapter #0:4: start 1949.906000, end 2291.164000
+      Metadata:
+        title           : Chapter 5
+    Chapter #0:5: start 2291.164000, end 2613.861000
+      Metadata:
+        title           : Chapter 6
+    Chapter #0:6: start 2613.861000, end 3007.004000
+      Metadata:
+        title           : Chapter 7
+    Chapter #0:7: start 3007.004000, end 3087.616000
+      Metadata:
+        title           : Chapter 8
+  Stream #0:0: Video: h264 (High), yuv420p(progressive), 1920x1080 [SAR 1:1 DAR 16:9], 23.98 fps, 23.98 tbr, 1k tbn (default)
+    Metadata:
+      title           : MPEG-4 AVC Video / 19480 kbps / 1080p / 23.976 fps / 16:9 / High Profile 4.1
+      BPS             : 19352137
+      BPS-eng         : 19352137
+      DURATION        : 00:51:27.585000000
+      DURATION-eng    : 00:51:27.585000000
+      NUMBER_OF_FRAMES: 74028
+      NUMBER_OF_FRAMES-eng: 74028
+      NUMBER_OF_BYTES : 7468921033
+      NUMBER_OF_BYTES-eng: 7468921033
+      _STATISTICS_WRITING_APP: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_APP-eng: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_DATE_UTC: 2016-11-03 04:12:51
+      _STATISTICS_WRITING_DATE_UTC-eng: 2016-11-03 04:12:51
+      _STATISTICS_TAGS: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+      _STATISTICS_TAGS-eng: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+  Stream #0:1(eng): Audio: truehd, 48000 Hz, 7.1, s32 (24 bit) (default)
+    Metadata:
+      title           : Dolby Atmos Audio / 7.1 / 48 kHz / 4049 kbps / 24-bit
+      BPS             : 4049069
+      BPS-eng         : 4049069
+      DURATION        : 00:51:27.585000000
+      DURATION-eng    : 00:51:27.585000000
+      NUMBER_OF_FRAMES: 3705102
+      NUMBER_OF_FRAMES-eng: 3705102
+      NUMBER_OF_BYTES : 1562730694
+      NUMBER_OF_BYTES-eng: 1562730694
+      _STATISTICS_WRITING_APP: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_APP-eng: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_DATE_UTC: 2016-11-03 04:12:51
+      _STATISTICS_WRITING_DATE_UTC-eng: 2016-11-03 04:12:51
+      _STATISTICS_TAGS: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+      _STATISTICS_TAGS-eng: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+  Stream #0:2(eng): Audio: ac3, 48000 Hz, 5.1(side), fltp, 640 kb/s
+    Metadata:
+      title           : Compatibility Track / 5.1-EX / 48 kHz / 640 kbps
+      BPS             : 640000
+      BPS-eng         : 640000
+      DURATION        : 00:51:27.616000000
+      DURATION-eng    : 00:51:27.616000000
+      NUMBER_OF_FRAMES: 96488
+      NUMBER_OF_FRAMES-eng: 96488
+      NUMBER_OF_BYTES : 247009280
+      NUMBER_OF_BYTES-eng: 247009280
+      _STATISTICS_WRITING_APP: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_APP-eng: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_DATE_UTC: 2016-11-03 04:12:51
+      _STATISTICS_WRITING_DATE_UTC-eng: 2016-11-03 04:12:51
+      _STATISTICS_TAGS: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+      _STATISTICS_TAGS-eng: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+  Stream #0:3(eng): Audio: ac3, 48000 Hz, 5.1(side), fltp, 448 kb/s
+    Metadata:
+      title           : Commentary with Director Jack Bender, Director of Photography Jonathan Freeman, John Bradley (Samwell Tarly), and Hannah Murray (Gilly) / Dolby Digital Audio / 5.1 / 48 kHz / 448 kbps
+      BPS             : 448000
+      BPS-eng         : 448000
+      DURATION        : 00:51:27.616000000
+      DURATION-eng    : 00:51:27.616000000
+      NUMBER_OF_FRAMES: 96488
+      NUMBER_OF_FRAMES-eng: 96488
+      NUMBER_OF_BYTES : 172906496
+      NUMBER_OF_BYTES-eng: 172906496
+      _STATISTICS_WRITING_APP: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_APP-eng: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_DATE_UTC: 2016-11-03 04:12:51
+      _STATISTICS_WRITING_DATE_UTC-eng: 2016-11-03 04:12:51
+      _STATISTICS_TAGS: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+      _STATISTICS_TAGS-eng: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+  Stream #0:4(eng): Subtitle: hdmv_pgs_subtitle (default)
+    Metadata:
+      title           : Foreign Parts Only
+      BPS             : 10463
+      BPS-eng         : 10463
+      DURATION        : 00:02:02.748000000
+      DURATION-eng    : 00:02:02.748000000
+      NUMBER_OF_FRAMES: 36
+      NUMBER_OF_FRAMES-eng: 36
+      NUMBER_OF_BYTES : 160544
+      NUMBER_OF_BYTES-eng: 160544
+      _STATISTICS_WRITING_APP: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_APP-eng: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_DATE_UTC: 2016-11-03 04:12:51
+      _STATISTICS_WRITING_DATE_UTC-eng: 2016-11-03 04:12:51
+      _STATISTICS_TAGS: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+      _STATISTICS_TAGS-eng: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+  Stream #0:5(eng): Subtitle: hdmv_pgs_subtitle
+    Metadata:
+      title           : SDH
+      BPS             : 10953
+      BPS-eng         : 10953
+      DURATION        : 00:48:01.837000000
+      DURATION-eng    : 00:48:01.837000000
+      NUMBER_OF_FRAMES: 1292
+      NUMBER_OF_FRAMES-eng: 1292
+      NUMBER_OF_BYTES : 3945866
+      NUMBER_OF_BYTES-eng: 3945866
+      _STATISTICS_WRITING_APP: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_APP-eng: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_DATE_UTC: 2016-11-03 04:12:51
+      _STATISTICS_WRITING_DATE_UTC-eng: 2016-11-03 04:12:51
+      _STATISTICS_TAGS: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+      _STATISTICS_TAGS-eng: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+  Stream #0:6(fre): Subtitle: hdmv_pgs_subtitle
+    Metadata:
+      BPS             : 8899
+      BPS-eng         : 8899
+      DURATION        : 00:48:33.661000000
+      DURATION-eng    : 00:48:33.661000000
+      NUMBER_OF_FRAMES: 1210
+      NUMBER_OF_FRAMES-eng: 1210
+      NUMBER_OF_BYTES : 3241221
+      NUMBER_OF_BYTES-eng: 3241221
+      _STATISTICS_WRITING_APP: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_APP-eng: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_DATE_UTC: 2016-11-03 04:12:51
+      _STATISTICS_WRITING_DATE_UTC-eng: 2016-11-03 04:12:51
+      _STATISTICS_TAGS: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+      _STATISTICS_TAGS-eng: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+  Stream #0:7(spa): Subtitle: hdmv_pgs_subtitle
+    Metadata:
+      BPS             : 9743
+      BPS-eng         : 9743
+      DURATION        : 00:47:02.569000000
+      DURATION-eng    : 00:47:02.569000000
+      NUMBER_OF_FRAMES: 1152
+      NUMBER_OF_FRAMES-eng: 1152
+      NUMBER_OF_BYTES : 3437560
+      NUMBER_OF_BYTES-eng: 3437560
+      _STATISTICS_WRITING_APP: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_APP-eng: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_DATE_UTC: 2016-11-03 04:12:51
+      _STATISTICS_WRITING_DATE_UTC-eng: 2016-11-03 04:12:51
+      _STATISTICS_TAGS: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+      _STATISTICS_TAGS-eng: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+  Stream #0:8(spa): Subtitle: hdmv_pgs_subtitle
+    Metadata:
+      title           : Castillan
+      BPS             : 9708
+      BPS-eng         : 9708
+      DURATION        : 00:47:02.444000000
+      DURATION-eng    : 00:47:02.444000000
+      NUMBER_OF_FRAMES: 1088
+      NUMBER_OF_FRAMES-eng: 1088
+      NUMBER_OF_BYTES : 3425040
+      NUMBER_OF_BYTES-eng: 3425040
+      _STATISTICS_WRITING_APP: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_APP-eng: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_DATE_UTC: 2016-11-03 04:12:51
+      _STATISTICS_WRITING_DATE_UTC-eng: 2016-11-03 04:12:51
+      _STATISTICS_TAGS: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+      _STATISTICS_TAGS-eng: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+  Stream #0:9(ger): Subtitle: hdmv_pgs_subtitle
+    Metadata:
+      BPS             : 10110
+      BPS-eng         : 10110
+      DURATION        : 00:47:02.236000000
+      DURATION-eng    : 00:47:02.236000000
+      NUMBER_OF_FRAMES: 1036
+      NUMBER_OF_FRAMES-eng: 1036
+      NUMBER_OF_BYTES : 3566891
+      NUMBER_OF_BYTES-eng: 3566891
+      _STATISTICS_WRITING_APP: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_APP-eng: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_DATE_UTC: 2016-11-03 04:12:51
+      _STATISTICS_WRITING_DATE_UTC-eng: 2016-11-03 04:12:51
+      _STATISTICS_TAGS: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+      _STATISTICS_TAGS-eng: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+  Stream #0:10(por): Subtitle: hdmv_pgs_subtitle
+    Metadata:
+      title           : Brazilian
+      BPS             : 9851
+      BPS-eng         : 9851
+      DURATION        : 00:47:02.569000000
+      DURATION-eng    : 00:47:02.569000000
+      NUMBER_OF_FRAMES: 1158
+      NUMBER_OF_FRAMES-eng: 1158
+      NUMBER_OF_BYTES : 3475674
+      NUMBER_OF_BYTES-eng: 3475674
+      _STATISTICS_WRITING_APP: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_APP-eng: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_DATE_UTC: 2016-11-03 04:12:51
+      _STATISTICS_WRITING_DATE_UTC-eng: 2016-11-03 04:12:51
+      _STATISTICS_TAGS: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+      _STATISTICS_TAGS-eng: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+  Stream #0:11(dut): Subtitle: hdmv_pgs_subtitle
+    Metadata:
+      BPS             : 9435
+      BPS-eng         : 9435
+      DURATION        : 00:47:02.569000000
+      DURATION-eng    : 00:47:02.569000000
+      NUMBER_OF_FRAMES: 1154
+      NUMBER_OF_FRAMES-eng: 1154
+      NUMBER_OF_BYTES : 3329208
+      NUMBER_OF_BYTES-eng: 3329208
+      _STATISTICS_WRITING_APP: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_APP-eng: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_DATE_UTC: 2016-11-03 04:12:51
+      _STATISTICS_WRITING_DATE_UTC-eng: 2016-11-03 04:12:51
+      _STATISTICS_TAGS: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+      _STATISTICS_TAGS-eng: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+  Stream #0:12(dan): Subtitle: hdmv_pgs_subtitle
+    Metadata:
+      BPS             : 9498
+      BPS-eng         : 9498
+      DURATION        : 00:47:02.569000000
+      DURATION-eng    : 00:47:02.569000000
+      NUMBER_OF_FRAMES: 1152
+      NUMBER_OF_FRAMES-eng: 1152
+      NUMBER_OF_BYTES : 3351239
+      NUMBER_OF_BYTES-eng: 3351239
+      _STATISTICS_WRITING_APP: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_APP-eng: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_DATE_UTC: 2016-11-03 04:12:51
+      _STATISTICS_WRITING_DATE_UTC-eng: 2016-11-03 04:12:51
+      _STATISTICS_TAGS: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+      _STATISTICS_TAGS-eng: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+  Stream #0:13(fin): Subtitle: hdmv_pgs_subtitle
+    Metadata:
+      BPS             : 8572
+      BPS-eng         : 8572
+      DURATION        : 00:47:02.569000000
+      DURATION-eng    : 00:47:02.569000000
+      NUMBER_OF_FRAMES: 1154
+      NUMBER_OF_FRAMES-eng: 1154
+      NUMBER_OF_BYTES : 3024401
+      NUMBER_OF_BYTES-eng: 3024401
+      _STATISTICS_WRITING_APP: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_APP-eng: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_DATE_UTC: 2016-11-03 04:12:51
+      _STATISTICS_WRITING_DATE_UTC-eng: 2016-11-03 04:12:51
+      _STATISTICS_TAGS: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+      _STATISTICS_TAGS-eng: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+  Stream #0:14(nor): Subtitle: hdmv_pgs_subtitle
+    Metadata:
+      BPS             : 9183
+      BPS-eng         : 9183
+      DURATION        : 00:47:02.569000000
+      DURATION-eng    : 00:47:02.569000000
+      NUMBER_OF_FRAMES: 1154
+      NUMBER_OF_FRAMES-eng: 1154
+      NUMBER_OF_BYTES : 3240071
+      NUMBER_OF_BYTES-eng: 3240071
+      _STATISTICS_WRITING_APP: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_APP-eng: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_DATE_UTC: 2016-11-03 04:12:51
+      _STATISTICS_WRITING_DATE_UTC-eng: 2016-11-03 04:12:51
+      _STATISTICS_TAGS: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+      _STATISTICS_TAGS-eng: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+  Stream #0:15(swe): Subtitle: hdmv_pgs_subtitle
+    Metadata:
+      BPS             : 9333
+      BPS-eng         : 9333
+      DURATION        : 00:47:02.569000000
+      DURATION-eng    : 00:47:02.569000000
+      NUMBER_OF_FRAMES: 1154
+      NUMBER_OF_FRAMES-eng: 1154
+      NUMBER_OF_BYTES : 3292894
+      NUMBER_OF_BYTES-eng: 3292894
+      _STATISTICS_WRITING_APP: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_APP-eng: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_DATE_UTC: 2016-11-03 04:12:51
+      _STATISTICS_WRITING_DATE_UTC-eng: 2016-11-03 04:12:51
+      _STATISTICS_TAGS: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+      _STATISTICS_TAGS-eng: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES";
+        var logger = new TestLogger();
+        var videoInfo = VideoInfoHelper.ParseOutput(logger, ffmpegOutput);
+        Assert.AreEqual(3, videoInfo.AudioStreams.Count);
+        
+
+        foreach (var vs in videoInfo.AudioStreams)
+        {
+          logger.ILog($"Audio stream '{vs.Codec}' '{vs.Index}' 'Language: {vs.Language}' 'Channels: {vs.Channels}'");
         }
+        
+        var log = logger.ToString();
+        
+        Assert.AreEqual(7.1f, videoInfo.AudioStreams[0].Channels);
+        Assert.AreEqual(5.1f, videoInfo.AudioStreams[1].Channels);
+        Assert.AreEqual(5.1f, videoInfo.AudioStreams[2].Channels);
+
+      }
     }
 }
 
