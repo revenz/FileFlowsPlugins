@@ -1,3 +1,5 @@
+using Microsoft.VisualStudio.TestTools.UnitTesting.Logging;
+
 namespace FileFlows.BasicNodes.File;
 
 using FileFlows.Plugin;
@@ -20,9 +22,11 @@ public class Touch : Node
         string filename = args.ReplaceVariables(this.FileName ?? string.Empty, stripMissing: true);
         if (string.IsNullOrEmpty(filename))
             filename = args.WorkingFile;
+        
 
         if (IsDirectory(filename))
         {
+            args.Logger?.ILog("Touching directory: " + filename);
             try
             {
                 var dir = new DirectoryInfo(filename);
@@ -37,6 +41,7 @@ public class Touch : Node
         }
         else
         {
+            args.Logger?.ILog("Touching file: " + filename);
             try
             {
                 if (System.IO.File.Exists(filename))
