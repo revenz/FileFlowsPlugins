@@ -82,39 +82,39 @@ public class SevenZip : Node
         }
     }
 
-    // /// <summary>
-    // /// Gets or sets the level of compression
-    // /// </summary>
-    // [Select(nameof(CompressionLevels), 1)]
-    // public int CompressionLevel { get; set; }
-    //
-    // private static List<ListOption> _CompressionLevels;
-    //
-    // public static List<ListOption> CompressionLevels
-    // {
-    //     get
-    //     {
-    //         if (_CompressionLevels == null)
-    //         {
-    //             _CompressionLevels = new List<ListOption>
-    //             {
-    //                 // we are 1 based here, even though 0 is the actually 0
-    //                 // we use 1 so we can detect if its not set and use a sensible default
-    //                 new () { Label = "0 - No compression", Value = 1 },
-    //                 new () { Label = "1 - Fastest compression", Value = 2 },
-    //                 new () { Label = "2 - Less compression", Value = 3 },
-    //                 new () { Label = "3 - Fast compression", Value = 4 },
-    //                 new () { Label = "4 - Normal compression", Value = 5 },
-    //                 new () { Label = "5 - Balanced compression", Value = 6 },
-    //                 new () { Label = "6 - Maximum speed compression", Value = 7 },
-    //                 new () { Label = "7 - Maximum compression", Value = 8 },
-    //                 new () { Label = "8 - Ultra compression", Value = 9 },
-    //                 new () { Label = "9 - Insane compression", Value = 10 }
-    //             };
-    //         }
-    //         return _CompressionLevels;
-    //     }
-    // }
+    /// <summary>
+    /// Gets or sets the level of compression
+    /// </summary>
+    [Select(nameof(CompressionLevels), 1)]
+    public int CompressionLevel { get; set; }
+    
+    private static List<ListOption> _CompressionLevels;
+    
+    public static List<ListOption> CompressionLevels
+    {
+        get
+        {
+            if (_CompressionLevels == null)
+            {
+                _CompressionLevels = new List<ListOption>
+                {
+                    // we are 1 based here, even though 0 is the actually 0
+                    // we use 1 so we can detect if its not set and use a sensible default
+                    new () { Label = "0 - No compression", Value = 1 },
+                    new () { Label = "1 - Fastest compression", Value = 2 },
+                    new () { Label = "2 - Less compression", Value = 3 },
+                    new () { Label = "3 - Fast compression", Value = 4 },
+                    new () { Label = "4 - Normal compression", Value = 5 },
+                    new () { Label = "5 - Balanced compression", Value = 6 },
+                    new () { Label = "6 - Maximum speed compression", Value = 7 },
+                    new () { Label = "7 - Maximum compression", Value = 8 },
+                    new () { Label = "8 - Ultra compression", Value = 9 },
+                    new () { Label = "9 - Insane compression", Value = 10 }
+                };
+            }
+            return _CompressionLevels;
+        }
+    }
 
 
     /// <summary>
@@ -184,7 +184,7 @@ public class SevenZip : Node
 
             args.Logger?.ILog($"Compressing '{args.WorkingFile}' to '{destFile}'");
 
-            //int compression = CompressionLevel < 1 ? 5 : CompressionLevel;
+            int compression = CompressionLevel < 1 ? 5 : CompressionLevel;
 
             if (System.IO.File.Exists(destFile))
             {
@@ -208,7 +208,7 @@ public class SevenZip : Node
                 ArgumentList = new[]
                 {
                     "a", "-t7z", $"-m0={compressionMethod}", 
-                    //$"-mx{compression}", 
+                    $"-mx{compression}", 
                     destFile, itemToCompress
                 }
             });
