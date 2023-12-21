@@ -145,7 +145,7 @@ public class VideoInfoHelper
             }
             else if (sm.Value.Contains(" Audio: "))
             {
-                var audio = ParseAudioStream(sm.Value);
+                var audio = ParseAudioStream(logger, sm.Value);
                 if (audio != null)
                 {
                     audio.TypeIndex = audioIndex;
@@ -296,7 +296,7 @@ public class VideoInfoHelper
         return vs;
     }
 
-    public static AudioStream ParseAudioStream(string info)
+    public static AudioStream ParseAudioStream(ILogger logger, string info)
     {
         // Stream #0:1(eng): Audio: dts (DTS), 48000 Hz, stereo, fltp, 1536 kb/s (default)
         string line = info.Split(new string[] { "\r\n", "\n", "\r" }, StringSplitOptions.RemoveEmptyEntries).First();
@@ -326,7 +326,23 @@ public class VideoInfoHelper
                 else if (Regex.IsMatch(parts[2], @"^[\d]+(\.[\d]+)?"))
                 {
                     audio.Channels = float.Parse(Regex.Match(parts[2], @"^[\d]+(\.[\d]+)?").Value);
+                    logger?.ILog("Detected audio channels: " + audio.Channels + ", from " + parts[2]);
                 }
+                else if (line.Contains(" 7.1"))
+                    audio.Channels = 7.1f;
+                else if (line.Contains(" 7.2"))
+                    audio.Channels = 7.2f;
+                else if (line.Contains(" 5.1"))
+                    audio.Channels = 5.1f;
+                else if (line.Contains(" 5.0"))
+                    audio.Channels = 5f;
+                else if (line.Contains(" 4.1"))
+                    audio.Channels = 4.1f;
+                else
+                {
+                    logger?.WLog("Unable to detect channels from: " + line);
+                }
+                logger?.ILog("Audio channels: " + audio.Channels + ", from " + parts[2]);
             }
             catch (Exception) { }
         }

@@ -301,9 +301,13 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
             parameters.AddRange(AV1_Amd(quality, speed));
         else
             parameters.AddRange(AV1_CPU(quality, speed));
-        
+
         if (tenBit)
-            parameters.AddRange(new [] { "-pix_fmt:v:{index}", "yuv420p10le" });
+        {
+            bool qsv = parameters.Any(x => x.ToLower().Contains("qsv"));
+            parameters.AddRange(new[] { "-pix_fmt:v:{index}", qsv ? "p010le" : "yuv420p10le" });
+        }
+
         return parameters;
     }
     

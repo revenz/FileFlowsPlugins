@@ -524,6 +524,7 @@ Input #0, matroska,webm, from 'D:\downloads\sabnzbd\complete\movies\Cast.Away.20
       [TestMethod]
       public void AudioParsingTest()
       {
+        var logger = new TestLogger();
         string audioInfo =
           @"Stream #0:1[0x2](fre): Audio: eac3 (ec-3 / 0x332D6365), 48000 Hz, 5.1(side), fltp, 640 kb/s (default)
     Metadata:
@@ -531,7 +532,7 @@ Input #0, matroska,webm, from 'D:\downloads\sabnzbd\complete\movies\Cast.Away.20
       vendor_id       : [0][0][0][0]
     Side data:
       audio service type: main";
-        var audio = VideoInfoHelper.ParseAudioStream(audioInfo);
+        var audio = VideoInfoHelper.ParseAudioStream(logger, audioInfo);
         Assert.AreEqual("fre", audio.Language);
 
         string audioInfo2 = @"Stream #0:1(eng): Audio: ac3, 48000 Hz, stereo, fltp, 192 kb/s (default)
@@ -550,7 +551,7 @@ Input #0, matroska,webm, from 'D:\downloads\sabnzbd\complete\movies\Cast.Away.20
       _STATISTICS_WRITING_DATE_UTC-eng: 2018-01-06 22:12:14
       _STATISTICS_TAGS: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
       _STATISTICS_TAGS-eng: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES";
-        var audio2 = VideoInfoHelper.ParseAudioStream(audioInfo2);
+        var audio2 = VideoInfoHelper.ParseAudioStream(logger, audioInfo2);
         Assert.AreEqual("eng", audio2.Language);
 
       }
@@ -876,7 +877,38 @@ Input #0, matroska,webm, from 'D:\downloads\sabnzbd\complete\movies\Cast.Away.20
         Assert.AreEqual(5.1f, videoInfo.AudioStreams[2].Channels);
 
       }
+      
+      
+      [TestMethod]
+      public void AudioParsingTest2()
+      {
+        var logger = new TestLogger();
+        string audioInfo =
+          @"Stream #0:1(eng): Audio: truehd, 48000 Hz, 7.1, s32 (24 bit) (default)
+    Metadata:
+      title           : Dolby Atmos Audio / 7.1 / 48 kHz / 4049 kbps / 24-bit
+      BPS             : 4049069
+      BPS-eng         : 4049069
+      DURATION        : 00:51:27.585000000
+      DURATION-eng    : 00:51:27.585000000
+      NUMBER_OF_FRAMES: 3705102
+      NUMBER_OF_FRAMES-eng: 3705102
+      NUMBER_OF_BYTES : 1562730694
+      NUMBER_OF_BYTES-eng: 1562730694
+      _STATISTICS_WRITING_APP: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_APP-eng: mkvmerge v9.4.2 ('So High') 64bit
+      _STATISTICS_WRITING_DATE_UTC: 2016-11-03 04:12:51
+      _STATISTICS_WRITING_DATE_UTC-eng: 2016-11-03 04:12:51
+      _STATISTICS_TAGS: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+      _STATISTICS_TAGS-eng: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES";
+        var audio = VideoInfoHelper.ParseAudioStream(logger, audioInfo);
+        Assert.AreEqual("eng", audio.Language);
+        Assert.AreEqual(4049069, audio.Bitrate);
+        Assert.AreEqual(7.1f, audio.Channels);
+      }
     }
+    
+    
 }
 
 #endif
