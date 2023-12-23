@@ -305,7 +305,10 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         if (tenBit)
         {
             bool qsv = parameters.Any(x => x.ToLower().Contains("qsv"));
-            parameters.AddRange(new[] { "-pix_fmt:v:{index}", qsv ? "p010le" : "yuv420p10le" });
+            if(qsv)
+                parameters.AddRange(new[] { "-vf", "scale_qsv=format=p010le" });
+            else
+                parameters.AddRange(new[] { "-pix_fmt:v:{index}", "yuv420p10le" });
         }
 
         return parameters;
