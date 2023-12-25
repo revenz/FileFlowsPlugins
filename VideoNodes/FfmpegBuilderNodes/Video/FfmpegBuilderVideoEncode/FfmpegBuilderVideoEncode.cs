@@ -249,6 +249,7 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         List<string> parameters = new List<string>();
         string[] bit10Filters = null;
         string[] non10BitFilters = null;
+        bool qsv = false;
         if (encoder == ENCODER_CPU)
             parameters.AddRange(H26x_CPU(true, quality, speed, out bit10Filters));
         else if (IsMac && encoder == ENCODER_MAC)
@@ -256,7 +257,10 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         else if (encoder == ENCODER_NVIDIA)
             parameters.AddRange(H26x_Nvidia(true, quality, speed, out non10BitFilters));
         else if (encoder == ENCODER_QSV)
+        {
             parameters.AddRange(H26x_Qsv(true, quality, fps, speed));
+            qsv = true;
+        }
         else if (encoder == ENCODER_AMF)
             parameters.AddRange(H26x_Amd(true, quality, speed));
         else if (encoder == ENCODER_VAAPI)
@@ -267,7 +271,10 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         else if (CanUseHardwareEncoding.CanProcess_Nvidia_Hevc(args))
             parameters.AddRange(H26x_Nvidia(true, quality, speed, out non10BitFilters));
         else if (CanUseHardwareEncoding.CanProcess_Qsv_Hevc(args))
+        {
             parameters.AddRange(H26x_Qsv(true, quality, fps, speed));
+            qsv = true;
+        }
         else if (CanUseHardwareEncoding.CanProcess_Amd_Hevc(args))
             parameters.AddRange(H26x_Amd(true, quality, speed));
         else if (CanUseHardwareEncoding.CanProcess_Vaapi_Hevc(args))
@@ -276,7 +283,18 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
             parameters.AddRange(H26x_CPU(true, quality, speed, out bit10Filters));
 
         if (tenBit)
-            parameters.AddRange(bit10Filters ?? new string[] { "-pix_fmt:v:{index}", "p010le", "-profile:v:{index}", "main10" });
+        {
+            if (qsv)
+            {
+                parameters.AddRange(bit10Filters ?? new []
+                    { "-vf", "scale_qsv=format=p010le" });
+            }
+            else
+            {
+                parameters.AddRange(bit10Filters ?? new []
+                    { "-pix_fmt:v:{index}", "p010le", "-profile:v:{index}", "main10" });
+            }
+        }
         else if(non10BitFilters?.Any() == true)
             parameters.AddRange(non10BitFilters);
         return parameters;
