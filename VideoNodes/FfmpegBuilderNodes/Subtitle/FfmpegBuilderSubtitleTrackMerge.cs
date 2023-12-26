@@ -87,10 +87,11 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
                     language = lang2;
             }
 
+            string subTitle = language;
+            language = LanguageHelper.GetIso2Code(language.Split(' ').First()); // remove any SDH etc
             args.Logger.ILog("Adding file: " + file.FullName + " [" + ext + "]" + (string.IsNullOrEmpty(language) == false ? " (Language: " + language + ")" : ""));
             this.Model.InputFiles.Add(new InputFile(file.FullName) { DeleteAfterwards = this.DeleteAfterwards });
 
-            string subTitle = language;
             if (string.IsNullOrEmpty(subTitle))
                 subTitle = file.Name.Replace(file.Extension, "");
 
