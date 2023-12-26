@@ -295,6 +295,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             //new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "cuda" }, // this fails with Impossible to convert between the formats supported by the filter 'Parsed_crop_0' and the filter 'auto_scale_0'
             IsMac ? new [] { "-hwaccel", "videotoolbox" } : null,
             new [] { "-hwaccel", "cuda" },
+            new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "p010le" },
             new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "qsv" },
             new [] { "-hwaccel", "vaapi", "-hwaccel_output_format", "vaapi" },
             new [] { "-hwaccel", "vulkan", "-hwaccel_output_format", "vulkan" },
@@ -311,6 +312,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             //new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "cuda" }, // this fails with Impossible to convert between the formats supported by the filter 'Parsed_crop_0' and the filter 'auto_scale_0'
             IsMac ? new [] { "-hwaccel", "videotoolbox" } : null,
             new [] { "-hwaccel", "cuda" },
+            new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "p010le" },
             new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "qsv" },
             new [] { "-hwaccel", "vaapi", "-hwaccel_output_format", "vaapi" },
             new [] { "-hwaccel", "vulkan", "-hwaccel_output_format", "vulkan" },
