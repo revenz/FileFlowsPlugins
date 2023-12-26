@@ -194,7 +194,6 @@ public class CanUseHardwareEncoding:Node
     /// <returns>if a encoder/decoder has been disabled by a variable</returns>
     internal static bool DisabledByVariables(NodeParameters args, string[] parameters)
     {
-
         if (parameters.Any(x => x.ToLower().Contains("nvenc")))
         {
             if (args.GetVariable("NoNvidia") as bool? == true)

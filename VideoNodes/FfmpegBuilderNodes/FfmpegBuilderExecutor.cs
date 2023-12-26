@@ -154,7 +154,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             useHardwareEncoding = false;
         if (useHardwareEncoding)
         {
-            startArgs.AddRange(GetHardwareDecodingArgs());
+            startArgs.AddRange(GetHardwareDecodingArgs(args));
         }
         
         if (ffArgs.Any(x => x.Contains("vaapi") && Helpers.VaapiHelper.VaapiLinux))
@@ -221,7 +221,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         return 1;
     }
 
-    internal string[] GetHardwareDecodingArgs()
+    internal string[] GetHardwareDecodingArgs(NodeParameters args)
     {
         string testFile = Path.Combine(Args.TempPath, Guid.NewGuid() + ".hwtest.mkv");
         var video = this.Model.VideoStreams.Where(x => x.Stream.IsImage == false).FirstOrDefault();
@@ -230,9 +230,9 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         bool isH264 = video.Stream.Codec.Contains("264");
         bool isHevc = video.Stream.Codec.Contains("265") || video.Stream.Codec.ToLower().Contains("hevc");
 
-        var decoders = isH264 ? Decoders_h264() :
-                        isHevc ? Decoders_hevc() :
-                        Decoders_Default();
+        var decoders = isH264 ? Decoders_h264(args) :
+                        isHevc ? Decoders_hevc(args) :
+                        Decoders_Default(args);
         try
         {
             foreach (var hw in decoders)
@@ -288,51 +288,120 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
     private static readonly bool IsMac = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
 
 
-    private string[][] Decoders_h264()
+    private string[][] Decoders_h264(NodeParameters args)
     {
+        bool noNvidia =
+            args.Variables.Any(x => x.Key?.ToLowerInvariant() == "nonvidia" && x.Value as bool? == true);
+        bool noQsv =
+            args.Variables.Any(x => x.Key?.ToLowerInvariant() == "noqsv" && x.Value as bool? == true);
+        bool noVaapi =
+            args.Variables.Any(x => x.Key?.ToLowerInvariant() == "novaapi" && x.Value as bool? == true);
+        bool noAmf =
+            args.Variables.Any(x =>
+                (x.Key?.ToLowerInvariant() == "noamf" || x.Key?.ToLowerInvariant() == "noamd") &&
+                x.Value as bool? == true);
+        bool noVideoToolbox =
+            args.Variables.Any(x => x.Key?.ToLowerInvariant() == "novideotoolbox" && x.Value as bool? == true);
+        bool noVulkan =
+            args.Variables.Any(x => x.Key?.ToLowerInvariant() == "novulkan" && x.Value as bool? == true);
+        bool noDxva2 =
+            args.Variables.Any(x => x.Key?.ToLowerInvariant() == "nodxva2" && x.Value as bool? == true);
+        bool noD3d11va =
+            args.Variables.Any(x => x.Key?.ToLowerInvariant() == "nod3d11va" && x.Value as bool? == true);
+        bool noOpencl =
+            args.Variables.Any(x => x.Key?.ToLowerInvariant() == "noopencl" && x.Value as bool? == true);
+
         return new[]
         {
             //new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "cuda" }, // this fails with Impossible to convert between the formats supported by the filter 'Parsed_crop_0' and the filter 'auto_scale_0'
-            IsMac ? new [] { "-hwaccel", "videotoolbox" } : null,
-            new [] { "-hwaccel", "cuda" },
-            new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "p010le" },
-            new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "qsv" },
-            new [] { "-hwaccel", "vaapi", "-hwaccel_output_format", "vaapi" },
-            new [] { "-hwaccel", "vulkan", "-hwaccel_output_format", "vulkan" },
-            new [] { "-hwaccel", "dxva2" },
-            new [] { "-hwaccel", "d3d11va" },
-            new [] { "-hwaccel", "opencl" },
+            noVideoToolbox == false && IsMac ? new [] { "-hwaccel", "videotoolbox" } : null,
+            noNvidia ? null : new [] { "-hwaccel", "cuda" },
+            noQsv ? null : new [] { "-hwaccel", "qsv" },
+            noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "p010le" },
+            noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "qsv" },
+            noVaapi ? null : new [] { "-hwaccel", "vaapi", "-hwaccel_output_format", "vaapi" },
+            noVulkan ? null : new [] { "-hwaccel", "vulkan", "-hwaccel_output_format", "vulkan" },
+            noDxva2 ? null : new [] { "-hwaccel", "dxva2" },
+            noD3d11va ? null : new [] { "-hwaccel", "d3d11va" },
+            noOpencl ? null : new [] { "-hwaccel", "opencl" },
         };
     }
 
-    private string[][] Decoders_hevc()
+    private string[][] Decoders_hevc(NodeParameters args)
     {
+        bool noNvidia =
+            args.Variables.Any(x => x.Key?.ToLowerInvariant() == "nonvidia" && x.Value as bool? == true);
+        bool noQsv =
+            args.Variables.Any(x => x.Key?.ToLowerInvariant() == "noqsv" && x.Value as bool? == true);
+        bool noVaapi =
+            args.Variables.Any(x => x.Key?.ToLowerInvariant() == "novaapi" && x.Value as bool? == true);
+        bool noAmf =
+            args.Variables.Any(x =>
+                (x.Key?.ToLowerInvariant() == "noamf" || x.Key?.ToLowerInvariant() == "noamd") &&
+                x.Value as bool? == true);
+        bool noVideoToolbox =
+            args.Variables.Any(x => x.Key?.ToLowerInvariant() == "novideotoolbox" && x.Value as bool? == true);
+        bool noVulkan =
+            args.Variables.Any(x => x.Key?.ToLowerInvariant() == "novulkan" && x.Value as bool? == true);
+        bool noDxva2 =
+            args.Variables.Any(x => x.Key?.ToLowerInvariant() == "nodxva2" && x.Value as bool? == true);
+        bool noD3d11va =
+            args.Variables.Any(x => x.Key?.ToLowerInvariant() == "nod3d11va" && x.Value as bool? == true);
+        bool noOpencl =
+            args.Variables.Any(x => x.Key?.ToLowerInvariant() == "noopencl" && x.Value as bool? == true);
+
         return new[]
         {
             //new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "cuda" }, // this fails with Impossible to convert between the formats supported by the filter 'Parsed_crop_0' and the filter 'auto_scale_0'
-            IsMac ? new [] { "-hwaccel", "videotoolbox" } : null,
-            new [] { "-hwaccel", "cuda" },
-            new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "p010le" },
-            new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "qsv" },
-            new [] { "-hwaccel", "vaapi", "-hwaccel_output_format", "vaapi" },
-            new [] { "-hwaccel", "vulkan", "-hwaccel_output_format", "vulkan" },
-            new [] { "-hwaccel", "dxva2" },
-            new [] { "-hwaccel", "d3d11va" },
-            new [] { "-hwaccel", "opencl" },
+            noVideoToolbox == false && IsMac ? new [] { "-hwaccel", "videotoolbox" } : null,
+            noNvidia ? null : new [] { "-hwaccel", "cuda" },
+            noQsv ? null : new [] { "-hwaccel", "qsv" },
+            noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "p010le" },
+            noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "qsv" },
+            noVaapi ? null : new [] { "-hwaccel", "vaapi", "-hwaccel_output_format", "vaapi" },
+            noVulkan ? null : new [] { "-hwaccel", "vulkan", "-hwaccel_output_format", "vulkan" },
+            noDxva2 ? null : new [] { "-hwaccel", "dxva2" },
+            noD3d11va ? null : new [] { "-hwaccel", "d3d11va" },
+            noOpencl ? null : new [] { "-hwaccel", "opencl" },
         };
     }
 
-    private string[][] Decoders_Default()
+    private string[][] Decoders_Default(NodeParameters args)
     {
+        bool noNvidia =
+            args.Variables.Any(x => x.Key?.ToLowerInvariant() == "nonvidia" && x.Value as bool? == true);
+        bool noQsv =
+            args.Variables.Any(x => x.Key?.ToLowerInvariant() == "noqsv" && x.Value as bool? == true);
+        bool noVaapi =
+            args.Variables.Any(x => x.Key?.ToLowerInvariant() == "novaapi" && x.Value as bool? == true);
+        bool noAmf =
+            args.Variables.Any(x =>
+                (x.Key?.ToLowerInvariant() == "noamf" || x.Key?.ToLowerInvariant() == "noamd") &&
+                x.Value as bool? == true);
+        bool noVideoToolbox =
+            args.Variables.Any(x => x.Key?.ToLowerInvariant() == "novideotoolbox" && x.Value as bool? == true);
+        bool noVulkan =
+            args.Variables.Any(x => x.Key?.ToLowerInvariant() == "novulkan" && x.Value as bool? == true);
+        bool noDxva2 =
+            args.Variables.Any(x => x.Key?.ToLowerInvariant() == "nodxva2" && x.Value as bool? == true);
+        bool noD3d11va =
+            args.Variables.Any(x => x.Key?.ToLowerInvariant() == "nod3d11va" && x.Value as bool? == true);
+        bool noOpencl =
+            args.Variables.Any(x => x.Key?.ToLowerInvariant() == "noopencl" && x.Value as bool? == true);
+
+        
         return new[]
         {
             //new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "cuda" }, // this fails with Impossible to convert between the formats supported by the filter 'Parsed_crop_0' and the filter 'auto_scale_0'
-            new [] { "-hwaccel", "cuda" },
-            new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "qsv" },
-            new [] { "-hwaccel", "vaapi", "-hwaccel_output_format", "vaapi" },
-            new [] { "-hwaccel", "dxva2" },
-            new [] { "-hwaccel", "d3d11va" },
-            new [] { "-hwaccel", "opencl" },
+            noNvidia ? null : new [] { "-hwaccel", "cuda" },
+            noQsv ? null : new [] { "-hwaccel", "qsv" },
+            noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "p010le" },
+            noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "qsv" },
+            noVaapi ? null : new [] { "-hwaccel", "vaapi", "-hwaccel_output_format", "vaapi" },
+            noVulkan ? null : new [] { "-hwaccel", "vulkan", "-hwaccel_output_format", "vulkan" },
+            noDxva2 ? null : new [] { "-hwaccel", "dxva2" },
+            noD3d11va ? null : new [] { "-hwaccel", "d3d11va" },
+            noOpencl ? null : new [] { "-hwaccel", "opencl" },
         };
     }
 }
