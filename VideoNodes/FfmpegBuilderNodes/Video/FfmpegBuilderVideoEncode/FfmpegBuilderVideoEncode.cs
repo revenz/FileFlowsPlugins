@@ -287,7 +287,9 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
             if (qsv)
             {
                 parameters.AddRange(bit10Filters ?? new []
-                    { "-vf", "scale_qsv=format=p010le" });
+                {
+                    "-profile:v", "main10", "-vf", "scale_qsv=format=p010le"
+                });
             }
             else
             {
