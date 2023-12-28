@@ -148,15 +148,29 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             "-probesize", VideoInfoHelper.ProbeSize + "M"
         });
 
-        
-        bool useHardwareEncoding = HardwareDecoding;
+
         if (Environment.GetEnvironmentVariable("HW_OFF") == "1")
-            useHardwareEncoding = false;
-        if (useHardwareEncoding)
         {
-            startArgs.AddRange(GetHardwareDecodingArgs(args));
+            
         }
-        
+        else
+        {
+            if(ffArgs.Any(x => x.Contains("_qsv")))
+            {
+                // use qsv decoder
+                startArgs.AddRange(new[] { "-hwaccel", "qsv" });
+            }
+            else if(ffArgs.Any(x => x.Contains("_nvenc")))
+            {
+                // use nvidia decoder
+                startArgs.AddRange(new[] { "-hwaccel", "cuda" });
+            }
+            else if (HardwareDecoding)
+            {
+                startArgs.AddRange(GetHardwareDecodingArgs(args));
+            }
+        }
+
         if (ffArgs.Any(x => x.Contains("vaapi") && Helpers.VaapiHelper.VaapiLinux))
         {
             startArgs.Add("-vaapi_device");

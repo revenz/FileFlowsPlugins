@@ -60,7 +60,7 @@ public partial class FfmpegBuilderVideoEncode
         }
         parameters.AddRange(new[]
         {
-            "-global_quality", quality.ToString(),
+            "-global_quality:v", quality.ToString(),
             "-preset", speed?.EmptyAsNull() ?? "slower",
         });
         return parameters;
