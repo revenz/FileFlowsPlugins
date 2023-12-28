@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Runtime.InteropServices;
+using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 
@@ -170,7 +171,7 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         }
         else if (Codec == CODEC_H265 || Codec == CODEC_H265_10BIT)
         {
-            stream.EncodingParameters.AddRange(H265(args, Codec == CODEC_H265_10BIT, Quality, encoder,
+            stream.EncodingParameters.AddRange(H265(stream, args, Codec == CODEC_H265_10BIT, Quality, encoder,
                 stream.Stream.FramesPerSecond, Speed));
             stream.Codec = "hevc";
         }
@@ -199,7 +200,7 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         if (codec == CODEC_H264)
             return H264(args, false, quality, encoder, speed).Select(x => x.Replace("{index}", "0")); 
         if (codec == CODEC_H265 || codec == CODEC_H265_10BIT)
-            return H265(args, codec == CODEC_H265_10BIT, quality, encoder, fps, speed).Select(x => x.Replace("{index}", "0"));
+            return H265(null, args, codec == CODEC_H265_10BIT, quality, encoder, fps, speed).Select(x => x.Replace("{index}", "0"));
         if(codec == CODEC_AV1)
             return AV1(args, codec == CODEC_AV1_10BIT, quality, encoder, speed).Select(x => x.Replace("{index}", "0")); 
             
@@ -243,7 +244,7 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         return parameters;
     }
     
-    private static IEnumerable<string> H265(NodeParameters args, bool tenBit, int quality, string encoder, float fps, string speed)
+    private static IEnumerable<string> H265(FfmpegVideoStream stream, NodeParameters args, bool tenBit, int quality, string encoder, float fps, string speed)
     {
         // hevc_qsv -load_plugin hevc_hw -pix_fmt p010le -profile:v main10 -global_quality 21 -g 24 -look_ahead 1 -look_ahead_depth 60
         List<string> parameters = new List<string>();
@@ -286,10 +287,16 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         {
             if (qsv)
             {
-                parameters.AddRange(bit10Filters ?? new []
+                parameters.AddRange(new []
                 {
-                    "-profile:v", "main10", "-vf", "scale_qsv=format=p010le"
+                    "-profile:v:{index}", "main10" //, "-vf", "scale_qsv=format=p010le"
                 });
+                // if the stream is passed in, we add it to the filter
+                if(stream != null)
+                    stream.Filter.Add("scale_qsv=format=p010le");
+                else // if there is no stream, we specify the -vf directly, this is called by audio to video flow elements
+                    parameters.AddRange(new [] {  "-vf", "scale_qsv=format=p010le" });
+                
             }
             else
             {
