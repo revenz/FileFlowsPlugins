@@ -94,7 +94,7 @@
                 if (Filter.Any() || OptionalFilter.Any())
                 {
                     results.Add("-filter:v:" + args.OutputTypeIndex);
-                    results.Add(String.Join(", ", Filter.Concat(OptionalFilter)).Replace("{index}", args.OutputTypeIndex.ToString()));
+                    results.Add(string.Join(", ", Filter.Concat(OptionalFilter)).Replace("{index}", args.OutputTypeIndex.ToString()));
                 }
             }
 
