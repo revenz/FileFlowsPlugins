@@ -102,7 +102,7 @@
           }
         },
         "Delete": {
-          "Description": "Deletes a file",
+          "Description": "Deletes a file or folder",
           "Outputs": {
             "1": "File deleted"
           },
