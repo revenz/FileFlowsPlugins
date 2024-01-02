@@ -107,8 +107,8 @@
             "1": "File deleted"
           },
           "Fields": {
-            "FileName": "File Name",
-            "FileName-Help": "If left blank the current working file will be deleted, or folder if library is folder based."
+            "FileName": "Path",
+            "FileName-Help": "A path to either a file or folder to delete.\n\nIf left blank the current working file will be deleted."
           }
         },
         "FailFlow": {
