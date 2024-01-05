@@ -310,11 +310,12 @@ public class VideoInfoHelper
             audio.Codec = audio.Codec[..^1].Trim();
 
         audio.Language = GetLanguage(line);
-        if (info.IndexOf("0 channels") >= 0)
-        {
-            audio.Channels = 0;
-        }
-        else
+        // if (info.IndexOf("0 channels", StringComparison.Ordinal) >= 0)
+        // {
+        //     logger?.WLog("Stream contained '0 Channels'");
+        //     audio.Channels = 0;
+        // }
+        // else
         {
             try
             {
@@ -342,9 +343,13 @@ public class VideoInfoHelper
                 {
                     logger?.WLog("Unable to detect channels from: " + line);
                 }
+
                 logger?.ILog("Audio channels: " + audio.Channels + ", from " + parts[2]);
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                logger?.WLog("Failed to parse audio channels: " + ex.Message + "\n" + "From line: " + line);
+            }
         }
 
         var match = rgxAudioSampleRate.Match(info);
