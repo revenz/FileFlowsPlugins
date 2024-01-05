@@ -348,9 +348,12 @@ namespace FileFlows.AudioNodes
 
             if (Normalize)
             {
-                string twoPass = AudioFileNormalization.DoTwoPass(args, ffmpegExe);
-                ffArgs.Add("-af");
-                ffArgs.Add(twoPass);
+                var twoPass =  AudioFileNormalization.DoTwoPass(args, ffmpegExe);
+                if (twoPass.Success)
+                {
+                    ffArgs.Add("-af");
+                    ffArgs.Add(twoPass.Normalization);
+                }
             }
 
             ffArgs.Add(outputFile);
