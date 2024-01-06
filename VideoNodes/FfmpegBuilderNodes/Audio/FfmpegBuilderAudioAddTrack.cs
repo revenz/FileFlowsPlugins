@@ -220,7 +220,7 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
             {
                 args.Logger?.ILog("EAC3 detected with 7.1, switch to 5.1");
                 totalChannels = 6;
-                Channels = 5.1f;
+                Channels = 6;
             }
 
             int bitrate = Bitrate;
