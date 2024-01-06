@@ -219,6 +219,12 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
             if (BitratePerChannel)
             {
                 int totalChannels = GetAudioBitrateChannels(audio);
+                if (totalChannels == 8 && Codec == "eac3")
+                {
+                    args.Logger?.ILog("EAC3 detected with 7.1, switch to 5.1");
+                    totalChannels = 6;
+                    Channels = 5.1f;
+                }
                 args.Logger?.ILog("Total channels: " + totalChannels);
                 args.Logger?.ILog("Bitrate Per Channel: " + bitrate);
                 
