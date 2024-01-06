@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 using System.Runtime.InteropServices;
 using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
 
@@ -53,6 +54,7 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
             return _CodecOptions;
         }
     }
+    
     /// <summary>
     /// Gets or sets the audio channels for the new track
     /// </summary>
@@ -197,7 +199,7 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
         bool directCopy = false;
         if(bestAudio.Codec.ToLower() == this.Codec.ToLower())
         {
-            if((Channels == 0 || Channels == bestAudio.Channels) && Bitrate <= 2)
+            if((Channels == 0 || Math.Abs(Channels - bestAudio.Channels) < 0.05f) && Bitrate <= 2)
             {
                 directCopy = true;
             }
@@ -226,7 +228,10 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
 
             audio.EncodingParameters.AddRange(GetNewAudioTrackParameters(args, audio, Codec, Channels, bitrate, sampleRate));
             if (this.Channels > 0)
+            {
+                args.Logger?.ILog("Setting channels to: " + Channels);
                 audio.Channels = this.Channels;
+            }
         }
 
         if (RemoveTitle)
@@ -256,6 +261,15 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
 
         // Calculate the additional channels based on the decimal part
         int additionalChannels = (int)(decimalPart * 10);
+
+        if (additionalChannels == 0 && channels.ToString(CultureInfo.InvariantCulture).Contains("."))
+        {
+            var str = channels.ToString(CultureInfo.InvariantCulture);
+            Args?.Logger?.ILog("Decimal channel detected in string but not in float: " + str);
+            str = str.Substring(str.LastIndexOf(".", StringComparison.Ordinal) + 1);
+            additionalChannels = int.Parse(str);
+            Args?.Logger?.ILog("New additional channels detected: " + additionalChannels);
+        }
 
         // Total channels including sub-channels
         int totalChannels = (int)channels + additionalChannels;
@@ -296,17 +310,17 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
             return 0;
         })
         .ThenByDescending(x => {
-            if(this.Channels == 2)
+            if(Math.Abs(this.Channels - 2) < 0.05f)
             {
-                if (x.Channels == 2)
+                if (Math.Abs(x.Channels - 2) < 0.05f)
                     return 1_000_000_000;
                 // compare codecs
                 if (x.Codec?.ToLower() == this.Codec?.ToLower())
                     return 1_000_000;
             }
-            if(this.Channels == 1)
+            if(Math.Abs(this.Channels - 1) < 0.05f)
             {
-                if (x.Channels == 1)
+                if (Math.Abs(x.Channels - 1) < 0.05f)
                     return 1_000_000_000;
                 if (x.Channels <= 2.1f)
                     return 5_000_000;
@@ -356,7 +370,7 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
         if (channels > 0)
         {
             options.Add("-ac:a:{index}");
-            options.Add(channels.ToString());
+            options.Add(channels.ToString(CultureInfo.InvariantCulture));
         }
         else if ((opus || eac3 || dts) && stream.Channels > 1)
         {
