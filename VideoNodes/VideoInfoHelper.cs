@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Globalization;
 
 namespace FileFlows.VideoNodes;
 
@@ -326,8 +327,18 @@ public class VideoInfoHelper
                     audio.Channels = 1;
                 else if (Regex.IsMatch(parts[2], @"^[\d]+(\.[\d]+)?"))
                 {
-                    audio.Channels = float.Parse(Regex.Match(parts[2], @"^[\d]+(\.[\d]+)?").Value);
-                    logger?.ILog("Detected audio channels: " + audio.Channels + ", from " + parts[2]);
+                    var matchValue = Regex.Match(parts[2], @"^[\d]+(\.[\d]+)?").Value;
+                    
+                    CultureInfo culture = CultureInfo.InvariantCulture; // Use invariant culture for consistent parsing
+                    if (float.TryParse(matchValue, NumberStyles.Float, culture, out float channels))
+                    {
+                        audio.Channels = channels;
+                        logger?.ILog("Detected audio channels: " + audio.Channels + ", from " + parts[2]);
+                    }
+                    else
+                    {
+                        logger?.WLog($"Failed to parse value '{matchValue}' as a float.");
+                    }
                 }
                 else if (line.Contains(" 7.1"))
                     audio.Channels = 7.1f;
