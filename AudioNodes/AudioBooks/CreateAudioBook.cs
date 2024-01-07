@@ -29,16 +29,15 @@ public class CreateAudioBook: AudioNode
     public override string HelpUrl => "https://fileflows.com/docs/plugins/audio-nodes/create-audio-book";
 
     /// <summary>
-    /// Gets the node type
+    /// Gets the flow element type
     /// </summary>
     public override FlowElementType Type => FlowElementType.Process;
-
     
     /// <summary>
-    /// Executes the node
+    /// Executes the flow element
     /// </summary>
     /// <param name="args">the node parameters</param>
-    /// <returns>the result of the execution</returns>
+    /// <returns>the output to call next, -1 to abort flow, 0 to end flow</returns>
     public override int Execute(NodeParameters args)
     {
         var ffmpeg = GetFFmpeg(args);
