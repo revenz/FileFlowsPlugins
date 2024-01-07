@@ -65,6 +65,14 @@ public class Delete : Node
         if (string.IsNullOrEmpty(path))
             path = args.WorkingFile;
 
+        bool originalFile = path == args.FileName;
+        if (originalFile && args.IsRemote)
+        {
+            args.Logger?.ILog("Deleting original file remotely: " + args.LibraryFileName);
+            var result = args.DeleteRemote(args.LibraryFileName, false, null);
+            return 1;
+        }
+        
         if (IsDirectory(path))
         {
             try
