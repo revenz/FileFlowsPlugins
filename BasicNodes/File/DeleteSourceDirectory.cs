@@ -74,11 +74,15 @@ public class DeleteSourceDirectory : Node
 
         if (args.IsRemote)
         {
+            if (args.LibraryFileName.StartsWith(pathToDelete))
+            {
+                args.Logger?.ILog("Deleting original file remotely: " + args.LibraryFileName);
+                args.DeleteRemote(args.LibraryFileName, false,
+                    null); // first delete the source file since its in this directory we are deleting
+            }
+            
             args.Logger?.ILog("Sending request to delete remote path: " + pathToDelete);
 
-            if (args.LibraryFileName.StartsWith(pathToDelete))
-                args.DeleteRemote(args.LibraryFileName, false, null); // first delete the source file since its in this directory we are deleting
-            
             bool deleted = args.DeleteRemote(pathToDelete, IfEmpty, IncludePatterns);
             if (deleted)
                 args.Logger?.ILog("Successfully deleted remote path: " + pathToDelete);
