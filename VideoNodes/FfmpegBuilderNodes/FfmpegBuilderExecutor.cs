@@ -301,7 +301,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
 
     private static readonly bool IsMac = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
 
-
+    
     private string[][] Decoders_h264(NodeParameters args)
     {
         bool noNvidia =

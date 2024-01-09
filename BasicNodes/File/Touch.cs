@@ -11,7 +11,6 @@ public class Touch : Node
     public override string Icon => "fas fa-hand-point-right";
     public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/touch"; 
 
-
     [TextVariable(1)]
     public string FileName { get; set; }
 
@@ -20,48 +19,14 @@ public class Touch : Node
         string filename = args.ReplaceVariables(this.FileName ?? string.Empty, stripMissing: true);
         if (string.IsNullOrEmpty(filename))
             filename = args.WorkingFile;
-        
 
-        if (IsDirectory(filename))
+        var result = args.FileService.Touch(filename);
+        if (result.IsFailed)
         {
-            args.Logger?.ILog("Touching directory: " + filename);
-            try
-            {
-                var dir = new DirectoryInfo(filename);
-                Directory.SetLastWriteTimeUtc(filename, DateTime.UtcNow);
-                return 1;
-            }
-            catch (Exception ex)
-            {
-                args.Logger?.ELog("Failed to touch directory: " + ex.Message);
-                return -1;
-            }
+            args.Logger?.ELog("Failed to touch: " + result.Error);
+            return -1;
         }
-        else
-        {
-            args.Logger?.ILog("Touching file: " + filename);
-            try
-            {
-                if (System.IO.File.Exists(filename))
-                    System.IO.File.SetLastWriteTimeUtc(filename, DateTime.UtcNow);
-                else
-                    System.IO.File.Create(filename);
-                return 1;
-            }
-            catch (Exception ex)
-            {
-                args.Logger?.ELog($"Failed to touch file: '{filename}' => {ex.Message}");
-                return -1;
-            }
-        }
-    }
 
-    private bool IsDirectory(string filename)
-    {
-        try
-        {
-            return new DirectoryInfo(filename).Exists;
-        }
-        catch (Exception) { return false; }
+        return 1;
     }
 }

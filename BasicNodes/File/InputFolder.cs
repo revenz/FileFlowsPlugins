@@ -14,8 +14,7 @@ namespace FileFlows.BasicNodes.File
         {
             try
             {
-                var info = new DirectoryInfo(args.WorkingFile);
-                if (info.Exists == false)
+                if (args.FileService.DirectoryExists(args.WorkingFile).Is(true) == false)
                 {
                     args.Logger?.ELog("Directory not found: " + args.WorkingFile);
                     return -1;

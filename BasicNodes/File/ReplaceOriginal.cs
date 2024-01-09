@@ -1,5 +1,6 @@
 ﻿using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
+using FileFlows.Plugin.Helpers;
 
 namespace FileFlows.BasicNodes.File;
 
@@ -48,9 +49,9 @@ public class ReplaceOriginal : Node
         {
             args.Logger?.ILog("Working file is same as original, nothing to do.");
             return 1;
-        }
-        var wf = new FileInfo(args.WorkingFile);
-        if (args.FileName.ToLower().EndsWith(wf.Extension.ToLower()))
+        };
+        var wfExtension = FileHelper.GetExtension(args.WorkingFile);
+        if (args.FileName.ToLower().EndsWith(wfExtension.ToLower()))
         {
             // easy replace
             bool moved = args.MoveFile(args.FileName);
@@ -64,39 +65,37 @@ public class ReplaceOriginal : Node
                args.Variables.TryGetValue("ORIGINAL_LAST_WRITE_UTC", out object oLastWriteUtc) &&
                oCreateTimeUtc is DateTime dtCreateTimeUtc && oLastWriteUtc is DateTime dtLastWriteUtc)
             {
-                Helpers.FileHelper.SetCreationTime(args.FileName, dtCreateTimeUtc);
-                Helpers.FileHelper.SetLastWriteTime(args.FileName, dtLastWriteUtc);
+                args.FileService.SetCreationTimeUtc(args.FileName, dtCreateTimeUtc);
+                args.FileService.SetLastWriteTimeUtc(args.FileName, dtLastWriteUtc);
             }
         }
         else
         {
             // different extension, we will move the file, but then delete the original                
-            string dest = Path.ChangeExtension(args.FileName, wf.Extension);
+            string dest = Path.ChangeExtension(args.FileName, wfExtension);
             if(args.MoveFile(dest) == false)
             {
                 args.Logger?.ELog("Failed to move file to: " + dest);
                 return -1;
             }
-            if (dest.ToLower() != args.FileName.ToLower())
+
+            if (string.Equals(dest, args.FileName, StringComparison.CurrentCultureIgnoreCase) == false)
             {
-                try
+                var result = args.FileService.FileDelete(args.FileName);
+                if (result.IsFailed)
                 {
-                    System.IO.File.Delete(args.FileName);
-                }
-                catch (Exception ex)
-                {
-                    args.Logger?.ELog("Failed to delete orginal (with different extension): " + ex.Message);
+                    args.Logger?.ELog("Failed to delete original (with different extension): " + result.Error);
                     return -1;
                 }
             }
-            
+
 
             if(PreserverOriginalDates && args.Variables.TryGetValue("ORIGINAL_CREATE_UTC", out object oCreateTimeUtc) &&
                args.Variables.TryGetValue("ORIGINAL_LAST_WRITE_UTC", out object oLastWriteUtc) &&
                oCreateTimeUtc is DateTime dtCreateTimeUtc && oLastWriteUtc is DateTime dtLastWriteUtc)
             {
-                Helpers.FileHelper.SetCreationTime(dest, dtCreateTimeUtc);
-                Helpers.FileHelper.SetLastWriteTime(dest, dtLastWriteUtc);
+                args.FileService.SetCreationTimeUtc(args.FileName, dtCreateTimeUtc);
+                args.FileService.SetLastWriteTimeUtc(args.FileName, dtLastWriteUtc);
             }
         }
 

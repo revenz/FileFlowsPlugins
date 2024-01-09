@@ -21,13 +21,14 @@ namespace FileFlows.BasicNodes.File
 
         public override int Execute(NodeParameters args)
         {
-            var fi = new FileInfo(args.WorkingFile);
-            if (fi.Exists == false) {
+            var result = args.FileService.FileSize(args.WorkingFile);
+            if(result.IsFailed)
+            {
                 args.Logger.ELog("File Does not exist: " + args.WorkingFile);
                 return -1;
             }
 
-            return TestSize(args, fi.Length);
+            return TestSize(args, result.ValueOrDefault);
         }
 
         public int TestSize(NodeParameters args, long size)

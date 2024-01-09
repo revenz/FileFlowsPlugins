@@ -34,25 +34,6 @@ public class Delete : Node
     /// </summary>
     [TextVariable(1)] public string FileName { get; set; }
 
-    /// <summary>
-    /// Tests if a path is a directory
-    /// </summary>
-    /// <param name="path">the path to test</param>
-    /// <returns>true if a directory, otherwise false</returns>
-    private bool IsDirectory(string path)
-    {
-        if (string.IsNullOrWhiteSpace(path))
-            return false;
-
-        try
-        {
-            return Directory.Exists(path);
-        }
-        catch (Exception)
-        {
-            return false;
-        }
-    }
 
     /// <summary>
     /// Executes the flow element
@@ -65,21 +46,17 @@ public class Delete : Node
         if (string.IsNullOrEmpty(path))
             path = args.WorkingFile;
 
-        bool originalFile = path == args.FileName;
-        if (originalFile && args.IsRemote)
-        {
-            args.Logger?.ILog("Deleting original file remotely: " + args.LibraryFileName);
-            var result = args.DeleteRemote(args.LibraryFileName, false, null);
-            return 1;
-        }
-        
-        if (IsDirectory(path))
+
+        if (args.FileService.DirectoryExists(path).Is(true))
         {
             try
             {
                 args.Logger?.ILog("Deleting directory: " + path);
-                Directory.Delete(path, true);
-                args.Logger?.ILog("Deleted directory: " + path);
+                var result = args.FileService.DirectoryDelete(path, true);
+                if (result.IsFailed)
+                    args.Logger?.ELog("Failed deleting directory: "+ result.Error);
+                else
+                    args.Logger?.ILog("Deleted directory: " + path);
                 return 1;
             }
             catch (Exception ex)
@@ -93,8 +70,11 @@ public class Delete : Node
             try
             {
                 args.Logger?.ILog("Deleting file: " + path);
-                System.IO.File.Delete(path);
-                args.Logger?.ILog("Deleted file: " + path);
+                var result = args.FileService.FileDelete(path);
+                if(result.IsFailed)
+                    args.Logger?.ELog("Failed to Deleted file: " + result.Error);
+                else
+                    args.Logger?.ILog("Deleted file: " + path);
                 return 1;
             }
             catch (Exception ex)

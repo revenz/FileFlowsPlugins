@@ -1,4 +1,6 @@
-﻿namespace FileFlows.BasicNodes.Functions;
+﻿using FileFlows.Plugin.Helpers;
+
+namespace FileFlows.BasicNodes.Functions;
 
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
@@ -32,7 +34,8 @@ public class PatternReplacer : Node
 
         try
         {
-            string filename = new FileInfo(UseWorkingFileName ? args.WorkingFile : args.FileName).Name;
+            //string filename = new FileInfo(UseWorkingFileName ? args.WorkingFile : args.FileName).Name;
+            string filename = FileHelper.GetShortFileName(UseWorkingFileName ? args.WorkingFile : args.FileName);
             string updated = RunReplacements(args, filename);
             
             if (updated == filename)
@@ -43,20 +46,19 @@ public class PatternReplacer : Node
 
             args.Logger?.ILog($"Pattern replacement: '{filename}' to '{updated}'");
 
-            string dest = Path.Combine(new FileInfo(args.WorkingFile)?.DirectoryName ?? string.Empty, updated);
+            string directory = FileHelper.GetDirectory(args.WorkingFile);
+            string dest = directory + args.FileService.PathSeparator + updated;
             args.Logger?.ILog($"New filename: " + dest);
             if (UnitTest == false)
             {
-                if (args.MoveFile(dest) == false)
+                var result = args.FileService.FileMove(args.WorkingFile, dest, true);
+                if(result.IsFailed)
                 {
-                    args.Logger?.ELog("Failed to move file");
+                    args.Logger?.ELog("Failed to move file: " + result.Error);
                     return -1;
                 }
             }
-            else
-            {
-                args.SetWorkingFile(dest);
-            }
+            args.SetWorkingFile(dest);
             return 1;
         }
         catch (Exception ex)

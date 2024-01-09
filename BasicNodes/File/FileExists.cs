@@ -26,15 +26,24 @@ public class FileExists: Node
         }
         try
         {
-            file = args.MapPath(file);
-            var fileInfo = new FileInfo(file);
-            if (fileInfo.Exists)
+            var result = args.FileService.FileExists(file);
+            if (result.Is(true))
             {
                 args.Logger?.ILog("File does exist: " + file);
                 return 1;
             }
             args.Logger?.ILog("File does NOT exist: " + file);
             return 2;
+            
+            // file = args.MapPath(file);
+            // var fileInfo = new FileInfo(file);
+            // if (fileInfo.Exists)
+            // {
+            //     args.Logger?.ILog("File does exist: " + file);
+            //     return 1;
+            // }
+            // args.Logger?.ILog("File does NOT exist: " + file);
+            // return 2;
         }
         catch (Exception ex)
         {

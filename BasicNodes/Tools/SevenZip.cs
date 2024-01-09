@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
+using FileFlows.Plugin.Helpers;
 
 namespace FileFlows.BasicNodes.File;
 
@@ -129,15 +130,31 @@ public class SevenZip : Node
         try
         {
             string itemToCompress = args.WorkingFile;
-            if (System.IO.Directory.Exists(args.WorkingFile))
+            if (Directory.Exists(args.WorkingFile))
             {
+                if (args.IsRemote)
+                {
+                    args.Logger?.ELog("Cannot 7-zip a remote folder");
+                    return -1;
+                }
                 isDir = true;
                 itemToCompress = Path.Combine(args.WorkingFile, "*");
             }
-            else if (System.IO.File.Exists(args.WorkingFile) == false)
+            else
             {
-                args.Logger?.ELog("File or folder does not exist: " + args.WorkingFile);
-                return -1;
+                if (args.FileService.FileExists(args.WorkingFile))
+                {
+                    args.Logger?.ELog("File does not exist: " + args.WorkingFile);
+                    return 1;
+                }
+                var result = args.FileService.GetLocalPath(args.WorkingFile);
+                if (result.IsFailed)
+                {
+                    args.Logger?.ELog("Failed to ensure file is local: " + result.Error);
+                    return -1;
+                }
+
+                itemToCompress = result;
             }
             
             string sevenZip = args.GetToolPath("7zip")?.EmptyAsNull() ?? "7z";
@@ -149,7 +166,8 @@ public class SevenZip : Node
                 if (isDir)
                     destDir = new DirectoryInfo(args.LibraryPath).FullName;
                 else
-                    destDir = new FileInfo(args.FileName)?.DirectoryName ?? String.Empty;
+                    destDir = FileHelper.GetDirectory(args.FileName);
+                
                 if (string.IsNullOrEmpty(destDir))
                 {
                     args.Logger?.ELog("Failed to get destination directory");
@@ -164,9 +182,15 @@ public class SevenZip : Node
 
                 destDir = args.ReplaceVariables(destDir, stripMissing: true);
 
+                destDir = destDir.TrimEnd(Path.PathSeparator);
+
                 // this converts it to the actual OS path
-                destDir = new DirectoryInfo(destDir).FullName;
-                args.CreateDirectoryIfNotExists(destDir);
+                var result = args.FileService.DirectoryCreate(destDir);
+                if (result.IsFailed)
+                {
+                    args.Logger?.ELog("Failed creating directory: " + result.Error);
+                    return -1;
+                }
             }
             args.Logger?.ILog("Destination Folder: " + destDir);
 
@@ -176,31 +200,30 @@ public class SevenZip : Node
                 if (isDir)
                     destFile = new DirectoryInfo(args.FileName).Name + ".7z";
                 else
-                    destFile = new FileInfo(args.FileName).Name + ".7z";
+                    destFile = FileHelper.GetShortFileName(args.FileName) + ".7z";
             }
             if (destFile.ToLower().EndsWith(".7z") == false)
                 destFile += ".7z";
-            destFile = Path.Combine(destDir, destFile);
+            destFile = destDir + args.FileService.PathSeparator + destFile;
 
             args.Logger?.ILog($"Compressing '{args.WorkingFile}' to '{destFile}'");
 
             int compression = CompressionLevel < 1 ? 5 : CompressionLevel;
 
-            if (System.IO.File.Exists(destFile))
+            if (args.FileService.FileExists(destFile).Is(true))
             {
                 args.Logger?.ILog("Destination file already exists, deleting: " + destFile);
-                try
+                var result = args.FileService.FileDelete(destFile);
+                if (result.IsFailed)
                 {
-                    System.IO.File.Delete(destFile);
-                }
-                catch (Exception ex)
-                {
-                    args.Logger?.ILog("Failed to delete existing file: " + ex.Message);
+                    args.Logger?.ILog("Failed to delete existing file: " + result.Error);
                     return -1;
                 }
             }
 
             string compressionMethod = CompressionMethod?.EmptyAsNull() ?? "lzma2";
+
+            string targetFile = args.IsRemote ? Path.Combine(args.TempPath, Guid.NewGuid() + ".7zip") : destFile;
 
             args.Execute(new()
             {
@@ -209,19 +232,30 @@ public class SevenZip : Node
                 {
                     "a", "-t7z", $"-m0={compressionMethod}", 
                     $"-mx{compression}", 
-                    destFile, itemToCompress
+                    targetFile, itemToCompress
                 }
             });
-            
-            if (System.IO.File.Exists(destFile))
+
+            if (System.IO.File.Exists(targetFile) == false)
             {
-                args.SetWorkingFile(destFile);
-                args.Logger?.ILog("7z created at: " + destFile);
-                return 1;
+                args.Logger?.ELog("Failed to create 7z: " + destFile);
+                return -1;
             }
 
-            args.Logger?.ELog("Failed to create 7z: " + destFile);
-            return -1;
+            if (targetFile != destFile)
+            {
+                // need to move the file 
+                var result = args.FileService.FileMove(targetFile, destFile, true);
+                if (result.IsFailed)
+                {
+                    args.Logger?.ELog("Failed to move 7z file: " + result.Error);
+                    return -1;
+                }
+            }
+            
+            args.SetWorkingFile(destFile);
+            args.Logger?.ILog("7z created at: " + destFile);
+            return 1;
         }
         catch (Exception ex)
         {

@@ -1,10 +1,11 @@
-﻿namespace FileFlows.BasicNodes.File;
-
+﻿using FileFlows.Plugin.Helpers;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Text.RegularExpressions;
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
+
+namespace FileFlows.BasicNodes.File;
 
 public class Renamer : Node
 {
@@ -50,7 +51,7 @@ public class Renamer : Node
         }
 
         string newFile = Pattern;
-        // incase they set a linux path on windows or vice versa
+        // in case they set a linux path on windows or vice versa
         newFile = newFile.Replace('\\', Path.DirectorySeparatorChar);
         newFile = newFile.Replace('/', Path.DirectorySeparatorChar);
 
@@ -67,36 +68,37 @@ public class Renamer : Node
         
         string destFolder = args.ReplaceVariables(DestinationPath ?? string.Empty, stripMissing: true, cleanSpecialCharacters: true);
         if (string.IsNullOrEmpty(destFolder))
-            destFolder = new FileInfo(args.WorkingFile).Directory?.FullName ?? "";
+            destFolder = FileHelper.GetDirectory(args.WorkingFile);
 
-        var dest = args.GetSafeName(Path.Combine(destFolder, newFile));
+        if (destFolder.EndsWith("/") | destFolder.EndsWith(@"\"))
+            destFolder = destFolder[..^1];
 
-        if (string.IsNullOrEmpty(dest.Extension) == false)
+        var dest = args.GetSafeName(destFolder + args.FileService.PathSeparator + newFile);
+        
+        string destExtension = FileHelper.GetExtension(dest);
+
+        if (string.IsNullOrEmpty(destExtension) == false)
         {
             // just ensures extensions are lowercased
-            dest = new FileInfo(dest.FullName.Substring(0, dest.FullName.LastIndexOf(dest.Extension)) + dest.Extension.ToLower());
+            dest = dest[..dest.LastIndexOf(destExtension, StringComparison.Ordinal)] +
+                   destExtension.ToLower();
         }
 
 
 
-        args.Logger?.ILog("Renaming file to: " + dest.FullName);
+        args.Logger?.ILog("Renaming file to: " + dest);
 
         if (string.IsNullOrEmpty(CsvFile) == false)
         {
-            try
-            {
-                System.IO.File.AppendAllText(CsvFile, EscapeForCsv(args.FileName) + "," + EscapeForCsv(dest.FullName) + Environment.NewLine);
-            }
-            catch (Exception ex)  
-            {
-                args.Logger?.ELog("Failed to append to CSV file: " + ex.Message);
-            }
+                var result = args.FileService.FileAppendAllText(CsvFile, EscapeForCsv(args.FileName) + "," + EscapeForCsv(dest) + Environment.NewLine);
+                if(result.IsFailed)
+                    args.Logger?.ELog("Failed to append to CSV file: " + result.Error);
         }
 
         if (LogOnly)
             return 1;
 
-        return args.MoveFile(dest.FullName) ? 1 : -1;
+        return args.MoveFile(dest) ? 1 : -1;
     }
 
     private string EscapeForCsv(string input)

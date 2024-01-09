@@ -15,9 +15,10 @@ namespace FileFlows.BasicNodes.File
 
         public override int Execute(NodeParameters args)
         {
-            FileInfo fiOriginal = new FileInfo(args.FileName);
-            float origSize = 0;
-            if (fiOriginal.Exists == false)
+            //FileInfo fiOriginal = new FileInfo(args.FileName);
+            var result = args.FileService.FileSize(args.FileName);
+            long origSize = result.ValueOrDefault;
+            if (result.IsFailed)
             {
                 // try get from variables
                 if (args.Variables.ContainsKey("file.Orig.Size") && args.Variables["file.Orig.Size"] is long tSize && tSize > 0)
@@ -30,14 +31,11 @@ namespace FileFlows.BasicNodes.File
                     return -1;
                 }
             }
-            else
-            {
-                origSize = fiOriginal.Length;
-            }
 
-            float wfSize = 0;
-                FileInfo fiWorkingFile = new FileInfo(args.WorkingFile);
-            if (fiWorkingFile.Exists == false)
+            //FileInfo fiWorkingFile = new FileInfo(args.WorkingFile);
+            result = args.FileService.FileSize(args.WorkingFile);
+            long wfSize = result.ValueOrDefault;
+            if (result.IsFailed)
             {
                 if (args.WorkingFileSize > 0)
                 {
@@ -49,14 +47,10 @@ namespace FileFlows.BasicNodes.File
                     return -1;
                 }
             }
-            else
-            {
-                wfSize = fiWorkingFile.Length;
-            }
             
 
-            args.Logger?.ILog("Original File Size: " + String.Format("{0:n0}", origSize));
-            args.Logger?.ILog("Working File Size: " + String.Format("{0:n0}", wfSize));
+            args.Logger?.ILog($"Original File Size: {origSize:n0}");
+            args.Logger?.ILog($"Working File Size: {wfSize:n0}");
 
 
             if (wfSize > origSize)

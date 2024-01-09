@@ -33,14 +33,14 @@ public class InputFile : Node
     {
         try
         {
-            FileInfo fileInfo = new FileInfo(args.WorkingFile);
-            if (fileInfo.Exists == false)
+            if(args.FileService.FileExists(args.WorkingFile).Is(true) == false)
             {
                 args.Logger?.ELog("File not found: " + args.WorkingFile);
                 return -1;
             }
-            args.Variables["ORIGINAL_CREATE_UTC"] = fileInfo.CreationTimeUtc;
-            args.Variables["ORIGINAL_LAST_WRITE_UTC"] = fileInfo.LastWriteTimeUtc;
+            
+            args.Variables["ORIGINAL_CREATE_UTC"] = args.FileService.FileCreationTimeUtc(args.WorkingFile).ValueOrDefault;
+            args.Variables["ORIGINAL_LAST_WRITE_UTC"] = args.FileService.FileLastWriteTimeUtc(args.WorkingFile).ValueOrDefault;
             return 1;
         }
         catch (Exception ex)
