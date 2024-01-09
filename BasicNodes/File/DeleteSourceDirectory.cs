@@ -48,10 +48,12 @@ public class DeleteSourceDirectory : Node
     /// <returns>the output to call next, -1 to abort flow, 0 to end flow</returns>
     public override int Execute(NodeParameters args)
     {
-        string path = args.LibraryFileName.Substring(0, args.LibraryFileName.Length - args.RelativeFile.Length);
+        string libraryPath = args.LibraryFileName.Substring(0, args.LibraryFileName.Length - args.RelativeFile.Length)
+            .TrimEnd('/')
+            .TrimEnd('\\');
 
         args.Logger?.ILog("Library File Name: " + args.LibraryFileName);
-        args.Logger?.ILog("Library Path: " + path);
+        args.Logger?.ILog("Library Path: " + libraryPath);
         args.Logger?.ILog("Relative File: " + args.RelativeFile);
         //args.Logger?.ILog("IsRemote: " + args.IsRemote);
 
@@ -67,7 +69,7 @@ public class DeleteSourceDirectory : Node
         string pathSeparator = args.FileService.PathSeparator.ToString();
 
         args.Logger?.ILog("Path Separator: " + pathSeparator);
-        string pathToDelete = path.EndsWith(pathSeparator) ? path + topdir : path + pathSeparator + topdir;
+        string pathToDelete = libraryPath.EndsWith(pathSeparator) ? libraryPath + topdir : libraryPath + pathSeparator + topdir;
         args.Logger?.ILog("Path To Delete: " + pathToDelete);
 
         // if (args.IsRemote)
@@ -91,9 +93,9 @@ public class DeleteSourceDirectory : Node
 
         if (IfEmpty)
         {
-            string libFilePath = args.IsDirectory ? args.FileName : FileHelper.GetDirectory(args.LibraryFileName);
-            args.Logger?.ILog("libFilePath: " + libFilePath);
-            return RecursiveDelete(args, path, libFilePath, true);
+            string libFileDirectory = args.IsDirectory ? args.FileName : FileHelper.GetDirectory(args.LibraryFileName);
+            args.Logger?.ILog("libFileDirectory: " + libFileDirectory);
+            return RecursiveDelete(args, libraryPath, libFileDirectory, true);
         }
 
         args.Logger?.ILog("Deleting directory: " + pathToDelete);
@@ -114,14 +116,13 @@ public class DeleteSourceDirectory : Node
         
         args.Logger?.ILog("Checking directory to delete: " + path);
         //DirectoryInfo dir = new DirectoryInfo(path);
-        var dirFullName = FileHelper.GetDirectory(path);
-        if (string.Equals(dirFullName, root, StringComparison.CurrentCultureIgnoreCase))
+        if (string.Equals(path, root, StringComparison.CurrentCultureIgnoreCase))
         {
             args.Logger?.ILog("At root, stopping deleting: " + root);
             return 1;
         }
 
-        if (dirFullName.Length <= root.Length)
+        if (path.Length <= root.Length)
         {
             args.Logger?.ILog("At root2, stopping deleting: " + root);
             return 1;
@@ -139,7 +140,7 @@ public class DeleteSourceDirectory : Node
         var files = args.FileService.GetFiles(path, "*.*", true).ValueOrDefault ?? new string [] {};
         if (IncludePatterns?.Any() == true)
         {
-            var count = files.Where(x =>
+            var includeFiles = files.Where(x =>
             {
                 foreach (var pattern in IncludePatterns)
                 {
@@ -157,16 +158,18 @@ public class DeleteSourceDirectory : Node
                 }
 
                 return false;
-            }).Count();
-            if (count > 0)
+            }).ToList();
+            if (includeFiles.Any())
             {
-                args.Logger?.ILog("Directory is not empty, cannot delete: " + path);
+                args.Logger?.ILog("Directory is not empty, cannot delete: " + path + Environment.NewLine +
+                                  string.Join(Environment.NewLine, includeFiles.Select(x => " - " + x)));
                 return 2;
             }
         }
         else if (files.Length == 0)
         {
-            args.Logger?.ILog("Directory is not empty, cannot delete: " + path);
+            args.Logger?.ILog("Directory is not empty, cannot delete: " + path + Environment.NewLine +
+                              string.Join(Environment.NewLine, files.Select(x => " - " + x)));
             return 2;
         }
 
