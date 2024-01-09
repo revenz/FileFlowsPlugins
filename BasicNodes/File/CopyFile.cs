@@ -89,43 +89,55 @@ namespace FileFlows.BasicNodes.File
             // /mnt, etc will be converted to c:\mnt and break the destination
             var destDir = destParts.Path;
             string dest = destParts.Path + destParts.Separator + destParts.Filename;
-            
-            bool copied = args.CopyFile(args.WorkingFile, dest, updateWorkingFile: true);
-            if (!copied)
-                return -1;
 
+            //bool copied = args.CopyFile(args.WorkingFile, dest, updateWorkingFile: true);
+            //if (!copied)
+            //    return -1;
+            
+            if (args.FileService.FileCopy(args.WorkingFile, dest, true).IsFailed)
+                return -1;
+            args.SetWorkingFile(dest);
 
             if(PreserverOriginalDates && args.Variables.TryGetValue("ORIGINAL_CREATE_UTC", out object oCreateTimeUtc) &&
                args.Variables.TryGetValue("ORIGINAL_LAST_WRITE_UTC", out object oLastWriteUtc) &&
                oCreateTimeUtc is DateTime dtCreateTimeUtc && oLastWriteUtc is DateTime dtLastWriteUtc)
             {
-                Helpers.FileHelper.SetCreationTime(dest, dtCreateTimeUtc);
-                Helpers.FileHelper.SetLastWriteTime(dest, dtLastWriteUtc);
+                args.FileService.SetCreationTimeUtc(dest, dtCreateTimeUtc);
+                args.FileService.SetLastWriteTimeUtc(dest, dtLastWriteUtc);
+                
+                //Helpers.FileHelper.SetCreationTime(dest, dtCreateTimeUtc);
+                //Helpers.FileHelper.SetLastWriteTime(dest, dtLastWriteUtc);
             }
 
-            var srcDir = AdditionalFilesFromOriginal ? new FileInfo(args.MapPath(args.FileName)).DirectoryName : new FileInfo(args.MapPath(args.WorkingFile)).DirectoryName;
+            var srcDir = AdditionalFilesFromOriginal ? 
+                new FileInfo(args.MapPath(args.FileName)).DirectoryName :
+                new FileInfo(args.MapPath(args.WorkingFile)).DirectoryName;
 
             if (AdditionalFiles?.Any() == true)
             {
                 try
                 {
-                    var diSrc = new DirectoryInfo(srcDir);
+                    //var diSrc = new DirectoryInfo(srcDir);
                     foreach (var additional in AdditionalFiles)
                     {
-                        foreach (var addFile in diSrc.GetFiles(additional))
+                        //foreach (var addFile in diSrc.GetFiles(additional))
+                        foreach(var addFile in args.FileService.GetFiles(srcDir).ValueOrDefault ?? new string[] {})
                         {
                             try
                             {
-                                string addFileDest = Path.Combine(destDir, addFile.Name);
-                                args.CopyFile(addFile.FullName, addFileDest, updateWorkingFile: false);
+                                string shortName = FileHelper.GetShortFileName(addFile);
+                                
+                                string addFileDest = Path.Combine(destDir, shortName);
+                                args.FileService.FileCopy(addFile, addFileDest, true);
+                                //args.CopyFile(addFile, addFileDest, updateWorkingFile: false);
 
-                                FileHelper.ChangeOwner(args.Logger, addFileDest, file: true);
+                                //FileHelper.ChangeOwner(args.Logger, addFileDest, file: true);
 
-                                args.Logger?.ILog("Copied file: \"" + addFile.FullName + "\" to \"" + addFileDest + "\"");
+                                args.Logger?.ILog("Copied file: \"" + addFile + "\" to \"" + addFileDest + "\"");
                             }
                             catch (Exception ex)
                             {
-                                args.Logger?.ILog("Failed copying file: \"" + addFile.FullName + "\": " + ex.Message);
+                                args.Logger?.ILog("Failed copying file: \"" + addFile + "\": " + ex.Message);
                             }
                         }
                     }
