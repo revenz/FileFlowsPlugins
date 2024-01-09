@@ -91,7 +91,7 @@ public class DeleteSourceDirectory : Node
 
         if (IfEmpty)
         {
-            string libFilePath = args.IsDirectory ? args.FileName : FileHelper.GetDirectory(args.FileName);
+            string libFilePath = args.IsDirectory ? args.FileName : FileHelper.GetDirectory(args.LibraryFileName);
             args.Logger?.ILog("libFilePath: " + libFilePath);
             return RecursiveDelete(args, path, libFilePath, true);
         }
