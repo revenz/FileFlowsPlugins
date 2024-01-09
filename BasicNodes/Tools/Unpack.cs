@@ -4,6 +4,7 @@ using FileFlows.Plugin.Attributes;
 using System.IO.Compression;
 using FileFlows.BasicNodes;
 using SharpCompress.Archives;
+using System.IO;
 
 namespace BasicNodes.Tools;
 

@@ -52,8 +52,8 @@ public class Renamer : Node
 
         string newFile = Pattern;
         // in case they set a linux path on windows or vice versa
-        newFile = newFile.Replace('\\', Path.DirectorySeparatorChar);
-        newFile = newFile.Replace('/', Path.DirectorySeparatorChar);
+        newFile = newFile.Replace('\\', args.FileService.PathSeparator);
+        newFile = newFile.Replace('/', args.FileService.PathSeparator);
 
         newFile = args.ReplaceVariables(newFile, stripMissing: true, cleanSpecialCharacters: true);
         newFile = Regex.Replace(newFile, @"\.(\.[\w\d]+)$", "$1");

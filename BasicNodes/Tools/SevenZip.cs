@@ -3,6 +3,8 @@ using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
 using FileFlows.Plugin.Helpers;
 
+using System.IO;
+
 namespace FileFlows.BasicNodes.File;
 
 /// <summary>

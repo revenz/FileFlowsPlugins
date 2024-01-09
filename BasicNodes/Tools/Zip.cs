@@ -1,6 +1,7 @@
 ﻿using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
 using System.IO.Compression;
+using System.IO;
 
 namespace FileFlows.BasicNodes.File;
 

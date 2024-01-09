@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
+using FileFlows.Plugin.Helpers;
 
 namespace FileFlows.BasicNodes.File;
 
@@ -86,7 +87,7 @@ public class MoveFile : Node
             return -1;
         
         // store srcDir here before we move and the working file is altered
-        var srcDir = AdditionalFilesFromOriginal ? new FileInfo(args.FileName).DirectoryName : new FileInfo(args.WorkingFile).DirectoryName;
+        var srcDir = FileHelper.GetDirectory(AdditionalFilesFromOriginal ? args.FileName : args.WorkingFile);
 
         if (args.MoveFile(dest) == false)
             return -1;
@@ -103,27 +104,27 @@ public class MoveFile : Node
         {
             try
             {
-                string destDir = new FileInfo(args.MapPath(dest)).DirectoryName;
-                args.CreateDirectoryIfNotExists(destDir ?? String.Empty);
+                string destDir = FileHelper.GetDirectory(dest);
+                args.FileService.DirectoryCreate(destDir);
 
-                var diSrc = new DirectoryInfo(srcDir);
                 args.Logger?.ILog("Looking for additional files in directory: " + srcDir);
                 foreach (var additional in AdditionalFiles)
                 {
                     args.Logger?.ILog("Looking for additional files: " + additional);
-                    foreach(var addFile in diSrc.GetFiles(additional))
+                    var srcDirFiles = args.FileService.GetFiles(srcDir).ValueOrDefault ?? new string[] { };
+                    foreach(var addFile in srcDirFiles)
                     {
                         try
                         {
-                            args.Logger?.ILog("Additional files: " + addFile.FullName);
+                            args.Logger?.ILog("Additional files: " + addFile);
                             
-                            string addFileDest = Path.Combine(destDir, addFile.Name);
-                            System.IO.File.Move(addFile.FullName, addFileDest, true);
-                            args.Logger?.ILog("Moved file: \"" + addFile.FullName + "\" to \"" + addFileDest + "\"");
+                            string addFileDest = destDir + args.FileService.PathSeparator + FileHelper.GetShortFileName(addFile);
+                            args.FileService.FileMove(addFile, addFileDest, true);
+                            args.Logger?.ILog("Moved file: \"" + addFile + "\" to \"" + addFileDest + "\"");
                         }
                         catch(Exception ex)
                         {
-                            args.Logger?.ILog("Failed moving file: \"" + addFile.FullName + "\": " + ex.Message);
+                            args.Logger?.ILog("Failed moving file: \"" + addFile + "\": " + ex.Message);
                         }
                     }
                 }
@@ -139,12 +140,12 @@ public class MoveFile : Node
         }
 
 
-        if (DeleteOriginal && args.FileName != args.WorkingFile)
+        if (DeleteOriginal && args.LibraryFileName != args.WorkingFile)
         {
-            args.Logger?.ILog("Deleting original file: " + args.FileName);
+            args.Logger?.ILog("Deleting original file: " + args.LibraryFileName);
             try
             {
-                System.IO.File.Delete(args.FileName);
+                args.FileService.FileDelete(args.LibraryFileName);
             }
             catch(Exception ex)
             {
@@ -205,7 +206,7 @@ public class MoveFile : Node
                 relative = relative[1..];
             if (relative.IndexOf(separator, StringComparison.Ordinal) > 0)
             {
-                destFolder = destFolder + separator + relative.Substring(0, relative.LastIndexOf(separator, StringComparison.Ordinal));
+                destFolder = destFolder + separator + relative[..relative.LastIndexOf(separator, StringComparison.Ordinal)];
                 args.Logger?.ILog("Using relative directory: " + destFolder);
             }
         }
@@ -220,12 +221,12 @@ public class MoveFile : Node
             destFilename = args.ReplaceVariables(destinationFile);
         }
         
-        string destExtension = new FileInfo(destFilename).Extension;
-        string workingExtension = new FileInfo(args.WorkingFile).Extension;
-
+        string destExtension = FileHelper.GetExtension(destFilename);
+        string workingExtension = FileHelper.GetExtension(args.WorkingFile);
+            
         if (string.IsNullOrEmpty(destExtension) == false && destExtension != workingExtension)
         {
-            destFilename = destFilename.Substring(0, destFilename.LastIndexOf(".", StringComparison.Ordinal)) + workingExtension;
+            destFilename = destFilename[..(destFilename.LastIndexOf(".", StringComparison.Ordinal) + 1)] + workingExtension;
         }
 
         args.Logger?.ILog("Final destination path: " + destFolder);

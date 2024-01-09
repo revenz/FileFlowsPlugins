@@ -1,5 +1,7 @@
 ﻿#if(DEBUG)
 
+using System.IO;
+
 namespace BasicNodes.Tests
 {
     using FileFlows.BasicNodes.File;

@@ -109,9 +109,9 @@ namespace FileFlows.BasicNodes.File
                 //Helpers.FileHelper.SetLastWriteTime(dest, dtLastWriteUtc);
             }
 
-            var srcDir = AdditionalFilesFromOriginal ? 
-                new FileInfo(args.MapPath(args.FileName)).DirectoryName :
-                new FileInfo(args.MapPath(args.WorkingFile)).DirectoryName;
+            var srcDir = FileHelper.GetDirectory(AdditionalFilesFromOriginal
+                ? args.MapPath(args.FileName)
+                : args.MapPath(args.WorkingFile));
 
             if (AdditionalFiles?.Any() == true)
             {
@@ -121,13 +121,13 @@ namespace FileFlows.BasicNodes.File
                     foreach (var additional in AdditionalFiles)
                     {
                         //foreach (var addFile in diSrc.GetFiles(additional))
-                        foreach(var addFile in args.FileService.GetFiles(srcDir).ValueOrDefault ?? new string[] {})
+                        foreach(var addFile in args.FileService.GetFiles(additional).ValueOrDefault ?? new string[] {})
                         {
                             try
                             {
                                 string shortName = FileHelper.GetShortFileName(addFile);
                                 
-                                string addFileDest = Path.Combine(destDir, shortName);
+                                string addFileDest = destDir + args.FileService.PathSeparator + shortName;
                                 args.FileService.FileCopy(addFile, addFileDest, true);
                                 //args.CopyFile(addFile, addFileDest, updateWorkingFile: false);
 
