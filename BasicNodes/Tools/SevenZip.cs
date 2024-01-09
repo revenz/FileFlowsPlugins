@@ -140,7 +140,7 @@ public class SevenZip : Node
                     return -1;
                 }
                 isDir = true;
-                itemToCompress = Path.Combine(args.WorkingFile, "*");
+                itemToCompress = FileHelper.Combine(args.WorkingFile, "*");
             }
             else
             {
@@ -225,7 +225,7 @@ public class SevenZip : Node
 
             string compressionMethod = CompressionMethod?.EmptyAsNull() ?? "lzma2";
 
-            string targetFile = args.IsRemote ? Path.Combine(args.TempPath, Guid.NewGuid() + ".7zip") : destFile;
+            string targetFile = args.IsRemote ? FileHelper.Combine(args.TempPath, Guid.NewGuid() + ".7zip") : destFile;
 
             args.Execute(new()
             {
