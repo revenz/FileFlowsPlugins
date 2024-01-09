@@ -137,7 +137,14 @@ public class DeleteSourceDirectory : Node
             }
         }
 
-        var files = args.FileService.GetFiles(path, "*.*", true).ValueOrDefault ?? new string [] {};
+        var files = args.FileService.GetFiles(path, "", true).ValueOrDefault ?? new string [] {};
+        args.Logger?.ILog($"Directory contains {files.Length} file{(files.Length == 1 ? "" : "s")}");
+        
+        foreach (var file in files)
+        {
+            args.Logger?.ILog("File: " + file);
+        }
+
         if (IncludePatterns?.Any() == true)
         {
             var includeFiles = files.Where(x =>
