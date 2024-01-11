@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using FileFlows.VideoNodes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Text.Json;
+using System.IO;
 
 namespace VideoNodes.Tests;
 
@@ -20,11 +21,11 @@ public abstract class TestBase
     [TestInitialize]
     public void TestInitialize()
     {
-        if (File.Exists("../../../test.settings.dev.json"))
+        if (System.IO.File.Exists("../../../test.settings.dev.json"))
         {
             LoadSettings("../../../test.settings.dev.json");
         }
-        else if (File.Exists("../../../test.settings.json"))
+        else if (System.IO.File.Exists("../../../test.settings.json"))
         {
             LoadSettings("../../../test.settings.json");
         }

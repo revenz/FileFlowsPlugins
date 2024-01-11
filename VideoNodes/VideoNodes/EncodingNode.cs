@@ -67,7 +67,7 @@ namespace FileFlows.VideoNodes
             Encoder.AtTime += AtTimeEvent;
 
             if (string.IsNullOrEmpty(outputFile))
-                outputFile = Path.Combine(args.TempPath, Guid.NewGuid().ToString() + "." + extension);
+                outputFile = System.IO.Path.Combine(args.TempPath, Guid.NewGuid() + "." + extension);
 
             if (TotalTime.TotalMilliseconds == 0)
             {
@@ -220,7 +220,7 @@ namespace FileFlows.VideoNodes
                 else
                 {
                     // linux, crude method, look for nvidia in the /dev dir
-                    var dir = new DirectoryInfo("/dev");
+                    var dir = new System.IO.DirectoryInfo("/dev");
                     if (dir.Exists == false)
                         return false;
 

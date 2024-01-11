@@ -129,12 +129,15 @@ public class SubtitleExtractor : EncodingNode
                 }
                 else
                 {
-                    var file = new FileInfo(args.FileName);
-                    output = file.FullName[..file.FullName.LastIndexOf(file.Extension, StringComparison.Ordinal)];
+                    string fileFullname = args.FileName;
+                    string fileExtension = FileHelper.GetExtension(fileFullname);
+                    output = fileFullname[..fileFullname.LastIndexOf(fileExtension, StringComparison.Ordinal)];
 
                     output = output +
-                             (string.IsNullOrWhiteSpace(subTrack.Language) == false ? "." + subTrack.Language  : "") +
+                             (string.IsNullOrWhiteSpace(subTrack.Language) == false ? subTrack.Language  : "") +
                              (i == 0 ? "" : "." + i);
+                    
+                    output = output.Replace("..", ".");
                 }
 
 

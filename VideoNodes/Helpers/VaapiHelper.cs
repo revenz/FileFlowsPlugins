@@ -5,7 +5,7 @@ namespace FileFlows.VideoNodes.Helpers;
 /// </summary>
 class VaapiHelper
 {
-    internal static bool VaapiLinux => OperatingSystem.IsLinux() && File.Exists(VaapiRenderDevice);
+    internal static bool VaapiLinux => OperatingSystem.IsLinux() && System.IO.File.Exists(VaapiRenderDevice);
 
     internal const string VaapiRenderDevice = "/dev/dri/renderD128";
 }

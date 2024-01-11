@@ -35,7 +35,13 @@ public class VideoHasErrors: VideoNode
     /// <returns>the output to call next</returns>
     public override int Execute(NodeParameters args)
     {
-        var result = ValidateFile(FFMPEG, args.FileName);
+        var file = args.FileService.GetLocalPath(args.WorkingFile);
+        if (file.IsFailed)
+        {
+            args.Logger?.ILog("Failed to get file: " + file.Error);
+            return -1;
+        }
+        var result = ValidateFile(FFMPEG, file);
         if (result.NoErrors)
             return 2;
         
@@ -54,10 +60,10 @@ public class VideoHasErrors: VideoNode
     /// </returns>
     public static (bool NoErrors, string Log) ValidateFile(string ffmpegPath, string filename)
     {
-        if (File.Exists(ffmpegPath) == false)
+        if (System.IO.File.Exists(ffmpegPath) == false)
             return (false, "FFmpeg does not exist at the specified path.");
 
-        if (File.Exists(filename) == false)
+        if (System.IO.File.Exists(filename) == false)
             return (false, "The input file does not exist.");
 
         var processStartInfo = new ProcessStartInfo

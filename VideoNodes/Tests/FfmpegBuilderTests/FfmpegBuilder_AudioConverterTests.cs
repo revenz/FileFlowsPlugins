@@ -4,6 +4,7 @@ using FileFlows.VideoNodes.FfmpegBuilderNodes;
 using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VideoNodes.Tests;
+using System.IO;
 
 namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests;
 

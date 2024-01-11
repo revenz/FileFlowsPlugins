@@ -5,10 +5,7 @@ namespace VideoNodes.Tests
     using FileFlows.VideoNodes;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using System.IO;
 
     [TestClass]
     public class SubtitleExtractorTests: TestBase

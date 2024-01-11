@@ -3,6 +3,7 @@
 using FileFlows.VideoNodes.FfmpegBuilderNodes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VideoNodes.Tests;
+using System.IO;
 
 namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests;
 
@@ -40,7 +41,7 @@ public class FfmpegBuilder_VideoEncode_VideoEncodeTests: TestBase
         int result = ffExecutor.Execute(args);
         string log = logger.ToString();
         if(args.WorkingFile.StartsWith(args.TempPath))
-            File.Move(args.WorkingFile, Path.Combine(args.TempPath, outfile), true);
+            File.Move(args.WorkingFile, FileHelper.Combine(args.TempPath, outfile), true);
         Assert.AreEqual(1, result);
         return (result, log);
     }

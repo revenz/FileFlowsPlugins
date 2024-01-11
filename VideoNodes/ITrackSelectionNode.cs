@@ -55,12 +55,12 @@ public interface ITrackStreamSelectionNode
         }
     }
 
-    [ConditionEquals(nameof(Stream), "Video", inverse: true)]
+    [ConditionEquals(nameof(StreamType), "Video", inverse: true)]
     [TextVariable(14)]
     public string Language { get; set; }
 
 
-    [ConditionEquals(nameof(Stream), "Audio")]
+    [ConditionEquals(nameof(StreamType), "Audio")]
     [NumberFloat(17)]
     public float Channels { get; set; }
 }

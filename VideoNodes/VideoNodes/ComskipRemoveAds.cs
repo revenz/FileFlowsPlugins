@@ -13,6 +13,39 @@
     {
         public override int Outputs => 2;
 
+        private string GetEdlFile(NodeParameters args)
+        {
+            string edlFile = args.WorkingFile.Substring(0, args.WorkingFile.LastIndexOf(".", StringComparison.Ordinal) + 1) +
+                "edl";
+            if (args.FileService.FileIsLocal(edlFile))
+            {
+                if (System.IO.File.Exists(edlFile))
+                    return edlFile;
+                
+                return args.WorkingFile.Substring(0,
+                        args.WorkingFile.LastIndexOf(".", StringComparison.Ordinal) + 1) + "edl";
+            }
+            if (args.FileService.FileExists(edlFile).Is(true) == false)
+            {
+                edlFile = args.WorkingFile.Substring(0,
+                    args.WorkingFile.LastIndexOf(".", StringComparison.Ordinal) + 1) + "edl";
+                
+                if (args.FileService.FileExists(edlFile).Is(true) == false)
+                    return string.Empty;
+                    
+            }
+            
+            var result = args.FileService.GetLocalPath(edlFile);
+            if (result.IsFailed)
+            {
+                args.Logger.ELog("Failed to download edl file locally: " + result.Error);
+                return null;
+            }
+
+            return result;
+
+        }
+
         public override int Execute(NodeParameters args)
         {
             VideoInfo videoInfo = GetVideoInfo(args);
@@ -21,16 +54,15 @@
             float totalTime = (float)videoInfo.VideoStreams[0].Duration.TotalSeconds;
 
 
-            string edlFile = args.WorkingFile.Substring(0, args.WorkingFile.LastIndexOf(".") + 1) + "edl";
-            if(File.Exists(edlFile) == false)
-                edlFile = args.WorkingFile.Substring(0, args.WorkingFile.LastIndexOf(".") + 1) + "edl";
-            if (File.Exists(edlFile) == false)
+            string edlFile = GetEdlFile(args);
+
+            if (string.IsNullOrWhiteSpace(edlFile) || System.IO.File.Exists(edlFile) == false)
             {
                 args.Logger?.ILog("No EDL file found for file");
                 return 2;
             }
 
-            string text = File.ReadAllText(edlFile) ?? string.Empty;
+            string text = System.IO.File.ReadAllText(edlFile) ?? string.Empty;
             float last = -1;
             List<BreakPoint> breakPoints = new List<BreakPoint>();
             foreach(string line in text.Split(new string[] { "\r\n", "\n", "\r"}, StringSplitOptions.RemoveEmptyEntries))
@@ -63,7 +95,7 @@
 
             float segStart = 0;
             string extension = args.WorkingFile.Substring(args.WorkingFile.LastIndexOf(".") + 1);
-            string segmentPrefix = Path.Combine(args.TempPath, Guid.NewGuid().ToString())+"_";
+            string segmentPrefix = System.IO.Path.Combine(args.TempPath, Guid.NewGuid().ToString())+"_";
             int count = 0;
             List<string> segmentsInfo = new List<string>();
             foreach (BreakPoint bp in breakPoints)
@@ -85,7 +117,7 @@
             // stitch file back together
             string concatList = segmentPrefix + "concatlist.txt";
             string concatListContents = String.Join(Environment.NewLine, segments.Select(x => $"file '{x}'"));
-            File.WriteAllText(concatList, concatListContents);
+            System.IO.File.WriteAllText(concatList, concatListContents);
 
             args.Logger?.ILog("====================================================");
             foreach (var str in segmentsInfo)
@@ -112,7 +144,7 @@
             {
                 try
                 {
-                    File.Delete(segment);
+                    System.IO.File.Delete(segment);
                 }
                 catch (Exception) { }
             }

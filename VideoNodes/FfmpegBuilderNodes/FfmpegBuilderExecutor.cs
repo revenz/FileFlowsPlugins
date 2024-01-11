@@ -158,12 +158,12 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             if(ffArgs.Any(x => x.Contains("_qsv")))
             {
                 // use qsv decoder
-                startArgs.AddRange(new[] { "-hwaccel", "qsv" });
+                startArgs.AddRange(new[] { "-hwaccel", "qsv", "-hwaccel_output_format", "qsv" });
             }
             else if(ffArgs.Any(x => x.Contains("_nvenc")))
             {
                 // use nvidia decoder
-                startArgs.AddRange(new[] { "-hwaccel", "cuda" });
+                startArgs.AddRange(new[] { "-hwaccel", "cuda", "-hwaccel_output_format", "cuda" });
             }
             else if (HardwareDecoding)
             {

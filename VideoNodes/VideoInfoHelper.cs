@@ -51,12 +51,12 @@ public class VideoInfoHelper
         
         var vi = new VideoInfo();
         vi.FileName = filename;
-        if (File.Exists(filename) == false)
+        if (System.IO.File.Exists(filename) == false)
         {
             logger.ELog("File not found: " + filename);
             return vi;
         }
-        if (string.IsNullOrEmpty(ffMpegExe) || File.Exists(ffMpegExe) == false)
+        if (string.IsNullOrEmpty(ffMpegExe) || System.IO.File.Exists(ffMpegExe) == false)
         {
             logger.ELog("FFmpeg not found: " + (ffMpegExe ?? "not passed in"));
             return vi;
