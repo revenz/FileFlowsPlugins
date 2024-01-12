@@ -144,6 +144,12 @@ public class DeleteSourceDirectory : Node
         {
             args.Logger?.ILog("File: " + file);
         }
+        
+        if(files.Any(x => x.EndsWith(".fftemp")))
+        {
+            args.Logger?.ILog("Temporary FF file found, cannot delete.");
+            return 2;
+        }
 
         if (IncludePatterns?.Any() == true)
         {
