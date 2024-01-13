@@ -13,16 +13,22 @@ public abstract class ImageBaseNode:Node
 
     public override bool PreExecute(NodeParameters args)
     {
+        var localFile = args.FileService.GetLocalPath(args.WorkingFile);
+        if (localFile.IsFailed)
+        {
+            args.Logger?.ELog("Working file cannot be read: " + localFile.Error);
+            return false;
+        }
         if (args.WorkingFile.ToLowerInvariant().EndsWith(".heic"))
         {
-            using var image = new MagickImage(args.WorkingFile);
+            using var image = new MagickImage(localFile);
             CurrentHeight = image.Height;
             CurrentWidth = image.Width;
             CurrentFormat = "HEIC";
         }
         else
         {
-            using var image = Image.Load(args.WorkingFile, out IImageFormat format);
+            using var image = Image.Load(localFile, out IImageFormat format);
             CurrentHeight = image.Height;
             CurrentWidth = image.Width;
             CurrentFormat = format.Name;
@@ -38,7 +44,7 @@ public abstract class ImageBaseNode:Node
 
     protected void UpdateImageInfo(NodeParameters args, Dictionary<string, object> variables = null)
     {
-        string extension = new FileInfo(args.WorkingFile).Extension[1..].ToLowerInvariant();
+        string extension = FileHelper.GetExtension(args.WorkingFile).ToLowerInvariant();
         if (extension == "heic")
         {
             using var image = new MagickImage(args.WorkingFile);
@@ -60,10 +66,7 @@ public abstract class ImageBaseNode:Node
         };
 
         variables ??= new Dictionary<string, object>();
-        if (args.Parameters.ContainsKey(IMAGE_INFO))
-            args.Parameters[IMAGE_INFO] = imageInfo;
-        else
-            args.Parameters.Add(IMAGE_INFO, imageInfo);
+        args.Parameters[IMAGE_INFO] = imageInfo;
 
         variables.AddOrUpdate("img.Width", imageInfo.Width);
         variables.AddOrUpdate("img.Height", imageInfo.Height);
@@ -76,7 +79,6 @@ public abstract class ImageBaseNode:Node
         metadata.Add("Width", imageInfo.Width);
         metadata.Add("Height", imageInfo.Height);
         args.SetMetadata(metadata);
-
 
         args.UpdateVariables(variables);
     }
@@ -103,14 +105,14 @@ public abstract class ImageBaseNode:Node
     /// <returns>the filename fo the image to use</returns>
     protected string ConvertImageIfNeeded(NodeParameters args)
     {
-        string extension = new FileInfo(args.WorkingFile).Extension[1..].ToLowerInvariant();
+        string extension = FileHelper.GetExtension(args.WorkingFile).ToLowerInvariant();
         if (extension == "heic")
         {
             // special case have to use imagemagick
             
             using var image = new MagickImage(args.WorkingFile);
             image.Format = MagickFormat.Png;
-            var newFile = Path.Combine(args.TempPath, Guid.NewGuid().ToString() + ".png");
+            var newFile = FileHelper.Combine(args.TempPath, Guid.NewGuid() + ".png");
             image.Write(newFile);
             return newFile;
         }

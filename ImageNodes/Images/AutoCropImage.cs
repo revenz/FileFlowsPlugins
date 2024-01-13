@@ -61,7 +61,7 @@ public class AutoCropImage : ImageNode
         {
             c.Grayscale().Resize(originalWidth / scaleFactor, originalHeight / scaleFactor);
         });
-        string temp = Path.Combine(args.TempPath, Guid.NewGuid() + ".jpg");
+        string temp = FileHelper.Combine(args.TempPath, Guid.NewGuid() + ".jpg");
         image.SaveAsJpeg(temp);
         var bounds = GetTrimBounds(temp);
         bounds.X *= scaleFactor;

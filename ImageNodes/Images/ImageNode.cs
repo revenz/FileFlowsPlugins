@@ -27,15 +27,15 @@ public abstract class ImageNode : ImageBaseNode
             {
                 _FormatOptions = new List<ListOption>
                 {
-                    new ListOption { Value = "", Label = "Same as source"},
-                    new ListOption { Value = IMAGE_FORMAT_BMP, Label = "Bitmap"},
-                    new ListOption { Value = IMAGE_FORMAT_GIF, Label = "GIF"},
-                    new ListOption { Value = IMAGE_FORMAT_JPEG, Label = "JPEG"},
-                    new ListOption { Value = IMAGE_FORMAT_PBM, Label = "PBM"},
-                    new ListOption { Value = IMAGE_FORMAT_PNG, Label = "PNG"},
-                    new ListOption { Value = IMAGE_FORMAT_TIFF, Label = "TIFF"},
-                    new ListOption { Value = IMAGE_FORMAT_TGA, Label = "TGA" },
-                    new ListOption { Value = IMAGE_FORMAT_WEBP, Label = "WebP"},
+                    new () { Value = "", Label = "Same as source"},
+                    new () { Value = IMAGE_FORMAT_BMP, Label = "Bitmap"},
+                    new () { Value = IMAGE_FORMAT_GIF, Label = "GIF"},
+                    new () { Value = IMAGE_FORMAT_JPEG, Label = "JPEG"},
+                    new () { Value = IMAGE_FORMAT_PBM, Label = "PBM"},
+                    new () { Value = IMAGE_FORMAT_PNG, Label = "PNG"},
+                    new () { Value = IMAGE_FORMAT_TIFF, Label = "TIFF"},
+                    new () { Value = IMAGE_FORMAT_TGA, Label = "TGA" },
+                    new () { Value = IMAGE_FORMAT_WEBP, Label = "WebP"},
                 };
             }
             return _FormatOptions;
@@ -46,7 +46,7 @@ public abstract class ImageNode : ImageBaseNode
     {
         IImageFormat? format = null;
         
-        var newFile = Path.Combine(args.TempPath, Guid.NewGuid().ToString());
+        var newFile = FileHelper.Combine(args.TempPath, Guid.NewGuid().ToString());
         switch (this.Format)
         {
             case IMAGE_FORMAT_BMP:
@@ -97,8 +97,19 @@ public abstract class ImageNode : ImageBaseNode
 
     protected void SaveImage(NodeParameters args, Image img, string file, IImageFormat format, bool updateWorkingFile = true)
     {
-        using Stream outStream = new FileStream(file, FileMode.Create);
+        string local = args.FileService.FileIsLocal(file)
+            ? file
+            : FileHelper.Combine(args.TempPath, Guid.NewGuid() + "." + FileHelper.GetExtension(file));
+        
+        using var outStream = new System.IO.FileStream(local, System.IO.FileMode.Create);
         img.Save(outStream, format);
+
+        if (local != file && args.FileService.FileMove(local, file).Failed(out string error))
+        {
+            args.Logger?.ELog("Failed to move saved file: " + error);
+            return;
+        }
+
         if (updateWorkingFile)
         {
             args.SetWorkingFile(file);
@@ -108,9 +119,14 @@ public abstract class ImageNode : ImageBaseNode
 
     protected void SaveImage(NodeParameters args, ImageMagick.MagickImage img, string file, bool updateWorkingFile = true)
     {
-        using Stream outStream = new FileStream(file, FileMode.Create);
-        string origExtension = new FileInfo(args.WorkingFile).Extension[1..].ToLowerInvariant();
-        string newExtension = new FileInfo(file).Extension[1..].ToLowerInvariant();
+        string local = args.FileService.FileIsLocal(file)
+            ? file
+            : FileHelper.Combine(args.TempPath, Guid.NewGuid() + "." + FileHelper.GetExtension(file));
+        
+        using var outStream = new System.IO.FileStream(local, System.IO.FileMode.Create);
+        
+        string origExtension = FileHelper.GetExtension(args.WorkingFile).ToLowerInvariant();
+        string newExtension = FileHelper.GetExtension(file).ToLowerInvariant();
         if (origExtension != newExtension)
         {
             switch (newExtension)
@@ -145,11 +161,18 @@ public abstract class ImageNode : ImageBaseNode
         }
 
         img.Write(outStream);
+        
+        
         if (updateWorkingFile)
         {
             args.SetWorkingFile(file);
-            using var image = Image.Load(args.WorkingFile, out IImageFormat format);
+            using var image = Image.Load(local, out IImageFormat format);
             UpdateImageInfo(args, img.Width, img.Height, format.Name, Variables);
+        }
+        
+        if (local != file && args.FileService.FileMove(local, file).Failed(out string error))
+        {
+            args.Logger?.ELog("Failed to move saved file: " + error);
         }
     }
 }

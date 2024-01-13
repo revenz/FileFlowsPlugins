@@ -22,7 +22,7 @@ public class ImageFormat: ImageNode
             return 2;
         }
 
-        string extension = new FileInfo(args.WorkingFile).Extension[1..].ToLowerInvariant();
+        string extension = FileHelper.GetExtension(args.WorkingFile).ToLowerInvariant();
         if (extension == "heic")
         {
             // special case have to use imagemagick

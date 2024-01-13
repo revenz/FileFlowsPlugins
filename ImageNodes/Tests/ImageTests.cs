@@ -199,7 +199,7 @@ public class ImageNodesTests
     [TestMethod]
     public void ImageNodes_Basic_AutoCrop_01()
     {
-        Assert.IsTrue(File.Exists(TestCropImage1));
+        Assert.IsTrue(System.IO.File.Exists(TestCropImage1));
         var logger = new TestLogger();
         var args = new NodeParameters(TestCropImage1, logger, false, string.Empty)
         {
