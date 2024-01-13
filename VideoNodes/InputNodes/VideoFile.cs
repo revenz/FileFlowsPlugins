@@ -67,12 +67,11 @@ public class VideoFile : VideoNode
                 args.Logger.ILog($"Video stream '{vs.Codec}' '{vs.Index}'");
             }
 
-            var fileInfo = new FileInfo(args.WorkingFile);
-            if (fileInfo.Exists)
-            {
-                args.Variables["ORIGINAL_CREATE_UTC"] = fileInfo.CreationTimeUtc;
-                args.Variables["ORIGINAL_LAST_WRITE_UTC"] = fileInfo.LastWriteTimeUtc;
-            }
+            if (args.FileService.FileCreationTimeUtc(args.WorkingFile).Success(out DateTime creationTimeUtc))
+                args.Variables["ORIGINAL_CREATE_UTC"] = creationTimeUtc;
+            if (args.FileService.FileCreationTimeUtc(args.WorkingFile).Success(out DateTime lastWriteTimeUtc))
+                args.Variables["ORIGINAL_LAST_WRITE_UTC"] = lastWriteTimeUtc;
+                
 
             foreach (var stream in videoInfo.VideoStreams)
             {
@@ -108,7 +107,7 @@ public class VideoFile : VideoNode
                 args.RecordStatistic("VIDEO_RESOLUTION", resName);
             }
 
-            string extension = new FileInfo(args.FileName).Extension.ToLower()[1..];
+            string extension = FileHelper.GetExtension(args.FileName).ToLowerInvariant();
             var container = extension switch
             {
                 "mkv" => "MKV",

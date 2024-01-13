@@ -93,8 +93,8 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
                 return string.Empty;
             }
 
-            string tempMetaDataFile = Path.Combine(args.TempPath, Guid.NewGuid().ToString() + ".txt");
-            File.WriteAllText(tempMetaDataFile, metadata.ToString());
+            string tempMetaDataFile = System.IO.Path.Combine(args.TempPath, Guid.NewGuid() + ".txt");
+            System.IO.File.WriteAllText(tempMetaDataFile, metadata.ToString());
 
             return tempMetaDataFile;
 

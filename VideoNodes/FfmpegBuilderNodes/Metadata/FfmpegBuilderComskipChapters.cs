@@ -33,16 +33,14 @@ public class FfmpegBuilderComskipChapters : FfmpegBuilderNode
     {
         float totalTime = (float)videoInfo.VideoStreams[0].Duration.TotalSeconds;
 
-        string edlFile = args.WorkingFile.Substring(0, args.WorkingFile.LastIndexOf(".") + 1) + "edl";
-        if (File.Exists(edlFile) == false)
-            edlFile = args.WorkingFile.Substring(0, args.WorkingFile.LastIndexOf(".") + 1) + "edl";
-        if (File.Exists(edlFile) == false)
+        var edlFile = GetLocalEdlFile(args);
+        if (edlFile.IsFailed)
         {
-            args.Logger?.ILog("No EDL file found for file");
+            args.Logger.ILog(edlFile.Error);
             return string.Empty;
         }
 
-        string text = File.ReadAllText(edlFile) ?? string.Empty;
+        string text = System.IO.File.ReadAllText(edlFile) ?? string.Empty;
         float last = 0;
 
         StringBuilder metadata = new StringBuilder();
@@ -75,8 +73,8 @@ public class FfmpegBuilderComskipChapters : FfmpegBuilderNode
         }
         AddChapter(last, totalTime);
 
-        string tempMetaDataFile = Path.Combine(args.TempPath, Guid.NewGuid().ToString() + ".txt");
-        File.WriteAllText(tempMetaDataFile, metadata.ToString());
+        string tempMetaDataFile = System.IO.Path.Combine(args.TempPath, Guid.NewGuid() + ".txt");
+        System.IO.File.WriteAllText(tempMetaDataFile, metadata.ToString());
         return tempMetaDataFile;
 
         void AddChapter(float start, float end)
@@ -90,5 +88,23 @@ public class FfmpegBuilderComskipChapters : FfmpegBuilderNode
             metadata.AppendLine();
         }
 
+    }
+
+    /// <summary>
+    /// Gets the edl file to use locally if remote
+    /// </summary>
+    /// <param name="args">the node parameters</param>
+    /// <returns>the edl file</returns>
+    private Result<string> GetLocalEdlFile(NodeParameters args)
+    {
+        string edlFile = args.WorkingFile.Substring(0, args.WorkingFile.LastIndexOf(".", StringComparison.Ordinal) + 1) + "edl";
+        if (args.FileService.FileExists(edlFile))
+            return args.FileService.GetLocalPath(edlFile);
+        
+        edlFile = args.WorkingFile.Substring(0, args.WorkingFile.LastIndexOf(".", StringComparison.Ordinal) + 1) + "edl";
+        if (args.FileService.FileExists(edlFile))
+            return args.FileService.GetLocalPath(edlFile);
+        
+        return Result<string>.Fail("No EDL file found for file");
     }
 }

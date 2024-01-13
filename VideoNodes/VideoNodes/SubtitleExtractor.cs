@@ -187,11 +187,13 @@ public class SubtitleExtractor : EncodingNode
     /// <returns>if it was successful or not</returns>
     internal bool ExtractSubtitle(NodeParameters args, string ffmpegExe, string subtitleStream, string output)
     {
-        if (File.Exists(output))
+        if (args.FileService.FileExists(output).Is(true))
         {
             args.Logger?.ILog("File already exists, deleting file: " + output);
-            File.Delete(output);
+            args.FileService.FileDelete(output);
         }
+
+        var tempOutput = FileHelper.Combine(args.TempPath, Guid.NewGuid() + "." + FileHelper.GetExtension(output));
 
         bool textSubtitles = Regex.IsMatch(output.ToLower(), @"\.(sup)$") == false;
         // -y means it will overwrite a file if output already exists
@@ -203,18 +205,19 @@ public class SubtitleExtractor : EncodingNode
 
                     "-i", args.WorkingFile,
                     "-map", subtitleStream,
-                    output
+                    tempOutput
                 } : 
                 new[] {
 
                     "-i", args.WorkingFile,
                     "-map", subtitleStream,
                     "-c:s", "copy",
-                    output
+                    tempOutput
                 }
         }).Result;
 
-        var of = new FileInfo(output);
+        
+        var of = new System.IO.FileInfo(tempOutput);
         args.Logger?.ILog("Extraction exit code: " + result.ExitCode);
         if (result.ExitCode != 0)
         {
@@ -231,6 +234,12 @@ public class SubtitleExtractor : EncodingNode
                 }
                 catch (Exception) { }
             }
+            return false;
+        }
+
+        if (args.FileService.FileMove(tempOutput, output).Failed(out string error))
+        {
+            args.Logger?.ELog("Failed to move extracted subtitle: " + error);
             return false;
         }
         args.Logger?.ILog("Extracted file successful: " + of.Exists);

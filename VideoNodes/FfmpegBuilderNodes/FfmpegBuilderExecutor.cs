@@ -217,13 +217,13 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         {
             if (file.DeleteAfterwards)
             {
-                if (File.Exists(file.FileName) == false)
+                if (System.IO.File.Exists(file.FileName) == false)
                     continue;
 
                 args.Logger.ILog("Deleting file: " + file.FileName);
                 try
                 {
-                    File.Delete(file.FileName);
+                    System.IO.File.Delete(file.FileName);
                 }
                 catch (Exception ex)
                 {
@@ -237,7 +237,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
 
     internal string[] GetHardwareDecodingArgs(NodeParameters args)
     {
-        string testFile = Path.Combine(Args.TempPath, Guid.NewGuid() + ".hwtest.mkv");
+        string testFile = FileHelper.Combine(Args.TempPath, Guid.NewGuid() + ".hwtest.mkv");
         var video = this.Model.VideoStreams.Where(x => x.Stream.IsImage == false).FirstOrDefault();
         if (string.IsNullOrWhiteSpace(video?.Stream?.Codec))
             return new string[] { };
@@ -292,8 +292,8 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         {
             try
             {
-                if (File.Exists(testFile))
-                    File.Delete(testFile);
+                if (System.IO.File.Exists(testFile))
+                    System.IO.File.Delete(testFile);
             }
             catch (Exception) { }
         }

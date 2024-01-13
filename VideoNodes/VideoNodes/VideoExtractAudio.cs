@@ -36,10 +36,10 @@ public class VideoExtractAudio : AudioSelectionEncodingNode
             {
                 _CodecOptions = new List<ListOption>
                 {
-                    new ListOption { Label = "AAC", Value = "aac"},
-                    new ListOption { Label = "AC3", Value = "ac3"},
-                    new ListOption { Label = "EAC3", Value = "eac3" },
-                    new ListOption { Label = "MP3", Value = "mp3"},
+                    new () { Label = "AAC", Value = "aac"},
+                    new () { Label = "AC3", Value = "ac3"},
+                    new () { Label = "EAC3", Value = "eac3" },
+                    new () { Label = "MP3", Value = "mp3"},
                 };
             }
             return _CodecOptions;
@@ -76,20 +76,27 @@ public class VideoExtractAudio : AudioSelectionEncodingNode
             string outputFile = GetOutputFile(args);
             var parameters = GetAudioTrackParameters(track);
 
-            var extracted = ExtractAudio(args, FFMPEG, parameters, outputFile);
-            if(extracted)
+            string _output = args.FileService.FileIsLocal(outputFile)
+                ? outputFile
+                : FileHelper.Combine(args.TempPath, Guid.NewGuid() + ". " + FileHelper.GetExtension(outputFile));
+
+            var extracted = ExtractAudio(args, FFMPEG, parameters, _output);
+            if (extracted == false)
+                return 2;
+
+            if (_output != outputFile)
             {
-                args.UpdateVariables(new Dictionary<string, object>
-                {
-                    { "ExtractedAudioFile", outputFile }
-                });
-                if (SetWorkingFile)
-                    args.SetWorkingFile(OutputFile, dontDelete: true);
-
-                return 1;
+                args.FileService.FileMove(_output, outputFile);
             }
+            
+            args.UpdateVariables(new Dictionary<string, object>
+            {
+                { "ExtractedAudioFile", outputFile }
+            });
+            if (SetWorkingFile)
+                args.SetWorkingFile(OutputFile, dontDelete: true);
 
-            return 2;
+            return 1;
         }
         catch (Exception ex)
         {
@@ -107,8 +114,12 @@ public class VideoExtractAudio : AudioSelectionEncodingNode
         }
         else
         {
-            var file = new FileInfo(args.FileName);
-            outputfile = file.FullName.Substring(0, file.FullName.LastIndexOf(file.Extension));
+            //var file = new System.IO.FileInfo(args.FileName);
+            string extension = FileHelper.GetExtension(args.FileName);
+            if(string.IsNullOrEmpty(extension) == false)
+                outputfile = args.FileName[..^(extension.Length + 1)];
+            else
+                outputfile = args.FileName;
         }
         outputfile = args.MapPath(outputfile);
 
@@ -142,14 +153,14 @@ public class VideoExtractAudio : AudioSelectionEncodingNode
         };
     }
 
-    internal bool ExtractAudio(NodeParameters args, string ffmpegExe, string[] parameters, string output)
+    internal bool ExtractAudio(NodeParameters args, string ffmpegExe, string[] parameters, string localOutput)
     {
-        if (File.Exists(output))
+        if (System.IO.File.Exists(localOutput))
         {
-            args.Logger?.ILog("File already exists, deleting file: " + output);
-            File.Delete(output);
+            args.Logger?.ILog("File already exists, deleting file: " + localOutput);
+            System.IO.File.Delete(localOutput);
         }
-        var argList = new [] { "-i", args.WorkingFile }.Union(parameters).Union(new [] { output }).ToArray();
+        var argList = new [] { "-i", args.WorkingFile }.Union(parameters).Union(new [] { localOutput }).ToArray();
 
         // -y means it will overwrite a file if output already exists
         var result = args.Process.ExecuteShellCommand(new ExecuteArgs
@@ -158,7 +169,7 @@ public class VideoExtractAudio : AudioSelectionEncodingNode
             ArgumentList = argList
         }).Result;
 
-        var of = new FileInfo(output);
+        var of = new System.IO.FileInfo(localOutput);
         if (result.ExitCode != 0)
         {
             args.Logger?.ELog("FFMPEG process failed to extract audio track");

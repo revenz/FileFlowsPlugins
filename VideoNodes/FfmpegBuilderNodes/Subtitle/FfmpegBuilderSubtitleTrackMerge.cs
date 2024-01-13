@@ -23,13 +23,13 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
             {
                 _Options = new List<ListOption>
                 {
-                    new ListOption { Value = "ass", Label = "ass: Advanced SubStation Alpha"},
-                    new ListOption { Value = "idx", Label = "idx: IDX"},
-                    new ListOption { Value = "srt", Label = "srt: SubRip subtitle"},
-                    new ListOption { Value = "ssa", Label = "ssa: SubStation Alpha"},
-                    new ListOption { Value = "sub", Label = "sub: SubStation Alpha"},
-                    new ListOption { Value = "sup", Label = "sup: SubPicture"},
-                    new ListOption { Value = "txt", Label = "txt: Raw text subtitle"}                        
+                    new () { Value = "ass", Label = "ass: Advanced SubStation Alpha"},
+                    new () { Value = "idx", Label = "idx: IDX"},
+                    new () { Value = "srt", Label = "srt: SubRip subtitle"},
+                    new () { Value = "ssa", Label = "ssa: SubStation Alpha"},
+                    new () { Value = "sub", Label = "sub: SubStation Alpha"},
+                    new () { Value = "sup", Label = "sup: SubPicture"},
+                    new () { Value = "txt", Label = "txt: Raw text subtitle"}                        
                 };
             }
             return _Options;
@@ -48,11 +48,10 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
     
     public override int Execute(NodeParameters args)
     {
-
-        var dir = UseSourceDirectory ? new FileInfo(args.FileName).Directory : new DirectoryInfo(args.TempPath);
-        if (dir.Exists == false)
+        var dir = UseSourceDirectory ? FileHelper.GetDirectory(args.LibraryFileName) : args.TempPath;
+        if (args.FileService.DirectoryExists(dir).Is(true) == false)
         {
-            args.Logger?.ILog("Directory does not exist: " + dir.FullName);
+            args.Logger?.ILog("Directory does not exist: " + dir);
             return 2;
         }
         foreach(var sub in Subtitles)
@@ -61,13 +60,19 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
         }
 
         int count = 0;
-        foreach (var file in dir.GetFiles())
+        var files = args.FileService.GetFiles(dir);
+        if (files.IsFailed)
         {
-            string ext = file.Extension;
+            args.Logger?.ILog("Failed getting files: "+ files.Error);
+            return 2;
+        }
+        
+        foreach (var file in files.ValueOrDefault ?? new string[] {})
+        {
+            string ext = FileHelper.GetExtension(file) ?? string.Empty;
             if (string.IsNullOrEmpty(ext) || ext.Length < 2)
                 continue;
-            ext = ext.Substring(1).ToLower();// remove .
-            if (Subtitles.Contains(ext) == false)
+            if (Subtitles.Contains(ext.ToLowerInvariant()) == false)
                 continue;
 
             string language = string.Empty;
@@ -75,8 +80,8 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
             if (MatchFilename)
             {
                 string lang1, lang2;
-                bool matchesOriginal = FilenameMatches(args.FileName, file.FullName, out lang1);
-                bool matchesWorking = FilenameMatches(args.WorkingFile, file.FullName, out lang2);
+                bool matchesOriginal = FilenameMatches(args.FileName, file, out lang1);
+                bool matchesWorking = FilenameMatches(args.WorkingFile, file, out lang2);
 
                 if (matchesOriginal == false && matchesWorking == false)
                     continue;
@@ -89,11 +94,11 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
 
             string subTitle = language;
             language = LanguageHelper.GetIso2Code(language.Split(' ').First()); // remove any SDH etc
-            args.Logger.ILog("Adding file: " + file.FullName + " [" + ext + "]" + (string.IsNullOrEmpty(language) == false ? " (Language: " + language + ")" : ""));
-            this.Model.InputFiles.Add(new InputFile(file.FullName) { DeleteAfterwards = this.DeleteAfterwards });
+            args.Logger.ILog("Adding file: " + file + " [" + ext + "]" + (string.IsNullOrEmpty(language) == false ? " (Language: " + language + ")" : ""));
+            this.Model.InputFiles.Add(new InputFile(file) { DeleteAfterwards = this.DeleteAfterwards });
 
             if (string.IsNullOrEmpty(subTitle))
-                subTitle = file.Name.Replace(file.Extension, "");
+                subTitle = FileHelper.GetShortFileName(file).Replace("." + ext, "");
 
             this.Model.SubtitleStreams.Add(new FfmpegSubtitleStream
             {
@@ -105,7 +110,7 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
                     TypeIndex = 0,
                     Language = language,
                     Title = subTitle,
-                    Codec = file.Extension[1..],
+                    Codec = ext,
                     IndexString = (this.Model.InputFiles.Count - 1) + ":s:0"
                 },
                 
@@ -121,11 +126,11 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
     internal bool FilenameMatches(string input, string other, out string languageCode)
     {
         languageCode = String.Empty;
-        var inputFile = new FileInfo(input);
-        string inputName = inputFile.Name.Replace(inputFile.Extension, "");
+        var inputFileExtension = FileHelper.GetExtension(input);
+        string inputName = FileHelper.GetShortFileName(input).Replace("." + inputFileExtension, "");
 
-        var otherFile = new FileInfo(other);
-        string otherName = otherFile.Name.Replace(otherFile.Extension, "");
+        var otherFileExtension = FileHelper.GetExtension(other);
+        string otherName = FileHelper.GetShortFileName(other).Replace("." + otherFileExtension, "");
 
         if (inputName.ToLowerInvariant().Equals(otherName.ToLowerInvariant()))
             return true;

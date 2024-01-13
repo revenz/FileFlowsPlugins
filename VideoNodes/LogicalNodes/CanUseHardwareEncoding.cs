@@ -283,7 +283,7 @@ public class CanUseHardwareEncoding:Node
             {
                 arguments.InsertRange(0,
                     new[] { "-fflags", "+genpts", "-vaapi_device", VaapiHelper.VaapiRenderDevice });
-                arguments.Add(Path.Combine(args.TempPath, Guid.NewGuid() + ".mkv"));
+                arguments.Add(FileHelper.Combine(args.TempPath, Guid.NewGuid() + ".mkv"));
             }
             else
             {
