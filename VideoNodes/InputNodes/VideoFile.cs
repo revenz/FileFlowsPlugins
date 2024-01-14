@@ -56,7 +56,14 @@ public class VideoFile : VideoNode
 
         try
         {
-            var videoInfo = new VideoInfoHelper(FFMPEG, args.Logger).Read(args.WorkingFile);
+            var file = args.FileService.GetLocalPath(args.WorkingFile);
+            if (file.IsFailed)
+            {
+                args.Logger?.ELog("Failed getting local file: " + file.Error);
+                return -1;
+            }
+            
+            var videoInfo = new VideoInfoHelper(FFMPEG, args.Logger).Read(file);
             if (videoInfo.VideoStreams.Any() == false)
             {
                 args.Logger.ELog("No video streams detected.");
