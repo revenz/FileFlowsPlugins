@@ -162,7 +162,14 @@ namespace FileFlows.VideoNodes
             if (refreshIfFileChanged == false || vi.FileName == args.FileName)
                 return vi;
 
-            vi = new VideoInfoHelper(FFMPEG, args.Logger).Read(args.WorkingFile);
+            var local = args.FileService.GetLocalPath(args.WorkingFile);
+            if (local.IsFailed)
+            {
+                args.Logger?.ELog("Failed to get local file: " + local.Error);
+                return null;
+            }
+
+            vi = new VideoInfoHelper(FFMPEG, args.Logger).Read(local);
             SetVideoInfo(args, vi, Variables);
             return vi;
         }
