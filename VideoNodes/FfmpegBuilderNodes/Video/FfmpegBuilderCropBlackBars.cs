@@ -48,7 +48,14 @@ public class FfmpegBuilderCropBlackBars : FfmpegBuilderNode
             args.Logger?.ELog("Failed to find video height");
             return string.Empty;
         }
-        return Execute(ffmpeg, args.WorkingFile, args, vidWidth, vidHeight, threshold, (int)videoInfo.VideoStreams[0].Duration.TotalSeconds);
+
+        var localFile = args.FileService.GetLocalPath(args.WorkingFile);
+        if (localFile.IsFailed)
+        {
+            args.Logger?.ELog("Failed to get local file: " + localFile.Error);
+            return string.Empty;
+        }
+        return Execute(ffmpeg, localFile, args, vidWidth, vidHeight, threshold, (int)videoInfo.VideoStreams[0].Duration.TotalSeconds);
     }
 
     private int[] GetTimeIntervals(int seconds)
