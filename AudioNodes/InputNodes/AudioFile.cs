@@ -43,16 +43,16 @@ namespace FileFlows.AudioNodes
             if (string.IsNullOrEmpty(ffmpegExe))
                 return -1;
 
-            var fileInfo = new FileInfo(args.WorkingFile);
-            if (fileInfo.Exists)
-            {
-                args.Variables["ORIGINAL_CREATE_UTC"] = fileInfo.CreationTimeUtc;
-                args.Variables["ORIGINAL_LAST_WRITE_UTC"] = fileInfo.LastWriteTimeUtc;
-            }
+            
+            if (args.FileService.FileCreationTimeUtc(args.WorkingFile).Success(out DateTime createTime))
+                args.Variables["ORIGINAL_CREATE_UTC"] = createTime;
+            if (args.FileService.FileLastWriteTimeUtc(args.WorkingFile).Success(out DateTime writeTime))
+                args.Variables["ORIGINAL_LAST_WRITE_UTC"] = writeTime;
+            
             
             try
             {
-                if (ReadAudioFileInfo(args, ffmpegExe, args.WorkingFile))
+                if (ReadAudioFileInfo(args, ffmpegExe, LocalWorkingFile))
                     return 1;
 
                 var AudioInfo = GetAudioInfo(args);

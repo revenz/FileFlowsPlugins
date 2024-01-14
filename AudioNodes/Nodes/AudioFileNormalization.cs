@@ -33,7 +33,7 @@ public class AudioFileNormalization : AudioNode
 
             long sampleRate = AudioInfo.Frequency > 0 ? AudioInfo.Frequency : 48_000;
             
-            var twoPass = DoTwoPass(args, ffmpegExe);
+            var twoPass = DoTwoPass(args, ffmpegExe, LocalWorkingFile);
             if (twoPass.Success == false)
             {
                 args.Logger?.WLog("Failed to normalize audio, skipping");
@@ -42,11 +42,9 @@ public class AudioFileNormalization : AudioNode
             
             ffArgs.AddRange(new[] { "-i", args.WorkingFile, "-c:a", AudioInfo.Codec, "-ar", sampleRate.ToString(), "-af", twoPass.Normalization });
 
-            string extension = new FileInfo(args.WorkingFile).Extension;
-            if (extension.StartsWith("."))
-                extension = extension.Substring(1);
+            string extension = FileHelper.GetExtension(args.WorkingFile);
 
-            string outputFile = Path.Combine(args.TempPath, Guid.NewGuid() + "." + extension);
+            string outputFile = FileHelper.Combine(args.TempPath, Guid.NewGuid() + "." + extension);
             ffArgs.Add(outputFile);
 
             var result = args.Execute(new ExecuteArgs
@@ -65,7 +63,7 @@ public class AudioFileNormalization : AudioNode
     }
 
     [UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "<Pending>")]
-    public static (bool Success, string Normalization) DoTwoPass(NodeParameters args, string ffmpegExe) 
+    public static (bool Success, string Normalization) DoTwoPass(NodeParameters args, string ffmpegExe, string localFile)
     {
         //-af loudnorm=I=-24:LRA=7:TP=-2.0"
         var result = args.Execute(new ExecuteArgs
@@ -74,7 +72,7 @@ public class AudioFileNormalization : AudioNode
             ArgumentList = new[]
             {
                 "-hide_banner",
-                "-i", args.WorkingFile,
+                "-i", localFile,
                 "-af", "loudnorm=" + LOUDNORM_TARGET + ":print_format=json",
                 "-f", "null",
                 "-"

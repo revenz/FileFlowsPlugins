@@ -336,19 +336,19 @@ namespace FileFlows.AudioNodes
 
 
             var ffArgs = GetArguments(args, out string extension);
-            string outputFile = Path.Combine(args.TempPath,
-                Guid.NewGuid().ToString() + "." + (extension?.EmptyAsNull() ?? Extension));
+            string outputFile = FileHelper.Combine(args.TempPath,
+                Guid.NewGuid() + "." + (extension?.EmptyAsNull() ?? Extension));
             
             ffArgs.Insert(0, "-hide_banner");
             ffArgs.Insert(1, "-y"); // tells ffmpeg to replace the file if already exists, which it shouldnt but just incase
             ffArgs.Insert(2, "-i");
-            ffArgs.Insert(3, args.WorkingFile);
+            ffArgs.Insert(3, LocalWorkingFile);
             ffArgs.Insert(4, "-vn"); // disables video
 
 
             if (Normalize)
             {
-                var twoPass =  AudioFileNormalization.DoTwoPass(args, ffmpegExe);
+                var twoPass =  AudioFileNormalization.DoTwoPass(args, ffmpegExe, LocalWorkingFile);
                 if (twoPass.Success)
                 {
                     ffArgs.Add("-af");
@@ -358,7 +358,7 @@ namespace FileFlows.AudioNodes
 
             ffArgs.Add(outputFile);
 
-            args.Logger?.ILog("FFArgs: " + String.Join(" ", ffArgs.Select(x => x.IndexOf(" ") > 0 ? "\"" + x + "\"" : x).ToArray()));
+            args.Logger?.ILog("FFArgs: " + string.Join(" ", ffArgs.Select(x => x.IndexOf(" ") > 0 ? "\"" + x + "\"" : x).ToArray()));
 
             var result = args.Execute(new ExecuteArgs
             {

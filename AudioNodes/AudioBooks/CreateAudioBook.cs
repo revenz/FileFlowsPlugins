@@ -1,4 +1,3 @@
-using System.Text.RegularExpressions;
 using FileFlows.Plugin;
 
 namespace FileFlows.AudioNodes;
@@ -44,35 +43,38 @@ public class CreateAudioBook: AudioNode
         if (string.IsNullOrEmpty(ffmpeg))
             return -1;
 
-        var dir = args.IsDirectory ? new DirectoryInfo(args.WorkingFile) : new FileInfo(args.WorkingFile).Directory;
+        var dir = args.IsDirectory ? args.WorkingFile : FileHelper.GetDirectory(args.WorkingFile);
 
-        var allowedExtensions = new[] { ".mp3", ".aac", ".m4b", ".m4a" };
-        List<FileInfo> files = new List<FileInfo>();
-        foreach (var file in dir.GetFiles("*.*"))
+        var allowedExtensions = new List<string> { ".mp3", ".aac", ".m4b", ".m4a" };
+        var dirFiles = args.FileService.GetFiles(dir, "*.*");
+        List<string> files = new ();
+        foreach (var file in dirFiles.ValueOrDefault ?? new string[] {})
         {
-            if (file.Extension == null)
-                continue;
-            if (allowedExtensions.Contains(file.Extension.ToLower()) == false)
+            string extension = FileHelper.GetExtension(file);
+            if (allowedExtensions.Contains(extension.ToLower()) == false)
                 continue;
             files.Add(file);
         }
 
         if (files.Any() == false)
         {
-            args.Logger.WLog("No audio files found in directory: " + dir.FullName);
+            args.Logger.WLog("No audio files found in directory: " + dir);
             return 2;
         }
 
         if (files.Count == 1)
         {
-            args.Logger.WLog("Only one audio file found: " + files[0].FullName);
+            args.Logger.WLog("Only one audio file found: " + files[0]);
             return 2;
         }
 
         var rgxNumbers = new Regex(@"[\d]+");
         files = files.OrderBy(x =>
         {
-            var shortname = x.Name[..^x.Extension.Length];
+            string extension = FileHelper.GetExtension(x);
+            string shortname = FileHelper.GetShortFileName(x);
+            if (string.IsNullOrEmpty(extension) == false)
+                shortname = shortname[..^(extension.Length + 1)];
             var matches = rgxNumbers.Matches(shortname);
             if (matches.Any() == false)
             {
@@ -92,14 +94,17 @@ public class CreateAudioBook: AudioNode
             return number;
         }).ToList();
 
-        string metadataFile = Path.Combine(args.TempPath, "CreateAudioBookChapters-metadata.txt");
+        string metadataFile = FileHelper.Combine(args.TempPath, "CreateAudioBookChapters-metadata.txt");
         TimeSpan current = TimeSpan.Zero;
-        string bookName = dir.Name;
+        string bookName = FileHelper.GetShortFileName(dir);
         int chapterCount = 1;
-        File.WriteAllText(metadataFile, @";FFMETADATA1\n\n" + string.Join("\n", files.Select(x =>
+        
+        System.IO.File.WriteAllText(metadataFile, @";FFMETADATA1\n\n" + string.Join("\n", files.Select(x =>
         {
-            string chapterName = GetChapterName(bookName, x.Name[..^x.Extension.Length], chapterCount);
-            TimeSpan length = GetChapterLength(args, ffmpeg, x.FullName);
+            string extension = FileHelper.GetExtension(x);
+            string name = FileHelper.GetShortFileName(x);
+            string chapterName = GetChapterName(bookName, name[..^extension.Length], chapterCount);
+            TimeSpan length = GetChapterLength(args, ffmpeg, x);
             var end = current.Add(length);
             var chapter = "[CHAPTER]\n" +
                           "TIMEBASE=1/1000\n" +
@@ -110,10 +115,10 @@ public class CreateAudioBook: AudioNode
             ++chapterCount;
             return chapter;
         })));
-        string inputFiles = Path.Combine(args.TempPath, Guid.NewGuid() + ".txt");
-        File.WriteAllText(inputFiles, string.Join("\n", files.Select(x => $"file '{x.FullName}'")));
+        string inputFiles = FileHelper.Combine(args.TempPath, Guid.NewGuid() + ".txt");
+        System.IO.File.WriteAllText(inputFiles, string.Join("\n", files.Select(x => $"file '{x}'")));
 
-        string outputFile = Path.Combine(args.TempPath, Guid.NewGuid() + ".m4b");
+        string outputFile = FileHelper.Combine(args.TempPath, Guid.NewGuid() + ".m4b");
 
         string artwork = null; //FindArtwork(dir);
 
@@ -175,7 +180,7 @@ public class CreateAudioBook: AudioNode
             ArgumentList = execArgs.ToArray()
         });
 
-        if (File.Exists(outputFile) == false || new FileInfo(outputFile).Length == 0)
+        if (System.IO.File.Exists(outputFile) == false || new System.IO.FileInfo(outputFile).Length == 0)
         {
             args.Logger.ELog("Failed to create output file: " + outputFile);
             return -1;
@@ -184,22 +189,22 @@ public class CreateAudioBook: AudioNode
         return 1;
     }
 
-    private string FindArtwork(DirectoryInfo dir)
-    {
-        var files = dir.GetFiles("*.*");
-        var extensions = new[] { ".png", ".jpg", ".jpe", ".jpeg" };
-        foreach(string possible in new [] { "cover", "artwork", "thumbnail", dir.Name.ToLowerInvariant()})
-        {
-            var matching = files.Where(x => x.Name.ToLowerInvariant().StartsWith(possible)).ToArray();
-            foreach (var file in matching)
-            {
-                if (extensions.Contains(file.Extension.ToLowerInvariant()))
-                    return file.FullName;
-            }
-        }
-
-        return string.Empty;
-    }
+    // private string FindArtwork(DirectoryInfo dir)
+    // {
+    //     var files = dir.GetFiles("*.*");
+    //     var extensions = new[] { ".png", ".jpg", ".jpe", ".jpeg" };
+    //     foreach(string possible in new [] { "cover", "artwork", "thumbnail", dir.Name.ToLowerInvariant()})
+    //     {
+    //         var matching = files.Where(x => x.Name.ToLowerInvariant().StartsWith(possible)).ToArray();
+    //         foreach (var file in matching)
+    //         {
+    //             if (extensions.Contains(file.Extension.ToLowerInvariant()))
+    //                 return file.FullName;
+    //         }
+    //     }
+    //
+    //     return string.Empty;
+    // }
 
     private TimeSpan GetChapterLength(NodeParameters args, string ffmpeg, string filename)
     {

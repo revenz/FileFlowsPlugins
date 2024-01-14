@@ -6,6 +6,21 @@ namespace FileFlows.AudioNodes
     {
         public override string Icon => "fas fa-music";
 
+        protected string LocalWorkingFile;
+
+        public override bool PreExecute(NodeParameters args)
+        {
+            var localFile = args.FileService.GetLocalPath(args.WorkingFile);
+            if (localFile.IsFailed)
+            {
+                args.Logger?.ELog("Failed to get local file: " + localFile.Error);
+                return false;
+            }
+
+            LocalWorkingFile = localFile.Value;
+            return true;
+        }
+
         protected string GetFFmpeg(NodeParameters args)
         {
             string ffmpeg = args.GetToolPath("FFMpeg");
@@ -14,7 +29,7 @@ namespace FileFlows.AudioNodes
                 args.Logger.ELog("FFmpeg tool not found.");
                 return "";
             }
-            var fileInfo = new FileInfo(ffmpeg);
+            var fileInfo = new System.IO.FileInfo(ffmpeg);
             if (fileInfo.Exists == false)
             {
                 args.Logger.ELog("FFmpeg tool configured by ffmpeg file does not exist.");
@@ -31,7 +46,7 @@ namespace FileFlows.AudioNodes
                 args.Logger.ELog("FFMpeg tool not found.");
                 return "";
             }
-            var fileInfo = new FileInfo(ffmpeg);
+            var fileInfo = new System.IO.FileInfo(ffmpeg);
             if (fileInfo.Exists == false)
             {
                 args.Logger.ELog("FFmpeg tool configured by ffmpeg file does not exist.");
@@ -43,10 +58,7 @@ namespace FileFlows.AudioNodes
         private const string Audio_INFO = "AudioInfo";
         internal void SetAudioInfo(NodeParameters args, AudioInfo AudioInfo, Dictionary<string, object> variables)
         {
-            if (args.Parameters.ContainsKey(Audio_INFO))
-                args.Parameters[Audio_INFO] = AudioInfo;
-            else
-                args.Parameters.Add(Audio_INFO, AudioInfo);
+            args.Parameters[Audio_INFO] = AudioInfo;
 
             if(AudioInfo.Artist.EndsWith(", The"))
                 variables.AddOrUpdate("audio.Artist", "The " + AudioInfo.Artist.Substring(0, AudioInfo.Artist.Length - ", The".Length).Trim());

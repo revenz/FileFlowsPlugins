@@ -1,6 +1,7 @@
 ﻿#if(DEBUG)
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
 
 namespace FileFlows.AudioNodes.Tests;
 [TestClass]
