@@ -125,7 +125,6 @@ public class SubtitleExtractor : EncodingNode
                 if (ExtractAll == false && string.IsNullOrEmpty(OutputFile) == false)
                 {
                     output = args.ReplaceVariables(OutputFile, true);
-                    output = args.MapPath(output);
                 }
                 else
                 {

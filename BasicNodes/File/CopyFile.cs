@@ -104,24 +104,19 @@ namespace FileFlows.BasicNodes.File
             {
                 args.FileService.SetCreationTimeUtc(dest, dtCreateTimeUtc);
                 args.FileService.SetLastWriteTimeUtc(dest, dtLastWriteUtc);
-                
-                //Helpers.FileHelper.SetCreationTime(dest, dtCreateTimeUtc);
-                //Helpers.FileHelper.SetLastWriteTime(dest, dtLastWriteUtc);
             }
 
             var srcDir = FileHelper.GetDirectory(AdditionalFilesFromOriginal
-                ? args.MapPath(args.FileName)
-                : args.MapPath(args.WorkingFile));
+                ? args.FileName
+                : args.WorkingFile);
 
             if (AdditionalFiles?.Any() == true)
             {
                 try
                 {
-                    //var diSrc = new DirectoryInfo(srcDir);
                     foreach (var additional in AdditionalFiles)
                     {
-                        //foreach (var addFile in diSrc.GetFiles(additional))
-                        foreach(var addFile in args.FileService.GetFiles(additional).ValueOrDefault ?? new string[] {})
+                        foreach(var addFile in args.FileService.GetFiles(srcDir, additional).ValueOrDefault ?? new string[] {})
                         {
                             try
                             {

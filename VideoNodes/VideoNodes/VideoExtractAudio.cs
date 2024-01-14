@@ -121,7 +121,6 @@ public class VideoExtractAudio : AudioSelectionEncodingNode
             else
                 outputfile = args.FileName;
         }
-        outputfile = args.MapPath(outputfile);
 
         if (string.IsNullOrWhiteSpace(OutputCodec))
             OutputCodec = "mp3";
