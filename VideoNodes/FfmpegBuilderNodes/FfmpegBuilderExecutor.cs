@@ -135,12 +135,18 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         if (model.ForceEncode == false && hasChange == false && (string.IsNullOrWhiteSpace(model.Extension) || args.WorkingFile.ToLower().EndsWith("." + model.Extension.ToLower())))
             return 2; // nothing to do 
 
+        var localFile = args.FileService.GetLocalPath(args.WorkingFile);
+        if (localFile.IsFailed)
+        {
+            args.Logger?.ELog("Failed to get local file: " + localFile.Error);
+            return -1;
+        }
 
         List<string> startArgs = new List<string>();
         if (model.InputFiles?.Any() == false)
-            model.InputFiles.Add(new InputFile(args.WorkingFile));
+            model.InputFiles.Add(new InputFile(localFile));
         else
-            model.InputFiles[0].FileName = args.WorkingFile;
+            model.InputFiles[0].FileName = localFile;
 
         startArgs.AddRange(new[] { "-fflags", "+genpts" }); //Generate missing PTS if DTS is present.
 
