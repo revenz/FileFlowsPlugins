@@ -33,6 +33,13 @@ public class FfmpegBuilderAudioNormalization : FfmpegBuilderNode
             return 2;
         }
 
+        var localFile = args.FileService.GetLocalPath(args.WorkingFile);
+        if (localFile.IsFailed)
+        {
+            args.Logger?.WLog("Failed to get local file: " + localFile.Error);
+            return 2;
+        }
+
         // store them incase we are creating duplicate tracks from same source, we dont need 
         // to calculate the normalization each time
         Dictionary<int, string> normalizedTracks = new Dictionary<int, string>();
@@ -57,7 +64,7 @@ public class FfmpegBuilderAudioNormalization : FfmpegBuilderNode
                     item.stream.Filter.Add(normalizedTracks[audio.TypeIndex]);
                 else
                 {
-                    string twoPass = DoTwoPass(this, args, FFMPEG, audio.TypeIndex);
+                    string twoPass = DoTwoPass(this, args, FFMPEG, audio.TypeIndex, localFile);
                     item.stream.Filter.Add(twoPass);
                     normalizedTracks.Add(audio.TypeIndex, twoPass); 
                 }
@@ -75,14 +82,14 @@ public class FfmpegBuilderAudioNormalization : FfmpegBuilderNode
 
 
     [RequiresUnreferencedCode("Calls System.Text.Json.JsonSerializer.Deserialize<FileFlows.VideoNodes.AudioNormalization.LoudNormStats>(string, System.Text.Json.JsonSerializerOptions?)")]
-    public static string DoTwoPass(EncodingNode node, NodeParameters args, string ffmpegExe, int audioIndex)
+    public static string DoTwoPass(EncodingNode node, NodeParameters args, string ffmpegExe, int audioIndex, string localFile)
     {
         //-af loudnorm=I=-24:LRA=7:TP=-2.0"
         string output;
         var result = node.Encode(args, ffmpegExe, new List<string>
         {
             "-hide_banner",
-            "-i", args.WorkingFile,
+            "-i", localFile,
             "-strict", "-2",  // allow experimental stuff
             "-map", "0:a:" + audioIndex,
             "-af", "loudnorm=" + LOUDNORM_TARGET + ":print_format=json",
@@ -91,14 +98,14 @@ public class FfmpegBuilderAudioNormalization : FfmpegBuilderNode
         }, out output, updateWorkingFile: false, dontAddInputFile: true);
 
         if (result == false)
-            throw new Exception("Failed to prcoess audio track");
+            throw new Exception("Failed to process audio track");
 
-        int index = output.LastIndexOf("{");
+        int index = output.LastIndexOf("{", StringComparison.Ordinal);
         if (index == -1)
             throw new Exception("Failed to detected json in output");
 
-        string json = output.Substring(index);
-        json = json.Substring(0, json.IndexOf("}") + 1);
+        string json = output[index..];
+        json = json.Substring(0, json.IndexOf("}", StringComparison.Ordinal) + 1);
         if (string.IsNullOrEmpty(json))
             throw new Exception("Failed to parse TwoPass json");
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
