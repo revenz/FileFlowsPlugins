@@ -32,6 +32,7 @@ public class FfmpegBuilderVideo10Bit : FfmpegBuilderNode
     public override int Execute(NodeParameters args)
     {
         args?.Logger?.WLog("This flow element has been marked obsolete and should no longer be used.");
+        return 1; // do nothing
         
         var videoInfo = GetVideoInfo(args);
         if (videoInfo == null || videoInfo.VideoStreams?.Any() != true)
