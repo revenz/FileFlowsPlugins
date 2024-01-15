@@ -308,6 +308,26 @@
           "2": "No HDR stream found"
         }
       },
+      "FfmpegBuilderKeepOriginalLanguage": {
+        "Label": "FFMPEG Builder: Keep Original Language",
+        "Outputs": {
+          "1": "Tracks have been modified",
+          "2": "No tracks have been changed"
+        },
+        "Description": "This flow element that will keep only the original language and any additional languages the user defines.\n\nAll other language streams will be removed/marked for deletion.",
+        "Fields": {
+          "StreamType": "Type",
+          "StreamType-Help": "The type of tracks that should be updated",
+          "AdditionalLanguages": "Additional Languages",
+          "AdditionalLanguages-Help": "An optional list of additional language codes to set on the tracks with missing languages.\n\nIt is recommended that an [ISO 639-2 language code](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) are used.",
+          "KeepOnlyFirst": "Keep Only First",
+          "KeepOnlyFirst-Help": "When enabled only the first track of each language would be kept.\n\nFor example if there were 2 English tracks, 3 Spanish tracks and 1 German track.  The original language was Spanish, additional languages was set to `eng`, then the result would be 1 English track and 1 Spanish track, the rest would be removed.",
+          "FirstIfNone": "First If None",
+          "FirstIfNone-Help": "When enabled, this ensures at least one track is kept.  If no tracks matching the original language and no tracks matching the additional languages are found, the first track will be kept regardless.\n\nThis avoids any issues of no audio left on the video.",
+          "TreatEmptyAsOriginal": "Treat Empty As Original",
+          "TreatEmptyAsOriginal-Help": "When enabled, any track that has no language set, will be treated as if it were the original language.\n\nFor example, original language is Maori, and a track has no language set on it, it will be treated as Maori."
+        }
+      },
       "FfmpegBuilderMetadataRemover": {
         "Label": "FFMPEG Builder: Metadata Remover",
         "Description": "Removes metadata from the FFMPEG Builder so when the file is processed the selected metadata will be removed.\n\nNote: Only the metadata when this node is effected, if metadata is added after this node runs, that will not be effected.",

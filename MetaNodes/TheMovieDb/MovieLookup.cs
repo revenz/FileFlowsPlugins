@@ -147,7 +147,11 @@ public class MovieLookup : Node
 
         Variables["movie.Title"] = result.Title;
         Variables["movie.Year"] = result.ReleaseDate.Year;
-        Variables["VideoMetadata"] = GetVideoMetadata(movieApi, result.Id, args.TempPath);
+        var meta = GetVideoMetadata(movieApi, result.Id, args.TempPath);
+        Variables["VideoMetadata"] = meta;
+        if (string.IsNullOrWhiteSpace(meta.OriginalLanguage) == false)
+            Variables["OriginalLanguage"] = meta.OriginalLanguage;
+        
         Variables[Globals.MOVIE_INFO] = result;
 
         args.UpdateVariables(Variables);

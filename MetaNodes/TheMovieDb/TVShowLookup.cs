@@ -107,6 +107,8 @@ public class TVShowLookup : Node
         Variables["tvshow.Year"] = result.FirstAirDate.Year;
         Variables["VideoMetadata"] = GetVideoMetadata(movieApi, result.Id, args.TempPath);
         Variables[Globals.TV_SHOW_INFO] = result;
+        if (string.IsNullOrWhiteSpace(result.OriginalLanguage) == false)
+            Variables["OriginalLanguage"] = result.OriginalLanguage;
         args.UpdateVariables(Variables);
         
         return 1;
