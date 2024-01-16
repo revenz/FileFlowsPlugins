@@ -50,6 +50,9 @@ public class Renamer : Node
             return -1;
         }
 
+        args.Logger?.ILog("Pattern: " + (Pattern ?? string.Empty));
+        args.Logger?.ILog("Destination Path: " + (DestinationPath ?? string.Empty));
+        
         string newFile = Pattern;
         // in case they set a linux path on windows or vice versa
         newFile = newFile.Replace('\\', args.FileService.PathSeparator);
@@ -65,15 +68,24 @@ public class Renamer : Node
         newFile = Regex.Replace(newFile, @"\s(\.[\w\d]+)$", "$1");
         newFile = newFile.Replace(" \\", "\\");
 
+        args.Logger?.ILog("New File: " + newFile);
         
         string destFolder = args.ReplaceVariables(DestinationPath ?? string.Empty, stripMissing: true, cleanSpecialCharacters: true);
+        args.Logger?.ILog("destFolder[0]: " + destFolder);
         if (string.IsNullOrEmpty(destFolder))
+        {
             destFolder = FileHelper.GetDirectory(args.WorkingFile);
+            args.Logger?.ILog("destFolder[1]: " + destFolder);
+        }
 
         if (destFolder.EndsWith("/") | destFolder.EndsWith(@"\"))
+        {
             destFolder = destFolder[..^1];
+            args.Logger?.ILog("destFolder[2]: " + destFolder);
+        }
 
         var dest = args.GetSafeName(destFolder + args.FileService.PathSeparator + newFile);
+        args.Logger?.ILog("dest: " + dest);
         
         string destExtension = FileHelper.GetExtension(dest);
 
@@ -84,15 +96,13 @@ public class Renamer : Node
                    destExtension.ToLower();
         }
 
-
-
         args.Logger?.ILog("Renaming file to: " + dest);
 
         if (string.IsNullOrEmpty(CsvFile) == false)
         {
-                var result = args.FileService.FileAppendAllText(CsvFile, EscapeForCsv(args.FileName) + "," + EscapeForCsv(dest) + Environment.NewLine);
-                if(result.IsFailed)
-                    args.Logger?.ELog("Failed to append to CSV file: " + result.Error);
+            var result = args.FileService.FileAppendAllText(CsvFile, EscapeForCsv(args.FileName) + "," + EscapeForCsv(dest) + Environment.NewLine);
+            if(result.IsFailed)
+                args.Logger?.ELog("Failed to append to CSV file: " + result.Error);
         }
 
         if (LogOnly)
