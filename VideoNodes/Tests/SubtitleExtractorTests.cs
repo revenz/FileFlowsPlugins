@@ -23,7 +23,7 @@ namespace VideoNodes.Tests
                 node.OutputFile = Path.Combine(TempPath, "subtitle.en" + ext);
                 node.Language = "eng";
 
-                var args = new NodeParameters(file, new TestLogger(), false, string.Empty);
+                var args = new NodeParameters(file, new TestLogger(), false, string.Empty, null);;
                 args.GetToolPathActual = (string tool) => FfmpegPath;
                 args.TempPath = TempPath;
 
@@ -49,7 +49,7 @@ namespace VideoNodes.Tests
                 node.OutputFile = Path.Combine(TempPath, "subtitle.en" + ext);
                 node.Language = "eng";
 
-                var args = new NodeParameters(file, new TestLogger(), false, string.Empty);
+                var args = new NodeParameters(file, new TestLogger(), false, string.Empty, null);;
                 args.GetToolPathActual = (string tool) => FfmpegPath;
                 args.TempPath = TempPath;
 

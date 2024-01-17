@@ -14,7 +14,7 @@ public class TVShowLookupTests
     public void TheBatman_Filename()
     {
         var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters("/test/tv/The Batman/Season 2/The Batman.s02e01.mkv", logger, false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters("/test/tv/The Batman/Season 2/The Batman.s02e01.mkv", logger, false, string.Empty, null);
 
         var element = new TVShowLookup();
         element.UseFolderName = false;
@@ -37,7 +37,7 @@ public class TVShowLookupTests
     public void TheBatman_Folder()
     {
         var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters("/test/tv/The Batman/Season 2/The Batman.s02e01.mkv", logger, false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters("/test/tv/The Batman/Season 2/The Batman.s02e01.mkv", logger, false, string.Empty, null);
 
         var element = new TVShowLookup();
         element.UseFolderName = true;
@@ -60,7 +60,7 @@ public class TVShowLookupTests
     public void SquidGame_Filename()
     {
         var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters("/test/tv/Squid Game/Season 1/Squid.Game.1x01-02.mkv", logger, false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters("/test/tv/Squid Game/Season 1/Squid.Game.1x01-02.mkv", logger, false, string.Empty, null);
 
         var element = new TVShowLookup();
         element.UseFolderName = false;
@@ -83,7 +83,7 @@ public class TVShowLookupTests
     public void SquidGame_Folder()
     {
         var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters("/test/tv/Squid Game/Season 1/Squid.Game.1x01-02.mkv", logger, false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters("/test/tv/Squid Game/Season 1/Squid.Game.1x01-02.mkv", logger, false, string.Empty, null);
 
         var element = new TVShowLookup();
         element.UseFolderName = true;

@@ -11,7 +11,7 @@ public class AppriseTests
     [TestMethod]
     public void Apprise_Basic_All()
     {
-        var args = new NodeParameters("test.file", new TestLogger(), false, string.Empty);
+        var args = new NodeParameters("test.file", new TestLogger(), false, string.Empty, null);;
         args.GetPluginSettingsJson = (string input) =>
         {
             return File.ReadAllText("../../../settings.json");
@@ -25,7 +25,7 @@ public class AppriseTests
     [TestMethod]
     public void Apprise_Basic_Valid()
     {
-        var args = new NodeParameters("test.file", new TestLogger(), false, string.Empty);
+        var args = new NodeParameters("test.file", new TestLogger(), false, string.Empty, null);;
         args.GetPluginSettingsJson = (string input) =>
         {
             return File.ReadAllText("../../../settings.json");
@@ -40,7 +40,7 @@ public class AppriseTests
     [TestMethod]
     public void Apprise_Basic_Invalid()
     {
-        var args = new NodeParameters("test.file", new TestLogger(), false, string.Empty);
+        var args = new NodeParameters("test.file", new TestLogger(), false, string.Empty, null);;
         args.GetPluginSettingsJson = (string input) =>
         {
             return File.ReadAllText("../../../settings.json");

@@ -18,7 +18,7 @@ public class VariableMatchTests
     [TestInitialize]
     public void TestStarting()
     {
-        Args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", new TestLogger(), false, string.Empty);
+        Args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", new TestLogger(), false, string.Empty, null);;
         Args.GetToolPathActual = (arg) => TestVariable;
 
     }

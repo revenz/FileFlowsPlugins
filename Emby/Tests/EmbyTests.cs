@@ -11,7 +11,7 @@ public class EmbyTests
     [TestMethod]
     public void Emby_Basic()
     {
-        var args = new NodeParameters(@"/media/movies/Citizen Kane (1941)/Citizen Kane (1941).mp4", new TestLogger(), false, string.Empty);
+        var args = new NodeParameters(@"/media/movies/Citizen Kane (1941)/Citizen Kane (1941).mp4", new TestLogger(), false, string.Empty, null);;
         args.GetPluginSettingsJson = (string input) =>
         {
             return File.ReadAllText("../../../settings.json");
@@ -24,7 +24,7 @@ public class EmbyTests
     [TestMethod]
     public void Emby_Fail()
     {
-        var args = new NodeParameters(@"/media/unknownmovies/The Batman (2022)/The Batman.mkv", new TestLogger(), false, string.Empty);
+        var args = new NodeParameters(@"/media/unknownmovies/The Batman (2022)/The Batman.mkv", new TestLogger(), false, string.Empty, null);;
         args.GetPluginSettingsJson = (string input) =>
         {
             return File.ReadAllText("../../../settings.invalid.json");
@@ -37,7 +37,7 @@ public class EmbyTests
     [TestMethod]
     public void Emby_Mapped()
     {
-        var args = new NodeParameters(@"/mnt/movies/Citizen Kane (1941)/Citizen Kane (1941).mp4", new TestLogger(), false, string.Empty);
+        var args = new NodeParameters(@"/mnt/movies/Citizen Kane (1941)/Citizen Kane (1941).mp4", new TestLogger(), false, string.Empty, null);;
         args.GetPluginSettingsJson = (string input) =>
         {
             return File.ReadAllText("../../../settings.json");

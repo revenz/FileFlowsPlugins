@@ -13,7 +13,7 @@ public class TouchTests
     [TestInitialize]
     public void TestStarting()
     {
-        Args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", new TestLogger(), false, string.Empty);
+        Args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", new TestLogger(), false, string.Empty, null);;
     }
 
     [TestMethod]

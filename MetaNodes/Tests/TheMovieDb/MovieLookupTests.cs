@@ -13,7 +13,7 @@ public class MovieLookupTests
     [TestMethod]
     public void MovieLookupTests_File_Ghostbusters()
     {
-        var args = new FileFlows.Plugin.NodeParameters(@"/test/Ghostbusters 1984.mkv", new TestLogger(), false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters(@"/test/Ghostbusters 1984.mkv", new TestLogger(), false, string.Empty, null);;
 
         MovieLookup ml = new MovieLookup();
         ml.UseFolderName = false;
@@ -32,7 +32,7 @@ public class MovieLookupTests
     [TestMethod]
     public void MovieLookupTests_File_Ghostbusters2()
     {
-        var args = new FileFlows.Plugin.NodeParameters(@"/test/Ghostbusters 2.mkv", new TestLogger(), false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters(@"/test/Ghostbusters 2.mkv", new TestLogger(), false, string.Empty, null);;
 
         MovieLookup ml = new MovieLookup();
         ml.UseFolderName = false;
@@ -51,7 +51,7 @@ public class MovieLookupTests
     [TestMethod]
     public void MovieLookupTests_File_WithDots()
     {
-        var args = new FileFlows.Plugin.NodeParameters(@"/test/Back.To.The.Future.2.mkv", new TestLogger(), false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters(@"/test/Back.To.The.Future.2.mkv", new TestLogger(), false, string.Empty, null);;
 
         MovieLookup ml = new MovieLookup();
         ml.UseFolderName = false;
@@ -70,7 +70,7 @@ public class MovieLookupTests
     [TestMethod]
     public void MovieLookupTests_File_WithYear()
     {
-        var args = new FileFlows.Plugin.NodeParameters(@"/test/Back.To.The.Future.1989.mkv", new TestLogger(), false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters(@"/test/Back.To.The.Future.1989.mkv", new TestLogger(), false, string.Empty, null);;
 
         MovieLookup ml = new MovieLookup();
         ml.UseFolderName = false;
@@ -89,7 +89,7 @@ public class MovieLookupTests
     [TestMethod]
     public void MovieLookupTests_Folder_WithYear()
     {
-        var args = new FileFlows.Plugin.NodeParameters(@"/test/Back To The Future (1989)/Jaws.mkv", new TestLogger(), false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters(@"/test/Back To The Future (1989)/Jaws.mkv", new TestLogger(), false, string.Empty, null);;
 
         MovieLookup ml = new MovieLookup();
         ml.UseFolderName = true;
@@ -108,7 +108,7 @@ public class MovieLookupTests
     [TestMethod]
     public void MovieLookupTests_VariablesSet()
     {
-        var args = new FileFlows.Plugin.NodeParameters(@"/test/Back To The Future (1989)/Jaws.mkv", new TestLogger(), false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters(@"/test/Back To The Future (1989)/Jaws.mkv", new TestLogger(), false, string.Empty, null);;
 
         MovieLookup ml = new MovieLookup();
         ml.UseFolderName = true;
@@ -124,7 +124,7 @@ public class MovieLookupTests
     [TestMethod]
     public void MovieLookupTests_NoMatchNoVariables()
     {
-        var args = new FileFlows.Plugin.NodeParameters(@"/test/sdfsdfdsvfdcxdsf.mkv", new TestLogger(), false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters(@"/test/sdfsdfdsvfdcxdsf.mkv", new TestLogger(), false, string.Empty, null);;
 
         MovieLookup ml = new MovieLookup();
         ml.UseFolderName = false;
@@ -140,7 +140,7 @@ public class MovieLookupTests
     public void MovieLookupTests_ComplexFile()
     {
         var logger = new TestLogger(); 
-        var args = new FileFlows.Plugin.NodeParameters(@"/test/Constantine.2005.German.DL.AC3.1080p.BluRay.x265-Fun{{fdg$ERGESDG32fesdfgds}}/Constantine.2005.German.DL.AC3.1080p.BluRay.x265-Fun{{fdg$ERGESDG32fesdfgds}}.mkv", logger, false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters(@"/test/Constantine.2005.German.DL.AC3.1080p.BluRay.x265-Fun{{fdg$ERGESDG32fesdfgds}}/Constantine.2005.German.DL.AC3.1080p.BluRay.x265-Fun{{fdg$ERGESDG32fesdfgds}}.mkv", logger, false, string.Empty, null);
         string log = logger.ToString();
 
         MovieLookup ml = new MovieLookup();
@@ -160,7 +160,7 @@ public class MovieLookupTests
     [TestMethod]
     public void MovieLookupTests_WonderWoman()
     {
-        var args = new FileFlows.Plugin.NodeParameters(@"/test/Wonder.Woman.1984.2020.German.DL.AC3.1080p.BluRay.x265-Fun{{fdg$ERGESDG32fesdfgds}}/Wonder.Woman.1984.2020.German.DL.AC3.1080p.BluRay.x265-Fun{{fdg$ERGESDG32fesdfgds}}.mkv", new TestLogger(), false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters(@"/test/Wonder.Woman.1984.2020.German.DL.AC3.1080p.BluRay.x265-Fun{{fdg$ERGESDG32fesdfgds}}/Wonder.Woman.1984.2020.German.DL.AC3.1080p.BluRay.x265-Fun{{fdg$ERGESDG32fesdfgds}}.mkv", new TestLogger(), false, string.Empty, null);;
 
         MovieLookup ml = new MovieLookup();
         ml.UseFolderName = false;

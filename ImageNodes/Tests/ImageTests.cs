@@ -45,7 +45,7 @@ public class ImageNodesTests
     [TestMethod]
     public void ImageNodes_Basic_ImageFormat()
     {
-        var args = new NodeParameters(TestImage1, new TestLogger(), false, string.Empty)
+        var args = new NodeParameters(TestImage1, new TestLogger(), false, string.Empty, null)
         {
             TempPath = TempDir
         };
@@ -58,7 +58,7 @@ public class ImageNodesTests
     [TestMethod]
     public void ImageNodes_Basic_ImageFormat_Heic()
     {
-        var args = new NodeParameters(TestImageHeic, new TestLogger(), false, string.Empty)
+        var args = new NodeParameters(TestImageHeic, new TestLogger(), false, string.Empty, null)
         {
             TempPath = TempDir
         };
@@ -71,7 +71,7 @@ public class ImageNodesTests
     [TestMethod]
     public void ImageNodes_Basic_IsLandscape_Heic()
     {
-        var args = new NodeParameters(TestImageHeic, new TestLogger(), false, string.Empty)
+        var args = new NodeParameters(TestImageHeic, new TestLogger(), false, string.Empty, null)
         {
             TempPath = TempDir
         };
@@ -88,7 +88,7 @@ public class ImageNodesTests
     public void ImageNodes_Basic_Resize()
     {
         var logger = new TestLogger();
-        var args = new NodeParameters(TestImage1, logger, false, string.Empty)
+        var args = new NodeParameters(TestImage1, logger, false, string.Empty, null)
         {
             TempPath = TempDir
         };
@@ -106,7 +106,7 @@ public class ImageNodesTests
     [TestMethod]
     public void ImageNodes_Basic_Resize_Heic()
     {
-        var args = new NodeParameters(TestImageHeic, new TestLogger(), false, string.Empty)
+        var args = new NodeParameters(TestImageHeic, new TestLogger(), false, string.Empty, null)
         {
             TempPath = TempDir
         };
@@ -121,7 +121,7 @@ public class ImageNodesTests
     [TestMethod]
     public void ImageNodes_Basic_Resize_Percent()
     {
-        var args = new NodeParameters(TestImage1, new TestLogger(), false, string.Empty)
+        var args = new NodeParameters(TestImage1, new TestLogger(), false, string.Empty, null)
         {
             TempPath = TempDir
         };
@@ -146,7 +146,7 @@ public class ImageNodesTests
     [TestMethod]
     public void ImageNodes_Basic_Flip()
     {
-        var args = new NodeParameters(TestImage2, new TestLogger(), false, string.Empty)
+        var args = new NodeParameters(TestImage2, new TestLogger(), false, string.Empty, null)
         {
             TempPath = TempDir
         };
@@ -160,7 +160,7 @@ public class ImageNodesTests
     [TestMethod]
     public void ImageNodes_Basic_Flip_Heic()
     {
-        var args = new NodeParameters(TestImageHeic, new TestLogger(), false, string.Empty)
+        var args = new NodeParameters(TestImageHeic, new TestLogger(), false, string.Empty, null)
         {
             TempPath = TempDir
         };
@@ -173,7 +173,7 @@ public class ImageNodesTests
     [TestMethod]
     public void ImageNodes_Basic_Rotate()
     {
-        var args = new NodeParameters(TestImage2, new TestLogger(), false, string.Empty)
+        var args = new NodeParameters(TestImage2, new TestLogger(), false, string.Empty, null)
         {
             TempPath = TempDir
         };
@@ -186,7 +186,7 @@ public class ImageNodesTests
     [TestMethod]
     public void ImageNodes_Basic_Rotate_Heic()
     {
-        var args = new NodeParameters(TestImageHeic, new TestLogger(), false, string.Empty)
+        var args = new NodeParameters(TestImageHeic, new TestLogger(), false, string.Empty, null)
         {
             TempPath = TempDir
         };
@@ -201,7 +201,7 @@ public class ImageNodesTests
     {
         Assert.IsTrue(System.IO.File.Exists(TestCropImage1));
         var logger = new TestLogger();
-        var args = new NodeParameters(TestCropImage1, logger, false, string.Empty)
+        var args = new NodeParameters(TestCropImage1, logger, false, string.Empty, null)
         {
             TempPath = TempDir
         };
@@ -219,7 +219,7 @@ public class ImageNodesTests
     public void ImageNodes_Basic_AutoCrop_02()
     {
         var logger = new TestLogger();
-        var args = new NodeParameters(TestCropImage2, logger, false, string.Empty)
+        var args = new NodeParameters(TestCropImage2, logger, false, string.Empty, null)
         {
             TempPath = TempDir
         };
@@ -236,7 +236,7 @@ public class ImageNodesTests
     public void ImageNodes_Basic_AutoCrop_03()
     {
         var logger = new TestLogger();
-        var args = new NodeParameters(TestCropImage3, logger, false, string.Empty)
+        var args = new NodeParameters(TestCropImage3, logger, false, string.Empty, null)
         {
             TempPath = TempDir
         };
@@ -254,7 +254,7 @@ public class ImageNodesTests
     public void ImageNodes_Basic_AutoCrop_04()
     {
         var logger = new TestLogger();
-        var args = new NodeParameters(TestCropImage4, logger, false, string.Empty)
+        var args = new NodeParameters(TestCropImage4, logger, false, string.Empty, null)
         {
             TempPath = TempDir
         };
@@ -278,7 +278,7 @@ public class ImageNodesTests
     public void ImageNodes_Basic_AutoCrop_NoCrop()
     {
         var logger = new TestLogger();
-        var args = new NodeParameters(TestCropImageNoCrop, logger, false, string.Empty)
+        var args = new NodeParameters(TestCropImageNoCrop, logger, false, string.Empty, null)
         {
             TempPath = TempDir
         };

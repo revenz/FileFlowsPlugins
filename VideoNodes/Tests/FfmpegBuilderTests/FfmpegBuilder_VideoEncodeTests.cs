@@ -19,7 +19,7 @@ public class FfmpegBuilder_VideoEncode_VideoEncodeTests: TestBase
         string ffmpeg = FfmpegPath;
         var vi = new VideoInfoHelper(ffmpeg, logger);
         var vii = vi.Read(file);
-        var args = new NodeParameters(file, logger, false, string.Empty);
+        var args = new NodeParameters(file, logger, false, string.Empty, null);
         args.GetToolPathActual = (string tool) => ffmpeg;
         args.TempPath = TempPath;
         args.Parameters.Add("VideoInfo", vii);
@@ -83,7 +83,7 @@ public class FfmpegBuilder_VideoEncode_VideoEncodeTests: TestBase
         string ffmpeg = FfmpegPath;
         var vi = new VideoInfoHelper(ffmpeg, logger);
         var vii = vi.Read(TestFile_120_mbps_4k_uhd_hevc_10bit);
-        var args = new NodeParameters(TestFile_50_mbps_hd_h264, logger, false, string.Empty);
+        var args = new NodeParameters(TestFile_50_mbps_hd_h264, logger, false, string.Empty, null);
         args.GetToolPathActual = (string tool) => ffmpeg;
         args.TempPath = TempPath;
         args.Parameters.Add("VideoInfo", vii);
@@ -114,7 +114,7 @@ public class FfmpegBuilder_VideoEncode_VideoEncodeTests: TestBase
         string ffmpeg = FfmpegPath;
         var vi = new VideoInfoHelper(ffmpeg, logger);
         var vii = vi.Read(TestFile_BasicMkv);
-        var args = new NodeParameters(TestFile_BasicMkv, logger, false, string.Empty);
+        var args = new NodeParameters(TestFile_BasicMkv, logger, false, string.Empty, null);
         args.GetToolPathActual = (string tool) => ffmpeg;
         args.TempPath = TempPath;
         args.Parameters.Add("VideoInfo", vii);
@@ -145,7 +145,7 @@ public class FfmpegBuilder_VideoEncode_VideoEncodeTests: TestBase
         string ffmpeg = FfmpegPath;
         var vi = new VideoInfoHelper(ffmpeg, logger);
         var vii = vi.Read(TestFile_BasicMkv);
-        var args = new NodeParameters(TestFile_BasicMkv, logger, false, string.Empty);
+        var args = new NodeParameters(TestFile_BasicMkv, logger, false, string.Empty, null);
         args.GetToolPathActual = (string tool) => ffmpeg;
         args.TempPath = TempPath;
         args.Parameters.Add("VideoInfo", vii);
@@ -177,7 +177,7 @@ public class FfmpegBuilder_VideoEncode_VideoEncodeTests: TestBase
         string ffmpeg = FfmpegPath;
         var vi = new VideoInfoHelper(ffmpeg, logger);
         var vii = vi.Read(TestFile_BasicMkv);
-        var args = new NodeParameters(TestFile_BasicMkv, logger, false, string.Empty);
+        var args = new NodeParameters(TestFile_BasicMkv, logger, false, string.Empty, null);
         args.GetToolPathActual = (string tool) => ffmpeg;
         args.TempPath = TempPath;
         args.Parameters.Add("VideoInfo", vii);

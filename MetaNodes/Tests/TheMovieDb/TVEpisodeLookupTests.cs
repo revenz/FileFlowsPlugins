@@ -14,7 +14,7 @@ public class TVEpisodeLookupTests
     public void TheBatman_s02e01()
     {
         var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters("/test/tv/The Batman/Season 2/The Batman.s02e01.mkv", logger, false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters("/test/tv/The Batman/Season 2/The Batman.s02e01.mkv", logger, false, string.Empty, null);
 
         var element = new TVEpisodeLookup();
 
@@ -32,7 +32,7 @@ public class TVEpisodeLookupTests
     public void TheBatman_2x03()
     {
         var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters("/test/tv/The Batman/Season 2/The Batman - 2x03.mkv", logger, false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters("/test/tv/The Batman/Season 2/The Batman - 2x03.mkv", logger, false, string.Empty, null);
 
         var element = new TVEpisodeLookup();
 
@@ -50,7 +50,7 @@ public class TVEpisodeLookupTests
     public void TheBatman_3x01_2()
     {
         var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters("/test/tv/The Batman/Season 3/The Batman - 3x01-2.mkv", logger, false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters("/test/tv/The Batman/Season 3/The Batman - 3x01-2.mkv", logger, false, string.Empty, null);
 
         var element = new TVEpisodeLookup();
 
@@ -69,7 +69,7 @@ public class TVEpisodeLookupTests
     public void TheBatman_s4e12_13()
     {
         var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters("/test/tv/The Batman/Season 4/The Batman - s4e12-13.mkv", logger, false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters("/test/tv/The Batman/Season 4/The Batman - s4e12-13.mkv", logger, false, string.Empty, null);
 
         var element = new TVEpisodeLookup();
 
@@ -88,7 +88,7 @@ public class TVEpisodeLookupTests
     public void TheBatman_s5e1_2_3()
     {
         var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters("/test/tv/The Batman/Season 5/The Batman - s5e1-3.mkv", logger, false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters("/test/tv/The Batman/Season 5/The Batman - s5e1-3.mkv", logger, false, string.Empty, null);
 
         var element = new TVEpisodeLookup();
 

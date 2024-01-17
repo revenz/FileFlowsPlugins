@@ -13,7 +13,7 @@ namespace BasicNodes.Tests
         public void Executor_OutputVariable()
         {
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger, false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger, false, string.Empty, null);
 
             Executor node = new Executor();
             string file = @"D:\Videos\dummy.mkv";

@@ -13,7 +13,7 @@ public class AudioInfoTests
     [TestMethod]
     public void AudioInfo_SplitTrack()
     {
-        var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty, null);;
         args.GetToolPathActual = (string tool) => ffmpegExe;
         args.TempPath = @"D:\music\temp";
 
@@ -29,7 +29,7 @@ public class AudioInfoTests
         const string file = @"\\oracle\Audio\Taylor Swift\Speak Now\Taylor Swift - Speak Now - 08 - Never Grow Up.mp3";
         const string ffmpegExe = @"C:\utils\ffmpeg\ffmpeg.exe";
 
-        var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty, null);;
         args.GetToolPathActual = (string tool) => ffmpegExe;
         args.TempPath = @"D:\music\temp";
 
@@ -44,7 +44,7 @@ public class AudioInfoTests
         var logger = new TestLogger();
         foreach (string file in Directory.GetFiles(@"/home/john/Music/test"))
         {
-            var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty, null);
             args.GetToolPathActual = (string tool) => ffmpegExe;
 
             // laod the variables
@@ -85,7 +85,7 @@ public class AudioInfoTests
     {
         var logger = new TestLogger();
         var file = @"/home/john/Music/test/test.mp3";
-        var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty, null);
         args.GetToolPathActual = (string tool) => ffmpegExe;
 
         // load the variables

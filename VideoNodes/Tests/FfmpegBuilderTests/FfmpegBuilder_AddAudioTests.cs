@@ -54,7 +54,7 @@ public class FfmpegBuilder_AddAudioTests
                 Channels = 5.1f
             }
         };
-        args = new NodeParameters(file, logger, false, string.Empty);
+        args = new NodeParameters(file, logger, false, string.Empty, null);
         args.GetToolPathActual = (string tool) => ffmpeg;
         args.TempPath = @"D:\videos\temp";
         args.Parameters.Add("VideoInfo", vii);

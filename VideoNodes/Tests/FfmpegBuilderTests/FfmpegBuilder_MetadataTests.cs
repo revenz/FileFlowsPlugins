@@ -19,7 +19,7 @@ public class FfmpegBuilder_MetadataTests: TestBase
         const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
         var vi = new VideoInfoHelper(ffmpeg, logger);
         var vii = vi.Read(file);
-        var args = new NodeParameters(file, logger, false, string.Empty);
+        var args = new NodeParameters(file, logger, false, string.Empty, null);
         args.GetToolPathActual = (string tool) => ffmpeg;
         args.TempPath = @"D:\videos\temp";
         args.Parameters.Add("VideoInfo", vii);
@@ -54,7 +54,7 @@ public class FfmpegBuilder_MetadataTests: TestBase
         const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
         var vi = new VideoInfoHelper(ffmpeg, logger);
         var vii = vi.Read(file);
-        var args = new NodeParameters(file, logger, false, string.Empty);
+        var args = new NodeParameters(file, logger, false, string.Empty, null);
         args.GetToolPathActual = (string tool) => ffmpeg;
         args.TempPath = @"D:\videos\temp";
         args.Parameters.Add("VideoInfo", vii);
@@ -86,7 +86,7 @@ public class FfmpegBuilder_MetadataTests: TestBase
         const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
         var vi = new VideoInfoHelper(ffmpeg, logger);
         var vii = vi.Read(file);
-        var args = new NodeParameters(file, logger, false, string.Empty);
+        var args = new NodeParameters(file, logger, false, string.Empty, null);
         args.GetToolPathActual = (string tool) => ffmpeg;
         args.TempPath = @"D:\videos\temp";
         args.Parameters.Add("VideoInfo", vii);
@@ -118,7 +118,7 @@ public class FfmpegBuilder_MetadataTests: TestBase
         var logger = new TestLogger();
         var vi = new VideoInfoHelper(FfmpegPath, logger);
         var vii = vi.Read(file);
-        var args = new NodeParameters(file, logger, false, string.Empty);
+        var args = new NodeParameters(file, logger, false, string.Empty, null);
         args.GetToolPathActual = (string tool) => FfmpegPath;
         args.TempPath = TempPath;
         args.Parameters.Add("VideoInfo", vii);

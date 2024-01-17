@@ -18,7 +18,7 @@
 //         var vi = new VideoInfoHelper(FfmpegPath, logger);
 //         var vii = vi.Read(file);
 //
-//         var args = new NodeParameters(file, logger, false, string.Empty);
+//         var args = new NodeParameters(file, logger, false, string.Empty, null);
 //         args.GetToolPathActual = (string tool) => FfmpegPath;
 //         args.TempPath = TempPath;
 //

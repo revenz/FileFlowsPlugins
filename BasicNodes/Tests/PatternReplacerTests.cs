@@ -17,7 +17,7 @@ namespace BasicNodes.Tests
                 new KeyValuePair<string, string>("Seinfeld", "Batman")
             };
             node.UnitTest = true;
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\Seinfeld.mkv", new TestLogger(), false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\Seinfeld.mkv", new TestLogger(), false, string.Empty, null);;
 
             var result = node.Execute(args);
             Assert.AreEqual(1, result);
@@ -34,7 +34,7 @@ namespace BasicNodes.Tests
                 new KeyValuePair<string, string>(@"0([1-9]+x[\d]+)", "$1"),
             };
             node.UnitTest = true;
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\Seinfeld S03E06.mkv", new TestLogger(), false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\Seinfeld S03E06.mkv", new TestLogger(), false, string.Empty, null);;
 
             var result = node.Execute(args);
             Assert.AreEqual(1, result);
@@ -49,7 +49,7 @@ namespace BasicNodes.Tests
                 new KeyValuePair<string, string>(@"\.h265", "EMPTY")
             };
             node.UnitTest = true;
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\Seinfeld.h265.mkv", new TestLogger(), false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\Seinfeld.h265.mkv", new TestLogger(), false, string.Empty, null);;
 
             var result = node.RunReplacements(args, args.WorkingFile);
             Assert.AreEqual(@"c:\test\Seinfeld.mkv", result);

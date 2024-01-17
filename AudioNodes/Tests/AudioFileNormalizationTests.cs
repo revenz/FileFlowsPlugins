@@ -23,7 +23,7 @@ public class AudioFileNormalizationTests
 
         AudioFileNormalization node = new ();
         var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty, null);
         args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
         args.TempPath = @"D:\music\temp";
         new AudioFile().Execute(args); // need to read the Audio info and set it
@@ -42,7 +42,7 @@ public class AudioFileNormalizationTests
 
             AudioFileNormalization node = new();
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty, null);
             args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\music\temp";
             new AudioFile().Execute(args); // need to read the Audio info and set it
@@ -61,7 +61,7 @@ public class AudioFileNormalizationTests
 
         const string file = @"D:\music\flacs\03-billy_joel-dont_ask_me_why.flac";
         var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty, null);
         args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
         args.TempPath = @"D:\music\temp";
 

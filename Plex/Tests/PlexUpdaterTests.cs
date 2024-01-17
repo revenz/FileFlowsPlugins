@@ -11,7 +11,7 @@ public class PlexUpdaterTests
     [TestMethod]
     public void Plex_Basic()
     {
-        var args = new NodeParameters(@"/media/movies/The Batman (2022)/The Batman.mkv", new TestLogger(), false, string.Empty);
+        var args = new NodeParameters(@"/media/movies/The Batman (2022)/The Batman.mkv", new TestLogger(), false, string.Empty, null);;
         args.GetPluginSettingsJson = (string input) =>
         {
             return File.ReadAllText("../../../settings.json");
@@ -24,7 +24,7 @@ public class PlexUpdaterTests
     [TestMethod]
     public void Plex_Fail()
     {
-        var args = new NodeParameters(@"/media/unknownmovies/The Batman (2022)/The Batman.mkv", new TestLogger(), false, string.Empty);
+        var args = new NodeParameters(@"/media/unknownmovies/The Batman (2022)/The Batman.mkv", new TestLogger(), false, string.Empty, null);;
         args.GetPluginSettingsJson = (string input) =>
         {
             return File.ReadAllText("../../../settings.json");
@@ -37,7 +37,7 @@ public class PlexUpdaterTests
     [TestMethod]
     public void Plex_Mapping()
     {
-        var args = new NodeParameters(@"/mnt/movies/The Batman (2022)/The Batman.mkv", new TestLogger(), false, string.Empty);
+        var args = new NodeParameters(@"/mnt/movies/The Batman (2022)/The Batman.mkv", new TestLogger(), false, string.Empty, null);;
         var settings = new PluginSettings();
         settings.Mapping = new List<KeyValuePair<string, string>>();
         settings.Mapping.Add(new KeyValuePair<string, string>("/mnt/movies", "/media/movies"));

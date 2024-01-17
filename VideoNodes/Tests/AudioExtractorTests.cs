@@ -21,7 +21,7 @@ public class AudioExtractorTests : TestBase
         node.OutputFile = Path.Combine(TempPath, "Audio");
         node.OutputCodec = "mp3";
 
-        var args = new NodeParameters(file, logger, false, string.Empty);
+        var args = new NodeParameters(file, logger, false, string.Empty, null);
         args.GetToolPathActual = (string tool) => FfmpegPath;
         args.TempPath = TempPath;
 
@@ -49,7 +49,7 @@ public class AudioExtractorTests : TestBase
         node.Language = "en";
         node.OutputCodec = "mp3";
 
-        var args = new NodeParameters(file, logger, false, string.Empty);
+        var args = new NodeParameters(file, logger, false, string.Empty, null);
         args.GetToolPathActual = (string tool) => FfmpegPath;
         args.TempPath = TempPath;
 
@@ -77,7 +77,7 @@ public class AudioExtractorTests : TestBase
         node.Codec = "eac3";
         node.OutputCodec = "mp3";
 
-        var args = new NodeParameters(file, logger, false, string.Empty);
+        var args = new NodeParameters(file, logger, false, string.Empty, null);
         args.GetToolPathActual = (string tool) => FfmpegPath;
         args.TempPath = TempPath;
 
@@ -104,7 +104,7 @@ public class AudioExtractorTests : TestBase
         node.Codec = "eac3";
         node.OutputCodec = "mp3";
 
-        var args = new NodeParameters(file, logger, false, string.Empty);
+        var args = new NodeParameters(file, logger, false, string.Empty, null);
         args.GetToolPathActual = (string tool) => FfmpegPath;
         args.TempPath = TempPath;
 
@@ -132,7 +132,7 @@ public class AudioExtractorTests : TestBase
         node.OutputCodec = "aac";
         node.OutputBitrate = 2048;
 
-        var args = new NodeParameters(file, logger, false, string.Empty);
+        var args = new NodeParameters(file, logger, false, string.Empty, null);
         args.GetToolPathActual = (string tool) => FfmpegPath;
         args.TempPath = TempPath;
 
@@ -160,7 +160,7 @@ public class AudioExtractorTests : TestBase
         node.OutputCodec = "aac";
         node.OutputBitrate = 128;
 
-        var args = new NodeParameters(file, logger, false, string.Empty);
+        var args = new NodeParameters(file, logger, false, string.Empty, null);
         args.GetToolPathActual = (string tool) => FfmpegPath;
         args.TempPath = TempPath;
 

@@ -13,7 +13,7 @@ namespace BasicNodes.Tests
         [TestInitialize]
         public void TestStarting()
         {
-            Args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", new TestLogger(), false, string.Empty);
+            Args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", new TestLogger(), false, string.Empty, null);;
 
         }
 
@@ -58,7 +58,7 @@ namespace BasicNodes.Tests
         {
             Function pm = new Function();
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty, null);
             args.Variables = new Dictionary<string, object>
             {
                 { "movie.Title", "Ghostbusters" },
@@ -75,7 +75,7 @@ return 0";
         {
             Function pm = new Function();
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty, null);
             args.Variables = new Dictionary<string, object>
             {
                 { "movie.Title", "Ghostbusters" },
@@ -93,7 +93,7 @@ return 0";
         {
             Function pm = new Function();
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty, null);
             args.Variables = new Dictionary<string, object>
             {
                 { "movie.Title", "Ghostbusters" },
@@ -111,7 +111,7 @@ return 0";
         {
             Function pm = new Function();
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty, null);
             args.Variables = new Dictionary<string, object>
             {
                 { "movie.Title", "Ghostbusters" },
@@ -133,7 +133,7 @@ return 0";
         {
             Function pm = new Function();
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty, null);
             args.Variables = new Dictionary<string, object>
             {
                 { "folder.Date", new DateTime(2020, 03, 01) }
@@ -149,7 +149,7 @@ return 2";
         {
             Function pm = new Function();
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty, null);
             args.Variables = new Dictionary<string, object>
             {
                 { "folder.Date.Year", 2020 }
@@ -166,7 +166,7 @@ return 2";
         {
             Function pm = new Function();
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty, null);
             Assert.IsFalse(args.Parameters.ContainsKey("batman"));
             pm.Code = @"
 Flow.SetParameter('batman', 1989);
@@ -182,7 +182,7 @@ return 1";
         {
             Function pm = new Function();
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty, null);
             pm.Code = @"return Flow.GetDirectorySize('C:\\temp');";
             var result = pm.Execute(args);
             Assert.IsTrue(result > 0);
@@ -194,7 +194,7 @@ return 1";
         {
             Function pm = new Function();
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"D:\videos\unprocessed\The IT Crowd - 2x04 - The Dinner Party - No English.mkv", logger, false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(@"D:\videos\unprocessed\The IT Crowd - 2x04 - The Dinner Party - No English.mkv", logger, false, string.Empty, null);
             pm.Code = @"
 let result = Flow.Execute({command:'c:\\utils\\ffmpeg\\ffmpeg.exe', argumentList: ['-i', Variables.file.FullName]});
 Logger.ILog('ExitCode: ' + result.exitCode);
@@ -216,7 +216,7 @@ return 0;
         {
             Function pm = new Function();
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"D:\videos\unprocessed\The IT Crowd - 2x04 - The Dinner Party - No English.mkv", logger, false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(@"D:\videos\unprocessed\The IT Crowd - 2x04 - The Dinner Party - No English.mkv", logger, false, string.Empty, null);
             pm.Code = @"
 Logger.ILog('My Message');
 return 2;
@@ -230,7 +230,7 @@ return 2;
         {
             Function pm = new Function();
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"D:\videos\unprocessed\The IT Crowd - 2x04 - The Dinner Party - No English.mkv", logger, false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(@"D:\videos\unprocessed\The IT Crowd - 2x04 - The Dinner Party - No English.mkv", logger, false, string.Empty, null);
             args.GetToolPathActual = (string name) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\videos\temp";
             pm.Code = @"
@@ -272,7 +272,7 @@ return 1;
         {
             Function pm = new Function();
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty, null);
 
             foreach(var kv in new Dictionary<string, object>()
             {
@@ -328,7 +328,7 @@ return 2;";
         {
             Function pm = new Function();
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\sdfsdfdsvfdcxdsf.mkv", logger, false, string.Empty, null);
 
             foreach (var kv in new Dictionary<string, object>()
             {
@@ -408,7 +408,7 @@ return 2; // it isn't so call output 2";
         {
             Function pm = new Function();
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"D:\videos\unprocessed\movie h264.mkv", logger, false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(@"D:\videos\unprocessed\movie h264.mkv", logger, false, string.Empty, null);
             pm.Code = @"
 let newName = Variables.file.Name;
 
@@ -435,7 +435,7 @@ return 1;
         {
             Function pm = new Function();
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"D:\videos\unprocessed\movie h264.mkv", logger, false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(@"D:\videos\unprocessed\movie h264.mkv", logger, false, string.Empty, null);
             pm.Code = @"
 let quality = Variables.VideoCrop ? 17 : 19;
 Variables.VideoCodecParameters = `hevc_qsv -preset slow -tune film -global_quality ${quality} -look_ahead 1`;
@@ -454,7 +454,7 @@ return 1;
         {
             Function pm = new Function();
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"D:\videos\unprocessed\movie h264.mkv", logger, false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(@"D:\videos\unprocessed\movie h264.mkv", logger, false, string.Empty, null);
             pm.Code = @"
 let quality = Variables.VideoCrop ? 17 : 19;
 Variables.VideoCodecParameters = `hevc_qsv -preset slow -tune film -global_quality ${quality} -look_ahead 1`;
@@ -472,7 +472,7 @@ return 1;
         {
             Function pm = new Function();
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"D:\videos\unprocessed\dummy.mkv", logger, false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(@"D:\videos\unprocessed\dummy.mkv", logger, false, string.Empty, null);
             args.GetToolPathActual = (string name) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\videos\temp";
             pm.Code = @"

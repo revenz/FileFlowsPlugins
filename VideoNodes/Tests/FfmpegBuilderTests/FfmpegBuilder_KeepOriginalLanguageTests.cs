@@ -13,7 +13,7 @@ public class FfmpegBuilder_KeepOriginalLanguageTests
     VideoInfo vii;
     NodeParameters args;
     TestLogger logger = new TestLogger();
-    private void Prepare()
+    private void Prepare(string german = "deu")
     {
         const string file = @"D:\videos\unprocessed\basic.mkv";
         const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
@@ -49,7 +49,7 @@ public class FfmpegBuilder_KeepOriginalLanguageTests
             {
                 Index = 5,
                 IndexString = "0:a:4",
-                Language = "deu",
+                Language = german,
                 Codec = "AAC",
                 Channels = 5.1f
             }
@@ -82,11 +82,11 @@ public class FfmpegBuilder_KeepOriginalLanguageTests
             {
                 Index = 5,
                 IndexString = "0:s:4",
-                Language = "deu",
+                Language = german,
                 Codec = "AAC"
             }
         };
-        args = new NodeParameters(file, logger, false, string.Empty);
+        args = new NodeParameters(file, logger, false, string.Empty, null);
         args.GetToolPathActual = (string tool) => ffmpeg;
         args.TempPath = @"D:\videos\temp";
         args.Parameters.Add("VideoInfo", vii);
@@ -269,6 +269,29 @@ public class FfmpegBuilder_KeepOriginalLanguageTests
         Assert.AreEqual("en", subKept[0].Language);
         Assert.AreEqual("0:s:0", subKept[0].Stream.IndexString);
         Assert.AreEqual("fre", subKept[1].Language);
+    }
+    
+    [TestMethod]
+    public void FfmpegBuilder_Both_GerTest()
+    {
+        string gerIsoCode = LanguageHelper.GetIso2Code("ger");
+        string deIsoCode = LanguageHelper.GetIso2Code("de");
+        Assert.AreEqual(gerIsoCode, deIsoCode);
+        
+        Prepare(german: "ger");
+        
+        FfmpegBuilderKeepOriginalLanguage ffElement = new();
+        ffElement.StreamType = "Both";
+        args.Variables["OriginalLanguage"] = "de";
+        ffElement.PreExecute(args);
+        var result = ffElement.Execute(args);
+        var log = logger.ToString();
+
+        Assert.AreEqual(1, result);
+        var model = GetFFmpegModel();
+        var kept = model.AudioStreams.Where(x => x.Deleted == false).ToList();
+        Assert.AreEqual(1, kept.Count);
+        Assert.AreEqual("ger", kept[0].Language);
     }
 }
 

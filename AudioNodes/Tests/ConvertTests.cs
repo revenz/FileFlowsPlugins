@@ -29,7 +29,7 @@ namespace FileFlows.AudioNodes.Tests
                     node.Codec = codec;
                     node.Bitrate = quality + 10;
                     node.HighEfficiency = true;
-                    var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty);
+                    var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty, null);
                     args.GetToolPathActual = (string tool) =>
                     {
                         if(tool.ToLowerInvariant().Contains("ffmpeg")) return @"/usr/bin/ffmpeg";
@@ -54,7 +54,7 @@ namespace FileFlows.AudioNodes.Tests
             const string file = @"D:\music\unprocessed\01-billy_joel-you_may_be_right.flac";
 
             ConvertToMP3 node = new();
-            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty, null);;
             args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\music\temp";
             new AudioFile().Execute(args); // need to read the Audio info and set it
@@ -69,7 +69,7 @@ namespace FileFlows.AudioNodes.Tests
             const string file = @"D:\music\unprocessed\04-billy_joel-scenes_from_an_italian_restaurant-b2125758.mp3";
 
             ConvertToWAV node = new();
-            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty, null);;
             args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\music\temp";
             new AudioFile().Execute(args); // need to read the Audio info and set it
@@ -85,7 +85,7 @@ namespace FileFlows.AudioNodes.Tests
             const string file = @"D:\music\unprocessed\04-billy_joel-scenes_from_an_italian_restaurant-b2125758.mp3";
 
             ConvertToOGG node = new();
-            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty, null);;
             args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\music\temp";
             new AudioFile().Execute(args); // need to read the Audio info and set it
@@ -102,7 +102,7 @@ namespace FileFlows.AudioNodes.Tests
             const string file = @"D:\music\temp\37f315a0-4afc-4a72-a0b4-eb7eb681b9b3.aac";
 
             ConvertToMP3 node = new();
-            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty, null);;
             args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\music\temp";
             new AudioFile().Execute(args); // need to read the Audio info and set it
@@ -122,7 +122,7 @@ namespace FileFlows.AudioNodes.Tests
             node.Codec = "mp3";
 
             node.Bitrate = 192;
-            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty, null);;
             args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\music\temp";
             new AudioFile().Execute(args); // need to read the Audio info and set it
@@ -138,7 +138,7 @@ namespace FileFlows.AudioNodes.Tests
             const string file = @"D:\videos\testfiles\basic.mkv";
 
             ConvertToMP3 node = new();
-            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty, null);;
             args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\music\temp";
             //new AudioFile().Execute(args); // need to read the Audio info and set it
@@ -155,7 +155,7 @@ namespace FileFlows.AudioNodes.Tests
             const string file = @"D:\videos\testfiles\basic.mkv";
 
             ConvertToAAC node = new();
-            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty, null);;
             args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\music\temp";
             //new AudioFile().Execute(args); // need to read the Audio info and set it
@@ -174,7 +174,7 @@ namespace FileFlows.AudioNodes.Tests
 
             ConvertToAAC node = new();
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty, null);
             args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\music\temp";
             new AudioFile().Execute(args); // need to read the Audio info and set it
@@ -194,7 +194,7 @@ namespace FileFlows.AudioNodes.Tests
 
             ConvertToAAC node = new();
             var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty);
+            var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty, null);
             args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
             args.TempPath = @"D:\music\temp";
             new AudioFile().Execute(args); // need to read the Audio info and set it

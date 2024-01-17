@@ -24,7 +24,7 @@ public class VideoHasStreamTests : TestBase
         node.Codec = "h264";
         node.Stream = "Video";
 
-        var args = new NodeParameters(file, new TestLogger(), false, string.Empty);
+        var args = new NodeParameters(file, new TestLogger(), false, string.Empty, null);;
         args.GetToolPathActual = (string tool) => FfmpegPath;
         args.TempPath = TempPath;
 
@@ -48,7 +48,7 @@ public class VideoHasStreamTests : TestBase
         node.Codec = "h265";
         node.Stream = "Video";
 
-        var args = new NodeParameters(file, new TestLogger(), false, string.Empty);
+        var args = new NodeParameters(file, new TestLogger(), false, string.Empty, null);;
         args.GetToolPathActual = (string tool) => FfmpegPath;
         args.TempPath = TempPath;
 
@@ -72,7 +72,7 @@ public class VideoHasStreamTests : TestBase
         node.Codec = "h265";
         node.Stream = "Video";
 
-        var args = new NodeParameters(file, new TestLogger(), false, string.Empty);
+        var args = new NodeParameters(file, new TestLogger(), false, string.Empty, null);;
         args.GetToolPathActual = (string tool) => FfmpegPath;
         args.TempPath = TempPath;
 
@@ -97,7 +97,7 @@ public class VideoHasStreamTests : TestBase
         node.Codec = "vorbis";
         node.Stream = "Audio";
 
-        var args = new NodeParameters(file, new TestLogger(), false, string.Empty);
+        var args = new NodeParameters(file, new TestLogger(), false, string.Empty, null);;
         args.GetToolPathActual = (string tool) => FfmpegPath;
         args.TempPath = TempPath;
 
@@ -123,7 +123,7 @@ public class VideoHasStreamTests : TestBase
         node.Channels = 5.1f;
         node.Stream = "Audio";
 
-        var args = new NodeParameters(file, new TestLogger(), false, string.Empty);
+        var args = new NodeParameters(file, new TestLogger(), false, string.Empty, null);;
         args.GetToolPathActual = (string tool) => FfmpegPath;
         args.TempPath = TempPath;
 
@@ -148,7 +148,7 @@ public class VideoHasStreamTests : TestBase
         node.Channels = 2;
         node.Stream = "Audio";
 
-        var args = new NodeParameters(file, new TestLogger(), false, string.Empty);
+        var args = new NodeParameters(file, new TestLogger(), false, string.Empty, null);;
         args.GetToolPathActual = (string tool) => FfmpegPath;
         args.TempPath = TempPath;
 
@@ -173,7 +173,7 @@ public class VideoHasStreamTests : TestBase
         node.Codec = "h264";
         node.Stream = "Video";
 
-        var args = new NodeParameters(file, new TestLogger(), false, string.Empty);
+        var args = new NodeParameters(file, new TestLogger(), false, string.Empty, null);;
         args.GetToolPathActual = (string tool) => FfmpegPath;
         args.TempPath = TempPath;
 
@@ -198,7 +198,7 @@ public class VideoHasStreamTests : TestBase
         node.Language = "ita";
         node.Stream = "Audio";
 
-        var args = new NodeParameters(file, new TestLogger(), false, string.Empty);
+        var args = new NodeParameters(file, new TestLogger(), false, string.Empty, null);;
         args.GetToolPathActual = (string tool) => FfmpegPath;
         args.TempPath = TempPath;
 
@@ -223,7 +223,7 @@ public class VideoHasStreamTests : TestBase
         node.Language = "mao";
         node.Stream = "Audio";
 
-        var args = new NodeParameters(file, new TestLogger(), false, string.Empty);
+        var args = new NodeParameters(file, new TestLogger(), false, string.Empty, null);;
         args.GetToolPathActual = (string tool) => FfmpegPath;
         args.TempPath = TempPath;
 

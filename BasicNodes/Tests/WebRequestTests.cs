@@ -12,7 +12,7 @@ public class WebRequestTests
     public void WebRequest_PostJson()
     {
         var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger, false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger, false, string.Empty, null);
         
         WebRequest node = new();
         node.Method = "POST";
@@ -40,7 +40,7 @@ public class WebRequestTests
         
         var logger = new TestLogger();
         var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", 
-            logger, false, string.Empty);
+            logger, false, string.Empty, null);
         
         WebRequest node = new();
         node.Method = "POST";

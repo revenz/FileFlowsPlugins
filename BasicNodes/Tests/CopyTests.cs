@@ -23,7 +23,7 @@ public class CopyTests
     public void CopyTests_Dir_Mapping()
     {            
         var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger, false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger, false, string.Empty, null);
         args.PathMapper = s => Map(s);
         
         CopyFile node = new ();
@@ -38,7 +38,7 @@ public class CopyTests
     public void CopyTests_Dir_DateReplacements()
     {
         var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters(@"D:\videos\testfiles\bigbuckbunny_480p_30s.mp4", logger, false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters(@"D:\videos\testfiles\bigbuckbunny_480p_30s.mp4", logger, false, string.Empty, null);
         args.PathMapper = s => Map(s);
 
         CopyFile node = new();

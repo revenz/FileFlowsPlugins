@@ -27,7 +27,7 @@ namespace VideoNodes.Tests
       {
         const string file = @"D:\videos\unprocessed\The IT Crowd - 2x04 - The Dinner Party - No English.mkv";
         const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
-        var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty, null);;
 
         args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
         args.TempPath = @"D:\videos\temp";
@@ -55,7 +55,7 @@ namespace VideoNodes.Tests
 
         SubtitleExtractor node = new();
         //node.OutputFile = file + ".sup";
-        var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
+        var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty, null);;
         args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
         args.TempPath = @"D:\videos\temp";
 

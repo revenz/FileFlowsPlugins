@@ -59,7 +59,7 @@ public class FfmpegBuilder_AudioConverterTests: TestBase
                 Channels = 5.1f
             }
         };
-        args = new NodeParameters(file, logger, false, string.Empty);
+        args = new NodeParameters(file, logger, false, string.Empty, null);
         args.GetToolPathActual = (string tool) => FfmpegPath;
         args.TempPath = TempPath;
         args.Parameters.Add("VideoInfo", vii);
@@ -241,7 +241,7 @@ public class FfmpegBuilder_AudioConverterTests: TestBase
         var logger = new TestLogger();
         var vi = new VideoInfoHelper(FfmpegPath, logger);
         var vii = vi.Read(file);
-        var args = new NodeParameters(file, logger, false, string.Empty);
+        var args = new NodeParameters(file, logger, false, string.Empty, null);
         args.GetToolPathActual = (string tool) => FfmpegPath;
         args.TempPath = TempPath;
         args.Parameters.Add("VideoInfo", vii);
