@@ -33,7 +33,13 @@ public class FfmpegSubtitleStream : FfmpegStream
             string.Equals(args.SourceExtension, args.DestinationExtension, StringComparison.InvariantCultureIgnoreCase);
         
         string destCodec;
-        if(containerSame)
+        if (Stream.Codec?.ToLowerInvariant().Equals("mov_text") == true &&
+            args.DestinationExtension?.ToLowerInvariant()?.EndsWith("mkv") == true)
+        {
+            args.Logger?.ILog("Force subtitle from mov_text to srt for a MKV container");
+            destCodec = "srt"; // force mov_text in mkvs to be srt
+        }
+        else if(containerSame)
             destCodec = "copy";
         else
         {
