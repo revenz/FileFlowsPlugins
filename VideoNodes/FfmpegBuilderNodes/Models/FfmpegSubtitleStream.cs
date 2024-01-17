@@ -64,7 +64,8 @@ public class FfmpegSubtitleStream : FfmpegStream
         if (string.IsNullOrWhiteSpace(this.Language) == false)
         {
             results.Add($"-metadata:s:s:{args.OutputTypeIndex}");
-            results.Add($"language={(this.Language == FfmpegStream.REMOVED ? "" : this.Language)}");
+            // splitting ,; as a file was reported with a double up on languages, "eng,eng" which caused issues
+            results.Add($"language={(Language == REMOVED ? "" : Language.Split(',', ';')[0])}");
         }
 
         if (Metadata.Any())
