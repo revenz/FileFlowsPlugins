@@ -171,15 +171,18 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             if(ffArgs.Any(x => x.Contains("_qsv")))
             {
                 // use qsv decoder
+                args.Logger?.ILog("_qsv detected using qsv hardware decoding");
                 startArgs.AddRange(new[] { "-hwaccel", "qsv" }); //, "-hwaccel_output_format", "qsv" });
             }
             else if(ffArgs.Any(x => x.Contains("_nvenc")))
             {
                 // use nvidia decoder
+                args.Logger?.ILog("_nvenc detected using cuda hardware decoding");
                 startArgs.AddRange(new[] { "-hwaccel", "cuda" }); //, "-hwaccel_output_format", "cuda" });
             }
             else if (HardwareDecoding)
             {
+                args.Logger?.ILog("Auto-detecting hardware decoder to use");
                 startArgs.AddRange(GetHardwareDecodingArgs(args));
             }
         }
@@ -250,7 +253,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
 
     internal string[] GetHardwareDecodingArgs(NodeParameters args)
     {
-        string testFile = FileHelper.Combine(Args.TempPath, Guid.NewGuid() + ".hwtest.mkv");
+        string testFile = FileHelper.Combine(args.TempPath, Guid.NewGuid() + ".hwtest.mkv");
         var video = this.Model.VideoStreams.Where(x => x.Stream.IsImage == false).FirstOrDefault();
         if (string.IsNullOrWhiteSpace(video?.Stream?.Codec))
             return new string[] { };
@@ -266,8 +269,12 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             {
                 if (hw == null)
                     continue;
-                if (CanUseHardwareEncoding.DisabledByVariables(Args, hw))
+                if (CanUseHardwareEncoding.DisabledByVariables(args, hw))
+                {
+                    args.Logger?.ILog("HW disabled by variables: " + string.Join(", ", hw));
                     continue;
+                }
+
                 try
                 {
                     var arguments = new List<string>()
@@ -283,14 +290,14 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                     testFile
                 });
 
-                    var result = Args.Execute(new ExecuteArgs
+                    var result = args.Execute(new ExecuteArgs
                     {
                         Command = FFMPEG,
                         ArgumentList = arguments.ToArray()
                     });
                     if (result.ExitCode == 0)
                     {
-                        Args.Logger?.ILog("Supported hardware decoding detected: " + string.Join(" ", hw));
+                        args.Logger?.ILog("Supported hardware decoding detected: " + string.Join(" ", hw));
 
                         return hw;
                     }
@@ -298,7 +305,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                 catch (Exception) { }
             }
 
-            Args.Logger?.ILog("No hardware decoding availble");
+            args.Logger?.ILog("No hardware decoding availble");
             return new string[] { };
         }
         finally
