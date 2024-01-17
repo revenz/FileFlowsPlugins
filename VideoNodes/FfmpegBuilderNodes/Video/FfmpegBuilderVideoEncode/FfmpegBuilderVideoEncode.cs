@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Net;
 using System.Runtime.InteropServices;
 using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
 
@@ -162,7 +163,13 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         
         stream.EncodingParameters.Clear();
 
-        string encoder = Environment.GetEnvironmentVariable("HW_OFF") == "1" ? ENCODER_CPU : this.Encoder;
+        // remove anything that may have been added before
+        stream.Filter = stream.Filter.Where(x => x?.StartsWith("scale_qsv") != true).ToList();
+
+        string encoder = Environment.GetEnvironmentVariable("HW_OFF") == "1" || 
+            (
+                args.Variables?.TryGetValue("HW_OFF", out object oHwOff) == true && (oHwOff as bool? == true || oHwOff?.ToString() == "1")
+            ) ? ENCODER_CPU : this.Encoder;
 
         if (Codec == CODEC_H264)
         {
