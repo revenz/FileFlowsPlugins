@@ -114,6 +114,12 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                 DestinationExtension = extension,
                 UpdateDefaultFlag = item.list.Any(x => x.Deleted == false && x.IsDefault)
             });
+            if (streamArgs?.Any() != true)
+            {
+                // stream was not included for some reason
+                // eg an unsupported subtitle type was removed
+                continue;
+            }
             for (int i = 0; i < streamArgs.Length; i++)
             {
                 streamArgs[i] = streamArgs[i].Replace("{sourceTypeIndex}", vfs.TypeIndex.ToString());
