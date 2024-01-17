@@ -46,6 +46,8 @@ internal class SubtitleHelper
         switch (containerType.ToLower())
         {
             case "mp4":
+                if (currentCodec == "dvb_teletext")
+                    return null; // dont support dvb_teletext
                 if (isImageBased)
                 {
                     // MP4 container does not support image-based subtitles, so conversion is not possible
@@ -53,12 +55,16 @@ internal class SubtitleHelper
                 }
                 return "mov_text";
             case "mkv":
+                if (currentCodec == "dvb_teletext")
+                    return null; // dont support dvb_teletext
                 if (isImageBased)
                     return "copy";
                 if (IsSupportedSubtitleCodecMKV(currentCodec) == false)
                     return "srt"; // or "ssa" or any other supported codec
                 return currentCodec;
             case "webm":
+                if (currentCodec == "dvb_teletext")
+                    return null; // dont support dvb_teletext
                 if (isImageBased)
                 {
                     // WebM container does not support image-based subtitles, so conversion is not possible
