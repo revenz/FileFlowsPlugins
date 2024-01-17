@@ -155,9 +155,16 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         });
 
 
-        if (Environment.GetEnvironmentVariable("HW_OFF") == "1" || Variables["HW_OFF"] == "1" || Variables["HW_OFF"] as bool? == true)
+        if (Environment.GetEnvironmentVariable("HW_OFF") == "1")
         {
             args.Logger?.ILog("HW_OFF detected");
+        }
+        else if (Variables.TryGetValue("HW_OFF", out object oHwOff) && 
+                 (oHwOff as bool? == true || oHwOff?.ToString() == "1")
+                 )
+        {
+            args.Logger?.ILog("HW_OFF detected");
+            
         }
         else
         {
