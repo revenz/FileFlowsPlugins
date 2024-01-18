@@ -99,7 +99,7 @@ public class DeleteSourceDirectory : Node
         }
 
         args.Logger?.ILog("Deleting directory: " + pathToDelete);
-        var result = args.FileService.DirectoryDelete(pathToDelete, false);
+        var result = args.FileService.DirectoryDelete(pathToDelete, true);
         if (result.IsFailed)
         {
             args.Logger?.WLog("Failed to deleted directory: " + result.Error);
