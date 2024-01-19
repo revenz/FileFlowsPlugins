@@ -1,4 +1,5 @@
 using FileFlows.Plugin;
+using TagLib.Tiff.Cr2;
 
 namespace FileFlows.AudioNodes;
 
@@ -31,6 +32,23 @@ public class CreateAudioBook: AudioNode
     /// Gets the flow element type
     /// </summary>
     public override FlowElementType Type => FlowElementType.Process;
+    
+    /// <summary>
+    /// Gets or sets the destination path
+    /// </summary>
+    [Required]
+    [Folder(1)]
+    public string DestinationPath { get; set; }
+    
+    /// <summary>
+    /// Gets or sets if the source files should be deleted
+    /// </summary>
+    [Boolean(2)] public bool DeleteSourceFiles { get; set; }
+    
+    /// <summary>
+    /// Gets or sets if the working file should be updated
+    /// </summary>
+    [Boolean(3)] public bool UpdateWorkingFile { get; set; }
     
     /// <summary>
     /// Executes the flow element
@@ -185,7 +203,41 @@ public class CreateAudioBook: AudioNode
             args.Logger.ELog("Failed to create output file: " + outputFile);
             return -1;
         }
-        args.Logger.ELog("Created output file: " + outputFile);
+        args.Logger.ILog("Created output file: " + outputFile);
+
+        if (DeleteSourceFiles)
+        {
+            foreach (var file in files)
+            {
+                var result = args.FileService.FileDelete(file);
+                if(result.IsFailed)
+                    args.Logger.ILog("Failed deleting source file: " + file + " -> " + result.Error);
+                else if(result.Value == false)
+                    args.Logger.ILog("Failed deleting source file: " + file);
+                else
+                    args.Logger.ILog("Deleted source file: " + file);
+            }
+        }
+
+        if (string.IsNullOrWhiteSpace(DestinationPath) == false)
+        {
+            var dest = args.ReplaceVariables(DestinationPath, stripMissing: true);
+            if (args.FileService.FileMove(outputFile, dest).Failed(out string error))
+            {
+                args.Logger?.ELog("Failed to save to destination: " + error);
+                return -1;
+            }
+
+            outputFile = dest;
+        }
+
+        if (UpdateWorkingFile)
+        {
+            args.Logger?.ILog("Updating working file to: " + outputFile);
+            args.IsDirectory = false; // no longer a directory based flow
+            args.SetWorkingFile(outputFile);
+        }
+        
         return 1;
     }
 

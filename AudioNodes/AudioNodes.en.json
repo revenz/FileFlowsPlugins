@@ -114,6 +114,14 @@
         "Outputs": {
           "1": "Audio book created",
           "2": "Audio book not created"          
+        },
+        "Fields": {
+          "DeleteSourceFiles": "Delete Source Files",
+          "DeleteSourceFiles-Help": "When enabled the source files that make up the newly created m4b file will be deleted, otherwise they will be left alone.",
+          "UpdateWorkingFile": "Update Working File",
+          "UpdateWorkingFile-Help": "When enabled the working file will be updated to the newly created file.",
+          "DestinationPath": "Destination Path",
+          "DestinationPath-Help": "The destination where to save the newly created file.  If left empty the file will be created in the temporary directory and will be deleted if not moved afterwards."
         }
       }
     }
