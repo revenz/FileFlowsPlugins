@@ -36,7 +36,6 @@ public class CreateAudioBook: AudioNode
     /// <summary>
     /// Gets or sets the destination path
     /// </summary>
-    [Required]
     [Folder(1)]
     public string DestinationPath { get; set; }
     
