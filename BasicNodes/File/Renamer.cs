@@ -84,7 +84,7 @@ public class Renamer : Node
             args.Logger?.ILog("destFolder[2]: " + destFolder);
         }
 
-        var dest = args.GetSafeName(destFolder + args.FileService.PathSeparator + newFile);
+        var dest = FileHelper.Combine(destFolder, args.GetSafeName(newFile));
         args.Logger?.ILog("dest: " + dest);
         
         string destExtension = FileHelper.GetExtension(dest);
