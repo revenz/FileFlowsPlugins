@@ -88,6 +88,9 @@ public class MoveFile : Node
         
         // store srcDir here before we move and the working file is altered
         var srcDir = FileHelper.GetDirectory(AdditionalFilesFromOriginal ? args.FileName : args.WorkingFile);
+        string shortNameLookup = FileHelper.GetShortFileName(args.FileName);
+        if (shortNameLookup.LastIndexOf(".", StringComparison.InvariantCulture) > 0)
+            shortNameLookup = shortNameLookup.Substring(0, shortNameLookup.LastIndexOf(".", StringComparison.Ordinal));
 
         if (args.MoveFile(dest) == false)
             return -1;
@@ -102,20 +105,34 @@ public class MoveFile : Node
 
         if(AdditionalFiles?.Any() == true)
         {
+            args.Logger?.ILog("Additional Files: " + string.Join(", ", AdditionalFiles));
+            
             try
             {
                 string destDir = FileHelper.GetDirectory(dest);
                 args.FileService.DirectoryCreate(destDir);
 
                 args.Logger?.ILog("Looking for additional files in directory: " + srcDir);
-                foreach (var additional in AdditionalFiles)
+                foreach (var additionalOrig in AdditionalFiles)
                 {
+                    string additional = additionalOrig;
+                    if (Regex.IsMatch(additionalOrig, @"\.[a-z0-9A-Z]+$") == false)
+                        additional = "*" + additional; // add the leading start for the search
+                    
                     args.Logger?.ILog("Looking for additional files: " + additional);
-                    var srcDirFiles = args.FileService.GetFiles(srcDir).ValueOrDefault ?? new string[] { };
+                    var srcDirFiles = args.FileService.GetFiles(srcDir, additional).ValueOrDefault ?? new string[] { };
                     foreach(var addFile in srcDirFiles)
                     {
                         try
                         {
+                            if (Regex.IsMatch(additional, @"\*\.[a-z0-9A-Z]+$"))
+                            {
+                                // make sure the file starts with same name
+                                var addFileName = FileHelper.GetShortFileName(addFile);
+                                if (addFileName.ToLowerInvariant().StartsWith(shortNameLookup.ToLowerInvariant()) ==
+                                    false)
+                                    continue;
+                            }
                             args.Logger?.ILog("Additional files: " + addFile);
                             
                             string addFileDest = destDir + args.FileService.PathSeparator + FileHelper.GetShortFileName(addFile);

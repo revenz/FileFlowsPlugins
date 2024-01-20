@@ -1,9 +1,9 @@
-﻿using FileFlows.Plugin;
-
+﻿
 #if(DEBUG)
 
 namespace BasicNodes.Tests;
 
+using FileFlows.Plugin;
 using FileFlows.BasicNodes.File;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Text.RegularExpressions;
