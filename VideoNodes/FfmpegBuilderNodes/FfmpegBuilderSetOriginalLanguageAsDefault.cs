@@ -84,12 +84,20 @@ public class FfmpegBuilderSetOriginalLanguageAsDefault: FfmpegBuilderNode
             return 0;
         
         int changed = 0;
+
+        var defaultTrack = streams.FirstOrDefault(x => x.Deleted == false && LanguageMatches(x.Language, originalLanguage));
+        if (defaultTrack == null)
+        {
+            args.Logger?.ILog("No track found with the original language: " + originalLanguage);
+            return 0;
+        }
+        
         foreach (var stream in streams)
         {
             if (stream.Deleted)
                 continue;
 
-            bool isDefault = LanguageMatches(stream.Language, originalLanguage);
+            bool isDefault = defaultTrack == stream;
             if(isDefault)
                 args.Logger?.ILog($"Stream '{stream.GetType().Name}' '{stream.Language}' set as default.");
 
