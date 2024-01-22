@@ -5,12 +5,12 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 /// <summary>
 /// FFmpeg Builder flow element to set the original language as the default tracks
 /// </summary>
-public class FfmpegBuilderSetOriginalLanguageAsDefault: FfmpegBuilderNode
+public class FfmpegBuilderDefaultOriginalLanguage: FfmpegBuilderNode
 {
     /// <summary>
     /// Gets the help URL for the flow element
     /// </summary>
-    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/set-original-language-as-default";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/default-original-language";
 
     /// <summary>
     /// Gets the number of outputs of the flow element
