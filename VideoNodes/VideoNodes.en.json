@@ -360,7 +360,9 @@
         "Description": "This flow element will attempt to set the original language tracks as default.  It will try to find the first track matching the original language, and then set that as default.\n\nIf no tracks are found with the original language, then no changes are made.",
         "Fields": {
           "StreamType": "Type",
-          "StreamType-Help": "The type of tracks that should be updated"
+          "StreamType-Help": "The type of tracks that should be updated",
+          "MakeFirst": "Make First",
+          "MakeFirst-Help": "If the original language track should also become the first track."
         }
       },
       "FfmpegBuilderSubtitleClearDefault": {

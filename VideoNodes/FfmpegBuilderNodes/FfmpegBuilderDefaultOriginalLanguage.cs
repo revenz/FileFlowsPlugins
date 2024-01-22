@@ -27,6 +27,13 @@ public class FfmpegBuilderDefaultOriginalLanguage: FfmpegBuilderNode
     /// </summary>
     [Select(nameof(StreamTypeOptions), 1)]
     public string StreamType { get; set; }
+    
+    /// <summary>
+    /// Gets or sets if the default track should become the first track
+    /// </summary>
+    [Boolean(2)]
+    public bool MakeFirst { get; set; }
+    
 
     private static List<ListOption> _StreamTypeOptions;
     /// <summary>
@@ -90,6 +97,14 @@ public class FfmpegBuilderDefaultOriginalLanguage: FfmpegBuilderNode
         {
             args.Logger?.ILog("No track found with the original language: " + originalLanguage);
             return 0;
+        }
+
+        if (MakeFirst && defaultTrack != streams.First())
+        {
+            args.Logger?.ILog($"Making default track '{defaultTrack.Language}' the first track");
+            streams.Remove(defaultTrack);
+            streams.Insert(0, defaultTrack);
+            ++changed;
         }
         
         foreach (var stream in streams)
