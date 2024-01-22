@@ -42,6 +42,9 @@ namespace FileFlows.AudioNodes
             string ffmpegExe = GetFFmpeg(args);
             if (string.IsNullOrEmpty(ffmpegExe))
                 return -1;
+            string ffprobe = GetFFprobe(args);
+            if (string.IsNullOrEmpty(ffprobe))
+                return -1;
 
             
             if (args.FileService.FileCreationTimeUtc(args.WorkingFile).Success(out DateTime createTime))
@@ -52,7 +55,7 @@ namespace FileFlows.AudioNodes
             
             try
             {
-                if (ReadAudioFileInfo(args, ffmpegExe, LocalWorkingFile))
+                if (ReadAudioFileInfo(args, ffmpegExe, ffprobe, LocalWorkingFile))
                     return 1;
 
                 var AudioInfo = GetAudioInfo(args);

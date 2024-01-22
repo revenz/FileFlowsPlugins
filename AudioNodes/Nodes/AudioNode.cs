@@ -37,23 +37,23 @@ namespace FileFlows.AudioNodes
             }
             return fileInfo.FullName;
         }
-
-        protected string GetFFMpegPath(NodeParameters args)
+        protected string GetFFprobe(NodeParameters args)
         {
-            string ffmpeg = args.GetToolPath("FFMpeg");
+            string ffmpeg = args.GetToolPath("FFprobe");
             if (string.IsNullOrEmpty(ffmpeg))
             {
-                args.Logger.ELog("FFMpeg tool not found.");
+                args.Logger.ELog("FFprobe tool not found.");
                 return "";
             }
             var fileInfo = new System.IO.FileInfo(ffmpeg);
             if (fileInfo.Exists == false)
             {
-                args.Logger.ELog("FFmpeg tool configured by ffmpeg file does not exist.");
+                args.Logger.ELog("FFprobe tool configured by ffmpeg file does not exist.");
                 return "";
             }
-            return fileInfo.DirectoryName;
+            return fileInfo.FullName;
         }
+
 
         private const string Audio_INFO = "AudioInfo";
         internal void SetAudioInfo(NodeParameters args, AudioInfo AudioInfo, Dictionary<string, object> variables)
@@ -139,9 +139,9 @@ namespace FileFlows.AudioNodes
             return result;
         }
 
-        protected bool ReadAudioFileInfo(NodeParameters args, string ffmpegExe, string filename)
+        protected bool ReadAudioFileInfo(NodeParameters args, string ffmpegExe, string ffprobe, string filename)
         {
-            var AudioInfo = new AudioInfoHelper(ffmpegExe, args.Logger).Read(filename);
+            var AudioInfo = new AudioInfoHelper(ffmpegExe, ffprobe, args.Logger).Read(filename);
             if (AudioInfo.Duration == 0)
             {
                 args.Logger?.ILog("Failed to load Audio information.");

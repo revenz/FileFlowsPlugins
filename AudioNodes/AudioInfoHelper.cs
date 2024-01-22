@@ -1,21 +1,23 @@
 using System.Diagnostics;
 //using System.IO;
 using System.Text.RegularExpressions;
+using TagLib.Matroska;
 
 namespace FileFlows.AudioNodes;
 
 public class AudioInfoHelper
 {
     private string ffMpegExe;
+    private string ffprobe;
     private ILogger Logger;
     
-    public AudioInfoHelper(string ffMpegExe, ILogger logger)
+    public AudioInfoHelper(string ffMpegExe, string ffprobe, ILogger logger)
     {
         this.ffMpegExe = ffMpegExe;
+        this.ffprobe = ffprobe;
         this.Logger = logger;
     }
 
-    public static string GetFFMpegPath(NodeParameters args) => args.GetToolPath("FFMpeg");
     public AudioInfo Read(string filename)
     {
         var mi = new AudioInfo();
@@ -27,11 +29,15 @@ public class AudioInfoHelper
         }
         if (string.IsNullOrEmpty(ffMpegExe) || System.IO.File.Exists(ffMpegExe) == false)
         {
-            Logger.ELog("FFMpeg not found: " + (ffMpegExe ?? "not passed in"));
+            Logger.ELog("FFmpeg not found: " + (ffMpegExe ?? "not passed in"));
             return mi;
         }
 
-        mi = ReadMetaData(filename);
+        var result = ReadFromFFprobe(filename);
+        if (result.IsFailed == false)
+            mi = result.Value;
+        else
+            mi = ReadMetaData(filename);
 
         try
         {
@@ -196,6 +202,75 @@ public class AudioInfoHelper
         return mi;
     }
 
+    public Result<AudioInfo> ReadFromFFprobe(string file)
+    {
+        try
+        {
+            using (var process = new Process())
+            {
+                process.StartInfo = new ProcessStartInfo();
+                process.StartInfo.FileName = ffprobe;
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.RedirectStandardError = true;
+                process.StartInfo.CreateNoWindow = true;
+                process.StartInfo.ArgumentList.Add("-v");
+                process.StartInfo.ArgumentList.Add("error");
+                process.StartInfo.ArgumentList.Add("-select_streams");
+                process.StartInfo.ArgumentList.Add("a:0");
+                process.StartInfo.ArgumentList.Add("-show_format");
+                process.StartInfo.ArgumentList.Add("-of");
+                process.StartInfo.ArgumentList.Add("json");
+                process.StartInfo.ArgumentList.Add(file);
+                process.Start();
+
+                string output = process.StandardError.ReadToEnd();
+                string error = process.StandardError.ReadToEnd();
+                process.WaitForExit();
+
+                if (string.IsNullOrEmpty(error) == false && error != "At least one output file must be specified")
+                {
+                    Logger.ELog("Failed reading ffmpeg info: " + error);
+                    return Result<AudioInfo>.Fail("Failed reading ffmpeg info: " + error);
+                }
+
+                var result = FFprobeAudioInfo.Parse(output);
+                if (result.IsFailed)
+                    return Result<AudioInfo>.Fail(result.Error);
+
+                var audioInfo = new AudioInfo();
+                audioInfo.Album = result.Value.Tags.Album;
+                audioInfo.Artist = result.Value.Tags.Artist;
+                audioInfo.Bitrate = result.Value.Bitrate;
+                audioInfo.Codec = result.Value.FormatName;
+                if (DateTime.TryParse(result.Value.Tags.Date ?? string.Empty, out DateTime date))
+                    audioInfo.Date = date;
+                else if (int.TryParse(result.Value.Tags.Date ?? string.Empty, out int year))
+                    audioInfo.Date = new DateTime(year, 1, 1);
+
+                if (int.TryParse(result.Value.Tags.Disc ?? string.Empty, out int disc))
+                    audioInfo.Disc = disc;
+                audioInfo.Duration = (long)result.Value.Duration.TotalSeconds;
+                audioInfo.Genres = result.Value.Tags?.Genre
+                    .Split(new string[] { ";", "," }, StringSplitOptions.RemoveEmptyEntries)?.Select(x => x.Trim())
+                    ?.ToArray();
+                audioInfo.Title = result.Value.Tags.Title;
+                if (int.TryParse(result.Value.Tags.Track, out int track))
+                    audioInfo.Track = track;
+                if (int.TryParse(result.Value.Tags.TotalDiscs, out int totalDiscs))
+                    audioInfo.TotalDiscs = totalDiscs;
+                if (int.TryParse(result.Value.Tags.TotalTracks, out int totalTracks))
+                    audioInfo.TotalTracks = totalTracks;
+
+                return audioInfo;
+            }
+        }
+        catch (Exception ex)
+        {
+            return Result<AudioInfo>.Fail(ex.Message);
+        }
+    }
+
     public AudioInfo ReadMetaData(string file)
     {
         using var tfile = TagLib.File.Create(file);
@@ -213,6 +288,7 @@ public class AudioInfoHelper
             info.Artist = String.Join(", ", tfile.Tag.AlbumArtists);
             info.Album = tfile.Tag.Album;
             info.Track = Convert.ToInt32(tfile.Tag.Track);
+            info.TotalTracks = Convert.ToInt32(tfile.Tag.TrackCount);
             if(tfile.Tag.Year > 1900)
             {
                 info.Date = new DateTime(Convert.ToInt32(tfile.Tag.Year), 1, 1);

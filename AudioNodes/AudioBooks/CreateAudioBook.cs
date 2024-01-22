@@ -59,6 +59,9 @@ public class CreateAudioBook: AudioNode
         var ffmpeg = GetFFmpeg(args);
         if (string.IsNullOrEmpty(ffmpeg))
             return -1;
+        var ffprobe = GetFFprobe(args);
+        if (string.IsNullOrEmpty(ffprobe))
+            return -1;
 
         var dir = args.IsDirectory ? args.WorkingFile : FileHelper.GetDirectory(args.WorkingFile);
 
@@ -121,7 +124,7 @@ public class CreateAudioBook: AudioNode
             string extension = FileHelper.GetExtension(x);
             string name = FileHelper.GetShortFileName(x);
             string chapterName = GetChapterName(bookName, name[..^extension.Length], chapterCount);
-            TimeSpan length = GetChapterLength(args, ffmpeg, x);
+            TimeSpan length = GetChapterLength(args, ffmpeg, ffprobe, x);
             var end = current.Add(length);
             var chapter = "[CHAPTER]\n" +
                           "TIMEBASE=1/1000\n" +
@@ -257,9 +260,9 @@ public class CreateAudioBook: AudioNode
     //     return string.Empty;
     // }
 
-    private TimeSpan GetChapterLength(NodeParameters args, string ffmpeg, string filename)
+    private TimeSpan GetChapterLength(NodeParameters args, string ffmpeg, string ffprobe, string filename)
     {
-        var info = new AudioInfoHelper(ffmpeg, args.Logger).Read(filename);
+        var info = new AudioInfoHelper(ffmpeg, ffprobe, args.Logger).Read(filename);
         return TimeSpan.FromSeconds(info.Duration);
     }
 

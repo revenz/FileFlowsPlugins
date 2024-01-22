@@ -1,4 +1,5 @@
-﻿using FileFlows.Plugin;
+﻿using FileFlows.AudioNodes.Helpers;
+using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
 
 namespace FileFlows.AudioNodes
@@ -310,6 +311,10 @@ namespace FileFlows.AudioNodes
             if (string.IsNullOrEmpty(ffmpegExe))
                 return -1;
 
+            string ffprobe = GetFFprobe(args);
+            if (string.IsNullOrEmpty(ffprobe))
+                return -1;
+
             if(Normalize == false && AudioInfo.Codec?.ToLower() == Extension?.ToLower())
             {
                 if (SkipIfCodecMatches)
@@ -356,6 +361,10 @@ namespace FileFlows.AudioNodes
                 }
             }
 
+            var metadata = MetadataHelper.GetMetadataParameters(AudioInfo);
+            if (metadata?.Any() == true)
+                ffArgs.AddRange(metadata);
+
             ffArgs.Add(outputFile);
 
             args.Logger?.ILog("FFArgs: " + string.Join(" ", ffArgs.Select(x => x.IndexOf(" ") > 0 ? "\"" + x + "\"" : x).ToArray()));
@@ -372,12 +381,10 @@ namespace FileFlows.AudioNodes
                 return -1;
             }
 
-            //CopyMetaData(outputFile, args.FileName);
-
             args.SetWorkingFile(outputFile);
 
             // update the Audio file info
-            if (ReadAudioFileInfo(args, ffmpegExe, args.WorkingFile))
+            if (ReadAudioFileInfo(args, ffmpegExe, ffprobe, args.WorkingFile))
                 return 1;
 
             return -1;

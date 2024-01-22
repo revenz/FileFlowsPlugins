@@ -1,7 +1,9 @@
 ﻿#if(DEBUG)
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Text.Json;
 
 namespace FileFlows.AudioNodes.Tests;
 [TestClass]
@@ -9,6 +11,7 @@ public class AudioInfoTests
 {
     const string file = @"/home/john/Music/test/test.mp3";
     readonly string ffmpegExe = (OperatingSystem.IsLinux() ? "/usr/bin/ffmpeg" :  @"C:\utils\ffmpeg\ffmpeg.exe");
+    readonly string ffprobe = (OperatingSystem.IsLinux() ? "/usr/bin/ffprobe" :  @"C:\utils\ffmpeg\ffprobe.exe");
     
     [TestMethod]
     public void AudioInfo_SplitTrack()
@@ -17,7 +20,7 @@ public class AudioInfoTests
         args.GetToolPathActual = (string tool) => ffmpegExe;
         args.TempPath = @"D:\music\temp";
 
-        var AudioInfo = new AudioInfoHelper(ffmpegExe, args.Logger).Read(args.WorkingFile);
+        var AudioInfo = new AudioInfoHelper(ffmpegExe, ffprobe, args.Logger).Read(args.WorkingFile);
 
         Assert.AreEqual(9, AudioInfo.Track);
     }
@@ -33,7 +36,7 @@ public class AudioInfoTests
         args.GetToolPathActual = (string tool) => ffmpegExe;
         args.TempPath = @"D:\music\temp";
 
-        var AudioInfo = new AudioInfoHelper(ffmpegExe, args.Logger).Read(args.WorkingFile);
+        var AudioInfo = new AudioInfoHelper(ffmpegExe, ffprobe, args.Logger).Read(args.WorkingFile);
 
         Assert.AreEqual(8, AudioInfo.Track);
     }
@@ -50,7 +53,7 @@ public class AudioInfoTests
             // laod the variables
             Assert.AreEqual(1, new AudioFile().Execute(args));
 
-            var audio = new AudioInfoHelper(ffmpegExe, args.Logger).Read(args.WorkingFile);
+            var audio = new AudioInfoHelper(ffmpegExe, ffprobe, args.Logger).Read(args.WorkingFile);
 
             string folder = args.ReplaceVariables("{audio.ArtistThe} ({audio.Year})");
             Assert.AreEqual($"{audio.Artist} ({audio.Date.Year})", folder);
@@ -69,7 +72,7 @@ public class AudioInfoTests
         
         var audio = new AudioInfo();
 
-        new AudioInfoHelper(ffmpegExe, logger).ParseFileNameInfo(file, audio);
+        new AudioInfoHelper(ffmpegExe, ffprobe, logger).ParseFileNameInfo(file, audio);
 
         Assert.AreEqual("Meat Loaf", audio.Artist);
         Assert.AreEqual("Bat out of Hell II- Back Into Hell…", audio.Album);
@@ -100,7 +103,7 @@ public class AudioInfoTests
         int result = convert.Execute(args);
         Assert.AreEqual(1, result);
 
-        var audio = new AudioInfoHelper(ffmpegExe, args.Logger).Read(args.WorkingFile);
+        var audio = new AudioInfoHelper(ffmpegExe, ffprobe, args.Logger).Read(args.WorkingFile);
         Assert.AreEqual(192 * 1024, audio.Bitrate);
 
         var md = new Dictionary<string, object>();
@@ -118,6 +121,46 @@ public class AudioInfoTests
         Assert.AreEqual(2, result);
 
         string log = logger.ToString();
+    }
+    
+    [TestMethod]
+    public void AudioFormatInfoTest()
+    {
+        string ffmpegOutput = @"{
+            ""format"": {
+                ""filename"": ""Aqua - Aquarium - 03 - Barbie Girl.flac"",
+                ""nb_streams"": 1,
+                ""nb_programs"": 0,
+                ""format_name"": ""flac"",
+                ""format_long_name"": ""raw FLAC"",
+                ""start_time"": ""0.000000"",
+                ""duration"": ""197.906667"",
+                ""size"": ""25955920"",
+                ""bit_rate"": ""1049218"",
+                ""probe_score"": 100,
+                ""tags"": {
+                    ""TITLE"": ""Barbie Girl"",
+                    ""ARTIST"": ""Aqua"",
+                    ""ALBUM"": ""Aquarium"",
+                    ""track"": ""3"",
+                    ""DATE"": ""1997"",
+                    ""GENRE"": ""Eurodance"",
+                    ""TOTALTRACKS"": ""11"",
+                    ""disc"": ""1"",
+                    ""TOTALDISCS"": ""1""
+                }
+            }
+        }";
+
+        // Deserialize the JSON using System.Text.Json
+        var result = FFprobeAudioInfo.Parse(ffmpegOutput);
+        Assert.IsFalse(result.IsFailed);
+        var audioFormatInfo = result.Value;
+
+        Assert.AreEqual(1049218, audioFormatInfo.Bitrate);
+        Assert.AreEqual("Barbie Girl", audioFormatInfo.Tags?.Title);
+        Assert.AreEqual("Aqua", audioFormatInfo.Tags?.Artist);
+        Assert.AreEqual("3", audioFormatInfo.Tags?.Track);
     }
 }
 
