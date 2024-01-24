@@ -119,8 +119,8 @@ namespace FileFlows.VideoNodes
             if (percent > 0)
             {
                 double remainingMilliseconds = TotalTime.TotalMilliseconds * (100 - percent) / percent;
-                DateTime eta = startedAt.AddMilliseconds(remainingMilliseconds);
-                Args.AdditionalInfoRecorder("ETA", eta, new TimeSpan(0, 1, 0));
+                TimeSpan eta = TimeSpan.FromMilliseconds(remainingMilliseconds);
+                Args.AdditionalInfoRecorder("ETA", TimeHelper.ToHumanReadableString(eta), new TimeSpan(0, 1, 0));
             }
         }
 
