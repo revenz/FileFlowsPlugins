@@ -14,9 +14,14 @@ namespace FileFlows.VideoNodes
         TaskCompletionSource<bool> outputCloseEvent, errorCloseEvent;
 
         private Regex rgxTime = new Regex(@"(?<=(time=))([\d]+:?)+\.[\d]+");
+        private Regex rgxFps = new Regex(@"(?<=(fps=[\s]?))([\d]+)");
+        private Regex rgxSpeed = new Regex(@"(?<=(speed=[\s]?))([\d]+(\.[\d]+)?)");
+        private Regex rgxBitrate = new Regex(@"(?<=(bitrate=[\s]?))([\d]+(\.[\d]+)?)kbits");
 
         public delegate void TimeEvent(TimeSpan time);
         public event TimeEvent AtTime;
+        public delegate void StatChange(string name, object value);
+        public event StatChange OnStatChange;
 
         private Process process;
 
@@ -89,6 +94,37 @@ namespace FileFlows.VideoNodes
         public async Task<ProcessResult> ExecuteShellCommand(string command, List<string> arguments, int timeout = 0)
         {
             var result = new ProcessResult();
+
+            var hwDecoderIndex = arguments.FindIndex(x => x == "-hwaccel");
+            if (hwDecoderIndex >= 0 && hwDecoderIndex < arguments.Count - 2)
+            {
+                var decoder = arguments[hwDecoderIndex + 1].ToLowerInvariant();
+                foreach(var dec in new []
+                        {
+                            ("qsv", "QSV"), ("cuda", "NVIDIA"), ("amf", "AMD"), ("vulkan", "Vulkan"), ("vaapi", "VAAPI"), ("dxva2", "dxva2"),
+                            ("d3d11va", "d3d11va"), ("opencl", "opencl")
+                        })
+                {
+                    if (decoder == dec.Item1)
+                    {
+                        OnStatChange?.Invoke("Decoder", dec.Item2);
+                        break;
+                    }
+                }
+            }
+
+            if(arguments.Any(x => x.ToLowerInvariant().Contains("hevc_qsv") || x.ToLowerInvariant().Contains("h264_qsv") || x.ToLowerInvariant().Contains("av1_qsv")))
+                OnStatChange?.Invoke("Encoder", "QSV");
+            else if(arguments.Any(x => x.ToLowerInvariant().Contains("_nvenc")))
+                OnStatChange?.Invoke("Encoder", "NVIDIA");
+            else if(arguments.Any(x => x.ToLowerInvariant().Contains("_amf")))
+                OnStatChange?.Invoke("Encoder", "AMD");
+            else if(arguments.Any(x => x.ToLowerInvariant().Contains("_vaapi")))
+                OnStatChange?.Invoke("Encoder", "VAAPI");
+            else if(arguments.Any(x => x.ToLowerInvariant().Contains("_videotoolbox")))
+                OnStatChange?.Invoke("Encoder", "VideoToolbox");
+            else if(arguments.Any(x => x.ToLowerInvariant().Contains("libx") || x.ToLowerInvariant().Contains("libvpx")))
+                OnStatChange?.Invoke("Encoder", "CPU");
 
             using (var process = new Process())
             {
@@ -174,6 +210,7 @@ namespace FileFlows.VideoNodes
 
             return result;
         }
+        
         public void OnOutputDataReceived(object sender, DataReceivedEventArgs e)
         {
             // The output stream has been closed i.e. the process has terminated
@@ -183,18 +220,7 @@ namespace FileFlows.VideoNodes
             }
             else
             {
-                if (e.Data.Contains("Skipping NAL unit"))
-                    return; // just slighlty ignore these
-                if (rgxTime.IsMatch(e.Data))
-                {
-                    var timeString = rgxTime.Match(e.Data).Value;
-                    var ts = TimeSpan.Parse(timeString);
-                    Logger.DLog("TimeSpan Detected: " + ts);
-                    if (AtTime != null)
-                        AtTime.Invoke(ts);
-                }
-                Logger.ILog(e.Data);
-                outputBuilder.AppendLine(e.Data);
+                CheckOutputLine(e.Data);
             }
         }
 
@@ -210,22 +236,45 @@ namespace FileFlows.VideoNodes
                 Logger.ELog(e.Data);
                 errorBuilder.AppendLine(e.Data);
             }
-            else if (e.Data.Contains("Skipping NAL unit"))
+            else
             {
-                return; // just slighlty ignore these
+                CheckOutputLine(e.Data);
+            }
+        }
+
+        private void CheckOutputLine(string line)
+        {
+            if (line.Contains("Skipping NAL unit"))
+                return; // just slightly ignore these
+            
+            if (rgxTime.IsMatch(line))
+            {
+                var timeString = rgxTime.Match(line).Value;
+                var ts = TimeSpan.Parse(timeString);
+                Logger.DLog("TimeSpan Detected: " + ts);
+                AtTime?.Invoke(ts);
+            }
+
+            if (line.Contains("Exit Code"))
+            {
+                OnStatChange?.Invoke("Speed", null);
+                OnStatChange?.Invoke("Bitrate", null);
+                OnStatChange?.Invoke("FPS", null);
             }
             else
             {
-                if (rgxTime.IsMatch(e.Data))
-                {
-                    var timeString = rgxTime.Match(e.Data).Value;
-                    var ts = TimeSpan.Parse(timeString);
-                    if (AtTime != null)
-                        AtTime.Invoke(ts);
-                }
-                Logger.ILog(e.Data);
-                outputBuilder.AppendLine(e.Data);
+                if (rgxSpeed.TryMatch(line, out Match matchSpeed))
+                    OnStatChange?.Invoke("Speed", matchSpeed.Value);
+
+                if (rgxBitrate.TryMatch(line, out Match matchBitrate))
+                    OnStatChange?.Invoke("Bitrate", matchBitrate.Value);
+                
+                if (rgxBitrate.TryMatch(line, out Match matchFps) && int.TryParse(matchFps.Value, out int fps))
+                    OnStatChange?.Invoke("FPS", fps);
             }
+            
+            Logger.ILog(line);
+            outputBuilder.AppendLine(line);
         }
 
 

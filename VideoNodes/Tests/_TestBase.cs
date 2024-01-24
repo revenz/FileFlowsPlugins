@@ -66,6 +66,7 @@ public abstract class TestBase
     protected string TestFile_MovText_Mp4 => Path.Combine(TestPath, "movtext.mp4");
     protected string TestFile_BasicMkv => Path.Combine(TestPath, "basic.mkv");
     protected string TestFile_Tag => Path.Combine(TestPath, "tag.mp4");
+    protected string TestFile_Sitcom => Path.Combine(TestPath, "sitcom.mkv");
     protected string TestFile_Pgs => Path.Combine(TestPath, "pgs.mkv");
     protected string TestFile_Font => Path.Combine(TestPath, "font.mkv");
     protected string TestFile_DefaultSub => Path.Combine(TestPath, "default-sub.mkv");

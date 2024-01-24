@@ -19,7 +19,7 @@ public class FfmpegBuilder_VideoEncode_VideoEncodeTests: TestBase
         string ffmpeg = FfmpegPath;
         var vi = new VideoInfoHelper(ffmpeg, logger);
         var vii = vi.Read(file);
-        var args = new NodeParameters(file, logger, false, string.Empty, null);
+        var args = new NodeParameters(file, logger, false, string.Empty, new LocalFileService());
         args.GetToolPathActual = (string tool) => ffmpeg;
         args.TempPath = TempPath;
         args.Parameters.Add("VideoInfo", vii);
@@ -54,7 +54,7 @@ public class FfmpegBuilder_VideoEncode_VideoEncodeTests: TestBase
                            h265 ? FfmpegBuilderVideoEncode.CODEC_H265 :
                            FfmpegBuilderVideoEncode.CODEC_H264;
 
-            var result = Encode(codec, quality, hardware, TestFile_120_mbps_4k_uhd_hevc_10bit,
+            var result = Encode(codec, quality, hardware, TestFile_Sitcom,
                 $"{(hardware ? "nvidia" : "cpu")}_h26{(h265 ? "5" : "4")}{(bit10 ? "_10bit" : "")}_{quality}.mkv");
         }
 

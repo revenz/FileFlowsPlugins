@@ -65,6 +65,7 @@ namespace FileFlows.VideoNodes
 
             Encoder = new FFMpegEncoder(ffmpegExe, args.Logger);
             Encoder.AtTime += AtTimeEvent;
+            Encoder.OnStatChange += EncoderOnOnStatChange;
 
             if (string.IsNullOrEmpty(outputFile))
                 outputFile = System.IO.Path.Combine(args.TempPath, Guid.NewGuid() + "." + extension);
@@ -90,6 +91,7 @@ namespace FileFlows.VideoNodes
                 SetVideoInfo(args, videoInfo, this.Variables ?? new Dictionary<string, object>());
             }
             Encoder.AtTime -= AtTimeEvent;
+            Encoder.OnStatChange -= EncoderOnOnStatChange;
             Encoder = null;
             output = success.output;
             return success.successs;
@@ -113,6 +115,9 @@ namespace FileFlows.VideoNodes
             if(Args?.PartPercentageUpdate != null)
                 Args.PartPercentageUpdate(percent);
         }
+
+        private void EncoderOnOnStatChange(string name, object value)
+            => Args.AdditionalInfoRecorder?.Invoke(name, value, new TimeSpan(0, 1, 0));
 
         public string CheckVideoCodec(string ffmpeg, string vidparams)
         {
