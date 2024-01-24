@@ -238,7 +238,10 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         else if (CanUseHardwareEncoding.CanProcess_Nvidia_H264(args))
             parameters.AddRange(H26x_Nvidia(false, quality, speed, out non10BitFilters));
         else if (CanUseHardwareEncoding.CanProcess_Qsv_H264(args))
+        {
             parameters.AddRange(H26x_Qsv(false, quality, 0, speed));
+            encoder = ENCODER_QSV;
+        }
         else if (CanUseHardwareEncoding.CanProcess_Amd_H264(args))
             parameters.AddRange(H26x_Amd(false, quality, speed));
         else if (CanUseHardwareEncoding.CanProcess_Vaapi_H264(args))
@@ -247,7 +250,11 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
             parameters.AddRange(H26x_CPU(false, quality, speed, out bit10Filters));
 
         if (tenBit)
-            parameters.AddRange(bit10Filters ?? new string[] { "-pix_fmt:v:{index}", "p010le", "-profile:v:{index}", "main10" });
+        {
+            parameters.AddRange(bit10Filters ?? new string[]
+                { "-pix_fmt:v:{index}", "p010le", "-profile:v:{index}", "main10" });
+        }
+
         return parameters;
     }
     
@@ -296,13 +303,13 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
             {
                 parameters.AddRange(new []
                 {
-                    "-profile:v:{index}", "main10" //, "-vf", "scale_qsv=format=p010le"
+                    "-profile:v:{index}", "main10", "-pix_fmt", "p010le" //, "-vf", "scale_qsv=format=p010le"
                 });
                 // if the stream is passed in, we add it to the filter
-                if(stream != null)
-                    stream.Filter.Add("scale_qsv=format=p010le");
-                else // if there is no stream, we specify the -vf directly, this is called by audio to video flow elements
-                    parameters.AddRange(new [] {  "-vf", "scale_qsv=format=p010le" });
+                // if(stream != null)
+                //     stream.Filter.Add("scale_qsv=format=p010le");
+                // else // if there is no stream, we specify the -vf directly, this is called by audio to video flow elements
+                //     parameters.AddRange(new [] {  "-vf", "scale_qsv=format=p010le" });
                 
             }
             else
