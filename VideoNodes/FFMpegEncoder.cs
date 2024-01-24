@@ -14,7 +14,7 @@ namespace FileFlows.VideoNodes
         TaskCompletionSource<bool> outputCloseEvent, errorCloseEvent;
 
         private Regex rgxTime = new Regex(@"(?<=(time=))([\d]+:?)+\.[\d]+");
-        private Regex rgxFps = new Regex(@"(?<=(fps=[\s]?))([\d]+)");
+        private Regex rgxFps = new Regex(@"(?<=(fps=[\s]?))([\d]+(\.[\d]+)?)");
         private Regex rgxSpeed = new Regex(@"(?<=(speed=[\s]?))([\d]+(\.[\d]+)?)");
         private Regex rgxBitrate = new Regex(@"(?<=(bitrate=[\s]?))([\d]+(\.[\d]+)?)kbits");
 
@@ -268,8 +268,8 @@ namespace FileFlows.VideoNodes
                 if (rgxBitrate.TryMatch(line, out Match matchBitrate))
                     OnStatChange?.Invoke("Bitrate", matchBitrate.Value);
                 
-                if (rgxBitrate.TryMatch(line, out Match matchFps) && int.TryParse(matchFps.Value, out int fps))
-                    OnStatChange?.Invoke("FPS", fps);
+                if (rgxFps.TryMatch(line, out Match matchFps))
+                    OnStatChange?.Invoke("FPS", matchFps.Value);
             }
             
             Logger.ILog(line);
