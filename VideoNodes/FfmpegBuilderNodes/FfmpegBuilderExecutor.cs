@@ -172,7 +172,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             args.Logger?.ILog("HW_OFF detected");
             
         }
-        else
+        else if (HardwareDecoding)
         {
             if(ffArgs.Any(x => x.Contains("_qsv")))
             {
@@ -186,7 +186,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                 args.Logger?.ILog("_nvenc detected using cuda hardware decoding");
                 startArgs.AddRange(new[] { "-hwaccel", "cuda" }); //, "-hwaccel_output_format", "cuda" });
             }
-            else if (HardwareDecoding)
+            else 
             {
                 args.Logger?.ILog("Auto-detecting hardware decoder to use");
                 startArgs.AddRange(GetHardwareDecodingArgs(args));
