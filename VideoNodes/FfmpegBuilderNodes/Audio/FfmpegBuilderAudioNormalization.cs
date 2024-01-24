@@ -40,7 +40,7 @@ public class FfmpegBuilderAudioNormalization : FfmpegBuilderNode
             return 2;
         }
 
-        // store them incase we are creating duplicate tracks from same source, we dont need 
+        // store them in case we are creating duplicate tracks from same source, we dont need 
         // to calculate the normalization each time
         Dictionary<int, string> normalizedTracks = new Dictionary<int, string>();
         bool normalizing = false;

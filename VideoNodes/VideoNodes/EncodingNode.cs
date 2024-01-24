@@ -104,7 +104,7 @@ namespace FileFlows.VideoNodes
             return base.Cancel();
         }
 
-        void AtTimeEvent(TimeSpan time)
+        void AtTimeEvent(TimeSpan time, DateTime startedAt)
         {
             if (TotalTime.TotalMilliseconds == 0)
             {
@@ -114,6 +114,14 @@ namespace FileFlows.VideoNodes
             float percent = (float)((time.TotalMilliseconds / TotalTime.TotalMilliseconds) * 100);
             if(Args?.PartPercentageUpdate != null)
                 Args.PartPercentageUpdate(percent);
+            
+            // Calculate ETA to reach 100%
+            if (percent > 0)
+            {
+                double remainingMilliseconds = TotalTime.TotalMilliseconds * (100 - percent) / percent;
+                DateTime eta = startedAt.AddMilliseconds(remainingMilliseconds);
+                Args.AdditionalInfoRecorder("ETA", eta, new TimeSpan(0, 1, 0));
+            }
         }
 
         private void EncoderOnOnStatChange(string name, object value)

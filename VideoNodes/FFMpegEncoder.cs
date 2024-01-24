@@ -18,12 +18,13 @@ namespace FileFlows.VideoNodes
         private Regex rgxSpeed = new Regex(@"(?<=(speed=[\s]?))([\d]+(\.[\d]+)?)");
         private Regex rgxBitrate = new Regex(@"(?<=(bitrate=[\s]?))([\d]+(\.[\d]+)?)kbits");
 
-        public delegate void TimeEvent(TimeSpan time);
+        public delegate void TimeEvent(TimeSpan time, DateTime startedAt);
         public event TimeEvent AtTime;
         public delegate void StatChange(string name, object value);
         public event StatChange OnStatChange;
 
         private Process process;
+        DateTime startedAt;
 
         public FFMpegEncoder(string ffMpegExe, ILogger logger)
         {
@@ -154,6 +155,7 @@ namespace FileFlows.VideoNodes
 
                 bool isStarted;
 
+                startedAt = DateTime.Now;
                 try
                 {
                     isStarted = process.Start();
@@ -251,7 +253,7 @@ namespace FileFlows.VideoNodes
             {
                 var timeString = rgxTime.Match(line).Value;
                 var ts = TimeSpan.Parse(timeString);
-                AtTime?.Invoke(ts);
+                AtTime?.Invoke(ts, startedAt);
             }
 
             if (line.Contains("Exit Code"))
