@@ -147,7 +147,7 @@ public class SevenZip : Node
                 if (args.FileService.FileExists(args.WorkingFile))
                 {
                     args.Logger?.ELog("File does not exist: " + args.WorkingFile);
-                    return 1;
+                    return -1;
                 }
                 var result = args.FileService.GetLocalPath(args.WorkingFile);
                 if (result.IsFailed)
