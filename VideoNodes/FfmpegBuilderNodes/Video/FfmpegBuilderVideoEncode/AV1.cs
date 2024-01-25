@@ -1,3 +1,5 @@
+using FileFlows.VideoNodes.Helpers;
+
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 
 public partial class FfmpegBuilderVideoEncode
@@ -78,5 +80,38 @@ public partial class FfmpegBuilderVideoEncode
             "-preset", speed,
             "-spatial-aq", "1"
         };
+    }
+    
+    /// <summary>
+    /// AV1 QSV encoding
+    /// </summary>
+    /// <param name="quality">the quality</param>
+    /// <param name="speed">the speed</param>
+    /// <returns>the encoding parameters</returns>
+    private static IEnumerable<string> AV1_Qsv(int quality, string speed)
+    {
+        switch (speed)
+        {
+            case "ultrafast": speed = "7"; break;
+            case "superfast": speed = "7"; break;
+            case "veryfast": speed = "7"; break;
+            case "faster": speed = "6"; break;
+            case "fast": speed = "5"; break;
+            case "medium": speed = "4"; break;
+            case "slow": speed = "3"; break;
+            case "slower": speed = "2"; break;
+            case "veryslow": speed = "1"; break;
+            default: speed = "4"; break; // unexpected
+        }
+        var args = new List<string>
+        {
+            "av1_qsv",
+            "-global_quality:v", quality.ToString(),
+            "-preset", speed
+        };
+        if(VaapiHelper.VaapiLinux)
+            args.AddRange(new [] { "-qsv_device", VaapiHelper.VaapiRenderDevice});
+        
+        return args.ToArray();
     }
 }

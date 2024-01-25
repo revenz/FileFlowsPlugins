@@ -113,6 +113,13 @@ public class CanUseHardwareEncoding:Node
     /// <param name="args">the node parameters</param>
     /// <returns>true if can use it, otherwise false</returns>
     internal static bool CanProcess_Nvidia_AV1(NodeParameters args) => CanProcess(args, "av1_nvenc");
+    
+    /// <summary>
+    /// Checks if this flow runner can use QSV AV1 encoder
+    /// </summary>
+    /// <param name="args">the node parameters</param>
+    /// <returns>true if can use it, otherwise false</returns>
+    internal static bool CanProcess_Qsv_AV1(NodeParameters args) => CanProcess(args, "av1_qsv");
 
     /// <summary>
     /// Checks if this flow runner can use NVIDIA H.264 encoder
