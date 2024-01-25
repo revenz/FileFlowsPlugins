@@ -59,6 +59,8 @@ namespace FileFlows.VideoNodes
             {
                 if (arguments.Last() != "-")
                 {
+                    arguments.AddRange(new string[]
+                        { "-metadata", "comment=Created by FileFlows\nhttps://fileflows.com" });
                     // strict -2 needs to be just before the output file
                     arguments.AddRange(new[] { "-strict", strictness }); 
                     arguments.Add(output);
