@@ -44,7 +44,7 @@ public class AudioFileNormalization : AudioNode
 
             string extension = FileHelper.GetExtension(args.WorkingFile);
 
-            string outputFile = FileHelper.Combine(args.TempPath, Guid.NewGuid() + "." + extension);
+            string outputFile = FileHelper.Combine(args.TempPath, Guid.NewGuid() + extension);
             ffArgs.Add(outputFile);
 
             var result = args.Execute(new ExecuteArgs

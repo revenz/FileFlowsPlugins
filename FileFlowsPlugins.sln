@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComicNodes", "ComicNodes\Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telegram", "Telegram\Telegram.csproj", "{BFAD621E-4C82-47FC-A9C8-03F09FF9926C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiteScraping", "SiteScraping\SiteScraping.csproj", "{A8227B00-9A44-4FE8-967B-46E289969563}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,10 @@ Global
 		{BFAD621E-4C82-47FC-A9C8-03F09FF9926C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFAD621E-4C82-47FC-A9C8-03F09FF9926C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFAD621E-4C82-47FC-A9C8-03F09FF9926C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8227B00-9A44-4FE8-967B-46E289969563}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8227B00-9A44-4FE8-967B-46E289969563}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8227B00-9A44-4FE8-967B-46E289969563}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8227B00-9A44-4FE8-967B-46E289969563}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

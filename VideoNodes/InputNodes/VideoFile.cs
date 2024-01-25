@@ -114,7 +114,7 @@ public class VideoFile : VideoNode
                 args.RecordStatistic("VIDEO_RESOLUTION", resName);
             }
 
-            string extension = FileHelper.GetExtension(args.FileName).ToLowerInvariant();
+            string extension = FileHelper.GetExtension(args.FileName).ToLowerInvariant().TrimStart('.');
             var container = extension switch
             {
                 "mkv" => "MKV",

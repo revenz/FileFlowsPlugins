@@ -28,11 +28,11 @@ public class FfmpegBuilderScaler : FfmpegBuilderNode
                 {
                     // we use -2 here so the width is divisible by 2 and automatically scaled to
                     // the appropriate height, if we forced the height it could be stretched
-                    new ListOption { Value = "640:-2", Label = "480P"},
-                    new ListOption { Value = "1280:-2", Label = "720P"},
-                    new ListOption { Value = "1920:-2", Label = "1080P"},
-                    new ListOption { Value = "2560:-2", Label = "1440P"},
-                    new ListOption { Value = "3840:-2", Label = "4K" }
+                    new () { Value = "640:-2", Label = "480P"},
+                    new () { Value = "1280:-2", Label = "720P"},
+                    new () { Value = "1920:-2", Label = "1080P"},
+                    new () { Value = "2560:-2", Label = "1440P"},
+                    new () { Value = "3840:-2", Label = "4K" }
                 };
             }
             return _ResolutionOptions;
@@ -72,13 +72,13 @@ public class FfmpegBuilderScaler : FfmpegBuilderNode
             
             if (resolution == ResolutionHelper.Resolution.r1080p && scale1920)
                 return 2;
-            else if (resolution == ResolutionHelper.Resolution.r1440p && scale2560)
+            if (resolution == ResolutionHelper.Resolution.r1440p && scale2560)
                 return 2;
-            else if (resolution == ResolutionHelper.Resolution.r4k && scale4k)
+            if (resolution == ResolutionHelper.Resolution.r4k && scale4k)
                 return 2;
-            else if (resolution == ResolutionHelper.Resolution.r720p && scale720)
+            if (resolution == ResolutionHelper.Resolution.r720p && scale720)
                 return 2;
-            else if (resolution == ResolutionHelper.Resolution.r480p && scale480)
+            if (resolution == ResolutionHelper.Resolution.r480p && scale480)
                 return 2;
         }
         return Scale();

@@ -99,7 +99,7 @@ public abstract class ImageNode : ImageBaseNode
     {
         string local = args.FileService.FileIsLocal(file)
             ? file
-            : FileHelper.Combine(args.TempPath, Guid.NewGuid() + "." + FileHelper.GetExtension(file));
+            : FileHelper.Combine(args.TempPath, Guid.NewGuid() + FileHelper.GetExtension(file));
         
         using var outStream = new System.IO.FileStream(local, System.IO.FileMode.Create);
         img.Save(outStream, format);
@@ -121,12 +121,12 @@ public abstract class ImageNode : ImageBaseNode
     {
         string local = args.FileService.FileIsLocal(file)
             ? file
-            : FileHelper.Combine(args.TempPath, Guid.NewGuid() + "." + FileHelper.GetExtension(file));
+            : FileHelper.Combine(args.TempPath, Guid.NewGuid() + FileHelper.GetExtension(file));
         
         using var outStream = new System.IO.FileStream(local, System.IO.FileMode.Create);
-        
-        string origExtension = FileHelper.GetExtension(args.WorkingFile).ToLowerInvariant();
-        string newExtension = FileHelper.GetExtension(file).ToLowerInvariant();
+
+        string origExtension = FileHelper.GetExtension(args.WorkingFile).ToLowerInvariant().TrimStart('.');
+        string newExtension = FileHelper.GetExtension(file).ToLowerInvariant().TrimStart('.');
         if (origExtension != newExtension)
         {
             switch (newExtension)

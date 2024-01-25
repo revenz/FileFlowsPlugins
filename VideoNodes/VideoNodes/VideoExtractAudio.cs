@@ -78,7 +78,7 @@ public class VideoExtractAudio : AudioSelectionEncodingNode
 
             string _output = args.FileService.FileIsLocal(outputFile)
                 ? outputFile
-                : FileHelper.Combine(args.TempPath, Guid.NewGuid() + ". " + FileHelper.GetExtension(outputFile));
+                : FileHelper.Combine(args.TempPath, Guid.NewGuid() + FileHelper.GetExtension(outputFile));
 
             var extracted = ExtractAudio(args, FFMPEG, parameters, _output);
             if (extracted == false)
@@ -117,7 +117,7 @@ public class VideoExtractAudio : AudioSelectionEncodingNode
             //var file = new System.IO.FileInfo(args.FileName);
             string extension = FileHelper.GetExtension(args.FileName);
             if(string.IsNullOrEmpty(extension) == false)
-                outputfile = args.FileName[..^(extension.Length + 1)];
+                outputfile = args.FileName[..^(extension.Length)];
             else
                 outputfile = args.FileName;
         }

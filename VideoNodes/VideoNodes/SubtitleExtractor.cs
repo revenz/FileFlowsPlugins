@@ -129,7 +129,7 @@ public class SubtitleExtractor : EncodingNode
                 else
                 {
                     string fileFullname = args.FileName;
-                    string fileExtension = FileHelper.GetExtension(fileFullname);
+                    string fileExtension = FileHelper.GetExtension(fileFullname).TrimStart('.');
                     output = fileFullname[..fileFullname.LastIndexOf(fileExtension, StringComparison.Ordinal)];
 
                     output = output +
@@ -192,7 +192,7 @@ public class SubtitleExtractor : EncodingNode
             args.FileService.FileDelete(output);
         }
 
-        var tempOutput = FileHelper.Combine(args.TempPath, Guid.NewGuid() + "." + FileHelper.GetExtension(output));
+        var tempOutput = FileHelper.Combine(args.TempPath, Guid.NewGuid() + FileHelper.GetExtension(output));
 
         bool textSubtitles = Regex.IsMatch(output.ToLower(), @"\.(sup)$") == false;
         // -y means it will overwrite a file if output already exists

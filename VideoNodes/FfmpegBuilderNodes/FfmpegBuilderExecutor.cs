@@ -193,12 +193,6 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             }
         }
 
-        if (ffArgs.Any(x => x.Contains("vaapi") && Helpers.VaapiHelper.VaapiLinux))
-        {
-            startArgs.Add("-vaapi_device");
-            startArgs.Add(VaapiHelper.VaapiRenderDevice);
-        }
-
         foreach (var file in model.InputFiles)
         {
             startArgs.Add("-i");
@@ -216,6 +210,9 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             // FF-378: keep attachments (fonts etc)
             ffArgs.AddRange(new[] { "-map", "0:t?", "-c:t", "copy" });
         }
+
+        // make any adjustments needed for hardware devices
+        ffArgs = EncoderAdjustments.EncoderAdjustment.Run(ffArgs);
 
         var ffmpeg = FFMPEG;
         

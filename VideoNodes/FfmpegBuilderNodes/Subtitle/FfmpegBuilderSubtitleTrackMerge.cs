@@ -69,7 +69,7 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
         
         foreach (var file in files.ValueOrDefault ?? new string[] {})
         {
-            string ext = FileHelper.GetExtension(file) ?? string.Empty;
+            string ext = FileHelper.GetExtension(file).TrimStart('.');
             if (string.IsNullOrEmpty(ext) || ext.Length < 2)
                 continue;
             if (Subtitles.Contains(ext.ToLowerInvariant()) == false)
@@ -127,10 +127,10 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
     {
         languageCode = String.Empty;
         var inputFileExtension = FileHelper.GetExtension(input);
-        string inputName = FileHelper.GetShortFileName(input).Replace("." + inputFileExtension, "");
+        string inputName = FileHelper.GetShortFileName(input).Replace(inputFileExtension, "");
 
         var otherFileExtension = FileHelper.GetExtension(other);
-        string otherName = FileHelper.GetShortFileName(other).Replace("." + otherFileExtension, "");
+        string otherName = FileHelper.GetShortFileName(other).Replace(otherFileExtension, "");
 
         if (inputName.ToLowerInvariant().Equals(otherName.ToLowerInvariant()))
             return true;

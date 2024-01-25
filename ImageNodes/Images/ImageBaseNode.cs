@@ -44,7 +44,7 @@ public abstract class ImageBaseNode:Node
 
     protected void UpdateImageInfo(NodeParameters args, Dictionary<string, object> variables = null)
     {
-        string extension = FileHelper.GetExtension(args.WorkingFile).ToLowerInvariant();
+        string extension = FileHelper.GetExtension(args.WorkingFile).ToLowerInvariant().TrimStart('.');
         if (extension == "heic")
         {
             using var image = new MagickImage(args.WorkingFile);
@@ -105,7 +105,7 @@ public abstract class ImageBaseNode:Node
     /// <returns>the filename fo the image to use</returns>
     protected string ConvertImageIfNeeded(NodeParameters args)
     {
-        string extension = FileHelper.GetExtension(args.WorkingFile).ToLowerInvariant();
+        string extension = FileHelper.GetExtension(args.WorkingFile).ToLowerInvariant().TrimStart('.');
         if (extension == "heic")
         {
             // special case have to use imagemagick

@@ -91,7 +91,7 @@ public class CreateAudioBook: AudioNode
         var rgxNumbers = new Regex(@"[\d]+");
         files = files.OrderBy(x =>
         {
-            string extension = FileHelper.GetExtension(x);
+            string extension = FileHelper.GetExtension(x).TrimStart('.');
             string shortname = FileHelper.GetShortFileName(x);
             if (string.IsNullOrEmpty(extension) == false)
                 shortname = shortname[..^(extension.Length + 1)];

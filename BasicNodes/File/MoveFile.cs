@@ -238,8 +238,8 @@ public class MoveFile : Node
             destFilename = args.ReplaceVariables(destinationFile);
         }
         
-        string destExtension = FileHelper.GetExtension(destFilename);
-        string workingExtension = FileHelper.GetExtension(args.WorkingFile);
+        string destExtension = FileHelper.GetExtension(destFilename).TrimStart('.');
+        string workingExtension = FileHelper.GetExtension(args.WorkingFile).TrimStart('.');
             
         if (string.IsNullOrEmpty(destExtension) == false && destExtension != workingExtension)
         {
