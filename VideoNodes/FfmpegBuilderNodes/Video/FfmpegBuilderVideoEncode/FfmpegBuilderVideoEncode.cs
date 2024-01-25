@@ -333,11 +333,15 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
             parameters.AddRange(AV1_CPU(quality, speed));
         else if(encoder == ENCODER_NVIDIA)
             parameters.AddRange(AV1_Nvidia(quality, speed));
+        else if(encoder == ENCODER_QSV)
+            parameters.AddRange(AV1_Qsv(quality, speed));
         else if(encoder == ENCODER_AMF)
             parameters.AddRange(AV1_Amd(quality, speed));
         
         else if (CanUseHardwareEncoding.CanProcess_Nvidia_AV1(args))
             parameters.AddRange(AV1_Nvidia(quality, speed));
+        else if (CanUseHardwareEncoding.CanProcess_Qsv_AV1(args))
+            parameters.AddRange(AV1_Qsv(quality, speed));
         else if (CanUseHardwareEncoding.CanProcess_Amd_AV1(args))
             parameters.AddRange(AV1_Amd(quality, speed));
         else
@@ -345,8 +349,11 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
 
         if (tenBit)
         {
-            bool qsv = parameters.Any(x => x.ToLower().Contains("qsv"));
-            if(qsv)
+            bool qsv = parameters.Any(x => x.ToLowerInvariant().Contains("qsv"));
+            bool av1 = parameters.Any(x => x.ToLowerInvariant().Contains("av1"));
+            if(qsv && av1)
+                parameters.AddRange(new[] { "-pix_fmt", "p010le" });
+            else
                 parameters.AddRange(new[] { "-vf", "scale_qsv=format=p010le" });
             else
                 parameters.AddRange(new[] { "-pix_fmt:v:{index}", "yuv420p10le" });
