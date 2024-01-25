@@ -353,7 +353,7 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
             bool av1 = parameters.Any(x => x.ToLowerInvariant().Contains("av1"));
             if(qsv && av1)
                 parameters.AddRange(new[] { "-pix_fmt", "p010le" });
-            else
+            else if(qsv)
                 parameters.AddRange(new[] { "-vf", "scale_qsv=format=p010le" });
             else
                 parameters.AddRange(new[] { "-pix_fmt:v:{index}", "yuv420p10le" });
