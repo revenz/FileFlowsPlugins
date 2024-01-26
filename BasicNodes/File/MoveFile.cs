@@ -85,7 +85,7 @@ public class MoveFile : Node
         var dest = GetDestinationPath(args, DestinationPath, DestinationFile, MoveFolder);
         if (dest == null)
             return -1;
-        
+
         // store srcDir here before we move and the working file is altered
         var srcDir = FileHelper.GetDirectory(AdditionalFilesFromOriginal ? args.FileName : args.WorkingFile);
         string shortNameLookup = FileHelper.GetShortFileName(args.FileName);
@@ -94,13 +94,21 @@ public class MoveFile : Node
 
         if (args.MoveFile(dest) == false)
             return -1;
-        
-        if(PreserverOriginalDates && args.Variables.TryGetValue("ORIGINAL_CREATE_UTC", out object oCreateTimeUtc) &&
-           args.Variables.TryGetValue("ORIGINAL_LAST_WRITE_UTC", out object oLastWriteUtc) &&
-           oCreateTimeUtc is DateTime dtCreateTimeUtc && oLastWriteUtc is DateTime dtLastWriteUtc)
+
+        if (PreserverOriginalDates)
         {
-            Helpers.FileHelper.SetLastWriteTime(dest, dtLastWriteUtc);
-            Helpers.FileHelper.SetCreationTime(dest, dtCreateTimeUtc);
+            if (args.Variables.TryGetValue("ORIGINAL_CREATE_UTC", out object oCreateTimeUtc) &&
+                args.Variables.TryGetValue("ORIGINAL_LAST_WRITE_UTC", out object oLastWriteUtc) &&
+                oCreateTimeUtc is DateTime dtCreateTimeUtc && oLastWriteUtc is DateTime dtLastWriteUtc)
+            {
+                args.Logger?.ILog("Preserving dates");
+                Helpers.FileHelper.SetLastWriteTime(dest, dtLastWriteUtc);
+                Helpers.FileHelper.SetCreationTime(dest, dtCreateTimeUtc);
+            }
+            else
+            {
+                args.Logger?.WLog("Preserve dates is on but failed to get original dates from variables");
+            }
         }
 
         if(AdditionalFiles?.Any() == true)

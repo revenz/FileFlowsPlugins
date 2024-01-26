@@ -98,12 +98,20 @@ namespace FileFlows.BasicNodes.File
                 return -1;
             args.SetWorkingFile(dest);
 
-            if(PreserverOriginalDates && args.Variables.TryGetValue("ORIGINAL_CREATE_UTC", out object oCreateTimeUtc) &&
-               args.Variables.TryGetValue("ORIGINAL_LAST_WRITE_UTC", out object oLastWriteUtc) &&
-               oCreateTimeUtc is DateTime dtCreateTimeUtc && oLastWriteUtc is DateTime dtLastWriteUtc)
+            if (PreserverOriginalDates)
             {
-                args.FileService.SetCreationTimeUtc(dest, dtCreateTimeUtc);
-                args.FileService.SetLastWriteTimeUtc(dest, dtLastWriteUtc);
+                if (args.Variables.TryGetValue("ORIGINAL_CREATE_UTC", out object oCreateTimeUtc) &&
+                    args.Variables.TryGetValue("ORIGINAL_LAST_WRITE_UTC", out object oLastWriteUtc) &&
+                    oCreateTimeUtc is DateTime dtCreateTimeUtc && oLastWriteUtc is DateTime dtLastWriteUtc)
+                {
+                    args.Logger?.ILog("Preserving dates");
+                    Helpers.FileHelper.SetLastWriteTime(dest, dtLastWriteUtc);
+                    Helpers.FileHelper.SetCreationTime(dest, dtCreateTimeUtc);
+                }
+                else
+                {
+                    args.Logger?.WLog("Preserve dates is on but failed to get original dates from variables");
+                }
             }
 
             var srcDir = FileHelper.GetDirectory(AdditionalFilesFromOriginal
