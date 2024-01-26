@@ -20,8 +20,9 @@ public class VaapiAdjustments : IEncoderAdjustment
     /// </summary>
     /// <param name="args">the ffmpeg args</param>
     /// <returns>the adjusted arguments</returns>
-    public List<string> Run(List<string> args)
+    public List<string> Run(ILogger logger, List<string> args)
     {
+        logger.ILog("Original VAAPI parameters: \n" + string.Join("\n", args));
         int iIndex = args.IndexOf("-i");
         if (iIndex >= 0 && VaapiHelper.VaapiLinux)
         {
@@ -78,6 +79,7 @@ public class VaapiAdjustments : IEncoderAdjustment
         if(filterV0 > 0 && filterV0 < args.Count - 1 && args[filterV0 + 1] == "-map")
             args.RemoveAt(filterV0);
 
+        logger.ILog("Updated VAAPI parameters: \n" + string.Join("\n", args));
         return args;
     }
 }

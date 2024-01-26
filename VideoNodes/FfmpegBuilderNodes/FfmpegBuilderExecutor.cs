@@ -212,7 +212,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         }
 
         // make any adjustments needed for hardware devices
-        ffArgs = EncoderAdjustments.EncoderAdjustment.Run(ffArgs);
+        ffArgs = EncoderAdjustments.EncoderAdjustment.Run(args.Logger, ffArgs);
 
         var ffmpeg = FFMPEG;
         
