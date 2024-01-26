@@ -189,7 +189,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             else 
             {
                 args.Logger?.ILog("Auto-detecting hardware decoder to use");
-                startArgs.AddRange(GetHardwareDecodingArgs(args));
+                startArgs.AddRange(GetHardwareDecodingArgs(args, localFile));
             }
         }
 
@@ -254,9 +254,8 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         return 1;
     }
 
-    internal string[] GetHardwareDecodingArgs(NodeParameters args)
+    internal string[] GetHardwareDecodingArgs(NodeParameters args, string localFile)
     {
-        string testFile = FileHelper.Combine(args.TempPath, Guid.NewGuid() + ".hwtest.mkv");
         var video = this.Model.VideoStreams.Where(x => x.Stream.IsImage == false).FirstOrDefault();
         if (string.IsNullOrWhiteSpace(video?.Stream?.Codec))
             return new string[] { };
@@ -264,62 +263,52 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         bool isHevc = video.Stream.Codec.Contains("265") || video.Stream.Codec.ToLower().Contains("hevc");
 
         var decoders = isH264 ? Decoders_h264(args) :
-                        isHevc ? Decoders_hevc(args) :
-                        Decoders_Default(args);
-        try
+            isHevc ? Decoders_hevc(args) :
+            Decoders_Default(args);
+        foreach (var hw in decoders)
         {
-            foreach (var hw in decoders)
+            if (hw == null)
+                continue;
+            if (CanUseHardwareEncoding.DisabledByVariables(args, hw))
             {
-                if (hw == null)
-                    continue;
-                if (CanUseHardwareEncoding.DisabledByVariables(args, hw))
-                {
-                    args.Logger?.ILog("HW disabled by variables: " + string.Join(", ", hw));
-                    continue;
-                }
+                args.Logger?.ILog("HW disabled by variables: " + string.Join(", ", hw));
+                continue;
+            }
 
-                try
-                {
-                    var arguments = new List<string>()
+            try
+            {
+                var arguments = new List<string>()
                 {
                     "-y",
                 };
-                    arguments.AddRange(hw);
-                    arguments.AddRange(new[]
-                    {
+                arguments.AddRange(hw);
+                arguments.AddRange(new[]
+                {
                     "-f", "lavfi",
                     "-i", "color=color=red",
                     "-frames:v", "10",
-                    testFile
+                    localFile
                 });
 
-                    var result = args.Execute(new ExecuteArgs
-                    {
-                        Command = FFMPEG,
-                        ArgumentList = arguments.ToArray()
-                    });
-                    if (result.ExitCode == 0)
-                    {
-                        args.Logger?.ILog("Supported hardware decoding detected: " + string.Join(" ", hw));
+                var result = args.Execute(new ExecuteArgs
+                {
+                    Command = FFMPEG,
+                    ArgumentList = arguments.ToArray()
+                });
+                if (result.ExitCode == 0)
+                {
+                    args.Logger?.ILog("Supported hardware decoding detected: " + string.Join(" ", hw));
 
-                        return hw;
-                    }
+                    return hw;
                 }
-                catch (Exception) { }
             }
-
-            args.Logger?.ILog("No hardware decoding availble");
-            return new string[] { };
-        }
-        finally
-        {
-            try
+            catch (Exception)
             {
-                if (System.IO.File.Exists(testFile))
-                    System.IO.File.Delete(testFile);
             }
-            catch (Exception) { }
         }
+
+        args.Logger?.ILog("No hardware decoding availble");
+        return new string[] { };
     }
 
     private static readonly bool IsMac = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
