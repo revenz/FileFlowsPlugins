@@ -67,9 +67,9 @@ public class FFMpegEncoder
         }
 
         string argsString = String.Join(" ", arguments.Select(x => x.IndexOf(" ") > 0 ? "\"" + x + "\"" : x));
-        Logger.ILog(new string('-', ("FFMpeg.Arguments: " + argsString).Length));
-        Logger.ILog("FFMpeg.Arguments: " + argsString);
-        Logger.ILog(new string('-', ("FFMpeg.Arguments: " + argsString).Length));
+        Logger.ILog(new string('-', ("FFmpeg.Arguments: " + argsString).Length));
+        Logger.ILog("FFmpeg.Arguments: " + argsString);
+        Logger.ILog(new string('-', ("FFmpeg.Arguments: " + argsString).Length));
 
         var task = ExecuteShellCommand(ffMpegExe, arguments, 0);
         task.Wait();
