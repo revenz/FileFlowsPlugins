@@ -235,6 +235,9 @@ public class CanUseHardwareEncoding:Node
 
     private static bool CanProcess(NodeParameters args, params string[] encodingParams)
     {
+        if (encodingParams.Any(x => x.Contains("vaapi") && OperatingSystem.IsWindows()))
+            return false; // dont bother checking vaapi on windows, unlikely the user has added support for it
+        
         if (DisabledByVariables(args, encodingParams))
             return false;
 

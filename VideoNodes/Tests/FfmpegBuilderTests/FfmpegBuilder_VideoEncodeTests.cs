@@ -30,11 +30,20 @@ public class FfmpegBuilder_VideoEncode_VideoEncodeTests: TestBase
         Assert.AreEqual(1, ffStart.Execute(args));
 
         FfmpegBuilderVideoEncode ffEncode = new();
+        ffEncode.Encoder = "VAAPI";
+        //ffEncode.Encoder = "NVIDIA";
+       // ffEncode.Encoder = "Intel QSV";
         ffEncode.Codec = codec;
         ffEncode.Quality = quality;
         //ffEncode.HardwareEncoding = hardwareEncoding;
         ffEncode.PreExecute(args);
         ffEncode.Execute(args);
+
+        FfmpegBuilderScaler scaler = new();
+        scaler.Resolution = "1280:-2";
+        scaler.Force = true;
+        scaler.PreExecute(args);
+        Assert.AreEqual(1, scaler.Execute(args));
         
         FfmpegBuilderExecutor ffExecutor = new();
         ffExecutor.PreExecute(args);

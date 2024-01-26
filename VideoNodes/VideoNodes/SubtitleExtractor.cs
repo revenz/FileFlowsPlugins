@@ -214,7 +214,6 @@ public class SubtitleExtractor : EncodingNode
                     tempOutput
                 }
         }).Result;
-
         
         var of = new System.IO.FileInfo(tempOutput);
         args.Logger?.ILog("Extraction exit code: " + result.ExitCode);
@@ -236,12 +235,18 @@ public class SubtitleExtractor : EncodingNode
             return false;
         }
 
+        if (of.Exists == false)
+        {
+            args.Logger?.WLog("Failed to create subtitle file: " + tempOutput);
+            return false;
+        }
+
         if (args.FileService.FileMove(tempOutput, output).Failed(out string error))
         {
             args.Logger?.ELog("Failed to move extracted subtitle: " + error);
             return false;
         }
-        args.Logger?.ILog("Extracted file successful: " + of.Exists);
-        return of.Exists;
+        args.Logger?.ILog("Extracted file successful to: " + output);
+        return true;
     }
 }

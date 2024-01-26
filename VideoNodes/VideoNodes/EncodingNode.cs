@@ -122,7 +122,7 @@ namespace FileFlows.VideoNodes
                 double remainingMilliseconds = elapsed.TotalMilliseconds * (100 - percent) / percent;
                 TimeSpan eta = TimeSpan.FromMilliseconds(remainingMilliseconds);
 
-                Args.AdditionalInfoRecorder("ETA", TimeHelper.ToHumanReadableString(eta), new TimeSpan(0, 1, 0));
+                Args?.AdditionalInfoRecorder?.Invoke("ETA", TimeHelper.ToHumanReadableString(eta), new TimeSpan(0, 1, 0));
             }
         }
 
