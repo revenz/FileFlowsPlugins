@@ -291,7 +291,10 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                     {
                         "-i", localFile,
                         "-frames:v", "10",
-                        testFile
+                        "-ss", "1",
+                        // instead of file output to null
+                        "-f", "null", "-"
+                        // testFile
                     });
 
                     var result = args.Execute(new ExecuteArgs
@@ -311,7 +314,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                 }
             }
 
-            args.Logger?.ILog("No hardware decoding availble");
+            args.Logger?.ILog("No hardware decoding available");
             return new string[] { };
         }
         finally

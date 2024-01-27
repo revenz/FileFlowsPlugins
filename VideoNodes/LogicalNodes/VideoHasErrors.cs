@@ -55,7 +55,6 @@ public class VideoHasErrors: VideoNode
         if (result.NoErrors)
             return 2;
         
-        args.Logger.WLog(result.Log);
         return 1;
     }
 
@@ -115,12 +114,28 @@ public class VideoHasErrors: VideoNode
             StartInfo = processStartInfo
         };
 
+        var line = "Executing: " + (ffmpegPath.IndexOf(" ") > 0 ? "\"" + ffmpegPath + "\"" : ffmpegPath) + " " +
+                      string.Join(" ",
+                          processStartInfo.ArgumentList.Select(x => x.IndexOf(" ") > 0 ? "\"" + x + "\"" : x)
+                              .ToArray());
+        args.Logger?.ILog(new string('-', line.Length));
+        args.Logger?.ILog(line);
+        args.Logger?.ILog(new string('-', line.Length));
+
         process.Start();
         string output = process.StandardError.ReadToEnd();
         process.WaitForExit();
 
         if (output.Contains("error"))
+        {
+            args.Logger?.ILog("Errors detected in file");
+            args.Logger?.WLog(output);
             return (false, output);
+        }
+
+        args.Logger?.ILog("No errors detected");
+        if(string.IsNullOrWhiteSpace(output) == false)
+            args.Logger?.ILog(output);
 
         return (true, string.Empty);
     }
