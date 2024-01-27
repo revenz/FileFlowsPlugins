@@ -29,6 +29,13 @@ public class VideoHasErrors: VideoNode
     public override string Icon => "fas fa-exclamation-circle";
 
     /// <summary>
+    /// Gets or sets if hardware decoding should be used
+    /// </summary>
+    [DefaultValue(true)]
+    [Boolean(1)]
+    public bool HardwareDecoding { get; set; }
+
+    /// <summary>
     /// Executes the flow element
     /// </summary>
     /// <param name="args">the arguments</param>
@@ -41,7 +48,10 @@ public class VideoHasErrors: VideoNode
             args.Logger?.ILog("Failed to get file: " + file.Error);
             return -1;
         }
-        var result = ValidateFile(FFMPEG, file);
+        
+        var videoInfo = GetVideoInfo(args);
+        
+        var result = ValidateFile(args, FFMPEG, file, videoInfo, useHardwareDecoding: HardwareDecoding);
         if (result.NoErrors)
             return 2;
         
@@ -52,28 +62,53 @@ public class VideoHasErrors: VideoNode
     /// <summary>
     /// Validates a video file for errors using FFmpeg.
     /// </summary>
+    /// <param name="args">the arguments</param>
     /// <param name="ffmpegPath">The path to the FFmpeg executable.</param>
     /// <param name="filename">The path to the video file to be validated.</param>
+    /// <param name="info">The video information for the current file</param>
+    /// <param name="useHardwareDecoding">If hardware decoding should be attempted</param>
     /// <returns>
     /// A tuple containing a boolean indicating whether there are no errors (NoErrors)
     /// and a log message (Log) from FFmpeg.
     /// </returns>
-    public static (bool NoErrors, string Log) ValidateFile(string ffmpegPath, string filename)
+    public static (bool NoErrors, string Log) ValidateFile(NodeParameters args, string ffmpegPath, string filename, VideoInfo info, bool useHardwareDecoding)
     {
         if (System.IO.File.Exists(ffmpegPath) == false)
             return (false, "FFmpeg does not exist at the specified path.");
 
         if (System.IO.File.Exists(filename) == false)
             return (false, "The input file does not exist.");
+        
+        var video = info.VideoStreams.FirstOrDefault(x => x.IsImage == false);
 
         var processStartInfo = new ProcessStartInfo
         {
             FileName = ffmpegPath,
-            ArgumentList = { "-v", "error", "-i", filename, "-f", "null", "-" },
+            //ArgumentList = { "-v", "error", "-i", filename, "-f", "null", "-" },
             RedirectStandardError = true,
             UseShellExecute = false,
             CreateNoWindow = true
         };
+        processStartInfo.ArgumentList.Add("-v");
+        processStartInfo.ArgumentList.Add("error");
+
+        if (useHardwareDecoding)
+        {
+            var hardwareDecodingArgs =
+                FfmpegBuilderNodes.FfmpegBuilderExecutor.GetHardwareDecodingArgs(args, filename, ffmpegPath,
+                    video?.Codec);
+            if (hardwareDecodingArgs?.Any() == true)
+            {
+                foreach (var hwArg in hardwareDecodingArgs)
+                    processStartInfo.ArgumentList.Add(hwArg);
+            }
+        }
+
+        processStartInfo.ArgumentList.Add("-i");
+        processStartInfo.ArgumentList.Add(filename);
+        processStartInfo.ArgumentList.Add("-f");
+        processStartInfo.ArgumentList.Add("null");
+        processStartInfo.ArgumentList.Add("-");
 
         Process process = new Process
         {

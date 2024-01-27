@@ -189,7 +189,10 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             // else 
             {
                 args.Logger?.ILog("Auto-detecting hardware decoder to use");
-                startArgs.AddRange(GetHardwareDecodingArgs(args, localFile));
+                
+                
+                var video = this.Model.VideoStreams.FirstOrDefault(x => x.Stream.IsImage == false);
+                startArgs.AddRange(GetHardwareDecodingArgs(args, localFile, FFMPEG, video?.Stream?.Codec));
             }
         }
 
@@ -254,14 +257,13 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         return 1;
     }
 
-    internal string[] GetHardwareDecodingArgs(NodeParameters args, string localFile)
+    internal static string[] GetHardwareDecodingArgs(NodeParameters args, string localFile, string ffmpeg, string codec)
     {
         string testFile = FileHelper.Combine(args.TempPath, Guid.NewGuid() + ".hwtest.mkv");
-        var video = this.Model.VideoStreams.FirstOrDefault(x => x.Stream.IsImage == false);
-        if (string.IsNullOrWhiteSpace(video?.Stream?.Codec))
+        if (string.IsNullOrWhiteSpace(codec))
             return new string[] { };
-        bool isH264 = video.Stream.Codec.Contains("264");
-        bool isHevc = video.Stream.Codec.Contains("265") || video.Stream.Codec.ToLower().Contains("hevc");
+        bool isH264 = codec.Contains("264");
+        bool isHevc = codec.Contains("265") || codec.ToLowerInvariant().Contains("hevc");
 
         var decoders = isH264 ? Decoders_h264(args) :
             isHevc ? Decoders_hevc(args) :
@@ -294,7 +296,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
 
                     var result = args.Execute(new ExecuteArgs
                     {
-                        Command = FFMPEG,
+                        Command = ffmpeg,
                         ArgumentList = arguments.ToArray()
                     });
                     if (result.ExitCode == 0)
@@ -328,7 +330,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
     private static readonly bool IsMac = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
 
     
-    private string[][] Decoders_h264(NodeParameters args)
+    private static string[][] Decoders_h264(NodeParameters args)
     {
         bool noNvidia =
             args.Variables.Any(x => x.Key?.ToLowerInvariant() == "nonvidia" && x.Value as bool? == true);
@@ -367,7 +369,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         };
     }
 
-    private string[][] Decoders_hevc(NodeParameters args)
+    private static string[][] Decoders_hevc(NodeParameters args)
     {
         bool noNvidia =
             args.Variables.Any(x => x.Key?.ToLowerInvariant() == "nonvidia" && x.Value as bool? == true);
@@ -406,7 +408,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         };
     }
 
-    private string[][] Decoders_Default(NodeParameters args)
+    private static string[][] Decoders_Default(NodeParameters args)
     {
         bool noNvidia =
             args.Variables.Any(x => x.Key?.ToLowerInvariant() == "nonvidia" && x.Value as bool? == true);

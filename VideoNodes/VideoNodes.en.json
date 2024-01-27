@@ -656,6 +656,10 @@
         "Outputs": {
           "1": "Contains an error",
           "2": "Did not detect any errors"
+        },
+        "Fields": {
+          "HardwareDecoding": "Hardware Decoding",
+          "HardwareDecoding-Help": "If the an attempt to use hardware decoding should be made.  If not available the execution will proceed just without hardware decoding enabled."
         }
       },
       "VideoHasStream": {
