@@ -293,8 +293,8 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                         "-frames:v", "10",
                         "-ss", "1",
                         // instead of file output to null
-                        "-f", "null", "-"
-                        // testFile
+                        // "-f", "null", "-"
+                        testFile
                     });
 
                     var result = args.Execute(new ExecuteArgs
