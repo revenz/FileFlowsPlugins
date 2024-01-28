@@ -203,31 +203,27 @@ public class CanUseHardwareEncoding:Node
     {
         if (parameters.Any(x => x.ToLower().Contains("nvenc")))
         {
-            if (args.GetVariable("NoNvidia") as bool? == true)
-                return true;
-            if (args.GetVariable("NoNVIDIA") as bool? == true)
+            if (args.Variables.FirstOrDefault(x => x.Key.ToLowerInvariant() == "nonvidia").Value as bool? == true)
                 return true;
         }
         else if (parameters.Any(x => x.ToLower().Contains("qsv")))
         {
-            if (args.GetVariable("NoQSV") as bool? == true)
+            if (args.Variables.FirstOrDefault(x => x.Key.ToLowerInvariant() == "noqsv").Value as bool? == true)
                 return true;
         }
         else if (parameters.Any(x => x.ToLower().Contains("vaapi")))
         {
-            if (args.GetVariable("NoVAAPI") as bool? == true)
+            if (args.Variables.FirstOrDefault(x => x.Key.ToLowerInvariant() == "novaapi").Value as bool? == true)
                 return true;
         }
         else if (parameters.Any(x => x.ToLower().Contains("amf")))
         {
-            if (args.GetVariable("NoAMF") as bool? == true)
-                return true;
-            if (args.GetVariable("NoAMD") as bool? == true)
+            if (args.Variables.FirstOrDefault(x => x.Key.ToLowerInvariant() == "noamf" || x.Key.ToLowerInvariant() == "noamd").Value as bool? == true)
                 return true;
         }
         else if (parameters.Any(x => x.ToLower().Contains("videotoolbox")))
         {
-            if (args.GetVariable("NoVideoToolbox") as bool? == true)
+            if (args.Variables.FirstOrDefault(x => x.Key.ToLowerInvariant() == "novideotoolbox").Value as bool? == true)
                 return true;
         }
         return false;
