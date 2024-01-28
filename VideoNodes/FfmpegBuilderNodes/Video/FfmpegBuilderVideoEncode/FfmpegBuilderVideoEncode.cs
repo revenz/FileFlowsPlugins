@@ -176,15 +176,17 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
             stream.EncodingParameters.AddRange(H264(args, false, Quality, encoder, Speed));
             stream.Codec = CODEC_H264;
         }
-        else if (Codec == CODEC_H265 || Codec == CODEC_H265_10BIT)
+        else if (Codec is CODEC_H265 or CODEC_H265_10BIT)
         {
-            stream.EncodingParameters.AddRange(H265(stream, args, Codec == CODEC_H265_10BIT, Quality, encoder,
+            bool tenBit = Codec == CODEC_H265_10BIT || stream.Stream.Is10Bit;
+            stream.EncodingParameters.AddRange(H265(stream, args, tenBit, Quality, encoder,
                 stream.Stream.FramesPerSecond, Speed));
             stream.Codec = "hevc";
         }
-        else if (Codec == CODEC_AV1 || Codec == CODEC_AV1_10BIT)
+        else if (Codec is CODEC_AV1 or CODEC_AV1_10BIT)
         {
-            stream.EncodingParameters.AddRange(AV1(args, Codec == CODEC_AV1_10BIT, Quality, encoder, Speed));
+            bool tenBit = Codec == CODEC_AV1_10BIT || stream.Stream.Is10Bit;
+            stream.EncodingParameters.AddRange(AV1(args, tenBit, Quality, encoder, Speed));
             stream.Codec = "av1";
         }
         else if (Codec == CODEC_VP9)

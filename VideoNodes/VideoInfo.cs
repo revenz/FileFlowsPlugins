@@ -93,6 +93,16 @@ public class VideoFileStream
     /// Gets or sets the pixel format that should be used to decode this stream
     /// </summary>
     public string PixelFormat { get; set; }
+    
+    /// <summary>
+    /// Gets or sets if this stream is 10 bit
+    /// </summary>
+    public bool Is10Bit { get; set; }
+    
+    /// <summary>
+    /// Gets or sets if this stream is 12 bit
+    /// </summary>
+    public bool Is12Bit { get; set; }
 }
 
 /// <summary>

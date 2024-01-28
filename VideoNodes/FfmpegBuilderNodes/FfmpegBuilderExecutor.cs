@@ -192,7 +192,14 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                 var video = this.Model.VideoStreams.FirstOrDefault(x => x.Stream.IsImage == false);
                 
                 args.Logger?.ILog("Pixel Format: " + (video?.Stream?.PixelFormat?.EmptyAsNull() ?? "Unknown"));
-                startArgs.AddRange(GetHardwareDecodingArgs(args, localFile, FFMPEG, video?.Stream?.Codec, video?.Stream?.PixelFormat));
+                bool targetIs10Bit = string.Join(" ", ffArgs).Contains("p010le");
+                string pxtFormat = video?.Stream?.PixelFormat;
+                if (targetIs10Bit && video?.Stream?.Is10Bit == true)
+                    pxtFormat = "p010le";
+                if (targetIs10Bit == false && video?.Stream?.Is10Bit == false && video?.Stream?.Is12Bit == false)
+                    pxtFormat = "yuv420p";
+                    
+                startArgs.AddRange(GetHardwareDecodingArgs(args, localFile, FFMPEG, video?.Stream?.Codec, pxtFormat));
             }
         }
 
