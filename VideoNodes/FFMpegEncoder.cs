@@ -96,39 +96,55 @@ public class FFMpegEncoder
         var result = new ProcessResult();
 
         var hwDecoderIndex = arguments.FindIndex(x => x == "-hwaccel");
+        string decoder = null;
         if (hwDecoderIndex >= 0 && hwDecoderIndex < arguments.Count - 2)
         {
-            var decoder = arguments[hwDecoderIndex + 1].ToLowerInvariant();
+            var decoder2 = arguments[hwDecoderIndex + 1].ToLowerInvariant();
             foreach(var dec in new []
                     {
                         ("qsv", "QSV"), ("cuda", "NVIDIA"), ("amf", "AMD"), ("vulkan", "Vulkan"), ("vaapi", "VAAPI"), ("dxva2", "dxva2"),
                         ("d3d11va", "d3d11va"), ("opencl", "opencl")
                     })
             {
-                if (decoder == dec.Item1)
+                if (decoder2 == dec.Item1)
                 {
-                    OnStatChange?.Invoke("Decoder", dec.Item2);
+                    decoder = dec.Item2;
                     break;
                 }
             }
         }
         else if(arguments.Any(x => x.Contains(":v:")))
         {
-            OnStatChange?.Invoke("Decoder", "CPU");
+            decoder = "CPU";
         }
 
-        if(arguments.Any(x => x.ToLowerInvariant().Contains("hevc_qsv") || x.ToLowerInvariant().Contains("h264_qsv") || x.ToLowerInvariant().Contains("av1_qsv")))
-            OnStatChange?.Invoke("Encoder", "QSV");
-        else if(arguments.Any(x => x.ToLowerInvariant().Contains("_nvenc")))
-            OnStatChange?.Invoke("Encoder", "NVIDIA");
-        else if(arguments.Any(x => x.ToLowerInvariant().Contains("_amf")))
-            OnStatChange?.Invoke("Encoder", "AMD");
-        else if(arguments.Any(x => x.ToLowerInvariant().Contains("_vaapi")))
-            OnStatChange?.Invoke("Encoder", "VAAPI");
-        else if(arguments.Any(x => x.ToLowerInvariant().Contains("_videotoolbox")))
-            OnStatChange?.Invoke("Encoder", "VideoToolbox");
-        else if(arguments.Any(x => x.ToLowerInvariant().Contains("libx") || x.ToLowerInvariant().Contains("libvpx")))
-            OnStatChange?.Invoke("Encoder", "CPU");
+        if (decoder != null)
+        {
+            Logger?.ILog("Decoder: " + decoder);
+            OnStatChange?.Invoke("Decoder", decoder);
+        }
+
+        string encoder = null;
+        if (arguments.Any(x =>
+                x.ToLowerInvariant().Contains("hevc_qsv") || x.ToLowerInvariant().Contains("h264_qsv") ||
+                x.ToLowerInvariant().Contains("av1_qsv")))
+            encoder = "QSV";
+        else if (arguments.Any(x => x.ToLowerInvariant().Contains("_nvenc")))
+            encoder = "NVIDIA";
+        else if (arguments.Any(x => x.ToLowerInvariant().Contains("_amf")))
+            encoder = "AMF";
+        else if (arguments.Any(x => x.ToLowerInvariant().Contains("_vaapi")))
+            encoder = "VAAPI";
+        else if (arguments.Any(x => x.ToLowerInvariant().Contains("_videotoolbox")))
+            encoder = "VideoToolbox";
+        else if (arguments.Any(x => x.ToLowerInvariant().Contains("libx") || x.ToLowerInvariant().Contains("libvpx")))
+            encoder = "CPU";
+
+        if (encoder != null)
+        {
+            Logger?.ILog("Encoder: " + encoder);
+            OnStatChange?.Invoke("Encoder", encoder);
+        }
 
         using (var process = new Process())
         {
