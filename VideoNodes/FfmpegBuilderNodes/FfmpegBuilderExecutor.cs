@@ -271,22 +271,23 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         try
         {
             List<string> tested = new List<string>();
-            foreach (var hw in decoders)
+            foreach (var hwOrig in decoders)
             {
-                if (hw == null)
+                if (hwOrig == null)
                     continue;
-                if (CanUseHardwareEncoding.DisabledByVariables(args, hw))
+                if (CanUseHardwareEncoding.DisabledByVariables(args, hwOrig))
                 {
-                    args.Logger?.ILog("HW disabled by variables: " + string.Join(", ", hw));
+                    args.Logger?.ILog("HW disabled by variables: " + string.Join(", ", hwOrig));
                     continue;
                 }
                 
-                if (hw.Contains("#FORMAT#") && string.IsNullOrWhiteSpace(pixelFormat))
+                if (hwOrig.Contains("#FORMAT#") && string.IsNullOrWhiteSpace(pixelFormat))
                 {
-                    args.Logger?.ILog("No pixel format detected skipping check for: " + string.Join(" ", hw));
+                    args.Logger?.ILog("No pixel format detected skipping check for: " + string.Join(" ", hwOrig));
                     continue;
                 }
 
+                var hw = hwOrig.Select(x => x.Replace("#FORMAT#", pixelFormat));
 
                 try
                 {
