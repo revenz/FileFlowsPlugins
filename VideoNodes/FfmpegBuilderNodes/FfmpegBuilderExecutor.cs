@@ -297,17 +297,28 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                         testFile
                     });
 
+                    DateTime dtStart = DateTime.Now;
+                    const int timeout = 20;
                     var result = args.Execute(new ExecuteArgs
                     {
                         Command = ffmpeg,
                         ArgumentList = arguments.ToArray(),
-                        Timeout = 30
+                        Timeout = timeout
                     });
                     if (result.ExitCode == 0)
                     {
                         args.Logger?.ILog("Supported hardware decoding detected: " + string.Join(" ", hw));
 
                         return hw;
+                    }
+
+                    var timeTaken = DateTime.Now.Subtract(dtStart);
+
+                    if (timeTaken.TotalSeconds >= timeout && result.Output?.Contains("frame=") == true)
+                    {
+                        args.Logger?.ILog("Supported hardware decoding detected via frame=: " + string.Join(" ", hw));
+                        return hw;
+                        
                     }
                 }
                 catch (Exception)
