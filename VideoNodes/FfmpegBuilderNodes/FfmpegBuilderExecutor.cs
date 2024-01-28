@@ -337,11 +337,19 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                     }
 
                     var timeTaken = DateTime.Now.Subtract(dtStart);
+                    args.Logger?.ILog("Time taken: " + timeTaken + " vs timeout: " + timeout);
 
-                    if (timeTaken.TotalSeconds >= timeout && result.Output?.Contains("frame=") == true)
+                    if (timeTaken.TotalSeconds >= timeout)
                     {
-                        args.Logger?.ILog("Supported hardware decoding detected via frame=: " + string.Join(" ", hw));
-                        return hw;
+                        args.Logger?.ILog("Time was longer than timeout, assume it was aborted");
+                        args.Logger?.ILog("Output: " +  (result.Output ?? String.Empty));
+                        args.Logger?.ILog("StandardOutput: " +  (result.StandardOutput ?? string.Empty));
+                        if (result.Output?.Contains("frame=") == true || result.StandardOutput?.Contains("frame=") == true)
+                        {
+                            args.Logger?.ILog(
+                                "Supported hardware decoding detected via frame=: " + string.Join(" ", hw));
+                            return hw;
+                        }
                     }
                 }
                 catch (Exception)
@@ -439,7 +447,6 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             noNvidia ? null : new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "cuda" }, // this fails with Impossible to convert between the formats supported by the filter 'Parsed_crop_0' and the filter 'auto_scale_0'
             noNvidia ? null : new [] { "-hwaccel", "cuda" },
             noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "#FORMAT#" },
-            //noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "p010le" },
             noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "qsv" },
             noQsv ? null : new [] { "-hwaccel", "qsv" },
             noVaapi ? null : new [] { "-hwaccel", "vaapi", "-hwaccel_output_format", "vaapi" },
