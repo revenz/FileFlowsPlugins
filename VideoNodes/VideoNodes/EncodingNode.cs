@@ -76,7 +76,7 @@ namespace FileFlows.VideoNodes
                 if (videoInfo != null)
                 {
                     TotalTime = videoInfo.VideoStreams[0].Duration;
-                    args.Logger.ILog("### Total Time: " + TotalTime);
+                    args.Logger.ILog("### Total Run-Time Of Video: " + TotalTime);
                 }
             }
 
