@@ -196,8 +196,10 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                 string pxtFormat = video?.Stream?.PixelFormat;
                 if (targetIs10Bit && video?.Stream?.Is10Bit == true)
                     pxtFormat = "p010le";
-                if (targetIs10Bit == false && video?.Stream?.Is10Bit == false && video?.Stream?.Is12Bit == false)
+                else if (targetIs10Bit == false && video?.Stream?.Is10Bit == false && video?.Stream?.Is12Bit == false)
                     pxtFormat = "yuv420p";
+                else if (targetIs10Bit)
+                    pxtFormat = string.Empty; // clear it, if we use a 8bit pixel format this will break the colours
                     
                 startArgs.AddRange(GetHardwareDecodingArgs(args, localFile, FFMPEG, video?.Stream?.Codec, pxtFormat));
             }

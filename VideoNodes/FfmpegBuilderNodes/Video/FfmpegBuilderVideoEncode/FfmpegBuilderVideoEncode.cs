@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Net;
 using System.Runtime.InteropServices;
+using System.Text;
 using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
@@ -171,27 +172,42 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
                 args.Variables?.TryGetValue("HW_OFF", out object oHwOff) == true && (oHwOff as bool? == true || oHwOff?.ToString() == "1")
             ) ? ENCODER_CPU : this.Encoder;
 
+        args.Logger?.ILog("Codec: " + Codec);
         if (Codec == CODEC_H264)
         {
-            stream.EncodingParameters.AddRange(H264(args, false, Quality, encoder, Speed));
+            var encodingParameters = H264(args, false, Quality, encoder, Speed).ToArray();
+            args.Logger?.ILog("Encoding Parameters: " +
+                              string.Join(" ", encodingParameters.Select(x => x.Contains(" ") ? "\"" + x + "\"" : x)));
+            stream.EncodingParameters.AddRange(encodingParameters);
             stream.Codec = CODEC_H264;
         }
         else if (Codec is CODEC_H265 or CODEC_H265_10BIT)
         {
             bool tenBit = Codec == CODEC_H265_10BIT || stream.Stream.Is10Bit;
-            stream.EncodingParameters.AddRange(H265(stream, args, tenBit, Quality, encoder,
-                stream.Stream.FramesPerSecond, Speed));
+            args.Logger?.ILog("10 Bit: " + tenBit);
+            var encodingParameters = H265(stream, args, tenBit, Quality, encoder,
+                stream.Stream.FramesPerSecond, Speed).ToArray();
+            args.Logger?.ILog("Encoding Parameters: " +
+                              string.Join(" ", encodingParameters.Select(x => x.Contains(" ") ? "\"" + x + "\"" : x)));
+            stream.EncodingParameters.AddRange(encodingParameters);
             stream.Codec = "hevc";
         }
         else if (Codec is CODEC_AV1 or CODEC_AV1_10BIT)
         {
             bool tenBit = Codec == CODEC_AV1_10BIT || stream.Stream.Is10Bit;
-            stream.EncodingParameters.AddRange(AV1(args, tenBit, Quality, encoder, Speed));
+            args.Logger?.ILog("10 Bit: " + tenBit);
+            var encodingParameters = AV1(args, tenBit, Quality, encoder, Speed).ToArray();
+            args.Logger?.ILog("Encoding Parameters: " +
+                              string.Join(" ", encodingParameters.Select(x => x.Contains(" ") ? "\"" + x + "\"" : x)));
+            stream.EncodingParameters.AddRange(encodingParameters);
             stream.Codec = "av1";
         }
         else if (Codec == CODEC_VP9)
         {
-            stream.EncodingParameters.AddRange(VP9(args, Quality, encoder, Speed));
+            var encodingParameters = VP9(args, Quality, encoder, Speed).ToArray();
+            args.Logger?.ILog("Encoding Parameters: " +
+                              string.Join(" ", encodingParameters.Select(x => x.Contains(" ") ? "\"" + x + "\"" : x)));
+            stream.EncodingParameters.AddRange(encodingParameters);
             stream.Codec = "vp9";
         }
         else
@@ -322,6 +338,8 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         }
         else if(non10BitFilters?.Any() == true)
             parameters.AddRange(non10BitFilters);
+        else if (string.IsNullOrWhiteSpace(stream?.Stream?.PixelFormat) == false)
+            parameters.AddRange(new[] { "-pix_fmt:v:{index}", stream.Stream.PixelFormat });
         return parameters;
     }
 
