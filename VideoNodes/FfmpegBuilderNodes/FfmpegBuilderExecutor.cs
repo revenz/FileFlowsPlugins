@@ -388,7 +388,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             noNvidia ? null : new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "#FORMAT#" },
             noNvidia ? null : new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "cuda" }, // this fails with Impossible to convert between the formats supported by the filter 'Parsed_crop_0' and the filter 'auto_scale_0'
             noNvidia ? null : new [] { "-hwaccel", "cuda" },
-            noNvidia ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "#FORMAT#" },
+            noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "#FORMAT#" },
             //noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "p010le" },
             noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "qsv" },
             noQsv ? null : new [] { "-hwaccel", "qsv" },
@@ -429,7 +429,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             noNvidia ? null : new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "#FORMAT#" },
             noNvidia ? null : new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "cuda" }, // this fails with Impossible to convert between the formats supported by the filter 'Parsed_crop_0' and the filter 'auto_scale_0'
             noNvidia ? null : new [] { "-hwaccel", "cuda" },
-            noNvidia ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "#FORMAT#" },
+            noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "#FORMAT#" },
             //noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "p010le" },
             noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "qsv" },
             noQsv ? null : new [] { "-hwaccel", "qsv" },
@@ -470,7 +470,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             noNvidia ? null : new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "#FORMAT#" },
             noNvidia ? null : new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "cuda" }, // this fails with Impossible to convert between the formats supported by the filter 'Parsed_crop_0' and the filter 'auto_scale_0'
             noNvidia ? null : new [] { "-hwaccel", "cuda" },
-            noNvidia ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "#FORMAT#" },
+            noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "#FORMAT#" },
             //noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "p010le" },
             noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "qsv" },
             noQsv ? null : new [] { "-hwaccel", "qsv" },
