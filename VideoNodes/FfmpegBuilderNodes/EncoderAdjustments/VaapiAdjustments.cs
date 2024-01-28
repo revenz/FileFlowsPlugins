@@ -42,42 +42,61 @@ public class VaapiAdjustments : IEncoderAdjustment
             args.RemoveAt(main10 - 1);
         }
 
-        string scale = args.FirstOrDefault(x => x.StartsWith("scale="));
-        bool scaleRemoved = false;
-
-        int vfIndex = args.IndexOf("-vf");
-        if (vfIndex < 0)
+        int vfScaleIndex =  args.FindIndex(x => x.StartsWith("scale=") || x.Contains(", scale="));
+        if (vfScaleIndex > 0)
         {
-            int yIndex = args.IndexOf("-y");
-            if (yIndex >= 0)
+            string vfScale = args[vfScaleIndex];
+            var filters = vfScale.Split(',').Select(x => x.Trim()).ToArray();
+            var scale = filters.FirstOrDefault(x => x.StartsWith("scale="));
+            bool scaleRemoved = false;
+
+            int vfIndex = args.IndexOf("-vf");
+            if (vfIndex < 0)
             {
-                string vf = "format=nv12,hwupload";
-                if (string.IsNullOrWhiteSpace(scale) == false)
+                int yIndex = args.IndexOf("-y");
+                if (yIndex >= 0)
                 {
-                    args.Remove(scale);
-                    vf += "," + scale.Replace("scale=", "scale_vaapi=")
-                        .Replace(":flags=lanczos", string.Empty);
-                    scaleRemoved = true;
+                    string vf = "format=nv12,hwupload";
+                    if (string.IsNullOrWhiteSpace(scale) == false)
+                    {
+                        vf += "," + scale.Replace("scale=", "scale_vaapi=")
+                            .Replace(":flags=lanczos", string.Empty);
+                        if (filters.Length == 1)
+                        {
+                            args.RemoveAt(vfScaleIndex);
+                            args.RemoveAt(vfScaleIndex - 1); // remove the filter for this
+                            scaleRemoved = true;
+                        }
+                        else
+                        {
+                            args = args.Select(x =>
+                            {
+                                if (x == vfScale)
+                                    return string.Join(", ", filters.Where(x => x != scale));
+                                return x;
+                            }).ToList();
+                        }
+                    }
+
+                    args.InsertRange(yIndex + 1, new[] { "-vf", vf });
                 }
-                
-                args.InsertRange(yIndex + 1, new [] { "-vf", vf });
             }
         }
 
-        if (scaleRemoved == false)
-        {
-            for (int i = 0; i < args.Count; i++)
-            {
-                var arg = args[i];
-                if (arg.StartsWith("scale=")) // scale should use scale_vaapi
-                    args[i] = arg.Replace("scale=", "scale_vaapi=");
-            }
-        }
+        // if (scaleRemoved == false)
+        // {
+        //     for (int i = 0; i < args.Count; i++)
+        //     {
+        //         var arg = args[i];
+        //         if (arg.StartsWith("scale=")) // scale should use scale_vaapi
+        //             args[i] = arg.Replace("scale=", "scale_vaapi=");
+        //     }
+        // }
 
         // scale filter was used, but then removed
-        int filterV0 = args.IndexOf("-filter:v:0");
-        if(filterV0 > 0 && filterV0 < args.Count - 1 && args[filterV0 + 1] == "-map")
-            args.RemoveAt(filterV0);
+        // int filterV0 = args.IndexOf("-filter:v:0");
+        // if(filterV0 > 0 && filterV0 < args.Count - 1 && args[filterV0 + 1].StartsWith("-"))
+        //     args.RemoveAt(filterV0);
 
         logger.ILog("Updated VAAPI parameters: \n" + string.Join("\n", args));
         return args;
