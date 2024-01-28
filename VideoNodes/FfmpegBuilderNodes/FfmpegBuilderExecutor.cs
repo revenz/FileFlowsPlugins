@@ -291,10 +291,10 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                     {
                         "-i", localFile,
                         "-frames:v", "10",
-                        "-ss", "1",
+                        //"-ss", "1",
                         // instead of file output to null
-                        // "-f", "null", "-"
-                        testFile
+                        "-f", "null", "-",
+                        //testFile
                     });
 
                     var result = args.Execute(new ExecuteArgs
@@ -397,8 +397,8 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
 
         return new[]
         {
-            //new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "cuda" }, // this fails with Impossible to convert between the formats supported by the filter 'Parsed_crop_0' and the filter 'auto_scale_0'
             noVideoToolbox == false && IsMac ? new [] { "-hwaccel", "videotoolbox" } : null,
+            noNvidia ? null : new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "cuda" }, // this fails with Impossible to convert between the formats supported by the filter 'Parsed_crop_0' and the filter 'auto_scale_0'
             noNvidia ? null : new [] { "-hwaccel", "cuda" },
             noQsv ? null : new [] { "-hwaccel", "qsv" },
             noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "p010le" },
