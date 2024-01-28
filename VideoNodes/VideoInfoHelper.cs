@@ -454,14 +454,15 @@ public class VideoInfoHelper
     /// </remarks>
     static string GetDecoderPixelFormat(string line)
     {
-        if(line.IndexOf("yuv420p", StringComparison.Ordinal) > 0)
-           return "yuv420p";
+        // only p010le confirmed working so far
         if(line.IndexOf("p010le", StringComparison.Ordinal) > 0)
            return "p010le";
-        if (line.IndexOf("nv12", StringComparison.Ordinal) >= 0)
-            return "nv12";
-        if (line.IndexOf("yuv444p", StringComparison.Ordinal) >= 0)
-            return "yuv444p";
+        // if(line.IndexOf("yuv420p", StringComparison.Ordinal) > 0)
+        //    return "yuv420p";
+        // if (line.IndexOf("nv12", StringComparison.Ordinal) >= 0)
+        //     return "nv12";
+        // if (line.IndexOf("yuv444p", StringComparison.Ordinal) >= 0)
+        //     return "yuv444p";
         return string.Empty;
     }
 }
