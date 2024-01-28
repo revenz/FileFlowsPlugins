@@ -197,7 +197,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                 if (targetIs10Bit && video?.Stream?.Is10Bit == true)
                     pxtFormat = "p010le";
                 else if (targetIs10Bit == false && video?.Stream?.Is10Bit == false && video?.Stream?.Is12Bit == false)
-                    pxtFormat = "yuv420p";
+                    pxtFormat = "nv12";
                 else if (targetIs10Bit)
                     pxtFormat = string.Empty; // clear it, if we use a 8bit pixel format this will break the colours
                     
@@ -296,8 +296,6 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                     continue;
                 }
 
-                if (hwOrig.Any(x => x.Contains("qsv")) && pixelFormat == "yuv420p")
-                    pixelFormat = "nv12";
 
                 var hw = hwOrig.Select(x => x.Replace("#FORMAT#", pixelFormat)).ToArray();
 

@@ -461,7 +461,7 @@ public class VideoInfoHelper
         if(Regex.IsMatch(line, @"p(0)?10l(b)?e"))
            return "p010le";
         if(line.IndexOf("yuv420p", StringComparison.Ordinal) > 0)
-            return "yuv420p";
+            return "nv12"; // use nv12 instead of yuv420p
         // if (line.IndexOf("nv12", StringComparison.Ordinal) >= 0)
         //     return "nv12";
         // if (line.IndexOf("yuv444p", StringComparison.Ordinal) >= 0)
