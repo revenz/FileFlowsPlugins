@@ -296,6 +296,9 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                     continue;
                 }
 
+                if (hwOrig.Any(x => x.Contains("qsv")) && pixelFormat == "yuv420p")
+                    pixelFormat = "nv12";
+
                 var hw = hwOrig.Select(x => x.Replace("#FORMAT#", pixelFormat)).ToArray();
 
                 try

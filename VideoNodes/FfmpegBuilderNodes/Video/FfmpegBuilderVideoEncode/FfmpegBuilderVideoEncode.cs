@@ -246,7 +246,7 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         else if (encoder == ENCODER_NVIDIA)
             parameters.AddRange(H26x_Nvidia(false, quality, speed, out non10BitFilters));
         else if (encoder == ENCODER_QSV)
-            parameters.AddRange(H26x_Qsv(false, quality, 0, speed));
+            parameters.AddRange(H26x_Qsv(false, quality, 0, speed, out non10BitFilters));
         else if (encoder == ENCODER_AMF)
             parameters.AddRange(H26x_Amd(false, quality, speed));
         else if (encoder == ENCODER_VAAPI)
@@ -257,7 +257,7 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
             parameters.AddRange(H26x_Nvidia(false, quality, speed, out non10BitFilters));
         else if (CanUseHardwareEncoding.CanProcess_Qsv_H264(args))
         {
-            parameters.AddRange(H26x_Qsv(false, quality, 0, speed));
+            parameters.AddRange(H26x_Qsv(false, quality, 0, speed, out non10BitFilters));
             encoder = ENCODER_QSV;
         }
         else if (CanUseHardwareEncoding.CanProcess_Amd_H264(args))
@@ -291,7 +291,7 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
             parameters.AddRange(H26x_Nvidia(true, quality, speed, out non10BitFilters));
         else if (encoder == ENCODER_QSV)
         {
-            parameters.AddRange(H26x_Qsv(true, quality, fps, speed));
+            parameters.AddRange(H26x_Qsv(true, quality, fps, speed, out non10BitFilters));
             qsv = true;
         }
         else if (encoder == ENCODER_AMF)
@@ -305,7 +305,7 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
             parameters.AddRange(H26x_Nvidia(true, quality, speed, out non10BitFilters));
         else if (CanUseHardwareEncoding.CanProcess_Qsv_Hevc(args))
         {
-            parameters.AddRange(H26x_Qsv(true, quality, fps, speed));
+            parameters.AddRange(H26x_Qsv(true, quality, fps, speed, out non10BitFilters));
             qsv = true;
         }
         else if (CanUseHardwareEncoding.CanProcess_Amd_Hevc(args))
@@ -338,8 +338,6 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         }
         else if(non10BitFilters?.Any() == true)
             parameters.AddRange(non10BitFilters);
-        else if (string.IsNullOrWhiteSpace(stream?.Stream?.PixelFormat) == false)
-            parameters.AddRange(new[] { "-pix_fmt:v:{index}", stream.Stream.PixelFormat });
         return parameters;
     }
 
