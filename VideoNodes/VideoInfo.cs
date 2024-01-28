@@ -88,6 +88,11 @@ public class VideoFileStream
     /// Gets or sets the input file index
     /// </summary>
     public int InputFileIndex { get; set; } = 0;
+    
+    /// <summary>
+    /// Gets or sets the pixel format that should be used to decode this stream
+    /// </summary>
+    public string PixelFormat { get; set; }
 }
 
 /// <summary>

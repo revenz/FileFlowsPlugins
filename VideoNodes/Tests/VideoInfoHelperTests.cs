@@ -70,7 +70,7 @@ namespace VideoNodes.Tests
       public void VideoInfoTest_AC1()
       {
         string ffmpegOutput =
-          @"Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/media/Videos/#-Test Tdarr/Input3/input file.mp4':
+          @"Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/media/Videos/Input3/input file.mp4':
   Metadata:
     major_brand     : mp42
     minor_version   : 512
@@ -92,6 +92,7 @@ namespace VideoNodes.Tests
         var vi = VideoInfoHelper.ParseOutput(null, ffmpegOutput);
         Assert.AreEqual(1920, vi.VideoStreams[0].Width);
         Assert.AreEqual(1080, vi.VideoStreams[0].Height);
+        Assert.AreEqual("yuv420p", vi.VideoStreams[0].PixelFormat);
       }
 
 

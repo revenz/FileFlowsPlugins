@@ -256,6 +256,7 @@ public class VideoInfoHelper
         }
 
         vs.Codec = line.Substring(line.IndexOf("Video: ") + "Video: ".Length).Replace(",", "").Trim().Split(' ').First().ToLower();
+        vs.PixelFormat = GetDecoderPixelFormat(line);
         var dimensions = Regex.Match(line, @"([\d]{3,})x([\d]{3,})");
         if (int.TryParse(dimensions.Groups[1].Value, out int width))
             vs.Width = width;
@@ -265,7 +266,7 @@ public class VideoInfoHelper
         if (Regex.IsMatch(line, @"([\d]+(\.[\d]+)?)\sfps") &&
             float.TryParse(Regex.Match(line, @"([\d]+(\.[\d]+)?)\sfps").Groups[1].Value, out float fps))
         {
-            logger.ILog("Frames Per Second: " + fps);
+            logger?.ILog("Frames Per Second: " + fps);
             vs.FramesPerSecond = fps;
         }
 
@@ -440,5 +441,27 @@ public class VideoInfoHelper
         if (lang == "und")
             return string.Empty;
         return lang;
+    }
+    
+    /// <summary>
+    /// Extracts the supported pixel format from an FFmpeg output line for hardware decoding.
+    /// </summary>
+    /// <param name="line">The FFmpeg output line containing video stream information.</param>
+    /// <returns>The supported pixel format (e.g., "yuv420p" or "p010le"), or an empty string if not found or not supported.</returns>
+    /// <remarks>
+    /// Supports "yuv420p" and "p010le" formats. Handles cases where "p010le" has no additional specifiers, defaulting to "yuv420p".
+    /// Adjust the regular expression or default behavior based on specific hardware and FFmpeg output format.
+    /// </remarks>
+    static string GetDecoderPixelFormat(string line)
+    {
+        if(line.IndexOf("yuv420p", StringComparison.Ordinal) > 0)
+           return "yuv420p";
+        if(line.IndexOf("p010le", StringComparison.Ordinal) > 0)
+           return "p010le";
+        if (line.IndexOf("nv12", StringComparison.Ordinal) >= 0)
+            return "nv12";
+        if (line.IndexOf("yuv444p", StringComparison.Ordinal) >= 0)
+            return "yuv444p";
+        return string.Empty;
     }
 }

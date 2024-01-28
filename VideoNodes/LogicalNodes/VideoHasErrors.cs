@@ -95,7 +95,7 @@ public class VideoHasErrors: VideoNode
         {
             var hardwareDecodingArgs =
                 FfmpegBuilderNodes.FfmpegBuilderExecutor.GetHardwareDecodingArgs(args, filename, ffmpegPath,
-                    video?.Codec);
+                    video?.Codec, video?.PixelFormat);
             if (hardwareDecodingArgs?.Any() == true)
             {
                 foreach (var hwArg in hardwareDecodingArgs)

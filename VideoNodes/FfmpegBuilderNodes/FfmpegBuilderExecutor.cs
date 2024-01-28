@@ -192,7 +192,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                 
                 
                 var video = this.Model.VideoStreams.FirstOrDefault(x => x.Stream.IsImage == false);
-                startArgs.AddRange(GetHardwareDecodingArgs(args, localFile, FFMPEG, video?.Stream?.Codec));
+                startArgs.AddRange(GetHardwareDecodingArgs(args, localFile, FFMPEG, video?.Stream?.Codec, video?.Stream?.PixelFormat));
             }
         }
 
@@ -257,7 +257,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         return 1;
     }
 
-    internal static string[] GetHardwareDecodingArgs(NodeParameters args, string localFile, string ffmpeg, string codec)
+    internal static string[] GetHardwareDecodingArgs(NodeParameters args, string localFile, string ffmpeg, string codec, string pixelFormat)
     {
         string testFile = FileHelper.Combine(args.TempPath, Guid.NewGuid() + ".hwtest.mkv");
         if (string.IsNullOrWhiteSpace(codec))
@@ -270,9 +270,12 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             Decoders_Default(args);
         try
         {
+            List<string> tested = new List<string>();
             foreach (var hw in decoders)
             {
                 if (hw == null)
+                    continue;
+                if (hw.Contains("#FORMAT#") && string.IsNullOrWhiteSpace(pixelFormat))
                     continue;
                 if (CanUseHardwareEncoding.DisabledByVariables(args, hw))
                 {
@@ -286,7 +289,8 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                     {
                         "-y",
                     };
-                    arguments.AddRange(hw);
+                    foreach(var hwarg in hw)
+                        arguments.Add(hwarg.Replace("#FORMAT#", pixelFormat));
                     arguments.AddRange(new[]
                     {
                         "-i", localFile,
@@ -296,6 +300,11 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                         //"-f", "null", "-",
                         testFile
                     });
+                    string line = string.Join("", arguments);
+                    if (tested.Contains(line))
+                        continue; // avoids testing twice if the #FORMAT# already tested one
+                    
+                    tested.Add(line);
 
                     DateTime dtStart = DateTime.Now;
                     const int timeout = 20;
@@ -361,18 +370,20 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             args.Variables.Any(x => x.Key?.ToLowerInvariant() == "novideotoolbox" && x.Value as bool? == true);
         bool noVulkan =
             args.Variables.Any(x => x.Key?.ToLowerInvariant() == "novulkan" && x.Value as bool? == true);
-        bool noDxva2 =
+        bool noDxva2 = OperatingSystem.IsWindows() == false || 
             args.Variables.Any(x => x.Key?.ToLowerInvariant() == "nodxva2" && x.Value as bool? == true);
-        bool noD3d11va =
-            args.Variables.Any(x => x.Key?.ToLowerInvariant() == "nod3d11va" && x.Value as bool? == true);
+        bool noD3d11va = OperatingSystem.IsWindows() == false || 
+                         args.Variables.Any(x => x.Key?.ToLowerInvariant() == "nod3d11va" && x.Value as bool? == true);
         bool noOpencl =
             args.Variables.Any(x => x.Key?.ToLowerInvariant() == "noopencl" && x.Value as bool? == true);
 
         return new[]
         {
             noVideoToolbox == false && IsMac ? new [] { "-hwaccel", "videotoolbox" } : null,
+            noNvidia ? null : new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "#FORMAT#" },
             noNvidia ? null : new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "cuda" }, // this fails with Impossible to convert between the formats supported by the filter 'Parsed_crop_0' and the filter 'auto_scale_0'
             noNvidia ? null : new [] { "-hwaccel", "cuda" },
+            noNvidia ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "#FORMAT#" },
             noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "p010le" },
             noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "qsv" },
             noQsv ? null : new [] { "-hwaccel", "qsv" },
@@ -401,17 +412,19 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         bool noVulkan =
             args.Variables.Any(x => x.Key?.ToLowerInvariant() == "novulkan" && x.Value as bool? == true);
         bool noDxva2 =
-            args.Variables.Any(x => x.Key?.ToLowerInvariant() == "nodxva2" && x.Value as bool? == true);
+            OperatingSystem.IsWindows() == false || args.Variables.Any(x => x.Key?.ToLowerInvariant() == "nodxva2" && x.Value as bool? == true);
         bool noD3d11va =
-            args.Variables.Any(x => x.Key?.ToLowerInvariant() == "nod3d11va" && x.Value as bool? == true);
+            OperatingSystem.IsWindows() == false || args.Variables.Any(x => x.Key?.ToLowerInvariant() == "nod3d11va" && x.Value as bool? == true);
         bool noOpencl =
             args.Variables.Any(x => x.Key?.ToLowerInvariant() == "noopencl" && x.Value as bool? == true);
 
         return new[]
         {
             noVideoToolbox == false && IsMac ? new [] { "-hwaccel", "videotoolbox" } : null,
+            noNvidia ? null : new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "#FORMAT#" },
             noNvidia ? null : new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "cuda" }, // this fails with Impossible to convert between the formats supported by the filter 'Parsed_crop_0' and the filter 'auto_scale_0'
             noNvidia ? null : new [] { "-hwaccel", "cuda" },
+            noNvidia ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "#FORMAT#" },
             noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "p010le" },
             noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "qsv" },
             noQsv ? null : new [] { "-hwaccel", "qsv" },
@@ -440,17 +453,19 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         bool noVulkan =
             args.Variables.Any(x => x.Key?.ToLowerInvariant() == "novulkan" && x.Value as bool? == true);
         bool noDxva2 =
-            args.Variables.Any(x => x.Key?.ToLowerInvariant() == "nodxva2" && x.Value as bool? == true);
+            OperatingSystem.IsWindows() == false || args.Variables.Any(x => x.Key?.ToLowerInvariant() == "nodxva2" && x.Value as bool? == true);
         bool noD3d11va =
-            args.Variables.Any(x => x.Key?.ToLowerInvariant() == "nod3d11va" && x.Value as bool? == true);
+            OperatingSystem.IsWindows() == false || args.Variables.Any(x => x.Key?.ToLowerInvariant() == "nod3d11va" && x.Value as bool? == true);
         bool noOpencl =
             args.Variables.Any(x => x.Key?.ToLowerInvariant() == "noopencl" && x.Value as bool? == true);
 
         
         return new[]
         {
+            noNvidia ? null : new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "#FORMAT#" },
             noNvidia ? null : new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "cuda" }, // this fails with Impossible to convert between the formats supported by the filter 'Parsed_crop_0' and the filter 'auto_scale_0'
             noNvidia ? null : new [] { "-hwaccel", "cuda" },
+            noNvidia ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "#FORMAT#" },
             noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "p010le" },
             noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "qsv" },
             noQsv ? null : new [] { "-hwaccel", "qsv" },
