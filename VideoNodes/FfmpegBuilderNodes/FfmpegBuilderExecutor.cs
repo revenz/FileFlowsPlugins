@@ -287,7 +287,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                     continue;
                 }
 
-                var hw = hwOrig.Select(x => x.Replace("#FORMAT#", pixelFormat));
+                var hw = hwOrig.Select(x => x.Replace("#FORMAT#", pixelFormat)).ToArray();
 
                 try
                 {
@@ -295,8 +295,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                     {
                         "-y",
                     };
-                    foreach(var hwarg in hw)
-                        arguments.Add(hwarg.Replace("#FORMAT#", pixelFormat));
+                    arguments.AddRange(hw);
                     arguments.AddRange(new[]
                     {
                         "-i", localFile,
@@ -333,7 +332,6 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                     {
                         args.Logger?.ILog("Supported hardware decoding detected via frame=: " + string.Join(" ", hw));
                         return hw;
-                        
                     }
                 }
                 catch (Exception)
