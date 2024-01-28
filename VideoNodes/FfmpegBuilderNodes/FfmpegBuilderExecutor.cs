@@ -275,13 +275,18 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             {
                 if (hw == null)
                     continue;
-                if (hw.Contains("#FORMAT#") && string.IsNullOrWhiteSpace(pixelFormat))
-                    continue;
                 if (CanUseHardwareEncoding.DisabledByVariables(args, hw))
                 {
                     args.Logger?.ILog("HW disabled by variables: " + string.Join(", ", hw));
                     continue;
                 }
+                
+                if (hw.Contains("#FORMAT#") && string.IsNullOrWhiteSpace(pixelFormat))
+                {
+                    args.Logger?.ILog("No pixel format detected skipping check for: " + string.Join(" ", hw));
+                    continue;
+                }
+
 
                 try
                 {
