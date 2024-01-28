@@ -309,7 +309,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                     arguments.AddRange(new[]
                     {
                         "-i", localFile,
-                        "-frames:v", "10",
+                        "-frames:v", "1",
                         //"-ss", "1",
                         // instead of file output to null
                         //"-f", "null", "-",
@@ -347,8 +347,8 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                         if (result.Output?.Contains("frame=") == true || result.StandardOutput?.Contains("frame=") == true)
                         {
                             args.Logger?.ILog(
-                                "Supported hardware decoding detected via frame=: " + string.Join(" ", hw));
-                            return hw;
+                                "Sort of supported hardware decoding detected via frame=: " + string.Join(" ", hw));
+                            //return hw;
                         }
                     }
                 }
