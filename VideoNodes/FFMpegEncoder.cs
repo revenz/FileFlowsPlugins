@@ -112,6 +112,10 @@ public class FFMpegEncoder
                 }
             }
         }
+        else if(arguments.Any(x => x.Contains(":v:")))
+        {
+            OnStatChange?.Invoke("Decoder", "CPU");
+        }
 
         if(arguments.Any(x => x.ToLowerInvariant().Contains("hevc_qsv") || x.ToLowerInvariant().Contains("h264_qsv") || x.ToLowerInvariant().Contains("av1_qsv")))
             OnStatChange?.Invoke("Encoder", "QSV");
