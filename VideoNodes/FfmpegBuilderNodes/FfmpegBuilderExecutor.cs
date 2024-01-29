@@ -212,7 +212,13 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                     pxtFormat = string.Empty; // clear it, if we use a 8bit pixel format this will break the colours
                 }
 
-                startArgs.AddRange(GetHardwareDecodingArgs(args, localFile, FFMPEG, video?.Stream?.Codec, pxtFormat));
+                var decodingParameters =
+                    GetHardwareDecodingArgs(args, localFile, FFMPEG, video?.Stream?.Codec, pxtFormat);
+                if (decodingParameters.Any() == true)
+                {
+                    args.StatisticRecorder("DecoderParameters", string.Join(" ", decodingParameters));
+                    startArgs.AddRange(decodingParameters);
+                }
             }
         }
 
