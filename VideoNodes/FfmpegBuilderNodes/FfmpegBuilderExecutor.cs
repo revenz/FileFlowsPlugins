@@ -320,8 +320,8 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                     arguments.AddRange(new[]
                     {
                         "-i", localFile,
-                        "-frames:v", "1",
-                        //"-ss", "1",
+                        //"-frames:v", "1",
+                        "-ss", "1",
                         // instead of file output to null
                         //"-f", "null", "-",
                         testFile
