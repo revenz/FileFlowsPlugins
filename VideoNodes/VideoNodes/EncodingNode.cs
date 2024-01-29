@@ -126,8 +126,12 @@ namespace FileFlows.VideoNodes
             }
         }
 
-        private void EncoderOnOnStatChange(string name, object value)
-            => Args.AdditionalInfoRecorder?.Invoke(name, value, new TimeSpan(0, 1, 0));
+        private void EncoderOnOnStatChange(string name, object value, bool recordStatistic)
+        {
+            Args.AdditionalInfoRecorder?.Invoke(name, value, new TimeSpan(0, 1, 0));
+            if(recordStatistic)
+                Args.RecordStatistic(name, value);
+        }
 
         public string CheckVideoCodec(string ffmpeg, string vidparams)
         {

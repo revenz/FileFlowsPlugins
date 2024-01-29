@@ -17,7 +17,7 @@ public class FFMpegEncoder
 
     public delegate void TimeEvent(TimeSpan time, DateTime startedAt);
     public event TimeEvent AtTime;
-    public delegate void StatChange(string name, object value);
+    public delegate void StatChange(string name, object value, bool recordStatistic = false);
     public event StatChange OnStatChange;
 
     private Process process;
@@ -121,7 +121,7 @@ public class FFMpegEncoder
         if (decoder != null)
         {
             Logger?.ILog("Decoder: " + decoder);
-            OnStatChange?.Invoke("Decoder", decoder);
+            OnStatChange?.Invoke("Decoder", decoder, recordStatistic: true);
         }
 
         string encoder = null;
@@ -143,7 +143,7 @@ public class FFMpegEncoder
         if (encoder != null)
         {
             Logger?.ILog("Encoder: " + encoder);
-            OnStatChange?.Invoke("Encoder", encoder);
+            OnStatChange?.Invoke("Encoder", encoder, recordStatistic: true);
         }
 
         using (var process = new Process())
