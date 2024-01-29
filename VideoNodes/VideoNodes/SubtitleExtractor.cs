@@ -118,6 +118,13 @@ public class SubtitleExtractor : EncodingNode
 
             int extractedCount = 0;
 
+            var localFile = args.FileService.GetLocalPath(args.WorkingFile);
+            if (localFile.IsFailed)
+            {
+                args.Logger?.WLog("Failed to get local file: " + localFile.Error);
+                return 2;
+            }
+
             for(int i=0;i<(ExtractAll ? subTracks.Length : 1);i++)
             {
                 var subTrack = subTracks[i];
@@ -147,7 +154,7 @@ public class SubtitleExtractor : EncodingNode
                 
                 args.Logger?.ILog($"Extracting subtitle codec '{subTrack.Codec}' to '{output}'");
 
-                var extracted = ExtractSubtitle(args, FFMPEG, "0:s:" + subTrack.TypeIndex, output);
+                var extracted = ExtractSubtitle(args, FFMPEG, "0:s:" + subTrack.TypeIndex, output, localFile);
                 if (extracted)
                     ++extractedCount;
                 if (extracted && ExtractAll == false)
@@ -182,9 +189,10 @@ public class SubtitleExtractor : EncodingNode
     /// <param name="args">the node parameters</param>
     /// <param name="ffmpegExe">the FFmpeg executable</param>
     /// <param name="subtitleStream">the FFmpeg subtitle stream to extract</param>
-    /// <param name="output">the destination file of the extracted subtitle</param>
+    /// <param name="output">the destination file of the extracted subtitle</param
+    /// <param name="localFile">The local file that the subtitles will be extracted from</param>
     /// <returns>if it was successful or not</returns>
-    internal bool ExtractSubtitle(NodeParameters args, string ffmpegExe, string subtitleStream, string output)
+    internal bool ExtractSubtitle(NodeParameters args, string ffmpegExe, string subtitleStream, string output, string localFile)
     {
         if (args.FileService.FileExists(output).Is(true))
         {
@@ -202,13 +210,13 @@ public class SubtitleExtractor : EncodingNode
             ArgumentList = textSubtitles ? 
                 new[] {
 
-                    "-i", args.WorkingFile,
+                    "-i", localFile,
                     "-map", subtitleStream,
                     tempOutput
                 } : 
                 new[] {
 
-                    "-i", args.WorkingFile,
+                    "-i", localFile,
                     "-map", subtitleStream,
                     "-c:s", "copy",
                     tempOutput
