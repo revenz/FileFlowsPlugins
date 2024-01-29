@@ -195,12 +195,23 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                 bool targetIs10Bit = string.Join(" ", ffArgs).Contains("p010le");
                 string pxtFormat = video?.Stream?.PixelFormat;
                 if (targetIs10Bit && video?.Stream?.Is10Bit == true)
+                {
+                    args.Logger?.ILog(
+                        "Target is 10-Bit forcing p010le");
                     pxtFormat = "p010le";
+                }
                 else if (targetIs10Bit == false && video?.Stream?.Is10Bit == false && video?.Stream?.Is12Bit == false)
+                {
+                    args.Logger?.ILog(
+                        "Target is 8-Bit forcing nv12");
                     pxtFormat = "nv12";
+                }
                 else if (targetIs10Bit)
+                {
+                    args.Logger?.ILog("Target is 10-Bit but source is 8-Bit, clearing pixel format to avoid color issues in output file.");
                     pxtFormat = string.Empty; // clear it, if we use a 8bit pixel format this will break the colours
-                    
+                }
+
                 startArgs.AddRange(GetHardwareDecodingArgs(args, localFile, FFMPEG, video?.Stream?.Codec, pxtFormat));
             }
         }
