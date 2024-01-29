@@ -178,7 +178,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             {
                 // use qsv decoder
                 args.Logger?.ILog("_qsv detected using qsv hardware decoding");
-                startArgs.AddRange(new[] { "-hwaccel", "qsv" , "-hwaccel_output_format", "qsv" });
+                startArgs.AddRange(new[] { "-hwaccel", "qsv" });// , "-hwaccel_output_format", "qsv" });
             }
             // else if(ffArgs.Any(x => x.Contains("_nvenc")))
             // {
