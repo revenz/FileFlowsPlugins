@@ -101,11 +101,23 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
         foreach (var track in Model.AudioStreams)
         {
             if (track.Deleted)
+            {
+                args.Logger?.ILog($"Stream {track} is deleted, skipping");
                 continue;
+            }
 
             if (string.IsNullOrEmpty(this.Pattern))
-            {
-                converting |= ConvertTrack(args, track);
+            { 
+                bool convertResult = ConvertTrack(args, track);
+                if (convertResult)
+                {
+                    args.Logger?.ILog($"Stream {track} will be converted");
+                    converting = true;
+                }
+                else
+                {
+                    args.Logger?.ILog($"Stream {track} will not be converted");
+                }
                 continue;
             }
 
@@ -121,7 +133,16 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
                     matches = !matches;
                 if (matches)
                 {
-                    converting |= ConvertTrack(args, track);
+                    bool convertResult = ConvertTrack(args, track);
+                    if (convertResult)
+                    {
+                        args.Logger?.ILog($"Stream {track} matches pattern and will be converted");
+                        converting = true;
+                    }
+                    else
+                    {
+                        args.Logger?.ILog($"Stream {track} matches pattern but will not be converted");
+                    }
                 }
             }
         }
@@ -141,7 +162,10 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
         bool bitrateSame = stream.Stream.Bitrate == 0 || Math.Abs(stream.Stream.Bitrate - Bitrate) < 0.05f;
 
         if (codecSame && channelsSame && bitrateSame)
+        {
+            args.Logger.ILog($"Stream {stream} matches codec, channels, and bitrate, skipping conversion");
             return false;
+        }
 
         stream.Codec = Codec.ToLowerInvariant();
 

@@ -137,6 +137,18 @@ public class VideoStream : VideoFileStream
     /// The duration of the stream
     /// </summary>
     public TimeSpan Duration { get; set; }
+
+    /// <summary>
+    /// Converts the steam to a string
+    /// </summary>
+    /// <returns></returns>
+    public override string ToString()
+        => string.Join(" / ", new string[]
+        {
+            Index.ToString(),
+            Codec,
+            Title
+        }.Where(x => string.IsNullOrWhiteSpace(x) == false));
 }
 
 /// <summary>
@@ -163,6 +175,20 @@ public class AudioStream : VideoFileStream
     /// The sample rate of the audio stream
     /// </summary>
     public int SampleRate { get; set; }
+
+    /// <summary>
+    /// Converts the steam to a string
+    /// </summary>
+    /// <returns></returns>
+    public override string ToString()
+        => string.Join(" / ", new string[]
+        {
+            Index.ToString(),
+            Language,
+            Codec,
+            Title,
+            Channels > 0 ? Channels.ToString("0.0") : null
+        }.Where(x => string.IsNullOrWhiteSpace(x) == false));
 }
 
 /// <summary>
@@ -184,6 +210,20 @@ public class SubtitleStream : VideoFileStream
     /// If this is a the default subtitle track
     /// </summary>
     public bool Default { get; set; }
+
+    /// <summary>
+    /// Converts the steam to a string
+    /// </summary>
+    /// <returns></returns>
+    public override string ToString()
+        => string.Join(" / ", new string[]
+        {
+            Index.ToString(),
+            Language,
+            Codec,
+            Title,
+            Default ? "Default" : null
+        }.Where(x => string.IsNullOrWhiteSpace(x) == false));
 }
 
 /// <summary>

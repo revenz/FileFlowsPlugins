@@ -91,5 +91,8 @@
 
             return results.ToArray();
         }
+
+        public override string ToString()
+            => Stream.ToString();
     }
 }
