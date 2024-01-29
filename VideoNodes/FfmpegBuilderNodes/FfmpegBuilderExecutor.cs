@@ -343,19 +343,17 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                     if (result.ExitCode == 0)
                     {
                         args.Logger?.ILog("Supported hardware decoding detected: " + string.Join(" ", hw));
-
                         return hw;
                     }
 
-                    var timeTaken = DateTime.Now.Subtract(dtStart);
-                    args.Logger?.ILog("Time taken: " + timeTaken + " vs timeout: " + timeout);
-
-                    if (timeTaken.TotalSeconds >= timeout)
+                    if (result.Completed == false)
                     {
-                        args.Logger?.ILog("Time was longer than timeout, assume it was aborted");
-                        args.Logger?.ILog("Output: " +  (result.Output ?? String.Empty));
-                        args.Logger?.ILog("StandardOutput: " +  (result.StandardOutput ?? string.Empty));
-                        if (result.Output?.Contains("frame=") == true || result.StandardOutput?.Contains("frame=") == true)
+                        // timeout
+                        args.Logger?.ILog("Test timed out");
+                        args.Logger?.ILog("Output: " + (result.Output ?? String.Empty));
+                        args.Logger?.ILog("StandardOutput: " + (result.StandardOutput ?? string.Empty));
+                        if (result.Output?.Contains("frame=") == true ||
+                            result.StandardOutput?.Contains("frame=") == true)
                         {
                             args.Logger?.ILog(
                                 "Sort of supported hardware decoding detected via frame=: " + string.Join(" ", hw));
