@@ -323,8 +323,8 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                         //"-frames:v", "1",
                         "-ss", "10",
                         // instead of file output to null
-                        "-f", "null", "-",
-                        //testFile
+                        //"-f", "null", "-",
+                        testFile
                     });
                     string line = string.Join("", arguments);
                     if (tested.Contains(line))
@@ -333,7 +333,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                     tested.Add(line);
 
                     DateTime dtStart = DateTime.Now;
-                    const int timeout = 20;
+                    const int timeout = 10;
                     var result = args.Execute(new ExecuteArgs
                     {
                         Command = ffmpeg,
@@ -355,7 +355,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                         {
                             args.Logger?.ILog(
                                 "Sort of supported hardware decoding detected via frame=: " + string.Join(" ", hw));
-                            return hw;
+                            //return hw;
                         }
                     }
                 }
