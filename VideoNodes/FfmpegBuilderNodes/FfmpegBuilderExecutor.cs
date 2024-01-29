@@ -321,11 +321,11 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                     arguments.AddRange(new[]
                     {
                         "-i", localFile,
-                        //"-frames:v", "1",
-                        "-ss", "10",
+                        "-frames:v", "1",
+                        //"-ss", "10",
                         // instead of file output to null
-                        //"-f", "null", "-",
-                        testFile
+                        "-f", "null", "-",
+                        //testFile
                     });
                     string line = string.Join("", arguments);
                     if (tested.Contains(line))
