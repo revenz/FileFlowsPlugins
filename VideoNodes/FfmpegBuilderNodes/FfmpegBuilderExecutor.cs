@@ -350,14 +350,12 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                     {
                         // timeout
                         args.Logger?.ILog("Test timed out");
-                        args.Logger?.ILog("Output: " + (result.Output ?? String.Empty));
-                        args.Logger?.ILog("StandardOutput: " + (result.StandardOutput ?? string.Empty));
                         if (result.Output?.Contains("frame=") == true ||
                             result.StandardOutput?.Contains("frame=") == true)
                         {
                             args.Logger?.ILog(
                                 "Sort of supported hardware decoding detected via frame=: " + string.Join(" ", hw));
-                            //return hw;
+                            return hw;
                         }
                     }
                 }
