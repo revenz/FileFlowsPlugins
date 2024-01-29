@@ -297,7 +297,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                     continue;
                 if (CanUseHardwareEncoding.DisabledByVariables(args, hwOrig))
                 {
-                    args.Logger?.ILog("HW disabled by variables: " + string.Join(", ", hwOrig));
+                    args.Logger?.ILog("HW disabled by variables: " + string.Join(" ", hwOrig));
                     continue;
                 }
                 
@@ -307,6 +307,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                     continue;
                 }
 
+                args.AdditionalInfoRecorder("Testing", string.Join(" ", hwOrig), new TimeSpan(0, 0, 10));
 
                 var hw = hwOrig.Select(x => x.Replace("#FORMAT#", pixelFormat)).ToArray();
 
@@ -369,6 +370,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         }
         finally
         {
+            args.AdditionalInfoRecorder("Testing", null, new TimeSpan(0, 0, 10));
             try
             {
                 if (System.IO.File.Exists(testFile))
