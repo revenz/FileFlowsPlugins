@@ -212,8 +212,16 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                     pxtFormat = string.Empty; // clear it, if we use a 8bit pixel format this will break the colours
                 }
 
+                List<string> encodingParameters = new ();
+                if (video?.EncodingParameters?.Any() == true)
+                {
+                    encodingParameters.Add("-c:v:" + video.Stream.TypeIndex);
+                    encodingParameters.AddRange(video.EncodingParameters.Select(x =>
+                        x.Replace("{index}", video.Stream.Index.ToString())));
+                }
+
                 var decodingParameters =
-                    GetHardwareDecodingArgs(args, localFile, FFMPEG, video?.Stream?.Codec, pxtFormat);
+                    GetHardwareDecodingArgs(args, localFile, FFMPEG, video?.Stream?.Codec, pxtFormat, encodingParameters: encodingParameters);
                 if (decodingParameters.Any() == true)
                 {
                     args.StatisticRecorder("DecoderParameters", string.Join(" ", decodingParameters));
@@ -283,7 +291,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         return 1;
     }
 
-    internal static string[] GetHardwareDecodingArgs(NodeParameters args, string localFile, string ffmpeg, string codec, string pixelFormat)
+    internal static string[] GetHardwareDecodingArgs(NodeParameters args, string localFile, string ffmpeg, string codec, string pixelFormat, List<string> encodingParameters = null)
     {
         string testFile = FileHelper.Combine(args.TempPath, Guid.NewGuid() + ".hwtest.mkv");
         if (string.IsNullOrWhiteSpace(codec))
@@ -330,9 +338,14 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                         "-frames:v", "1",
                         //"-ss", "10",
                         // instead of file output to null
-                        "-f", "null", "-",
+                        //"-f", "null", "-",
                         //testFile
                     });
+                    if (encodingParameters?.Any() == true)
+                        arguments.AddRange(encodingParameters);
+                    
+                    arguments.AddRange(new[] { "-f", "null", "-" });
+                    
                     string line = string.Join("", arguments);
                     if (tested.Contains(line))
                         continue; // avoids testing twice if the #FORMAT# already tested one

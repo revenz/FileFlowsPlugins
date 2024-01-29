@@ -34,20 +34,20 @@ public class FfmpegBuilderVideo10Bit : FfmpegBuilderNode
         args?.Logger?.WLog("This flow element has been marked obsolete and should no longer be used.");
         return 1; // do nothing
         
-        var videoInfo = GetVideoInfo(args);
-        if (videoInfo == null || videoInfo.VideoStreams?.Any() != true)
-            return -1;
-
-        var stream = Model?.VideoStreams?.Where(x => x.Deleted == false)?.FirstOrDefault();
-        if (stream != null)
-        {
-            args.Logger?.ILog(
-                "Adding optional encoding parameters: -pix_fmt:v:{index} p010le -profile:v:{index} main10");
-            
-            stream.OptionalEncodingParameters.AddRange(new[]
-                { "-pix_fmt:v:{index}", "p010le", "-profile:v:{index}", "main10" });
-        }
-
-        return 1;
+        // var videoInfo = GetVideoInfo(args);
+        // if (videoInfo == null || videoInfo.VideoStreams?.Any() != true)
+        //     return -1;
+        //
+        // var stream = Model?.VideoStreams?.Where(x => x.Deleted == false)?.FirstOrDefault();
+        // if (stream != null)
+        // {
+        //     args.Logger?.ILog(
+        //         "Adding optional encoding parameters: -pix_fmt:v:{index} p010le -profile:v:{index} main10");
+        //     
+        //     stream.OptionalEncodingParameters.AddRange(new[]
+        //         { "-pix_fmt:v:{index}", "p010le", "-profile:v:{index}", "main10" });
+        // }
+        //
+        // return 1;
     }
 }

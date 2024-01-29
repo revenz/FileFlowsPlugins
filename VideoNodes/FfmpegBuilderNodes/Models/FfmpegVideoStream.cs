@@ -37,19 +37,19 @@
                 _EncodingParameters = value ?? new List<string>();
             }
         }
-        private List<string> _OptionalEncodingParameters = new List<string>();
-        /// <summary>
-        /// Gets or sets encoding paramaters that will process but only if processing is needed, these won't trigger a has changed
-        /// value of the video file by themselves
-        /// </summary>
-        public List<string> OptionalEncodingParameters
-        {
-            get => _OptionalEncodingParameters;
-            set
-            {
-                _OptionalEncodingParameters = value ?? new List<string>();
-            }
-        }
+        // private List<string> _OptionalEncodingParameters = new List<string>();
+        // /// <summary>
+        // /// Gets or sets encoding paramaters that will process but only if processing is needed, these won't trigger a has changed
+        // /// value of the video file by themselves
+        // /// </summary>
+        // public List<string> OptionalEncodingParameters
+        // {
+        //     get => _OptionalEncodingParameters;
+        //     set
+        //     {
+        //         _OptionalEncodingParameters = value ?? new List<string>();
+        //     }
+        // }
         private List<string> _AdditionalParameters = new List<string>();
         public List<string> AdditionalParameters
         {
@@ -80,8 +80,8 @@
                 {
                     results.Add("-c:v:" + Stream.TypeIndex);
                     results.AddRange(EncodingParameters.Select(x => x.Replace("{index}", args.OutputTypeIndex.ToString())));
-                    if(OptionalEncodingParameters.Any())
-                        results.AddRange(OptionalEncodingParameters.Select(x => x.Replace("{index}", args.OutputTypeIndex.ToString())));
+                    // if(OptionalEncodingParameters.Any())
+                    //     results.AddRange(OptionalEncodingParameters.Select(x => x.Replace("{index}", args.OutputTypeIndex.ToString())));
                 }
                 else
                 {
