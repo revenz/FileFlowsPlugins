@@ -174,19 +174,19 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         }
         else if (HardwareDecoding)
         {
-            // if(ffArgs.Any(x => x.Contains("_qsv")))
-            // {
-            //     // use qsv decoder
-            //     args.Logger?.ILog("_qsv detected using qsv hardware decoding");
-            //     startArgs.AddRange(new[] { "-hwaccel", "qsv" , "-hwaccel_output_format", "qsv" });
-            // }
+            if(ffArgs.Any(x => x.Contains("_qsv")))
+            {
+                // use qsv decoder
+                args.Logger?.ILog("_qsv detected using qsv hardware decoding");
+                startArgs.AddRange(new[] { "-hwaccel", "qsv" , "-hwaccel_output_format", "qsv" });
+            }
             // else if(ffArgs.Any(x => x.Contains("_nvenc")))
             // {
             //     // use nvidia decoder
             //     args.Logger?.ILog("_nvenc detected using cuda hardware decoding");
             //     startArgs.AddRange(new[] { "-hwaccel", "cuda" }); //, "-hwaccel_output_format", "cuda" });
             // }
-            // else 
+            else 
             {
                 args.Logger?.ILog("Auto-detecting hardware decoder to use");
                 var video = this.Model.VideoStreams.FirstOrDefault(x => x.Stream.IsImage == false);
