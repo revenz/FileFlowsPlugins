@@ -296,6 +296,10 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         string testFile = FileHelper.Combine(args.TempPath, Guid.NewGuid() + ".hwtest.mkv");
         if (string.IsNullOrWhiteSpace(codec))
             return new string[] { };
+        
+        if (encodingParameters?.Any() == true)
+            args.Logger?.ILog("Testing with encoding parameters:" + string.Join(" ", encodingParameters));
+        
         bool isH264 = codec.Contains("264");
         bool isHevc = codec.Contains("265") || codec.ToLowerInvariant().Contains("hevc");
 
@@ -321,9 +325,10 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                     continue;
                 }
 
-                args.AdditionalInfoRecorder("Testing", string.Join(" ", hwOrig), new TimeSpan(0, 0, 10));
 
                 var hw = hwOrig.Select(x => x.Replace("#FORMAT#", pixelFormat)).ToArray();
+                
+                args.AdditionalInfoRecorder("Testing", string.Join(" ", hw), new TimeSpan(0, 0, 10));
 
                 try
                 {
@@ -343,7 +348,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                     });
                     if (encodingParameters?.Any() == true)
                         arguments.AddRange(encodingParameters);
-                    
+
                     arguments.AddRange(new[] { "-f", "null", "-" });
                     
                     string line = string.Join("", arguments);
