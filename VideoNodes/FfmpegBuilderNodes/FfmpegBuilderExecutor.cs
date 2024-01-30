@@ -221,7 +221,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                 if (video?.EncodingParameters?.Any() == true)
                 {
                     encodingParameters.Add("-c:v:" + video.Stream.TypeIndex);
-                    encodingParameters.AddRange(video.EncodingParameters.Select(x =>
+                    encodingParameters.AddRange(video.EncodingParameters.Union(video.Filter ?? new ()).Select(x =>
                         x.Replace("{index}", video.Stream.Index.ToString())));
                 }
 
@@ -332,6 +332,8 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
 
 
                 var hw = hwOrig.Select(x => x.Replace("#FORMAT#", pixelFormat)).ToArray();
+
+                hw = EncoderAdjustments.EncoderAdjustment.Run(args.Logger, hw.ToList()).ToArray();
                 
                 args.AdditionalInfoRecorder("Testing", string.Join(" ", hw), new TimeSpan(0, 0, 10));
 
@@ -531,6 +533,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "qsv" },
             noQsv ? null : new [] { "-hwaccel", "qsv" },
             noVaapi ? null : new [] { "-hwaccel", "vaapi" },
+            noVaapi ? null : new [] { "-hwaccel", "vaapi", "-v" },
             noVaapi ? null : new [] { "-hwaccel", "vaapi", "-hwaccel_output_format", "vaapi" },
             noVulkan ? null : new [] { "-hwaccel", "vulkan", "-hwaccel_output_format", "vulkan" },
             noDxva2 ? null : new [] { "-hwaccel", "dxva2" },
