@@ -113,9 +113,16 @@ public class FFMpegEncoder
                 }
             }
         }
-        else if(arguments.Any(x => x.Contains(":v:")))
+        else
         {
-            decoder = "CPU";
+            var index = arguments.FindIndex(x => x.Contains("-c:v:"));
+            if (index > 0 && index < arguments.Count - 2)
+            {
+                if(arguments[index + 1] != "copy")
+                    decoder = "CPU";
+                else
+                    OnStatChange?.Invoke("Decoder", "Copy", recordStatistic: false);
+            }
         }
 
         if (decoder != null)
