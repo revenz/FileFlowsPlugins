@@ -160,8 +160,13 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             "-probesize", VideoInfoHelper.ProbeSize + "M"
         });
 
-
-        if (Environment.GetEnvironmentVariable("HW_OFF") == "1")
+        bool isEncodingVideo =
+            model.VideoStreams.Any(x => x.Deleted == false && x.EncodingParameters?.Any() == true || x.Filter?.Any() == true);
+        if (isEncodingVideo)
+        {
+            args.Logger?.ILog("No video encoding, no need for hardware decoding");
+        }
+        else if (Environment.GetEnvironmentVariable("HW_OFF") == "1")
         {
             args.Logger?.ILog("HW_OFF detected");
         }
