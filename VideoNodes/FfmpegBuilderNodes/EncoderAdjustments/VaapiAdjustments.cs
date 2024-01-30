@@ -35,53 +35,70 @@ public class VaapiAdjustments : IEncoderAdjustment
         
         // "-pix_fmt:v:{index}", "p010le", "-profile:v:{index}", "main10"
         int main10 = args.IndexOf("main10");
+        string additionalFilters = string.Empty;
         if (main10 > 0)
         {
             // we dont specify main 10 for vaapi
             args.RemoveAt(main10);
             args.RemoveAt(main10 - 1);
         }
-
-        int vfScaleIndex =  args.FindIndex(x => x.StartsWith("scale=") || x.Contains(", scale="));
-        if (vfScaleIndex > 0)
+        else
         {
-            string vfScale = args[vfScaleIndex];
-            var filters = vfScale.Split(',').Select(x => x.Trim()).ToArray();
-            var scale = filters.FirstOrDefault(x => x.StartsWith("scale="));
-            bool scaleRemoved = false;
-
-            int vfIndex = args.IndexOf("-vf");
-            if (vfIndex < 0)
-            {
-                int yIndex = args.IndexOf("-y");
-                if (yIndex >= 0)
-                {
-                    string vf = "format=nv12,hwupload";
-                    if (string.IsNullOrWhiteSpace(scale) == false)
-                    {
-                        vf += "," + scale.Replace("scale=", "scale_vaapi=")
-                            .Replace(":flags=lanczos", string.Empty);
-                        if (filters.Length == 1)
-                        {
-                            args.RemoveAt(vfScaleIndex);
-                            args.RemoveAt(vfScaleIndex - 1); // remove the filter for this
-                            scaleRemoved = true;
-                        }
-                        else
-                        {
-                            args = args.Select(x =>
-                            {
-                                if (x == vfScale)
-                                    return string.Join(", ", filters.Where(x => x != scale));
-                                return x;
-                            }).ToList();
-                        }
-                    }
-
-                    args.InsertRange(yIndex + 1, new[] { "-vf", vf });
-                }
-            }
+            additionalFilters += "format=nv12,";
         }
+
+        additionalFilters += "hwupload,";
+        for (int i = 0; i < args.Count - 2; i++)
+        {
+            if (args[i].StartsWith("-filter:v:") == false)
+                continue;
+            ++i;
+            var vf = args[i];
+            vf = additionalFilters + vf.Replace("scale=", "scale_vaapi=")
+                .Replace(":flags=lanczos", string.Empty);
+            args[i] = vf;
+        }
+
+        // int vfScaleIndex =  args.FindIndex(x => x.StartsWith("scale=") || x.Contains(", scale="));
+        // if (vfScaleIndex > 0)
+        // {
+        //     string vfScale = args[vfScaleIndex];
+        //     var filters = vfScale.Split(',').Select(x => x.Trim()).ToArray();
+        //     var scale = filters.FirstOrDefault(x => x.StartsWith("scale="));
+        //     bool scaleRemoved = false;
+        //
+        //     int vfIndex = args.IndexOf("-vf");
+        //     if (vfIndex < 0)
+        //     {
+        //         int yIndex = args.IndexOf("-y");
+        //         if (yIndex >= 0)
+        //         {
+        //             string vf = "format=nv12,hwupload";
+        //             if (string.IsNullOrWhiteSpace(scale) == false)
+        //             {
+        //                 vf += "," + scale.Replace("scale=", "scale_vaapi=")
+        //                     .Replace(":flags=lanczos", string.Empty);
+        //                 if (filters.Length == 1)
+        //                 {
+        //                     args.RemoveAt(vfScaleIndex);
+        //                     args.RemoveAt(vfScaleIndex - 1); // remove the filter for this
+        //                     scaleRemoved = true;
+        //                 }
+        //                 else
+        //                 {
+        //                     args = args.Select(x =>
+        //                     {
+        //                         if (x == vfScale)
+        //                             return string.Join(", ", filters.Where(x => x != scale));
+        //                         return x;
+        //                     }).ToList();
+        //                 }
+        //             }
+        //
+        //             args.InsertRange(yIndex + 1, new[] { "-vf", vf });
+        //         }
+        //     }
+        // }
 
         // if (scaleRemoved == false)
         // {
