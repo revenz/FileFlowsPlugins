@@ -162,7 +162,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
 
         bool isEncodingVideo =
             model.VideoStreams.Any(x => x.Deleted == false && x.EncodingParameters?.Any() == true || x.Filter?.Any() == true);
-        if (isEncodingVideo)
+        if (isEncodingVideo == false)
         {
             args.Logger?.ILog("No video encoding, no need for hardware decoding");
         }
