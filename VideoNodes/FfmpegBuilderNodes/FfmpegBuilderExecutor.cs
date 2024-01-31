@@ -222,8 +222,14 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                 if (video?.EncodingParameters?.Any() == true)
                 {
                     encodingParameters.Add("-c:v:" + video.Stream.TypeIndex);
-                    encodingParameters.AddRange(video.EncodingParameters.Union(video.Filter ?? new ()).Select(x =>
-                        x.Replace("{index}", video.Stream.Index.ToString())));
+                    encodingParameters.AddRange(video.EncodingParameters);
+                    if (video.Filter?.Any() == true)
+                    {
+                        encodingParameters.Add("-filter:v:" + video.Stream.TypeIndex);
+                        encodingParameters.AddRange(video.Filter);
+                    }
+                    encodingParameters = encodingParameters.Select(x =>
+                        x.Replace("{index}", video.Stream.Index.ToString())).ToList();
                 }
 
                 var decodingParameters =
@@ -334,9 +340,12 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
 
                 var hw = hwOrig.Select(x => x.Replace("#FORMAT#", pixelFormat)).ToArray();
 
-                if(VaapiAdjustments.IsUsingVaapi(hw))
+                if (hw.Any(x => x.ToLowerInvariant().Contains("vaapi")))
+                {
+                    args.Logger?.ILog("VAAPI detected adjusting parameters for testing");
                     hw = new VaapiAdjustments().Run(args.Logger, hw.ToList()).ToArray();
-                
+                }
+
                 args.AdditionalInfoRecorder("Testing", string.Join(" ", hw), new TimeSpan(0, 0, 10));
 
                 try
