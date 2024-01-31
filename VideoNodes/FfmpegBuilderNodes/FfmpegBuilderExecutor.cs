@@ -226,7 +226,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                     if (video.Filter?.Any() == true)
                     {
                         encodingParameters.Add("-filter:v:" + video.Stream.TypeIndex);
-                        encodingParameters.AddRange(video.Filter);
+                        encodingParameters.Add(string.Join(",", video.Filter));
                     }
                     encodingParameters = encodingParameters.Select(x =>
                         x.Replace("{index}", video.Stream.Index.ToString())).ToList();
@@ -340,34 +340,35 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
 
                 var hw = hwOrig.Select(x => x.Replace("#FORMAT#", pixelFormat)).ToArray();
 
-                if (hw.Any(x => x.ToLowerInvariant().Contains("vaapi")))
+                var arguments = new List<string>()
+                {
+                    "-y",
+                };
+                arguments.AddRange(hw);
+                arguments.AddRange(new[]
+                {
+                    "-i", localFile,
+                    "-frames:v", "1",
+                    //"-ss", "10",
+                    // instead of file output to null
+                    //"-f", "null", "-",
+                    //testFile
+                });
+                if (encodingParameters?.Any() == true)
+                    arguments.AddRange(encodingParameters);
+
+                arguments.AddRange(new[] { "-f", "null", "-" });
+                
+                if (arguments.Any(x => x.ToLowerInvariant().Contains("vaapi")))
                 {
                     args.Logger?.ILog("VAAPI detected adjusting parameters for testing");
-                    hw = new VaapiAdjustments().Run(args.Logger, hw.ToList()).ToArray();
+                    arguments = new VaapiAdjustments().Run(args.Logger, arguments);
                 }
 
                 args.AdditionalInfoRecorder("Testing", string.Join(" ", hw), new TimeSpan(0, 0, 10));
 
                 try
                 {
-                    var arguments = new List<string>()
-                    {
-                        "-y",
-                    };
-                    arguments.AddRange(hw);
-                    arguments.AddRange(new[]
-                    {
-                        "-i", localFile,
-                        "-frames:v", "1",
-                        //"-ss", "10",
-                        // instead of file output to null
-                        //"-f", "null", "-",
-                        //testFile
-                    });
-                    if (encodingParameters?.Any() == true)
-                        arguments.AddRange(encodingParameters);
-
-                    arguments.AddRange(new[] { "-f", "null", "-" });
                     
                     string line = string.Join("", arguments);
                     if (tested.Contains(line))
