@@ -159,7 +159,8 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
     {
         bool codecSame = stream.Stream.Codec?.ToLower() == Codec?.ToLower();
         bool channelsSame = Channels == 0 || Math.Abs(Channels - stream.Stream.Channels) < 0.05f;
-        bool bitrateSame = stream.Stream.Bitrate == 0 || Math.Abs(stream.Stream.Bitrate - Bitrate) < 0.05f;
+        bool bitrateSame = Bitrate < 2 || stream.Stream.Bitrate == 0 ||
+                           Math.Abs(stream.Stream.Bitrate - Bitrate) < 0.05f;
 
         if (codecSame && channelsSame && bitrateSame)
         {
