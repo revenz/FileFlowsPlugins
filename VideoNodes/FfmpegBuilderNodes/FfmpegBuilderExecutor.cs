@@ -1,6 +1,7 @@
 ﻿using FileFlows.Plugin;
 using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
 using System.Runtime.InteropServices;
+using FileFlows.VideoNodes.FfmpegBuilderNodes.EncoderAdjustments;
 using FileFlows.VideoNodes.Helpers;
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
@@ -333,7 +334,8 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
 
                 var hw = hwOrig.Select(x => x.Replace("#FORMAT#", pixelFormat)).ToArray();
 
-                hw = EncoderAdjustments.EncoderAdjustment.Run(args.Logger, hw.ToList()).ToArray();
+                if(VaapiAdjustments.IsUsingVaapi(hw))
+                    hw = new VaapiAdjustments().Run(args.Logger, hw.ToList()).ToArray();
                 
                 args.AdditionalInfoRecorder("Testing", string.Join(" ", hw), new TimeSpan(0, 0, 10));
 

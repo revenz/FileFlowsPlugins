@@ -12,7 +12,7 @@ public class VaapiAdjustments : IEncoderAdjustment
     /// </summary>
     /// <param name="args">the ffmepg args</param>
     /// <returns>true if using VAAPI hardware encoding, otherwise false</returns>
-    public static bool IsUsingVaapi(List<string> args)
+    public static bool IsUsingVaapi(IEnumerable<string> args)
         => args.Any(x => x == "hevc_vaapi" || x == "h264_vaapi");
     
     /// <summary>
