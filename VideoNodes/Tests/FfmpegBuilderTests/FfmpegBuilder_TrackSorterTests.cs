@@ -523,7 +523,7 @@ public class FfmpegBuilder_TrackSorterTests
             new() { Index = 4, Channels = 5.1f, Language = "ger", Codec = "ac3" },
             new() { Index = 5, Channels = 5.1f, Language = "German", Codec = "dts" },
             new() { Index = 6, Channels = 5.1f, Language = "chi", Codec = "aac" },
-            new() { Index = 7, Channels = 5.1f, Language = "mao", Codec = "ac3" },
+            new() { Index = 7, Channels = 5.1f, Language = "mri", Codec = "ac3" },
         };
 
         // Mock sorters by different properties
@@ -554,7 +554,58 @@ public class FfmpegBuilder_TrackSorterTests
         
         Assert.AreEqual("fr", sorted[4].Language);
         Assert.AreEqual("chi", sorted[5].Language);
-        Assert.AreEqual("mao", sorted[6].Language);
+        Assert.AreEqual("mri", sorted[6].Language);
+    }
+    
+    
+    [TestMethod]
+    public void ProcessStreams_SortsStreamsBasedOnLanguageRegexOriginal()
+    {
+        // Arrange
+        var args = new NodeParameters(new TestLogger());
+        var trackSorter = new FfmpegBuilderTrackSorter();
+        List<FfmpegAudioStream> streams = new List<FfmpegAudioStream>
+        {
+            new() { Index = 1, Channels = 2, Language = "eng", Codec = "aac" },
+            new() { Index = 2, Channels = 2, Language = "fr", Codec = "aac" },
+            new() { Index = 3, Channels = 5.1f, Language = "en", Codec = "eac3" },
+            new() { Index = 4, Channels = 5.1f, Language = "ger", Codec = "ac3" },
+            new() { Index = 5, Channels = 5.1f, Language = "mri", Codec = "ac3" },
+            new() { Index = 6, Channels = 5.1f, Language = "chi", Codec = "aac" },
+            new() { Index = 7, Channels = 5.1f, Language = "German", Codec = "dts" },
+        };
+
+        args.Variables["OriginalLanguage"] = "Maori";
+        
+        // Mock sorters by different properties
+        trackSorter.Sorters = new List<KeyValuePair<string, string>>
+        {
+            new("Language", "orig|deu")
+        };
+
+        // Act
+        var sorted = trackSorter.SortStreams(args, streams);
+
+        // Assert
+        Assert.AreEqual(4, sorted[0].Index);
+        Assert.AreEqual(5, sorted[1].Index);
+        Assert.AreEqual(7, sorted[2].Index);
+        
+        // non english
+        Assert.AreEqual(1, sorted[3].Index);
+        Assert.AreEqual(2, sorted[4].Index);
+        Assert.AreEqual(3, sorted[5].Index);
+        Assert.AreEqual(6, sorted[6].Index);
+
+        // Additional assertions for logging
+        Assert.AreEqual("ger", sorted[0].Language);
+        Assert.AreEqual("mri", sorted[1].Language);
+        Assert.AreEqual("German", sorted[2].Language);
+        
+        Assert.AreEqual("eng", sorted[3].Language);
+        Assert.AreEqual("fr", sorted[4].Language);
+        Assert.AreEqual("en", sorted[5].Language);
+        Assert.AreEqual("chi", sorted[6].Language);
     }
 }
 

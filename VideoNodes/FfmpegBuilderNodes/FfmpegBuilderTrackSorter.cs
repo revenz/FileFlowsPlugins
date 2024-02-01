@@ -202,9 +202,17 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
 
         if (property == nameof(stream.Language))
         {
+            object oOriginalLanguage = null;
+            args?.Variables?.TryGetValue("OriginalLanguage", out oOriginalLanguage);
+            var originalLanguage = LanguageHelper.GetIso2Code(oOriginalLanguage?.ToString() ?? string.Empty);
             comparison = string.Join("|",
                 comparison.Split('|', StringSplitOptions.RemoveEmptyEntries)
-                    .Select(LanguageHelper.GetIso2Code));
+                    .Select(x =>
+                    {
+                        if (x?.ToLowerInvariant()?.StartsWith("orig") == true)
+                            return originalLanguage;
+                        return LanguageHelper.GetIso2Code(x);
+                    }).Where(x => string.IsNullOrWhiteSpace(x) == false).ToArray());
         }
 
         var value = property switch
