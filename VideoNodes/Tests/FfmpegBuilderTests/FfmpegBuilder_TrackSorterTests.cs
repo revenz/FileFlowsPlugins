@@ -128,7 +128,7 @@ public class FfmpegBuilder_TrackSorterTests
         trackSorter.Sorters = new List<KeyValuePair<string, string>>
         {
             new("Language", "en"),
-            new("Channels", ">=5.1"),
+            new("Channels", ">= 5.1"),
         };
 
         // Act

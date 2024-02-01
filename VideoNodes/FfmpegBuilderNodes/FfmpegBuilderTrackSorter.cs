@@ -414,23 +414,23 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
         switch (operation.Substring(0, 2))
         {
             case "<=":
-                return Convert.ToDouble(value) <= Convert.ToDouble(AdjustComparisonValue(operation[2..]));
+                return Convert.ToDouble(value) <= Convert.ToDouble(AdjustComparisonValue(operation[2..].Trim()));
             case ">=":
-                return Convert.ToDouble(value) >= Convert.ToDouble(AdjustComparisonValue(operation[2..]));
+                return Convert.ToDouble(value) >= Convert.ToDouble(AdjustComparisonValue(operation[2..].Trim()));
             case "==":
-                return Math.Abs(Convert.ToDouble(value) - Convert.ToDouble(AdjustComparisonValue(operation[2..]))) < 0.05f;
+                return Math.Abs(Convert.ToDouble(value) - Convert.ToDouble(AdjustComparisonValue(operation[2..].Trim()))) < 0.05f;
             case "!=":
-                return Math.Abs(Convert.ToDouble(value) - Convert.ToDouble(AdjustComparisonValue(operation[2..]))) > 0.05f;
+                return Math.Abs(Convert.ToDouble(value) - Convert.ToDouble(AdjustComparisonValue(operation[2..].Trim()))) > 0.05f;
         }
 
         switch (operation.Substring(0, 1))
         {
             case "<":
-                return Convert.ToDouble(value) < Convert.ToDouble(AdjustComparisonValue(operation[1..]));
+                return Convert.ToDouble(value) < Convert.ToDouble(AdjustComparisonValue(operation[1..].Trim()));
             case ">":
-                return Convert.ToDouble(value) > Convert.ToDouble(AdjustComparisonValue(operation[1..]));
+                return Convert.ToDouble(value) > Convert.ToDouble(AdjustComparisonValue(operation[1..].Trim()));
             case "=":
-                return Math.Abs(Convert.ToDouble(value) - Convert.ToDouble(AdjustComparisonValue(operation[1..]))) < 0.05f;
+                return Math.Abs(Convert.ToDouble(value) - Convert.ToDouble(AdjustComparisonValue(operation[1..].Trim()))) < 0.05f;
         }
 
         return false;
