@@ -97,16 +97,16 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
     /// <summary>
     /// Processes the streams 
     /// </summary>
-    /// <param name="logger">the logger parameters</param>
+    /// <param name="args">the node parameters</param>
     /// <param name="streams">the streams to process for deletion</param>
     /// <typeparam name="T">the stream type</typeparam>
     /// <returns>if any changes were made</returns>
-    internal bool ProcessStreams<T>(ILogger logger, List<T> streams, int sortIndex = 0) where T : FfmpegStream
+    internal bool ProcessStreams<T>(NodeParameters args, List<T> streams, int sortIndex = 0) where T : FfmpegStream
     {
         if (streams?.Any() != true || Sorters?.Any() != true || sortIndex >= Sorters.Count)
             return false;
 
-        var orderedStreams = SortStreams(streams);
+        var orderedStreams = SortStreams(args, streams);
 
         // Replace the unsorted items with the sorted ones
         for (int i = 0; i < streams.Count; i++)
@@ -117,22 +117,22 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
         return true;
     }
 
-    internal List<T> SortStreams<T>(List<T> streams) where T : FfmpegStream
+    internal List<T> SortStreams<T>(NodeParameters args, List<T> streams) where T : FfmpegStream
     {
         if (streams?.Any() != true || Sorters?.Any() != true)
             return streams;
 
-        return streams.OrderBy(stream => GetSortKey(stream))
+        return streams.OrderBy(stream => GetSortKey(args, stream))
             .ToList();
     }
 
-    private string GetSortKey<T>(T stream) where T : FfmpegStream
+    private string GetSortKey<T>(NodeParameters args, T stream) where T : FfmpegStream
     {
         string sortKey = "";
 
         for (int i = 0; i < Sorters.Count; i++)
         {
-            var sortValue = Math.Round(SortValue<T>(stream, Sorters[i])).ToString();
+            var sortValue = Math.Round(SortValue<T>(args, stream, Sorters[i])).ToString();
             // Trim the sort value to 15 characters
             string trimmedValue = sortValue[..Math.Min(sortValue.Length, 15)];
 
@@ -174,22 +174,44 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
     /// Calculates the sort value for a stream property based on the specified sorter.
     /// </summary>
     /// <typeparam name="T">Type of the stream.</typeparam>
+    /// <param name="args">the node parameters</param>
     /// <param name="stream">The stream instance.</param>
     /// <param name="sorter">The key-value pair representing the sorter.</param>
     /// <returns>The calculated sort value for the specified property and sorter.</returns>
-    public static double SortValue<T>(T stream, KeyValuePair<string, string> sorter) where T : FfmpegStream
+    public static double SortValue<T>(NodeParameters args, T stream, KeyValuePair<string, string> sorter) where T : FfmpegStream
     {
         string property = sorter.Key;
         bool invert = property.EndsWith("Desc");
         if (invert)
             property = property[..^4]; // remove "Desc"
         
-        string comparison = sorter.Value;
+        string comparison = sorter.Value ?? string.Empty;
+
+        if (comparison.StartsWith("{") && comparison.EndsWith("}"))
+        {
+            comparison = comparison[1..^1];
+            if (args?.Variables?.TryGetValue(comparison, out object variable) == true)
+                comparison = variable?.ToString() ?? string.Empty;
+            else
+                comparison = string.Empty;
+        }
+        else if (args?.Variables?.TryGetValue(comparison, out object oVariable) == true)
+        {
+            comparison = oVariable?.ToString() ?? string.Empty;
+        }
+
+        if (property == nameof(stream.Language))
+        {
+            comparison = string.Join("|",
+                comparison.Split('|', StringSplitOptions.RemoveEmptyEntries)
+                    .Select(LanguageHelper.GetIso2Code));
+        }
 
         var value = property switch
         {
             nameof(FfmpegStream.Codec) => stream.Codec,
             nameof(AudioStream.Bitrate) => (stream is FfmpegAudioStream audioStream) ? audioStream?.Stream?.Bitrate : null,
+            nameof(FfmpegStream.Language) => LanguageHelper.GetIso2Code(stream.Language),
             _ => stream.GetType().GetProperty(property)?.GetValue(stream, null)
         };
 
