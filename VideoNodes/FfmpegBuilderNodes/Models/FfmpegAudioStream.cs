@@ -92,6 +92,10 @@
             return results.ToArray();
         }
 
+        /// <summary>
+        /// Converts the object to a string
+        /// </summary>
+        /// <returns>the string representation of stream</returns>
         public override string ToString()
         {
             if (Stream != null)

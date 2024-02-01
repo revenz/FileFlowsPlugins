@@ -1,6 +1,5 @@
 ﻿using System.Globalization;
 using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
-using FileFlows.VideoNodes.Helpers;
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 
@@ -91,7 +90,24 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
     /// <returns>the next output node</returns>
     public override int Execute(NodeParameters args)
     {
-        return 1;
+        bool changed = false;
+        if (StreamType == "Audio")
+        {
+            args.Logger?.ILog("Sorting Audio Tracks");
+            changed = ProcessStreams(args, Model.AudioStreams);
+        }
+        else if (StreamType == "Subtitle")
+        {
+            args.Logger?.ILog("Sorting Subtitle Tracks");
+            changed = ProcessStreams(args, Model.SubtitleStreams);
+        }
+
+        if (changed)
+            args.Logger?.ILog("Changes were made");
+        else
+            args.Logger?.ILog("No changes were made");
+
+        return changed ? 1 : 2;
     }
 
     /// <summary>
@@ -106,15 +122,25 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
         if (streams?.Any() != true || Sorters?.Any() != true || sortIndex >= Sorters.Count)
             return false;
 
+        if (sortIndex == 0)
+        {
+            foreach (var sorter in Sorters)
+            {
+                args.Logger?.ILog("Sorter: " + sorter.Key + " = " + sorter.Value);
+            }
+        }
+
         var orderedStreams = SortStreams(args, streams);
 
+        bool changes = false;
         // Replace the unsorted items with the sorted ones
         for (int i = 0; i < streams.Count; i++)
         {
+            changes |= streams[i] != orderedStreams[i];
             streams[i] = orderedStreams[i];
         }
         
-        return true;
+        return changes;
     }
 
     internal List<T> SortStreams<T>(NodeParameters args, List<T> streams) where T : FfmpegStream
@@ -122,7 +148,12 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
         if (streams?.Any() != true || Sorters?.Any() != true)
             return streams;
 
-        return streams.OrderBy(stream => GetSortKey(args, stream))
+        return streams.OrderBy(stream =>
+            {
+                var sortKey =  GetSortKey(args, stream);
+                args.Logger?.ILog(stream.ToString() + " -> sort key = " + sortKey);
+                return sortKey;
+            })
             .ToList();
     }
 
@@ -132,18 +163,29 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
 
         for (int i = 0; i < Sorters.Count; i++)
         {
-            var sortValue = Math.Round(SortValue<T>(args, stream, Sorters[i])).ToString();
-            // Trim the sort value to 15 characters
-            string trimmedValue = sortValue[..Math.Min(sortValue.Length, 15)];
+            var key = Sorters[i].Key;
+            int sorterLength = 1;
+            if (string.IsNullOrWhiteSpace(Sorters[i].Value))
+            {
+                // we are sorting by value, not comparison
+                if (key.StartsWith(nameof(AudioStream.Bitrate)))
+                    sorterLength = 15;
+                else if (key.StartsWith(nameof(AudioStream.Channels)))
+                    sorterLength = 2;
+            }
+
+            var sortValue = Math.Round(SortValue(args, stream, Sorters[i], sorterLength)).ToString(CultureInfo.InvariantCulture);
+            // Trim the sort value to sorter Length characters
+            string trimmedValue = sortValue[..Math.Min(sortValue.Length, sorterLength)];
 
             // Pad the trimmed value with left zeros if needed
-            string paddedValue = trimmedValue.PadLeft(15, '0');
+            string paddedValue = trimmedValue.PadLeft(sorterLength, '0');
 
             // Concatenate the padded value to the sort key
-            sortKey += paddedValue;
+            sortKey += paddedValue + "|";
         }
 
-        return sortKey;
+        return sortKey.TrimEnd('|');
     }
 
     /// <summary>
@@ -177,8 +219,9 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
     /// <param name="args">the node parameters</param>
     /// <param name="stream">The stream instance.</param>
     /// <param name="sorter">The key-value pair representing the sorter.</param>
+    /// <param name="sorterLength">The number of characters to use for this sorter value</param>
     /// <returns>The calculated sort value for the specified property and sorter.</returns>
-    public static double SortValue<T>(NodeParameters args, T stream, KeyValuePair<string, string> sorter) where T : FfmpegStream
+    public static double SortValue<T>(NodeParameters args, T stream, KeyValuePair<string, string> sorter, int sorterLength) where T : FfmpegStream
     {
         string property = sorter.Key;
         bool invert = property.EndsWith("Desc");
@@ -228,8 +271,15 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
         if (value != null && value is string == false && string.IsNullOrWhiteSpace(comparison) &&
             double.TryParse(value.ToString(), out double dblValue))
         {
-            // invert the bits of dbl value and return that
-            result = dblValue;
+            if (property == nameof(AudioStream.Channels))
+            {
+                // remove the decimal and round
+                result = Math.Round(dblValue, 1) * 10;
+            }
+            else
+            {
+                result = dblValue;
+            }
         }
         else if (IsMathOperation(comparison))
             result = ApplyMathOperation(value.ToString(), comparison) ? 0 : 1;
@@ -240,7 +290,7 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
         else
             result = string.Equals(value?.ToString() ?? string.Empty, comparison ?? string.Empty, StringComparison.OrdinalIgnoreCase) ? 0 : 1;
 
-        return invert ? InvertBits(result) : result;
+        return invert ? InvertBits(result, sorterLength) : result;
     }
 
     /// <summary>
@@ -304,14 +354,15 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
     /// Inverts the bits of a double value.
     /// </summary>
     /// <param name="value">The double value to invert.</param>
+    /// <param name="sorterLength">The number of characters to use for this sorter value</param>
     /// <returns>The inverted double value.</returns>
-    private static double InvertBits(double value)
+    private static double InvertBits(double value, int sorterLength)
     {
         // Convert the double to a string with 15 characters above the decimal point
         string stringValue = Math.Round(value, 0).ToString("F0");
 
         // Invert the digits and pad left with zeros
-        char[] charArray = stringValue.PadLeft(15, '0').ToCharArray();
+        char[] charArray = stringValue.PadLeft(sorterLength, '0').ToCharArray();
         for (int i = 0; i < charArray.Length; i++)
         {
             charArray[i] = (char)('9' - (charArray[i] - '0'));

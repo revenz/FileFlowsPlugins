@@ -83,4 +83,23 @@ public class FfmpegSubtitleStream : FfmpegStream
 
         return results.ToArray();
     }
+    
+    
+    /// <summary>
+    /// Converts the object to a string
+    /// </summary>
+    /// <returns>the string representation of stream</returns>
+    public override string ToString()
+    {
+        if (Stream != null)
+            return Stream.ToString();
+        // can be null in unit tests
+        return string.Join(" / ", new string[]
+        {
+            Index.ToString(),
+            Language,
+            Codec,
+            Title
+        }.Where(x => string.IsNullOrWhiteSpace(x) == false));
+    }
 }
