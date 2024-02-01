@@ -20,7 +20,7 @@ public class PatternReplacer : Node
 
     internal bool UnitTest = false;
 
-    [KeyValue(1)]
+    [KeyValue(1, null)]
     [Required]
     public List<KeyValuePair<string, string>> Replacements{ get; set; }
 

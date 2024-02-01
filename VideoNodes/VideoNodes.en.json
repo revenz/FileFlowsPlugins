@@ -365,6 +365,22 @@
           "MakeFirst-Help": "If the original language track should also become the first track."
         }
       },
+      "FfmpegBuilderTrackSorter": {
+        "Label": "FFMPEG Builder: Track Sorter",
+        "Outputs": {
+          "1": "Tracks have been modified",
+          "2": "No tracks have been changed"
+        },
+        "Description": "This flow element sorts tracks based on sorting options set by the user.",
+        "Fields": {
+          "StreamType": "Type",
+          "StreamType-Help": "The type of tracks that should be updated",
+          "Sorters": "Sorters",
+          "Sorters-Help": "Add one or more sorting options to sort the tracks by.",
+          "SortersKey": "Field",
+          "SortersValue": "Value"
+        }
+      },
       "FfmpegBuilderSubtitleClearDefault": {
         "Label": "FFMPEG Builder: Subtitle Clear Default",
         "Description": "This node will clear the default flag from subtitles.",

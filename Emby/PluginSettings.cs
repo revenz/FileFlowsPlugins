@@ -14,7 +14,7 @@
         [Required]
         public string AccessToken { get; set; }
 
-        [KeyValue(3)]
+        [KeyValue(3, null)]
         public List<KeyValuePair<string, string>> Mapping { get; set; }
     }
 }

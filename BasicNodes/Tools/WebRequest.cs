@@ -61,7 +61,7 @@ public class WebRequest : Node
     }
 
 
-    [KeyValue(4)]
+    [KeyValue(4, null)]
     public List<KeyValuePair<string, string>> Headers { get; set; }
 
     [TextArea(5)]

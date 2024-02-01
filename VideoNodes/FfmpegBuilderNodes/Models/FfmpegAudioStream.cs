@@ -93,6 +93,18 @@
         }
 
         public override string ToString()
-            => Stream.ToString();
+        {
+            if (Stream != null)
+                return Stream.ToString();
+            // can be null in unit tests
+            return string.Join(" / ", new string[]
+            {
+                Index.ToString(),
+                Language,
+                Codec,
+                Title,
+                Channels > 0 ? Channels.ToString("0.0") : null
+            }.Where(x => string.IsNullOrWhiteSpace(x) == false));
+        }
     }
 }

@@ -102,6 +102,14 @@ public class FfmpegBuilderKeepOriginalLanguage: FfmpegBuilderNode
         return changes > 0 ? 1 : 2;
     }
 
+    /// <summary>
+    /// Processes the streams 
+    /// </summary>
+    /// <param name="args">the node parameters</param>
+    /// <param name="streams">the streams to process for deletion</param>
+    /// <param name="originalLanguage">the original language of the source material</param>
+    /// <typeparam name="T">the stream type</typeparam>
+    /// <returns>the number of streams changed</returns>
     private int ProcessStreams<T>(NodeParameters args, List<T> streams, string originalLanguage) where T : FfmpegStream
     {
         if (streams?.Any() != true)

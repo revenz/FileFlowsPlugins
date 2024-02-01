@@ -20,7 +20,7 @@ public abstract class PlexNode:Node
     [Text(2)]
     public string AccessToken { get; set; }
 
-    [KeyValue(3)]
+    [KeyValue(3, null)]
     public List<KeyValuePair<string, string>> Mapping { get; set; }
 
     public override int Execute(NodeParameters args)
