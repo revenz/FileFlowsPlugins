@@ -16,7 +16,7 @@ public class Unzip :  Node
     /// <summary>
     /// Gets the obsolete message
     /// </summary>
-    public override string ObsoleteMessage => "This has been replaced with the Unpack node.\n\nUse that instead.";
+    public override string ObsoleteMessage => "This has been replaced with the Unpack flow element.\n\nUse that instead.";
     public override int Inputs => 1;
     public override int Outputs => 1;
     public override FlowElementType Type => FlowElementType.Process;

@@ -9,6 +9,14 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 public class FfmpegBuilderAudioTrackReorder : FfmpegBuilderNode
 {
     /// <summary>
+    /// Gets that this node is obsolete
+    /// </summary>
+    public override bool Obsolete => true;
+    /// <summary>
+    /// Gets the obsolete message
+    /// </summary>
+    public override string ObsoleteMessage => "This has been replaced with the Track Sorter flow element.\n\nUse that instead.";
+    /// <summary>
     /// Gets the number of output nodes
     /// </summary>
     public override int Outputs => 2;
