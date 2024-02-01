@@ -99,7 +99,7 @@
         public override string ToString()
         {
             if (Stream != null)
-                return Stream.ToString();
+                return Stream.ToString() + (Deleted ? " / Deleted" : "");
             // can be null in unit tests
             return string.Join(" / ", new string[]
             {
@@ -107,7 +107,8 @@
                 Language,
                 Codec,
                 Title,
-                Channels > 0 ? Channels.ToString("0.0") : null
+                Channels > 0 ? Channels.ToString("0.0") : null,
+                Deleted ? "Deleted" : null
             }.Where(x => string.IsNullOrWhiteSpace(x) == false));
         }
     }

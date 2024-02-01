@@ -44,8 +44,30 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
             if(this is FfmpegBuilderStart == false && Model == null)
                 throw new Exception("FFMPEG Builder Model not set, you must add and use the \"FFMPEG Builder Start\" node first");
 
-            if (this is FfmpegBuilderStart == false && Model.VideoInfo == null)
-                throw new Exception("FFMPEG Builder VideoInfo is null");
+            if (this is FfmpegBuilderStart == false)
+            {
+                if (Model.VideoInfo == null)
+                    throw new Exception("FFMPEG Builder VideoInfo is null");
+                string header = "------------------------ Starting FFmpeg Builder Model ------------------------";
+                args.Logger?.ILog(header);
+                foreach (var stream in Model.VideoStreams ?? new List<FfmpegVideoStream>())
+                {
+                    string line = "| Video Stream: " + stream;
+                    args.Logger?.ILog(line + new string(' ', Math.Max(1, header.Length - line.Length - 1)) + '|');
+                }
+                foreach (var stream in Model.AudioStreams ?? new List<FfmpegAudioStream>())
+                {
+                    string line = "| Audio Stream: " + stream;
+                    args.Logger?.ILog(line + new string(' ', Math.Max(1, header.Length - line.Length - 1)) + '|');
+                }
+                foreach (var stream in Model.SubtitleStreams ?? new List<FfmpegSubtitleStream>())
+                {
+                    string line = "| Subtitle Stream: " + stream;
+                    args.Logger?.ILog(line + new string(' ', Math.Max(1, header.Length - line.Length - 1)) + '|');
+                }
+
+                args.Logger?.ILog(new string('-', header.Length));
+            }
 
             return true;
         }

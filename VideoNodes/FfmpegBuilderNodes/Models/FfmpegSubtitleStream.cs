@@ -92,14 +92,16 @@ public class FfmpegSubtitleStream : FfmpegStream
     public override string ToString()
     {
         if (Stream != null)
-            return Stream.ToString();
+            return Stream.ToString() + (Deleted ? " / Deleted" : "");
+
         // can be null in unit tests
         return string.Join(" / ", new string[]
         {
             Index.ToString(),
             Language,
             Codec,
-            Title
+            Title,
+            Deleted ? "Deleted" : null
         }.Where(x => string.IsNullOrWhiteSpace(x) == false));
     }
 }

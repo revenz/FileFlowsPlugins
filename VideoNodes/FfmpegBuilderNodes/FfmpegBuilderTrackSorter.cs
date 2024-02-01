@@ -136,7 +136,15 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
         // Replace the unsorted items with the sorted ones
         for (int i = 0; i < streams.Count; i++)
         {
-            changes |= streams[i] != orderedStreams[i];
+            bool newDefault = i == 0;
+            bool changed = streams[i] != orderedStreams[i] || orderedStreams[i].IsDefault != newDefault;
+            streams[i].IsDefault = newDefault;
+            if (changed)
+            {
+                streams[i].ForcedChange = true;
+                orderedStreams[i].ForcedChange = true;
+            }
+            changes |= changed;
             streams[i] = orderedStreams[i];
         }
         
@@ -145,12 +153,13 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
 
     internal List<T> SortStreams<T>(NodeParameters args, List<T> streams) where T : FfmpegStream
     {
-        if (streams?.Any() != true || Sorters?.Any() != true)
+        if (streams?.Any() != true || Sorters?.Any() != true || streams.Count == 1)
             return streams;
 
         return streams.OrderBy(stream =>
             {
-                var sortKey =  GetSortKey(args, stream);
+                // we add a 1 to deleted ones first, so they are always sorted after non-deleted ones
+                var sortKey = (stream.Deleted ? "1|" : "0|") + GetSortKey(args, stream);
                 args.Logger?.ILog(stream.ToString() + " -> sort key = " + sortKey);
                 return sortKey;
             })
@@ -311,8 +320,8 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
             // Make an educated guess for Mbps to kbps conversion
             return adjustedComparison[..^4] switch
             {
-                { } value when double.TryParse(value, out var numericValue) => (numericValue * 1_000_000).ToString(
-                    CultureInfo.InvariantCulture),
+                { } value when double.TryParse(value, out var numericValue) => (numericValue * 1_000_000)
+                    .ToString(CultureInfo.InvariantCulture),
                 _ => comparisonValue
             };
         }
@@ -321,32 +330,84 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
             // Make an educated guess for kbps to bps conversion
             return adjustedComparison[..^4] switch
             {
-                { } value when double.TryParse(value, out var numericValue) => (numericValue * 1_000).ToString(
-                    CultureInfo.InvariantCulture),
+                { } value when double.TryParse(value, out var numericValue) => (numericValue * 1_000)
+                    .ToString(CultureInfo.InvariantCulture),
+                _ => comparisonValue
+            };
+        }
+        if (adjustedComparison.EndsWith("kb"))
+        {
+            return adjustedComparison[..^2] switch
+            {
+                { } value when double.TryParse(value, out var numericValue) => (numericValue * 1_000 )
+                    .ToString(CultureInfo.InvariantCulture),
+                _ => comparisonValue
+            };
+        }
+        if (adjustedComparison.EndsWith("mb"))
+        {
+            return adjustedComparison[..^2] switch
+            {
+                { } value when double.TryParse(value, out var numericValue) => (numericValue * 1_000_000 )
+                    .ToString(CultureInfo.InvariantCulture),
                 _ => comparisonValue
             };
         }
         if (adjustedComparison.EndsWith("gb"))
         {
-            // Make an educated guess for GB to bytes conversion
             return adjustedComparison[..^2] switch
             {
-                { } value when double.TryParse(value, out var numericValue) => (numericValue * Math.Pow(1024, 3))
+                { } value when double.TryParse(value, out var numericValue) => (numericValue * 1_000_000_000 )
                     .ToString(CultureInfo.InvariantCulture),
                 _ => comparisonValue
             };
         }
         if (adjustedComparison.EndsWith("tb"))
         {
-            // Make an educated guess for TB to bytes conversion
             return adjustedComparison[..^2] switch
             {
-                { } value when double.TryParse(value, out var numericValue) => (numericValue * Math.Pow(1024, 4))
+                { } value when double.TryParse(value, out var numericValue) => (numericValue * 1_000_000_000_000)
                     .ToString(CultureInfo.InvariantCulture),
                 _ => comparisonValue
             };
         }
 
+        if (adjustedComparison.EndsWith("kib"))
+        {
+            return adjustedComparison[..^3] switch
+            {
+                { } value when double.TryParse(value, out var numericValue) => (numericValue * 1_024 )
+                    .ToString(CultureInfo.InvariantCulture),
+                _ => comparisonValue
+            };
+        }
+        if (adjustedComparison.EndsWith("mib"))
+        {
+            return adjustedComparison[..^3] switch
+            {
+                { } value when double.TryParse(value, out var numericValue) => (numericValue * 1_048_576 )
+                    .ToString(CultureInfo.InvariantCulture),
+                _ => comparisonValue
+            };
+        }
+        if (adjustedComparison.EndsWith("gib"))
+        {
+            return adjustedComparison[..^3] switch
+            {
+                { } value when double.TryParse(value, out var numericValue) => (numericValue * 1_099_511_627_776 )
+                    .ToString(CultureInfo.InvariantCulture),
+                _ => comparisonValue
+            };
+        }
+        if (adjustedComparison.EndsWith("tib"))
+        {
+            return adjustedComparison[..^3] switch
+            {
+                { } value when double.TryParse(value, out var numericValue) => (numericValue * 1_000_000_000_000)
+                    .ToString(CultureInfo.InvariantCulture),
+                _ => comparisonValue
+            };
+        }
         return comparisonValue;
     }
 
@@ -420,6 +481,7 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
             case "==":
                 return Math.Abs(Convert.ToDouble(value) - Convert.ToDouble(AdjustComparisonValue(operation[2..].Trim()))) < 0.05f;
             case "!=":
+            case "<>":
                 return Math.Abs(Convert.ToDouble(value) - Convert.ToDouble(AdjustComparisonValue(operation[2..].Trim()))) > 0.05f;
         }
 
