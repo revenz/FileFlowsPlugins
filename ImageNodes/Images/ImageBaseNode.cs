@@ -142,11 +142,7 @@ public abstract class ImageBaseNode:Node
 
         if (dateTaken != null)
         {
-            variables.AddOrUpdate("img.DateTaken.Value", dateTaken.Value);
-            variables.AddOrUpdate("img.DateTaken.Year", dateTaken.Value.Year);
-            variables.AddOrUpdate("img.DateTaken.Month", dateTaken.Value.Month);
-            variables.AddOrUpdate("img.DateTaken.Day", dateTaken.Value.Day);
-            variables.AddOrUpdate("img.DateTaken.FulLDate", dateTaken.Value.ToString("yyyy-MM-dd"));
+            variables.AddOrUpdate("img.DateTaken", dateTaken.Value);
         }
 
         var metadata = new Dictionary<string, object>();

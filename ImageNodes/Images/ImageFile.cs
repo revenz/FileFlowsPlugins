@@ -24,8 +24,7 @@ public class ImageFile : ImageBaseNode
 
             { "img.DateTaken.Year", 2020 },
             { "img.DateTaken.Month", 4 },
-            { "img.DateTaken.Day", 20 },
-            { "img.DateTaken.FulLDate", "2020-04-20" }
+            { "img.DateTaken.Day", 20 }
         };
     }
 

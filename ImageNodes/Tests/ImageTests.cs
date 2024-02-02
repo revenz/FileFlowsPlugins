@@ -306,7 +306,7 @@ public class ImageNodesTests
         var node = new ImageFile();
         var result = node.Execute(args);
         Assert.AreEqual(1, result);
-        if(node.Variables.TryGetValue("img.DateTaken.Value", out object oDate) == false)
+        if(node.Variables.TryGetValue("img.DateTaken", out object oDate) == false)
             Assert.Fail("Failed to get date time");
         
         if(oDate is DateTime dt == false)
