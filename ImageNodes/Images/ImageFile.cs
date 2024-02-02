@@ -20,7 +20,12 @@ public class ImageFile : ImageBaseNode
             { "img.Height", 1080 },
             { "img.Format", "PNG" },
             { "img.IsPortrait", true },
-            { "img.IsLandscape", false }
+            { "img.IsLandscape", false },
+
+            { "img.DateTaken.Year", 2020 },
+            { "img.DateTaken.Month", 4 },
+            { "img.DateTaken.Day", 20 },
+            { "img.DateTaken.FulLDate", "2020-04-20" }
         };
     }
 

@@ -53,10 +53,38 @@ public abstract class ImageBaseNode:Node
         else
         {
             using var image = Image.Load(args.WorkingFile, out IImageFormat format);
-            UpdateImageInfo(args, image.Width, image.Height, format.Name, variables);
+            DateTime? dateTaken = null;
+            if (image.Metadata.ExifProfile != null)
+            {
+                args.Logger?.ILog("EXIF Profile found");
+                var dateTimeOriginalString = image.Metadata.ExifProfile.GetValue(SixLabors.ImageSharp.Metadata.Profiles.Exif.ExifTag.DateTimeOriginal)?.Value;
+                if (string.IsNullOrWhiteSpace(dateTimeOriginalString))
+                {
+                    args.Logger?.ILog("No DateTimeOriginal found");
+                }
+                else
+                {
+                    if (string.IsNullOrWhiteSpace(dateTimeOriginalString) == false &&
+                        DateTime.TryParse(dateTimeOriginalString, out DateTime dateTimeOriginal))
+                    {
+                        dateTaken = dateTimeOriginal;
+                        args.Logger?.ILog("DateTimeOriginal: " + dateTimeOriginal);
+                    }
+                    else
+                    {
+                        args.Logger?.ILog("Invalid date format for DateTimeOriginal: " + dateTimeOriginalString);
+                    }
+                }
+            }
+            else
+            {
+                args.Logger?.ILog("No EXIF Profile found");
+            }
+            
+            UpdateImageInfo(args, image.Width, image.Height, format.Name, variables: variables, dateTaken: dateTaken);
         }
     }
-    protected void UpdateImageInfo(NodeParameters args, int width, int height, string format, Dictionary<string, object> variables = null)
+    protected void UpdateImageInfo(NodeParameters args, int width, int height, string format, Dictionary<string, object> variables = null, DateTime? dateTaken = null)
     {
         var imageInfo = new ImageInfo
         {
@@ -73,6 +101,14 @@ public abstract class ImageBaseNode:Node
         variables.AddOrUpdate("img.Format", imageInfo.Format);
         variables.AddOrUpdate("img.IsPortrait", imageInfo.IsPortrait);
         variables.AddOrUpdate("img.IsLandscape", imageInfo.IsLandscape);
+
+        if (dateTaken != null)
+        {
+            variables.AddOrUpdate("img.DateTaken.Year", dateTaken.Value.Year);
+            variables.AddOrUpdate("img.DateTaken.Month", dateTaken.Value.Month);
+            variables.AddOrUpdate("img.DateTaken.Day", dateTaken.Value.Day);
+            variables.AddOrUpdate("img.DateTaken.FulLDate", dateTaken.Value.ToString("yyyy-MM-dd"));
+        }
 
         var metadata = new Dictionary<string, object>();
         metadata.Add("Format", imageInfo.Format);

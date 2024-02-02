@@ -1,4 +1,3 @@
-using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using ImageMagick;
 using SixLabors.ImageSharp.Formats;
