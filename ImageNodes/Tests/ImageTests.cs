@@ -14,7 +14,7 @@ public class ImageNodesTests
     string TestImage2;
     string TestImageHeic;
     string TempDir;
-    string TestCropImage1, TestCropImage2, TestCropImage3, TestCropImage4, TestCropImageNoCrop;
+    string TestCropImage1, TestCropImage2, TestCropImage3, TestCropImage4, TestCropImageNoCrop, TestExif;
 
     public ImageNodesTests()
     {
@@ -39,6 +39,7 @@ public class ImageNodesTests
             TestImage1 = "/home/john/Pictures/circle.jpg";
             TestImage2 = "/home/john/Pictures/36410427.png";
             TempDir = "/home/john/temp/";
+            TestExif = "/home/john/Pictures/exif_test.jpg";
         }
     }
 
@@ -290,6 +291,26 @@ public class ImageNodesTests
 
         string log = logger.ToString();
         Assert.AreEqual(2, result);
+    }
+    
+    
+    [TestMethod]
+    public void ImageNodes_Basic_Exif()
+    {
+        var logger = new TestLogger();
+        var args = new NodeParameters(TestExif, logger, false, string.Empty, new LocalFileService())
+        {
+            TempPath = TempDir
+        };
+
+        var node = new ImageFile();
+        var result = node.Execute(args);
+        Assert.AreEqual(1, result);
+        if(node.Variables.TryGetValue("img.DateTaken.Value", out object oDate) == false)
+            Assert.Fail("Failed to get date time");
+        
+        if(oDate is DateTime dt == false)
+            Assert.Fail("oDate is not a DateTime");
     }
 }
 

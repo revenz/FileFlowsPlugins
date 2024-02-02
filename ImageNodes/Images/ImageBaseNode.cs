@@ -3,14 +3,37 @@ using SixLabors.ImageSharp.Formats;
 
 namespace FileFlows.ImageNodes.Images;
 
+/// <summary>
+/// Represents an abstract base class for nodes related to image processing.
+/// </summary>
 public abstract class ImageBaseNode:Node
 {
-
+    /// <summary>
+    /// Represents the key for storing image information in a context or dictionary.
+    /// </summary>
     private const string IMAGE_INFO = "ImageInfo";
+
+    /// <summary>
+    /// Gets or sets the current format of the image.
+    /// </summary>
     protected string CurrentFormat { get; private set; }
-    protected int CurrentWidth{ get; private set; }
+
+    /// <summary>
+    /// Gets or sets the current width of the image.
+    /// </summary>
+    protected int CurrentWidth { get; private set; }
+
+    /// <summary>
+    /// Gets or sets the current height of the image.
+    /// </summary>
     protected int CurrentHeight { get; private set; }
 
+
+    /// <summary>
+    /// Calls any pre-execute setup code
+    /// </summary>
+    /// <param name="args">The NodeParameters</param>
+    /// <returns>true if successful, otherwise false</returns>
     public override bool PreExecute(NodeParameters args)
     {
         var localFile = args.FileService.GetLocalPath(args.WorkingFile);
@@ -41,7 +64,12 @@ public abstract class ImageBaseNode:Node
 
         return true;
     }
-
+    
+    /// <summary>
+    /// Updates information about an image based on the provided NodeParameters and optional variables.
+    /// </summary>
+    /// <param name="args">The NodeParameters</param>
+    /// <param name="variables">Additional variables associated with the image (optional).</param>
     protected void UpdateImageInfo(NodeParameters args, Dictionary<string, object> variables = null)
     {
         string extension = FileHelper.GetExtension(args.WorkingFile).ToLowerInvariant().TrimStart('.');
@@ -65,7 +93,7 @@ public abstract class ImageBaseNode:Node
                 else
                 {
                     if (string.IsNullOrWhiteSpace(dateTimeOriginalString) == false &&
-                        DateTime.TryParse(dateTimeOriginalString, out DateTime dateTimeOriginal))
+                        TryParseDateTime(dateTimeOriginalString, out DateTime? dateTimeOriginal))
                     {
                         dateTaken = dateTimeOriginal;
                         args.Logger?.ILog("DateTimeOriginal: " + dateTimeOriginal);
@@ -84,6 +112,16 @@ public abstract class ImageBaseNode:Node
             UpdateImageInfo(args, image.Width, image.Height, format.Name, variables: variables, dateTaken: dateTaken);
         }
     }
+    
+    /// <summary>
+    /// Updates information about an image based on the provided NodeParameters, width, height, format, variables, and dateTaken.
+    /// </summary>
+    /// <param name="args">The NodeParameters</param>
+    /// <param name="width">The width of the image.</param>
+    /// <param name="height">The height of the image.</param>
+    /// <param name="format">The format of the image.</param>
+    /// <param name="variables">Additional variables associated with the image (optional).</param>
+    /// <param name="dateTaken">The date when the image was taken (optional).</param>
     protected void UpdateImageInfo(NodeParameters args, int width, int height, string format, Dictionary<string, object> variables = null, DateTime? dateTaken = null)
     {
         var imageInfo = new ImageInfo
@@ -104,6 +142,7 @@ public abstract class ImageBaseNode:Node
 
         if (dateTaken != null)
         {
+            variables.AddOrUpdate("img.DateTaken.Value", dateTaken.Value);
             variables.AddOrUpdate("img.DateTaken.Year", dateTaken.Value.Year);
             variables.AddOrUpdate("img.DateTaken.Month", dateTaken.Value.Month);
             variables.AddOrUpdate("img.DateTaken.Day", dateTaken.Value.Day);
@@ -118,6 +157,14 @@ public abstract class ImageBaseNode:Node
 
         args.UpdateVariables(variables);
     }
+    
+    /// <summary>
+    /// Gets information about an image based on the provided NodeParameters.
+    /// </summary>
+    /// <param name="args">The NodeParameters</param>
+    /// <returns>
+    /// An ImageInfo object representing information about the image, or null if information could not be retrieved.
+    /// </returns>
     internal ImageInfo? GetImageInfo(NodeParameters args)
     {
         if (args.Parameters.ContainsKey(IMAGE_INFO) == false)
@@ -155,4 +202,42 @@ public abstract class ImageBaseNode:Node
 
         return args.WorkingFile;
     }
+    
+    /// <summary>
+    /// Tries to parse a DateTime from a string, attempting different formats.
+    /// </summary>
+    /// <param name="dateTimeString">The string representation of the DateTime.</param>
+    /// <param name="dateTime">When this method returns, contains the parsed DateTime if successful; otherwise, null.</param>
+    /// <returns>
+    /// True if the parsing was successful; otherwise, false.
+    /// </returns>
+    static bool TryParseDateTime(string dateTimeString, out DateTime? dateTime)
+    {
+        DateTime parsedDateTime;
+
+        // Try parsing using DateTime.TryParse
+        if (DateTime.TryParse(dateTimeString, out parsedDateTime))
+        {
+            dateTime = parsedDateTime;
+            return true;
+        }
+
+        // Define an array of possible date formats for additional attempts
+        string[] dateFormats = { "yyyy:MM:dd HH:mm:ss", "yyyy-MM-dd HH:mm:ss" /* Add more formats if needed */ };
+
+        // Attempt to parse using different formats
+        foreach (var format in dateFormats)
+        {
+            if (DateTime.TryParseExact(dateTimeString, format, null, System.Globalization.DateTimeStyles.None, out parsedDateTime))
+            {
+                dateTime = parsedDateTime;
+                return true;
+            }
+        }
+
+        // Set dateTime to null if parsing fails with all formats
+        dateTime = null;
+        return false;
+    }
+
 }
