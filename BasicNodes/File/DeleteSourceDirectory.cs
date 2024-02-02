@@ -179,7 +179,7 @@ public class DeleteSourceDirectory : Node
                 return 2;
             }
         }
-        else if (files.Length == 0)
+        else if (files.Any())
         {
             args.Logger?.ILog("Directory is not empty, cannot delete: " + path + Environment.NewLine +
                               string.Join(Environment.NewLine, files.Select(x => " - " + x)));
