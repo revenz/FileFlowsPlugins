@@ -43,7 +43,8 @@ public class FfmpegBuilder_TrackSorterTests
                 IndexString = "0:a:1",
                 Language = "en",
                 Codec = "AAC",
-                Channels = 2
+                Channels = 2,
+                Title = "Directors Commentary"
             },
             new AudioStream
             {
@@ -787,7 +788,7 @@ public class FfmpegBuilder_TrackSorterTests
         // Additional assertions for logging
         Assert.AreEqual("2 / en / AC3 / 5.1", model.AudioStreams[0].ToString());
         Assert.AreEqual("5 / deu / AAC / 5.1", model.AudioStreams[1].ToString());
-        Assert.AreEqual("3 / en / AAC / 2.0", model.AudioStreams[2].ToString());
+        Assert.AreEqual("3 / en / AAC / Directors Commentary / 2.0", model.AudioStreams[2].ToString());
         Assert.AreEqual("4 / fre / AAC / 2.0", model.AudioStreams[3].ToString());
     }
 
@@ -824,8 +825,6 @@ public class FfmpegBuilder_TrackSorterTests
         Assert.AreEqual("2 / en / subrip", model.SubtitleStreams[3].ToString());
     }
 
-    
-    
     [TestMethod]
     public void ProcessStreams_NoSubtitleChanges()
     {
@@ -857,6 +856,40 @@ public class FfmpegBuilder_TrackSorterTests
         Assert.AreEqual("2 / en / subrip", model.SubtitleStreams[1].ToString());
         Assert.AreEqual("3 / fre / srt", model.SubtitleStreams[2].ToString());
         Assert.AreEqual("4 / deu / movtext", model.SubtitleStreams[3].ToString());
+    }
+    
+    
+    [TestMethod]
+    public void ProcessStreams_CommentaryRemove()
+    {
+        Prepare();
+        
+        var trackSorter = new FfmpegBuilderTrackSorter();
+
+        // Mock sorters by different properties
+        trackSorter.Sorters = new List<KeyValuePair<string, string>>
+        {
+            new("TitleDesc", "Commentary"),
+            new("Language", "English")
+        };
+        trackSorter.StreamType = "Audio";
+
+        // Act
+        trackSorter.PreExecute(args);
+        var result = trackSorter.Execute(args);
+
+        string log = logger.ToString();
+        TestContext.WriteLine(log);
+        
+        // Assert
+        Assert.AreEqual(1, result);
+        var model = GetFFmpegModel();
+        
+        // Additional assertions for logging
+        Assert.AreEqual("2 / en / AC3 / 5.1", model.AudioStreams[0].ToString());
+        Assert.AreEqual("4 / fre / AAC / 2.0", model.AudioStreams[1].ToString());
+        Assert.AreEqual("5 / deu / AAC / 5.1", model.AudioStreams[2].ToString());
+        Assert.AreEqual("3 / en / AAC / Directors Commentary / 2.0", model.AudioStreams[3].ToString());
     }
 }
 

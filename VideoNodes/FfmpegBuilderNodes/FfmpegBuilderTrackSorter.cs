@@ -76,6 +76,8 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
                     new() { Label = "Codec Reversed", Value = "CodecDesc" },
                     new() { Label = "Language", Value = "Language" },
                     new() { Label = "Language Reversed", Value = "LanguageDesc" },
+                    new() { Label = "Title", Value = "Title" },
+                    new() { Label = "Title Reversed", Value = "TitleDesc" }
                 };
             }
 
@@ -296,6 +298,8 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
             result = Regex.IsMatch(value.ToString(), comparison, RegexOptions.IgnoreCase) ? 0 : 1;
         else if (value != null && double.TryParse(value.ToString(), out double dbl))
             result = dbl;
+        else if (property == nameof(FfmpegStream.Title) && string.IsNullOrWhiteSpace(comparison) == false && string.IsNullOrWhiteSpace(value?.ToString()) == false)
+            result = value?.ToString()?.ToLowerInvariant()?.Contains(comparison.ToLowerInvariant()) == true ? 0 : 1;
         else
             result = string.Equals(value?.ToString() ?? string.Empty, comparison ?? string.Empty, StringComparison.OrdinalIgnoreCase) ? 0 : 1;
 
