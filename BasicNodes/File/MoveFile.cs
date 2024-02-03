@@ -88,9 +88,12 @@ public class MoveFile : Node
 
         // store srcDir here before we move and the working file is altered
         var srcDir = FileHelper.GetDirectory(AdditionalFilesFromOriginal ? args.FileName : args.WorkingFile);
+        args.Logger?.ILog("Source Directory: " + srcDir);
         string shortNameLookup = FileHelper.GetShortFileName(args.FileName);
         if (shortNameLookup.LastIndexOf(".", StringComparison.InvariantCulture) > 0)
             shortNameLookup = shortNameLookup.Substring(0, shortNameLookup.LastIndexOf(".", StringComparison.Ordinal));
+        
+        args.Logger?.ILog("shortNameLookup: " + shortNameLookup);
 
         if (args.MoveFile(dest) == false)
             return -1;

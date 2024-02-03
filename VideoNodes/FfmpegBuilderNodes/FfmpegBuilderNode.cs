@@ -5,7 +5,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
 {
     public abstract class FfmpegBuilderNode: EncodingNode
     {
-        protected const string MODEL_KEY = "FfmpegBuilderModel";
+        internal const string MODEL_KEY = "FfmpegBuilderModel";
 
         /// <summary>
         /// Gets the number of inputs

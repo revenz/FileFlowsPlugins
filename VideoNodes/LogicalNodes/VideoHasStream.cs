@@ -1,3 +1,6 @@
+using FileFlows.VideoNodes.FfmpegBuilderNodes;
+using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
+
 namespace FileFlows.VideoNodes;
 
 /// <summary>
@@ -74,6 +77,36 @@ public class VideoHasStream : VideoNode
     [ConditionEquals(nameof(Stream), "Audio")]
     [NumberFloat(5)]
     public float Channels { get; set; }
+    
+    /// <summary>
+    /// Gets or sets if deleted tracks should also be checked
+    /// </summary>
+    [Boolean(6)]
+    public bool CheckDeleted { get; set; }
+    
+    /// <summary>
+    /// Gets or sets if result should be inverted
+    /// </summary>
+    [Boolean(7)]
+    public bool Invert { get; set; }
+
+    /// <summary>
+    /// Tries to get the FFmpegModel if loaded into variables
+    /// </summary>
+    /// <param name="args">The node parameters</param>
+    /// <returns>the FFmpeg model if exists</returns>
+    protected FfmpegModel GetFfmpegModel(NodeParameters args)
+    {
+        if (args.Variables.TryGetValue(FfmpegBuilderNode.MODEL_KEY, out var variable) &&
+            variable is FfmpegModel ffmpegModel)
+        {
+            args.Logger?.ILog("FFmpeg Model found and will be used.");
+            return ffmpegModel;
+        }
+        args.Logger?.ILog("FFmpeg Model not found, using VideoInfo.");
+
+        return null;
+    }
 
     /// <summary>
     /// Executes the flow element
@@ -90,9 +123,20 @@ public class VideoHasStream : VideoNode
         string title = args.ReplaceVariables(Title, stripMissing: true);
         string codec = args.ReplaceVariables(Codec, stripMissing: true);
         string lang = args.ReplaceVariables(Language, stripMissing: true);
+        var ffmpegModel = GetFfmpegModel(args);
+        if (ffmpegModel != null && CheckDeleted)
+        {
+            args.Logger?.ILog("Checking deleted, ignoring FFmpeg model");
+            ffmpegModel = null;
+        }
+
         if (this.Stream == "Video")
         {
-            found = videoInfo.VideoStreams.Where(x =>
+            var streams = ffmpegModel == null
+                ? videoInfo.VideoStreams
+                : ffmpegModel.VideoStreams.Where(x => x.Deleted == false).Select(x => x.Stream).ToList();
+            
+            found = streams.Where(x =>
             {
                 if (ValueMatch(title, x.Title) == MatchResult.NoMatch)
                     return false;
@@ -105,7 +149,11 @@ public class VideoHasStream : VideoNode
         }
         else if (this.Stream == "Audio")
         {
-            found = videoInfo.AudioStreams.Where(x =>
+            var streams = ffmpegModel == null
+                ? videoInfo.AudioStreams
+                : ffmpegModel.AudioStreams.Where(x => x.Deleted == false).Select(x => x.Stream).ToList();
+            
+            found = streams.Where(x =>
             {
                 if (ValueMatch(title, x.Title) == MatchResult.NoMatch)
                     return false;
@@ -120,7 +168,11 @@ public class VideoHasStream : VideoNode
         }
         else if (this.Stream == "Subtitle")
         {   
-            found = videoInfo.SubtitleStreams.Where(x =>
+            var streams = ffmpegModel == null
+                ? videoInfo.SubtitleStreams
+                : ffmpegModel.SubtitleStreams.Where(x => x.Deleted == false).Select(x => x.Stream).ToList();
+            
+            found = streams.Where(x =>
             {
                 if (ValueMatch(title, x.Title) == MatchResult.NoMatch)
                     return false;
@@ -130,6 +182,13 @@ public class VideoHasStream : VideoNode
                     return false;
                 return true;
             }).Any();
+        }
+
+        args.Logger?.ILog("Found stream: " + found);
+        if (Invert)
+        {
+            args.Logger?.ILog("Invert result");
+            found = !found;
         }
 
         return found ? 1 : 2;
