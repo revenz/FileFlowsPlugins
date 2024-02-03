@@ -546,6 +546,24 @@
           "Index-Help": "The index of the track to set as default, only used if language is not specified."
         }
       },
+      "FfmpegBuilderSetTrackTitles": {
+        "Label": "FFMPEG Builder: Set Track Titles",
+        "Description": "Set track titles based on a formatter in the FFmpeg builder.",
+        "Outputs": {
+          "1": "Track titles updated",
+          "2": "No track titles were effected"
+        },
+        "Fields": {
+          "StreamType": "Type",
+          "StreamType-Help": "The type of track to set as default in the FFMPEG Builder",
+          "Format": "Format",
+          "Format-Help": "The formatter to use, see _Help_ for more information.",
+          "Separator": "Separator",
+          "Separator-Help": "The string separator used between format values, this is need to ensure no empty values are kept.",
+          "CommentaryFormat": "Commentary",
+          "CommentaryFormat-Help": "How commentary tracks should be treated, you can use the same formatter as other tracks or use a different method."
+        }
+      },
       "FfmpegBuilderVideo10Bit": {
         "Label": "FFMPEG Builder: Video 10 Bit",
         "Description": "Sets FFMPEG Builder to encode the video streams in 10 Bit",
