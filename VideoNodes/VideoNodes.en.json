@@ -546,6 +546,20 @@
           "Index-Help": "The index of the track to set as default, only used if language is not specified."
         }
       },
+      "FfmpegBuilderSetFps": {
+        "Label": "FFMPEG Builder: Set FPS",
+        "Description": "Set the frames per second (FPS) in the FFmpeg Builder",
+        "Outputs": {
+          "1": "FPS updated",
+          "2": "No changes were necessary"
+        },
+        "Fields": {
+          "Fps": "FPS",
+          "Fps-Help": "The desired FPS, if the input FPS and the desired FPS do not match then FFMPEG will convert it, e.g (23.976, 24, 30, 60).",
+          "OnlyIfHigher": "Only If Higher",
+          "OnlyIfHigher-Help": "If the FPS should be adjusted only if the current FPS is more than the current."
+        }
+      },
       "FfmpegBuilderSetTrackTitles": {
         "Label": "FFMPEG Builder: Set Track Titles",
         "Description": "Set track titles based on a formatter in the FFmpeg builder.",
