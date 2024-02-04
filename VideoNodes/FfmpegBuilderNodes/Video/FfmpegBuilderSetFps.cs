@@ -68,13 +68,13 @@ public class FfmpegBuilderSetFps:FfmpegBuilderNode
 
         if (Math.Abs(currentFps - desiredFps) < 0.05f)
         {
-            args.Logger?.ILog("The frame rate matches, so does not need changing");
+            args.Logger?.ILog($"The frame rate '{desiredFps}fps' matches, so does not need changing");
             return 2;
         }
 
         if (currentFps > desiredFps)
         {
-            args.Logger?.ILog($"The frame rate {currentFps}fps is higher than the desired {desiredFps}fps, so will be changed");
+            args.Logger?.ILog($"The frame rate '{currentFps}fps' is higher than the desired '{desiredFps}fps', so will be changed");
             videoStream.Filter.Add($"fps=fps={desiredFps}");
             return 1;
         }
@@ -83,11 +83,11 @@ public class FfmpegBuilderSetFps:FfmpegBuilderNode
         {
             if (OnlyIfHigher)
             {
-                args.Logger?.ILog($"The frame rate {currentFps}fps is lower than the desired {desiredFps}fps, and (Only If Higher) was selected, so no change needed");
+                args.Logger?.ILog($"The frame rate '{currentFps}fps' is lower than the desired '{desiredFps}fps', and (Only If Higher) was selected, so no change needed");
                 return 2;
             }
 
-            args.Logger?.ILog($"The frame rate {currentFps}fps is lower than the desired {desiredFps}fps, so will be changed");
+            args.Logger?.ILog($"The frame rate '{currentFps}fps' is lower than the desired '{desiredFps}fps', so will be changed");
             videoStream.Filter.Add($"fps=fps={desiredFps}");
             return 1;
         }
