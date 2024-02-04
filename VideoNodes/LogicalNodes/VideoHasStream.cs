@@ -1,5 +1,6 @@
 using FileFlows.VideoNodes.FfmpegBuilderNodes;
 using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
+using FileFlows.VideoNodes.Helpers;
 
 namespace FileFlows.VideoNodes;
 
@@ -209,14 +210,20 @@ public class VideoHasStream : VideoNode
 
             if (string.IsNullOrEmpty(value))
                 return MatchResult.NoMatch;
-            var rgx = new Regex(pattern, RegexOptions.IgnoreCase);
-            if(rgx.IsMatch(value))
-                return MatchResult.Matched;
+            
+            if (GeneralHelper.IsRegex(pattern))
+            {
+                var rgx = new Regex(pattern, RegexOptions.IgnoreCase);
+                if (rgx.IsMatch(value))
+                    return MatchResult.Matched;
+            }
 
             if (value.ToLower() == "hevc" && (pattern.ToLower() == "h265" || pattern == "265" || pattern.ToLower() == "h.265"))
                 return MatchResult.Matched; // special case
 
-            return MatchResult.NoMatch;
+            return pattern.ToLowerInvariant().Trim() == value.ToLowerInvariant().Trim()
+                ? MatchResult.Matched
+                : MatchResult.NoMatch;
         }
         catch (Exception)
         {

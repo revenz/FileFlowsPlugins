@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
+using FileFlows.VideoNodes.Helpers;
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 
@@ -294,7 +295,7 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
         }
         else if (IsMathOperation(comparison))
             result = ApplyMathOperation(value.ToString(), comparison) ? 0 : 1;
-        else if (IsRegex(comparison))
+        else if (GeneralHelper.IsRegex(comparison))
             result = Regex.IsMatch(value.ToString(), comparison, RegexOptions.IgnoreCase) ? 0 : 1;
         else if (value != null && double.TryParse(value.ToString(), out double dbl))
             result = dbl;
@@ -455,16 +456,6 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
     {
         // Check if the comparison string starts with <=, <, >, >=, ==, or =
         return new[] { "<=", "<", ">", ">=", "==", "=" }.Any(comparison.StartsWith);
-    }
-    
-    /// <summary>
-    /// Checks if the comparison string represents a regular expression.
-    /// </summary>
-    /// <param name="comparison">The comparison string to check.</param>
-    /// <returns>True if the comparison is a regular expression, otherwise false.</returns>
-    private static bool IsRegex(string comparison)
-    {
-        return new[] { "?", "|", "^", "$" }.Any(ch => comparison.Contains(ch));
     }
 
     /// <summary>
