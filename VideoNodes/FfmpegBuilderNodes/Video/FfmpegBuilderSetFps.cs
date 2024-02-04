@@ -40,6 +40,8 @@ public class FfmpegBuilderSetFps:FfmpegBuilderNode
     public override int Execute(NodeParameters args)
     {
         double desiredFps = Fps;
+        
+        string desiredString = desiredFps.ToString("F3").TrimEnd('0').TrimEnd('.');
 
         VideoInfo videoInfo = GetVideoInfo(args);
         if (videoInfo == null || !videoInfo.VideoStreams?.Any() == true)
@@ -50,6 +52,7 @@ public class FfmpegBuilderSetFps:FfmpegBuilderNode
 
         int currentFps = (int)Math.Ceiling(videoInfo.VideoStreams[0].FramesPerSecond);
         currentFps = FixHighFrameRateBug(currentFps);
+        string currentString = currentFps.ToString("F3").TrimEnd('0').TrimEnd('.');
 
         var ffmpegModel = GetModel();
         if (ffmpegModel == null)
@@ -68,14 +71,14 @@ public class FfmpegBuilderSetFps:FfmpegBuilderNode
 
         if (Math.Abs(currentFps - desiredFps) < 0.05f)
         {
-            args.Logger?.ILog($"The frame rate '{desiredFps}fps' matches, so does not need changing");
+            args.Logger?.ILog($"The frame rate '{desiredString}fps' matches, so does not need changing");
             return 2;
         }
 
         if (currentFps > desiredFps)
         {
-            args.Logger?.ILog($"The frame rate '{currentFps}fps' is higher than the desired '{desiredFps}fps', so will be changed");
-            videoStream.Filter.Add($"fps=fps={desiredFps}");
+            args.Logger?.ILog($"The frame rate '{currentString}fps' is higher than the desired '{desiredString}fps', so will be changed");
+            videoStream.Filter.Add($"fps=fps={desiredString}");
             return 1;
         }
 
@@ -83,12 +86,12 @@ public class FfmpegBuilderSetFps:FfmpegBuilderNode
         {
             if (OnlyIfHigher)
             {
-                args.Logger?.ILog($"The frame rate '{currentFps}fps' is lower than the desired '{desiredFps}fps', and (Only If Higher) was selected, so no change needed");
+                args.Logger?.ILog($"The frame rate '{currentString}fps' is lower than the desired '{desiredString}fps', and (Only If Higher) was selected, so no change needed");
                 return 2;
             }
 
-            args.Logger?.ILog($"The frame rate '{currentFps}fps' is lower than the desired '{desiredFps}fps', so will be changed");
-            videoStream.Filter.Add($"fps=fps={desiredFps}");
+            args.Logger?.ILog($"The frame rate '{currentString}fps' is lower than the desired '{desiredString}fps', so will be changed");
+            videoStream.Filter.Add($"fps=fps={desiredString}");
             return 1;
         }
 
