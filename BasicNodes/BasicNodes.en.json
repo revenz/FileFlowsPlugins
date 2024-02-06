@@ -112,7 +112,11 @@
           }
         },
         "FailFlow": {
-          "Description": "Fails a flow immediately, useful if you want a certain path to just fail."
+          "Description": "Fails a flow immediately, useful if you want a certain path to just fail.",
+          "Fields": {
+            "Reason": "Reason",
+            "Reason-Help": "An optional reason to log why this flow is failing."
+          }
         },
         "FileSize": {
           "Description": "Checks if the file size matches the configured parameters. The values are in megabytes.\n\nOutput 1: Matches\nOutput 2: Does not match",
@@ -241,6 +245,14 @@
             "ReplacementsValue": "Value",
             "UseWorkingFileName": "Use Working Filename",
             "UseWorkingFileName-Help": "If current working filename should be used, or if false, the original filename of the incoming file will be used."
+          }
+        },
+        "Random": {
+          "Label": "Random",
+          "Description": "Chooses a random output",
+          "Fields": {
+            "Outputs": "Outputs",
+            "Outputs-Help": "The number of outputs available to this flow element."
           }
         },
         "ReplaceOriginal": {
