@@ -43,10 +43,22 @@ public class IfString: IfBase
             args.Logger?.ELog(args.FailureReason);
             return -1;
         }
-        var index = Options.ToList().FindIndex(x => x == value as string);
+
+        for(int i=0;i<Options.Length;i++)
+        {
+            args.Logger?.ILog($"Option[{i}] = {(Options[i] == null ? "null" : Options[i].ToString())}");
+        }
+
+        var strValue = value?.ToString() ?? string.Empty;
+        
+        var index = Options.ToList().FindIndex(x => x?.EmptyAsNull() == strValue?.EmptyAsNull());
         args.Logger?.ILog("Index of option: " + index);
-        if (index > 0)
+        if (index >= 0)
             return index + 1;
+        
+        // index is then -1
+        args.Logger?.ELog("Failed to locate value in options");
+        args.FailureReason = "Failed to locate value in options: " + strValue;
         return index;
     }
 }
