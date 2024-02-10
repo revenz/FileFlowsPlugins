@@ -252,7 +252,7 @@
           "Description": "Chooses a random output",
           "Fields": {
             "Outputs": "Outputs",
-            "Outputs-Help": "The number of outputs available to this flow element."
+            "Outputs-Help": "The number of outputs that could possible be called."
           }
         },
         "ReplaceOriginal": {

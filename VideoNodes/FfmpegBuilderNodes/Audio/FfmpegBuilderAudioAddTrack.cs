@@ -189,7 +189,8 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
         var bestAudio = GetBestAudioTrack(args, Model.AudioStreams.Select(x => x.Stream));
         if (bestAudio == null)
         {
-            args.Logger.WLog("No source audio track found");
+            args.Logger.ELog("No source audio track found");
+            args.FailureReason = "No source audio track found";
             return -1;
         }
 

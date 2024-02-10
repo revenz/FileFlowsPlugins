@@ -41,12 +41,19 @@ namespace FileFlows.AudioNodes
         {
             string ffmpegExe = GetFFmpeg(args);
             if (string.IsNullOrEmpty(ffmpegExe))
+            {
+                args.FailureReason = "FFmpeg not found";
                 return -1;
+            }
+
             string ffprobe = GetFFprobe(args);
             if (string.IsNullOrEmpty(ffprobe))
+            {
+                args.FailureReason = "FFprobe not found";
                 return -1;
+            }
 
-            
+
             if (args.FileService.FileCreationTimeUtc(args.WorkingFile).Success(out DateTime createTime))
                 args.Variables["ORIGINAL_CREATE_UTC"] = createTime;
             if (args.FileService.FileLastWriteTimeUtc(args.WorkingFile).Success(out DateTime writeTime))
@@ -68,6 +75,7 @@ namespace FileFlows.AudioNodes
             catch (Exception ex)
             {
                 args.Logger.ELog("Failed processing AudioFile: " + ex.Message);
+                args.FailureReason = "Failed processing AudioFile: " + ex.Message;
                 return -1;
             }
         }

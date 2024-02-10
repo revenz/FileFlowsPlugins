@@ -58,10 +58,17 @@ public class CreateAudioBook: AudioNode
     {
         var ffmpeg = GetFFmpeg(args);
         if (string.IsNullOrEmpty(ffmpeg))
+        {
+            args.FailureReason = "FFmpeg not found";
             return -1;
+        }
+
         var ffprobe = GetFFprobe(args);
         if (string.IsNullOrEmpty(ffprobe))
+        {
+            args.FailureReason = "FFprobe not found";
             return -1;
+        }
 
         var dir = args.IsDirectory ? args.WorkingFile : FileHelper.GetDirectory(args.WorkingFile);
 
@@ -202,6 +209,7 @@ public class CreateAudioBook: AudioNode
 
         if (System.IO.File.Exists(outputFile) == false || new System.IO.FileInfo(outputFile).Length == 0)
         {
+            args.FailureReason = "Failed to create output file: " + outputFile;
             args.Logger.ELog("Failed to create output file: " + outputFile);
             return -1;
         }
@@ -226,6 +234,7 @@ public class CreateAudioBook: AudioNode
             var dest = args.ReplaceVariables(DestinationPath, stripMissing: true);
             if (args.FileService.FileMove(outputFile, dest).Failed(out string error))
             {
+                args.FailureReason = "Failed to save to destination: " + error;
                 args.Logger?.ELog("Failed to save to destination: " + error);
                 return -1;
             }
