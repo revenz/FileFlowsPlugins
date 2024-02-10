@@ -35,8 +35,16 @@ public class IfString: IfBase
     /// <returns>true if matches, otherwise false</returns>
     protected override int DoCheck(NodeParameters args, object value)
     {
-        if (Options?.Any() != true) return -1;
+        args?.Logger?.ILog("Value is: " + (value == null ? "null" : value.ToString()));
+        
+        if (Options?.Any() != true)
+        {
+            args.FailureReason = "No Options configured";
+            args.Logger?.ELog(args.FailureReason);
+            return -1;
+        }
         var index = Options.ToList().FindIndex(x => x == value as string);
+        args.Logger?.ILog("Index of option: " + index);
         if (index > 0)
             return index + 1;
         return index;
