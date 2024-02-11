@@ -165,6 +165,18 @@ public class SevenZip : Node
         return destDir;
     }
 
+    private Result<string> GetSevenZipLocation(NodeParameters args)
+    {
+        var sevenZip = args.GetToolPath("7zip")?.EmptyAsNull() ?? "7z";
+        var result = args.Execute(new()
+        {
+            Command = sevenZip
+        });
+        if (result.ExitCode != 0)
+            return Result<string>.Fail("7zip not found on processing node.");
+        return sevenZip;
+    }
+
 
     /// <summary>
     /// Executes the flow element
@@ -175,7 +187,15 @@ public class SevenZip : Node
     {
         try
         {
-            string sevenZip = args.GetToolPath("7zip")?.EmptyAsNull() ?? "7z";
+            var sevenZipResult = GetSevenZipLocation(args);
+            if (sevenZipResult.IsFailed)
+            {
+                args.FailureReason = sevenZipResult.Error;
+                args.Logger?.ELog(sevenZipResult.Error);
+                return -1;
+            }
+
+            string sevenZip = sevenZipResult.Value;
 
             var itemToCompressResult = GetItemToCompress(args);
             if (itemToCompressResult.IsFailed)
@@ -228,7 +248,8 @@ public class SevenZip : Node
 
             string compressionMethod = CompressionMethod?.EmptyAsNull() ?? "lzma2";
 
-            string targetFile = args.IsRemote ? FileHelper.Combine(args.TempPath, Guid.NewGuid() + ".7zip") : destFile;
+            string targetFile = args.IsRemote ? FileHelper.Combine(args.TempPath, Guid.NewGuid() + ".7zip") : 
+                args.FileService.GetLocalPath(destFile); // local but maybe mapped
 
             args.Execute(new()
             {
