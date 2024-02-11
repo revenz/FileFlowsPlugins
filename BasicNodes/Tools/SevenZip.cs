@@ -131,8 +131,15 @@ public class SevenZip : Node
 
         try
         {
-            string itemToCompress = args.WorkingFile;
-            if (Directory.Exists(args.WorkingFile))
+            var localResult = args.FileService.GetLocalPath(args.WorkingFile);
+            if (localResult.IsFailed)
+            {
+                args.Logger?.ELog("Failed to ensure file is local: " + localResult.Error);
+                return -1;
+            }
+
+            string itemToCompress = localResult.Value;
+            if (Directory.Exists(itemToCompress))
             {
                 if (args.IsRemote)
                 {
@@ -140,23 +147,7 @@ public class SevenZip : Node
                     return -1;
                 }
                 isDir = true;
-                itemToCompress = FileHelper.Combine(args.WorkingFile, "*");
-            }
-            else
-            {
-                if (args.FileService.FileExists(args.WorkingFile))
-                {
-                    args.Logger?.ELog("File does not exist: " + args.WorkingFile);
-                    return -1;
-                }
-                var result = args.FileService.GetLocalPath(args.WorkingFile);
-                if (result.IsFailed)
-                {
-                    args.Logger?.ELog("Failed to ensure file is local: " + result.Error);
-                    return -1;
-                }
-
-                itemToCompress = result;
+                itemToCompress = FileHelper.Combine(itemToCompress, "*");
             }
             
             string sevenZip = args.GetToolPath("7zip")?.EmptyAsNull() ?? "7z";
