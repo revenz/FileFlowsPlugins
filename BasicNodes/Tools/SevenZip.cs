@@ -119,6 +119,52 @@ public class SevenZip : Node
         }
     }
 
+    private Result<string> GetItemToCompress(NodeParameters args)
+    {
+        var localResult = args.FileService.GetLocalPath(args.WorkingFile);
+        if (localResult.IsFailed)
+            return Result<string>.Fail("Failed to ensure file is local: " + localResult.Error);
+
+        string itemToCompress = localResult.Value;
+        if (Directory.Exists(itemToCompress) == false)
+            return itemToCompress;
+        
+        return FileHelper.Combine(itemToCompress, "*");
+    }
+
+    private Result<string> GetDestinationPath(NodeParameters args, bool isDir)
+    {
+        string destDir = DestinationPath;
+        if (string.IsNullOrEmpty(destDir))
+        {
+            args.Logger?.ILog("No destination path set");
+            if (isDir)
+                destDir = new DirectoryInfo(args.LibraryPath).FullName;
+            else
+                destDir = FileHelper.GetDirectory(args.FileName);
+                
+            if (string.IsNullOrEmpty(destDir))
+                return Result<string>.Fail("Failed to get destination directory");
+        }
+        else
+        {
+            // in case they set a linux path on windows or vice versa
+            destDir = destDir.Replace('\\', Path.DirectorySeparatorChar);
+            destDir = destDir.Replace('/', Path.DirectorySeparatorChar);
+
+            destDir = args.ReplaceVariables(destDir, stripMissing: true);
+
+            destDir = destDir.TrimEnd(Path.PathSeparator);
+
+            // this converts it to the actual OS path
+            var result = args.FileService.DirectoryCreate(destDir);
+            if (result.IsFailed)
+                return Result<string>.Fail("Failed creating directory: " + result.Error);
+        }
+        args.Logger?.ILog("Destination Folder: " + destDir);
+        return destDir;
+    }
+
 
     /// <summary>
     /// Executes the flow element
@@ -127,66 +173,31 @@ public class SevenZip : Node
     /// <returns>the output to call next</returns>
     public override int Execute(NodeParameters args)
     {
-        bool isDir = false;
-
         try
         {
-            var localResult = args.FileService.GetLocalPath(args.WorkingFile);
-            if (localResult.IsFailed)
+            string sevenZip = args.GetToolPath("7zip")?.EmptyAsNull() ?? "7z";
+
+            var itemToCompressResult = GetItemToCompress(args);
+            if (itemToCompressResult.IsFailed)
             {
-                args.Logger?.ELog("Failed to ensure file is local: " + localResult.Error);
+                args.FailureReason = itemToCompressResult.Error;
+                args.Logger?.ELog(itemToCompressResult.Error);
+                return -1;
+            }
+            string itemToCompress = itemToCompressResult.Value;
+            bool isDir = itemToCompress.EndsWith("*"); 
+
+            var destDirResult = GetDestinationPath(args, isDir);
+            if (destDirResult.IsFailed)
+            {
+                args.FailureReason = destDirResult.Error;
+                args.Logger?.ELog(destDirResult.Error);
                 return -1;
             }
 
-            string itemToCompress = localResult.Value;
-            if (Directory.Exists(itemToCompress))
-            {
-                if (args.IsRemote)
-                {
-                    args.Logger?.ELog("Cannot 7-zip a remote folder");
-                    return -1;
-                }
-                isDir = true;
-                itemToCompress = FileHelper.Combine(itemToCompress, "*");
-            }
+            var destDir = destDirResult.Value;
             
-            string sevenZip = args.GetToolPath("7zip")?.EmptyAsNull() ?? "7z";
-
-            string destDir = DestinationPath;
-            if (string.IsNullOrEmpty(destDir))
-            {
-                args.Logger?.ILog("No destination path set");
-                if (isDir)
-                    destDir = new DirectoryInfo(args.LibraryPath).FullName;
-                else
-                    destDir = FileHelper.GetDirectory(args.FileName);
-                
-                if (string.IsNullOrEmpty(destDir))
-                {
-                    args.Logger?.ELog("Failed to get destination directory");
-                    return -1;
-                }
-            }
-            else
-            {
-                // in case they set a linux path on windows or vice versa
-                destDir = destDir.Replace('\\', Path.DirectorySeparatorChar);
-                destDir = destDir.Replace('/', Path.DirectorySeparatorChar);
-
-                destDir = args.ReplaceVariables(destDir, stripMissing: true);
-
-                destDir = destDir.TrimEnd(Path.PathSeparator);
-
-                // this converts it to the actual OS path
-                var result = args.FileService.DirectoryCreate(destDir);
-                if (result.IsFailed)
-                {
-                    args.Logger?.ELog("Failed creating directory: " + result.Error);
-                    return -1;
-                }
-            }
-            args.Logger?.ILog("Destination Folder: " + destDir);
-
+            
             string destFile = args.ReplaceVariables(DestinationFile ?? string.Empty, true);
             if (string.IsNullOrEmpty(destFile))
             {
@@ -209,7 +220,8 @@ public class SevenZip : Node
                 var result = args.FileService.FileDelete(destFile);
                 if (result.IsFailed)
                 {
-                    args.Logger?.ILog("Failed to delete existing file: " + result.Error);
+                    args.FailureReason = "Failed to delete existing file: " + result.Error;
+                    args.Logger?.ELog(args.FailureReason);
                     return -1;
                 }
             }
@@ -231,7 +243,8 @@ public class SevenZip : Node
 
             if (System.IO.File.Exists(targetFile) == false)
             {
-                args.Logger?.ELog("Failed to create 7z: " + destFile);
+                args.FailureReason = "Failed to create 7z: " + destFile; 
+                args.Logger?.ELog(args.FailureReason);
                 return -1;
             }
 
@@ -241,7 +254,8 @@ public class SevenZip : Node
                 var result = args.FileService.FileMove(targetFile, destFile, true);
                 if (result.IsFailed)
                 {
-                    args.Logger?.ELog("Failed to move 7z file: " + result.Error);
+                    args.FailureReason = "Failed to move 7z file: " + result.Error;
+                    args.Logger?.ELog(args.FailureReason);
                     return -1;
                 }
             }
@@ -252,7 +266,8 @@ public class SevenZip : Node
         }
         catch (Exception ex)
         {
-            args.Logger?.ELog("Failed creating 7z: " + ex.Message + Environment.NewLine + ex.StackTrace);
+            args.FailureReason = "Failed creating 7z: " + ex.Message;
+            args.Logger?.ELog(args.FailureReason + Environment.NewLine + ex.StackTrace);
             return -1;
         }
     }
