@@ -172,9 +172,20 @@ public class SevenZip : Node
         {
             Command = sevenZip
         });
-        if (result.ExitCode != 0)
-            return Result<string>.Fail("7zip not found on processing node.");
-        return sevenZip;
+        if (result.ExitCode == 0)
+            return sevenZip;
+
+        if (OperatingSystem.IsWindows())
+        {
+            // try default installation of 7zip
+            args.Logger?.ILog("7zip not found, trying default Windows install path");
+            string programFilesDir = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+            string sevenZipPath = Path.Combine(programFilesDir, "7-Zip", "7z.exe");
+            if (System.IO.File.Exists(sevenZipPath))
+                return sevenZipPath;
+            args.Logger?.ILog("Failed to locate 7zip in default Windows installation path: " + sevenZipPath);
+        }
+        return Result<string>.Fail("7zip not found on processing node.");
     }
 
 
