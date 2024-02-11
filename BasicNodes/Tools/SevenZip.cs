@@ -182,7 +182,11 @@ public class SevenZip : Node
             string programFilesDir = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
             string sevenZipPath = Path.Combine(programFilesDir, "7-Zip", "7z.exe");
             if (System.IO.File.Exists(sevenZipPath))
+            {
+                args.Logger?.ILog("7zip found at: " + sevenZipPath);
                 return sevenZipPath;
+            }
+
             args.Logger?.ILog("Failed to locate 7zip in default Windows installation path: " + sevenZipPath);
         }
         return Result<string>.Fail("7zip not found on processing node.");
