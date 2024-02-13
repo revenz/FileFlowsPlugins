@@ -2,6 +2,7 @@
 
 using DM.MovieApi;
 using DM.MovieApi.MovieDb.Movies;
+using FileFlows.Plugin;
 using MetaNodes.TheMovieDb;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -181,13 +182,40 @@ public class MovieLookupTests
     {
         MovieDbFactory.RegisterSettings(MovieLookup.MovieDbBearerToken);
         var movieApi = MovieDbFactory.Create<IApiMovieRequest>().Value;
-        var md = MovieLookup.GetVideoMetadata(movieApi, 414906, @"D:\videos\temp");
+        var args = new FileFlows.Plugin.NodeParameters(@"/test/Ghostbusters 1984.mkv", new TestLogger(), false, string.Empty, null);;
+        
+        var md = MovieLookup.GetVideoMetadata(args, movieApi, 414906, @"D:\videos\temp");
         Assert.IsNotNull(md);
         string json = System.Text.Json.JsonSerializer.Serialize(md, new System.Text.Json.JsonSerializerOptions
         {
             WriteIndented = true
         });
         File.WriteAllText(@"D:\videos\metadata.json", json);
+    }
+    [TestMethod]
+    public void MovieLookupTests_WonderWoman_Nfo()
+    {
+        var logger = new TestLogger();
+        var args = new NodeParameters(@"/test/Wonder.Woman.1984.2020.German.DL.AC3.1080p.BluRay.x265-Fun{{fdg$ERGESDG32fesdfgds}}/Wonder.Woman.1984.2020.German.DL.AC3.1080p.BluRay.x265-Fun{{fdg$ERGESDG32fesdfgds}}.mkv", 
+            logger, false, string.Empty, null);;
+
+        MovieLookup ml = new MovieLookup();
+        ml.UseFolderName = false;
+
+        var result = ml.Execute(args);
+        Assert.AreEqual(1, result);
+        Assert.IsTrue(args.Parameters.ContainsKey(Globals.MOVIE_INFO));
+
+        var mi = args.Parameters[Globals.MOVIE_INFO] as MovieInfo;
+        Assert.IsNotNull(mi);
+        Assert.AreEqual("Wonder Woman 1984", mi.Title);
+        Assert.AreEqual(2020, mi.ReleaseDate.Year);
+
+        var eleNfo = new NfoFileCreator();
+        result = eleNfo.Execute(args);
+        Assert.AreEqual(1, result);
+        string nfo = (string)args.Variables["NFO"];
+        Assert.IsFalse(string.IsNullOrWhiteSpace(nfo));
     }
 }
 

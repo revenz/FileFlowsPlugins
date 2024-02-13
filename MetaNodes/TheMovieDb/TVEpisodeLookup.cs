@@ -145,6 +145,19 @@ public class TVEpisodeLookup : Node
         
         args.SetParameter(Globals.TV_SHOW_INFO, result);
 
+        if (lastEpisode > episode)
+        {
+            for (int i = episode.Value + 1; i <= lastEpisode; i++)
+            {
+                
+                var epInfoExtra = show.Item.Episodes.FirstOrDefault(x => x.EpisodeNumber == i);
+                if (epInfoExtra == null)
+                    continue;
+                int diff = i - episode.Value;
+                args.Variables[Globals.TV_EPISODE_INFO + "_" + diff] = epInfoExtra;
+            }
+        }
+
         Variables["tvepisode.Title"] = result.Name;
         Variables["tvepisode.Subtitle"] = epInfo.Name;
         Variables["tvepisode.Year"] = epInfo.AirDate.Year;
@@ -156,6 +169,7 @@ public class TVEpisodeLookup : Node
         Variables["tvepisode.Overview"] = epInfo.Overview;
         //Variables["VideoMetadata"] = GetVideoMetadata(movieApi, result.Id, args.TempPath);
         Variables[Globals.TV_SHOW_INFO] = result;
+        Variables[Globals.TV_EPISODE_INFO] = epInfo;
         
         if (string.IsNullOrWhiteSpace(result.OriginalLanguage) == false)
             Variables["OriginalLanguage"] = result.OriginalLanguage;

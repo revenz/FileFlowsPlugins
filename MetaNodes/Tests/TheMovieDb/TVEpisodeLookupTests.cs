@@ -1,5 +1,6 @@
 ﻿#if(DEBUG)
 
+using System.Diagnostics.CodeAnalysis;
 using DM.MovieApi.MovieDb.Movies;
 using DM.MovieApi.MovieDb.TV;
 using MetaNodes.TheMovieDb;
@@ -102,6 +103,47 @@ public class TVEpisodeLookupTests
         Assert.AreEqual("The Batman/Superman Story (1)", args.Variables["tvepisode.Subtitle"]);
         Assert.IsFalse(string.IsNullOrWhiteSpace(args.Variables["tvepisode.Overview"] as string));
     }
+    
+    
+    
+    [TestMethod]
+    public void TheBatman_2x03_nfo()
+    {
+        var logger = new TestLogger();
+        var args = new FileFlows.Plugin.NodeParameters("/test/tv/The Batman/Season 2/The Batman - 2x03.mkv", logger, false, string.Empty, null);
+
+        var element = new TVEpisodeLookup();
+
+        var result = element.Execute(args);
+        Assert.AreEqual(1, result);
+
+        var eleNfo = new NfoFileCreator();
+        result = eleNfo.Execute(args);
+        Assert.AreEqual(1, result);
+
+        TVShowInfo tvShowInfo = (TVShowInfo)args.Variables[Globals.TV_SHOW_INFO];
+        Episode epInfo = (Episode)args.Variables[Globals.TV_EPISODE_INFO];
+        string nfo = eleNfo.CreateTvShowNfo(args, tvShowInfo, epInfo);
+        Assert.IsNotNull(nfo);
+    }
+    
+    [TestMethod]
+    public void TheBatman_s5e1_2_3_Nfo()
+    {
+        var logger = new TestLogger();
+        var args = new FileFlows.Plugin.NodeParameters("/test/tv/The Batman/Season 5/The Batman - s5e1-3.mkv", logger, false, string.Empty, null);
+
+        var element = new TVEpisodeLookup();
+
+        var result = element.Execute(args);
+        Assert.AreEqual(1, result);
+        
+        var eleNfo = new NfoFileCreator();
+        result = eleNfo.Execute(args);
+        Assert.AreEqual(1, result);
+        string nfo = (string)args.Variables["NFO"];
+    }
+
 }
 
 

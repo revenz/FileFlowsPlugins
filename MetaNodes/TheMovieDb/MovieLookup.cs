@@ -81,7 +81,7 @@ public class MovieLookup : Node
         }
 
         // remove double spaces in case they were added when removing the year
-        while (lookupName.IndexOf("  ") > 0)
+        while (lookupName.IndexOf("  ", StringComparison.Ordinal) > 0)
             lookupName = lookupName.Replace("  ", " ");
         
         args.Logger?.ILog("Lookup name: " + lookupName);
@@ -145,14 +145,18 @@ public class MovieLookup : Node
 
         args.SetParameter(Globals.MOVIE_INFO, result);
 
+
         Variables["movie.Title"] = result.Title;
         Variables["movie.Year"] = result.ReleaseDate.Year;
-        var meta = GetVideoMetadata(movieApi, result.Id, args.TempPath);
+        var meta = GetVideoMetadata(args, movieApi, result.Id, args.TempPath);
         Variables["VideoMetadata"] = meta;
         if (string.IsNullOrWhiteSpace(meta.OriginalLanguage) == false)
             Variables["OriginalLanguage"] = meta.OriginalLanguage;
         
         Variables[Globals.MOVIE_INFO] = result;
+        var movie = movieApi.FindByIdAsync(result.Id).Result.Item;
+        if(movie != null)
+            Variables[Globals.MOVIE] = movie;
 
         args.UpdateVariables(Variables);
         return 1;
@@ -167,7 +171,7 @@ public class MovieLookup : Node
     /// <param name="id">the ID of the movie</param>
     /// <param name="tempPath">the temp path to save any images to</param>
     /// <returns>the VideoMetadata</returns>
-    internal static VideoMetadata GetVideoMetadata(IApiMovieRequest movieApi, int id, string tempPath)
+    internal static VideoMetadata GetVideoMetadata(NodeParameters args, IApiMovieRequest movieApi, int id, string tempPath)
     {
         var movie = movieApi.FindByIdAsync(id).Result?.Item;
         if (movie == null)
@@ -202,8 +206,9 @@ public class MovieLookup : Node
         
         if(credits != null)
         {
+            args.Variables[Globals.MOVIE_CREDITS] = credits;
             md.Actors = credits.CastMembers?.Select(x => x.Name)?.ToList();
-            md.Writers  = credits.CrewMembers?.Where(x => x.Job == "Writer" || x.Job == "Screenplay") ?.Select(x => x.Name)?.ToList();
+            md.Writers  = credits.CrewMembers?.Where(x => x.Department == "Writing" || x.Job == "Writer" || x.Job == "Screenplay") ?.Select(x => x.Name)?.ToList();
             md.Directors = credits.CrewMembers?.Where(x => x.Job == "Director")?.Select(x => x.Name)?.ToList();
             md.Producers = credits.CrewMembers?.Where(x => x.Job == "Producer")?.Select(x => x.Name)?.ToList();
         }

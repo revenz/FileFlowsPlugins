@@ -26,6 +26,19 @@
       "MusicMeta": {
         "Description": "Loads the metadata of a music file into the flow variables."
       },
+      "NfoFileCreator": {
+        "Description": "Creates a Kodi NFO file from previously loaded metadata.",
+        "Fields": {
+          "DestinationPath": "Destination Folder",
+          "DestinationPath-Help": "The folder where the NFO file will be created in.\nIf empty will be created in the same directory as the original file.",
+          "DestinationFile": "Destination File",
+          "DestinationFile-Help": "The filename of the new NFO file.  If empty, the original filename will be used with the extension changed to `.nfo`"
+        },
+        "Outputs": {
+          "1": "NFO File created",
+          "2": "NFO failed to be created"
+        }        
+      },
       "TVShowLookup": {
         "Description": "Performs a search on TheMovieDB.org for a TV Show.\nStores the Metadata inside the variable 'TVShowInfo'.",
         "Outputs": {
