@@ -38,33 +38,40 @@ namespace FileFlows.BasicNodes.File
         private string _DestinationPath = string.Empty;
         private string _DestinationFile = string.Empty;
 
+
+        /// <summary>
+        /// Gets or sets the input file to move
+        /// </summary>
+        [TextVariable(1)]
+        public string InputFile{ get; set; }
+        
         [Required]
-        [Folder(1)]
+        [Folder(2)]
         public string DestinationPath 
         { 
             get => _DestinationPath;
             set { _DestinationPath = value ?? ""; }
         }
-        [TextVariable(2)]
+        [TextVariable(3)]
         public string DestinationFile
         {
             get => _DestinationFile;
             set { _DestinationFile = value ?? ""; }
         }
 
-        [Boolean(3)]
+        [Boolean(4)]
         public bool CopyFolder { get; set; }
 
-        [StringArray(4)]
+        [StringArray(5)]
         public string[] AdditionalFiles { get; set; }
 
-        [Boolean(5)]
+        [Boolean(6)]
         public bool AdditionalFilesFromOriginal { get; set; }
 
         /// <summary>
         /// Gets or sets if the original files creation and last write time dates should be preserved
         /// </summary>
-        [Boolean(6)]
+        [Boolean(7)]
         public bool PreserverOriginalDates { get; set; }
 
         private bool Canceled;
@@ -80,43 +87,62 @@ namespace FileFlows.BasicNodes.File
         {
             Canceled = false;
             
+             
             var destParts = MoveFile.GetDestinationPathParts(args, DestinationPath, DestinationFile, CopyFolder);
             if (destParts.Filename == null)
                 return -1;
             
+            string inputFile = args.ReplaceVariables(InputFile ?? string.Empty, stripMissing: true)?.EmptyAsNull() ?? args.WorkingFile;
+                              
             // cant use new FileInfo(dest).Directory.Name here since
             // if the folder is a linux folder and this node is running on windows
             // /mnt, etc will be converted to c:\mnt and break the destination
             var destDir = destParts.Path;
-            string dest = destParts.Path + destParts.Separator + destParts.Filename;
+            var destFile = destParts.Filename;
+            if(inputFile != args.WorkingFile && string.IsNullOrWhiteSpace(DestinationFile))
+            {
+                destFile = FileHelper.GetShortFileName(inputFile);
+            }
+            string dest = FileHelper.Combine(destParts.Path, destFile);
 
             //bool copied = args.CopyFile(args.WorkingFile, dest, updateWorkingFile: true);
             //if (!copied)
             //    return -1;
-            
-            if (args.FileService.FileCopy(args.WorkingFile, dest, true).IsFailed)
-                return -1;
-            args.SetWorkingFile(dest);
+            args.Logger?.ILog("File to copy: " + inputFile);
+            args.Logger?.ILog("Destination: " + dest);
 
-            if (PreserverOriginalDates)
+            if (args.FileService.FileCopy(inputFile, dest, true).Failed(out string error))
             {
-                if (args.Variables.TryGetValue("ORIGINAL_CREATE_UTC", out object oCreateTimeUtc) &&
-                    args.Variables.TryGetValue("ORIGINAL_LAST_WRITE_UTC", out object oLastWriteUtc) &&
-                    oCreateTimeUtc is DateTime dtCreateTimeUtc && oLastWriteUtc is DateTime dtLastWriteUtc)
+                args.FailureReason = "Failed to copy file: " + error;
+                args.Logger?.ELog(args.FailureReason);
+                return -1;
+            }
+
+            if (inputFile == args.WorkingFile)
+            {
+                args.Logger?.ILog("Setting working file to: " + dest);
+                args.SetWorkingFile(dest);
+
+                if (PreserverOriginalDates)
                 {
-                    args.Logger?.ILog("Preserving dates");
-                    Helpers.FileHelper.SetLastWriteTime(dest, dtLastWriteUtc);
-                    Helpers.FileHelper.SetCreationTime(dest, dtCreateTimeUtc);
-                }
-                else
-                {
-                    args.Logger?.WLog("Preserve dates is on but failed to get original dates from variables");
+                    if (args.Variables.TryGetValue("ORIGINAL_CREATE_UTC", out object oCreateTimeUtc) &&
+                        args.Variables.TryGetValue("ORIGINAL_LAST_WRITE_UTC", out object oLastWriteUtc) &&
+                        oCreateTimeUtc is DateTime dtCreateTimeUtc && oLastWriteUtc is DateTime dtLastWriteUtc)
+                    {
+                        args.Logger?.ILog("Preserving dates");
+                        Helpers.FileHelper.SetLastWriteTime(dest, dtLastWriteUtc);
+                        Helpers.FileHelper.SetCreationTime(dest, dtCreateTimeUtc);
+                    }
+                    else
+                    {
+                        args.Logger?.WLog("Preserve dates is on but failed to get original dates from variables");
+                    }
                 }
             }
 
             var srcDir = FileHelper.GetDirectory(AdditionalFilesFromOriginal
                 ? args.FileName
-                : args.WorkingFile);
+                : inputFile);
 
             if (AdditionalFiles?.Any() == true)
             {

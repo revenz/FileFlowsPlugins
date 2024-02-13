@@ -27,6 +27,9 @@
             "1": "File copied"
           },
           "Fields": {
+            "InputFile": "File To Copy",
+            "InputFile-Help": "The file to copy, if left empty then the working file will be copied",
+            "InputFile-Placeholder": "Working File",
             "DestinationPath": "Destination Folder",
             "DestinationPath-Help": "The folder where the file will be copied to",
             "DestinationFile": "Destination File",
@@ -187,6 +190,9 @@
             "2": "File moved, however original file could not be deleted"
           },
           "Fields": {
+            "InputFile": "File To Move",
+            "InputFile-Help": "The file to move, if left empty then the working file will be moved",
+            "InputFile-Placeholder": "Working File",
             "DestinationPath": "Destination Folder",
             "DestinationPath-Help": "The folder where the file will be moved to",
             "DestinationFile": "Destination File",

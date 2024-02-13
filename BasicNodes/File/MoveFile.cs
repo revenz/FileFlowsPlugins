@@ -33,48 +33,54 @@ public class MoveFile : Node
     public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/move-file";
 
     /// <summary>
+    /// Gets or sets the input file to move
+    /// </summary>
+    [TextVariable(1)]
+    public string InputFile{ get; set; }
+
+    /// <summary>
     /// Gets or sets the destination path
     /// </summary>
     [Required]
-    [Folder(1)]
+    [Folder(2)]
     public string DestinationPath { get; set; }
 
     /// <summary>
     /// Gets or sets the destination file
     /// </summary>
-    [TextVariable(2)]
+    [TextVariable(3)]
     public string DestinationFile{ get; set; }
 
     /// <summary>
     /// Gets or sets if the folder should be moved
     /// </summary>
-    [Boolean(3)]
+    [Boolean(4)]
     public bool MoveFolder { get; set; }
     
     /// <summary>
     /// Gets or sets if the original should be deleted
     /// </summary>
-    [Boolean(4)]
+    [Boolean(5)]
     public bool DeleteOriginal { get; set; }
 
     /// <summary>
     /// Gets or sets additional files that should also be moved
     /// </summary>
-    [StringArray(5)]
+    [StringArray(6)]
     public string[] AdditionalFiles { get; set; }
 
     /// <summary>
     /// Gets or sets original files from the original file location that should also be moved
     /// </summary>
-    [Boolean(6)]
+    [Boolean(7)]
     public bool AdditionalFilesFromOriginal { get; set; }
 
     /// <summary>
     /// Gets or sets if the original files creation and last write time dates should be preserved
     /// </summary>
-    [Boolean(7)]
+    [Boolean(8)]
     public bool PreserverOriginalDates { get; set; }
-
+    
     /// <summary>
     /// Executes the node
     /// </summary>
@@ -82,21 +88,54 @@ public class MoveFile : Node
     /// <returns>the output to call next</returns>
     public override int Execute(NodeParameters args)
     {
-        var dest = GetDestinationPath(args, DestinationPath, DestinationFile, MoveFolder);
+        string destFile = args.ReplaceVariables(DestinationFile ?? string.Empty);
+        
+        string inputFile = args.ReplaceVariables(InputFile ?? string.Empty)?.EmptyAsNull() ?? args.WorkingFile;
+        if (inputFile != args.WorkingFile && string.IsNullOrWhiteSpace(DestinationFile))
+            destFile = FileHelper.GetShortFileName(inputFile);
+        
+        var dest = GetDestinationPath(args, DestinationPath, destFile, MoveFolder);
         if (dest == null)
+        {
+            args.FailureReason = "Failed to get move destination";
+            args.Logger?.ELog(args.FailureReason);
             return -1;
+        }
+
+        if (inputFile != args.WorkingFile && string.IsNullOrWhiteSpace(destFile) == false)
+            dest = FileHelper.Combine(FileHelper.GetDirectory(dest), destFile); // ensure the non working file has correct extension/name
 
         // store srcDir here before we move and the working file is altered
-        var srcDir = FileHelper.GetDirectory(AdditionalFilesFromOriginal ? args.FileName : args.WorkingFile);
+        var srcDir = FileHelper.GetDirectory(AdditionalFilesFromOriginal ? args.FileName : inputFile);
         args.Logger?.ILog("Source Directory: " + srcDir);
         string shortNameLookup = FileHelper.GetShortFileName(args.FileName);
         if (shortNameLookup.LastIndexOf(".", StringComparison.InvariantCulture) > 0)
-            shortNameLookup = shortNameLookup.Substring(0, shortNameLookup.LastIndexOf(".", StringComparison.Ordinal));
+            shortNameLookup = shortNameLookup[..shortNameLookup.LastIndexOf(".", StringComparison.Ordinal)];
         
         args.Logger?.ILog("shortNameLookup: " + shortNameLookup);
+        
+        args.Logger?.ILog("Moving file: " + inputFile);
+        args.Logger?.ILog("Destination: " + dest);
 
-        if (args.MoveFile(dest) == false)
-            return -1;
+
+        if (inputFile == args.WorkingFile)
+        {
+            if (args.MoveFile(dest) == false)
+            {
+                args.FailureReason = "Failed to move file";
+                args.Logger?.ELog(args.FailureReason);
+                return -1;
+            }
+        }
+        else
+        {
+            if (args.FileService.FileMove(inputFile, dest).Failed(out string error))
+            {
+                args.FailureReason = "Failed to move file: " + error;
+                args.Logger?.ELog(args.FailureReason);
+                return -1;
+            }
+        }
 
         if (PreserverOriginalDates)
         {
@@ -198,7 +237,7 @@ public class MoveFile : Node
         var result = GetDestinationPathParts(args, destinationPath, destinationFile, moveFolder);
         if(result.Filename == null)
             return null;
-        return result.Path + result.Separator + result.Filename;
+        return FileHelper.Combine(result.Path, result.Filename);
     }
     
     /// <summary>
