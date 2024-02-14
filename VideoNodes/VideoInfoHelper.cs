@@ -315,6 +315,7 @@ public class VideoInfoHelper
             audio.Codec = audio.Codec[..^1].Trim();
 
         audio.Language = GetLanguage(line);
+        audio.Default = info.Contains("(default)");
         // if (info.IndexOf("0 channels", StringComparison.Ordinal) >= 0)
         // {
         //     logger?.WLog("Stream contained '0 Channels'");

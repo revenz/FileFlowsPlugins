@@ -27,17 +27,64 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
                 {
                     new () { Label = "AAC", Value = "aac"},
                     new () { Label = "AC3", Value = "ac3"},
+                    new () { Label = "DTS", Value = "dts" },
                     new () { Label = "EAC3", Value = "eac3" },
+                    new () { Label = "FLAC", Value ="flac" },
                     new () { Label = "MP3", Value = "mp3"},
+                    new () { Label = "PCM", Value ="pcm" },
                     new () { Label = "OPUS", Value = "opus"},
+                    new () { Label = "Vorbis", Value ="libvorbis" },
                 };
             }
             return _CodecOptions;
         }
     }
+    
+    [DefaultValue("pcm_s16le")]
+    [Select(nameof(PcmFormats), 2)]
+    [ConditionEquals(nameof(Codec), "pcm")]
+    public string PcmFormat { get; set; }
+
+    private static List<ListOption> _PcmFormats;
+    public static List<ListOption> PcmFormats
+    {
+        get
+        {
+            if (_PcmFormats == null)
+            {
+                _PcmFormats = new List<ListOption>
+                {
+                    new () { Label = "Common", Value = "###GROUP###" },
+                    new () { Label = "Signed 16-bit Little Endian", Value = "pcm_s16le" },
+                    new () { Label = "Signed 24-bit Little Endian", Value = "pcm_s24le"},
+                    
+                    new () { Label = "Signed", Value = "###GROUP###" },
+                    new () { Label = "8-bit", Value = "pcm_s8"},
+                    new () { Label = "16-bit Little Endian", Value = "pcm_s16le" },
+                    new () { Label = "16-bit Big Endian", Value = "pcm_s16be"},
+                    new () { Label = "24-bit Little Endian", Value = "pcm_s24le"},
+                    new () { Label = "24-bit Big Endian", Value = "pcm_s24be"},
+                    new () { Label = "32-bit Little Endian", Value = "pcm_s32le"},
+                    new () { Label = "32-bit Big Endian", Value = "pcm_s32be"},
+                    new () { Label = "64-bit Little Endian", Value = "pcm_s64le"},
+                    new () { Label = "64-bit Big Endian", Value = "pcm_s64be"},
+                    new () { Label = "Floating-point", Value = "###GROUP###" },
+                    new () { Label = "32-bit Little Endian", Value = "pcm_f32le"},
+                    new () { Label = "32-bit Big Endian", Value = "pcm_f32be"},
+                    new () { Label = "16-bit Little Endian", Value = "pcm_f16le"},
+                    new () { Label = "24-bit Little Endian", Value = "pcm_f24le"},
+                    new () { Label = "64-bit Little Endian", Value = "pcm_f64le"},
+                    new () { Label = "64-bit Big Endian", Value = "pcm_f64be"},
+                };
+
+            }
+            return _PcmFormats;
+        }
+    }
+
 
     [DefaultValue(0)]
-    [Select(nameof(ChannelsOptions), 2)]
+    [Select(nameof(ChannelsOptions), 3)]
     public float Channels { get; set; }
 
     private static List<ListOption> _ChannelsOptions;
@@ -60,7 +107,7 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
         }
     }
 
-    [Select(nameof(BitrateOptions), 3)]
+    [Select(nameof(BitrateOptions), 4)]
     public int Bitrate { get; set; }
 
     private static List<ListOption> _BitrateOptions;
@@ -85,13 +132,13 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
     }
 
 
-    [TextVariable(4)]
+    [TextVariable(5)]
     public string Pattern { get; set; }
 
-    [Boolean(5)]
+    [Boolean(6)]
     public bool NotMatching { get; set; }
 
-    [Boolean(6)]
+    [Boolean(7)]
     public bool UseLanguageCode { get; set; }
 
     public override int Execute(NodeParameters args)
@@ -157,7 +204,11 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
     /// <returns>if the stream had to be converted or not</returns>
     private bool ConvertTrack(NodeParameters args, FfmpegAudioStream stream)
     {
-        bool codecSame = stream.Stream.Codec?.ToLower() == Codec?.ToLower();
+        string codec = Codec?.ToLowerInvariant() ?? string.Empty;
+        if (codec == "pcm")
+            codec = PcmFormat;
+        
+        bool codecSame = stream.Stream.Codec?.ToLowerInvariant() == codec;
         bool channelsSame = Channels == 0 || Math.Abs(Channels - stream.Stream.Channels) < 0.05f;
         bool bitrateSame = Bitrate < 2 || stream.Stream.Bitrate == 0 ||
                            Math.Abs(stream.Stream.Bitrate - Bitrate) < 0.05f;
@@ -170,7 +221,7 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
 
         stream.Codec = Codec.ToLowerInvariant();
 
-        stream.EncodingParameters.AddRange(FfmpegBuilderAudioAddTrack.GetNewAudioTrackParameters(args, stream, Codec, Channels, Bitrate, 0));
+        stream.EncodingParameters.AddRange(FfmpegBuilderAudioAddTrack.GetNewAudioTrackParameters(args, stream, codec, Channels, Bitrate, 0));
         return true;
     }
 }

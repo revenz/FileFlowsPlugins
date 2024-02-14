@@ -145,7 +145,13 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
             if (changed)
             {
                 streams[i].ForcedChange = true;
-                orderedStreams[i].ForcedChange = true;
+                args.Logger?.ILog("Stream has change[1]: " + streams[i]);
+                
+                if (streams[i] != orderedStreams[i])
+                {
+                    orderedStreams[i].ForcedChange = true;
+                    args.Logger?.ILog("Stream has change[2]: " + orderedStreams[i]);
+                }
             }
             changes |= changed;
             streams[i] = orderedStreams[i];

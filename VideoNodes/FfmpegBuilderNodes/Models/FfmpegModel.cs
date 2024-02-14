@@ -97,6 +97,7 @@
                     Language = item.stream.Language,
                     Stream = item.stream,
                     Channels = item.stream.Channels,
+                    IsDefault = item.stream.Default,
                     Codec = item.stream.Codec
                 });
             }
@@ -115,9 +116,15 @@
             }
 
             if(info.FileName.ToLower().EndsWith(".mp4"))
-                model.Extension = info.FileName.Substring(info.FileName.LastIndexOf(".") + 1);
-            if (info.FileName.ToLower().EndsWith(".mkv"))
-                model.Extension = info.FileName.Substring(info.FileName.LastIndexOf(".") + 1);
+                model.Extension = info.FileName[(info.FileName.LastIndexOf(".", StringComparison.Ordinal) + 1)..];
+            else if (info.FileName.ToLower().EndsWith(".mkv"))
+                model.Extension = info.FileName[(info.FileName.LastIndexOf(".", StringComparison.Ordinal) + 1)..];
+            else if (info.FileName.ToLower().EndsWith(".mov"))
+                model.Extension = info.FileName[(info.FileName.LastIndexOf(".", StringComparison.Ordinal) + 1)..];
+            else if (info.FileName.ToLower().EndsWith(".mxf"))
+                model.Extension = info.FileName[(info.FileName.LastIndexOf(".", StringComparison.Ordinal) + 1)..];
+            else if (info.FileName.ToLower().EndsWith(".webm"))
+                model.Extension = info.FileName[(info.FileName.LastIndexOf(".", StringComparison.Ordinal) + 1)..];
 
             return model;
         }

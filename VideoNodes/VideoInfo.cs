@@ -177,6 +177,11 @@ public class AudioStream : VideoFileStream
     public int SampleRate { get; set; }
 
     /// <summary>
+    /// If this is a the default audio track
+    /// </summary>
+    public bool Default { get; set; }
+
+    /// <summary>
     /// Converts the steam to a string
     /// </summary>
     /// <returns></returns>
@@ -187,7 +192,8 @@ public class AudioStream : VideoFileStream
             Language,
             Codec,
             Title,
-            Channels > 0 ? Channels.ToString("0.0") : null
+            Channels > 0 ? Channels.ToString("0.0") : null,
+            Default ? "Default" : null
         }.Where(x => string.IsNullOrWhiteSpace(x) == false));
 }
 

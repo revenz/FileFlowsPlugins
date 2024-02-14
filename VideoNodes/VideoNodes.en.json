@@ -175,6 +175,8 @@
         "Fields": {
           "Channels": "Channels",
           "Channels-Help": "The number of channels this new audio track will be.\nIf you specify more channels than the source, FFMPEG will automatically upmix it.\nIf you specify fewer channels than the source, FFMPEG will automatically down mix it.",
+          "PcmFormat": "Format",
+          "PcmFormat-Help": "The PCM format to use for encoding PCM audio.",
           "Bitrate": "Bitrate",
           "Bitrate-Help": "Bitrate of the audio track",
           "Codec": "Codec",
@@ -470,6 +472,8 @@
           "1": "Video set to use prores"
         },
         "Fields": {
+          "Encoder": "Encoder",
+          "Encoder-Help": "Which FFmpeg prores encoder to use.",
           "Quality": "Quality",
           "Quality-Help": "0 for maximum quality, 32 for minimum quality.  9 to 13 are good values to use.",
           "Profile": "Profile",
@@ -488,6 +492,13 @@
         "Description": "Remuxes a video file into a MKV container.",
         "Outputs": {
           "1": "FFMPEG Builder set to remux to MKV"
+        }
+      },
+      "FfmpegBuilderRemuxToMxf": {
+        "Label": "FFMPEG Builder: Remux to MXF",
+        "Description": "Remuxes a video file into a MXF container.",
+        "Outputs": {
+          "1": "FFMPEG Builder set to remux to MXF"
         }
       },
       "FfmpegBuilderRemuxToMP4": {

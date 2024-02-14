@@ -91,8 +91,8 @@ public class FfmpegSubtitleStream : FfmpegStream
     /// <returns>the string representation of stream</returns>
     public override string ToString()
     {
-        if (Stream != null)
-            return Stream.ToString() + (Deleted ? " / Deleted" : "");
+        // if (Stream != null)
+        //     return Stream.ToString() + (Deleted ? " / Deleted" : "");
 
         // can be null in unit tests
         return string.Join(" / ", new string[]
@@ -101,7 +101,9 @@ public class FfmpegSubtitleStream : FfmpegStream
             Language,
             Codec,
             Title,
-            Deleted ? "Deleted" : null
+            IsDefault ? "Default" : null,
+            Deleted ? "Deleted" : null,
+            HasChange ? "Changed" : null
         }.Where(x => string.IsNullOrWhiteSpace(x) == false));
     }
 }
