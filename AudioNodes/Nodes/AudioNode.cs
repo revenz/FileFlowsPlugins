@@ -139,14 +139,15 @@ namespace FileFlows.AudioNodes
 
         protected bool ReadAudioFileInfo(NodeParameters args, string ffmpegExe, string ffprobe, string filename)
         {
-            var AudioInfo = new AudioInfoHelper(ffmpegExe, ffprobe, args.Logger).Read(filename);
-            if (AudioInfo.Duration == 0)
+            var result = new AudioInfoHelper(ffmpegExe, ffprobe, args.Logger).Read(filename);
+            if (result.Failed(out string error))
             {
-                args.Logger?.ILog("Failed to load Audio information.");
+                args.FailureReason = error;
+                args.Logger?.ELog(error);
                 return false;
             }
 
-            SetAudioInfo(args, AudioInfo, Variables);
+            SetAudioInfo(args, result.Value, Variables);
             return true;
         }
     }

@@ -18,21 +18,15 @@ public class AudioInfoHelper
         this.Logger = logger;
     }
 
-    public AudioInfo Read(string filename)
+    public Result<AudioInfo> Read(string filename)
     {
-        var mi = new AudioInfo();
         
         if (System.IO.File.Exists(filename) == false)
-        {
-            Logger.ELog("File not found: " + filename);
-            return mi;
-        }
+            return Result<AudioInfo>.Fail("File not found: " + filename);
         if (string.IsNullOrEmpty(ffMpegExe) || System.IO.File.Exists(ffMpegExe) == false)
-        {
-            Logger.ELog("FFmpeg not found: " + (ffMpegExe ?? "not passed in"));
-            return mi;
-        }
+            return Result<AudioInfo>.Fail("FFmpeg not found: " + (ffMpegExe ?? "not passed in"));
 
+        var mi = new AudioInfo();
         var result = ReadFromFFprobe(filename);
         if (result.IsFailed == false)
             mi = result.Value;
@@ -56,18 +50,12 @@ public class AudioInfoHelper
                 process.WaitForExit();
 
                 if (string.IsNullOrEmpty(error) == false && error != "At least one output file must be specified")
-                {
-                    Logger.ELog("Failed reading ffmpeg info: " + error);
-                    return mi;
-                }
+                    return Result<AudioInfo>.Fail("Failed reading ffmpeg info: " + error);
 
                 Logger.ILog("Audio Information:" + Environment.NewLine + output);
 
-                if(output.IndexOf("Input #0") < 0)
-                {
-                    Logger.ELog("Failed to read audio information for file");
-                    return mi;
-                }
+                if(output.IndexOf("Input #0", StringComparison.Ordinal) < 0)
+                    return Result<AudioInfo>.Fail("Failed to read audio information for file");
 
                 if (output.ToLower().Contains("mp3"))
                     mi.Codec = "mp3";
@@ -88,14 +76,14 @@ public class AudioInfoHelper
 
                 foreach (string line in output.Split('\n'))
                 {
-                    int colonIndex = line.IndexOf(":");
+                    int colonIndex = line.IndexOf(":", StringComparison.Ordinal);
                     if(colonIndex < 1)
                         continue;
 
                     string lowLine = line.ToLower().Trim();
 
                     if (lowLine.StartsWith("language"))
-                        mi.Language = line.Substring(colonIndex + 1).Trim();
+                        mi.Language = line[(colonIndex + 1)..].Trim();
                     else if (lowLine.StartsWith("track") && lowLine.Contains("total") == false)
                     {
                         if (mi.Track < 1)
@@ -108,51 +96,51 @@ public class AudioInfoHelper
                     else if (lowLine.StartsWith("artist") || lowLine.StartsWith("album_artist"))
                     {
                         if (string.IsNullOrWhiteSpace(mi.Artist))
-                            mi.Artist = line.Substring(colonIndex + 1).Trim();
+                            mi.Artist = line[(colonIndex + 1)..].Trim();
                     }
                     else if (lowLine.StartsWith("title") && lowLine.Contains(".jpg") == false)
                     {
                         if (string.IsNullOrWhiteSpace(mi.Title))
-                            mi.Title = line.Substring(colonIndex + 1).Trim();
+                            mi.Title = line[(colonIndex + 1)..].Trim();
                     }
                     else if (lowLine.StartsWith("album"))
                     {
                         if (string.IsNullOrWhiteSpace(mi.Album))
-                            mi.Album = line.Substring(colonIndex + 1).Trim();
+                            mi.Album = line[(colonIndex + 1)..].Trim();
                     }
                     else if (lowLine.StartsWith("disc"))
                     {
-                        if (int.TryParse(line.Substring(colonIndex + 1).Trim(), out int value))
+                        if (int.TryParse(line[(colonIndex + 1)..].Trim(), out int value))
                             mi.Disc = value;
                     }
                     else if (lowLine.StartsWith("disctotal") || lowLine.StartsWith("totaldiscs"))
                     {
-                        if (int.TryParse(line.Substring(colonIndex + 1).Trim(), out int value))
+                        if (int.TryParse(line[(colonIndex + 1)..].Trim(), out int value))
                             mi.TotalDiscs = value;
                     }
                     else if (lowLine.StartsWith("date") || lowLine.StartsWith("retail date") || lowLine.StartsWith("retaildate") || lowLine.StartsWith("originaldate") || lowLine.StartsWith("original date"))
                     {
-                        if (int.TryParse(line.Substring(colonIndex + 1).Trim(), out int value))
+                        if (int.TryParse(line[(colonIndex + 1)..].Trim(), out int value))
                         {
                             if(mi.Date < new DateTime(1900, 1, 1))
                                 mi.Date = new DateTime(value, 1, 1);
                         }
-                        else if(DateTime.TryParse(line.Substring(colonIndex + 1).Trim(), out DateTime dtValue) && dtValue.Year > 1900)
+                        else if(DateTime.TryParse(line[(colonIndex + 1)..].Trim(), out DateTime dtValue) && dtValue.Year > 1900)
                             mi.Date = dtValue; 
                     }
                     else if (lowLine.StartsWith("genre"))
                     {
                         if(mi.Genres?.Any() != true)
-                            mi.Genres = line.Substring(colonIndex + 1).Trim().Split(' ');
+                            mi.Genres = line[(colonIndex + 1)..].Trim().Split(' ');
                     }
                     else if (lowLine.StartsWith("encoder"))
-                        mi.Encoder = line.Substring(colonIndex + 1).Trim();
+                        mi.Encoder = line[(colonIndex + 1)..].Trim();
                     else if (lowLine.StartsWith("duration"))
                     {
                         if (mi.Duration < 1)
                         {
-                            string temp = line.Substring(colonIndex + 1).Trim();
-                            if (temp.IndexOf(",") > 0)
+                            string temp = line[(colonIndex + 1)..].Trim();
+                            if (temp.IndexOf(",", StringComparison.Ordinal) > 0)
                             {
                                 temp = temp.Substring(0, temp.IndexOf(","));
                                 if (TimeSpan.TryParse(temp, out TimeSpan value))
@@ -162,10 +150,10 @@ public class AudioInfoHelper
                     }
 
 
-                    if (line.ToLower().IndexOf("bitrate:") > 0)
+                    if (line.ToLower().IndexOf("bitrate:", StringComparison.Ordinal) > 0)
                     {
-                        string br = line.Substring(line.ToLower().IndexOf("bitrate:") + "bitrate:".Length).Trim();
-                        if (br.IndexOf(" ") > 0)
+                        string br = line.Substring(line.ToLower().IndexOf("bitrate:", StringComparison.Ordinal) + "bitrate:".Length).Trim();
+                        if (br.IndexOf(" ", StringComparison.Ordinal) > 0)
                         {
                             int multiplier = br.ToLower().IndexOf("kb/s", StringComparison.Ordinal) > 0 ? 1024 : 
                                              br.ToLower().IndexOf("mb/s", StringComparison.Ordinal) > 0 ? 1024 * 1024 : 
@@ -182,7 +170,7 @@ public class AudioInfoHelper
                         mi.Frequency = int.Parse(match.Groups[1].Value);
                     }
 
-                    if (line.IndexOf(" stereo,") > 0)
+                    if (line.IndexOf(" stereo,", StringComparison.Ordinal) > 0)
                         mi.Channels = 2;
                 }
 
@@ -191,6 +179,7 @@ public class AudioInfoHelper
         catch (Exception ex)
         {
             Logger.ELog(ex.Message, ex.StackTrace.ToString());
+            return Result<AudioInfo>.Fail("Failed reading audio information: " + ex.Message);
         }
 
         if (string.IsNullOrEmpty(mi.Artist) || string.IsNullOrEmpty(mi.Album) || mi.Track < 1 || string.IsNullOrEmpty(mi.Title))

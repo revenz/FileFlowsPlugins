@@ -9,18 +9,22 @@ namespace FileFlows.AudioNodes.Tests;
 [TestClass]
 public class AudioInfoTests
 {
-    const string file = @"/home/john/Music/test/test.mp3";
-    readonly string ffmpegExe = (OperatingSystem.IsLinux() ? "/usr/bin/ffmpeg" :  @"C:\utils\ffmpeg\ffmpeg.exe");
-    readonly string ffprobe = (OperatingSystem.IsLinux() ? "/usr/bin/ffprobe" :  @"C:\utils\ffmpeg\ffprobe.exe");
+    const string file = @"/home/john/Music/test/test.wav";
+    readonly string ffmpegExe = (OperatingSystem.IsLinux() ? "/usr/local/bin/ffmpeg" :  @"C:\utils\ffmpeg\ffmpeg.exe");
+    readonly string ffprobe = (OperatingSystem.IsLinux() ? "/usr/local/bin/ffprobe" :  @"C:\utils\ffmpeg\ffprobe.exe");
     
     [TestMethod]
     public void AudioInfo_SplitTrack()
     {
-        var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty, null);;
+        var logger = new TestLogger();
+        var args = new FileFlows.Plugin.NodeParameters(file, logger,  false, string.Empty, null);;
         args.GetToolPathActual = (string tool) => ffmpegExe;
-        args.TempPath = @"D:\music\temp";
+        args.TempPath = @"/home/john/Music/temp";
 
-        var AudioInfo = new AudioInfoHelper(ffmpegExe, ffprobe, args.Logger).Read(args.WorkingFile);
+        var result = new AudioInfoHelper(ffmpegExe, ffprobe, args.Logger).Read(args.WorkingFile);
+        Assert.IsFalse(result.IsFailed);
+
+        var AudioInfo = result.Value;
 
         Assert.AreEqual(9, AudioInfo.Track);
     }
@@ -38,7 +42,7 @@ public class AudioInfoTests
 
         var AudioInfo = new AudioInfoHelper(ffmpegExe, ffprobe, args.Logger).Read(args.WorkingFile);
 
-        Assert.AreEqual(8, AudioInfo.Track);
+        Assert.AreEqual(8, AudioInfo.Value.Track);
     }
 
     [TestMethod]
@@ -53,7 +57,7 @@ public class AudioInfoTests
             // laod the variables
             Assert.AreEqual(1, new AudioFile().Execute(args));
 
-            var audio = new AudioInfoHelper(ffmpegExe, ffprobe, args.Logger).Read(args.WorkingFile);
+            var audio = new AudioInfoHelper(ffmpegExe, ffprobe, args.Logger).Read(args.WorkingFile).Value;
 
             string folder = args.ReplaceVariables("{audio.ArtistThe} ({audio.Year})");
             Assert.AreEqual($"{audio.Artist} ({audio.Date.Year})", folder);
@@ -103,7 +107,7 @@ public class AudioInfoTests
         int result = convert.Execute(args);
         Assert.AreEqual(1, result);
 
-        var audio = new AudioInfoHelper(ffmpegExe, ffprobe, args.Logger).Read(args.WorkingFile);
+        var audio = new AudioInfoHelper(ffmpegExe, ffprobe, args.Logger).Read(args.WorkingFile).Value;
         Assert.AreEqual(192 * 1024, audio.Bitrate);
 
         var md = new Dictionary<string, object>();

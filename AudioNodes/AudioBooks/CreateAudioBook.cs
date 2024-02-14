@@ -275,7 +275,7 @@ public class CreateAudioBook: AudioNode
 
     private TimeSpan GetChapterLength(NodeParameters args, string ffmpeg, string ffprobe, string filename)
     {
-        var info = new AudioInfoHelper(ffmpeg, ffprobe, args.Logger).Read(filename);
+        var info = new AudioInfoHelper(ffmpeg, ffprobe, args.Logger).Read(filename).Value;
         return TimeSpan.FromSeconds(info.Duration);
     }
 
