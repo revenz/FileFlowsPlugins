@@ -18,11 +18,39 @@ public class FfmpegBuilderProres : FfmpegBuilderNode
     /// Gets that this is an enterprise flow element
     /// </summary>
     public override bool Enterprise => true;
+    
+    /// <summary>
+    /// Gets or sets the profile to use
+    /// </summary>
+    [Select(nameof(Encoders), 1)]
+    [DefaultValue(4)]
+    public string Encoder { get; set; }
+    
+    private static List<ListOption> _Encoders;
+    /// <summary>
+    /// Gets or sets the encoder options
+    /// </summary>
+    public static List<ListOption> Encoders
+    {
+        get
+        {
+            if (_Encoders == null)
+            {
+                _Encoders = new List<ListOption>
+                {
+                    new () { Label = "prores", Value = "prores" },
+                    new () { Label = "prores_ks / prores_kostya", Value = "prores_ks" },
+                    new () { Label = "prores_aw / prores_anatolyi", Value = "prores_aw" }
+                };
+            }
+            return _Encoders;
+        }
+    } 
 
     /// <summary>
     /// Gets or sets the profile to use
     /// </summary>
-    [Select(nameof(Profiles), 1)]
+    [Select(nameof(Profiles), 2)]
     [DefaultValue(3)]
     public int Profile { get; set; }
     
@@ -51,7 +79,7 @@ public class FfmpegBuilderProres : FfmpegBuilderNode
     /// <summary>
     /// Gets or sets the pixel format to use
     /// </summary>
-    [Select(nameof(PixelFormats), 2)]
+    [Select(nameof(PixelFormats), 3)]
     [DefaultValue("yuva444p10le")]
     public string PixelFormat { get; set; }
     
@@ -67,6 +95,7 @@ public class FfmpegBuilderProres : FfmpegBuilderNode
             {
                 _PixelFormats = new List<ListOption>
                 {
+                    new () { Label = "Not Set", Value = string.Empty },
                     new () { Label = "4:2:2", Value = "yuva422p10le" },
                     new () { Label = "4:4:4", Value = "yuva444p10le" }
                 };
@@ -78,10 +107,11 @@ public class FfmpegBuilderProres : FfmpegBuilderNode
     /// <summary>
     /// Gets or sets the profile to use
     /// </summary>
-    [Slider(3)]
+    [Slider(4, inverse: true)]
     [Range(0, 32)]
     [DefaultValue(9)]
     public int Quality { get; set; }
+    
 
     /// <summary>
     /// Executes the flow element
@@ -106,7 +136,8 @@ public class FfmpegBuilderProres : FfmpegBuilderNode
         stream.EncodingParameters.Clear();
         
         // prores_ks -profile:v 3 -qscale:v 13 -vendor apl0 -pix_fmt yuva444p10le
-        stream.EncodingParameters.Add("prores_ks");
+        string encoder = Encoder?.EmptyAsNull() ?? "prores";
+        stream.EncodingParameters.Add(encoder);
         stream.EncodingParameters.Add("-profile:v");
         int profile = this.Profile;
         if (profile < 0)
@@ -126,13 +157,15 @@ public class FfmpegBuilderProres : FfmpegBuilderNode
         stream.EncodingParameters.Add("-vendor");
         stream.EncodingParameters.Add("apl0");
 
-        string pix_fmt = PixelFormat?.EmptyAsNull() ?? "yuva422p10le";
-        stream.EncodingParameters.Add("-pix_fmt");
-        stream.EncodingParameters.Add(pix_fmt);
-
+        args.Logger?.ILog("Encoding Prores Encoder: " + encoder);
         args.Logger?.ILog("Encoding Prores Profile: " + profile);
         args.Logger?.ILog("Encoding Prores Quality: " + quality);
-        args.Logger?.ILog("Encoding Prores Pixel Format: " + pix_fmt);
+        if (string.IsNullOrWhiteSpace(PixelFormat) == false)
+        {
+            stream.EncodingParameters.Add("-pix_fmt");
+            stream.EncodingParameters.Add(PixelFormat);
+            args.Logger?.ILog("Encoding Prores Pixel Format: " + PixelFormat);
+        }
 
         stream.ForcedChange = true;
         return 1;
