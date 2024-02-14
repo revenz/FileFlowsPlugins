@@ -39,19 +39,23 @@ namespace FileFlows.AudioNodes
 
         public override int Execute(NodeParameters args)
         {
-            string ffmpegExe = GetFFmpeg(args);
-            if (string.IsNullOrEmpty(ffmpegExe))
+            var ffmpegExeResult = GetFFmpeg(args);
+            if (ffmpegExeResult.Failed(out string ffmpegError))
             {
-                args.FailureReason = "FFmpeg not found";
+                args.FailureReason = ffmpegError;
+                args.Logger?.ELog(ffmpegError);
                 return -1;
             }
-
-            string ffprobe = GetFFprobe(args);
-            if (string.IsNullOrEmpty(ffprobe))
+            string ffmpegExe = ffmpegExeResult.Value;
+            
+            var ffprobeResult = GetFFprobe(args);
+            if (ffmpegExeResult.Failed(out string ffprobeError))
             {
-                args.FailureReason = "FFprobe not found";
+                args.FailureReason = ffprobeError;
+                args.Logger?.ELog(ffprobeError);
                 return -1;
             }
+            string ffprobe = ffprobeResult.Value;
 
 
             if (args.FileService.FileCreationTimeUtc(args.WorkingFile).Success(out DateTime createTime))
@@ -66,9 +70,15 @@ namespace FileFlows.AudioNodes
                     return 1;
 
                 var AudioInfo = GetAudioInfo(args);
+                if (AudioInfo.Failed(out string error))
+                {
+                    args.FailureReason = error;
+                    args.Logger?.ELog(error);
+                    return -1;
+                }
 
-                if (string.IsNullOrEmpty(AudioInfo.Codec) == false)
-                    args.RecordStatistic("CODEC", AudioInfo.Codec);
+                if (string.IsNullOrEmpty(AudioInfo.Value.Codec) == false)
+                    args.RecordStatistic("CODEC", AudioInfo.Value.Codec);
 
                 return 0;
             }

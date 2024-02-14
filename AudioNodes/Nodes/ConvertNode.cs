@@ -1,6 +1,4 @@
 ﻿using FileFlows.AudioNodes.Helpers;
-using FileFlows.Plugin;
-using FileFlows.Plugin.Attributes;
 
 namespace FileFlows.AudioNodes
 {
@@ -99,9 +97,15 @@ namespace FileFlows.AudioNodes
 
         public override int Execute(NodeParameters args)
         {
-            AudioInfo AudioInfo = GetAudioInfo(args);
-            if (AudioInfo == null)
+            var audioInfoResult = GetAudioInfo(args);
+            if (audioInfoResult.Failed(out string error))
+            {
+                args.Logger?.ELog(error);
+                args.FailureReason = error;
                 return -1;
+            }
+
+            AudioInfo AudioInfo = audioInfoResult.Value; 
 
             string ffmpegExe = GetFFmpeg(args);
             if (string.IsNullOrEmpty(ffmpegExe))
@@ -122,7 +126,7 @@ namespace FileFlows.AudioNodes
 
         protected long GetSourceBitrate(NodeParameters args)
         {
-            var info = GetAudioInfo(args);
+            var info = GetAudioInfo(args).Value;
             return info.Bitrate;
         }
 
@@ -307,13 +311,23 @@ namespace FileFlows.AudioNodes
             if (AudioInfo == null)
                 return -1;
             
-            string ffmpegExe = GetFFmpeg(args);
-            if (string.IsNullOrEmpty(ffmpegExe))
+            var ffmpegExeResult = GetFFmpeg(args);
+            if (ffmpegExeResult.Failed(out string ffmpegError))
+            {
+                args.FailureReason = ffmpegError;
+                args.Logger?.ELog(ffmpegError);
                 return -1;
+            }
+            string ffmpegExe = ffmpegExeResult.Value;
 
-            string ffprobe = GetFFprobe(args);
-            if (string.IsNullOrEmpty(ffprobe))
+            var ffprobeResult = GetFFprobe(args);
+            if (ffmpegExeResult.Failed(out string ffprobeError))
+            {
+                args.FailureReason = ffprobeError;
+                args.Logger?.ELog(ffprobeError);
                 return -1;
+            }
+            string ffprobe = ffprobeResult.Value;
 
             if(Normalize == false && AudioInfo.Codec?.ToLower() == Extension?.ToLower())
             {

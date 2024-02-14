@@ -56,19 +56,23 @@ public class CreateAudioBook: AudioNode
     /// <returns>the output to call next, -1 to abort flow, 0 to end flow</returns>
     public override int Execute(NodeParameters args)
     {
-        var ffmpeg = GetFFmpeg(args);
-        if (string.IsNullOrEmpty(ffmpeg))
+        var ffmpegExeResult = GetFFmpeg(args);
+        if (ffmpegExeResult.Failed(out string ffmpegError))
         {
-            args.FailureReason = "FFmpeg not found";
+            args.FailureReason = ffmpegError;
+            args.Logger?.ELog(ffmpegError);
             return -1;
         }
+        string ffmpeg = ffmpegExeResult.Value;
 
-        var ffprobe = GetFFprobe(args);
-        if (string.IsNullOrEmpty(ffprobe))
+        var ffprobeResult = GetFFprobe(args);
+        if (ffmpegExeResult.Failed(out string ffprobeError))
         {
-            args.FailureReason = "FFprobe not found";
+            args.FailureReason = ffprobeError;
+            args.Logger?.ELog(ffprobeError);
             return -1;
         }
+        string ffprobe = ffprobeResult.Value;
 
         var dir = args.IsDirectory ? args.WorkingFile : FileHelper.GetDirectory(args.WorkingFile);
 

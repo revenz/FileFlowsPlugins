@@ -7,6 +7,20 @@
           "1": "Audio file from library"
         }
       },
+      "AudioBitrateMatches": {
+        "Label": "Audio Bitrate Matches",
+        "Description": "Check if an audio bitrate matches the constraints.",
+        "Fields": {
+          "Match": "Match",
+          "BitrateKilobytes": "Bitrate",
+          "BitrateKilobytes-Suffix": "Kilobytes",
+          "BitrateKilobytes-Help": "The bitrate in kilobytes to run the match against."
+        },
+        "Outputs": {
+          "1": "Does match",
+          "2": "Does not match"
+        }
+      },
       "AudioFileNormalization": {
         "Description": "Normalizes an audio file using two passes of FFMPEGs loudnorm filter",
         "Outputs": {

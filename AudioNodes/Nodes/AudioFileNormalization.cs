@@ -20,13 +20,24 @@ public class AudioFileNormalization : AudioNode
     {
         try
         {
-            string ffmpegExe = GetFFmpeg(args);
-            if (string.IsNullOrEmpty(ffmpegExe))
+            var ffmpegExeResult = GetFFmpeg(args);
+            if (ffmpegExeResult.Failed(out string ffmpegError))
+            {
+                args.FailureReason = ffmpegError;
+                args.Logger?.ELog(ffmpegError);
                 return -1;
+            }
+            string ffmpegExe = ffmpegExeResult.Value;
 
-            AudioInfo AudioInfo = GetAudioInfo(args);
-            if (AudioInfo == null)
+            var audioInfoResult = GetAudioInfo(args);
+            if (audioInfoResult.Failed(out string error))
+            {
+                args.Logger?.ELog(error);
+                args.FailureReason = error;
                 return -1;
+            }
+
+            AudioInfo AudioInfo = audioInfoResult.Value;
 
             List<string> ffArgs = new List<string>();
 
