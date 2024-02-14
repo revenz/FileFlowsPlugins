@@ -114,7 +114,10 @@ namespace FileFlows.VideoNodes
                 }
                 else if (HasLine(lines, "codec not currently supported in container", out line))
                 {
-                    args.FailureReason = "Codec not currently supported in container";
+                    if (line.Contains("codec ttf")) // add more as i see them
+                        args.FailureReason = "Subtitle codec not currently supported in container";
+                    else // generic
+                        args.FailureReason = "Codec not currently supported in container";
                 }
                 else if (HasLine(lines, "encoding with ProRes Proxy/LT/422/422 HQ (apco, apcs, apcn, ap4h) profile, need YUV422P10 input", out line))
                 {
