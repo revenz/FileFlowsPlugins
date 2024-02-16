@@ -411,7 +411,7 @@ public class VideoInfoHelper
         if (rgxTitle.IsMatch(info))
             sub.Title = rgxTitle.Match(info).Value.Trim();
 
-        sub.Forced = info.ToLower().Contains("forced");
+        sub.Forced = info.ToLower().Contains("(forced)");
         return sub;
     }
     

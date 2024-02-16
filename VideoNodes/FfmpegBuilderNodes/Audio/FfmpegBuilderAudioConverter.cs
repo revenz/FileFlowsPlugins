@@ -1,4 +1,5 @@
 ﻿using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
+using FileFlows.VideoNodes.Helpers;
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 
@@ -131,20 +132,49 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
         }
     }
 
+    [DefaultValue("")]
+    [Select(nameof(FieldOptions), 5)]
+    public string Field { get; set; }
 
-    [TextVariable(5)]
+    private static List<ListOption> _FieldOptions;
+
+    internal const string FIELD_TITLE = "Title";
+    internal const string FIELD_LANGUAGE = "Language";
+    internal const string FIELD_CODEC = "Codec";
+
+    public static List<ListOption> FieldOptions
+    {
+        get
+        {
+            if (_FieldOptions == null)
+            {
+                _FieldOptions = new List<ListOption>
+                {
+                    new() { Label = "Convert All", Value = "" },
+                    new() { Label = "Title", Value = FIELD_TITLE },
+                    new() { Label = "Language", Value = FIELD_LANGUAGE },
+                    new() { Label = "Codec", Value = FIELD_CODEC },
+                };
+            }
+
+            return _FieldOptions;
+        }
+    }
+
+    [TextVariable(6)]
+    [ConditionEquals(nameof(Field), "", true)]
     public string Pattern { get; set; }
 
-    [Boolean(6)]
-    public bool NotMatching { get; set; }
-
     [Boolean(7)]
-    public bool UseLanguageCode { get; set; }
+    [ConditionEquals(nameof(Field), "", true)]
+    public bool NotMatching { get; set; }
 
     public override int Execute(NodeParameters args)
     {
         bool converting = false;
         Regex? regex = null;
+        
+        
         foreach (var track in Model.AudioStreams)
         {
             if (track.Deleted)
@@ -153,44 +183,74 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
                 continue;
             }
 
-            if (string.IsNullOrEmpty(this.Pattern))
-            { 
-                bool convertResult = ConvertTrack(args, track);
-                if (convertResult)
+            bool convert = false;
+            if (string.IsNullOrEmpty(this.Field))
+            {
+                convert = true;
+            }
+            else
+            {
+                string testValue = Field switch
                 {
-                    args.Logger?.ILog($"Stream {track} will be converted");
-                    converting = true;
+                    FIELD_LANGUAGE => track.Language?.EmptyAsNull() ?? track.Stream?.Language ?? string.Empty,
+                    FIELD_TITLE => track.Title?.EmptyAsNull() ?? track.Stream?.Title ?? string.Empty,
+                    FIELD_CODEC => track.Codec?.EmptyAsNull() ?? track.Stream?.Codec ?? string.Empty,
+                    _ => null
+                };
+                if (testValue == null)
+                {
+                    args.Logger?.ILog("Failed to load test value for stream: " + track);
+                    continue;
+                }
+
+                string pattern = this.Pattern ?? string.Empty;
+
+                if (GeneralHelper.IsRegex(pattern))
+                {
+                    try
+                    {
+                        convert =
+                            new Regex(pattern, RegexOptions.CultureInvariant | RegexOptions.IgnoreCase).IsMatch(
+                                testValue);
+                        if (NotMatching)
+                            convert = !convert;
+                    }
+                    catch (Exception ex)
+                    {
+                        args.Logger?.WLog("Invalid pattern: " + ex.Message);
+                        continue;
+                    }
+                }
+                else if (Field == FIELD_LANGUAGE)
+                {
+                    args.Logger?.ILog("Matching language using language helper.");
+                    convert = LanguageHelper.AreSame(pattern, testValue);
+                    if (NotMatching)
+                        convert = !convert;
                 }
                 else
                 {
-                    args.Logger?.ILog($"Stream {track} will not be converted");
+                    convert = string.Equals(pattern, testValue, StringComparison.InvariantCultureIgnoreCase);
+                    if (NotMatching)
+                        convert = !convert;
                 }
+            }
+
+            if (convert == false)
+            {
+                args.Logger?.ILog("Stream does not match conditions: " + track);
                 continue;
             }
 
-            if (regex == null)
-                regex = new Regex(this.Pattern, RegexOptions.IgnoreCase);
-
-            string str = UseLanguageCode ? track.Stream.Language : track.Stream.Title;
-            
-            if (string.IsNullOrEmpty(str) == false) // if empty we always use this since we have no info to go on
+            bool convertResult = ConvertTrack(args, track);
+            if (convertResult)
             {
-                bool matches = regex.IsMatch(str);
-                if (NotMatching)
-                    matches = !matches;
-                if (matches)
-                {
-                    bool convertResult = ConvertTrack(args, track);
-                    if (convertResult)
-                    {
-                        args.Logger?.ILog($"Stream {track} matches pattern and will be converted");
-                        converting = true;
-                    }
-                    else
-                    {
-                        args.Logger?.ILog($"Stream {track} matches pattern but will not be converted");
-                    }
-                }
+                args.Logger?.ILog($"Stream {track} matches pattern and will be converted");
+                converting = true;
+            }
+            else
+            {
+                args.Logger?.ILog($"Stream {track} matches pattern but will not be converted");
             }
         }
         return converting ? 1 : 2;

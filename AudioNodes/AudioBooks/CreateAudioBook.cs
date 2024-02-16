@@ -66,7 +66,7 @@ public class CreateAudioBook: AudioNode
         string ffmpeg = ffmpegExeResult.Value;
 
         var ffprobeResult = GetFFprobe(args);
-        if (ffmpegExeResult.Failed(out string ffprobeError))
+        if (ffprobeResult.Failed(out string ffprobeError))
         {
             args.FailureReason = ffprobeError;
             args.Logger?.ELog(ffprobeError);

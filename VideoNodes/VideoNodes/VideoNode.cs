@@ -57,6 +57,24 @@ namespace FileFlows.VideoNodes
             }
             return fileInfo.FullName;
         }
+
+        /// <summary>
+        /// Gets the FFprobe location
+        /// </summary>
+        /// <param name="args">the node parameters</param>
+        /// <returns>the FFprobe location</returns>
+        protected Result<string> GetFFprobe(NodeParameters args)
+        {
+            string ffmpeg = args.GetToolPath("FFprobe");
+            if (string.IsNullOrEmpty(ffmpeg))
+                return Result<string>.Fail("FFprobe tool not found.");
+            
+            var fileInfo = new System.IO.FileInfo(ffmpeg);
+            if (fileInfo.Exists == false)
+                return Result<string>.Fail("FFprobe tool configured by ffmpeg file does not exist.");
+            return fileInfo.FullName;
+        }
+        
         // protected string GetFFMpegPath(NodeParameters args)
         // {
         //     string ffmpeg = args.GetToolPath("FFMpeg");

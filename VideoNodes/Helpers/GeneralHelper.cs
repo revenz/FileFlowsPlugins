@@ -12,6 +12,6 @@ public class GeneralHelper
     /// <returns>True if the input is a regular expression, otherwise false.</returns>
     public static bool IsRegex(string input)
     {
-        return new[] { "?", "|", "^", "$" }.Any(ch => input.Contains(ch));
+        return new[] { "?", "|", "^", "$", "*" }.Any(ch => input.Contains(ch));
     }
 }

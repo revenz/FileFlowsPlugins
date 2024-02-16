@@ -57,9 +57,27 @@ public class FfmpegBuilder_AudioConverterTests: TestBase
                 Language = "en",
                 Codec = "AAC",
                 Channels = 5.1f
+            },
+            new AudioStream
+            {
+                Index = 6,
+                TypeIndex = 4,
+                IndexString = "0:a:4",
+                Language = "en",
+                Codec = "eac3",
+                Channels = 5.1f
+            },
+            new AudioStream
+            {
+                Index = 7,
+                TypeIndex = 5,
+                IndexString = "0:a:5",
+                Language = "en",
+                Codec = "ac3",
+                Channels = 5.1f
             }
         };
-        args = new NodeParameters(file, logger, false, string.Empty, null);
+        args = new NodeParameters(file, logger, false, string.Empty, new LocalFileService());
         args.GetToolPathActual = (string tool) => FfmpegPath;
         args.TempPath = TempPath;
         args.Parameters.Add("VideoInfo", vii);
@@ -77,8 +95,8 @@ public class FfmpegBuilder_AudioConverterTests: TestBase
 
         FfmpegBuilderAudioConverter ffAudioConvert = new();
         ffAudioConvert.Codec = "aac";
-        ffAudioConvert.Pattern = "fre";
-        ffAudioConvert.UseLanguageCode = true;
+        ffAudioConvert.Pattern = "fre";;
+        ffAudioConvert.Field = FfmpegBuilderAudioConverter.FIELD_LANGUAGE;
         ffAudioConvert.PreExecute(args);
         int result = ffAudioConvert.Execute(args);
         Assert.AreEqual(2, result);
@@ -92,7 +110,7 @@ public class FfmpegBuilder_AudioConverterTests: TestBase
         FfmpegBuilderAudioConverter ffAudioConvert = new();
         ffAudioConvert.Codec = "ac3";
         ffAudioConvert.Pattern = "fre";
-        ffAudioConvert.UseLanguageCode = true;
+        ffAudioConvert.Field = FfmpegBuilderAudioConverter.FIELD_LANGUAGE;
         ffAudioConvert.PreExecute(args);
         int result = ffAudioConvert.Execute(args);
         Assert.AreEqual(1, result);
@@ -136,11 +154,11 @@ public class FfmpegBuilder_AudioConverterTests: TestBase
         ffAudioConvert.PreExecute(args);
         int result = ffAudioConvert.Execute(args);
         Assert.AreEqual(1, result);
-        var model = args.Variables["FFMPEG_BUILDER_MODEL"] as FfmpegModel;
+        var model = args.Variables[FfmpegBuilderNode.MODEL_KEY] as FfmpegModel;
         Assert.IsNotNull(model);
         var audio = model.AudioStreams[2];
         Assert.AreEqual("-map", audio.EncodingParameters[0]);
-        Assert.AreEqual("0:a:2", audio.EncodingParameters[1]);
+        Assert.AreEqual("0:a:{sourceTypeIndex}", audio.EncodingParameters[1]);
         Assert.AreEqual("-c:a:{index}", audio.EncodingParameters[2]);
         Assert.AreEqual("ac3", audio.EncodingParameters[3]);
         Assert.AreEqual("-ac:a:{index}", audio.EncodingParameters[4]);
@@ -148,91 +166,6 @@ public class FfmpegBuilder_AudioConverterTests: TestBase
         Assert.AreEqual("-b:a:{index}", audio.EncodingParameters[6]);
         Assert.AreEqual("384k", audio.EncodingParameters[7]);
     }
-    //[TestMethod]
-    //public void FfmpegBuilder_AudioConverter_AacSameAsSource()
-    //{
-    //    Prepare();
-
-    //    FfmpegBuilderAudioConverter ffAudioConvert = new();
-    //    ffAudioConvert.Codec = "aac";
-    //    ffAudioConvert.Channels = 0;
-    //    var best = ffAudioConvert.GetBestAudioTrack(args, vii.AudioStreams);
-
-    //    Assert.IsNotNull(best);
-
-    //    Assert.AreEqual(5, best.Index);
-    //    Assert.AreEqual("AAC", best.Codec);
-    //    Assert.AreEqual(5.1f, best.Channels);
-    //}
-
-    //[TestMethod]
-    //public void FfmpegBuilder_AudioConverter_Ac3SameAsSource()
-    //{
-    //    Prepare();
-
-    //    FfmpegBuilderAudioConverter ffAudioConvert = new();
-    //    ffAudioConvert.Codec = "ac3";
-    //    ffAudioConvert.Channels = 0;
-    //    ffAudioConvert.Index = 1;
-    //    var best = ffAudioConvert.GetBestAudioTrack(args, vii.AudioStreams);
-
-    //    Assert.IsNotNull(best);
-
-    //    Assert.AreEqual(2, best.Index);
-    //    Assert.AreEqual("AC3", best.Codec);
-    //    Assert.AreEqual(5.1f, best.Channels);
-    //}
-
-    //[TestMethod]
-    //public void FfmpegBuilder_AudioConverter_DtsSame()
-    //{
-    //    Prepare();
-
-    //    FfmpegBuilderAudioConverter ffAudioConvert = new();
-    //    ffAudioConvert.Codec = "dts";
-    //    ffAudioConvert.Channels = 0;
-    //    var best = ffAudioConvert.GetBestAudioTrack(args, vii.AudioStreams);
-
-    //    Assert.IsNotNull(best);
-
-    //    Assert.AreEqual(2, best.Index);
-    //    Assert.AreEqual("AC3", best.Codec);
-    //    Assert.AreEqual(5.1f, best.Channels);
-    //}
-
-    //[TestMethod]
-    //public void FfmpegBuilder_AudioConverter_DtsStereo()
-    //{
-    //    Prepare();
-
-    //    FfmpegBuilderAudioConverter ffAudioConvert = new();
-    //    ffAudioConvert.Codec = "dts";
-    //    ffAudioConvert.Channels = 2;
-    //    var best = ffAudioConvert.GetBestAudioTrack(args, vii.AudioStreams);
-
-    //    Assert.IsNotNull(best);
-
-    //    Assert.AreEqual(3, best.Index);
-    //    Assert.AreEqual("AAC", best.Codec);
-    //    Assert.AreEqual(2f, best.Channels);
-    //}
-
-    //[TestMethod]
-    //public void FfmpegBuilder_AudioConverter_DtsMono()
-    //{
-    //    Prepare();
-
-    //    FfmpegBuilderAudioConverter ffAudioConvert = new();
-    //    ffAudioConvert.Codec = "dts";
-    //    ffAudioConvert.Channels = 1;
-    //    var best = ffAudioConvert.GetBestAudioTrack(args, vii.AudioStreams);
-
-    //    Assert.IsNotNull(best);
-
-    //    Assert.AreEqual(3, best.Index);
-    //    Assert.AreEqual("AAC", best.Codec);
-    //    Assert.AreEqual(2f, best.Channels);
-    //}
     
     [TestMethod]
     public void FfmpegBuilder_AudioConverter_Opus_All()
@@ -241,7 +174,7 @@ public class FfmpegBuilder_AudioConverterTests: TestBase
         var logger = new TestLogger();
         var vi = new VideoInfoHelper(FfmpegPath, logger);
         var vii = vi.Read(file);
-        var args = new NodeParameters(file, logger, false, string.Empty, null);
+        var args = new NodeParameters(file, logger, false, string.Empty, new LocalFileService());
         args.GetToolPathActual = (string tool) => FfmpegPath;
         args.TempPath = TempPath;
         args.Parameters.Add("VideoInfo", vii);
@@ -266,6 +199,32 @@ public class FfmpegBuilder_AudioConverterTests: TestBase
 
         var newInfo = vi.Read(args.WorkingFile);
         Assert.AreEqual("opus", newInfo.AudioStreams[0].Codec);
+    }
+    
+    
+    [TestMethod]
+    public void FfmpegBuilder_AudioConverter_Ac3ToOpus()
+    {
+        Prepare();
+
+        FfmpegBuilderAudioConverter ffAudioConvert = new();
+        ffAudioConvert.Codec = "opus";
+        ffAudioConvert.Field = FfmpegBuilderAudioConverter.FIELD_CODEC;
+        ffAudioConvert.Pattern = "ac3";
+        ffAudioConvert.PreExecute(args);
+        int result = ffAudioConvert.Execute(args);
+        Assert.AreEqual(1, result);
+
+        var model = args.Variables[FfmpegBuilderNode.MODEL_KEY] as FfmpegModel;
+        Assert.IsNotNull(model);
+        
+        var firstAc3  = model.AudioStreams[0];
+        var eac3 = model.AudioStreams[4];
+        var secondAc3  = model.AudioStreams[5];
+        Assert.AreEqual(firstAc3.ToString(), "0 / en / opus / 5.1 / Changed");
+        Assert.AreEqual(secondAc3.ToString(), "5 / en / opus / 5.1 / Changed");
+        Assert.AreEqual(eac3.ToString(), "4 / en / eac3 / 5.1");
+
     }
 }
 

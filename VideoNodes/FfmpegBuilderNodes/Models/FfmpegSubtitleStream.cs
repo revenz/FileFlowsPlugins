@@ -102,6 +102,7 @@ public class FfmpegSubtitleStream : FfmpegStream
             Codec,
             Title,
             IsDefault ? "Default" : null,
+            Stream?.Forced == true ? "Forced" : null,
             Deleted ? "Deleted" : null,
             HasChange ? "Changed" : null
         }.Where(x => string.IsNullOrWhiteSpace(x) == false));

@@ -61,6 +61,10 @@
         "Outputs": {
           "1": "Commercials removed, saved to temporary file",
           "2": "No commercials detected"
+        },
+        "Fields": {
+          "RunComskipIfNoEdl": "Run Comskip",
+          "RunComskipIfNoEdl-Help":"Run comskip against the file if no comskip (EDL) file is found." 
         }
       },
       "VideoFile": {
@@ -181,12 +185,12 @@
           "Bitrate-Help": "Bitrate of the audio track",
           "Codec": "Codec",
           "Codec-Help": "The codec to use to encode the audio",
+          "Field": "Field",
+          "Field-Help": "The field to match the pattern against.  Leave the pattern empty to match anything with no value set.",
           "Pattern": "Pattern",
-          "Pattern-Help": "A regular expression to match against, eg \"commentary\" to match commentary tracks",
+          "Pattern-Help": "A string or regular expression to match against, eg \"commentary\" to match commentary exactly or \".*commentary.*\" to match commentary anywhere in the string",
           "NotMatching": "Not Matching",
-          "NotMatching-Help": "If audio tracks NOT matching the pattern should be converted",
-          "UseLanguageCode": "Use Language Code",
-          "UseLanguageCode-Help": "If the language code of the track should be used instead of the title"
+          "NotMatching-Help": "If audio tracks NOT matching the pattern should be converted"
         }
       },
       "FfmpegBuilderAudioNormalization": {
@@ -287,6 +291,10 @@
         "Outputs": {
           "1": "Commercials chapters created, added to FFMPEG Builder",
           "2": "No commercials detected"
+        },
+        "Fields": {
+          "RunComskipIfNoEdl": "Run Comskip",
+          "RunComskipIfNoEdl-Help":"Run comskip against the file if no comskip (EDL) file is found."
         }
       },
       "FfmpegBuilderCustomParameters": {

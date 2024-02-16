@@ -1,5 +1,6 @@
 ﻿using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
 using System.Text;
+using FileFlows.VideoNodes.Helpers;
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 
@@ -7,6 +8,13 @@ public class FfmpegBuilderComskipChapters : FfmpegBuilderNode
 {
     public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/comskip-chapters";
     public override int Outputs => 2;
+    
+    
+    /// <summary>
+    /// Gets or sets if comskip should be run if no EDL file is found
+    /// </summary>
+    [Boolean(1)]
+    public bool RunComskipIfNoEdl { get; set; }
 
     public override int Execute(NodeParameters args)
     {
@@ -37,7 +45,17 @@ public class FfmpegBuilderComskipChapters : FfmpegBuilderNode
         if (edlFile.IsFailed)
         {
             args.Logger.ILog(edlFile.Error);
-            return string.Empty;
+            if (RunComskipIfNoEdl == false)
+                return string.Empty;
+            var csResult = ComskipHelper.RunComskip(args, args.FileService.GetLocalPath(args.WorkingFile));
+            if (csResult.Failed(out string error))
+            {
+                args.Logger.ILog(error);
+                return string.Empty;
+            }
+
+            edlFile = csResult;
+            args.Logger?.ILog("Created EDL File: " + edlFile);
         }
 
         string text = System.IO.File.ReadAllText(edlFile) ?? string.Empty;
