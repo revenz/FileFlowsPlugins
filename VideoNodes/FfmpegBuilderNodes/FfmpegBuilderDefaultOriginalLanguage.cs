@@ -71,14 +71,17 @@ public class FfmpegBuilderDefaultOriginalLanguage: FfmpegBuilderNode
             return 2;
         }
         args.Logger?.ILog("OriginalLanguage: " + originalLanguage);
+        args.Logger?.ILog("Stream Type: " + StreamType));
 
         int changes = 0;
         if(StreamType is "Audio" or "Both")
         {
+            args.Logger?.ILog("Processing Audio Tracks");
             changes += ProcessStreams(args, Model.AudioStreams, originalLanguage);
         }
         if(StreamType is "Subtitle" or "Both")
         {
+            args.Logger?.ILog("Processing Subtitle Tracks");
             changes += ProcessStreams(args, Model.SubtitleStreams, originalLanguage);
         }
 
