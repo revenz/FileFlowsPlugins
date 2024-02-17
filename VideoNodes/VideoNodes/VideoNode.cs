@@ -159,6 +159,8 @@ namespace FileFlows.VideoNodes
                     metadata.Add(prefix + "Title", stream.Title);
                 if(string.IsNullOrEmpty(stream.Language) == false)
                     metadata.Add(prefix + "Language", stream.Language);
+                if(stream.Default)
+                    metadata.Add(prefix + "Default", true);
                 if (stream.Bitrate > 0)
                     metadata.Add(prefix + "Bitrate", stream.Bitrate);
             }
@@ -170,6 +172,10 @@ namespace FileFlows.VideoNodes
                     metadata.Add(prefix + "Title", stream.Title);
                 if (string.IsNullOrEmpty(stream.Language) == false)
                     metadata.Add(prefix + "Language", stream.Language);
+                if(stream.Default)
+                    metadata.Add(prefix + "Default", true);
+                if(stream.Forced)
+                    metadata.Add(prefix + "Forced", true);
             }
             args.SetMetadata(metadata);
         }
