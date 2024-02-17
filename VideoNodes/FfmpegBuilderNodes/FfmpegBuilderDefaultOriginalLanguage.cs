@@ -71,7 +71,7 @@ public class FfmpegBuilderDefaultOriginalLanguage: FfmpegBuilderNode
             return 2;
         }
         args.Logger?.ILog("OriginalLanguage: " + originalLanguage);
-        args.Logger?.ILog("Stream Type: " + StreamType));
+        args.Logger?.ILog("Stream Type: " + StreamType);
 
         int changes = 0;
         if(StreamType is "Audio" or "Both")
