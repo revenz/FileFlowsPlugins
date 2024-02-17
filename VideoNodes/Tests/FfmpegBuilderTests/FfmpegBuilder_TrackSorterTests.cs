@@ -181,7 +181,7 @@ public class FfmpegBuilder_TrackSorterTests
         Assert.AreEqual(1, streams[2].Index);
 
         // Additional assertions for logging
-        Assert.AreEqual("2 / fr / aac / 5.1", streams[0].ToString());
+        Assert.AreEqual("2 / fr / aac / 5.1 / Default", streams[0].ToString());
         Assert.AreEqual("3 / en / ac3 / 7.1", streams[1].ToString());
         Assert.AreEqual("1 / en / aac / 2.0", streams[2].ToString());
     }
@@ -218,7 +218,7 @@ public class FfmpegBuilder_TrackSorterTests
         Assert.AreEqual(2, streams[2].Index);
 
         // Additional assertions for logging
-        Assert.AreEqual("3 / en / ac3 / 7.1", streams[0].ToString());
+        Assert.AreEqual("3 / en / ac3 / 7.1 / Default", streams[0].ToString());
         Assert.AreEqual("1 / en / aac / 2.0", streams[1].ToString());
         Assert.AreEqual("2 / fr / aac / 5.1", streams[2].ToString());
     }
@@ -254,7 +254,7 @@ public class FfmpegBuilder_TrackSorterTests
         Assert.AreEqual(1, streams[2].Index);
 
         // Additional assertions for logging
-        Assert.AreEqual("2 / fr / aac / 5.1", streams[0].ToString());
+        Assert.AreEqual("2 / fr / aac / 5.1 / Default", streams[0].ToString());
         Assert.AreEqual("3 / en / ac3 / 7.1", streams[1].ToString());
         Assert.AreEqual("1 / en / aac / 2.0", streams[2].ToString());
     }
@@ -291,7 +291,7 @@ public class FfmpegBuilder_TrackSorterTests
         Assert.AreEqual(2, streams[2].Index);
 
         // Additional assertions for logging
-        Assert.AreEqual("1 / en / ac3 / 2.0", streams[0].ToString());
+        Assert.AreEqual("1 / en / ac3 / 2.0 / Default", streams[0].ToString());
         Assert.AreEqual("3 / en / ac3 / 7.1", streams[1].ToString());
         Assert.AreEqual("2 / fr / eac3 / 5.1", streams[2].ToString());
     }
@@ -786,10 +786,10 @@ public class FfmpegBuilder_TrackSorterTests
         var model = GetFFmpegModel();
         
         // Additional assertions for logging
-        Assert.AreEqual("2 / en / AC3 / 5.1", model.AudioStreams[0].ToString());
-        Assert.AreEqual("5 / deu / AAC / 5.1", model.AudioStreams[1].ToString());
-        Assert.AreEqual("3 / en / AAC / Directors Commentary / 2.0", model.AudioStreams[2].ToString());
-        Assert.AreEqual("4 / fre / AAC / 2.0", model.AudioStreams[3].ToString());
+        Assert.AreEqual("0 / en / AC3 / 5.1 / Default", model.AudioStreams[0].ToString());
+        Assert.AreEqual("3 / deu / AAC / 5.1", model.AudioStreams[1].ToString());
+        Assert.AreEqual("1 / en / AAC / Directors Commentary / 2.0", model.AudioStreams[2].ToString());
+        Assert.AreEqual("2 / fre / AAC / 2.0", model.AudioStreams[3].ToString());
     }
 
     [TestMethod]
@@ -819,10 +819,10 @@ public class FfmpegBuilder_TrackSorterTests
         var model = GetFFmpegModel();
         
         // Additional assertions for logging
-        Assert.AreEqual("3 / fre / srt", model.SubtitleStreams[0].ToString());
-        Assert.AreEqual("4 / deu / movtext", model.SubtitleStreams[1].ToString());
-        Assert.AreEqual("1 / en / movtext", model.SubtitleStreams[2].ToString());
-        Assert.AreEqual("2 / en / subrip", model.SubtitleStreams[3].ToString());
+        Assert.AreEqual("2 / fre / srt / Default", model.SubtitleStreams[0].ToString());
+        Assert.AreEqual("3 / deu / movtext", model.SubtitleStreams[1].ToString());
+        Assert.AreEqual("0 / en / movtext", model.SubtitleStreams[2].ToString());
+        Assert.AreEqual("1 / en / subrip", model.SubtitleStreams[3].ToString());
     }
 
     [TestMethod]
@@ -852,10 +852,10 @@ public class FfmpegBuilder_TrackSorterTests
         var model = GetFFmpegModel();
         
         // Additional assertions for logging
-        Assert.AreEqual("1 / en / movtext", model.SubtitleStreams[0].ToString());
-        Assert.AreEqual("2 / en / subrip", model.SubtitleStreams[1].ToString());
-        Assert.AreEqual("3 / fre / srt", model.SubtitleStreams[2].ToString());
-        Assert.AreEqual("4 / deu / movtext", model.SubtitleStreams[3].ToString());
+        Assert.AreEqual("0 / en / movtext", model.SubtitleStreams[0].ToString());
+        Assert.AreEqual("1 / en / subrip", model.SubtitleStreams[1].ToString());
+        Assert.AreEqual("2 / fre / srt", model.SubtitleStreams[2].ToString());
+        Assert.AreEqual("3 / deu / movtext", model.SubtitleStreams[3].ToString());
     }
     
     
@@ -886,10 +886,10 @@ public class FfmpegBuilder_TrackSorterTests
         var model = GetFFmpegModel();
         
         // Additional assertions for logging
-        Assert.AreEqual("2 / en / AC3 / 5.1", model.AudioStreams[0].ToString());
-        Assert.AreEqual("4 / fre / AAC / 2.0", model.AudioStreams[1].ToString());
-        Assert.AreEqual("5 / deu / AAC / 5.1", model.AudioStreams[2].ToString());
-        Assert.AreEqual("3 / en / AAC / Directors Commentary / 2.0", model.AudioStreams[3].ToString());
+        Assert.AreEqual("0 / en / AC3 / 5.1 / Default", model.AudioStreams[0].ToString());
+        Assert.AreEqual("2 / fre / AAC / 2.0", model.AudioStreams[1].ToString());
+        Assert.AreEqual("3 / deu / AAC / 5.1", model.AudioStreams[2].ToString());
+        Assert.AreEqual("1 / en / AAC / Directors Commentary / 2.0", model.AudioStreams[3].ToString());
     }
 }
 

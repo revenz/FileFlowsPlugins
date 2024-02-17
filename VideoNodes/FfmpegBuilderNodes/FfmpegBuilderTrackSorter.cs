@@ -139,7 +139,7 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
         // Replace the unsorted items with the sorted ones
         for (int i = 0; i < streams.Count; i++)
         {
-            bool newDefault = i == 0;
+            bool newDefault = orderedStreams[0] == streams[i];
             bool changed = streams[i] != orderedStreams[i] || orderedStreams[i].IsDefault != newDefault;
             streams[i].IsDefault = newDefault;
             if (changed)
