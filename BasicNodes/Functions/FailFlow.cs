@@ -24,7 +24,10 @@ public class FailFlow : Node
     /// Gets the URL for the help page
     /// </summary>
     public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/fail-flow";
-    
+
+    /// <inheritdoc />
+    public override string CustomColor => "var(--error)";
+
     /// <summary>
     /// Gets or sets the reason to fail the flow
     /// </summary>

@@ -3,14 +3,24 @@ using System.Text.Json;
 
 namespace FileFlows.Apprise.Communication;
 
+/// <summary>
+/// Flow element that send a notification via apprise
+/// </summary>
 public class Apprise: Node
 {
     public override int Inputs => 1;
+    /// <inheritdoc />
     public override int Outputs => 2;
-    public override FlowElementType Type => FlowElementType.Communication; 
+    /// <inheritdoc />
+    public override FlowElementType Type => FlowElementType.Communication;
+    /// <inheritdoc /> 
     public override string Icon => "fas fa-bell";
+    /// <inheritdoc />
     public override bool FailureNode => true;
+    /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/apprise/apprise";
+    /// <inheritdoc />
+    public override string CustomColor => "#257575";
 
     [Required]
     [TextVariable(1)]
@@ -42,6 +52,7 @@ public class Apprise: Node
         }
     }
 
+    /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
         try

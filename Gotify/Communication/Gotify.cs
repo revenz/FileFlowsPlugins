@@ -28,6 +28,9 @@ public class Gotify: Node
     /// Gets if this can be used in a failure flow
     /// </summary>
     public override bool FailureNode => true;
+
+    /// <inheritdoc />
+    public override string CustomColor => "#6fc4e7";
     
     /// <summary>
     /// Gets the Help URL

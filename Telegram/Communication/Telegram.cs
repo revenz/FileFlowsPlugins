@@ -20,11 +20,14 @@ public class Telegram: Node
     /// <summary>
     /// Gets the icon for this flow element
     /// </summary>
-    public override string Icon => "fas fa-bell";
+    public override string Icon => "fab fa-telegram-plane";
     /// <summary>
     /// Gets if this can be used in a failure flow
     /// </summary>
     public override bool FailureNode => true;
+
+    /// <inheritdoc />
+    public override string CustomColor => "#0088CC";
     
     /// <summary>
     /// Gets the Help URL

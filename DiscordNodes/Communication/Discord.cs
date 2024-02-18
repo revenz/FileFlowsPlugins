@@ -5,12 +5,19 @@ namespace FileFlows.DiscordNodes.Communication;
 
 public class Discord: Node
 {
+    /// <inheritdoc />
     public override int Inputs => 1;
+    /// <inheritdoc />
     public override int Outputs => 2;
     public override FlowElementType Type => FlowElementType.Communication; 
+    /// <inheritdoc />
     public override string Icon => "fab fa-discord";
+    /// <inheritdoc />
     public override bool FailureNode => true;
+    /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/discord/discord";
+    /// <inheritdoc />
+    public override string CustomColor => "#5865F2";
 
     [Required]
     [TextVariable(1)]
