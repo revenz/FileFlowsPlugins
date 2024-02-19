@@ -162,13 +162,13 @@ namespace FileFlows.VideoNodes
                 double remainingMilliseconds = elapsed.TotalMilliseconds * (100 - percent) / percent;
                 TimeSpan eta = TimeSpan.FromMilliseconds(remainingMilliseconds);
 
-                Args?.AdditionalInfoRecorder?.Invoke("ETA", TimeHelper.ToHumanReadableString(eta), new TimeSpan(0, 1, 0));
+                Args?.AdditionalInfoRecorder?.Invoke("ETA", TimeHelper.ToHumanReadableString(eta), 1, new TimeSpan(0, 1, 0));
             }
         }
 
         private void EncoderOnOnStatChange(string name, object value, bool recordStatistic)
         {
-            Args.AdditionalInfoRecorder?.Invoke(name, value, new TimeSpan(0, 1, 0));
+            Args.AdditionalInfoRecorder?.Invoke(name, value, 1, new TimeSpan(0, 1, 0));
             if(recordStatistic)
                 Args.RecordStatistic(name, value);
         }

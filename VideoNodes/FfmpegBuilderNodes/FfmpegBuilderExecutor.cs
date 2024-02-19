@@ -365,7 +365,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                     arguments = new VaapiAdjustments().Run(args.Logger, arguments);
                 }
 
-                args.AdditionalInfoRecorder("Testing", string.Join(" ", hw), new TimeSpan(0, 0, 10));
+                args.AdditionalInfoRecorder("Testing", string.Join(" ", hw), 1, new TimeSpan(0, 0, 10));
 
                 try
                 {
@@ -413,7 +413,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         }
         finally
         {
-            args.AdditionalInfoRecorder("Testing", null, new TimeSpan(0, 0, 10));
+            args.AdditionalInfoRecorder("Testing", null, 1, new TimeSpan(0, 0, 10));
             try
             {
                 if (System.IO.File.Exists(testFile))
