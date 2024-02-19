@@ -101,7 +101,18 @@
           },
           "Fields": {
             "FileName": "File Name",
-            "FileName-Help": "The file to check if exists.  This should be used with a variable from a previous node."
+            "FileName-Help": "The file to check.  Leave empty to check the current working file."
+          }
+        },
+        "HasHardLinks": {
+          "Description": "Checks if a file has hard links to it or not",
+          "Outputs": {
+            "1": "Hard links detected",
+            "2": "No hard links detected"
+          },
+          "Fields": {
+            "FileName": "File Name",
+            "FileName-Help": "The file to check.  Leave empty to check the current working file."
           }
         },
         "Delete": {

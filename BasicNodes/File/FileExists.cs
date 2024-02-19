@@ -1,27 +1,42 @@
-namespace FileFlows.BasicNodes.File;
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
 
+namespace FileFlows.BasicNodes.File;
+
+/// <summary>
+/// Checks if a file exists
+/// </summary>
 public class FileExists: Node
 {
+    /// <inheritdoc />
     public override int Inputs => 1;
+    /// <inheritdoc />
     public override int Outputs => 2;
-
+    /// <inheritdoc />
     public override FlowElementType Type => FlowElementType.Logic;
+    /// <inheritdoc />
     public override string Icon => "fas fa-question-circle";
-
+    /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/file-exists";
+    /// <inheritdoc />
+    public override bool NoEditorOnAdd => true;
 
 
+    /// <summary>
+    /// Gets or sets the name of the file to check
+    /// Leave blank to test the working file
+    /// </summary>
     [TextVariable(1)]
     public string FileName { get; set; }
 
+    /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
-        string file = args.ReplaceVariables(FileName ?? string.Empty, true);
+        string file = args.ReplaceVariables(FileName ?? string.Empty, true)?.EmptyAsNull() ?? args.WorkingFile;
         if(string.IsNullOrWhiteSpace(file))
         {
-            args.Logger?.ELog("FileName not set");
+            args.FailureReason = "FileName not set";
+            args.Logger?.ELog(args.FailureReason);
             return -1;
         }
         try
@@ -37,7 +52,8 @@ public class FileExists: Node
         }
         catch (Exception ex)
         {
-            args.Logger?.ELog($"Failed testing if file '{file}' exists: " + ex.Message);
+            args.FailureReason = $"Failed testing if file '{file}' exists: " + ex.Message;
+            args.Logger?.ELog(args.FailureReason);
             return -1;
         }
     }
