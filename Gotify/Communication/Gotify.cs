@@ -37,26 +37,59 @@ public class Gotify: Node
     /// </summary>
     public override string HelpUrl => "https://fileflows.com/docs/plugins/gotify";
 
-    /// <summary>
-    /// Gets or sets the message to send
-    /// </summary>
-    [Required]
-    [TextVariable(1)]
-    public string Message { get; set; }
     
     /// <summary>
     /// Gets or sets the title of the message
     /// </summary>
-    [TextVariable(2)]
+    [TextVariable(1)]
     public string Title { get; set; }
+    
 
     /// <summary>
     /// Gets or sets the priority of the message
     /// </summary>
-    [NumberInt(3)]
+    [NumberInt(2)]
     [Range(1, 100)]
     [DefaultValue(2)]
     public int Priority { get; set; } = 2;
+    
+    /// <summary>
+    /// Gets or sets the message
+    /// </summary>
+    [Required]
+    [Template(3, nameof(MessageTemplates))]
+    public string Message { get; set; }
+
+    private static List<ListOption> _MessageTemplates;
+    public static List<ListOption> MessageTemplates
+    {
+        get
+        {
+            if (_MessageTemplates == null)
+            {
+                _MessageTemplates = new List<ListOption>
+                {
+                    new () { Label = "Basic", Value = @"File: {{ file.Orig.FullName }}
+Size: {{ file.Size }}" },
+                    new () { Label = "File Size Changes", Value = @"
+{{ difference = file.Size - file.Orig.Size }}
+{{ percent = (difference / file.Orig.Size) * 100 | math.round 2 }}
+
+Input File: {{ file.Orig.FullName }}
+Output File: {{ file.FullName }}
+Original Size: {{ file.Orig.Size | file_size }}
+Final Size: {{ file.Size | file_size }}
+
+{{- if difference < 0 }}
+File grew in size: {{ difference | math.abs | file_size }}
+{{ else }}
+File shrunk in size by: {{ difference | file_size }} / {{ percent }}%
+{{ end }}"}
+                };
+            }
+            return _MessageTemplates;
+        }
+    }
 
     /// <summary>
     /// Executes the flow element
@@ -81,7 +114,7 @@ public class Gotify: Node
                 return 2;
             }
 
-            string message = args.ReplaceVariables(this.Message);
+            string message = args.RenderTemplate!(this.Message);
             if (string.IsNullOrWhiteSpace(message))
             {
                 args.Logger?.WLog("No message to send");

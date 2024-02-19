@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-using System.Text.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace FileFlows.DiscordNodes.Communication;
 
@@ -19,16 +19,25 @@ public class Discord: Node
     /// <inheritdoc />
     public override string CustomColor => "#5865F2";
 
-    [Required]
+    /// <summary>
+    /// Gets or sets the title
+    /// </summary>
     [TextVariable(1)]
-    public string Message { get; set; }
-
-    [TextVariable(2)]
     public string Title { get; set; }
 
+    /// <summary>
+    /// Gets or sets the message type
+    /// </summary>
     [DefaultValue("standard")]
-    [Select(nameof(MessageTypeOptions), 3)]
+    [Select(nameof(MessageTypeOptions), 2)]
     public string MessageType { get; set; }
+
+    /// <summary>
+    /// Gets or sets the message
+    /// </summary>
+    [Required]
+    [Template(3, nameof(MessageTemplates))]
+    public string Message { get; set; }
 
     private static List<ListOption> _MessageTypeOptions;
     public static List<ListOption> MessageTypeOptions
@@ -51,6 +60,37 @@ public class Discord: Node
         }
     }
 
+    private static List<ListOption> _MessageTemplates;
+    public static List<ListOption> MessageTemplates
+    {
+        get
+        {
+            if (_MessageTemplates == null)
+            {
+                _MessageTemplates = new List<ListOption>
+                {
+                    new () { Label = "Basic", Value = @"File: {{ file.Orig.FullName }}
+Size: {{ file.Size }}" },
+                    new () { Label = "File Size Changes", Value = @"
+{{ difference = file.Size - file.Orig.Size }}
+{{ percent = (difference / file.Orig.Size) * 100 | math.round 2 }}
+
+Input File: {{ file.Orig.FullName }}
+Output File: {{ file.FullName }}
+Original Size: {{ file.Orig.Size | file_size }}
+Final Size: {{ file.Size | file_size }}
+
+{{- if difference < 0 }}
+File grew in size: {{ difference | math.abs | file_size }}
+{{ else }}
+File shrunk in size by: {{ difference | file_size }} / {{ percent }}%
+{{ end }}"}
+                };
+            }
+            return _MessageTemplates;
+        }
+    }
+    
     const int colorInfo = 0x1F61E6;
     const int colorSuccess= 0x80E61F;
     const int colorError = 0xE7421F;
@@ -75,7 +115,7 @@ public class Discord: Node
                 return 2;
             }
 
-            string message = args.ReplaceVariables(this.Message);
+            var message = args.RenderTemplate!(Message);
             if (string.IsNullOrWhiteSpace(message))
             {
                 args.Logger?.WLog("No message to send");
@@ -84,6 +124,7 @@ public class Discord: Node
 
             string title = args.ReplaceVariables(this.Title)?.EmptyAsNull() ??
                            this.MessageType?.EmptyAsNull() ?? "Information";
+            
 
             // replace new lines
             message = message.Replace("\\r\\n", "\r\n");

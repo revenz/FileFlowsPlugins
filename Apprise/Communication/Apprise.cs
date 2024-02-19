@@ -22,15 +22,11 @@ public class Apprise: Node
     /// <inheritdoc />
     public override string CustomColor => "#257575";
 
-    [Required]
-    [TextVariable(1)]
-    public string Message { get; set; } = string.Empty;
-
-    [StringArray(2)]
+    [StringArray(1)]
     public string[] Tag { get; set; } = new string[] { };
 
     [DefaultValue("info")]
-    [Select(nameof(MessageTypeOptions), 3)]
+    [Select(nameof(MessageTypeOptions), 2)]
     public string MessageType { get; set; } = string.Empty;
 
     private static List<ListOption> _MessageTypeOptions;
@@ -42,16 +38,55 @@ public class Apprise: Node
             {
                 _MessageTypeOptions = new List<ListOption>
                     {
-                        new ListOption { Label = "Information", Value = "info"},
-                        new ListOption { Label = "Success", Value = "success"},
-                        new ListOption { Label = "Warning", Value = "warning" },
-                        new ListOption { Label = "Failure", Value = "failure"}
+                        new () { Label = "Information", Value = "info"},
+                        new () { Label = "Success", Value = "success"},
+                        new () { Label = "Warning", Value = "warning" },
+                        new () { Label = "Failure", Value = "failure"}
                     };
             }
             return _MessageTypeOptions;
         }
     }
 
+
+    /// <summary>
+    /// Gets or sets the message
+    /// </summary>
+    [Required]
+    [Template(3, nameof(MessageTemplates))]
+    public string Message { get; set; }
+
+    private static List<ListOption> _MessageTemplates;
+    public static List<ListOption> MessageTemplates
+    {
+        get
+        {
+            if (_MessageTemplates == null)
+            {
+                _MessageTemplates = new List<ListOption>
+                {
+                    new () { Label = "Basic", Value = @"File: {{ file.Orig.FullName }}
+Size: {{ file.Size }}" },
+                    new () { Label = "File Size Changes", Value = @"
+{{ difference = file.Size - file.Orig.Size }}
+{{ percent = (difference / file.Orig.Size) * 100 | math.round 2 }}
+
+Input File: {{ file.Orig.FullName }}
+Output File: {{ file.FullName }}
+Original Size: {{ file.Orig.Size | file_size }}
+Final Size: {{ file.Size | file_size }}
+
+{{- if difference < 0 }}
+File grew in size: {{ difference | math.abs | file_size }}
+{{ else }}
+File shrunk in size by: {{ difference | file_size }} / {{ percent }}%
+{{ end }}"}
+                };
+            }
+            return _MessageTemplates;
+        }
+    }
+    
     /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
@@ -79,7 +114,7 @@ public class Apprise: Node
             else
                 url += settings.Endpoint;
 
-            string message = args.ReplaceVariables(this.Message);
+            string message = args.RenderTemplate!(this.Message);
             if (string.IsNullOrWhiteSpace(message))
             {
                 args.Logger?.WLog("No message to send");

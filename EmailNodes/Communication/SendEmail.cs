@@ -1,7 +1,7 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
 using MailKit.Net.Smtp;
 using MimeKit;
-using Scriban;
 
 namespace FileFlows.Communication
 {
@@ -20,8 +20,43 @@ namespace FileFlows.Communication
         [TextVariable(2)]
         public string Subject { get; set; }
 
-        [TextArea(3)]
+        /// <summary>
+        /// Gets or sets the message
+        /// </summary>
+        [Required]
+        [Template(3, nameof(BodyTemplates))]
         public string Body { get; set; }
+
+        private static List<ListOption> _BodyTemplates;
+        public static List<ListOption> BodyTemplates
+        {
+            get
+            {
+                if (_BodyTemplates == null)
+                {
+                    _BodyTemplates = new List<ListOption>
+                    {
+                        new () { Label = "Basic", Value = @"File: {{ file.Orig.FullName }}
+Size: {{ file.Size }}" },
+                        new () { Label = "File Size Changes", Value = @"
+{{ difference = file.Size - file.Orig.Size }}
+{{ percent = (difference / file.Orig.Size) * 100 | math.round 2 }}
+
+Input File: {{ file.Orig.FullName }}
+Output File: {{ file.FullName }}
+Original Size: {{ file.Orig.Size | file_size }}
+Final Size: {{ file.Size | file_size }}
+
+{{- if difference < 0 }}
+File grew in size: {{ difference | math.abs | file_size }}
+{{ else }}
+File shrunk in size by: {{ difference | file_size }} / {{ percent }}%
+{{ end }}"}
+                    };
+                }
+                return _BodyTemplates;
+            }
+        }
 
         public override int Execute(NodeParameters args)
         {
@@ -62,18 +97,7 @@ namespace FileFlows.Communication
             if (string.IsNullOrEmpty(this.Body))
                 return string.Empty;
 
-            string body = this.Body;
-            var dict = new Dictionary<string, object>();
-            foreach(string key in args.Variables.Keys)
-            {
-                string newKey = key.Replace(".", "");
-                body = body.Replace(key, newKey);
-                if (dict.ContainsKey(newKey) == false)
-                    dict.Add(newKey, args.Variables[key]);
-            }
-            var template = Template.Parse(body);
-            string result = template.Render(dict).Trim();
-            return result;
+            return args.RenderTemplate!(this.Body);
         }
 
         private void SendDotNet(NodeParameters args, PluginSettings settings, string sender, string subject, string body)

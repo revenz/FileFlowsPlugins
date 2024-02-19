@@ -35,11 +35,42 @@ public class Telegram: Node
     public override string HelpUrl => "https://fileflows.com/docs/plugins/telegram";
 
     /// <summary>
-    /// Gets or sets the message to send
+    /// Gets or sets the message
     /// </summary>
     [Required]
-    [TextVariable(1)]
+    [Template(1, nameof(MessageTemplates))]
     public string Message { get; set; }
+
+    private static List<ListOption> _MessageTemplates;
+    public static List<ListOption> MessageTemplates
+    {
+        get
+        {
+            if (_MessageTemplates == null)
+            {
+                _MessageTemplates = new List<ListOption>
+                {
+                    new () { Label = "Basic", Value = @"File: {{ file.Orig.FullName }}
+Size: {{ file.Size }}" },
+                    new () { Label = "File Size Changes", Value = @"
+{{ difference = file.Size - file.Orig.Size }}
+{{ percent = (difference / file.Orig.Size) * 100 | math.round 2 }}
+
+Input File: {{ file.Orig.FullName }}
+Output File: {{ file.FullName }}
+Original Size: {{ file.Orig.Size | file_size }}
+Final Size: {{ file.Size | file_size }}
+
+{{- if difference < 0 }}
+File grew in size: {{ difference | math.abs | file_size }}
+{{ else }}
+File shrunk in size by: {{ difference | file_size }} / {{ percent }}%
+{{ end }}"}
+                };
+            }
+            return _MessageTemplates;
+        }
+    }
 
     /// <summary>
     /// Sends a telegram message
@@ -94,7 +125,7 @@ public class Telegram: Node
                 return 2;
             }
 
-            var message = args.ReplaceVariables(Message);
+            var message = args.RenderTemplate!(Message);
 
             var result = SendMessage(settings.BotToken, settings.ChatId, message);
 
