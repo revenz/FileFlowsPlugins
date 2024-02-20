@@ -10,10 +10,17 @@ namespace FileFlows.Plex.MediaManagement;
 
 public abstract class PlexNode:Node
 {
+    /// <inheritdoc />
     public override int Inputs => 1;
+    /// <inheritdoc />
     public override int Outputs => 2;
+    /// <inheritdoc />
     public override FlowElementType Type => FlowElementType.Process;
+    /// <inheritdoc />
     public override bool NoEditorOnAdd => true;
+    /// <inheritdoc />
+    public override string Icon => "svg:plex";
+    
     [Text(1)]
     public string ServerUrl { get; set; }
 

@@ -23,7 +23,7 @@ public class Gotify: Node
     /// <summary>
     /// Gets the icon for this flow element
     /// </summary>
-    public override string Icon => "fas fa-bell";
+    public override string Icon => "svg:gotify";
     /// <summary>
     /// Gets if this can be used in a failure flow
     /// </summary>

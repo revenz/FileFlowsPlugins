@@ -9,6 +9,9 @@ public class DisableIntelQsv:DisableEncoder
     /// Gets the encoder variable
     /// </summary>
     protected override string EncoderVariable => "NoQSV";
+    
+    /// <inheritdoc />
+    public override string Icon => "svg:intel";
 
     /// <summary>
     /// Gets the help URL

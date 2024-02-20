@@ -14,6 +14,8 @@ public class FfmpegBuilderRemuxToMP4: FfmpegBuilderNode
     /// Gets if the editor should be shown on add by default
     /// </summary>
     public override bool NoEditorOnAdd => true;
+    /// <inheritdoc />
+    public override string Icon => "svg:mp4";
 
     /// <summary>
     /// Gets or sets if hvc1 tag should be added

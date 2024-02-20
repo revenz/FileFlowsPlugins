@@ -32,7 +32,7 @@ public class NfoFileCreator : Node
     /// <summary>
     /// Gets the icon
     /// </summary>
-    public override string Icon => "fas fa-file-code";
+    public override string Icon => "svg:nfo";
 
     private const string TAB = "    ";
 

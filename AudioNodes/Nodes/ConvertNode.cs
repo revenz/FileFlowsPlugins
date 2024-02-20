@@ -4,13 +4,22 @@ namespace FileFlows.AudioNodes
 {
     public class ConvertToMP3 : ConvertNode
     {
+        /// <inheritdoc />  
         public override string HelpUrl => "https://fileflows.com/docs/plugins/audio-nodes/convert-to-mp3";
+        /// <inheritdoc />
         protected override string Extension => "mp3";
+
+        /// <inheritdoc />
+        public override string Icon => "svg:mp3";
     }
     public class ConvertToWAV : ConvertNode
     {
+        /// <inheritdoc />
         public override string HelpUrl => "https://fileflows.com/docs/plugins/audio-nodes/convert-to-wav";
+        /// <inheritdoc />
         protected override string Extension => "wav";
+        /// <inheritdoc />
+        public override string Icon => "svg:wav";
         
         private static List<ListOption> _BitrateOptions;
         public new static List<ListOption> BitrateOptions
@@ -41,8 +50,12 @@ namespace FileFlows.AudioNodes
 
     public class ConvertToAAC : ConvertNode
     {
+        /// <inheritdoc />
         public override string HelpUrl => "https://fileflows.com/docs/plugins/audio-nodes/convert-to-aac";
+        /// <inheritdoc />
         protected override string Extension => "aac";
+        /// <inheritdoc />
+        public override string Icon => "svg:aac";
 
         /// <summary>
         /// Gets or sets if high efficiency should be used
@@ -54,9 +67,13 @@ namespace FileFlows.AudioNodes
     }
     public class ConvertToOGG: ConvertNode
     {
+        /// <inheritdoc />
         public override string HelpUrl => "https://fileflows.com/docs/plugins/audio-nodes/convert-to-ogg";
+        /// <inheritdoc />
         protected override string Extension => "ogg";
         public static List<ListOption> BitrateOptions => ConvertNode.BitrateOptions;
+        /// <inheritdoc />
+        public override string Icon => "svg:ogg";
     }
 
     public class ConvertAudio : ConvertNode

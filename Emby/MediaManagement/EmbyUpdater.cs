@@ -5,11 +5,15 @@ namespace FileFlows.Emby.MediaManagement;
 
 public class EmbyUpdater: Node
 {
+    /// <inheritdoc />
     public override int Inputs => 1;
+    /// <inheritdoc />
     public override int Outputs => 2;
+    /// <inheritdoc />
     public override FlowElementType Type => FlowElementType.Process; 
-    public override string Icon => "fas fa-paper-plane";
-
+    /// <inheritdoc />
+    public override string Icon => "svg:emby";
+    /// <inheritdoc />
     public override bool NoEditorOnAdd => true;
 
     [Text(1)]
@@ -21,6 +25,7 @@ public class EmbyUpdater: Node
     [KeyValue(3, null)]
     public List<KeyValuePair<string, string>> Mapping { get; set; }
 
+    /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
         var settings = args.GetPluginSettings<PluginSettings>();

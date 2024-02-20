@@ -9,6 +9,9 @@ public class DisableNvidia:DisableEncoder
     /// Gets the encoder variable
     /// </summary>
     protected override string EncoderVariable => "NoNvidia";
+    
+    /// <inheritdoc />
+    public override string Icon => "svg:nvidia";
 
     /// <summary>
     /// Gets the help URL

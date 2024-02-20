@@ -14,7 +14,7 @@ public class Apprise: Node
     /// <inheritdoc />
     public override FlowElementType Type => FlowElementType.Communication;
     /// <inheritdoc /> 
-    public override string Icon => "fas fa-bell";
+    public override string Icon => "svg:apprise";
     /// <inheritdoc />
     public override bool FailureNode => true;
     /// <inheritdoc />

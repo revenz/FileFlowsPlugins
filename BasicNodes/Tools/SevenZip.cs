@@ -24,10 +24,11 @@ public class SevenZip : Node
     /// Gets the element type
     /// </summary>
     public override FlowElementType Type => FlowElementType.Process;
+
     /// <summary>
     /// Gets the icon
     /// </summary>
-    public override string Icon => "fas fa-file-archive";
+    public override string Icon => "svg:7zip";
     /// <summary>
     /// Gets the help URL
     /// </summary>

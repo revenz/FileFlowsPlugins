@@ -4,7 +4,6 @@ namespace FileFlows.Plex.MediaManagement;
 
 public class PlexAnalyze : PlexNode
 {
-    public override string Icon => "fas fa-sync";
 
     protected override int ExecuteActual(NodeParameters args, PlexDirectory directory, string baseUrl, string mappedPath, string accessToken)
     {
