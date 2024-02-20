@@ -1,0 +1,36 @@
+{
+  "Plugins": {
+    "Pushover": {
+      "Description": "A plugin that allows you to send messages to a Pushover server.",
+      "Fields": {
+        "UserKey": "User Key",
+        "UserKey-Help":"Your personal user key for receiving notifications.",
+        "ApiToken": "API Token",
+        "ApiToken-Help":"The application API token use for sending notifications."
+      }
+    }
+  },
+  "Flow": {
+    "Parts": {
+      "Pushover": {
+        "Outputs": {
+          "1": "Pushover message sent",
+          "2": "Pushover message failed to send"
+        },
+        "Description": "Sends a message via Pushover.",
+        "Fields": {
+          "Message": "Message",
+          "Message-Help": "The message to send to the Pushover server",
+          "Expire": "Expire",
+          "Expire-Suffix": "seconds",
+          "Expire-Help": "Set the duration, in seconds, before this emergency message expires and stops retrying delivery.",
+          "Retry": "Retry",
+          "Retry-Suffix": "seconds",
+          "Retry-Help": "Specify the interval, in seconds, between retry attempts for this emergency message in case of delivery failure.",
+          "Priority": "Priority",
+          "Priority-Help": "The priority of the message being sent"
+        }
+      }
+    }
+  }
+}

@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telegram", "Telegram\Telegr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiteScraping", "SiteScraping\SiteScraping.csproj", "{A8227B00-9A44-4FE8-967B-46E289969563}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pushover", "Pushover\Pushover.csproj", "{1F236585-E866-4048-B89E-294156EB8614}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,10 @@ Global
 		{A8227B00-9A44-4FE8-967B-46E289969563}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8227B00-9A44-4FE8-967B-46E289969563}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8227B00-9A44-4FE8-967B-46E289969563}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F236585-E866-4048-B89E-294156EB8614}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F236585-E866-4048-B89E-294156EB8614}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F236585-E866-4048-B89E-294156EB8614}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F236585-E866-4048-B89E-294156EB8614}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

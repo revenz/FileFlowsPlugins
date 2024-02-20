@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>FileFlows.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+	<FileVersion>1.1.1.528</FileVersion>
+	<ProductVersion>1.1.1.528</ProductVersion>
+	<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+	<PublishTrimmed>true</PublishTrimmed>
+	<Company>FileFlows</Company>
+	<Authors>John Andrews</Authors>
+	<Product>Pushover</Product>
+	<PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
+	<Description>Lets you send Pushover messages to a server</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Pushover.en.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Pushover.en.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+	<ItemGroup Condition=" '$(Configuration)' == 'Debug'">
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.1" />
+		<PackageReference Include="MSTest.TestAdapter" Version="3.0.4" />
+		<PackageReference Include="MSTest.TestFramework" Version="3.0.4" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="FileFlows.Plugin">
+      <HintPath>..\FileFlows.Plugin.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
