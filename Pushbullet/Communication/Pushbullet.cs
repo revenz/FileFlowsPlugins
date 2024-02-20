@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel;
 using System.Text.Json;
 
-namespace FileFlows.Pushover.Communication;
+namespace FileFlows.Pushbullet.Communication;
 
 /// <summary>
-/// A Pushover flow element that sends a message
+/// A Pushbullet flow element that sends a message
 /// </summary>
-public class Pushover: Node
+public class Pushbullet: Node
 {
     /// <summary>
     /// Gets the number of inputs to this flow element
@@ -23,73 +23,32 @@ public class Pushover: Node
     /// <summary>
     /// Gets the icon for this flow element
     /// </summary>
-    public override string Icon => "svg:pushover";
+    public override string Icon => "svg:pushbullet";
     /// <summary>
     /// Gets if this can be used in a failure flow
     /// </summary>
     public override bool FailureNode => true;
 
     /// <inheritdoc />
-    public override string CustomColor => "#40a6eb";
+    public override string CustomColor => "#3b8f52";
     
     /// <summary>
     /// Gets the Help URL
     /// </summary>
-    public override string HelpUrl => "https://fileflows.com/docs/plugins/pushover";
-    
-
-    /// <summary>
-    /// Gets or sets the priority of the message
-    /// </summary>
-    [Select(nameof(Priorities), 1)]
-    [DefaultValue(0)]
-    public int Priority { get; set; } = 2;
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/pushbullet";
     
     /// <summary>
-    /// Gets or sets the expiry in seconds for the message
+    /// Gets or sets the title of the message
     /// </summary>
-    [ConditionEquals(nameof(Priority), 2)]
-    [NumberInt(2)]
-    [DefaultValue(600)]
-    [Range(1, 86400)]
-    public int Expire { get; set; } = 2;
-    /// <summary>
-    /// Gets or sets the retry time in seconds
-    /// </summary>
-    [ConditionEquals(nameof(Priority), 2)]
-    [NumberInt(2)]
-    [DefaultValue(600)]
-    [Range(30, 86400)]
-    public int Retry { get; set; } = 2;
-
-    private static List<ListOption> _Priorities;
-    /// <summary>
-    /// Gets a list of message templates
-    /// </summary>
-    public static List<ListOption> Priorities
-    {
-        get
-        {
-            if (_Priorities == null)
-            {
-                _Priorities = new List<ListOption>
-                {
-                    new () { Label = "Lowest", Value = -1 },
-                    new () { Label = "Normal", Value = 0 },
-                    new () { Label = "High", Value = 1 },
-                    new () { Label = "Emergency", Value = 2 }
-                };
-            }
-            return _Priorities;
-        }
-    }
-    
+    [TextVariable(1)]
+    [Required]
+    public string Title { get; set; }
     
     /// <summary>
     /// Gets or sets the message
     /// </summary>
     [Required]
-    [Template(3, nameof(MessageTemplates))]
+    [Template(2, nameof(MessageTemplates))]
     public string Message { get; set; }
 
     private static List<ListOption> _MessageTemplates;
@@ -137,54 +96,42 @@ File shrunk in size by: {{ difference | file_size }} / {{ percent }}%
         {
             var settings = args.GetPluginSettings<PluginSettings>();
 
-            if (string.IsNullOrWhiteSpace(settings?.UserKey))
-            {
-                args.Logger?.WLog("No user set");
-                return 2;
-            }
-
             if (string.IsNullOrWhiteSpace(settings?.ApiToken))
             {
                 args.Logger?.WLog("No API Token set");
                 return 2;
             }
 
-            string message = args.RenderTemplate!(this.Message);
-            if (string.IsNullOrWhiteSpace(message))
+            string body = args.RenderTemplate!(this.Message);
+            if (string.IsNullOrWhiteSpace(body))
             {
                 args.Logger?.WLog("No message to send");
                 return 2;
             }
 
-            List<KeyValuePair<string, string>> parameters = new ()
-            {
-                new ("token", settings.ApiToken),
-                new ("user", settings.UserKey),
-                new ("message", message),
-                new ("priority", Priority.ToString())
-            };
-
-            if (Priority == 2)
-            {
-                int expire = Expire < 1 ? 1 : (Expire > 86400 ? 86400 : Expire);
-                
-                parameters.Add(new("expire", expire.ToString()));
-                int retry = Retry < 30 ? 30 : (Retry > 86400 ? 86400 : Retry);
-                
-                parameters.Add(new("retry", retry.ToString()));
-            }
-
-            var content = new FormUrlEncodedContent(parameters);
-
             using var httpClient = new HttpClient();
+
+            string title = args.ReplaceVariables(this.Title, stripMissing: true);
             
-            var response = httpClient.PostAsync("https://api.pushover.net/1/messages.json", content).Result;
+            // Set the authorization header with the Access Token
+            httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", settings.ApiToken);
+
+            // Create the request content
+            var content = new StringContent(JsonSerializer.Serialize(
+            new {
+                type = "note",
+                title,
+                body 
+            }), Encoding.UTF8, "application/json");
+
+            
+            var response = httpClient.PostAsync("https://api.pushbullet.com/v2/pushes", content).Result;
 
             if (response.IsSuccessStatusCode)
                 return 1;
 
             string error = response.Content.ReadAsStringAsync().Result;
-            args.Logger?.WLog("Error from Pushover: " + error);
+            args.Logger?.WLog("Error from Pushbullet: " + error);
             return 2;
         }
         catch (Exception ex)
