@@ -184,6 +184,13 @@
             "Flow": "Flow"
           }
         },
+        "Reprocess": {
+          "Description": "The flow element allows you to reprocess the original library file with a different processing node.\n\n If the same processing node is selected as the one currently processing the file, the flow will fail.",
+          "Fields": {
+            "Node": "Node",
+            "Node-Help": "The processing node to process this file."
+          }
+        },
         "Log": {
           "Description": "Logs a message to the flow log",
           "Outputs": {
