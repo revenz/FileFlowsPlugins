@@ -104,11 +104,17 @@ public class TVShowLookup : Node
         args.SetParameter(Globals.TV_SHOW_INFO, result);
 
         Variables["tvshow.Title"] = result.Name;
+        args.Logger?.ILog("Detected Title: " + result.Name);
         Variables["tvshow.Year"] = result.FirstAirDate.Year;
+        args.Logger?.ILog("Detected Year: " + result.FirstAirDate.Year);
         Variables["VideoMetadata"] = GetVideoMetadata(movieApi, result.Id, args.TempPath);
         Variables[Globals.TV_SHOW_INFO] = result;
         if (string.IsNullOrWhiteSpace(result.OriginalLanguage) == false)
+        {
             Variables["OriginalLanguage"] = result.OriginalLanguage;
+            args.Logger?.ILog("Detected Original Language: " + result.OriginalLanguage);
+        }
+
         args.UpdateVariables(Variables);
         
         return 1;

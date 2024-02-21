@@ -147,12 +147,17 @@ public class MovieLookup : Node
 
 
         Variables["movie.Title"] = result.Title;
+        args.Logger?.ILog("Detected Movie Title: " + result.Title);
         Variables["movie.Year"] = result.ReleaseDate.Year;
+        args.Logger?.ILog("Detected Movie Year: " + result.ReleaseDate.Year);
         var meta = GetVideoMetadata(args, movieApi, result.Id, args.TempPath);
         Variables["VideoMetadata"] = meta;
         if (string.IsNullOrWhiteSpace(meta.OriginalLanguage) == false)
+        {
+            args.Logger?.ILog("Detected Original Language: " + meta.OriginalLanguage);
             Variables["OriginalLanguage"] = meta.OriginalLanguage;
-        
+        }
+
         Variables[Globals.MOVIE_INFO] = result;
         var movie = movieApi.FindByIdAsync(result.Id).Result.Item;
         if(movie != null)

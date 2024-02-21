@@ -159,21 +159,32 @@ public class TVEpisodeLookup : Node
         }
 
         Variables["tvepisode.Title"] = result.Name;
+        args.Logger?.ILog("Detected Title: " + result.Name);
         Variables["tvepisode.Subtitle"] = epInfo.Name;
         Variables["tvepisode.Year"] = epInfo.AirDate.Year;
         Variables["tvepisode.AirDate"] = epInfo.AirDate;
+        args.Logger?.ILog("Detected Air Date: " + epInfo.AirDate.ToShortDateString());
         Variables["tvepisode.Season"] = season.Value;
+        args.Logger?.ILog("Detected Season: " + epInfo.SeasonNumber);
         Variables["tvepisode.Episode"] = episode.Value;
-        if(lastEpisode != null)
+        args.Logger?.ILog("Detected Episode: " + episode.Value);
+        if (lastEpisode != null)
+        {
             Variables["tvepisode.LastEpisode"] = lastEpisode.Value;
+            args.Logger?.ILog("Detected Last Episode: " + lastEpisode.Value);
+        }
+
         Variables["tvepisode.Overview"] = epInfo.Overview;
         //Variables["VideoMetadata"] = GetVideoMetadata(movieApi, result.Id, args.TempPath);
         Variables[Globals.TV_SHOW_INFO] = result;
         Variables[Globals.TV_EPISODE_INFO] = epInfo;
-        
+
         if (string.IsNullOrWhiteSpace(result.OriginalLanguage) == false)
+        {
             Variables["OriginalLanguage"] = result.OriginalLanguage;
-        
+            args.Logger?.ILog("Detected Original Language: " + result.OriginalLanguage);
+        }
+
         args.UpdateVariables(Variables);
         
         return 1;
