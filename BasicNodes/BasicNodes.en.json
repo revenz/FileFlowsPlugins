@@ -195,7 +195,7 @@
           "Description": "Checks if the flow is currently processing on a specified processing node.",
           "Fields": {
             "Node": "Node",
-            "Node-Help": "The processing node to check.",
+            "Node-Help": "The processing node to check."
           },
           "Outputs": {
             "1": "Is processing on node",
