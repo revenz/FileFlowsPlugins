@@ -42,7 +42,7 @@ public class VideoInfo
 }
 
 /// <summary>
-/// Metadata about a stream in a vidoe file
+/// Metadata about a stream in a video file
 /// </summary>
 public class VideoFileStream
 {
@@ -93,16 +93,6 @@ public class VideoFileStream
     /// Gets or sets the pixel format that should be used to decode this stream
     /// </summary>
     public string PixelFormat { get; set; }
-    
-    /// <summary>
-    /// Gets or sets if this stream is 10 bit
-    /// </summary>
-    public bool Is10Bit { get; set; }
-    
-    /// <summary>
-    /// Gets or sets if this stream is 12 bit
-    /// </summary>
-    public bool Is12Bit { get; set; }
 }
 
 /// <summary>
@@ -120,6 +110,16 @@ public class VideoStream : VideoFileStream
     /// 0 if unknown
     /// </summary>
     public int Bits { get; set; }
+
+    /// <summary>
+    /// Gets or sets if this stream is 10 bit
+    /// </summary>
+    public bool Is10Bit => Bits == 10;
+
+    /// <summary>
+    /// Gets or sets if this stream is 12 bit
+    /// </summary>
+    public bool Is12Bit => Bits == 12;
     
     /// <summary>
     /// Gets or sets if this is dolby vision

@@ -257,8 +257,6 @@ public class VideoInfoHelper
 
         vs.Codec = line.Substring(line.IndexOf("Video: ") + "Video: ".Length).Replace(",", "").Trim().Split(' ').First().ToLower();
         vs.PixelFormat = GetDecoderPixelFormat(line);
-        vs.Is10Bit = Regex.IsMatch(line, @"p(0)?10l(b)?e", RegexOptions.IgnoreCase);
-        vs.Is12Bit = Regex.IsMatch(line, @"p(0)?12l(b)?e", RegexOptions.IgnoreCase);
 
         var dimensions = Regex.Match(line, @"([\d]{3,})x([\d]{3,})");
         if (int.TryParse(dimensions.Groups[1].Value, out int width))
