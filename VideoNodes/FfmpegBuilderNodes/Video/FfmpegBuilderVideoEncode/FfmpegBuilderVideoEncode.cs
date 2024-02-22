@@ -117,6 +117,7 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
     /// Gets or sets the speed to encode
     /// </summary>
     [Select(nameof(SpeedOptions), 4)]
+    [DefaultValue("medium")]
     public string Speed { get; set; }
 
     private static List<ListOption> _SpeedOptions;
