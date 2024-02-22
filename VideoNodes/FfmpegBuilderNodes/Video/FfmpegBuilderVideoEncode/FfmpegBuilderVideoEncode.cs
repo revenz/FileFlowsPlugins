@@ -173,6 +173,7 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
                 args.Variables?.TryGetValue("HW_OFF", out object oHwOff) == true && (oHwOff as bool? == true || oHwOff?.ToString() == "1")
             ) ? ENCODER_CPU : this.Encoder;
 
+        args.Logger?.ILog("Quality: " + Quality);
         args.Logger?.ILog("Codec: " + Codec);
         if (Codec == CODEC_H264)
         {

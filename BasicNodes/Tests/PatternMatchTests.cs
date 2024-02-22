@@ -20,6 +20,17 @@ namespace BasicNodes.Tests
             Assert.AreEqual(1, result);
         }
 
+        [TestMethod]    
+        public void PatternMatch_Forum()
+        {
+            PatternMatch pm = new PatternMatch();
+            pm.Pattern = @"(.*)1080p(.*)megusta(.*)";
+            var args = new FileFlows.Plugin.NodeParameters(@"SAB_TV/The.Secrets.of.Hillsong.S01E01.1080p.HEVC.x265-MeGusta/The.Secrets.of.Hillsong.S01E01.1080p.HEVC.x265-MeGusta.mkv", new TestLogger(), false, string.Empty, null);;
+            
+            var result = pm.Execute(args);
+            Assert.AreEqual(1, result);
+        }
+        
         [TestMethod]
         public void PatternMatch_NotMatch()
         {

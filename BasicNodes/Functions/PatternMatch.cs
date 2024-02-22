@@ -35,7 +35,7 @@ public class PatternMatch : Node
 
         try
         {
-            var rgx = new Regex(Pattern);
+            var rgx = new Regex(Pattern, RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
             if (rgx.IsMatch(args.WorkingFile))
             {
                 args.Variables.Add("PatternMatch", rgx.Match(args.WorkingFile).Value);
