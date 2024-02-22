@@ -116,6 +116,12 @@ public class VideoStream : VideoFileStream
     public bool HDR { get; set; }
     
     /// <summary>
+    /// Gets or sets the bits
+    /// 0 if unknown
+    /// </summary>
+    public int Bits { get; set; }
+    
+    /// <summary>
     /// Gets or sets if this is dolby vision
     /// </summary>
     public bool DolbyVision { get; set; }
