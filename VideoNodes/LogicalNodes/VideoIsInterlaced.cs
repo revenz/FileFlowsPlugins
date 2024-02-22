@@ -48,6 +48,14 @@ public class VideoIsInterlaced : VideoNode
             return 2;
         }
 
+        var localFile = args.FileService.GetLocalPath(args.WorkingFile);
+        if (localFile.Failed(out string error))
+        {
+            args.FailureReason = "Failed to get local file: " + error;
+            args.Logger?.ELog(args.FailureReason);
+            return -1;
+        }
+
         var ffOutput = args.Execute(new()
         {
             Command = ffmpeg,
@@ -55,7 +63,7 @@ public class VideoIsInterlaced : VideoNode
             ArgumentList = new[]
             {
                 "-hide_banner",
-                "-i", args.WorkingFile,
+                "-i", localFile.Value,
                 "-vf", "idet",
                 "-f", "null", "-"
             }

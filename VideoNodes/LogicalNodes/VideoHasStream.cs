@@ -118,7 +118,11 @@ public class VideoHasStream : VideoNode
     {
         var videoInfo = GetVideoInfo(args);
         if (videoInfo == null)
+        {
+            args.FailureReason = "Failed to retrieve video info";
+            args.Logger?.ELog(args.FailureReason);
             return -1;
+        }
 
         bool found = false;
         string title = args.ReplaceVariables(Title, stripMissing: true);

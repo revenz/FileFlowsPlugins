@@ -705,6 +705,40 @@
           "ExtractAll-Help": "If all matching subtitles should be extracted."
         }
       },
+      "VideoBitCheck": {
+        "Label": "Video Bit Check",
+        "Description": "Checks if a video if 8-Bit, 10-Bit, 12-Bit or unknown.",
+        "Ouputs": {
+          "1": "Video is 8-Bit",
+          "2": "Video is 10-Bit",
+          "3": "Video is 12-Bit",
+          "4": "Unknown"
+        }
+      },
+      "VideoIs8Bit": {
+        "Label": "Video Is 8-Bit",
+        "Description": "Tests if a video file is 8-Bit",
+        "Outputs": {
+          "1": "Video is 8-Bit",
+          "2": "Video is not 8-Bit"
+        }
+      },
+      "VideoIs10Bit": {
+        "Label": "Video Is 10-Bit",
+        "Description": "Tests if a video file is 10-Bit",
+        "Outputs": {
+          "1": "Video is 10-Bit",
+          "2": "Video is not 10-Bit"
+        }
+      },
+      "VideoIs12Bit": {
+        "Label": "Video Is 12-Bit",
+        "Description": "Tests if a video file is 12-Bit",
+        "Outputs": {
+          "1": "Video is 12-Bit",
+          "2": "Video is not 12-Bit"
+        }
+      },
       "VideoIsInterlaced": {
         "Label": "Video Is Interlaced",
         "Description": "Tests if a video file is interlaced",
