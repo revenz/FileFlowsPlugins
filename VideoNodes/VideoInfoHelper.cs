@@ -257,6 +257,7 @@ public class VideoInfoHelper
 
         vs.Codec = line.Substring(line.IndexOf("Video: ") + "Video: ".Length).Replace(",", "").Trim().Split(' ').First().ToLower();
         vs.PixelFormat = GetDecoderPixelFormat(line);
+        vs.Bits = GetBitDepthFromStreamInfo(logger, info);
 
         var dimensions = Regex.Match(line, @"([\d]{3,})x([\d]{3,})");
         if (int.TryParse(dimensions.Groups[1].Value, out int width))
@@ -294,7 +295,6 @@ public class VideoInfoHelper
         // "HDR is only the new transfer function" (PQ or HLG)
         vs.HDR = info.Contains("arib-std-b67") || info.Contains("smpte2084");
 
-        vs.Bits = GetBitDepthFromStreamInfo(logger, info);
 
         vs.DolbyVision = info.Contains("DOVI configuration record");
         
@@ -469,47 +469,31 @@ public class VideoInfoHelper
         //     return "yuv444p";
         return string.Empty;
     }
-    
+
     /// <summary>
     /// Extracts the number of bits from the given video stream information.
     /// </summary>
     /// <param name="logger">the logger to use for logging</param>
-    /// <param name="streamInfo">The video stream information string.</param>
+    /// <param name="line">The video stream information string.</param>
     /// <returns>The number of bits, or 0 if unknown.</returns>
-    static int GetBitDepthFromStreamInfo(ILogger logger, string streamInfo)
+    static int GetBitDepthFromStreamInfo(ILogger logger, string line)
     {
-        Regex bitsRegex = new Regex(@"bits_per_raw_sample=(\d+)");
-        Regex pixFmtRegex = new Regex(@"pix_fmt=([^\s]+)");
-
-        Match bitsMatch = bitsRegex.Match(streamInfo);
-        if (bitsMatch.Success)
+        if (line.Contains("p10le") || line.Replace(" ", string.Empty).Contains("main10"))
         {
-            logger?.ILog("Bit detected by bits_per_raw_sample: " + bitsMatch.Groups[1].Value);
-            int bits = int.Parse(bitsMatch.Groups[1].Value);
-            return bits;
+            logger?.ILog("10-Bit detected");
+            return 10;
         }
 
-        Match pixFmtMatch = pixFmtRegex.Match(streamInfo);
-        if (pixFmtMatch.Success)
+        if (line.Contains("p12le"))
         {
-            string pixFmt = pixFmtMatch.Groups[1].Value;
-            if (pixFmt.EndsWith("p10le"))
-            {
-                logger?.ILog("10-Bit detected pix_fmt: " + pixFmtMatch);
-                return 10;
-            }
+            logger?.ILog("12-Bit detected");
+            return 12;
+        }
 
-            if (pixFmt.EndsWith("p12le"))
-            {
-                logger?.ILog("12-Bit detected pix_fmt: " + pixFmtMatch);
-                return 12;
-            }
-
-            if (pixFmt.EndsWith("p"))
-            {
-                logger?.ILog("8-Bit detected pix_fmt: " + pixFmtMatch);
-                return 8;
-            }
+        if (line.Contains("yuv420p") || line.Contains("nv12"))
+        {
+            logger?.ILog("8-Bit detected");
+            return 8;
         }
 
         logger?.ILog("Bits not detected in video");
