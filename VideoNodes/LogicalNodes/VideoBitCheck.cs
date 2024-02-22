@@ -25,6 +25,8 @@ public class VideoBitCheck : VideoNode
     /// Gets the help URL 
     /// </summary>
     public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/logical-nodes/video-bit-check";
+    /// <inheritdoc />
+    public override string Icon => "fas fa-sitemap";
 
     /// <summary>
     /// Executes the flow element

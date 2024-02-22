@@ -25,6 +25,8 @@ public class VideoIs12Bit : VideoNode
     /// Gets the help URL 
     /// </summary>
     public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/logical-nodes/video-is-12-bit";
+    /// <inheritdoc />
+    public override string Icon => "fas fa-question";
 
     /// <summary>
     /// Executes the flow element
