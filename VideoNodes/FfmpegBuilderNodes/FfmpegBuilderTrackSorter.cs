@@ -30,7 +30,7 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
     [Select(nameof(StreamTypeOptions), 1)]
     public string StreamType { get; set; }
 
-    [KeyValue(1, nameof(SorterOptions))]
+    [KeyValue(2, nameof(SorterOptions))]
     [Required]
     public List<KeyValuePair<string, string>> Sorters { get; set; }
 
@@ -85,6 +85,13 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
             return _SorterOptions;
         }
     }
+    
+    /// <summary>
+    /// Gets or sets if the first track should be marked default
+    /// </summary>
+    [Boolean(3)]
+    [DefaultValue(true)]
+    public bool SetFirstDefault { get; set; }
 
     /// <summary>
     /// Executes the flow element
@@ -134,14 +141,28 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
         }
 
         var orderedStreams = SortStreams(args, streams);
+        
+        if(SetFirstDefault)
+            args.Logger?.ILog("Will set first track as default");
+        else
+            args.Logger?.ILog("Won't set first track as default");
 
         bool changes = false;
         // Replace the unsorted items with the sorted ones
         for (int i = 0; i < streams.Count; i++)
         {
-            bool newDefault = orderedStreams[0] == streams[i];
-            bool changed = streams[i] != orderedStreams[i] || orderedStreams[i].IsDefault != newDefault;
-            streams[i].IsDefault = newDefault;
+            bool changed = false;
+            if (SetFirstDefault)
+            {
+                bool newDefault = orderedStreams[0] == streams[i];
+                changed = streams[i] != orderedStreams[i] || orderedStreams[i].IsDefault != newDefault;
+                streams[i].IsDefault = newDefault;
+            }
+            else
+            {
+                changed = streams[i] != orderedStreams[i];
+            }
+
             if (changed)
             {
                 streams[i].ForcedChange = true;

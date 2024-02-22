@@ -388,7 +388,9 @@
           "Sorters": "Sorters",
           "Sorters-Help": "Add one or more sorting options to sort the tracks by.",
           "SortersKey": "Field",
-          "SortersValue": "Value"
+          "SortersValue": "Value",
+          "SetFirstDefault": "Set Default",
+          "SetFirstDefault-Help": "If the first track should be set as default after the sort."
         }
       },
       "FfmpegBuilderSubtitleClearDefault": {
@@ -708,7 +710,7 @@
       "VideoBitCheck": {
         "Label": "Video Bit Check",
         "Description": "Checks if a video if 8-Bit, 10-Bit, 12-Bit or unknown.",
-        "Ouputs": {
+        "Outputs": {
           "1": "Video is 8-Bit",
           "2": "Video is 10-Bit",
           "3": "Video is 12-Bit",
