@@ -149,6 +149,12 @@ namespace FileFlows.VideoNodes
                     metadata.Add(prefix + "HDR", true);
                 if(stream.DolbyVision)
                     metadata.Add(prefix + "DolbyVision", true);
+                if(stream.Bits == 8)
+                    metadata.Add(prefix + "Bits", "8 Bit");
+                else if(stream.Bits == 10)
+                    metadata.Add(prefix + "Bits", "10 Bit");
+                else if(stream.Bits == 12)
+                    metadata.Add(prefix + "Bits", "12 Bit");
             }
             foreach (var (stream, i) in videoInfo.AudioStreams.Select((value, i) => (value, i)))
             {
