@@ -16,9 +16,12 @@
 	<Description>Lets you send Pushover messages to a server</Description>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Pushover.en.json" />
-  </ItemGroup>
+
+    <ItemGroup>
+        <None Update="i18n\*.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
 
 	<ItemGroup Condition=" '$(Configuration)' == 'Debug'">
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.1" />
