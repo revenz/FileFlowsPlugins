@@ -161,7 +161,7 @@ public class DeleteSourceDirectory : Node
                         return true;
                     try
                     {
-                        if (System.Text.RegularExpressions.Regex.IsMatch(x, pattern,
+                        if (System.Text.RegularExpressions.Regex.IsMatch(x, pattern.Trim(),
                                 System.Text.RegularExpressions.RegexOptions.IgnoreCase))
                             return true;
                     }
