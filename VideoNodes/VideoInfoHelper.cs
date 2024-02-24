@@ -40,27 +40,19 @@ public class VideoInfoHelper
 
     public static string GetFFMpegPath(NodeParameters args) => args.GetToolPath("FFMpeg");
 
-    public VideoInfo Read(string filename)
+    public Result<VideoInfo> Read(string filename)
         => ReadStatic(Logger, ffMpegExe, filename);
     
-    internal static VideoInfo ReadStatic(ILogger logger, string ffMpegExe, string filename)
+    internal static Result<VideoInfo> ReadStatic(ILogger logger, string ffMpegExe, string filename)
     {
         #if(DEBUG) // UNIT TESTING
         filename = filename.Replace("~/", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/");
         #endif
         
-        var vi = new VideoInfo();
-        vi.FileName = filename;
         if (System.IO.File.Exists(filename) == false)
-        {
-            logger.ELog("File not found: " + filename);
-            return vi;
-        }
+            return Result<VideoInfo>.Fail("File not found: " + filename);
         if (string.IsNullOrEmpty(ffMpegExe) || System.IO.File.Exists(ffMpegExe) == false)
-        {
-            logger.ELog("FFmpeg not found: " + (ffMpegExe ?? "not passed in"));
-            return vi;
-        }
+            return Result<VideoInfo>.Fail("FFmpeg not found: " + (ffMpegExe ?? "not passed in"));
 
         try
         {
@@ -89,21 +81,27 @@ public class VideoInfoHelper
                 process.WaitForExit();
 
                 if (string.IsNullOrEmpty(error) == false && error != "At least one output file must be specified")
-                {
-                    logger.ELog("Failed reading ffmpeg info: " + error);
-                    return vi;
-                }
+                    return Result<VideoInfo>.Fail("Failed reading ffmpeg info: " + error);
 
                 logger.ILog("Video Information:" + Environment.NewLine + output);
-                vi = ParseOutput(logger, output);
+
+                if (process.ExitCode != 0)
+                {
+                    if (output.Contains("moov atom not found"))
+                        return Result<VideoInfo>.Fail(
+                            "The video file appears to be corrupted or incomplete. (moov atom not found)");
+                }
+                
+                var vi = ParseOutput(logger, output);
+                vi.FileName = filename;
+                return vi;
             }
         }
         catch (Exception ex)
         {
             logger.ELog(ex.Message, ex.StackTrace);
+            return Result<VideoInfo>.Fail("Failed reading video information: " + ex.Message);
         }
-        vi.FileName = filename;
-        return vi;
     }
 
     public static VideoInfo ParseOutput(ILogger logger, string output)

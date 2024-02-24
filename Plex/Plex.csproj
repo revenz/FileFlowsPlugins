@@ -16,6 +16,11 @@
         <Description>Plex plugin that lets you update Plex with any changes</Description>
     </PropertyGroup>
 
+    <ItemGroup>
+      <None Update="i18n\*.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
 
     <ItemGroup Condition=" '$(Configuration)' == 'Debug'">
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.1" />

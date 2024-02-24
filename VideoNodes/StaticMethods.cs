@@ -12,5 +12,5 @@ public class StaticMethods
     /// <param name="filename">the name of the file to read</param>
     /// <returns>the video info</returns>
     public static VideoInfo GetVideoInfo(NodeParameters args, string filename)
-        => VideoInfoHelper.ReadStatic(args.Logger, args.GetToolPath("FFMpeg"), filename);
+        => VideoInfoHelper.ReadStatic(args.Logger, args.GetToolPath("FFMpeg"), filename).ValueOrDefault;
 }

@@ -59,14 +59,24 @@ public class VideoFile : VideoNode
             var file = args.FileService.GetLocalPath(args.WorkingFile);
             if (file.IsFailed)
             {
-                args.Logger?.ELog("Failed getting local file: " + file.Error);
+                args.FailureReason = "Failed getting local file: " + file.Error;
+                args.Logger?.ELog(args.FailureReason);
                 return -1;
             }
             
-            var videoInfo = new VideoInfoHelper(FFMPEG, args.Logger).Read(file);
+            var videoInfoResult = new VideoInfoHelper(FFMPEG, args.Logger).Read(file);
+            if (videoInfoResult.Failed(out string error))
+            {
+                args.FailureReason = error;
+                args.Logger?.ELog(args.FailureReason);
+                return -1;
+            }
+
+            var videoInfo = videoInfoResult.Value;
             if (videoInfo.VideoStreams.Any() == false)
             {
-                args.Logger.ELog("No video streams detected.");
+                args.FailureReason = "No video streams detected.";
+                args.Logger?.ELog(args.FailureReason);
                 return -1;
             }
             foreach (var vs in videoInfo.VideoStreams)

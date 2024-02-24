@@ -42,12 +42,20 @@ namespace FileFlows.VideoNodes
             };
         }
 
+        /// <inheritdoc />
         public override int Execute(NodeParameters args)
         {
             try
             {
 
-                var videoInfo = new VideoInfoHelper(FFMPEG, args.Logger).Read(args.WorkingFile);
+                var videoInfoResult = new VideoInfoHelper(FFMPEG, args.Logger).Read(args.WorkingFile);
+                if (videoInfoResult.Failed(out string error))
+                {
+                    args.Logger.ELog(error);
+                    return 2;
+                }
+
+                var videoInfo = videoInfoResult.Value;
                 if (videoInfo.VideoStreams.Any() == false)
                 {
                     args.Logger.ILog("No video streams detected.");
