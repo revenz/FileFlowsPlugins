@@ -1,0 +1,27 @@
+{
+  "Flow": {
+    "Parts": {
+      "ComicConverter": {
+        "Outputs": {
+          "1": "Comic wurde konvertiert und als temporäre Datei gespeichert.",
+          "2": "Comic ist bereits im gewünschten Format"
+        },
+        "Description": "Konvertiert einen Comic in ein anderes Format.\n\nUnterstützt die Konvertierung von CBZ, CBR, CB7, PDF, GZ und BZ2",
+        "Fields": {
+          "Format": "Format",
+          "Format-Help": "Das Format, in das der Comic konvertiert werden soll."
+        }
+      },
+      "ComicExtractor": {
+        "Outputs": {
+          "1": "Comic wurde extrahiert."
+        },
+        "Description": "Extrahiert alle Dateien aus einem Format und speichert sie in einem bestimmten Ordner.\n\nUnterstützt das Entpacken von CBZ, CBR, CB7, PDF, GZ und BZ2",
+        "Fields": {
+          "DestinationPath": "Zielverzeichnis",
+          "DestinationPath-Help": "Der Ordner in dem die extrahierten Dateien gespeichert werden sollen."
+        }
+      }
+    }
+  }
+}

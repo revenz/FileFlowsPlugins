@@ -20,12 +20,6 @@
     <None Remove="Pushover.en.json" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Include="Pushover.en.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
 	<ItemGroup Condition=" '$(Configuration)' == 'Debug'">
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.1" />
 		<PackageReference Include="MSTest.TestAdapter" Version="3.0.4" />

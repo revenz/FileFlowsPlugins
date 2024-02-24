@@ -25,12 +25,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Content Include="EmailNodes.en.json">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-    </ItemGroup>
-
-    <ItemGroup>
         <PackageReference Include="MailKit" Version="4.0.0" />
     </ItemGroup>
 
@@ -39,6 +33,13 @@
             <HintPath>..\FileFlows.Plugin.dll</HintPath>
             <SpecificVersion>False</SpecificVersion>
         </Reference>
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <None Update="i18n\*.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

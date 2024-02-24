@@ -14,17 +14,7 @@
         <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
         <Description>Nodes for processing images files.  This plugin contains nodes to convert and manipulate images.</Description>
     </PropertyGroup>
-
-    <ItemGroup>
-        <None Remove="ImageNodes.en.json" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <Content Include="ImageNodes.en.json">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-    </ItemGroup>
-
+    
     <ItemGroup Condition=" '$(Configuration)' == 'Debug'">
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.1" />
         <PackageReference Include="MSTest.TestAdapter" Version="3.0.4" />
@@ -40,6 +30,13 @@
     <ItemGroup>
         <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="13.0.1" />
         <PackageReference Include="SixLabors.ImageSharp" Version="2.1.1" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <None Update="i18n\*.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

@@ -22,14 +22,15 @@
         <None Remove="ChecksumNodes.en.json" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="ChecksumNodes.en.json">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-    </ItemGroup>
-    <ItemGroup>
         <Reference Include="Plugin">
             <HintPath>..\FileFlows.Plugin.dll</HintPath>
             <SpecificVersion>False</SpecificVersion>
         </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="i18n\*.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 </Project>
