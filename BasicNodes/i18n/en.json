@@ -316,6 +316,19 @@
             "CsvFile-Help": "Will append to this file the original name and the renamed file.  Useful when using ''Log Only'' to test the renamer before changing files."
           }
         },
+        "SetVariable": {
+          "Label": "Set Variable",
+          "Description": "Sets a variable in the flow.",
+          "Outputs": {
+            "1": "Variable set"
+          },
+          "Fields": {
+            "Variable": "Variable",
+            "Variable-Help": "The name of the variable to set",
+            "Value": "Value",
+            "Value-Help": "The value of the variable to set."
+          }
+        },
         "Sleep": {
           "Description": "Pauses the flow",
           "Outputs": {

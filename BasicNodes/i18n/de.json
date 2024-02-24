@@ -287,6 +287,19 @@
           "CsvFile-Help": "Der ursprüngliche Name und die umbenannte Datei werden an diese Datei angehängt. Nützlich, wenn Sie „Nur protokollieren“ verwenden, um den Renamer zu testen, bevor Sie Dateien ändern. Symbol „Von der Community überprüft“"
         }
       },
+      "SetVariable": {
+        "Label": "Variable setzen",
+        "Description": "Setzt eine Variable im Flow.",
+        "Outputs": {
+          "1": "Variable gesetzt"
+        },
+        "Fields": {
+          "Variable": "Variable",
+          "Variable-Help": "Der Name der zu setzenden Variable",
+          "Value": "Wert",
+          "Value-Help": "Der Wert der zu setzenden Variable"
+        }
+      },
       "Sleep": {
         "Description": "Unterbricht den Flow",
         "Outputs": {

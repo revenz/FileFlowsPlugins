@@ -4,7 +4,7 @@ using FileFlows.Plugin.Attributes;
 namespace FileFlows.BasicNodes.Functions;
 
 /// <summary>
-/// A node that simply fails a flow
+/// A flow element that simply fails a flow
 /// </summary>
 public class FailFlow : Node
 {
