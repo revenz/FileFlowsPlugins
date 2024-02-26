@@ -11,6 +11,14 @@ namespace VideoNodes.Tests;
 [TestClass]
 public abstract class TestBase
 {
+    private TestContext testContextInstance;
+
+    public TestContext TestContext
+    {
+        get { return testContextInstance; }
+        set { testContextInstance = value; }
+    }
+
     public string TestPath { get; private set; }
     public string TempPath { get; private set; }
     public string FfmpegPath { get; private set; }

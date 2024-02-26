@@ -15,6 +15,15 @@ public class FfmpegVideoStream : FfmpegStream
     }
     private List<string> _OptionalFilter = new List<string>();
 
+    private List<string> _FilterComplex = new List<string>();
+    public List<string> FilterComplex
+    {
+        get => _FilterComplex;
+        set
+        {
+            _FilterComplex = value ?? new List<string>();
+        }
+    }
     /// <summary>
     /// Gets or sets filters that will process but only if processing is needed, these won't trigger a has changed
     /// value of the video file by themselves
@@ -95,6 +104,12 @@ public class FfmpegVideoStream : FfmpegStream
             {
                 results.Add("-filter:v:" + args.OutputTypeIndex);
                 results.Add(string.Join(", ", Filter.Concat(OptionalFilter)).Replace("{index}", args.OutputTypeIndex.ToString()));
+            }
+
+            if (FilterComplex?.Any() == true)
+            {
+                results.Add("-filter_complex:v:" + args.OutputTypeIndex);
+                results.Add(string.Join(", ", FilterComplex).Replace("{index}", args.OutputTypeIndex.ToString()));
             }
         }
 

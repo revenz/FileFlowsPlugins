@@ -247,7 +247,30 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             startArgs.Add("-i");
             startArgs.Add(file.FileName);
         }
+
+        if (model.Watermark != null)
+        {
+            startArgs.AddRange(new[]
+            {
+                "-i",
+                model.Watermark.Image,
+                "-filter_complex",
+                model.Watermark.Filter.Replace("::wmindex::", (model.InputFiles.Count - 1).ToString()) + "[watermark]"
+            });
+
+            for (int i = 0; i < ffArgs.Count; i++)
+            {
+                if (ffArgs[i] == "0:v:0")
+                    ffArgs[i] = "[watermark]";
+            }
+        }
+        
         startArgs.Add("-y");
+        if(model.CutDuration != null)
+            startArgs.AddRange(new [] { "-t", model.CutDuration.Value.ToString()});
+        if(model.StartTime != null)
+            startArgs.AddRange(new [] { "-ss", model.StartTime.Value.ToString()});
+        
         if (extension.ToLower() == "mp4" && ffArgs.IndexOf("-movflags") < 0 && startArgs.IndexOf("-movflgs") < 0)
         {
             startArgs.AddRange(new[] { "-movflags", "+faststart" });

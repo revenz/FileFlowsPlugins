@@ -73,6 +73,22 @@
         {
             this._VideoInfo = info;
         }
+        
+        
+        /// <summary>
+        /// Gets or sets a watermark to apply
+        /// </summary>
+        internal WatermarkModel Watermark { get; set; }
+
+        /// <summary>
+        /// Gets or sets the cut duration of the video, ie the -t variable
+        /// </summary>
+        public TimeSpan? CutDuration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the start time of hte video, ie the -ss variable
+        /// </summary>
+        public TimeSpan? StartTime { get; set; }
 
         internal static FfmpegModel CreateModel(VideoInfo info)
         {

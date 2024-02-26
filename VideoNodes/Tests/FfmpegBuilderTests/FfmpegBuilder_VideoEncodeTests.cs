@@ -186,7 +186,7 @@ public class FfmpegBuilder_VideoEncode_VideoEncodeTests: TestBase
         string ffmpeg = FfmpegPath;
         var vi = new VideoInfoHelper(ffmpeg, logger);
         var vii = vi.Read(TestFile_BasicMkv);
-        var args = new NodeParameters(TestFile_BasicMkv, logger, false, string.Empty, null);
+        var args = new NodeParameters(TestFile_BasicMkv, logger, false, string.Empty, new LocalFileService());
         args.GetToolPathActual = (string tool) => ffmpeg;
         args.TempPath = TempPath;
         args.Parameters.Add("VideoInfo", vii);
@@ -207,6 +207,53 @@ public class FfmpegBuilder_VideoEncode_VideoEncodeTests: TestBase
         ffExecutor.PreExecute(args);
         int result = ffExecutor.Execute(args);
         string log = logger.ToString();
+        Assert.AreEqual(1, result);
+    }
+    
+    
+    
+    [TestMethod]
+    public void FfmpegBuilder_VideoEncode_Watermark()
+    {
+        var logger = new TestLogger(); 
+        string ffmpeg = FfmpegPath;
+        var vi = new VideoInfoHelper(ffmpeg, logger);
+        var vii = vi.Read(TestFile_BasicMkv);
+        var args = new NodeParameters(TestFile_BasicMkv, logger, false, string.Empty, new LocalFileService());
+        args.GetToolPathActual = (string tool) => ffmpeg;
+        args.TempPath = TempPath;
+        args.Parameters.Add("VideoInfo", vii);
+        
+        FfmpegBuilderStart ffStart = new();
+        ffStart.PreExecute(args);
+        Assert.AreEqual(1, ffStart.Execute(args));
+
+        FfmpegBuilderVideoEncode ffEncode = new();
+        ffEncode.Quality = 28;
+        ffEncode.Encoder = "CPU";
+        ffEncode.Speed = "fast";
+        ffEncode.Codec = "av1";
+        ffEncode.PreExecute(args);
+        ffEncode.Execute(args);
+
+        FFmpegBuilderWatermark ffWatermark = new();
+        ffWatermark.Image = "/home/john/Videos/watermark.png";
+        ffWatermark.Position = FFmpegBuilderWatermark.WatermarkPosition.BottomRight;
+        ffWatermark.Height = new();
+        ffWatermark.Width = new() { Value = 5, Percentage = true};
+        ffWatermark.XPos = new() { Value = 10, Percentage = true };
+        ffWatermark.YPos = new() { Value = 5, Percentage = true };
+        ffWatermark.Opacity = 50;
+        
+        ffWatermark.PreExecute(args);
+        ffWatermark.Execute(args);
+
+        FfmpegBuilderExecutor ffExecutor = new();
+        ffExecutor.HardwareDecoding = false;
+        ffExecutor.PreExecute(args);
+        int result = ffExecutor.Execute(args);
+        string log = logger.ToString();
+        TestContext.WriteLine(log);
         Assert.AreEqual(1, result);
     }
 }

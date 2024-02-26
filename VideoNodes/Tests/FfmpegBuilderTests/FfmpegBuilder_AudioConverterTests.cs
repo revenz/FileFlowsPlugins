@@ -197,7 +197,7 @@ public class FfmpegBuilder_AudioConverterTests: TestBase
         string log = logger.ToString();
         Assert.AreEqual(1, result);
 
-        var newInfo = vi.Read(args.WorkingFile);
+        var newInfo = vi.Read(args.WorkingFile).Value;
         Assert.AreEqual("opus", newInfo.AudioStreams[0].Codec);
     }
     

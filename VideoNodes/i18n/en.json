@@ -5,6 +5,15 @@
   },
   "5": { "1": "5.1" },
   "7": { "1": "7.1" },
+  "Enums": {
+    "WatermarkPosition": {
+      "Center": "Center",
+      "TopLeft": "Top Left",
+      "TopRight": "Top Right",
+      "BottomRight": "Bottom Right",
+      "BottomLeft": "Bottom Left"      
+    }
+  },
   "Flow": {
     "Parts": {
       "DisableAmd": {
@@ -308,6 +317,20 @@
           "Parameters-Help": "The parameters to add to the FFMPEG Builder for execution",
           "ForceEncode": "Force Encode",
           "ForceEncode-Help": "If this should force the FFMPEG Builder Executor to always execute even if no changes are detected that would usually require the executor to run."
+        }
+      },
+      "FFmpegBuilderDurationStart": {
+        "Label": "FFMPEG Builder: Duration/Start",
+        "Descriptions": "This flow element enables users to define the starting point and duration for extracting a segment from a video.",
+        "Outputs": {
+          "1": "Duration/Start configured",
+          "2": "Failed to set duration/start"
+        },
+        "Fields": {
+          "Duration": "Duration",
+          "Duration-Help": "The duration of the video file, if 0, will not adjust the duration.",
+          "Start": "Start",
+          "Start-Help": "The start of the video file, if 0, will not adjust the start."
         }
       },
       "FfmpegBuilderHdrToSdr": {
@@ -677,6 +700,29 @@
         "Fields": {
           "Tag": "Tag",
           "Tag-Help": "The tag to add to the video file"
+        }
+      },
+      "FFmpegBuilderWatermark": {
+        "Label": "FFMPEG Builder: Watermark",
+        "Description": "Adds a watermark to a video file.",
+        "Outputs": {
+          "1": "Watermark added"
+        },
+        "Fields": {
+          "Image": "Image",
+          "Image-Help": "The image file to the watermark, for best results use a PNG file.",
+          "Position": "Position",
+          "Position-Help": "Where to place the watermark",
+          "Opacity": "Opacity",
+          "Opacity-Help": "Adjusts the transparency level of the overlay image, ranging from 0 (fully transparent) to 100 (fully opaque).",
+          "XPos": "X-Pos",
+          "XPos-Help": "The position of the watermark on the x-axis",
+          "YPos": "Y-Pos",
+          "YPos-Help": "The position of the watermark on the y-axis",
+          "Width": "Width",
+          "Width-Help": "Set a custom width of the image, or set to 0 for source width or scaled if height is set.",
+          "Height": "Height",
+          "Height-Help": "Set a custom height of the image, or set to 0 for source height or scaled if width is set."
         }
       },
       "ReadVideoInfo": {
