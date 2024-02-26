@@ -47,8 +47,15 @@ namespace FileFlows.VideoNodes
         {
             try
             {
+                var localFileResult = args.FileService.GetLocalPath(args.WorkingFile);
+                if (localFileResult.Failed(out string lfError))
+                {
+                    args.FailureReason = "Failed getting local file: " + lfError;
+                    args.Logger.ILog(args.FailureReason);
+                    return -1;
+                }
 
-                var videoInfoResult = new VideoInfoHelper(FFMPEG, args.Logger).Read(args.WorkingFile);
+                var videoInfoResult = new VideoInfoHelper(FFMPEG, args.Logger).Read(localFileResult.Value);
                 if (videoInfoResult.Failed(out string error))
                 {
                     args.Logger.ELog(error);
