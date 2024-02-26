@@ -130,8 +130,8 @@ namespace FileFlows.BasicNodes.File
                         oCreateTimeUtc is DateTime dtCreateTimeUtc && oLastWriteUtc is DateTime dtLastWriteUtc)
                     {
                         args.Logger?.ILog("Preserving dates");
-                        Helpers.FileHelper.SetLastWriteTime(dest, dtLastWriteUtc);
-                        Helpers.FileHelper.SetCreationTime(dest, dtCreateTimeUtc);
+                        args.FileService.SetLastWriteTimeUtc(dest, dtLastWriteUtc);
+                        args.FileService.SetCreationTimeUtc(dest, dtCreateTimeUtc);
                     }
                     else
                     {
