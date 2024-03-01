@@ -79,6 +79,13 @@ namespace FileFlows.AudioNodes
 
                 if (string.IsNullOrEmpty(AudioInfo.Value.Codec) == false)
                     args.RecordStatistic("CODEC", AudioInfo.Value.Codec);
+                
+                string container = FileHelper.GetExtension(args.FileName).ToUpperInvariant().TrimStart('.');
+                if (string.IsNullOrEmpty(container) == false)
+                {
+                    args.Logger?.ILog("Audio Container: " + container);
+                    args.RecordStatistic("AUDIO_CONTAINER", container);
+                }
 
                 return 0;
             }
