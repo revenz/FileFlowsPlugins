@@ -11,6 +11,20 @@ namespace MetaNodes.Tests.TheMovieDb;
 [TestClass]
 public class TVEpisodeLookupTests
 {
+    /// <summary>
+    /// The test context instance
+    /// </summary>
+    private TestContext testContextInstance;
+
+    /// <summary>
+    /// Gets or sets the test context
+    /// </summary>
+    public TestContext TestContext
+    {
+        get { return testContextInstance; }
+        set { testContextInstance = value; }
+    }
+    
     [TestMethod]
     public void TheBatman_s02e01()
     {
@@ -45,6 +59,28 @@ public class TVEpisodeLookupTests
         Assert.AreEqual(3, args.Variables["tvepisode.Episode"]);
         Assert.AreEqual("Fire & Ice", args.Variables["tvepisode.Subtitle"]);
         Assert.IsFalse(string.IsNullOrWhiteSpace(args.Variables["tvepisode.Overview"] as string));
+    }
+    
+    [TestMethod]
+    public void WithYear()
+    {
+        var logger = new TestLogger();
+        var args = new FileFlows.Plugin.NodeParameters("/test/tv/Paradise PD (2018) - S04E04 - Good Jeans (1080p NF WEB-DL x265 t3nzin).mkv", logger, false, string.Empty, null);
+
+        var element = new TVEpisodeLookup();
+
+        var result = element.Execute(args);
+        TestContext.WriteLine(logger.ToString());
+        
+        Assert.AreEqual(1, result);
+        
+        
+        Assert.AreEqual("Paradise PD", args.Variables["tvepisode.Title"]);
+        Assert.AreEqual(4, args.Variables["tvepisode.Season"]);
+        Assert.AreEqual(4, args.Variables["tvepisode.Episode"]);
+        Assert.AreEqual("Good Jeans", args.Variables["tvepisode.Subtitle"]);
+        Assert.IsFalse(string.IsNullOrWhiteSpace(args.Variables["tvepisode.Overview"] as string));
+        
     }
     
     [TestMethod]

@@ -147,7 +147,7 @@ public class TVShowLookup : Node
         }
 
         // remove double spaces in case they were added when removing the year
-        while (lookupName.IndexOf("  ") > 0)
+        while (lookupName.IndexOf("  ", StringComparison.Ordinal) > 0)
             lookupName = lookupName.Replace("  ", " ");
         
         return (lookupName, year);
@@ -204,13 +204,22 @@ public class TVShowLookup : Node
         // Replace "1x02" format with "s1e02"
         text = Regex.Replace(text, @"(?<season>\d+)x(?<episode>\d+)", "s${season}e${episode}", RegexOptions.IgnoreCase);
 
+        string year = null;
+        var reYear = Regex.Match(text, @"(19|20)[\d]{2}", RegexOptions.CultureInvariant);
+        if (reYear.Success)
+        {
+            year = reYear.Value;
+            text = text.Replace("(" + year + ")", string.Empty);
+            text = text.Replace(year, string.Empty);
+        }
+
         string pattern = @"^(?<showName>[\w\s.-]+)[. _-]?(?:(s|S)(?<season>\d+)(e|E)(?<episode>\d+)(?:-(?<lastEpisode>\d+))?)";
 
         Match match = Regex.Match(text, pattern);
 
         if (match.Success == false)
             return (text, null, null, null);
-        
+    
         string show = match.Groups["showName"].Value.Replace(".", " ").TrimEnd();
         if (show.EndsWith(" -"))
             show = show[..^2];
@@ -218,6 +227,9 @@ public class TVShowLookup : Node
         int episode = int.Parse(match.Groups["episode"].Value);
         string lastEpisodeStr = match.Groups["lastEpisode"].Value;
         int? lastEpisode = string.IsNullOrEmpty(lastEpisodeStr) ? (int?)null : int.Parse(lastEpisodeStr);
+
+        if (year != null)
+            show += " (" + year + ")";
 
         return (show, season, episode, lastEpisode);
     }

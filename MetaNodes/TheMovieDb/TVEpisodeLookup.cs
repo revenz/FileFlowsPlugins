@@ -65,8 +65,8 @@ public class TVEpisodeLookup : Node
     public override int Execute(NodeParameters args)
     {
         string filename = args.FileName.Replace("\\", "/");
-        filename = filename.Substring(filename.LastIndexOf("/") + 1);
-        filename = filename.Substring(0, filename.LastIndexOf("."));
+        filename = filename.Substring(filename.LastIndexOf("/", StringComparison.Ordinal) + 1);
+        filename = filename.Substring(0, filename.LastIndexOf(".", StringComparison.Ordinal));
         
         (string lookupName, string year) = TVShowLookup.GetLookupName(filename, false);
 
