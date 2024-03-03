@@ -45,6 +45,20 @@ public class FfmpegBuilderAudioSetLanguage : FfmpegBuilderNode
             args.Logger?.WLog("No language set");
             return 2;
         }
+
+        if (language.ToLowerInvariant().Contains("orig"))
+        {
+            if (Variables.TryGetValue("OriginalLanguage", out object oLang) == false || string.IsNullOrEmpty(oLang as string))
+            {
+                args.Logger?.ILog("OriginalLanguage not found in varaibles.");
+                return 2;
+            }
+
+            language = oLang as string;
+            language = LanguageHelper.GetIso2Code(language);
+            args.Logger?.ILog("Using original language:" + language);
+        }
+        
         if (StreamType == "Subtitle" || StreamType == "Both")
         {
             foreach (var at in Model.SubtitleStreams)
