@@ -1,24 +1,36 @@
-﻿using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
+﻿namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 
-namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
-
+/// <summary>
+/// Flow element that set language fot tracks if the language is missing
+/// </summary>
 public class FfmpegBuilderAudioSetLanguage : FfmpegBuilderNode
 {
+    /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/set-language";
 
+    /// <inheritdoc />
     public override int Outputs => 2;
 
+    /// <inheritdoc />
     public override string Icon => "fas fa-comment-dots";
 
-
+    /// <summary>
+    /// Gets or sets the type of stream to set the language for
+    /// </summary>
     [Select(nameof(StreamTypeOptions), 1)]
     public string StreamType { get; set; }
 
+    /// <summary>
+    /// Gets or sets the language
+    /// </summary>
     [Required]
     [TextVariable(2)]
     public string Language { get; set; }
 
     private static List<ListOption> _StreamTypeOptions;
+    /// <summary>
+    /// Gets the possible stream types
+    /// </summary>
     public static List<ListOption> StreamTypeOptions
     {
         get
@@ -36,6 +48,7 @@ public class FfmpegBuilderAudioSetLanguage : FfmpegBuilderNode
         }
     }
 
+    /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
         bool changes = false;
@@ -45,6 +58,8 @@ public class FfmpegBuilderAudioSetLanguage : FfmpegBuilderNode
             args.Logger?.WLog("No language set");
             return 2;
         }
+        args.Logger?.ILog("Language: " + language);
+        args.Logger?.ILog("Stream Type: " + StreamType);
 
         if (language.ToLowerInvariant().Contains("orig"))
         {
@@ -59,7 +74,7 @@ public class FfmpegBuilderAudioSetLanguage : FfmpegBuilderNode
             args.Logger?.ILog("Using original language:" + language);
         }
         
-        if (StreamType == "Subtitle" || StreamType == "Both")
+        if (StreamType is "Subtitle" or "Both")
         {
             foreach (var at in Model.SubtitleStreams)
             {
