@@ -3,21 +3,33 @@ using FileFlows.VideoNodes.Helpers;
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 
+/// <summary>
+/// FFmpeg Builder flow element that converts audio
+/// </summary>
 public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
 {
+    /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/audio-converter";
-
+    /// <inheritdoc />
     public override string Icon => "fas fa-comments";
-
+    /// <inheritdoc />
     public override int Outputs => 2;
 
 
-
+    /// <summary>
+    /// Gets or sets the codec to use
+    /// </summary>
     [DefaultValue("aac")]
     [Select(nameof(CodecOptions), 1)]
     public string Codec { get; set; }
 
+    /// <summary>
+    /// The available codec options
+    /// </summary>
     private static List<ListOption> _CodecOptions;
+    /// <summary>
+    /// Gets the available codec options
+    /// </summary>
     public static List<ListOption> CodecOptions
     {
         get
@@ -41,12 +53,21 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
         }
     }
     
+    /// <summary>
+    /// Gets or sets the PCM format
+    /// </summary>
     [DefaultValue("pcm_s16le")]
     [Select(nameof(PcmFormats), 2)]
     [ConditionEquals(nameof(Codec), "pcm")]
     public string PcmFormat { get; set; }
 
+    /// <summary>
+    /// The PCM options
+    /// </summary>
     private static List<ListOption> _PcmFormats;
+    /// <summary>
+    /// Gets the PCM options
+    /// </summary>
     public static List<ListOption> PcmFormats
     {
         get
@@ -83,12 +104,19 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
         }
     }
 
-
+    /// <summary>
+    /// Gets or sets the number of channels for the converted audio
+    /// </summary>
     [DefaultValue(0)]
     [Select(nameof(ChannelsOptions), 3)]
     public float Channels { get; set; }
-
+    /// <summary>
+    /// The channel options
+    /// </summary>
     private static List<ListOption> _ChannelsOptions;
+    /// <summary>
+    /// Gets the channel options
+    /// </summary>
     public static List<ListOption> ChannelsOptions
     {
         get
@@ -108,10 +136,18 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
         }
     }
 
+    /// <summary>
+    /// Gets or sets the bitrate
+    /// </summary>
     [Select(nameof(BitrateOptions), 4)]
     public int Bitrate { get; set; }
-
+    /// <summary>
+    /// The bitrate options
+    /// </summary>
     private static List<ListOption> _BitrateOptions;
+    /// <summary>
+    /// Gets the bitrate options
+    /// </summary>
     public static List<ListOption> BitrateOptions
     {
         get
@@ -132,16 +168,33 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
         }
     }
 
+    /// <summary>
+    /// Gets or sets the field to match again
+    /// </summary>
     [DefaultValue("")]
     [Select(nameof(FieldOptions), 5)]
     public string Field { get; set; }
-
+    /// <summary>
+    /// The field options
+    /// </summary>
     private static List<ListOption> _FieldOptions;
 
+    /// <summary>
+    /// Constant for the Title field
+    /// </summary>
     internal const string FIELD_TITLE = "Title";
+    /// <summary>
+    /// Constant for the Language field
+    /// </summary>
     internal const string FIELD_LANGUAGE = "Language";
+    /// <summary>
+    /// Constant for the Codec field
+    /// </summary>
     internal const string FIELD_CODEC = "Codec";
 
+    /// <summary>
+    /// Gets the field options
+    /// </summary>
     public static List<ListOption> FieldOptions
     {
         get
@@ -161,14 +214,21 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
         }
     }
 
+    /// <summary>
+    /// Gets or sets the pattern to match against
+    /// </summary>
     [TextVariable(6)]
     [ConditionEquals(nameof(Field), "", true)]
     public string Pattern { get; set; }
 
+    /// <summary>
+    /// Gets or sets if the pattern should not match
+    /// </summary>
     [Boolean(7)]
     [ConditionEquals(nameof(Field), "", true)]
     public bool NotMatching { get; set; }
 
+    /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
         bool converting = false;
