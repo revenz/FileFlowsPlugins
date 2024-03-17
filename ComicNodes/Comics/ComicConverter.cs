@@ -53,8 +53,8 @@ public class ComicConverter: Node
         int pageCount = GetPageCount(args, currentFormat, args.WorkingFile);
         metadata.Add("Format", currentFormat);
         metadata.Add("Pages", pageCount);
-        args.RecordStatistic("COMIC_FORMAT", currentFormat);
-        args.RecordStatistic("COMIC_PAGES", pageCount);
+        args.RecordStatisticRunningTotals("COMIC_FORMAT", currentFormat);
+        args.RecordStatisticAverage("COMIC_PAGES", pageCount);
         args.SetMetadata(metadata);
         args.Logger?.ILog("Setting metadata: " + currentFormat);
 

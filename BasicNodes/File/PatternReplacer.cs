@@ -1,32 +1,46 @@
 ﻿using FileFlows.Plugin.Helpers;
-
-namespace FileFlows.BasicNodes.Functions;
-
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
 
+namespace FileFlows.BasicNodes.Functions;
+
+/// <summary>
+/// Replaces matching patterns in a fil
+/// </summary>
 public class PatternReplacer : Node
 {
+    /// <inheritdoc />
     public override int Inputs => 1;
+    /// <inheritdoc />
     public override int Outputs => 2;
+    /// <inheritdoc />
     public override FlowElementType Type => FlowElementType.Process;
+    /// <inheritdoc />
     public override string Icon => "fas fa-exchange-alt";
 
     public string Group => "File";
 
+    /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/filename-pattern-replacer";
 
     internal bool UnitTest = false;
 
+    /// <summary>
+    /// Gets or sets replacements to replace
+    /// </summary>
     [KeyValue(1, null)]
     [Required]
     public List<KeyValuePair<string, string>> Replacements{ get; set; }
 
+    /// <summary>
+    /// Gets or sets if the working file should be used
+    /// </summary>
     [Boolean(2)]
     public bool UseWorkingFileName { get; set; }
 
+    /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
         if (Replacements?.Any() != true)
@@ -34,7 +48,6 @@ public class PatternReplacer : Node
 
         try
         {
-            //string filename = new FileInfo(UseWorkingFileName ? args.WorkingFile : args.FileName).Name;
             string filename = FileHelper.GetShortFileName(UseWorkingFileName ? args.WorkingFile : args.FileName);
             string updated = RunReplacements(args, filename);
             
@@ -47,7 +60,7 @@ public class PatternReplacer : Node
             args.Logger?.ILog($"Pattern replacement: '{filename}' to '{updated}'");
 
             string directory = FileHelper.GetDirectory(args.WorkingFile);
-            string dest = directory + args.FileService.PathSeparator + updated;
+            string dest = FileHelper.Combine(directory, updated);
             args.Logger?.ILog($"New filename: " + dest);
             if (UnitTest == false)
             {

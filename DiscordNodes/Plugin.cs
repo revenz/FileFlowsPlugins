@@ -18,6 +18,9 @@ public class Plugin : FileFlows.Plugin.IPlugin
     /// </summary>
     public string MinimumVersion => "1.0.4.2019";
 
+    /// <inheritdoc />
+    public string Icon => "fab fa-discord:#5865F2";
+
     /// <summary>
     /// Initializes this plugin
     /// </summary>

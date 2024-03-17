@@ -236,7 +236,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                     GetHardwareDecodingArgs(args, localFile, FFMPEG, video?.Stream?.Codec, pxtFormat, encodingParameters: encodingParameters);
                 if (decodingParameters.Any() == true)
                 {
-                    args.StatisticRecorder("DecoderParameters", string.Join(" ", decodingParameters));
+                    args.StatisticRecorderRunningTotals("DecoderParameters", string.Join(" ", decodingParameters));
                     startArgs.AddRange(decodingParameters);
                 }
             }

@@ -94,8 +94,8 @@ public class VideoFile : VideoNode
             {
                 if (string.IsNullOrEmpty(stream.Codec) == false)
                 {
-                    args.RecordStatistic("CODEC", stream.Codec);
-                    args.RecordStatistic("VIDEO_CODEC", stream.Codec);
+                    args.RecordStatisticRunningTotals("CODEC", stream.Codec);
+                    args.RecordStatisticRunningTotals("VIDEO_CODEC", stream.Codec);
                 }
             }
 
@@ -103,8 +103,8 @@ public class VideoFile : VideoNode
             {
                 if (string.IsNullOrEmpty(stream.Codec) == false)
                 {
-                    args.RecordStatistic("CODEC", stream.Codec);
-                    args.RecordStatistic("AUDIO_CODEC", stream.Codec);
+                    args.RecordStatisticRunningTotals("CODEC", stream.Codec);
+                    args.RecordStatisticRunningTotals("AUDIO_CODEC", stream.Codec);
                 }
             }
 
@@ -121,7 +121,7 @@ public class VideoFile : VideoNode
             if (resName != null)
             {
                 args.Logger?.ILog("Video Resolution: " + resName);
-                args.RecordStatistic("VIDEO_RESOLUTION", resName);
+                args.RecordStatisticRunningTotals("VIDEO_RESOLUTION", resName);
             }
 
             string extension = FileHelper.GetExtension(args.FileName).ToLowerInvariant().TrimStart('.');
@@ -144,7 +144,7 @@ public class VideoFile : VideoNode
             if (string.IsNullOrEmpty(container) == false)
             {
                 args.Logger?.ILog("Video Container: " + container);
-                args.RecordStatistic("VIDEO_CONTAINER", container);
+                args.RecordStatisticRunningTotals("VIDEO_CONTAINER", container);
             }
 
 

@@ -1,6 +1,3 @@
-using FileFlows.Plugin;
-using TagLib.Tiff.Cr2;
-
 namespace FileFlows.AudioNodes;
 
 /// <summary>
@@ -84,6 +81,7 @@ public class CreateAudioBook: AudioNode
             string extension = FileHelper.GetExtension(file);
             if (allowedExtensions.Contains(extension.ToLower()) == false)
                 continue;
+            args.Logger?.ILog("Found audio file: " + file);
             files.Add(file);
         }
 
@@ -109,19 +107,19 @@ public class CreateAudioBook: AudioNode
             var matches = rgxNumbers.Matches(shortname);
             if (matches.Any() == false)
             {
-                args.Logger.DLog("No number found in: " + shortname);
+                args.Logger.ILog("No number found in: " + shortname);
                 return 100000;
             }
 
             if (matches.Count == 1)
             {
-                args.Logger.DLog($"Number [{matches[0].Value}] found in: " + shortname);
+                args.Logger.ILog($"Number [{matches[0].Value}] found in: " + shortname);
                 return int.Parse(matches[0].Value);
             }
 
             // we may have a year, if first number is 4 digits, assume year 
             var number = matches[0].Length == 4 ? int.Parse(matches[1].Value) : int.Parse(matches[0].Value);
-            args.Logger.DLog($"Number [{number}] found in: " + shortname);
+            args.Logger.ILog($"Number [{number}] found in: " + shortname);
             return number;
         }).ToList();
 
@@ -129,8 +127,8 @@ public class CreateAudioBook: AudioNode
         TimeSpan current = TimeSpan.Zero;
         string bookName = FileHelper.GetShortFileName(dir);
         int chapterCount = 1;
-        
-        System.IO.File.WriteAllText(metadataFile, @";FFMETADATA1\n\n" + string.Join("\n", files.Select(x =>
+
+        string metadataContents = @";FFMETADATA1\n\n" + string.Join("\n", files.Select(x =>
         {
             string extension = FileHelper.GetExtension(x);
             string name = FileHelper.GetShortFileName(x);
@@ -145,9 +143,13 @@ public class CreateAudioBook: AudioNode
             current = end;
             ++chapterCount;
             return chapter;
-        })));
+        }));
+        args.Logger?.ILog("Metadata Content:\n" + metadataContents);
+        System.IO.File.WriteAllText(metadataFile, metadataContents);
         string inputFiles = FileHelper.Combine(args.TempPath, Guid.NewGuid() + ".txt");
-        System.IO.File.WriteAllText(inputFiles, string.Join("\n", files.Select(x => $"file '{x}'")));
+        string strInputFiles = string.Join("\n", files.Select(x => $"file '{x}'"));
+        System.IO.File.WriteAllText(inputFiles, strInputFiles);
+        args.Logger?.ILog("Input Files:\n" + inputFiles);
 
         string outputFile = FileHelper.Combine(args.TempPath, Guid.NewGuid() + ".m4b");
 

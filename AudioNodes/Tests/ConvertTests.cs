@@ -9,6 +9,14 @@ namespace FileFlows.AudioNodes.Tests;
 [TestClass]
 public class ConvertTests
 {
+    private TestContext testContextInstance;
+
+    public TestContext TestContext
+    {
+        get { return testContextInstance; }
+        set { testContextInstance = value; }
+    }
+    
     [TestMethod]
     public void Convert_FlacToAac()
     {
@@ -81,15 +89,32 @@ public class ConvertTests
     public void Convert_Mp3ToOgg()
     {
 
-        const string file = @"D:\music\unprocessed\04-billy_joel-scenes_from_an_italian_restaurant-b2125758.mp3";
+        const string file = @"/home/john/Music/unprocessed/The Cranberries - No Need to Argue (1994) - 04 - Zombie.mp3";
 
-        ConvertToOGG node = new();
-        var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty, null);;
-        args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
-        args.TempPath = @"D:\music\temp";
-        new AudioFile().Execute(args); // need to read the Audio info and set it
-        int output = node.Execute(args);
+        //ConvertToOGG node = new();
+        var logger = new TestLogger();
+        var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty, new LocalFileService());;
+        args.GetToolPathActual = (string tool) =>
+        {
+            if(tool.ToLowerInvariant() == "ffprobe")
+                return @"/usr/local/bin/ffprobe";
+            if(tool.ToLowerInvariant() == "ffmpeg")
+                return @"/usr/local/bin/ffmpeg";
+            return string.Empty;
+        };
+        args.TempPath = @"/home/john/Music/temp";
+        var af = new AudioFile();
+        af.PreExecute(args);
+        af.Execute(args); // need to read the Audio info and set it
+        //int output = node.Execute(args);
 
+        var ele = new ConvertAudio();
+        ele.Codec = "libopus";
+        ele.Bitrate = 320;
+        ele.PreExecute(args);
+        int output = ele.Execute(args);
+
+        TestContext.WriteLine(logger.ToString());
         Assert.AreEqual(1, output);
     }
 
@@ -198,9 +223,11 @@ public class ConvertTests
         args.TempPath = @"D:\music\temp";
         new AudioFile().Execute(args); // need to read the Audio info and set it
         node.Normalize = true;
+        node.PreExecute(args);
         int output = node.Execute(args);
 
         string log = logger.ToString();
+        TestContext.WriteLine(log);
 
         Assert.AreEqual(1, output);
     }

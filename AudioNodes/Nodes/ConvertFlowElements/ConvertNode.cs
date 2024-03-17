@@ -2,136 +2,7 @@
 
 namespace FileFlows.AudioNodes
 {
-    public class ConvertToMP3 : ConvertNode
-    {
-        /// <inheritdoc />  
-        public override string HelpUrl => "https://fileflows.com/docs/plugins/audio-nodes/convert-to-mp3";
-        /// <inheritdoc />
-        protected override string Extension => "mp3";
 
-        /// <inheritdoc />
-        public override string Icon => "svg:mp3";
-    }
-    public class ConvertToWAV : ConvertNode
-    {
-        /// <inheritdoc />
-        public override string HelpUrl => "https://fileflows.com/docs/plugins/audio-nodes/convert-to-wav";
-        /// <inheritdoc />
-        protected override string Extension => "wav";
-        /// <inheritdoc />
-        public override string Icon => "svg:wav";
-        
-        private static List<ListOption> _BitrateOptions;
-        public new static List<ListOption> BitrateOptions
-        {
-            get
-            {
-                if (_BitrateOptions == null)
-                {
-                    _BitrateOptions = new List<ListOption>
-                    {
-                        new () { Label = "Automatic", Value = 0 },
-                        new () { Label = "Same as source", Value = -1 },
-                        new () { Label = "64 Kbps", Value = 64},
-                        new () { Label = "96 Kbps", Value = 96},
-                        new () { Label = "128 Kbps", Value = 128},
-                        new () { Label = "160 Kbps", Value = 160},
-                        new () { Label = "192 Kbps", Value = 192},
-                        new () { Label = "224 Kbps", Value = 224},
-                        new () { Label = "256 Kbps", Value = 256},
-                        new () { Label = "288 Kbps", Value = 288},
-                        new () { Label = "320 Kbps", Value = 320},
-                    };
-                }
-                return _BitrateOptions;
-            }
-        }
-    }
-
-    public class ConvertToAAC : ConvertNode
-    {
-        /// <inheritdoc />
-        public override string HelpUrl => "https://fileflows.com/docs/plugins/audio-nodes/convert-to-aac";
-        /// <inheritdoc />
-        protected override string Extension => "aac";
-        /// <inheritdoc />
-        public override string Icon => "svg:aac";
-
-        /// <summary>
-        /// Gets or sets if high efficiency should be used
-        /// </summary>
-        [Boolean(5)]
-        public bool HighEfficiency { get => base.HighEfficiency; set =>base.HighEfficiency = value; }
-        
-        protected override bool SetId3Tags => true;
-    }
-    public class ConvertToOGG: ConvertNode
-    {
-        /// <inheritdoc />
-        public override string HelpUrl => "https://fileflows.com/docs/plugins/audio-nodes/convert-to-ogg";
-        /// <inheritdoc />
-        protected override string Extension => "ogg";
-        public static List<ListOption> BitrateOptions => ConvertNode.BitrateOptions;
-        /// <inheritdoc />
-        public override string Icon => "svg:ogg";
-    }
-
-    public class ConvertAudio : ConvertNode
-    {
-        protected override string Extension => Codec;
-        public override string HelpUrl => "https://fileflows.com/docs/plugins/audio-nodes/convert-audio";
-
-        public static List<ListOption> BitrateOptions => ConvertNode.BitrateOptions;
-
-        [Select(nameof(CodecOptions), 0)]
-        public string Codec { get; set; }
-
-        /// <summary>
-        /// Gets or sets if high efficiency should be used
-        /// </summary>
-        [Boolean(5)]
-        [ConditionEquals(nameof(Codec), "aac")]
-        public bool HighEfficiency { get => base.HighEfficiency; set =>base.HighEfficiency = value; }
-
-        private static List<ListOption> _CodecOptions;
-        public static List<ListOption> CodecOptions
-        {
-            get
-            {
-                if (_CodecOptions == null)
-                {
-                    _CodecOptions = new List<ListOption>
-                    {
-                        new () { Label = "AAC", Value = "aac"},
-                        new () { Label = "MP3", Value = "MP3"},
-                        new () { Label = "OGG", Value = "ogg"},
-                        new () { Label = "WAV", Value = "wav"},
-                    };
-                }
-                return _CodecOptions;
-            }
-        }
-
-        public override int Execute(NodeParameters args)
-        {
-            var audioInfoResult = GetAudioInfo(args);
-            if (audioInfoResult.Failed(out string error))
-            {
-                args.Logger?.ELog(error);
-                args.FailureReason = error;
-                return -1;
-            }
-
-            AudioInfo AudioInfo = audioInfoResult.Value; 
-
-            string ffmpegExe = GetFFmpeg(args);
-            if (string.IsNullOrEmpty(ffmpegExe))
-                return -1;
-            
-            return base.Execute(args);
-
-        }
-    }
 
     public abstract class ConvertNode:AudioNode
     {
@@ -157,14 +28,18 @@ namespace FileFlows.AudioNodes
             string Codec = Extension;
             extension = null;
             string codecKey = Codec + "_codec";
-            string codec = args.GetToolPathActual(codecKey);
+            string codec = args.GetToolPathActual(codecKey)?.EmptyAsNull() ?? Codec;
             if (codec == "mp3")
                 extension = "mp3";
-            if (codec == "libvorbis" || codec == "ogg")
+            else if (codec == "libopus")
+                extension = "ogg";
+            else if (codec == "libvorbis" || codec == "ogg")
             {
                 codec = "libvorbis";
                 extension = "ogg";
             }
+
+            bool ogg = extension?.ToLowerInvariant() == "ogg";
 
             if (codec == codecKey || string.IsNullOrWhiteSpace(codec))
             {
@@ -177,7 +52,7 @@ namespace FileFlows.AudioNodes
             }
 
             int bitrate = Bitrate;
-            if (Codec.ToLowerInvariant() == "mp3" ||  Codec.ToLowerInvariant() ==  "ogg" || Codec.ToLowerInvariant() == "aac")
+            if (Codec.ToLowerInvariant() == "mp3" ||  ogg || Codec.ToLowerInvariant() == "aac")
             {
                 if (bitrate is >= 10 and <= 20)
                 {
@@ -361,14 +236,6 @@ namespace FileFlows.AudioNodes
                     return 2;
                 }
             }
-            //AudioInfo AudioInfo = GetAudioInfo(args);
-            //if (AudioInfo == null)
-            //    return -1;
-            // if (Bitrate != 0 && Bitrate != -1 && (Bitrate < 64 || Bitrate > 320))
-            // {
-            //     args.Logger?.ILog("Bitrate not set or invalid, setting to 192kbps");
-            //     Bitrate = 192;
-            // }
 
 
             var ffArgs = GetArguments(args, out string extension);
@@ -420,48 +287,5 @@ namespace FileFlows.AudioNodes
 
             return -1;
         }
-
-        //private void CopyMetaData(string outputFile, string originalFile)
-        //{
-        //    Track original = new Track(originalFile);
-        //    Track dest = new Track(outputFile);
-                        
-        //    dest.Album = original.Album;
-        //    dest.AlbumArtist = original.AlbumArtist;
-        //    dest.Artist = original.Artist;
-        //    dest.Comment = original.Comment;
-        //    dest.Composer= original.Composer;
-        //    dest.Conductor = original.Conductor;
-        //    dest.Copyright = original.Copyright;
-        //    dest.Date = original.Date;
-        //    dest.Description= original.Description;
-        //    dest.DiscNumber= original.DiscNumber;
-        //    dest.DiscTotal = original.DiscTotal;
-        //    if (original.EmbeddedPictures?.Any() == true)
-        //    {
-        //        foreach (var pic in original.EmbeddedPictures)
-        //            dest.EmbeddedPictures.Add(pic);
-        //    }
-        //    dest.Genre= original.Genre;
-        //    dest.Lyrics= original.Lyrics;
-        //    dest.OriginalAlbum= original.OriginalAlbum;
-        //    dest.OriginalArtist = original.OriginalArtist;
-        //    dest.Popularity= original.Popularity;
-        //    dest.Publisher= original.Publisher;
-        //    dest.PublishingDate= original.PublishingDate;
-        //    dest.Title= original.Title;
-        //    dest.TrackNumber= original.TrackNumber;
-        //    dest.TrackTotal= original.TrackTotal;
-        //    dest.Year= original.Year;
-        //    foreach (var key in original.AdditionalFields.Keys)
-        //    {
-        //        if(dest.AdditionalFields.ContainsKey(key))
-        //            dest.AdditionalFields[key] = original.AdditionalFields[key];
-        //        else
-        //            dest.AdditionalFields.Add(key, original.AdditionalFields[key]);
-        //    }
-
-        //    dest.Save();
-        //}
     }
 }

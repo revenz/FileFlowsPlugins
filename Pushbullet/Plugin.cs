@@ -19,6 +19,8 @@ public class Plugin : FileFlows.Plugin.IPlugin
     /// Gets the minimum version of FileFlows required for this plugin
     /// </summary>
     public string MinimumVersion => "1.0.4.2019";
+    /// <inheritdoc />
+    public string Icon => "svg:pushbullet";
 
     /// <summary>
     /// Initializes this plugin

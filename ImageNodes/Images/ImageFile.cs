@@ -39,7 +39,7 @@ public class ImageFile : ImageBaseNode
 
             UpdateImageInfo(args, this.Variables);
             if(string.IsNullOrEmpty(base.CurrentFormat) == false)
-                args.RecordStatistic("IMAGE_FORMAT", base.CurrentFormat);
+                args.RecordStatisticRunningTotals("IMAGE_FORMAT", base.CurrentFormat);
 
             return 1;
         }

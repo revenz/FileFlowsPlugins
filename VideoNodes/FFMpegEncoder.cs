@@ -17,7 +17,7 @@ public class FFMpegEncoder
 
     public delegate void TimeEvent(TimeSpan time, DateTime startedAt);
     public event TimeEvent AtTime;
-    public delegate void StatChange(string name, object value, bool recordStatistic = false);
+    public delegate void StatChange(string name, string value, bool recordStatistic = false);
     public event StatChange OnStatChange;
 
     private Process process;
