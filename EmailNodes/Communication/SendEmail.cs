@@ -47,7 +47,7 @@ Output File: {{ file.FullName }}
 Original Size: {{ file.Orig.Size | file_size }}
 Final Size: {{ file.Size | file_size }}
 
-{{- if difference < 0 }}
+{{- if difference > 0 }}
 File grew in size: {{ difference | math.abs | file_size }}
 {{ else }}
 File shrunk in size by: {{ difference | file_size }} / {{ percent }}%
