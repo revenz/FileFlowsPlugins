@@ -39,7 +39,7 @@ public class PlexAnalyze : PlexNode
             return string.Empty;
         }
 
-        var item = media?.Where(x => x.Part?.Any(y => y.File?.Replace("\\", "/").ToLower() == file.Replace("\\", "/").ToLower()) == true)?.FirstOrDefault();
+        var item = media?.Where(x => x.Part?.Any(y => string.Equals(y.File?.Replace("\\", "/"), file.Replace("\\", "/"), StringComparison.InvariantCultureIgnoreCase)) == true)?.FirstOrDefault();
         if(item == null)
         {
             args.Logger?.ILog($"No item matching '{file}' found in Plex.");

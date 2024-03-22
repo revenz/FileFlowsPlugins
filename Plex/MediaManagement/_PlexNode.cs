@@ -57,7 +57,7 @@ public abstract class PlexNode:Node
         {
             // juse use /
             path = path.Replace("\\", "/");
-            path = path.Substring(0, path.LastIndexOf("/"));
+            path = path[..path.LastIndexOf("/", StringComparison.Ordinal)];
         }
 
         if (serverUrl.EndsWith("/") == false)
@@ -95,7 +95,7 @@ public abstract class PlexNode:Node
         }
         args.Logger?.ILog("Path after plex mapping: " + path);
 
-        string pathLower = path.Replace("\\", "/").ToLower();
+        string pathLower = path.Replace("\\", "/").ToLowerInvariant();
         if (pathLower.EndsWith("/"))
             pathLower = pathLower[..^1];
         args.Logger?.ILog("Testing Plex Path: " + pathLower);
@@ -107,7 +107,7 @@ public abstract class PlexNode:Node
                 if (loc.Path == null)
                     continue;
                 args.Logger?.ILog("Plex section path: " + loc.Path);
-                if (pathLower.StartsWith(loc.Path.Replace("\\", "/").ToLower()))
+                if (pathLower.StartsWith(loc.Path.Replace("\\", "/").ToLowerInvariant()))
                     return true;
             }
             return false;
