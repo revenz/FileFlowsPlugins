@@ -88,9 +88,9 @@ public class MoveFile : Node
     /// <returns>the output to call next</returns>
     public override int Execute(NodeParameters args)
     {
-        string destFile = args.ReplaceVariables(DestinationFile ?? string.Empty);
+        string destFile = args.ReplaceVariables(DestinationFile ?? string.Empty, stripMissing: true);
         
-        string inputFile = args.ReplaceVariables(InputFile ?? string.Empty)?.EmptyAsNull() ?? args.WorkingFile;
+        string inputFile = args.ReplaceVariables(InputFile ?? string.Empty, stripMissing: true)?.EmptyAsNull() ?? args.WorkingFile;
         if (inputFile != args.WorkingFile && string.IsNullOrWhiteSpace(DestinationFile))
             destFile = FileHelper.GetShortFileName(inputFile);
         
@@ -251,7 +251,7 @@ public class MoveFile : Node
     internal static (string? Path, string? Filename, string? Separator) GetDestinationPathParts(NodeParameters args, string destinationPath, string destinationFile = null, bool moveFolder = false)
     {
         string separator = args.WorkingFile.IndexOf('/') >= 0 ? "/" : "\\";
-        string destFolder = args.ReplaceVariables(destinationPath, true);
+        string destFolder = args.ReplaceVariables(destinationPath, stripMissing: true);
         destFolder = destFolder.Replace("\\", separator);
         destFolder = destFolder.Replace("/", separator);
         string destFilename = args.FileName.Replace("\\", separator)
@@ -285,7 +285,7 @@ public class MoveFile : Node
             destinationFile = destinationFile.Replace("{file.Orig.FileName}{file.Orig.Extension}", "{file.Orig.FileName}");
             destinationFile = destinationFile.Replace("{file.Name}{file.Extension}", "{file.Name}");
             destinationFile = destinationFile.Replace("{file.Name}{ext}", "{file.Name}");
-            destFilename = args.ReplaceVariables(destinationFile);
+            destFilename = args.ReplaceVariables(destinationFile, stripMissing: true);
         }
         
         string destExtension = FileHelper.GetExtension(destFilename).TrimStart('.');
