@@ -363,8 +363,6 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
         bool opus = codec == "opus"; 
         if (opus)
             codec = "libopus";
-        if (codec.ToLowerInvariant() == "mp3")
-            codec = "libmp3lame";
         bool eac3 = codec.ToLowerInvariant() == "eac3";
         bool dts = codec.ToLowerInvariant().Contains("dts");
         

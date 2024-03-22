@@ -29,8 +29,11 @@ namespace FileFlows.AudioNodes
             extension = null;
             string codecKey = Codec + "_codec";
             string codec = args.GetToolPathActual(codecKey)?.EmptyAsNull() ?? Codec;
-            if (codec == "mp3")
+            if (codec.ToLowerInvariant() == "mp3")
+            {
                 extension = "mp3";
+                codec = "mp3";
+            }
             else if (codec == "libopus")
                 extension = "ogg";
             else if (codec == "libvorbis" || codec == "ogg")
