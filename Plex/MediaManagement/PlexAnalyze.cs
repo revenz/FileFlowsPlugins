@@ -45,16 +45,6 @@ public class PlexAnalyze : PlexNode
         if(item == null)
         {
             args.Logger?.ILog($"No item matching '{file}' found in Plex.");
-
-            foreach (var m in media)
-            {
-                if (m.Part?.Any() != true)
-                    continue;
-                foreach (var p in m.Part)
-                {
-                    args.Logger?.ILog("Plex File Part: " + p.File);
-                }
-            }
             return string.Empty;
         }    
         return item?.RatingKey ?? string.Empty;
