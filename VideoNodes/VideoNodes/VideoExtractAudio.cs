@@ -159,7 +159,9 @@ public class VideoExtractAudio : AudioSelectionEncodingNode
             args.Logger?.ILog("File already exists, deleting file: " + localOutput);
             System.IO.File.Delete(localOutput);
         }
-        var argList = new [] { "-i", args.WorkingFile }.Union(parameters).Union(new [] { localOutput }).ToArray();
+
+        string localFile = args.FileService.GetLocalPath(args.WorkingFile);
+        var argList = new [] { "-i", localFile }.Union(parameters).Union(new [] { localOutput }).ToArray();
 
         // -y means it will overwrite a file if output already exists
         var result = args.Process.ExecuteShellCommand(new ExecuteArgs
