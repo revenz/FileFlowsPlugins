@@ -26,6 +26,8 @@ public class VideoDuration : VideoNode
     /// </summary>
     public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/logical-nodes/video-duration";
 
+    /// <inheritdoc />
+    public override string Icon => "fas fa-clock";
 
     internal const string MATCH_GREATER_THAN = ">";
     internal const string MATCH_LESS_THAN = "<";
