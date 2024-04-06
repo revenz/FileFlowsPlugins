@@ -87,6 +87,18 @@
           "ProbeSize-Help": "The probe size to use in FFMPEG when executing."
         }
       },
+      "VideoDuration": {
+        "Description": "Tests whether or not the duration of the video matches the given parameters.",
+        "Outputs": {
+          "1": "Video duration matches",
+          "2": "Video duration does not match"
+        },
+        "Fields": {
+          "Match": "Match",
+          "ValueLow": "Duration",
+          "ValueHigh": " "
+        }
+      },
       "FfmpegBuilderStart": {
         "Label": "FFMPEG Builder: Start",
         "Outputs": {
