@@ -1,6 +1,18 @@
 {
   "Flow":{
     "Parts": {
+      "GenreMatches": {
+        "Description": "Matches the genre metadata against the specified genre(s).",
+        "Outputs": {
+          "1": "Genres match",
+          "2": "Genres do not match"
+        },
+        "Fields": {
+          "Genres": "Genres",
+          "MatchAll": "Match All",
+          "MatchAll-Help": "If all selected genres must appear in the metadata, otherwise any must appear"
+        }
+      },
       "MovieLookup": {
         "Description": "Performs a search on TheMovieDB.org for a movie.\nStores the Metadata inside the variable 'MovieInfo'.",
         "Outputs": {
