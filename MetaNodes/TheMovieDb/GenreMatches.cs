@@ -17,19 +17,24 @@ public class GenreMatches: Node
     public override int Outputs => 2;
     /// <inheritdoc />
     public override string Icon => "fas fa-theater-masks";
+    /// <inheritdoc />
+    public override FlowElementType Type => FlowElementType.Logic;
+    /// <inheritdoc />
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/meta-nodes/genre-matches";
+
+
+    /// <summary>
+    /// Gets or sets if all selected genres should must be present
+    /// </summary>
+    [Boolean(1)]
+    public bool MatchAll { get; set; }
     
     /// <summary>
     /// The genres to match
     /// </summary>
-    [Checklist(nameof(Options), 1)]
+    [Checklist(nameof(Options), 2)]
     [Required]
     public List<string> Genres { get; set; }
-    
-    /// <summary>
-    /// Gets or sets if all selected genres should must be present
-    /// </summary>
-    [Boolean(2)]
-    public bool MatchAll { get; set; }
 
     private static List<ListOption> _Options;
     /// <summary>

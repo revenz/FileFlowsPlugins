@@ -4,8 +4,8 @@
       "GenreMatches": {
         "Description": "Matches the genre metadata against the specified genre(s).",
         "Outputs": {
-          "1": "Genres match",
-          "2": "Genres do not match"
+          "1": "Genre match",
+          "2": "Genre does not match"
         },
         "Fields": {
           "Genres": "Genres",
