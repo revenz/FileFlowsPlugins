@@ -101,7 +101,7 @@ public class GenreMatches: Node
             videoGenres.AddRange(mi.Genres?.Select(x => x.Name)?.ToList() ?? new());
         }
         
-        if (args.Variables.TryGetValue(Globals.TV_SHOW_INFO, out object oShowInfo) && oMovieInfo is TVShowInfo show)
+        if (args.Variables.TryGetValue(Globals.TV_SHOW_INFO, out object oShowInfo) && oShowInfo is TVShowInfo show)
         {
             args.Logger?.ILog("Found TV Show info");
             videoGenres.AddRange(show.Genres?.Select(x => x.Name)?.ToList() ?? new());
