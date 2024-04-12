@@ -180,7 +180,43 @@ public class TVEpisodeLookupTests
         string nfo = (string)args.Variables["NFO"];
     }
 
-}
+    
+    [TestMethod]
+    public void VariousTests()
+    {
+        var logger = new TestLogger();
+        foreach (var test in new TVLookupTestData[]
+                 {
+                     new("See",
+                         "/media/TV/See (2019) [tvdbid-361565]/Season 02/S02E06 - The Truth About Unicorns ATVP WEBDL-2160pDV]EAC3 Atmos 5.1h265]-MP4.mp4"),
+                     new("The Walking Dead",
+                         "/media/TV/The Walking Dead (2010) [tvdbid-153021]/Season 07/S07E04 - Service HDTV-1080pAAC 5.1]h265mkv"),
+                     new("Teenage Mutant Ninja Turtles",
+                         "/media/Anime/Teenage Mutant Ninja Turtles (1987) [tvdbid-74582]/Season 04/S04E11 - 089 - Menace Maestro Please SDTV10bit]x264AC3 2.0].mkv"),
+                     new("Yowamushi Pedal",
+                         "/media/Anime/Yowamushi Pedal (2013) [tvdbid-272309]/Season 03/S03E12 - 074 - Trouble! HDTV-1080p8bit]x264Opus 2.0]JAmkv"),
+                     new("Law & Order - Special Victims Unit",
+                         "/media/TV/Law & Order - Special Victims Unit (1999) [tvdbid-75692]/Season 07/S07E04 - Ripped AMZN WEBRip-1080p ProperEAC3 5.1]x264NTb.mkv"),
+                     new("X-Men '97", "/media/tv/X-Men '97 (2024) [tvdb-3423432]/xmen97.3x03.mkv"),
+                     new("Phantom 2040", "/media/tv/Phantom 2040 (1992)/Phantom 2040.1x03.mkv"),
+                 })
+        {
+            (string lookupName, string year) = TVShowLookup.GetLookupName(test.Path, true);
+            Assert.AreEqual(test.Show, lookupName);
+            //
+            // var args = new FileFlows.Plugin.NodeParameters(test.Path, logger, false, string.Empty, null);
+            //
+            // var element = new TVEpisodeLookup();
+            //
+            // var result = element.Execute(args);
+            // Assert.AreEqual(1, result);
+            //
+            // Assert.AreEqual(test.Show, args.Variables["tvepisode.Title"]);
+            
+        }
+    }
 
+    private record TVLookupTestData(string Show, string Path);
+}
 
 #endif

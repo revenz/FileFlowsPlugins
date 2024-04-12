@@ -70,7 +70,7 @@ public class TVEpisodeLookup : Node
         
         (string lookupName, string year) = TVShowLookup.GetLookupName(filename, false);
 
-        (string showName, int? season, int? episode, int? lastEpisode) = TVShowLookup.GetTVShowInfo(filename);
+        (string showName, int? season, int? episode, int? lastEpisode, string year2) = TVShowLookup.GetTVShowInfo(filename);
 
         if (season == null)
         {
@@ -102,6 +102,10 @@ public class TVEpisodeLookup : Node
                 if (string.IsNullOrEmpty(year) == false)
                 {
                     return year == x.FirstAirDate.Year.ToString() ? 0 : 1;
+                }
+                if (string.IsNullOrEmpty(year2) == false)
+                {
+                    return year2 == x.FirstAirDate.Year.ToString() ? 0 : 1;
                 }
                 return 0;
             })
