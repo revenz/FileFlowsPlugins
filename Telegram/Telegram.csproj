@@ -1,39 +1,35 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-    <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <RootNamespace>FileFlows.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
-        <FileVersion>1.1.1.528</FileVersion>
-        <ProductVersion>1.1.1.528</ProductVersion>
-        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-        <PublishTrimmed>true</PublishTrimmed>
-        <Company>FileFlows</Company>
-        <Authors>John Andrews</Authors>
-        <Product>Telegram</Product>
-        <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
-        <Description>Lets you send Telegram messages</Description>
-    </PropertyGroup>
-
-    <ItemGroup>
-        <None Remove="Telegram.en.json" />
-    </ItemGroup>
-
-    <ItemGroup Condition=" '$(Configuration)' == 'Debug'">
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.1" />
-        <PackageReference Include="MSTest.TestAdapter" Version="3.0.4" />
-        <PackageReference Include="MSTest.TestFramework" Version="3.0.4" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <Reference Include="FileFlows.Plugin">
-            <HintPath>..\FileFlows.Plugin.dll</HintPath>
-        </Reference>
-    </ItemGroup>
-    <ItemGroup>
-      <None Update="i18n\*.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>FileFlows.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <FileVersion>1.1.1.528</FileVersion>
+    <ProductVersion>1.1.1.528</ProductVersion>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <PublishTrimmed>true</PublishTrimmed>
+    <Company>FileFlows</Company>
+    <Authors>John Andrews</Authors>
+    <Product>Telegram</Product>
+    <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
+    <Description>Lets you send Telegram messages</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Telegram.en.json" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)' == 'Debug'">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.3.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.3.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="FileFlows.Plugin">
+      <HintPath>..\FileFlows.Plugin.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="i18n\*.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

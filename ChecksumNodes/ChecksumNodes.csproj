@@ -1,36 +1,36 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
-        <FileVersion>1.0.4.189</FileVersion>
-        <ProductVersion>1.0.4.189</ProductVersion>
-        <PublishTrimmed>true</PublishTrimmed>
-        <Company>FileFlows</Company>
-        <Authors>John Andrews</Authors>
-        <Product>Checksum Nodes</Product>
-        <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
-        <Description>Nodes that provide the ability to run a checksum against a file.</Description>
-    </PropertyGroup>
-    <ItemGroup Condition=" '$(Configuration)' == 'Debug'">
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.1" />
-        <PackageReference Include="MSTest.TestAdapter" Version="3.0.4" />
-        <PackageReference Include="MSTest.TestFramework" Version="3.0.4" />
-    </ItemGroup>
-    <ItemGroup>
-        <None Remove="ChecksumNodes.en.json" />
-    </ItemGroup>
-    <ItemGroup>
-        <Reference Include="Plugin">
-            <HintPath>..\FileFlows.Plugin.dll</HintPath>
-            <SpecificVersion>False</SpecificVersion>
-        </Reference>
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Update="i18n\*.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+    <FileVersion>1.0.4.189</FileVersion>
+    <ProductVersion>1.0.4.189</ProductVersion>
+    <PublishTrimmed>true</PublishTrimmed>
+    <Company>FileFlows</Company>
+    <Authors>John Andrews</Authors>
+    <Product>Checksum Nodes</Product>
+    <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
+    <Description>Nodes that provide the ability to run a checksum against a file.</Description>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(Configuration)' == 'Debug'">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.3.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.3.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="ChecksumNodes.en.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Plugin">
+      <HintPath>..\FileFlows.Plugin.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="i18n\*.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

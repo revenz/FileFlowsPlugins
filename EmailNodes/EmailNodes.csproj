@@ -1,45 +1,39 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Project Sdk="Microsoft.NET.Sdk">
-
-    <PropertyGroup>
-        <RootNamespace>FileFlows.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
-        <TargetFramework>net7.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-        <PublishTrimmed>true</PublishTrimmed>
-        <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
-        <FileVersion>1.1.1.528</FileVersion>
-        <ProductVersion>1.1.1.528</ProductVersion>
-        <PublishTrimmed>true</PublishTrimmed>
-        <Company>FileFlows</Company>
-        <Authors>John Andrews</Authors>
-        <Product>Email</Product>
-        <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
-        <Description>This plugin allows you to send an email while executing a Flow.</Description>
-    </PropertyGroup>
-
-    <ItemGroup Condition=" '$(Configuration)' == 'Debug'">
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.1" />
-        <PackageReference Include="MSTest.TestAdapter" Version="3.0.4" />
-        <PackageReference Include="MSTest.TestFramework" Version="3.0.4" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <PackageReference Include="MailKit" Version="4.0.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <Reference Include="Plugin">
-            <HintPath>..\FileFlows.Plugin.dll</HintPath>
-            <SpecificVersion>False</SpecificVersion>
-        </Reference>
-    </ItemGroup>
-
-
-    <ItemGroup>
-      <None Update="i18n\*.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>FileFlows.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <PublishTrimmed>true</PublishTrimmed>
+    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+    <FileVersion>1.1.1.528</FileVersion>
+    <ProductVersion>1.1.1.528</ProductVersion>
+    <PublishTrimmed>true</PublishTrimmed>
+    <Company>FileFlows</Company>
+    <Authors>John Andrews</Authors>
+    <Product>Email</Product>
+    <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
+    <Description>This plugin allows you to send an email while executing a Flow.</Description>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(Configuration)' == 'Debug'">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.3.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.3.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MailKit" Version="4.4.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Plugin">
+      <HintPath>..\FileFlows.Plugin.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="i18n\*.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

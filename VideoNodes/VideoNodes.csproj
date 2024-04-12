@@ -1,47 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
-        <Nullable>enable</Nullable>
-        <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
-        <FileVersion>1.1.1.528</FileVersion>
-        <ProductVersion>1.1.1.528</ProductVersion>
-        <PublishTrimmed>true</PublishTrimmed>
-        <Company>FileFlows</Company>
-        <Authors>John Andrews</Authors>
-        <Product>Video Nodes</Product>
-        <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
-        <Description>Nodes for processing video files.  This plugin contains nodes to convert video files to different formats.  Node to parse the video information from a file.</Description>
-        <RootNamespace> FileFlows.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-        <NoWarn>1701;1702;CS8618;CS8601;CS8602;CS8603;CS8604;CS8618;CS8625;CS8765;CS8767;</NoWarn>
-        <WarningLevel>0</WarningLevel>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-        <NoWarn>1701;1702;CS8618;CS8601;CS8602;CS8603;CS8604;CS8618;CS8625;CS8765;CS8767;</NoWarn>
-        <WarningLevel>0</WarningLevel>
-    </PropertyGroup>
-
-    <ItemGroup Condition=" '$(Configuration)' == 'Debug'">
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.1" />
-        <PackageReference Include="MSTest.TestAdapter" Version="3.0.4" />
-        <PackageReference Include="MSTest.TestFramework" Version="3.0.4" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <Reference Include="Plugin">
-            <HintPath>..\FileFlows.Plugin.dll</HintPath>
-            <SpecificVersion>False</SpecificVersion>
-        </Reference>
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Update="i18n\*.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
-
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+    <FileVersion>1.1.1.528</FileVersion>
+    <ProductVersion>1.1.1.528</ProductVersion>
+    <PublishTrimmed>true</PublishTrimmed>
+    <Company>FileFlows</Company>
+    <Authors>John Andrews</Authors>
+    <Product>Video Nodes</Product>
+    <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
+    <Description>Nodes for processing video files.  This plugin contains nodes to convert video files to different formats.  Node to parse the video information from a file.</Description>
+    <RootNamespace> FileFlows.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;CS8618;CS8601;CS8602;CS8603;CS8604;CS8618;CS8625;CS8765;CS8767;</NoWarn>
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <NoWarn>1701;1702;CS8618;CS8601;CS8602;CS8603;CS8604;CS8618;CS8625;CS8765;CS8767;</NoWarn>
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(Configuration)' == 'Debug'">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.3.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.3.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Plugin">
+      <HintPath>..\FileFlows.Plugin.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="i18n\*.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

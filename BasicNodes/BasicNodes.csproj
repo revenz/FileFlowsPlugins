@@ -1,49 +1,42 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Project Sdk="Microsoft.NET.Sdk">
-
-    <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
-        <Nullable>enable</Nullable>
-        <FileVersion>1.1.1.528</FileVersion>
-        <ProductVersion>1.1.1.528</ProductVersion>
-        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-        <PublishTrimmed>true</PublishTrimmed>
-        <Company>FileFlows</Company>
-        <Authors>John Andrews</Authors>
-        <Product>Basic Nodes</Product>
-        <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
-        <Description>Basic nodes for FileFlows.  This plugin contains basic and common nodes to process files.
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <FileVersion>1.1.1.528</FileVersion>
+    <ProductVersion>1.1.1.528</ProductVersion>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <PublishTrimmed>true</PublishTrimmed>
+    <Company>FileFlows</Company>
+    <Authors>John Andrews</Authors>
+    <Product>Basic Nodes</Product>
+    <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
+    <Description>Basic nodes for FileFlows.  This plugin contains basic and common nodes to process files.
             This plugin is required for FileFlows to work.</Description>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-        <NoWarn>1701;1702;CS8618;CS8601;CS8602;CS8603;CS8604;CS8618;CS8625;CS8765;CS8767;CS8618l;CS8600</NoWarn>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-        <NoWarn>1701;1702;CS8618;CS8601;CS8602;CS8603;CS8604;CS8618;CS8625;CS8765;CS8767;CS8618l;CS8600</NoWarn>
-    </PropertyGroup>
-
-    <ItemGroup Condition=" '$(Configuration)' == 'Debug'">
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.1" />
-        <PackageReference Include="MSTest.TestAdapter" Version="3.0.4" />
-        <PackageReference Include="MSTest.TestFramework" Version="3.0.4" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <PackageReference Include="SharpCompress" Version="0.33.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <Reference Include="Plugin">
-            <HintPath>..\FileFlows.Plugin.dll</HintPath>
-            <SpecificVersion>False</SpecificVersion>
-        </Reference>
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Update="i18n\*.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
-
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;CS8618;CS8601;CS8602;CS8603;CS8604;CS8618;CS8625;CS8765;CS8767;CS8618l;CS8600</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <NoWarn>1701;1702;CS8618;CS8601;CS8602;CS8603;CS8604;CS8618;CS8625;CS8765;CS8767;CS8618l;CS8600</NoWarn>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(Configuration)' == 'Debug'">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.3.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.3.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="SharpCompress" Version="0.36.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Plugin">
+      <HintPath>..\FileFlows.Plugin.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="i18n\*.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
