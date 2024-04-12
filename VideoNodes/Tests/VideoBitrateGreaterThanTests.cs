@@ -19,7 +19,7 @@ public class VideoBitrateGreaterThanTests : TestBase
                 {
                     VideoNode.VIDEO_INFO, new VideoInfo()
                     {
-                        Bitrate = 10_000 * 1000,
+                        Bitrate = 10_001 * 1000,
                         VideoStreams = new ()
                         {
                             new (){}
@@ -30,7 +30,7 @@ public class VideoBitrateGreaterThanTests : TestBase
         };
         
         var element = new VideoBitrateGreaterThan();
-        element.Bitrate = 10_001;
+        element.Bitrate = 10_000;
         var result = element.Execute(args);
         Assert.AreEqual(1, result);
     }
@@ -46,7 +46,7 @@ public class VideoBitrateGreaterThanTests : TestBase
                 {
                     VideoNode.VIDEO_INFO, new VideoInfo()
                     {
-                        Bitrate = 10_001 * 1000,
+                        Bitrate = 10_000 * 1000,
                         VideoStreams = new ()
                         {
                             new (){}
@@ -57,7 +57,7 @@ public class VideoBitrateGreaterThanTests : TestBase
         };
         
         var element = new VideoBitrateGreaterThan();
-        element.Bitrate = 10_000;
+        element.Bitrate = 10_001;
         var result = element.Execute(args);
         Assert.AreEqual(2, result);
     }
@@ -93,7 +93,7 @@ public class VideoBitrateGreaterThanTests : TestBase
         logger.ILog($"Test Estimated Bitrate: {estimated} BPS / {estimated / 1000} KBps");
         
         var element = new VideoBitrateGreaterThan();
-        element.Bitrate = (int)(estimated / 1000f) - 1;
+        element.Bitrate = (int)(estimated / 1000f) + 1;
         var result = element.Execute(args);
         var log = logger.ToString();
         Assert.AreEqual(2, result);
@@ -130,11 +130,23 @@ public class VideoBitrateGreaterThanTests : TestBase
         logger.ILog($"Test Estimated Bitrate: {estimated} BPS / {estimated / 1000} KBps");
         
         var element = new VideoBitrateGreaterThan();
-        element.Bitrate = (int)Math.Round(estimated / 1000f) + 1;
+        element.Bitrate = (int)Math.Round(estimated / 1000f) - 1;
         var result = element.Execute(args);
         var log = logger.ToString();
         Assert.AreEqual(1, result);
     }
+    
+    
+    [TestMethod]
+    public void LogTests()
+    {
+        var logger = new TestLogger();
+
+        var output = VideoBitrateGreaterThan.CheckBitrate(logger, 120144000, 15000);
+        string log = logger.ToString();
+        Assert.AreEqual(1, output);
+    }
+
 }
 
 #endif

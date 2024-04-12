@@ -55,10 +55,9 @@ public class VideoBitrateGreaterThan: VideoNode
             args.Logger?.ELog($"No video stream detected");
             return -1; // no video streams detected
         }
-        
+
         // get the video stream
         var bitrate = video.Bitrate;
- 
         if(bitrate < 1)
         {
             // video stream doesn't have bitrate information
@@ -89,15 +88,28 @@ public class VideoBitrateGreaterThan: VideoNode
             bitrate = (int)calculated;
             args.Logger?.ILog($"Estimated Video Bitrate: {bitrate} BPS / {bitrate / 1000} KBps");
         }
+
+        return CheckBitrate(args.Logger, bitrate, Bitrate);
+    }
+    
+    /// <summary>
+    /// Does the actual check of the bitrate, in static method for unit tests
+    /// </summary>
+    /// <param name="logger">the logger to use</param>
+    /// <param name="videoBitrateBps">the video bitrate in BPS</param>
+    /// <param name="maxBitrateKbps">the maximum bitrate in KBPS</param>
+    /// <returns>the output to call next</returns>
+    public static int CheckBitrate(ILogger logger, float videoBitrateBps, float maxBitrateKbps)
+    {
  
         // check if the bitrate is over the maximum bitrate
-        if ((Bitrate * 1000) > bitrate)
+        if (videoBitrateBps > (maxBitrateKbps * 1000))
         {
-            args.Logger?.ILog($"Bitrate '{Bitrate} KBps' is greater than '{bitrate / 1000} KBps'");
+            logger?.ILog($"Bitrate '{videoBitrateBps / 1000} KBps' is greater than '{maxBitrateKbps} KBps'");
             return 1; // it is, so call output 1
         }
 
-        args.Logger?.ILog($"Bitrate '{Bitrate} KBps' is not greater than '{bitrate / 1000} KBps'");
+        logger?.ILog($"Bitrate '{videoBitrateBps / 1000} KBps' is not greater than '{maxBitrateKbps} KBps'");
         return 2; // it isn't so call output 2
     }
 }
