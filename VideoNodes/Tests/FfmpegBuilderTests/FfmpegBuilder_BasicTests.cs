@@ -1306,14 +1306,28 @@ public class FfmpegBuilder_BasicTests : TestBase
     public void FfmpegBuilder_SubtitleTrackMerge_FileMatchesTests()
     {
         FfmpegBuilderSubtitleTrackMerge ffSubMerge = new();
+        
         foreach (var item in new[] { 
+
+                     (File: "The Big Bang Theory_S01E01_Pilot.en.closedcaptions.srt", Language: "English (CC)", IsMatch: true, Forced: false),
+                     (File: "The Big Bang Theory_S01E01_Pilot.it.closedcaptions.srt", Language: "Italian (CC)", IsMatch: true, Forced: false),
+                     (File: "The Big Bang Theory_S01E01_Pilot.it.forced.srt", Language: "Italian", IsMatch: true, Forced: true),
+                 })
+        {
+            bool isMatch = ffSubMerge.FilenameMatches("The Big Bang Theory_S01E01_Pilot.mp4", item.File, out string lang, out bool forced);
+            Assert.AreEqual(item.IsMatch, isMatch, "Not match: " + item.File);
+            Assert.AreEqual(item.Forced, forced);
+            Assert.AreEqual(item.Language, lang, "Language not matching in: " + item.Language);
+        }
+        
+        foreach (var item in new[] { 
+("test.en.cc.srt", "English (CC)", true),
 ("test.srt", "", true),
 ("test.en.srt", "English", true),
 ("test(en).srt", "English", true),
 ("test (en).srt", "English", true),
 ("test.en.hi.srt", "English (HI)", true),
 ("test.en.sdh.srt", "English (SDH)", true),
-("test.en.cc.srt", "English (CC)", true),
 ("test.de.srt", "German", true),
 ("test(de).srt", "German", true),
 ("test (de).srt", "German", true),
@@ -1324,12 +1338,11 @@ public class FfmpegBuilder_BasicTests : TestBase
 ("nomatch (en).srt", "English", false)
         })
         {
-            string lang;
-            bool isMatch = ffSubMerge.FilenameMatches("Test.mkv", item.Item1, out lang);
+            TestContext.WriteLine("File: " + item.Item1);
+            bool isMatch = ffSubMerge.FilenameMatches("Test.mkv", item.Item1, out string lang, out bool forced);
             Assert.AreEqual(item.Item3, isMatch);
             Assert.AreEqual(item.Item2, lang, "Language not matching in: " + item.Item1);
         }
-
 
     }
 

@@ -76,12 +76,13 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
                 continue;
 
             string language = string.Empty;
+            bool forced = false;
 
             if (MatchFilename)
             {
                 string lang1, lang2;
-                bool matchesOriginal = FilenameMatches(args.FileName, file, out lang1);
-                bool matchesWorking = FilenameMatches(args.WorkingFile, file, out lang2);
+                bool matchesOriginal = FilenameMatches(args.FileName, file, out lang1, out bool forced1);
+                bool matchesWorking = FilenameMatches(args.WorkingFile, file, out lang2, out bool forced2);
 
                 if (matchesOriginal == false && matchesWorking == false)
                     continue;
@@ -90,6 +91,7 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
                     language = lang1;
                 if (string.IsNullOrEmpty(lang2) == false)
                     language = lang2;
+                forced = forced1 || forced2;
             }
 
             string subTitle = language;
@@ -109,6 +111,7 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
                     InputFileIndex = this.Model.InputFiles.Count - 1,
                     TypeIndex = 0,
                     Language = language,
+                    Forced = forced,
                     Title = subTitle,
                     Codec = ext,
                     IndexString = (this.Model.InputFiles.Count - 1) + ":s:0"
@@ -123,17 +126,21 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
         return count > 0 ? 1 : 2;
     }
 
-    internal bool FilenameMatches(string input, string other, out string languageCode)
+    internal bool FilenameMatches(string input, string other, out string languageCode, out bool forced)
     {
-        languageCode = String.Empty;
+        languageCode = string.Empty;
+        forced = false;
         var inputFileExtension = FileHelper.GetExtension(input);
         string inputName = FileHelper.GetShortFileName(input).Replace(inputFileExtension, "");
 
         var otherFileExtension = FileHelper.GetExtension(other);
         string otherName = FileHelper.GetShortFileName(other).Replace(otherFileExtension, "");
-
+        
         if (inputName.ToLowerInvariant().Equals(otherName.ToLowerInvariant()))
             return true;
+
+        bool closedCaptions = HasSection(ref otherName, "closedcaptions") || HasSection(ref otherName, "cc");
+        forced = HasSection(ref otherName, "forced");
 
         if(Regex.IsMatch(otherName, @"(\.[a-zA-Z]{2,3}){1,2}$"))
         {
@@ -143,14 +150,14 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
             if (rgxLanguage.IsMatch(otherName))
             {
                 string key = rgxLanguage.Match(otherName).Value;
-                languageCode = LanguageCodes.Codes[key];   
+                languageCode = LanguageCodes.Codes.GetValueOrDefault(key, key);
             }
 
             if (string.IsNullOrEmpty(languageCode) == false)
             {
                 if (Regex.IsMatch(otherName, @"\.hi(\.|$)"))
                     languageCode += " (HI)";
-                if (Regex.IsMatch(otherName, @"\.cc(\.|$)"))
+                if (closedCaptions || Regex.IsMatch(otherName, @"\.cc(\.|$)"))
                     languageCode += " (CC)";
                 if (Regex.IsMatch(otherName, @"\.sdh(\.|$)"))
                     languageCode += " (SDH)";
@@ -169,17 +176,17 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
             if (rgxLanguage.IsMatch(otherName))
             {
                 string key = rgxLanguage.Match(otherName).Value;
-                languageCode = LanguageCodes.Codes[key];
+                languageCode = LanguageCodes.Codes.GetValueOrDefault(key, key);
             }
 
 
             if (string.IsNullOrEmpty(languageCode) == false)
             {
-                if (other.ToLower().Contains("(hi)"))
+                if (other.ToLowerInvariant().Contains("(hi)"))
                     languageCode += " (HI)";
-                else if (other.ToLower().Contains("(cc)"))
+                else if (closedCaptions || other.ToLowerInvariant().Contains("(cc)")|| other.ToLowerInvariant().Contains("closedcaptions"))
                     languageCode += " (CC)";
-                else if (other.ToLower().Contains("(sdh)"))
+                else if (other.ToLowerInvariant().Contains("(sdh)"))
                     languageCode += " (SDH)";
             }
             if (inputName.ToLowerInvariant().Equals(stripLang.ToLowerInvariant()))
@@ -187,5 +194,41 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
         }
 
         return false;
+
+        bool HasSection(ref string input, string section)
+        {
+            var matchDot = new Regex(@"\." + Regex.Escape(section) + @"(\.|$)", RegexOptions.IgnoreCase);
+            if (matchDot.IsMatch(input))
+            {
+                input = matchDot.Replace(input, string.Empty)
+                    .Replace("..", ".")
+                    .Replace("  ", " ")
+                    .Replace("--", "-")
+                    .TrimExtra(".-");
+                return true;
+            }
+            var matchBracket = new Regex(@"\(" + Regex.Escape(section) + @"(\)|$)", RegexOptions.IgnoreCase);
+            if (matchBracket.IsMatch(input))
+            {
+                input = matchBracket.Replace(input, string.Empty)
+                    .Replace("..", ".")
+                    .Replace("  ", " ")
+                    .Replace("--", "-")
+                    .TrimExtra(".-");
+                return true;
+            }
+            var matchHyphen = new Regex(@"\-" + Regex.Escape(section) + @"(\-|$)", RegexOptions.IgnoreCase);
+            if (matchHyphen.IsMatch(input))
+            {
+                input = matchHyphen.Replace(input, string.Empty)
+                    .Replace("..", ".")
+                    .Replace("  ", " ")
+                    .Replace("--", "-")
+                    .TrimExtra(".-");
+                return true;
+            }
+            return false;
+
+        }
     }
 }
