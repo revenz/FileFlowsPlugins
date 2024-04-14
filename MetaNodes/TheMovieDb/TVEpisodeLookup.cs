@@ -1,6 +1,7 @@
 ﻿using DM.MovieApi;
 using DM.MovieApi.MovieDb.TV;
 using FileFlows.Plugin;
+using FileFlows.Plugin.Attributes;
 
 namespace MetaNodes.TheMovieDb;
 
@@ -36,6 +37,12 @@ public class TVEpisodeLookup : Node
     /// Gets the Variables this flow element provides
     /// </summary>
     public override Dictionary<string, object> Variables => _Variables;
+    
+    /// <summary>
+    /// Gets or sets if the folder name should be used
+    /// </summary>
+    [Boolean(1)]
+    public bool UseFolderName { get; set; }
 
     /// <summary>
     /// Constructs a new instance of this flow element
@@ -65,10 +72,10 @@ public class TVEpisodeLookup : Node
     public override int Execute(NodeParameters args)
     {
         string filename = args.FileName.Replace("\\", "/");
-        filename = filename.Substring(filename.LastIndexOf("/", StringComparison.Ordinal) + 1);
-        filename = filename.Substring(0, filename.LastIndexOf(".", StringComparison.Ordinal));
+        filename = filename[(filename.LastIndexOf("/", StringComparison.Ordinal) + 1)..];
+        filename = filename[..filename.LastIndexOf(".", StringComparison.Ordinal)];
         
-        (string lookupName, string year) = TVShowLookup.GetLookupName(filename, false);
+        (string lookupName, string year) = TVShowLookup.GetLookupName(filename, UseFolderName);
 
         (string showName, int? season, int? episode, int? lastEpisode, string year2) = TVShowLookup.GetTVShowInfo(filename);
 

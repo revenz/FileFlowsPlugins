@@ -67,6 +67,10 @@
         "Outputs": {
           "1": "TV Episode found",
           "2": "TV Episode NOT found"
+        },
+        "Fields": {
+          "UseFolderName": "Use Folder Name",
+          "UseFolderName-Help": "If the folder name should be used instead of the filename.\n\nNote if the folder starts with Season or Staffel or Saison the parent folder will be used."
         }
       }
     }

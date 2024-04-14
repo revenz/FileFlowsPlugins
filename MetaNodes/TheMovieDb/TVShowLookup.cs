@@ -127,7 +127,7 @@ public class TVShowLookup : Node
         if (useFolderName)
         {
             lookupName = fileInfo.Directory.Name;
-            if (Regex.IsMatch(lookupName, "^(Season|Staffel|Saison)", RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(lookupName, "^(Season|Staffel|Saison|Specials)", RegexOptions.IgnoreCase))
                 lookupName = fileInfo.Directory.Parent.Name;
         }
         else

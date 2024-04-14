@@ -44,9 +44,9 @@ public class VideoHasStream : VideoNode
             {
                 _StreamTypeOptions = new List<ListOption>
                 {
-                    new ListOption { Label = "Video", Value = "Video" },
-                    new ListOption { Label = "Audio", Value = "Audio" },
-                    new ListOption { Label = "Subtitle", Value = "Subtitle" }
+                    new () { Label = "Video", Value = "Video" },
+                    new () { Label = "Audio", Value = "Audio" },
+                    new () { Label = "Subtitle", Value = "Subtitle" }
                 };
             }
             return _StreamTypeOptions;
