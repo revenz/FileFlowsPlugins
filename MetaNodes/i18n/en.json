@@ -59,7 +59,7 @@
         },
         "Fields": {
           "UseFolderName": "Use Folder Name",
-          "UseFolderName-Help": "If the folder name should be used instead of the filename.\n\nNote if the folder starts with Season or Staffel or Saison the parent folder will be used."
+          "UseFolderName-Help": "If the folder name should be used instead of the filename.\n\nNote if the folder starts with Season or Staffel or Saison or Specials the parent folder will be used."
         }
       },
       "TVEpisodeLookup": {
@@ -70,7 +70,7 @@
         },
         "Fields": {
           "UseFolderName": "Use Folder Name",
-          "UseFolderName-Help": "If the folder name should be used instead of the filename.\n\nNote if the folder starts with Season or Staffel or Saison the parent folder will be used."
+          "UseFolderName-Help": "If the folder name should be used instead of the filename.\n\nNote if the folder starts with Season or Staffel or Saison or Specials the parent folder will be used."
         }
       }
     }
