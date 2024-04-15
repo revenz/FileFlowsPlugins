@@ -3,28 +3,40 @@ using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
 using System.ComponentModel.DataAnnotations;
 
-
 namespace FileFlows.BasicNodes.Functions;
 
+/// <summary>
+/// A flow element that executes custom code
+/// </summary>
 public class Function : Node
 {
+    /// <inheritdoc />
     public override int Inputs => 1;
+    /// <inheritdoc />
     public override FlowElementType Type => FlowElementType.Logic;
+    /// <inheritdoc />
     public override string Icon => "fas fa-code";
+    /// <inheritdoc />
     public override bool FailureNode => true;
-
+    /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/function"; 
 
+    /// <summary>
+    /// Gets or sets the number of outputs
+    /// </summary>
     [DefaultValue(1)]
     [NumberInt(1)]
     public new int Outputs { get; set; }
 
+    /// <summary>
+    /// Gets or sets the code to execute
+    /// </summary>
     [Required]
     [DefaultValue("// Custom javascript code that you can run against the flow file.\n// Flow contains helper functions for the Flow.\n// Variables contain variables available to this node from previous nodes.\n// Logger lets you log messages to the flow output.\n\n// return 0 to complete the flow.\n// return -1 to signal an error in the flow\n// return 1+ to select which output node will be processed next\n\nif(Variables.file.Size === 0)\n\treturn -1;\n\nreturn 1;")]
     [Code(2)]
     public string Code { get; set; }
-
-    delegate void LogDelegate(params object[] values);
+    
+    /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
         if (string.IsNullOrEmpty(Code))

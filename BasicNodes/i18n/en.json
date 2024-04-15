@@ -212,6 +212,15 @@
             "Message": "Message"
           }
         },
+        "Matches": {
+          "Description": "Compares a set of values and matches conditions to see which output should be called",
+          "Fields": {
+            "MatchConditions": "",
+            "MatchConditionsKey": "Value",
+            "MatchConditionsValue": "Expression",
+            "MatchConditions-Help": "The matches to test which output should be called."
+          }
+        },
         "MoveFile": {
           "Description": "Moves a file to the destination folder",
           "Outputs": {
