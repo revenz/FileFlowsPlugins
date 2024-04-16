@@ -24,6 +24,12 @@ public class GotoFlow : Node
     /// </summary>
     [Select("FLOW_LIST", 1)]
     public ObjectReference Flow { get; set; }
+    
+    /// <summary>
+    /// Gets or sets if the flow this file is processing with should be updated to this new flow
+    /// </summary>
+    [Boolean(2)]
+    public bool UpdateFlowUsed { get; set; }
 
     /// <inheritdoc />
     public override int Execute(NodeParameters args)

@@ -181,7 +181,9 @@
         "GotoFlow": {
           "Description": "This lets you switch to a different flow to process.  This flow will exit and the parameters and working file will be passed into the new Flow",
           "Fields": {
-            "Flow": "Flow"
+            "Flow": "Flow",
+            "UpdateFlowUsed": "Update Flow",
+            "UpdateFlowUsed-Help": "If the files `Flow` should be updated to reference this new Flow or leave it as the original Flow."
           }
         },
         "Reprocess": {
