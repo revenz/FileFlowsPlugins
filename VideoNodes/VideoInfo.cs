@@ -16,6 +16,11 @@ public class VideoInfo
     public float Bitrate { get; set; }
     
     /// <summary>
+    /// Gets or sets if this file is already processed
+    /// </summary>
+    public bool AlreadyProcessed { get; set; }
+    
+    /// <summary>
     /// Gets or sets the video streams contained in the file
     /// </summary>
     public List<VideoStream> VideoStreams { get; set; } = new List<VideoStream>();

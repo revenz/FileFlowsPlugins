@@ -799,6 +799,14 @@
           "2": "Video is not 12-Bit"
         }
       },
+      "VideoAlreadyProcessed": {
+        "Label": "Video Already Processed",
+        "Description": "Test if a video file has already been processed bv FileFlows",
+        "Outputs": {
+          "1": "Video has already been processed",
+          "2": "Video has not been processed"
+        }
+      },
       "VideoIsInterlaced": {
         "Label": "Video Is Interlaced",
         "Description": "Tests if a video file is interlaced",

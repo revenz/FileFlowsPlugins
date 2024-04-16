@@ -107,6 +107,7 @@ public class VideoInfoHelper
     public static VideoInfo ParseOutput(ILogger logger, string output)
     {
         var vi = new VideoInfo();
+        vi.AlreadyProcessed = output.Contains("Created by FileFlows");
         var rgxStreams = new Regex(@"Stream\s#[\d]+:[\d]+(.*?)(?=(Stream\s#[\d]|$))", RegexOptions.Singleline);
         var streamMatches = rgxStreams.Matches(output);
         int streamIndex = 0;
