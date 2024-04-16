@@ -86,6 +86,88 @@ public class MatchesTests
         var log = logger.ToString();
         Assert.AreEqual(2, result);
     }
+    
+    [TestMethod]    
+    public void Matches_True()
+    {
+        var logger = new TestLogger();
+        Matches ele = new ();
+        ele.MatchConditions = new()
+        {
+            new("{file.Name}", "triggerthis"),
+            new("{file.Deleted}", "true"),
+            new("{file.Name}", "TriggerThis"),
+        };
+        var args = new FileFlows.Plugin.NodeParameters(null, logger,
+            false, string.Empty, new LocalFileService());
+        args.Variables["file.Deleted"] = true;
+
+        var result = ele.Execute(args);
+        var log = logger.ToString();
+        Assert.AreEqual(2, result);
+    }
+    
+    
+    [TestMethod]    
+    public void Matches_True_1()
+    {
+        var logger = new TestLogger();
+        Matches ele = new ();
+        ele.MatchConditions = new()
+        {
+            new("{file.Name}", "triggerthis"),
+            new("{file.Deleted}", "true"),
+            new("{file.Name}", "TriggerThis"),
+        };
+        var args = new FileFlows.Plugin.NodeParameters(null, logger,
+            false, string.Empty, new LocalFileService());
+        args.Variables["file.Deleted"] = 1;
+
+        var result = ele.Execute(args);
+        var log = logger.ToString();
+        Assert.AreEqual(2, result);
+    }
+    
+    [TestMethod]    
+    public void Matches_False()
+    {
+        var logger = new TestLogger();
+        Matches ele = new ();
+        ele.MatchConditions = new()
+        {
+            new("{file.Name}", "triggerthis"),
+            new("{file.Deleted}", "false"),
+            new("{file.Name}", "TriggerThis"),
+        };
+        var args = new FileFlows.Plugin.NodeParameters(null, logger,
+            false, string.Empty, new LocalFileService());
+        args.Variables["file.Deleted"] = false;
+
+        var result = ele.Execute(args);
+        var log = logger.ToString();
+        Assert.AreEqual(2, result);
+    }
+    
+    
+    [TestMethod]    
+    public void Matches_False_0()
+    {
+        var logger = new TestLogger();
+        Matches ele = new ();
+        ele.MatchConditions = new()
+        {
+            new("{file.Name}", "triggerthis"),
+            new("{file.Deleted}", "false"),
+            new("{file.Name}", "TriggerThis"),
+        };
+        var args = new FileFlows.Plugin.NodeParameters(null, logger,
+            false, string.Empty, new LocalFileService());
+        args.Variables["file.Deleted"] = 0;
+
+        var result = ele.Execute(args);
+        var log = logger.ToString();
+        Assert.AreEqual(2, result);
+    }
 }
 
 

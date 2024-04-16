@@ -45,27 +45,47 @@ public class Matches : Node
             output++;
             try
             {
-                var value = args.ReplaceVariables(match.Key, stripMissing: true);
+                object value;
+                if (Regex.IsMatch(match.Key, @"\{[\w\d\.-]+\}") &&
+                    args.Variables.TryGetValue(match.Key[1..^1], out var varValue))
+                    value = varValue;
+                else
+                    value = args.ReplaceVariables(match.Key, stripMissing: true);
+                string strValue = value?.ToString() ?? string.Empty;
+                
                 if (GeneralHelper.IsRegex(match.Value))
                 {
-                    if (Regex.IsMatch(value, match.Value, RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+                    if (Regex.IsMatch(strValue, match.Value, RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
                     {
                         args.Logger?.ILog($"Match found '{match.Value}' = {value}");
                         return output;
                     }
                 }
 
-                if (match.Value == value)
+                if (Regex.IsMatch(match.Value ??string.Empty, "^(true|1)$", RegexOptions.IgnoreCase) &&
+                    Regex.IsMatch(strValue, "^(true|1)$", RegexOptions.IgnoreCase))
                 {
-                    args.Logger?.ILog($"Match found '{match.Value}' = {value}");
+                    args.Logger?.ILog($"Match found '{match.Value}' = {strValue}");
+                    return output;
+                }
+                if (Regex.IsMatch(match.Value ??string.Empty, "^(false|0)$", RegexOptions.IgnoreCase) &&
+                    Regex.IsMatch(strValue, "^(false|0)$", RegexOptions.IgnoreCase))
+                {
+                    args.Logger?.ILog($"Match found '{match.Value}' = {strValue}");
+                    return output;
+                }
+
+                if (match.Value == strValue)
+                {
+                    args.Logger?.ILog($"Match found '{match.Value}' = {strValue}");
                     return output;
                 }
 
                 if (MathHelper.IsMathOperation(match.Value))
                 {
-                    if (MathHelper.IsTrue(value, match.Value))
+                    if (MathHelper.IsTrue(strValue, match.Value))
                     {
-                        args.Logger?.ILog($"Match found '{match.Value}' = {value}");
+                        args.Logger?.ILog($"Match found '{match.Value}' = {strValue}");
                         return output;
                     }
                 }
