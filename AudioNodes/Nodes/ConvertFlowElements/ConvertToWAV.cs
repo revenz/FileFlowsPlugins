@@ -5,7 +5,7 @@ public class ConvertToWAV : ConvertNode
     /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/audio-nodes/convert-to-wav";
     /// <inheritdoc />
-    protected override string Extension => "wav";
+    protected override string DefaultExtension => "wav";
     /// <inheritdoc />
     public override string Icon => "svg:wav";
         

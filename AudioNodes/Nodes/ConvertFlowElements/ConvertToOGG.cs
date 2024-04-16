@@ -6,7 +6,7 @@ namespace FileFlows.AudioNodes;
         public override string HelpUrl => "https://fileflows.com/docs/plugins/audio-nodes/convert-to-ogg";
         
         /// <inheritdoc />
-        protected override string Extension => "ogg";
+        protected override string DefaultExtension => "ogg";
         
         public static List<ListOption> BitrateOptions => ConvertNode.BitrateOptions;
         

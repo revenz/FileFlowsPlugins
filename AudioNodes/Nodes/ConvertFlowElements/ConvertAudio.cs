@@ -2,7 +2,7 @@ namespace FileFlows.AudioNodes;
 
 public class ConvertAudio : ConvertNode
 {
-    protected override string Extension => Codec;
+    protected override string DefaultExtension => Codec;
     public override string HelpUrl => "https://fileflows.com/docs/plugins/audio-nodes/convert-audio";
 
     public static List<ListOption> BitrateOptions => ConvertNode.BitrateOptions;
