@@ -10,7 +10,7 @@
     <PublishTrimmed>true</PublishTrimmed>
     <Company>FileFlows</Company>
     <Authors>John Andrews</Authors>
-    <Product>Image Nodes</Product>
+    <Product>Image</Product>
     <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
     <Description>Nodes for processing images files.  This plugin contains nodes to convert and manipulate images.</Description>
   </PropertyGroup>

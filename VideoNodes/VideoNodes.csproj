@@ -9,9 +9,9 @@
     <PublishTrimmed>true</PublishTrimmed>
     <Company>FileFlows</Company>
     <Authors>John Andrews</Authors>
-    <Product>Video Nodes</Product>
+    <Product>Video</Product>
     <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
-    <Description>Nodes for processing video files.  This plugin contains nodes to convert video files to different formats.  Node to parse the video information from a file.</Description>
+    <Description>Flow element for the processing of video files, including but not limited to video file conversion, video file detection, upscaling, downscaling, and transcoding.</Description>
     <RootNamespace> FileFlows.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

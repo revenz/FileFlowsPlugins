@@ -32,7 +32,7 @@ public class Function : Node
     /// Gets or sets the code to execute
     /// </summary>
     [Required]
-    [DefaultValue("// Custom javascript code that you can run against the flow file.\n// Flow contains helper functions for the Flow.\n// Variables contain variables available to this node from previous nodes.\n// Logger lets you log messages to the flow output.\n\n// return 0 to complete the flow.\n// return -1 to signal an error in the flow\n// return 1+ to select which output node will be processed next\n\nif(Variables.file.Size === 0)\n\treturn -1;\n\nreturn 1;")]
+    [DefaultValue("// Custom javascript code that you can run against the flow file.\n// Flow contains helper functions for the Flow.\n// Variables contain variables available to this flow element from previous flow elements.\n// Logger lets you log messages to the flow output.\n\n// return 0 to complete the flow.\n// return -1 to signal an error in the flow\n// return 1+ to select which output node will be processed next\n\nif(Variables.file.Size === 0)\n\treturn -1;\n\nreturn 1;")]
     [Code(2)]
     public string Code { get; set; }
     

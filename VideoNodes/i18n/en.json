@@ -102,7 +102,7 @@
       "FfmpegBuilderStart": {
         "Label": "FFMPEG Builder: Start",
         "Outputs": {
-          "1": "FFMPEG Builder created and ready to add FFMPEG Builder nodes to"
+          "1": "FFMPEG Builder created and ready to add FFMPEG Builder flow elements to"
         },
         "Description": "Creates an instance of the FFMPEG Builder which can build a FFMPEG argument to then execute with the FFMPEG Executor."
       },
@@ -122,7 +122,7 @@
           "1": "FFMPEG Builder ran successfully and created new temporary file",
           "2": "No changes detected in FFMPEG Builder, file not created"
         },
-        "Description": "Executes a FFMPEG Builder command created by other FFMPEG Builder nodes.",
+        "Description": "Executes a FFMPEG Builder command created by other FFMPEG Builder flow elements.",
         "Fields": {
           "HardwareDecoding": "Hardware Decoding",
           "HardwareDecoding-Help": "If the executor should attempt to use hardware decoding.  If not available the execution will proceed just without hardware decoding enabled.",
@@ -375,7 +375,7 @@
       },
       "FfmpegBuilderMetadataRemover": {
         "Label": "FFMPEG Builder: Metadata Remover",
-        "Description": "Removes metadata from the FFMPEG Builder so when the file is processed the selected metadata will be removed.\n\nNote: Only the metadata when this node is effected, if metadata is added after this node runs, that will not be effected.",
+        "Description": "Removes metadata from the FFMPEG Builder so when the file is processed the selected metadata will be removed.\n\nNote: Only the metadata when this flow element is effected, if metadata is added after this node runs, that will not be effected.",
         "Outputs": {
           "1": "Metadata removed from FFMPEG Builder"
         },
@@ -430,7 +430,7 @@
       },
       "FfmpegBuilderSubtitleClearDefault": {
         "Label": "FFMPEG Builder: Subtitle Clear Default",
-        "Description": "This node will clear the default flag from subtitles.",
+        "Description": "This flow element will clear the default flag from subtitles.",
         "Fields": {
           "LeaveForced": "Leave Forced",
           "LeaveForced-Help": "When checked all forced subtitles will not be touched, they will maintain their original setting.  This is executed prior to 'Set Forced Default' so takes precedent.",

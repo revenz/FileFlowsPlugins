@@ -10,7 +10,7 @@
     <PublishTrimmed>true</PublishTrimmed>
     <Company>FileFlows</Company>
     <Authors>John Andrews</Authors>
-    <Product>Checksum Nodes</Product>
+    <Product>Checksum</Product>
     <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
     <Description>Nodes that provide the ability to run a checksum against a file.</Description>
   </PropertyGroup>

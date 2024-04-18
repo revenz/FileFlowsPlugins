@@ -455,8 +455,7 @@ public class LocalFileService : IFileService
 
         bool isFile = new FileInfo(path).Exists;
 
-        FileHelper.SetPermissions(logger, path, file: isFile,
-            permissions: permissions.Value.ToString("D3"));
+        FileHelper.SetPermissions(logger, path, file: isFile, permissions: permissions);
         
         FileHelper.ChangeOwner(logger, path, file: isFile, ownerGroup: OwnerGroup);
         

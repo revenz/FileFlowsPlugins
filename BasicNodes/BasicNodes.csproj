@@ -9,10 +9,10 @@
     <PublishTrimmed>true</PublishTrimmed>
     <Company>FileFlows</Company>
     <Authors>John Andrews</Authors>
-    <Product>Basic Nodes</Product>
+    <Product>Basic</Product>
     <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
-    <Description>Basic nodes for FileFlows.  This plugin contains basic and common nodes to process files.
-            This plugin is required for FileFlows to work.</Description>
+    <Description>Basic flow elements for FileFlows.  This plugin contains basic and common flow elements to process files.
+This plugin is required for FileFlows to work.</Description>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;CS8618;CS8601;CS8602;CS8603;CS8604;CS8618;CS8625;CS8765;CS8767;CS8618l;CS8600</NoWarn>

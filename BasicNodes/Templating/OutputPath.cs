@@ -34,7 +34,7 @@ public class OutputPath : TemplatingNode
     /// <returns>the output</returns>
     public override int Execute(NodeParameters args)
     {
-        args.Logger?.ELog("This templating node cannot be used in an executed flow");
+        args.Logger?.ELog("This templating flow element cannot be used in an executed flow");
         return -1;
     }
 }

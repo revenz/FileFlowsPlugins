@@ -131,7 +131,7 @@ namespace FileFlows.AudioNodes
         protected Result<AudioInfo> GetAudioInfo(NodeParameters args)
         {
             if (args.Parameters.ContainsKey(Audio_INFO) == false)
-                return Result<AudioInfo>.Fail("No codec information loaded, use a 'Audio File' node first");
+                return Result<AudioInfo>.Fail("No codec information loaded, use a 'Audio File' flow element first");
             if (args.Parameters[Audio_INFO] is AudioInfo result == false)
                 return Result<AudioInfo>.Fail("AudioInfo not found for file");
             return result;

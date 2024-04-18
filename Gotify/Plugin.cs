@@ -13,7 +13,7 @@ public class Plugin : FileFlows.Plugin.IPlugin
     /// <summary>
     /// Gets the name of this plugin
     /// </summary>
-    public string Name => "Gotify Nodes";
+    public string Name => "Gotify";
     
     /// <summary>
     /// Gets the minimum version of FileFlows required for this plugin

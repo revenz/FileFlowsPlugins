@@ -217,7 +217,7 @@ namespace FileFlows.VideoNodes
         {
             if (args.Parameters.ContainsKey(VIDEO_INFO) == false)
             {
-                args.Logger.WLog("No codec information loaded, use a 'VideoFile' node first");
+                args.Logger.WLog("No codec information loaded, use a 'VideoFile' flow element first");
                 return null;
             }
 

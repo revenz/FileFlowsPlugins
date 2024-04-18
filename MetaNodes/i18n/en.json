@@ -25,14 +25,14 @@
         }
       },
       "MovieRenamer": {
-        "Description": "Renames the working file using the metadata stored in 'MovieInfo'.\nNote: MovieLookup should be executed in the flow before this node to work.\n\nOutput 1: File was renamed\nOutput 2: File failed to be renamed",          
+        "Description": "Renames the working file using the metadata stored in 'MovieInfo'.\nNote: MovieLookup should be executed in the flow before this flow element to work.\n\nOutput 1: File was renamed\nOutput 2: File failed to be renamed",          
         "Fields": {
           "Pattern": "Pattern",
           "Pattern-Help": "The pattern to use to rename the folder.  '{Title}', '{Year}', '{Extension}'.",
           "DestinationPath": "Destination Path",
           "DestinationPath-Help": "If the file should be moved to a different directory.",
           "LogOnly": "Log Only",
-          "LogOnly-Help": "Turn on if you just want to test this node without it actually renaming the file"
+          "LogOnly-Help": "Turn on if you just want to test this flow element without it actually renaming the file"
         }
       },
       "MusicMeta": {

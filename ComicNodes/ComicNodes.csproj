@@ -10,9 +10,9 @@
     <PublishTrimmed>true</PublishTrimmed>
     <Company>FileFlows</Company>
     <Authors>John Andrews</Authors>
-    <Product>Comic Nodes</Product>
+    <Product>Comic</Product>
     <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
-    <Description>Nodes for processing comic books (cbr, cbz, pdf etc)</Description>
+    <Description>Flow elements for processing comic books (cbr, cbz, pdf etc)</Description>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="ComicNodes.en.json" />

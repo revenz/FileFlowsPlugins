@@ -10,13 +10,13 @@
     "Flow":{
       "Parts": {
         "InputFile": {
-          "Description": "An input node for a file.  This is required and is the starting point of a flow.  Any input node can be used, just one is required.",
+          "Description": "An input flow element for a file.  This is required and is the starting point of a flow.  Any input flow element can be used, just one is required.",
           "Outputs": {
             "1": "Library File"
           }
         },
         "InputFolder": {
-          "Description": "An input node for a folder.  This will only work if the library using this flow is configured for folders.",
+          "Description": "An input flow element for a folder.  This will only work if the library using this flow is configured for folders.",
           "Outputs": {
             "1": "Library Folder"
           }
@@ -322,7 +322,7 @@
             "DestinationPath": "Destination Folder",
             "DestinationPath-Help": "If the file should be moved to a different folder.",
             "LogOnly": "Log Only",
-            "LogOnly-Help": "Turn on if you just want to test this node without it actually renaming the file",
+            "LogOnly-Help": "Turn on if you just want to test this flow element without it actually renaming the file",
             "CsvFile": "CSV File",
             "CsvFile-Help": "Will append to this file the original name and the renamed file.  Useful when using ''Log Only'' to test the renamer before changing files."
           }

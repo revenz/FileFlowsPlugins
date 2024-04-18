@@ -67,7 +67,7 @@ File shrunk in size by: {{ difference | file_size }} / {{ percent }}%
                 if (string.IsNullOrEmpty(settings?.SmtpServer))
                 {
                     args.Logger?.ELog(
-                        "No SMTP Server configured, configure this under the 'Plugins > Email Nodes > Edit' page.");
+                        "No SMTP Server configured, configure this under the 'Plugins > Email > Edit' page.");
                     return -1;
                 }
 

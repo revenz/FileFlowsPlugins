@@ -165,7 +165,7 @@ public abstract class ImageBaseNode:Node
     {
         if (args.Parameters.ContainsKey(IMAGE_INFO) == false)
         {
-            args.Logger?.WLog("No image information loaded, use a 'Image File' node first");
+            args.Logger?.WLog("No image information loaded, use a 'Image File' flow element first");
             return null;
         }
         var result = args.Parameters[IMAGE_INFO] as ImageInfo;

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace FileFlows.VideoNodes.VideoNodes;
 
 /// <summary>
-/// Node that converts a audio file into a video file and generates a video based on the audio
+/// Flow Element that converts a audio file into a video file and generates a video based on the audio
 /// </summary>
 public class AudioToVideo : EncodingNode
 {

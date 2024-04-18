@@ -7,7 +7,7 @@ namespace FileFlows.BasicNodes
         /// <inheritdoc />
         public Guid Uid => new Guid("789b5213-4ca5-42da-816e-f2117f00cd16");
         /// <inheritdoc />
-        public string Name => "Basic Nodes";
+        public string Name => "Basic";
         /// <inheritdoc />
         public string MinimumVersion => "1.0.4.2019";
 

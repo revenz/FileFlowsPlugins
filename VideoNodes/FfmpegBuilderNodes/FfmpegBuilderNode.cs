@@ -42,7 +42,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
                 return false;
             
             if(this is FfmpegBuilderStart == false && Model == null)
-                throw new Exception("FFMPEG Builder Model not set, you must add and use the \"FFMPEG Builder Start\" node first");
+                throw new Exception("FFMPEG Builder Model not set, you must add and use the \"FFMPEG Builder Start\" flow element first");
 
             if (this is FfmpegBuilderStart == false)
             {
