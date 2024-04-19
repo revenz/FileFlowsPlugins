@@ -249,19 +249,20 @@ public class MoveFile : Node
     /// <param name="moveFolder">if the relative folder should be also be included, relative to the library</param>
     /// <returns>the path and filename</returns>
     internal static (string? Path, string? Filename, string? Separator) GetDestinationPathParts(NodeParameters args, string destinationPath, string destinationFile = null, bool moveFolder = false)
-    {;
-        var destFilename = FileHelper.GetShortFileName(args.FileName);
+    {
+        string separator = args.WorkingFile.IndexOf('/') >= 0 ? "/" : "\\";
         string destFolder = args.ReplaceVariables(destinationPath, stripMissing: true);
-        var separator = destFolder?.IndexOf('/') >= 0 ? "/" : "\\";
         destFolder = destFolder.Replace("\\", separator);
         destFolder = destFolder.Replace("/", separator);
+        string destFilename = args.FileName.Replace("\\", separator)
+                                           .Replace("/", separator);
+        destFilename = destFilename.Substring(destFilename.LastIndexOf(separator, StringComparison.Ordinal) + 1);
         if (string.IsNullOrEmpty(destFolder))
         {
             args.Logger?.ELog("No destination specified");
             args.Result = NodeResult.Failure;
             return (null, null, null);
         }
-        args.Logger?.ILog("Destination Folder: " + destFolder);
         args.Result = NodeResult.Failure;
 
         if (moveFolder) // we only want the full directory relative to the library, we don't want the original filename
@@ -295,17 +296,9 @@ public class MoveFile : Node
             destFilename = destFilename[..(destFilename.LastIndexOf(".", StringComparison.Ordinal) + 1)] + workingExtension;
         }
 
-        if (args.FileService?.GetType().Name == "MappedFileService")
-        {
-            args.Logger?.ILog("Final destination path (not mapped): " + destFolder);
-            args.Logger?.ILog("Final destination filename (not mapped): " + destFilename);
-        }
-        else
-        {
-            args.Logger?.ILog("Final destination path: " + destFolder);
-            args.Logger?.ILog("Final destination filename: " + destFilename);
-        }
-
+        args.Logger?.ILog("Final destination path: " + destFolder);
+        args.Logger?.ILog("Final destination filename: " + destFilename);
+        
         return (destFolder, destFilename, separator);
     }
 }
