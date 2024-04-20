@@ -18,6 +18,7 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
 
     internal const string CODEC_H264 = "h264";
     internal const string CODEC_H265 = "h265";
+    internal const string CODEC_H265_8BIT = "h265 8BIT";
     internal const string CODEC_H265_10BIT = "h265 10BIT";
     internal const string CODEC_AV1 = "av1";
     internal const string CODEC_AV1_10BIT = "av1 10BIT";
@@ -63,6 +64,7 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
                     new () { Label = "H.264", Value = CODEC_H264 },
                     // new () { Label = "H.264 (10-Bit)", Value = CODEC_H264_10BIT },
                     new () { Label = "HEVC", Value = CODEC_H265 },
+                    new () { Label = "HEVC (8-Bit)", Value = CODEC_H265_8BIT },
                     new () { Label = "HEVC (10-Bit)", Value = CODEC_H265_10BIT },
                     new () { Label = "AV1", Value = CODEC_AV1 },
                     new () { Label = "AV1 (10-Bit)", Value = CODEC_AV1_10BIT },
@@ -183,9 +185,9 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
             stream.EncodingParameters.AddRange(encodingParameters);
             stream.Codec = CODEC_H264;
         }
-        else if (Codec is CODEC_H265 or CODEC_H265_10BIT)
+        else if (Codec is CODEC_H265 or CODEC_H265_10BIT or CODEC_H265_8BIT)
         {
-            bool tenBit = Codec == CODEC_H265_10BIT || stream.Stream.Is10Bit;
+            bool tenBit = (Codec == CODEC_H265_10BIT || stream.Stream.Is10Bit) && (Codec != CODEC_H265_8BIT);
             args.Logger?.ILog("10 Bit: " + tenBit);
             var encodingParameters = H265(stream, args, tenBit, Quality, encoder,
                 stream.Stream.FramesPerSecond, Speed).ToArray();

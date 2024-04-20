@@ -32,6 +32,30 @@ public class TVShowLookupTests
         Assert.AreEqual("The Batman", args.Variables["tvshow.Title"]);
         Assert.AreEqual(2004, args.Variables["tvshow.Year"]);
     }
+    
+        
+    [TestMethod]
+    public void TvdbID_Test()
+    {
+        var logger = new TestLogger();
+        var args = new FileFlows.Plugin.NodeParameters("/media/TV/The Walking Dead (2010) [tvdbid-153021]/Season 07/S07E03 - The Cell [HDTV-1080p][AAC 5.1][h265].mkv", logger, false, string.Empty, null);
+
+        var element = new TVShowLookup();
+        element.UseFolderName = true;
+
+        var result = element.Execute(args);
+        Assert.AreEqual(1, result);
+        Assert.IsTrue(args.Parameters.ContainsKey(Globals.TV_SHOW_INFO));
+
+        var info = args.Parameters[Globals.TV_SHOW_INFO] as TVShowInfo;
+        Assert.IsNotNull(info);
+
+        Assert.AreEqual("The Walking Dead", info.Name);
+        Assert.AreEqual(2010, info.FirstAirDate.Year);
+        Assert.AreEqual("en", info.OriginalLanguage);
+        Assert.AreEqual("The Walking Dead", args.Variables["tvshow.Title"]);
+        Assert.AreEqual(2010, args.Variables["tvshow.Year"]);
+    }
 
     [TestMethod]
     public void TheBatman_Folder()
