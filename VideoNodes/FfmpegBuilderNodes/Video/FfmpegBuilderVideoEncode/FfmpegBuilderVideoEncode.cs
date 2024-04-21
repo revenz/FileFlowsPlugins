@@ -60,7 +60,7 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
                 {
                     new () { Label = "H.264", Value = CODEC_H264 },
                     // new () { Label = "H.264 (10-Bit)", Value = CODEC_H264_10BIT },
-                    new () { Label = "HEVC", Value = CODEC_H265 },
+                    new () { Label = "HEVC (Automatic)", Value = CODEC_H265 },
                     new () { Label = "HEVC (8-Bit)", Value = CODEC_H265_8BIT },
                     new () { Label = "HEVC (10-Bit)", Value = CODEC_H265_10BIT },
                     new () { Label = "AV1", Value = CODEC_AV1 },
