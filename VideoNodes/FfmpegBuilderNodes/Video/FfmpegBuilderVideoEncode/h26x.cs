@@ -23,7 +23,7 @@ public partial class FfmpegBuilderVideoEncode
     {
         if (h265 == false)
             non10BitFilters = new[] { "-pix_fmt:v:{index}", "yuv420p" };
-        else
+        else 
             non10BitFilters = null;
 
         return new []

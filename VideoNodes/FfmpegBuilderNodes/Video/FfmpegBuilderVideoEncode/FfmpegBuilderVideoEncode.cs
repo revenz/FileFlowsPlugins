@@ -1,7 +1,4 @@
-﻿using System.Globalization;
-using System.Net;
-using System.Runtime.InteropServices;
-using System.Text;
+﻿using System.Runtime.InteropServices;
 using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
@@ -188,9 +185,9 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         else if (Codec is CODEC_H265 or CODEC_H265_10BIT or CODEC_H265_8BIT)
         {
             bool tenBit = (Codec == CODEC_H265_10BIT || stream.Stream.Is10Bit) && (Codec != CODEC_H265_8BIT);
+            bool forceBitSetting = Codec is CODEC_H265_10BIT or CODEC_H265_8BIT;
             args.Logger?.ILog("10 Bit: " + tenBit);
-            var encodingParameters = H265(stream, args, tenBit, Quality, encoder,
-                stream.Stream.FramesPerSecond, Speed).ToArray();
+            var encodingParameters = H265(stream, args, tenBit, Quality, encoder, stream.Stream.FramesPerSecond, Speed, forceBitSetting: forceBitSetting).ToArray();
             args.Logger?.ILog("Encoding Parameters: " +
                               string.Join(" ", encodingParameters.Select(x => x.Contains(" ") ? "\"" + x + "\"" : x)));
             stream.EncodingParameters.AddRange(encodingParameters);
@@ -280,7 +277,8 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         return parameters;
     }
     
-    private static IEnumerable<string> H265(FfmpegVideoStream stream, NodeParameters args, bool tenBit, int quality, string encoder, float fps, string speed)
+    private static IEnumerable<string> H265(FfmpegVideoStream stream, NodeParameters args, bool tenBit, int quality, 
+        string encoder, float fps, string speed, bool forceBitSetting = false)
     {
         // hevc_qsv -load_plugin hevc_hw -pix_fmt p010le -profile:v main10 -global_quality 21 -g 24 -look_ahead 1 -look_ahead_depth 60
         List<string> parameters = new List<string>();
@@ -342,6 +340,10 @@ public partial class FfmpegBuilderVideoEncode:FfmpegBuilderNode
         }
         else if(non10BitFilters?.Any() == true)
             parameters.AddRange(non10BitFilters);
+        else if (forceBitSetting)
+        {
+            parameters.AddRange(new[] { "-pix_fmt:v:{index}", "yuv420p" });
+        }
         return parameters;
     }
 
