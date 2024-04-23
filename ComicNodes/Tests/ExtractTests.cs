@@ -12,10 +12,10 @@ public class ExtractTests
     public void Extract_Pdf()
     {
         var logger = new TestLogger();
-        var args = new NodeParameters(@"D:\comics\testfiles\fp1.pdf", logger, false, string.Empty, null);
+        var args = new NodeParameters(@"/home/john/Comics/unprocessed/Ghosts Book 1 Excerpt.pdf", logger, false, string.Empty, null);
 
         var node = new ComicExtractor();
-        node.DestinationPath = @"D:\comics\converted\pdf";
+        node.DestinationPath = @"/home/john/Comics/extracted";
         if (Directory.Exists(node.DestinationPath))
             Directory.Delete(node.DestinationPath, true);   
         Directory.CreateDirectory(node.DestinationPath);
