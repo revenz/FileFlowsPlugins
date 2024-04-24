@@ -107,7 +107,8 @@ public class FfmpegBuilderCropBlackBars : FfmpegBuilderNode
                     process.StartInfo.ArgumentList.Add(file);
                     process.StartInfo.ArgumentList.Add("-hide_banner");
                     process.StartInfo.ArgumentList.Add("-vframes");
-                    process.StartInfo.ArgumentList.Add("-25");
+                    process.StartInfo.ArgumentList.Add("25");
+                    process.StartInfo.ArgumentList.Add("-vf");
                     process.StartInfo.ArgumentList.Add("cropdetect"); 
                     process.StartInfo.ArgumentList.Add("-f"); 
                     process.StartInfo.ArgumentList.Add("null"); 
