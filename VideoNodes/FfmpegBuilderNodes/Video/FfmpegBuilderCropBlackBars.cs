@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.IO;
+using System.Text;
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 public class FfmpegBuilderCropBlackBars : FfmpegBuilderNode
@@ -208,10 +209,9 @@ public class FfmpegBuilderCropBlackBars : FfmpegBuilderNode
     /// <param name="destination">The output image file path.</param>
     /// <returns>True if the frame was extracted and saved successfully, otherwise false.</returns>
     static bool ExtractFrameWithFFmpeg(NodeParameters args, string ffmpeg, string inputFile, int ss, string destination)
-    { try
+    {
+        try
         {
-            // Create process start info
-            
             // Start the process
             using (Process process = new Process())
             {
@@ -234,16 +234,42 @@ public class FfmpegBuilderCropBlackBars : FfmpegBuilderNode
                 process.StartInfo.ArgumentList.Add("-update");
                 process.StartInfo.ArgumentList.Add("1");
                 process.StartInfo.ArgumentList.Add(destination);
+                process.StartInfo.ArgumentList.Add("-y");
                 
-                // Capture and display the output
+                // Capture and display the output and error messages separately
+                StringBuilder outputBuilder = new ();
+                StringBuilder errorBuilder = new ();
+
+                process.OutputDataReceived += (sender, e) => outputBuilder.AppendLine(e.Data);
+                process.ErrorDataReceived += (sender, e) => errorBuilder.AppendLine(e.Data);
+
                 process.Start();
-                string output = process.StandardError.ReadToEnd();
-                Console.WriteLine(output);
-                string error = process.StandardError.ReadToEnd();
+
+                // Begin asynchronous read operations on stdout and stderr
+                process.BeginOutputReadLine();
+                process.BeginErrorReadLine();
+                
                 if (process.WaitForExit(20_000) == false)
                 {
+                    process.Kill();
                     args.Logger?.ELog("Timed out extracting image");
+                    Console.WriteLine(outputBuilder.ToString());
                     return File.Exists(destination);
+                }
+
+                // Get the output and error messages
+                string output = outputBuilder.ToString();
+                string error = errorBuilder.ToString();
+                // Log the output and error messages if needed
+                if (!string.IsNullOrWhiteSpace(output))
+                {
+                    Console.WriteLine("Output from ffmpeg:");
+                    Console.WriteLine(output);
+                }
+
+                if (!string.IsNullOrWhiteSpace(error))
+                {
+                    args.Logger?.WLog($"Error from ffmpeg: {error}");
                 }
 
                 if (File.Exists(destination))
