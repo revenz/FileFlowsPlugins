@@ -100,14 +100,32 @@ public class FfmpegBuilderCropBlackBars : FfmpegBuilderNode
                     process.StartInfo.RedirectStandardOutput = true;
                     process.StartInfo.RedirectStandardError = true;
                     process.StartInfo.CreateNoWindow = true;
-                    process.StartInfo.Arguments =
-                        $" -ss {ss} -i \"{file}\" -hide_banner -vframes 25 -vf cropdetect -f null -";
-                    args.Logger?.DLog("Executing ffmpeg " + process.StartInfo.Arguments);
+                    process.StartInfo.ArgumentList.Add("-ss");
+                    process.StartInfo.ArgumentList.Add(ss.ToString());
+                    process.StartInfo.ArgumentList.Add("-i");
+                    process.StartInfo.ArgumentList.Add(file);
+                    process.StartInfo.ArgumentList.Add("-hide_banner");
+                    process.StartInfo.ArgumentList.Add("-vframes");
+                    process.StartInfo.ArgumentList.Add("-25");
+                    process.StartInfo.ArgumentList.Add("cropdetect"); 
+                    process.StartInfo.ArgumentList.Add("-f"); 
+                    process.StartInfo.ArgumentList.Add("null"); 
+                    process.StartInfo.ArgumentList.Add("-");
+                        //$" -ss {ss} -i \"{file}\" -hide_banner -vframes 25 -vf cropdetect -f null -";
+                    args.Logger?.DLog("Executing ffmpeg " + string.Join(' ', process.StartInfo.ArgumentList
+                        .Select(x => x.IndexOf(" ", StringComparison.Ordinal) > 0 ? "\"" + x + "\"" : x)
+                        .ToArray()));
+                        
                     process.Start();
                     string output = process.StandardError.ReadToEnd();
                     Console.WriteLine(output);
                     string error = process.StandardError.ReadToEnd();
-                    process.WaitForExit();
+                    if (process.WaitForExit(30_000) == false)
+                    {
+                        process.Kill();
+                        args.Logger.ELog("Aborted FFmpeg due to timeout");
+                        continue;
+                    }
 
                     var dimMatch = Regex.Match(output, @"Stream #[\d]+:[\d]+(.*?)Video:(.*?)([\d]+)x([\d]+)",
                         RegexOptions.Multiline);
@@ -222,7 +240,11 @@ public class FfmpegBuilderCropBlackBars : FfmpegBuilderNode
                 string error = process.StandardError.ReadToEnd();
 
                 // Wait for the process to exit
-                process.WaitForExit();
+                if (process.WaitForExit(30_000) == false)
+                {
+                    args.Logger?.ELog("Timed out extracting image");
+                    return false;
+                }
 
                 if (process.ExitCode == 0)
                     return true;
