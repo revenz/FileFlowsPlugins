@@ -120,7 +120,7 @@ public class FfmpegBuilderCropBlackBars : FfmpegBuilderNode
                         
                     process.Start();
                     string output = process.StandardError.ReadToEnd();
-                    Console.WriteLine(output);
+                    // Console.WriteLine(output);
                     string error = process.StandardError.ReadToEnd();
                     if (process.WaitForExit(30_000) == false)
                     {
