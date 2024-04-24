@@ -254,9 +254,10 @@ public class FfmpegBuilderCropBlackBars : FfmpegBuilderNode
                 {
                     process.Kill();
                     args.Logger?.ELog("Timed out extracting image");
-                    Console.WriteLine(outputBuilder.ToString());
-                    return File.Exists(destination);
                 }
+
+                if (File.Exists(destination))
+                    return true;
 
                 // Get the output and error messages
                 string output = outputBuilder.ToString();
@@ -268,13 +269,10 @@ public class FfmpegBuilderCropBlackBars : FfmpegBuilderNode
                     Console.WriteLine(output);
                 }
 
-                if (!string.IsNullOrWhiteSpace(error))
+                if (string.IsNullOrWhiteSpace(error) == false)
                 {
                     args.Logger?.WLog($"Error from ffmpeg: {error}");
                 }
-
-                if (File.Exists(destination))
-                    return true;
                 args.Logger?.WLog($"Error extracting frame: {error}");
                 return false;
             }
