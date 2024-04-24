@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace FileFlows.Gotify.Communication;
@@ -42,7 +43,7 @@ public class Gotify: Node
     /// Gets or sets the title of the message
     /// </summary>
     [TextVariable(1)]
-    public string Title { get; set; }
+    public string Title { get; set; } = string.Empty;
     
 
     /// <summary>
@@ -58,9 +59,9 @@ public class Gotify: Node
     /// </summary>
     [Required]
     [Template(3, nameof(MessageTemplates))]
-    public string Message { get; set; }
+    public string Message { get; set; } = string.Empty;
 
-    private static List<ListOption> _MessageTemplates;
+    private static List<ListOption>? _MessageTemplates;
     public static List<ListOption> MessageTemplates
     {
         get
@@ -96,6 +97,7 @@ File shrunk in size by: {{ difference | file_size }} / {{ percent }}%
     /// </summary>
     /// <param name="args">the node parameters</param>
     /// <returns>the output to call next</returns>
+    [UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "<Pending>")]
     public override int Execute(NodeParameters args)
     {
         try

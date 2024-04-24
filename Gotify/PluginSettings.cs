@@ -10,12 +10,12 @@ public class PluginSettings : IPluginSettings
     /// </summary>
     [Text(1)]
     [Required]
-    public string ServerUrl { get; set; }
+    public string ServerUrl { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets or sets the Access Token for the server
     /// </summary>
     [Text(2)]
     [Required]
-    public string AccessToken { get; set; }
+    public string AccessToken { get; set; } = string.Empty;
 }

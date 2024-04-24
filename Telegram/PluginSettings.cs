@@ -10,12 +10,12 @@ public class PluginSettings : IPluginSettings
     /// </summary>
     [Text(1)]
     [Required]
-    public string BotToken { get; set; }
+    public string BotToken { get; set; } = string.Empty;
     
     /// <summary>
     /// Gets or sets the chat ID
     /// </summary>
     [Text(1)]
     [Required]
-    public string ChatId { get; set; }
+    public string ChatId { get; set; } = string.Empty;
 }

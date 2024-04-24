@@ -314,10 +314,10 @@ namespace FileFlows.AudioNodes
             }
 
 
-            var ffArgs = GetArguments(args, out string extension);
-            string actualExt = args.ReplaceVariables(CustomExtension, stripMissing: true)?.EmptyAsNull() ??
-                               extension?.EmptyAsNull() ?? DefaultExtension;
-            string outputFile = FileHelper.Combine(args.TempPath, Guid.NewGuid() + "." + actualExt.TrimStart('.'));
+            var ffArgs = GetArguments(args, out var extension);
+            var actualExt = args.ReplaceVariables(CustomExtension, stripMissing: true)?.EmptyAsNull() ??
+                            extension?.EmptyAsNull() ?? DefaultExtension;
+            var outputFile = FileHelper.Combine(args.TempPath, Guid.NewGuid() + "." + actualExt.TrimStart('.'));
             
             ffArgs.Insert(0, "-hide_banner");
             ffArgs.Insert(1, "-y"); // tells ffmpeg to replace the file if already exists, which it shouldnt but just incase

@@ -111,7 +111,9 @@ public class AudioFileNormalization : AudioNode
             args.Logger?.WLog("Failed to parse TwoPass json\"");
             return (false, string.Empty);
         }
-        LoudNormStats stats = JsonSerializer.Deserialize<LoudNormStats>(json);
+        var stats = JsonSerializer.Deserialize<LoudNormStats>(json);
+        if (stats == null)
+            return (false, string.Empty);
         string ar = $"loudnorm=print_format=summary:linear=true:{LOUDNORM_TARGET}:measured_I={stats.input_i}:measured_LRA={stats.input_lra}:measured_tp={stats.input_tp}:measured_thresh={stats.input_thresh}:offset={stats.target_offset}";
         return (true, ar);
     }

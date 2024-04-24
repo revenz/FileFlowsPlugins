@@ -17,10 +17,10 @@ public class EmbyUpdater: Node
     public override bool NoEditorOnAdd => true;
 
     [Text(1)]
-    public string ServerUrl { get; set; }
+    public string ServerUrl { get; set; } = string.Empty;
 
     [Text(2)]
-    public string AccessToken { get; set; }
+    public string AccessToken { get; set; } = string.Empty;
 
     [KeyValue(3, null)]
     public List<KeyValuePair<string, string>> Mapping { get; set; }

@@ -165,7 +165,7 @@ public class FFprobeTimeSpanConverter : JsonConverter<TimeSpan>
 {
     public override TimeSpan Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        string stringValue = reader.GetString();
+        var stringValue = reader.GetString() ?? string.Empty;
         if (double.TryParse(stringValue, out double seconds) == false)
             return default;
         

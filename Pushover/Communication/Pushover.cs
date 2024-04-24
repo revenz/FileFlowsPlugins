@@ -62,7 +62,7 @@ public class Pushover: Node
     [Range(30, 86400)]
     public int Retry { get; set; } = 2;
 
-    private static List<ListOption> _Priorities;
+    private static List<ListOption>? _Priorities;
     /// <summary>
     /// Gets a list of message templates
     /// </summary>
@@ -83,16 +83,16 @@ public class Pushover: Node
             return _Priorities;
         }
     }
-    
-    
+
+
     /// <summary>
     /// Gets or sets the message
     /// </summary>
     [Required]
     [Template(3, nameof(MessageTemplates))]
-    public string Message { get; set; }
+    public string Message { get; set; } = string.Empty;
 
-    private static List<ListOption> _MessageTemplates;
+    private static List<ListOption>? _MessageTemplates;
     /// <summary>
     /// Gets a list of message templates
     /// </summary>

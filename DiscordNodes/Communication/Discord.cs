@@ -23,23 +23,23 @@ public class Discord: Node
     /// Gets or sets the title
     /// </summary>
     [TextVariable(1)]
-    public string Title { get; set; }
+    public string Title { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets or sets the message type
     /// </summary>
     [DefaultValue("standard")]
     [Select(nameof(MessageTypeOptions), 2)]
-    public string MessageType { get; set; }
+    public string MessageType { get; set; } = "standard";
 
     /// <summary>
     /// Gets or sets the message
     /// </summary>
     [Required]
     [Template(3, nameof(MessageTemplates))]
-    public string Message { get; set; }
+    public string Message { get; set; } = string.Empty;
 
-    private static List<ListOption> _MessageTypeOptions;
+    private static List<ListOption>? _MessageTypeOptions;
     public static List<ListOption> MessageTypeOptions
     {
         get
@@ -60,7 +60,7 @@ public class Discord: Node
         }
     }
 
-    private static List<ListOption> _MessageTemplates;
+    private static List<ListOption>? _MessageTemplates;
     public static List<ListOption> MessageTemplates
     {
         get

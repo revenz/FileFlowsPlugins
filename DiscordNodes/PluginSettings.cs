@@ -10,12 +10,12 @@ public class PluginSettings:IPluginSettings
     /// </summary>
     [Text(1)]
     [Required]
-    public string WebhookId { get; set; }
+    public string WebhookId { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets or sets the webhook token for this plugin
     /// </summary>
     [Text(2)]
     [Required]
-    public string WebhookToken { get; set; }
+    public string WebhookToken { get; set; } = string.Empty;
 }

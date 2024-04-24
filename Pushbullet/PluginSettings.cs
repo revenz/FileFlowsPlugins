@@ -10,5 +10,5 @@ public class PluginSettings : IPluginSettings
     /// </summary>
     [Text(2)]
     [Required]
-    public string ApiToken { get; set; }
+    public string ApiToken { get; set; } = string.Empty;
 }

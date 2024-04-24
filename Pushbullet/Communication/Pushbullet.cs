@@ -42,16 +42,16 @@ public class Pushbullet: Node
     /// </summary>
     [TextVariable(1)]
     [Required]
-    public string Title { get; set; }
+    public string Title { get; set; } = string.Empty;
     
     /// <summary>
     /// Gets or sets the message
     /// </summary>
     [Required]
     [Template(2, nameof(MessageTemplates))]
-    public string Message { get; set; }
+    public string Message { get; set; } = string.Empty;
 
-    private static List<ListOption> _MessageTemplates;
+    private static List<ListOption>? _MessageTemplates;
     /// <summary>
     /// Gets a list of message templates
     /// </summary>

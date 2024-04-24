@@ -39,9 +39,9 @@ public class Telegram: Node
     /// </summary>
     [Required]
     [Template(1, nameof(MessageTemplates))]
-    public string Message { get; set; }
+    public string Message { get; set; } = string.Empty;
 
-    private static List<ListOption> _MessageTemplates;
+    private static List<ListOption>? _MessageTemplates;
     public static List<ListOption> MessageTemplates
     {
         get

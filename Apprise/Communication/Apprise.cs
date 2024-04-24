@@ -29,7 +29,7 @@ public class Apprise: Node
     [Select(nameof(MessageTypeOptions), 2)]
     public string MessageType { get; set; } = string.Empty;
 
-    private static List<ListOption> _MessageTypeOptions;
+    private static List<ListOption>? _MessageTypeOptions;
     public static List<ListOption> MessageTypeOptions
     {
         get
@@ -54,9 +54,9 @@ public class Apprise: Node
     /// </summary>
     [Required]
     [Template(3, nameof(MessageTemplates))]
-    public string Message { get; set; }
+    public string Message { get; set; } = string.Empty;
 
-    private static List<ListOption> _MessageTemplates;
+    private static List<ListOption>? _MessageTemplates;
     public static List<ListOption> MessageTemplates
     {
         get

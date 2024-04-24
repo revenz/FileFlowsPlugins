@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.IO;
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 public class FfmpegBuilderCropBlackBars : FfmpegBuilderNode
@@ -77,7 +78,7 @@ public class FfmpegBuilderCropBlackBars : FfmpegBuilderNode
         };            
     }
 
-    string Execute(string ffplay, string file, NodeParameters args, int vidWidth, int vidHeight, int threshold, int seconds)
+    string Execute(string ffmpeg, string file, NodeParameters args, int vidWidth, int vidHeight, int threshold, int seconds)
     {
         try
         {
@@ -88,17 +89,19 @@ public class FfmpegBuilderCropBlackBars : FfmpegBuilderNode
             var intervals = GetTimeIntervals(seconds);
             if (intervals.Length == 0)
                 return string.Empty;
-            foreach (int ss in intervals)  // check at multiple times
+            foreach (int ss in intervals) // check at multiple times
             {
+                int intervalX = 0, intervalY = 0, intervalWidth = 0, intervalHeight = 0;
                 using (var process = new Process())
                 {
                     process.StartInfo = new ProcessStartInfo();
-                    process.StartInfo.FileName = ffplay;
+                    process.StartInfo.FileName = ffmpeg;
                     process.StartInfo.UseShellExecute = false;
                     process.StartInfo.RedirectStandardOutput = true;
                     process.StartInfo.RedirectStandardError = true;
                     process.StartInfo.CreateNoWindow = true;
-                    process.StartInfo.Arguments = $" -ss {ss} -i \"{file}\" -hide_banner -vframes 25 -vf cropdetect -f null -";
+                    process.StartInfo.Arguments =
+                        $" -ss {ss} -i \"{file}\" -hide_banner -vframes 25 -vf cropdetect -f null -";
                     args.Logger?.DLog("Executing ffmpeg " + process.StartInfo.Arguments);
                     process.Start();
                     string output = process.StandardError.ReadToEnd();
@@ -106,7 +109,8 @@ public class FfmpegBuilderCropBlackBars : FfmpegBuilderNode
                     string error = process.StandardError.ReadToEnd();
                     process.WaitForExit();
 
-                    var dimMatch = Regex.Match(output, @"Stream #[\d]+:[\d]+(.*?)Video:(.*?)([\d]+)x([\d]+)", RegexOptions.Multiline);
+                    var dimMatch = Regex.Match(output, @"Stream #[\d]+:[\d]+(.*?)Video:(.*?)([\d]+)x([\d]+)",
+                        RegexOptions.Multiline);
                     if (dimMatch.Success == false)
                     {
                         args.Logger?.WLog("Can't find dimensions for video");
@@ -117,11 +121,23 @@ public class FfmpegBuilderCropBlackBars : FfmpegBuilderNode
                     foreach (Match match in matches)
                     {
                         int[] parts = match.Value.Split(':').Select(x => int.Parse(x)).ToArray();
+                        intervalX = parts[2];
+                        intervalY = parts[3];
+                        intervalWidth = parts[0];
+                        intervalHeight = parts[1];
                         x = Math.Min(x, parts[2]);
                         y = Math.Min(y, parts[3]);
                         width = Math.Max(width, parts[0]);
                         height = Math.Max(height, parts[1]);
                     }
+                }
+
+                string imgFile = Path.Combine(args.TempPath, Guid.NewGuid() + ".jpg");
+                if (ExtractFrameWithFFmpeg(args, ffmpeg, file, ss, imgFile) && File.Exists(imgFile))
+                {
+                    // draw rectangle on frame
+                    args.ImageHelper?.DrawRectangleOnImage(imgFile, intervalX, intervalY, intervalWidth, intervalHeight);
+                    args.LogImage(imgFile);
                 }
             }
 
@@ -161,6 +177,63 @@ public class FfmpegBuilderCropBlackBars : FfmpegBuilderNode
     {
         int diff = (vidWidth - detectedWidth) + (vidHeight - detectedHeight);
         return (diff > threshold, diff);
+    }
+    
+    
+    /// <summary>
+    /// Extracts a frame from a video at a specified time, scales it to 640x480 resolution, and saves it as a JPEG image using FFmpeg.
+    /// </summary>
+    /// <param name="args">the node parameters</param>
+    /// <param name="ffmpeg">The path to the FFmpeg executable.</param>
+    /// <param name="inputFile">The input video file.</param>
+    /// <param name="ss">The time offset in seconds.</param>
+    /// <param name="destination">The output image file path.</param>
+    /// <returns>True if the frame was extracted and saved successfully, otherwise false.</returns>
+    static bool ExtractFrameWithFFmpeg(NodeParameters args, string ffmpeg, string inputFile, int ss, string destination)
+    { try
+        {
+            // Create process start info
+            
+            // Create process start info
+            ProcessStartInfo psi = new ProcessStartInfo
+            {
+                FileName = ffmpeg,
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true
+            };
 
+            // Specify arguments using ArgumentList to avoid escaping issues
+            psi.ArgumentList.Add("-ss");
+            psi.ArgumentList.Add(ss.ToString());
+            psi.ArgumentList.Add("-i");
+            psi.ArgumentList.Add(inputFile);
+            // psi.ArgumentList.Add("-vf");
+            // psi.ArgumentList.Add("select=eq(n\\,0),scale=640:480");
+            psi.ArgumentList.Add("-vframes");
+            psi.ArgumentList.Add("1");
+            psi.ArgumentList.Add(destination);
+            
+            // Start the process
+            using (Process process = Process.Start(psi))
+            {
+                // Capture and display the output
+                string output = process.StandardOutput.ReadToEnd();
+                string error = process.StandardError.ReadToEnd();
+
+                // Wait for the process to exit
+                process.WaitForExit();
+
+                if (process.ExitCode == 0)
+                    return true;
+                args.Logger?.WLog($"Error extracting frame: {error}");
+                return false;
+            }
+        }
+        catch (Exception ex)
+        {
+            args.Logger?.ELog($"An error occurred: {ex.Message}");
+            return false;
+        }
     }
 }
