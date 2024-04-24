@@ -212,38 +212,35 @@ public class FfmpegBuilderCropBlackBars : FfmpegBuilderNode
         {
             // Create process start info
             
-            // Create process start info
-            ProcessStartInfo psi = new ProcessStartInfo
-            {
-                FileName = ffmpeg,
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                CreateNoWindow = true
-            };
-
-            // Specify arguments using ArgumentList to avoid escaping issues
-            psi.ArgumentList.Add("-ss");
-            psi.ArgumentList.Add(ss.ToString());
-            psi.ArgumentList.Add("-i");
-            psi.ArgumentList.Add(inputFile);
-            // psi.ArgumentList.Add("-vf");
-            // psi.ArgumentList.Add("select=eq(n\\,0),scale=640:480");
-            psi.ArgumentList.Add("-vframes");
-            psi.ArgumentList.Add("1");
-            psi.ArgumentList.Add("-update");
-            psi.ArgumentList.Add("1");
-            psi.ArgumentList.Add(destination);
-            
             // Start the process
-            using (Process process = Process.Start(psi))
+            using (Process process = new Process())
             {
-                // Capture and display the output
-                string output = process.StandardOutput.ReadToEnd();
-                string error = process.StandardError.ReadToEnd();
+                process.StartInfo = new ProcessStartInfo();
+                process.StartInfo.FileName = ffmpeg;
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.RedirectStandardError = true;
+                process.StartInfo.CreateNoWindow = true;
 
-                // Wait for the process to exit
-                if (process.WaitForExit(30_000) == false)
+                // Specify arguments using ArgumentList to avoid escaping issues
+                process.StartInfo.ArgumentList.Add("-ss");
+                process.StartInfo.ArgumentList.Add(ss.ToString());
+                process.StartInfo.ArgumentList.Add("-i");
+                process.StartInfo.ArgumentList.Add(inputFile);
+                // process.StartInfo.ArgumentList.Add("-vf");
+                // process.StartInfo.ArgumentList.Add("select=eq(n\\,0),scale=640:480");
+                process.StartInfo.ArgumentList.Add("-vframes");
+                process.StartInfo.ArgumentList.Add("1");
+                process.StartInfo.ArgumentList.Add("-update");
+                process.StartInfo.ArgumentList.Add("1");
+                process.StartInfo.ArgumentList.Add(destination);
+                
+                // Capture and display the output
+                process.Start();
+                string output = process.StandardError.ReadToEnd();
+                Console.WriteLine(output);
+                string error = process.StandardError.ReadToEnd();
+                if (process.WaitForExit(20_000) == false)
                 {
                     args.Logger?.ELog("Timed out extracting image");
                     return File.Exists(destination);
