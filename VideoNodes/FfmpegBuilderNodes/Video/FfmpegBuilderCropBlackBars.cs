@@ -218,7 +218,8 @@ public class FfmpegBuilderCropBlackBars : FfmpegBuilderNode
                 FileName = ffmpeg,
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
-                RedirectStandardError = true
+                RedirectStandardError = true,
+                CreateNoWindow = true
             };
 
             // Specify arguments using ArgumentList to avoid escaping issues
@@ -229,6 +230,8 @@ public class FfmpegBuilderCropBlackBars : FfmpegBuilderNode
             // psi.ArgumentList.Add("-vf");
             // psi.ArgumentList.Add("select=eq(n\\,0),scale=640:480");
             psi.ArgumentList.Add("-vframes");
+            psi.ArgumentList.Add("1");
+            psi.ArgumentList.Add("-update");
             psi.ArgumentList.Add("1");
             psi.ArgumentList.Add(destination);
             
@@ -243,10 +246,10 @@ public class FfmpegBuilderCropBlackBars : FfmpegBuilderNode
                 if (process.WaitForExit(30_000) == false)
                 {
                     args.Logger?.ELog("Timed out extracting image");
-                    return false;
+                    return File.Exists(destination);
                 }
 
-                if (process.ExitCode == 0)
+                if (File.Exists(destination))
                     return true;
                 args.Logger?.WLog($"Error extracting frame: {error}");
                 return false;
