@@ -173,6 +173,13 @@
           "DestinationPath": "Destination Path",
           "DestinationPath-Help": "The destination where to save the newly created file.  If left empty the file will be created in the temporary directory and will be deleted if not moved afterwards."
         }
+      },
+      "EmbedArtwork": {
+        "Description": "Embeds artwork into an audio file",
+        "Outputs": {
+          "1": "Artwork found and embedded into the audio file",
+          "2": "No artwork found to embed"          
+        }        
       }
     }
   }

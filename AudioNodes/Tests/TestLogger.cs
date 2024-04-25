@@ -1,4 +1,6 @@
-﻿#if(DEBUG)
+﻿using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
+
+#if(DEBUG)
 
 namespace FileFlows.AudioNodes.Tests
 {
@@ -55,6 +57,12 @@ namespace FileFlows.AudioNodes.Tests
                 return string.Join(Environment.NewLine, Messages);
             return string.Join(Environment.NewLine, Messages.TakeLast(length));
         }
+
+        /// <summary>
+        /// Clears the log
+        /// </summary>
+        public void Clear()
+            => Messages.Clear();
     }
 }
 
