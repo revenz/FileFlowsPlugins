@@ -7,16 +7,8 @@ using AudioNodes.Tests;
 namespace FileFlows.AudioNodes.Tests;
 
 [TestClass]
-public class ConvertTests
+public class ConvertTests :  AudioTestBase
 {
-    private TestContext testContextInstance;
-
-    public TestContext TestContext
-    {
-        get { return testContextInstance; }
-        set { testContextInstance = value; }
-    }
-    
     [TestMethod]
     public void Convert_FlacToAac()
     {
@@ -217,9 +209,8 @@ public class ConvertTests
         const string file = @"D:\videos\testfiles\basic.mkv";
 
         ConvertToAAC node = new();
-        var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty, null);
-        args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
+        var args = GetNodeParameters(file);
+        
         args.TempPath = @"D:\music\temp";
         new AudioFile().Execute(args); // need to read the Audio info and set it
         node.Normalize = true;

@@ -7,26 +7,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace AudioNodes.Tests;
 
 [TestClass]
-public class EmbedArtworkTests
+public class EmbedArtworkTests : AudioTestBase
 {
-    /// <summary>
-    /// The test context instance
-    /// </summary>
-    private TestContext testContextInstance;
 
-    /// <summary>
-    /// Gets or sets the test context
-    /// </summary>
-    public TestContext TestContext
-    {
-        get { return testContextInstance; }
-        set { testContextInstance = value; }
-    }
-    
-    readonly string ffmpeg = (OperatingSystem.IsLinux() ? "/usr/local/bin/ffmpeg" :  @"C:\utils\ffmpeg\ffmpeg.exe");
-    readonly string ffprobe = (OperatingSystem.IsLinux() ? "/usr/local/bin/ffprobe" :  @"C:\utils\ffmpeg\ffprobe.exe");
-    
-    
     [TestMethod]
     public void SingleArtwork()
     {
@@ -82,24 +65,10 @@ public class EmbedArtworkTests
     
     void ConvertAudio(Node convertNode)
     {
-        var logger = new TestLogger();
         //const string file = "/home/john/Music/unprocessed/Aqua/Aquarium (1997)/zombie.mp3";
         const string file =
             "/home/john/Music/unprocessed/Aqua/Aquarius (2000)/Aqua - Aquarius - 01 - Cartoon Heroes.flac";
-        var args = new NodeParameters(file, logger, false, string.Empty, new LocalFileService())
-        {
-            LibraryFileName = file
-        };
-
-        args.GetToolPathActual = (string tool) =>
-        {
-            if (tool.ToLowerInvariant() == "ffmpeg")
-                return ffmpeg;
-            if (tool.ToLowerInvariant() == "ffprobe")
-                return ffprobe;
-            return null;
-        };
-        args.TempPath = @"/home/john/Music/temp";
+        var args = GetNodeParameters(file);
 
         var audioFile = new AudioFile();
         audioFile.PreExecute(args);

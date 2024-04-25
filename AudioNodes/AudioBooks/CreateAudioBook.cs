@@ -1,3 +1,5 @@
+using FileFlows.AudioNodes.Helpers;
+
 namespace FileFlows.AudioNodes;
 
 /// <summary>
@@ -73,7 +75,7 @@ public class CreateAudioBook: AudioNode
 
         var dir = args.IsDirectory ? args.WorkingFile : FileHelper.GetDirectory(args.WorkingFile);
 
-        var allowedExtensions = new List<string> { ".mp3", ".aac", ".m4b", ".m4a" };
+        var allowedExtensions = new List<string> { ".mp3", ".aac", ".m4b", ".m4a", ".flac" };
         var dirFiles = args.FileService.GetFiles(dir, "*.*");
         List<string> files = new ();
         foreach (var file in dirFiles.ValueOrDefault ?? new string[] {})
@@ -122,6 +124,9 @@ public class CreateAudioBook: AudioNode
             args.Logger.ILog($"Number [{number}] found in: " + shortname);
             return number;
         }).ToList();
+        
+        var readResult = new AudioInfoHelper(ffmpeg, ffprobe, args.Logger).Read(files.First());
+        var audioInfo = readResult.IsFailed ? null : readResult.Value;
 
         string metadataFile = FileHelper.Combine(args.TempPath, "CreateAudioBookChapters-metadata.txt");
         TimeSpan current = TimeSpan.Zero;
@@ -165,6 +170,16 @@ public class CreateAudioBook: AudioNode
             "-i",
             metadataFile
         };
+
+        if (audioInfo != null)
+        {
+            audioInfo.Track = 0;
+            audioInfo.TotalDiscs = 0;
+            audioInfo.TotalTracks = 0;
+            var metadata = MetadataHelper.GetMetadataParameters(audioInfo);
+            if (metadata.Any())
+                execArgs.AddRange(metadata);
+        }
 
         if (string.IsNullOrEmpty(artwork) == false)
         {
