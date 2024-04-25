@@ -51,7 +51,9 @@ public abstract class ImageBaseNode:Node
         }
         else
         {
-            using var image = Image.Load(localFile, out IImageFormat format);
+            
+            var format = Image.DetectFormat(localFile);
+            using var image = Image.Load(localFile);
             CurrentHeight = image.Height;
             CurrentWidth = image.Width;
             CurrentFormat = format.Name;
@@ -80,27 +82,27 @@ public abstract class ImageBaseNode:Node
         }
         else
         {
-            using var image = Image.Load(args.WorkingFile, out IImageFormat format);
+            var format = Image.DetectFormat(args.WorkingFile);
+            using var image = Image.Load(args.WorkingFile);
             DateTime? dateTaken = null;
             if (image.Metadata.ExifProfile != null)
             {
                 args.Logger?.ILog("EXIF Profile found");
-                var dateTimeOriginalString = image.Metadata.ExifProfile.GetValue(SixLabors.ImageSharp.Metadata.Profiles.Exif.ExifTag.DateTimeOriginal)?.Value;
-                if (string.IsNullOrWhiteSpace(dateTimeOriginalString))
+                if(image.Metadata.ExifProfile.TryGetValue(SixLabors.ImageSharp.Metadata.Profiles.Exif.ExifTag.DateTimeOriginal, out var dateTimeOriginalString) == false
+                   || string.IsNullOrWhiteSpace(dateTimeOriginalString?.Value))
                 {
                     args.Logger?.ILog("No DateTimeOriginal found");
                 }
                 else
                 {
-                    if (string.IsNullOrWhiteSpace(dateTimeOriginalString) == false &&
-                        TryParseDateTime(dateTimeOriginalString, out DateTime? dateTimeOriginal))
+                    if (TryParseDateTime(dateTimeOriginalString.Value, out DateTime? dateTimeOriginal))
                     {
                         dateTaken = dateTimeOriginal;
                         args.Logger?.ILog("DateTimeOriginal: " + dateTimeOriginal);
                     }
                     else
                     {
-                        args.Logger?.ILog("Invalid date format for DateTimeOriginal: " + dateTimeOriginalString);
+                        args.Logger?.ILog("Invalid date format for DateTimeOriginal: " + dateTimeOriginalString.Value);
                     }
                 }
             }

@@ -58,7 +58,8 @@ public class ImageResizer: ImageNode
     public override int Execute(NodeParameters args)
     {
         string inputFile = ConvertImageIfNeeded(args);
-        using var image = Image.Load(inputFile, out IImageFormat format);
+        var format = Image.DetectFormat(inputFile);
+        using var image = Image.Load(inputFile);
         SixLabors.ImageSharp.Processing.ResizeMode rzMode;
         switch (Mode)
         {

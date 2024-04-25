@@ -165,7 +165,8 @@ public abstract class ImageNode : ImageBaseNode
         if (updateWorkingFile)
         {
             args.SetWorkingFile(file);
-            using var image = Image.Load(local, out IImageFormat format);
+            var format = Image.DetectFormat(local);
+            using var image = Image.Load(local);
             UpdateImageInfo(args, img.Width, img.Height, format.Name, Variables);
         }
         

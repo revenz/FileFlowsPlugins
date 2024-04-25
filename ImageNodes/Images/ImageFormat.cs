@@ -33,7 +33,8 @@ public class ImageFormat: ImageNode
         }
         else
         {
-            using var image = Image.Load(args.WorkingFile, out IImageFormat format);
+            var format = Image.DetectFormat(args.WorkingFile);
+            using var image = Image.Load(args.WorkingFile);
             SaveImage(args, image, formatOpts.file, formatOpts.format ?? format);
             return 1;
         }

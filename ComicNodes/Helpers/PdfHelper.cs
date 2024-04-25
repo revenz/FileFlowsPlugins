@@ -47,7 +47,9 @@ internal class PdfHelper
                 args?.Logger?.ILog("File Extension of image: " + fileExtension);
             }
 
-            var file = Path.Combine(destinationDirectory, filePrefix + "-" + i.ToString(new string('0', pageCount.ToString().Length))) + "." + fileExtension;
+            var file = Path.Combine(destinationDirectory, 
+                filePrefix + "-" + i.ToString(new string('0', pageCount.ToString().Length))) 
+                       + "." + fileExtension;
 
             using (var outputStream = File.Create(file + "." + fileExtension))
             {

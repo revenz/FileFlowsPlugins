@@ -42,7 +42,8 @@ public class AutoCropImage : ImageNode
 
     private int ExecuteImageSharp(NodeParameters args)
     {
-        using var image = Image.Load(args.WorkingFile, out IImageFormat format);
+        var format = Image.DetectFormat(args.WorkingFile);
+        using var image = Image.Load(args.WorkingFile);
         int originalWidth = image.Width;
         int originalHeight= image.Height;
         float threshold = Threshold / 100f;
@@ -74,8 +75,8 @@ public class AutoCropImage : ImageNode
         if (bounds.Width == originalWidth && bounds.Height == originalHeight)
             return 2;
 
-        using var image2 = Image.Load(args.WorkingFile, out format);
-
+        format = Image.DetectFormat(args.WorkingFile);
+        using var image2 = Image.Load(args.WorkingFile);
 
         image2.Mutate(c =>
         {
