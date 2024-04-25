@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
-
-#if(DEBUG)
+﻿#if(DEBUG)
 
 namespace FileFlows.AudioNodes.Tests
 {

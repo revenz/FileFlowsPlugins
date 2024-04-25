@@ -1,4 +1,5 @@
 ﻿using FileFlows.Plugin.Attributes;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 
 namespace FileFlows.Emby.MediaManagement;
@@ -22,10 +23,10 @@ public class EmbyUpdater: Node
     [Text(2)]
     public string AccessToken { get; set; } = string.Empty;
 
-    [KeyValue(3, null)]
-    public List<KeyValuePair<string, string>> Mapping { get; set; }
+    [KeyValue(3, null)] public List<KeyValuePair<string, string>> Mapping { get; set; } = new();
 
     /// <inheritdoc />
+    [UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "<Pending>")]
     public override int Execute(NodeParameters args)
     {
         var settings = args.GetPluginSettings<PluginSettings>();
@@ -71,7 +72,7 @@ public class EmbyUpdater: Node
         args.Logger?.ILog("Url to call: " + url);
         args.Logger?.ILog("Path to update: " + path);
 
-        string body = System.Text.Json.JsonSerializer.Serialize(new {
+        var body = System.Text.Json.JsonSerializer.Serialize(new {
             Updates = new object [] { new { Path = path } }
         });
 
@@ -88,7 +89,8 @@ public class EmbyUpdater: Node
         return 1;
     }
 
-    private Func<HttpClient, string, string, string, (bool success, string body)> _GetWebRequest;
+    private Func<HttpClient, string, string, string, (bool success, string body)>? _GetWebRequest;
+    
     internal Func<HttpClient, string, string, string, (bool success, string body)> GetWebRequest
     {
         get
@@ -102,10 +104,10 @@ public class EmbyUpdater: Node
                         var content = new StringContent(json, Encoding.UTF8, "application/json");
                         client.DefaultRequestHeaders.Add("X-MediaBrowser-Token", accessToken);
                         var response = client.PostAsync(url, content).Result;
-                        string respnoseBody = response.Content.ReadAsStringAsync().Result;
+                        var respnoseBody = response.Content.ReadAsStringAsync().Result;
                         if(response.IsSuccessStatusCode)
                             return (response.IsSuccessStatusCode, respnoseBody);
-                        return (response.IsSuccessStatusCode, respnoseBody?.EmptyAsNull() ?? response.ReasonPhrase);
+                        return (response.IsSuccessStatusCode, respnoseBody?.EmptyAsNull() ?? response.ReasonPhrase ?? string.Empty);
                     }
                     catch(Exception ex)
                     {
