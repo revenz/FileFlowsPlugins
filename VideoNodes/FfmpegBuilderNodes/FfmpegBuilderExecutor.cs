@@ -6,23 +6,51 @@ using FileFlows.VideoNodes.Helpers;
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 
+/// <summary>
+/// Flow element that takes the built FFmpeg command and executes it
+/// </summary>
 public class FfmpegBuilderExecutor: FfmpegBuilderNode
 {
+    /// <inheritdoc />
     public override string Icon => "far fa-file-video";
+    /// <inheritdoc />
     public override int Inputs => 1;
+    /// <inheritdoc />
     public override int Outputs => 2;
+    /// <inheritdoc />
     public override FlowElementType Type => FlowElementType.BuildEnd;
-
+    /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder";
-
+    /// <inheritdoc />
     public override bool NoEditorOnAdd => true;
 
     /// <summary>
     /// Gets or sets if hardware decoding should be used
     /// </summary>
-    [DefaultValue(true)]
-    [Boolean(1)]
-    public bool HardwareDecoding { get; set; }
+    [Select(nameof(HardwareDecodingOptions), 1)]
+    [DefaultValue("auto")]
+    public object HardwareDecoding { get; set; }
+    
+    private static List<ListOption>? _HardwareDecodingOptions;
+    /// <summary>
+    /// Gets the strict options
+    /// </summary>
+    public static List<ListOption> HardwareDecodingOptions
+    {
+        get
+        {
+            if (_HardwareDecodingOptions == null)
+            {
+                _HardwareDecodingOptions = new List<ListOption>
+                {
+                    new () { Label = "Off", Value = false },
+                    new () { Label = "On", Value = true },
+                    new () { Label = "Automatic", Value = "auto" }
+                };
+            }
+            return _HardwareDecodingOptions;
+        }
+    }
     
     /// <summary>
     /// Gets or sets the strictness
@@ -31,7 +59,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
     [Select(nameof(StrictOptions), 2)]
     public string Strictness { get; set; }
 
-    private static List<ListOption> _StrictOptions;
+    private static List<ListOption>? _StrictOptions;
     /// <summary>
     /// Gets the strict options
     /// </summary>
@@ -53,8 +81,15 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             return _StrictOptions;
         }
     }
+    
+    /// <summary>
+    /// Gets or sets the probe size in bytes
+    /// </summary>
+    [FormInput(FormInputType.FileSize, 3)]
+    [DefaultValue(5_000_000)]
+    public long ProbeSize { get; set; }
 
-
+    /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
         var model = this.Model;
@@ -157,12 +192,19 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
 
         startArgs.AddRange(new[] { "-fflags", "+genpts" }); //Generate missing PTS if DTS is present.
 
-        startArgs.AddRange(new[] {
-            "-probesize", VideoInfoHelper.ProbeSize + "M"
-        });
+        if (ProbeSize >= 32)
+        {
+            startArgs.AddRange(new[]
+            {
+                "-probesize", ProbeSize.ToString()
+            });
+        }
 
         bool isEncodingVideo =
             model.VideoStreams.Any(x => x.Deleted == false && x.EncodingParameters?.Any() == true || x.Filter?.Any() == true);
+
+        bool useHardwareEncoding = GetUseHardwareEncoding(args, ffArgs);
+        
         if (isEncodingVideo == false)
         {
             args.Logger?.ILog("No video encoding, no need for hardware decoding");
@@ -178,7 +220,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             args.Logger?.ILog("HW_OFF detected");
             
         }
-        else if (HardwareDecoding)
+        else if (useHardwareEncoding)
         {
             // if(ffArgs.Any(x => x.Contains("_qsv")))
             // {
@@ -324,6 +366,43 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         }
 
         return 1;
+    }
+
+    /// <summary>
+    /// Gets if hardware decoding should be used
+    /// </summary>
+    /// <param name="args">the node parameters</param>
+    /// <param name="ffArgs">the FFmpeg arguments</param>
+    /// <returns>true to use hardware decoding, otherwise false</returns>
+    private bool GetUseHardwareEncoding(NodeParameters args, List<string> ffArgs)
+    {
+        if (Regex.IsMatch(HardwareDecoding?.ToString()?.ToLowerInvariant() ?? string.Empty, "^(0|false)$"))
+            return false;
+        if (Regex.IsMatch(HardwareDecoding?.ToString()?.ToLowerInvariant() ?? string.Empty, "^(1|true)$"))
+            return true;
+        // detect
+        args.Logger?.ILog("Auto detecting if hardware decoding should be used.");
+        var video = this.Model.VideoStreams.FirstOrDefault(x => x.Stream.IsImage == false);
+        bool targetIs10Bit = string.Join(" ", ffArgs).Contains("p010le");
+        if (targetIs10Bit && video?.Stream?.Is10Bit == true)
+        {
+            args.Logger?.ILog(
+                "Source and target is 10-Bit, using hardware decoding");
+            return true;
+        }
+        if (targetIs10Bit == false && video?.Stream?.Is10Bit == false && video?.Stream?.Is12Bit == false)
+        {
+            args.Logger?.ILog(
+                "Source and target is 9-Bit, using hardware decoding");
+            return true;
+        }
+        if (targetIs10Bit)
+        {
+            args.Logger?.ILog("Target is 10-Bit but source is 8-Bit, not using hardware decoding.");
+            return false;
+        }
+        args.Logger?.ILog("Target and source not same bit, not using hardware decoding");
+        return false;
     }
 
     internal static string[] GetHardwareDecodingArgs(NodeParameters args, string localFile, string ffmpeg, string codec, string pixelFormat, List<string> encodingParameters = null)
