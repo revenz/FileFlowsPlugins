@@ -104,6 +104,13 @@ public class FfmpegBuilderSetTrackTitles: FfmpegBuilderNode
                 bool isCommentary = IsCommentary(track.Title, track.Language)
                     ||  IsCommentary(track.Stream?.Title, track.Stream?.Language);
 
+                bool isHearingImpaired = ContainsHearingImpared(track.Title) || ContainsHearingImpared(track.Language) || 
+                                         ContainsHearingImpared(track.Stream?.Title) || ContainsHearingImpared(track.Stream?.Language);
+                bool isCC = ContainsClosedCaptions(track.Title) || ContainsClosedCaptions(track.Language) || 
+                            ContainsClosedCaptions(track.Stream?.Title) || ContainsClosedCaptions(track.Stream?.Language);
+                bool isSDH = ContainsSDH(track.Title) || ContainsSDH(track.Language) || 
+                             ContainsSDH(track.Stream?.Title) || ContainsSDH(track.Stream?.Language);
+
                 string originalTitle = track.Title;
                 if (isCommentary && string.IsNullOrWhiteSpace(CommentaryFormat) == false)
                 {
@@ -120,7 +127,10 @@ public class FfmpegBuilderSetTrackTitles: FfmpegBuilderNode
                         track.IsDefault,
                         track.Stream?.Bitrate ?? 0,
                         track.Channels > 0 ? track.Channels : track.Stream?.Channels ?? 0,
-                        track.Stream?.SampleRate ?? 0
+                        track.Stream?.SampleRate ?? 0,
+                        sdh: isSDH,
+                        hi: isHearingImpaired,
+                        cc: isCC
                     );
                 }
 
@@ -187,6 +197,30 @@ public class FfmpegBuilderSetTrackTitles: FfmpegBuilderNode
         => title?.ToLowerInvariant()?.Contains("comment") == true || language?.ToLowerInvariant()?.Contains("comment") == true;
 
     /// <summary>
+    /// Checks if the input string contains "HI" or "Hearing Impaired" in various formats.
+    /// </summary>
+    /// <param name="input">The string to be checked.</param>
+    /// <returns>True if the string contains "HI" or "Hearing Impaired", false otherwise.</returns>
+    public static bool ContainsHearingImpared(string input)
+        => string.IsNullOrWhiteSpace(input) == false && Regex.IsMatch(input.ToUpper(), @"\bHI\b|\bHEARING IMPAIRED\b");
+    
+    /// <summary>
+    /// Checks if the input string contains "SDH" in various formats.
+    /// </summary>
+    /// <param name="input">The string to be checked.</param>
+    /// <returns>True if the string contains "SH", false otherwise.</returns>
+    public static bool ContainsSDH(string input)
+        => string.IsNullOrWhiteSpace(input) == false && Regex.IsMatch(input.ToUpper(), @"\SDH\b");
+    
+    /// <summary>
+    /// Checks if the input string contains "CC" or "Closed Captions" in various formats.
+    /// </summary>
+    /// <param name="input">The string to be checked.</param>
+    /// <returns>True if the string contains "CC", false otherwise.</returns>
+    public static bool ContainsClosedCaptions(string input)
+        => string.IsNullOrWhiteSpace(input) == false && Regex.IsMatch(input.ToUpper(), @"\bCC\b|\bCLOSED CAPTIONS\b");
+    
+    /// <summary>
     /// Formats a string for the title
     /// </summary>
     /// <param name="formatter">the string formatting to use</param>
@@ -198,9 +232,12 @@ public class FfmpegBuilderSetTrackTitles: FfmpegBuilderNode
     /// <param name="channels">the number of channels</param>
     /// <param name="sampleRate">the sample rate</param>
     /// <param name="isForced">if the track is forced or not</param>
+    /// <param name="sdh">if the track is SDH</param>
+    /// <param name="cc">if the track is closed captions</param>
+    /// <param name="hi">if the track is hearing impared</param>
     /// <returns>the formatted string</returns>
     public static string FormatTitle(string formatter, string separator, string language, string codec, bool isDefault, float bitrate = 0,
-        float channels = 0, int sampleRate = 0, bool isForced = false)
+        float channels = 0, int sampleRate = 0, bool isForced = false, bool sdh = false, bool cc = false, bool hi = false)
     {
         if (string.IsNullOrWhiteSpace(formatter))
             return string.Empty;
@@ -222,6 +259,11 @@ public class FfmpegBuilderSetTrackTitles: FfmpegBuilderNode
         formatter = Replace(formatter, "codec", codec.ToUpperInvariant());
         formatter = Replace(formatter, "default", isDefault ? "Default" : string.Empty);
         formatter = Replace(formatter, "forced", isForced ? "Forced" : string.Empty);
+        formatter = Replace(formatter, "cc", cc ? "CC" : string.Empty);
+        formatter = Replace(formatter, "closedcaptions", cc ? "Closed Captions" : string.Empty);
+        formatter = Replace(formatter, "hi", hi ? "HI" : string.Empty);
+        formatter = Replace(formatter, "hearingimpared", hi ? "Hearing Impared" : string.Empty);
+        formatter = Replace(formatter, "sdh", sdh ? "SDH" : string.Empty);
         formatter = Replace(formatter, "channels", Math.Abs(channels - 1) < 0.05f ? "Mono" :
             Math.Abs(channels - 2) < 0.05f ? "Stereo" :
             channels > 0 ? channels.ToString("0.0") : null);

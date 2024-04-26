@@ -15,7 +15,7 @@ public class FFmpegBuilder_SetTrackTtitlesTests
     public void FormatTitle_DefaultCase_Success()
     {
         // Arrange
-        string formatter = "Track: lang / codec / channels / default / bitrate / samplerate";
+        string formatter = "Track: lang / codec / channels / default / bitrate / samplerate / cc / sdh / hi";
         string separator = " / ";
         string language = "English";
         string codec = "AAC";
@@ -32,6 +32,28 @@ public class FFmpegBuilder_SetTrackTtitlesTests
         Assert.AreEqual("Track: English / AAC / Stereo / Default / 128Kbps / 44.1kHz", result);
     }
 
+    [TestMethod]
+    public void FormatTitle_SDH()
+    {
+        // Arrange
+        string formatter = "Track: lang / codec / channels / default / bitrate / samplerate / cc / sdh / hi";
+        string separator = " / ";
+        string language = "English";
+        string codec = "AAC";
+        bool isDefault = true;
+        float bitrate = 128_000;
+        float channels = 2.0f;
+        int sampleRate = 44100;
+        bool isForced = false;
+
+        // Act
+        string result = FfmpegBuilderSetTrackTitles.FormatTitle(formatter, separator, language, codec, isDefault, bitrate, 
+            channels, sampleRate, isForced, sdh: true, cc: true);
+
+        // Assert
+        Assert.AreEqual("Track: English / AAC / Stereo / Default / 128Kbps / 44.1kHz / CC / SDH", result);
+    }
+    
     [TestMethod]
     public void FormatTitle_EmptyFormatter_ReturnsEmptyString()
     {
