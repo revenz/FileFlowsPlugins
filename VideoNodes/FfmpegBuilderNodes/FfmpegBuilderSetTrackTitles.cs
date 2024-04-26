@@ -254,9 +254,16 @@ public class FfmpegBuilderSetTrackTitles: FfmpegBuilderNode
         formatter = Replace(formatter, "lang", english);
         formatter = Replace(formatter, "lang-iso2", iso2);
         formatter = Replace(formatter, "lang-iso1", iso1);
+
+        var codecCommericalName = GetCodecCommercialName(codec);
+        formatter = Replace(formatter, "!codec-cc", codecCommericalName.ToLowerInvariant());
+        formatter = Replace(formatter, "codec-cc!", codecCommericalName.ToUpperInvariant());
+        formatter = Replace(formatter, "codec-cc", codecCommericalName);
+        
         formatter = Replace(formatter, "!codec", codec.ToLowerInvariant());
         formatter = Replace(formatter, "!codec!", codec);
         formatter = Replace(formatter, "codec", codec.ToUpperInvariant());
+        
         formatter = Replace(formatter, "default", isDefault ? "Default" : string.Empty);
         formatter = Replace(formatter, "forced", isForced ? "Forced" : string.Empty);
         formatter = Replace(formatter, "cc", cc ? "CC" : string.Empty);
@@ -344,4 +351,31 @@ public class FfmpegBuilderSetTrackTitles: FfmpegBuilderNode
             return input;
         }
     }
+    /// <summary>
+    /// Gets the commercial name for a codec.
+    /// </summary>
+    /// <param name="codec">The codec name.</param>
+    /// <returns>The commercial name.</returns>
+    private static string GetCodecCommercialName(string codec)
+    {
+        // Convert codec name to uppercase for case-insensitive comparison
+        return codec.ToUpper() switch
+        {
+            "DTS" => "Digital Theater Systems",
+            "DOLBY DIGITAL" => "Dolby Digital",
+            "DOLBY DIGITAL PLUS" => "Dolby Digital Plus",
+            "DOLBY DIGITAL ATMOS" => "Dolby Digital Atmos",
+            "DOLBY TRUEHD" => "Dolby TrueHD",
+            "DTS-HD MASTER AUDIO" => "DTS-HD Master Audio",
+            "PCM" => "Pulse-code Modulation",
+            "AAC" => "Advanced Audio Coding",
+            "MP3" => "MPEG-1 Audio Layer III",
+            "WMA" => "Windows Media Audio",
+            "FLAC" => "Free Lossless Audio Codec",
+            "ALAC" => "Apple Lossless Audio Codec",
+            "VORBIS" => "Vorbis",
+            _ => codec.ToUpperInvariant()
+        };
+    }
+
 }

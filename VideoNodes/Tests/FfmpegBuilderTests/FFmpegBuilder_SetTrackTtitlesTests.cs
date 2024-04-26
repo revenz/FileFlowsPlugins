@@ -54,6 +54,29 @@ public class FFmpegBuilder_SetTrackTtitlesTests
         Assert.AreEqual("Track: English / AAC / Stereo / Default / 128Kbps / 44.1kHz / CC / SDH", result);
     }
     
+
+    [TestMethod]
+    public void FormatTitle_Codec_CommericalName()
+    {
+        // Arrange
+        string formatter = "Track: lang / codec-cc / channels / default / bitrate / samplerate / cc / sdh / hi";
+        string separator = " / ";
+        string language = "English";
+        string codec = "DTS";
+        bool isDefault = true;
+        float bitrate = 128_000;
+        float channels = 2.0f;
+        int sampleRate = 44100;
+        bool isForced = false;
+
+        // Act
+        string result = FfmpegBuilderSetTrackTitles.FormatTitle(formatter, separator, language, codec, isDefault, bitrate, 
+            channels, sampleRate, isForced);
+
+        // Assert
+        Assert.AreEqual("Track: English / Digital Theater Systems / Stereo / Default / 128Kbps / 44.1kHz", result);
+    }
+    
     [TestMethod]
     public void FormatTitle_EmptyFormatter_ReturnsEmptyString()
     {
