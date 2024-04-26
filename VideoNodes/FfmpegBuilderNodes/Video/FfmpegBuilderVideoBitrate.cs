@@ -25,7 +25,7 @@ public class FfmpegBuilderVideoBitrate : FfmpegBuilderNode
         }
         if(Bitrate < 0)
         {
-            args.Logger?.ELog("Minimum birate not set");
+            args.Logger?.ELog("Minimum bitrate not set");
             return -1;
         }
         float currentBitrate = (int)(video.Stream.Bitrate / 1000f);
