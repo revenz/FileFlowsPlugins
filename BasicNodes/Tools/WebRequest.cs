@@ -5,22 +5,41 @@ using FileFlows.Plugin.Attributes;
 using System;
 using System.Text;
 
+/// <summary>
+/// Flow element that makes a web request
+/// </summary>
 public class WebRequest : Node
 {
+    /// <inheritdoc />
     public override int Inputs => 1;
+    /// <inheritdoc />
     public override int Outputs => 2;
+    /// <inheritdoc />
     public override FlowElementType Type => FlowElementType.Communication;
+    /// <inheritdoc />
     public override bool FailureNode => true;
+    /// <inheritdoc />
     public override string Icon => "fas fa-globe";
+    /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/web-request";
 
+    /// <summary>
+    /// Gets or sets the URL
+    /// </summary>
     [TextVariable(1)]
     public string Url { get; set; }
 
+    /// <summary>
+    /// Gets or sets the method
+    /// </summary>
     [Select(nameof(MethodOptions), 2)]
     public string Method { get; set; }
 
-    private static List<ListOption> _MethodOptions;
+    private static List<ListOption>? _MethodOptions;
+    
+    /// <summary>
+    /// Gets the method options
+    /// </summary>
     public static List<ListOption> MethodOptions
     {
         get
@@ -29,20 +48,26 @@ public class WebRequest : Node
             {
                 _MethodOptions = new List<ListOption>
                 {
-                    new ListOption { Label = "GET", Value = "GET"},
-                    new ListOption { Label = "POST", Value = "POST"},
-                    new ListOption { Label = "PUT", Value = "PUT"},
-                    new ListOption { Label = "DELETE", Value = "DELETE"},
+                    new () { Label = "GET", Value = "GET"},
+                    new () { Label = "POST", Value = "POST"},
+                    new () { Label = "PUT", Value = "PUT"},
+                    new () { Label = "DELETE", Value = "DELETE"},
                 };
             }
             return _MethodOptions;
         }
     }
 
+    /// <summary>
+    /// Gets or sets the content type
+    /// </summary>
     [Select(nameof(ContentTypeOptions), 3)]
     public string ContentType { get; set; }
 
-    private static List<ListOption> _ContentTypeOptions;
+    private static List<ListOption>? _ContentTypeOptions;
+    /// <summary>
+    /// Gets the content type options
+    /// </summary>
     public static List<ListOption> ContentTypeOptions
     {
         get
@@ -51,9 +76,9 @@ public class WebRequest : Node
             {
                 _ContentTypeOptions = new List<ListOption>
                 {
-                    new ListOption { Label = "None", Value = ""},
-                    new ListOption { Label = "JSON", Value = "application/json"},
-                    new ListOption { Label = "Form Data", Value = "application/x-www-form-urlencoded"},
+                    new () { Label = "None", Value = ""},
+                    new () { Label = "JSON", Value = "application/json"},
+                    new () { Label = "Form Data", Value = "application/x-www-form-urlencoded"},
                 };
             }
             return _ContentTypeOptions;
@@ -61,15 +86,25 @@ public class WebRequest : Node
     }
 
 
+    /// <summary>
+    /// Gest or sets any header
+    /// </summary>
     [KeyValue(4, null)]
-    public List<KeyValuePair<string, string>> Headers { get; set; }
+    public List<KeyValuePair<string, string>>? Headers { get; set; }
 
-    [TextArea(5)]
+    /// <summary>
+    /// Gets or sets the body of the request
+    /// </summary>
+    [TextArea(5, variables: true)]
     public string Body { get; set; }
 
 
-    private Dictionary<string, object> _Variables;
+    private Dictionary<string, object>? _Variables;
     public override Dictionary<string, object> Variables => _Variables;
+    
+    /// <summary>
+    /// Initialises a new instace of the web request
+    /// </summary>
     public WebRequest()
     {
         _Variables = new Dictionary<string, object>()
@@ -79,6 +114,7 @@ public class WebRequest : Node
         };
     }
 
+    /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
         try
