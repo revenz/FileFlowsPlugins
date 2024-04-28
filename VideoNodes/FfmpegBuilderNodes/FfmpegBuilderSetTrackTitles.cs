@@ -104,6 +104,42 @@ public class FfmpegBuilderSetTrackTitles: FfmpegBuilderNode
                 bool isCommentary = IsCommentary(track.Title, track.Language)
                     ||  IsCommentary(track.Stream?.Title, track.Stream?.Language);
 
+
+                string originalTitle = track.Title;
+                if (isCommentary && string.IsNullOrWhiteSpace(CommentaryFormat) == false)
+                {
+                    if (CommentaryFormat == "Leave")
+                        continue;
+                    track.Title = "Commentary";
+                }
+                else
+                {
+
+                    track.Title = FormatTitle(Format, Separator,
+                        track.Language?.EmptyAsNull() ?? track.Stream?.Language,
+                        track.Codec?.EmptyAsNull() ?? track.Stream?.Codec,
+                        track.IsDefault,
+                        track.Stream?.Bitrate ?? 0,
+                        track.Channels > 0 ? track.Channels : track.Stream?.Channels ?? 0,
+                        track.Stream?.SampleRate ?? 0
+                    );
+                }
+
+                if (originalTitle == track.Title)
+                    continue;
+                args.Logger?.ILog($"Title changed from '{(originalTitle ?? string.Empty)}' to '{track.Title}'");
+                track.ForcedChange = true;
+                ++changes;
+            }
+        }
+        
+        if (StreamType is "Subtitle" or "Both")
+        {
+            foreach(var track in Model.SubtitleStreams)
+            {
+                bool isCommentary = IsCommentary(track.Title, track.Language)
+                                    ||  IsCommentary(track.Stream?.Title, track.Stream?.Language);
+                
                 bool isHearingImpaired = ContainsHearingImpared(track.Title) || ContainsHearingImpared(track.Language) || 
                                          ContainsHearingImpared(track.Stream?.Title) || ContainsHearingImpared(track.Stream?.Language);
                 bool isCC = ContainsClosedCaptions(track.Title) || ContainsClosedCaptions(track.Language) || 
@@ -126,47 +162,12 @@ public class FfmpegBuilderSetTrackTitles: FfmpegBuilderNode
                         track.Codec?.EmptyAsNull() ?? track.Stream?.Codec,
                         track.IsDefault,
                         track.Stream?.Bitrate ?? 0,
-                        track.Channels > 0 ? track.Channels : track.Stream?.Channels ?? 0,
-                        track.Stream?.SampleRate ?? 0,
+                        0,
+                        0,
+                        track.IsForced,
                         sdh: isSDH,
                         hi: isHearingImpaired,
                         cc: isCC
-                    );
-                }
-
-                if (originalTitle == track.Title)
-                    continue;
-                args.Logger?.ILog($"Title changed from '{(originalTitle ?? string.Empty)}' to '{track.Title}'");
-                track.ForcedChange = true;
-                ++changes;
-            }
-        }
-        
-        if (StreamType is "Subtitle" or "Both")
-        {
-            foreach(var track in Model.SubtitleStreams)
-            {
-                bool isCommentary = IsCommentary(track.Title, track.Language)
-                                    ||  IsCommentary(track.Stream?.Title, track.Stream?.Language);
-
-                string originalTitle = track.Title;
-                if (isCommentary && string.IsNullOrWhiteSpace(CommentaryFormat) == false)
-                {
-                    if (CommentaryFormat == "Leave")
-                        continue;
-                    track.Title = "Commentary";
-                }
-                else
-                {
-
-                    track.Title = FormatTitle(Format, Separator,
-                        track.Language?.EmptyAsNull() ?? track.Stream?.Language,
-                        track.Codec?.EmptyAsNull() ?? track.Stream?.Codec,
-                        track.IsDefault,
-                        track.Stream?.Bitrate ?? 0,
-                        0,
-                        0,
-                        track.IsForced
                     );
                 }
 
