@@ -60,4 +60,57 @@ internal class ZipHelper
         if (args?.PartPercentageUpdate != null)
             args?.PartPercentageUpdate(halfProgress ? 50 : 100);
     }
+
+    /// <summary>
+    /// Checks if a file exist in the archive
+    /// </summary>
+    /// <param name="archivePath">the path to the archive</param>
+    /// <param name="file">the file to look for</param>
+    /// <returns>true if exists, otherwise false</returns>
+    public static Result<bool> FileExists(string archivePath, string file)
+    {
+        // Check if the archive file exists
+        if (File.Exists(archivePath) == false)
+            return Result<bool>.Fail("Archive file not found: " + archivePath);
+
+        try
+        {
+            // Open the zip archive
+            using ZipArchive archive = ZipFile.OpenRead(archivePath);
+            return archive.Entries.Any(x => x.FullName.ToLowerInvariant().Equals(file.ToLowerInvariant()));
+        }
+        catch (Exception ex)
+        {
+            return Result<bool>.Fail(ex.Message);
+        }
+    }
+
+    /// <summary>
+    /// Adds a file to the archive
+    /// </summary>
+    /// <param name="archivePath">the path to the archive</param>
+    /// <param name="file">the file to add</param>
+    /// <returns>true if successfully added</returns>
+    public static Result<bool> AddToArchive(string archivePath, string file)
+    {
+        // Check if the archive file exists
+        if (File.Exists(archivePath) == false)
+            return Result<bool>.Fail("Archive file not found: " + archivePath);
+        
+        try
+        {
+            // Open the zip archive
+            using ZipArchive archive = ZipFile.Open(archivePath, ZipArchiveMode.Update);
+            
+            // Create a new entry for the file
+            archive.CreateEntryFromFile(file, Path.GetFileName(file));
+
+            // Successfully added the file
+            return Result<bool>.Success(true);
+        }
+        catch (Exception ex)
+        {
+            return Result<bool>.Fail(ex.Message);
+        }
+    }
 }

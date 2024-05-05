@@ -31,6 +31,17 @@
           "DestinationPath": "Destination Path",
           "DestinationPath-Help": "The folder to save the extract comic book files to"
         }
+      },
+      "CreateComicInfo": {
+        "Description": "Parses the path of a comic and create a comicinfo.xml file inside the comic book archive.",
+        "Fields": {
+          "Publisher": "Publisher",
+          "Publisher-Help": "If the comic is in a publisher directory, see help for more information."
+        },
+        "Outputs": {
+          "1": "ComicInfo added to comic archive",
+          "2": "ComicInfo already in archive"
+        }
       }
     }
   }

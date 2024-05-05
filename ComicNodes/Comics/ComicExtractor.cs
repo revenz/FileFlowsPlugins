@@ -2,13 +2,20 @@
 
 namespace FileFlows.ComicNodes.Comics;
 
+/// <summary>
+/// Extracts a comic 
+/// </summary>
 public class ComicExtractor : Node
 { 
+    /// <inheritdoc />
     public override int Inputs => 1;
+    /// <inheritdoc />
     public override int Outputs => 1;
+    /// <inheritdoc />
     public override FlowElementType Type => FlowElementType.Process;
-
+    /// <inheritdoc />
     public override string Icon => "fas fa-file-pdf";
+    /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/comic-nodes/comic-extractor";
 
     CancellationTokenSource cancellation = new CancellationTokenSource();
@@ -17,6 +24,7 @@ public class ComicExtractor : Node
     [Folder(1)]
     public string DestinationPath { get; set; }
 
+    /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
         string dest = args.ReplaceVariables(DestinationPath, true);

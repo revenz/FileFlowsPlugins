@@ -9,6 +9,11 @@ namespace FileFlows.Comic.Tests;
 public abstract class TestBase
 {
     /// <summary>
+    /// Gets the test logger
+    /// </summary>
+    internal TestLogger Logger = new TestLogger();
+    
+    /// <summary>
     /// The test context instance
     /// </summary>
     private TestContext testContextInstance;
