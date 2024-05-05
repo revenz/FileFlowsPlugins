@@ -22,7 +22,6 @@ internal class GenericExtractor
         bool isRar = workingFile.ToLowerInvariant().EndsWith(".cbr");
         try
         {
-
             ArchiveFactory.WriteToDirectory(workingFile, destinationPath);
             PageNameHelper.FixPageNames(destinationPath);
         }
@@ -43,7 +42,7 @@ internal class GenericExtractor
             var rgxImages = new Regex(@"\.(jpeg|jpg|jpe|png|bmp|tiff|webp|gif)$", RegexOptions.IgnoreCase);
             using var archive = ArchiveFactory.Open(workingFile);
             var files = archive.Entries.Where(entry => !entry.IsDirectory).ToArray();
-            return files.Where(x => rgxImages.IsMatch(x.Key)).Count();
+            return files.Count(x => x.Key != null && rgxImages.IsMatch(x.Key));
         }
         catch(Exception ex) when (isRar && ex.Message.Contains("Unknown Rar Header"))
         {

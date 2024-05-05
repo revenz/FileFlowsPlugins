@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FileFlows.Comic.Tests;
 
 [TestClass]
-public class ComicTests
+public class ComicTests : TestBase
 {
     [TestMethod]
     public void Comic_Pdf_To_Cbz()
@@ -65,6 +65,25 @@ public class ComicTests
         int result = node.Execute(args);
 
         string log = logger.ToString();
+        Assert.AreEqual(1, result);
+    }
+
+    [TestMethod]
+    public void Comic_Resize()
+    {
+        var logger = new TestLogger();
+        var args = new NodeParameters(@"/home/john/Comics/unprocessed/ASMANN001.cbz", logger, false, string.Empty, new LocalFileService());
+        args.TempPath = @"/home/john/Comics/temp";
+
+        var ele = new ComicConverter();
+        ele.Format = "cbz";
+        ele.MaxHeight = 800;
+        ele.Codec = "webp";
+        ele.Quality = 20;
+        int result = ele.Execute(args);
+
+        string log = logger.ToString();
+        TestContext.WriteLine(log);
         Assert.AreEqual(1, result);
     }
 }

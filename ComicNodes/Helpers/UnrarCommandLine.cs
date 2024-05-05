@@ -67,6 +67,6 @@ internal class UnrarCommandLine
             throw new Exception(error?.EmptyAsNull() ?? "Failed to open rar file");
 
         var lines = output.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-        return lines.Where(x => rgxImages.IsMatch(x.Trim())).Count();
+        return lines.Count(x => rgxImages.IsMatch(x.Trim()));
     }
 }

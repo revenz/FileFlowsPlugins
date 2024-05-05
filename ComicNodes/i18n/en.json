@@ -9,7 +9,17 @@
         "Description": "Converts a comic to a different comic book format.\n\nSupports converting from CBZ, CBR, CB7, PDF, GZ, BZ2",
         "Fields": {
           "Format": "Format",
-          "Format-Help": "The format to convert the comic into"
+          "Format-Help": "The format to convert the comic into",
+          "EnsureTopDirectory": "Ensure Top Directory",
+          "EnsureTopDirectory-Help": "Ensures that all files are located directly within the top directory of the comic book file, with no subdirectories present.",
+          "Codec": "Codec",
+          "Codec-Help": "The codec to save the images as",
+          "Quality": "Quality",
+          "Quality-Help": "Quality of the comic book pages, 0 for most compression/worst quality, 100 for best quality",
+          "MaxWidth": "Max Width",
+          "MaxWidth-Help": "The maximum width for the pages, use 0 for no adjustments or to maintain quality with height",
+          "MaxHeight": "Max Height",
+          "MaxHeight-Help": "The maximum height for the pages, use 0 for no adjustments or to maintain quality with width"
         }
       },
       "ComicExtractor": {
