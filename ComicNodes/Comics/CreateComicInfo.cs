@@ -59,7 +59,7 @@ public class CreateComicInfo : Node
             return 2;
         }
 
-        var info = GetInfo(args.Logger, args.LibraryFileName, Publisher);
+        var info = GetInfo(args.Logger, args.LibraryFileName, args.LibraryPath, Publisher);
         if (info.Failed(out error))
         {
             args.FailureReason = error;
@@ -102,9 +102,10 @@ public class CreateComicInfo : Node
     /// </summary>
     /// <param name="logger">the logger to log with</param>
     /// <param name="libraryFile">the library filename to use</param>
+    /// <param name="libraryPath">the library path</param>
     /// <param name="publisher">if there is a publisher folder</param>
     /// <returns>the comic info</returns>
-    public static Result<ComicInfo> GetInfo(ILogger? logger, string libraryFile, bool publisher)
+    public static Result<ComicInfo> GetInfo(ILogger? logger, string libraryFile, string libraryPath, bool publisher)
     {
         // Publisher / Series (year?) / Title - #number (of #)- Issue Title.extension
         ComicInfo info = new();
@@ -115,10 +116,12 @@ public class CreateComicInfo : Node
         if (yearMatch.Success)
         {
             info.Volume = yearMatch.Groups["year"].Value;
-            info.Series = Regex.Replace(info.Series, @"\((19|20)\d{2}\)", "").Trim();
+            // info.Series = Regex.Replace(info.Series, @"\((19|20)\d{2}\)", "").Trim();
         }
 
-        info.Publisher = publisher ? FileHelper.GetDirectoryName(FileHelper.GetDirectory(libraryFile)) : null;
+        string relative = libraryFile[(libraryPath.Length + 1)..];
+
+        info.Publisher = publisher ? relative.Replace("\\", "/").Split('/').First() : null;
         string shortname = FileHelper.GetShortFileName(libraryFile);
         info.Tags = GetTags(ref shortname);
         shortname = shortname[..shortname.LastIndexOf('.')];
@@ -140,7 +143,15 @@ public class CreateComicInfo : Node
         }
         else
         {
-            logger?.WLog("Issue number not found in: " + parts[1]);
+            var volMatch = Regex.Match(parts[1], @"\b[Vv](?:olume|ol)?\s*(\d+)\b", RegexOptions.IgnoreCase);
+            if (volMatch.Success)
+            {
+                info.Volume = "Volume " + int.Parse(volMatch.Groups[1].Value);
+            }
+            else
+            {
+                logger?.WLog("Issue number not found in: " + parts[1]);
+            }
         }
 
         if (parts.Length > 2)

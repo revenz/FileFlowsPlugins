@@ -12,7 +12,8 @@ public class ComicInfoTests : TestBase
     public void Basic()
     {
         var result = CreateComicInfo.GetInfo(Logger,
-            "/home/john/comics/DC/Batman (1939)/Batman - #1 - Batman vs. Joker [old] [great] [amazing].cbr", true);
+            "/home/john/Comics/DC/Batman (1939)/Batman - #1 - Batman vs. Joker [old] [great] [amazing].cbr", 
+            "/home/john/Comics",true);
 
         TestContext.WriteLine(Logger.ToString());
 
@@ -20,7 +21,7 @@ public class ComicInfoTests : TestBase
         var info = result.Value;
         Assert.IsNotNull(info);
         Assert.AreEqual("DC", info.Publisher);
-        Assert.AreEqual("Batman", info.Series);
+        Assert.AreEqual("Batman (1939)", info.Series);
         Assert.AreEqual("1939", info.Volume);
         Assert.AreEqual("Batman vs. Joker", info.Title);
         Assert.AreEqual(3, info.Tags.Length);
@@ -33,7 +34,55 @@ public class ComicInfoTests : TestBase
         TestContext.WriteLine(new string('-', 70));
         TestContext.WriteLine(xml);
     }
+    
+    [TestMethod]
+    public void VolumeYear()
+    {
+        var result = CreateComicInfo.GetInfo(Logger,
+            "/home/john/Comics/actual/DC/He-Man and the Masters of the Universe/He-Man and the Masters of the Universe (2013)/He-Man and the Masters of the Universe - #001 - Desperate Times.cbr",
+            "/home/john/Comics/actual",
+            true);
 
+        TestContext.WriteLine(Logger.ToString());
+
+        Assert.IsFalse(result.IsFailed);
+        var info = result.Value;
+        Assert.IsNotNull(info);
+        Assert.AreEqual("DC", info.Publisher);
+        Assert.AreEqual("He-Man and the Masters of the Universe (2013)", info.Series);
+        Assert.AreEqual("2013", info.Volume);
+        Assert.AreEqual("Desperate Times", info.Title);
+
+        var xml = CreateComicInfo.SerializeToXml(info);
+        Assert.IsFalse(string.IsNullOrWhiteSpace(xml));
+        TestContext.WriteLine(new string('-', 70));
+        TestContext.WriteLine(xml);
+    }
+
+    [TestMethod]
+    public void Volume()
+    {
+        var result = CreateComicInfo.GetInfo(Logger,
+            "/home/john/Comics/Marvel/Ultimate Spider-Man (2000)/Ultimate Spider-Man - v05 - Public Scrutiny.cbz", 
+            "/home/john/Comics",
+            true);
+
+        TestContext.WriteLine(Logger.ToString());
+
+        Assert.IsFalse(result.IsFailed);
+        var info = result.Value;
+        Assert.IsNotNull(info);
+        Assert.AreEqual("Marvel", info.Publisher);
+        Assert.AreEqual("Ultimate Spider-Man (2000)", info.Series);
+        Assert.AreEqual("Volume 5", info.Volume);
+        Assert.AreEqual("Public Scrutiny", info.Title);
+
+        var xml = CreateComicInfo.SerializeToXml(info);
+        Assert.IsFalse(string.IsNullOrWhiteSpace(xml));
+        TestContext.WriteLine(new string('-', 70));
+        TestContext.WriteLine(xml);
+    }
+    
     [TestMethod]
     public void PhysicalFileTest()
     {
@@ -42,7 +91,8 @@ public class ComicInfoTests : TestBase
         var logger = new TestLogger();
         var args = new NodeParameters(FILE, logger, false, string.Empty, new LocalFileService())
         {
-            LibraryFileName = FILE
+            LibraryFileName = FILE,
+            LibraryPath = "/home/john/Comics"
         };
         args.TempPath = TempPath;
 
