@@ -1,8 +1,6 @@
 using System.Xml;
 using FileFlows.ComicNodes.Helpers;
-using Microsoft.VisualStudio.TestPlatform.Utilities.Helpers;
 using FileHelper = FileFlows.Plugin.Helpers.FileHelper;
-using Path = SixLabors.ImageSharp.Drawing.Path;
 
 namespace FileFlows.ComicNodes.Comics;
 
@@ -67,6 +65,34 @@ public class CreateComicInfo : Node
             return -1;
         }
         args.Logger?.ILog("Got ComicInfo from filename");
+
+        var newMetadata = new Dictionary<string, object>
+            {
+                { nameof(info.Value.Title), info.Value.Title },
+                { nameof(info.Value.Series), info.Value.Series },
+                { nameof(info.Value.Publisher), info.Value.Publisher },
+                { nameof(info.Value.Number), info.Value.Number },
+                { nameof(info.Value.Count), info.Value.Count },
+                { nameof(info.Value.Volume), info.Value.Volume },
+                { nameof(info.Value.AlternateSeries), info.Value.AlternateSeries },
+                { nameof(info.Value.AlternateNumber), info.Value.AlternateNumber },
+                { nameof(info.Value.AlternateCount), info.Value.AlternateCount },
+                { nameof(info.Value.Summary), info.Value.Summary },
+                { nameof(info.Value.Notes), info.Value.Notes },
+                { nameof(info.Value.ReleaseDate), info.Value.ReleaseDate },
+                { nameof(info.Value.Tags), info.Value.Tags?.Any() == true ? string.Join(", ", info.Value.Tags) : null }
+            }.Where(x => x.Value != null)
+            .ToDictionary(x => x.Key, x => x.Value);
+        
+        if (args.Metadata != null)
+        {
+            foreach (var key in args.Metadata.Keys)
+            {
+                if (newMetadata.ContainsKey(key))
+                    continue;
+                newMetadata[key] = args.Metadata[key];
+            }
+        }
 
         string xml = SerializeToXml(info.Value);
         if (string.IsNullOrWhiteSpace(xml))
@@ -199,19 +225,7 @@ public class CreateComicInfo : Node
             Encoding = Encoding.UTF8
         });
         writer.WriteStartDocument();
-        writer.WriteStartElement("xs", "schema", "http://www.w3.org/2001/XMLSchema");
-        writer.WriteAttributeString("elementFormDefault", "qualified");
-
-        writer.WriteStartElement("xs", "element", null);
-        writer.WriteAttributeString("name", "ComicInfo");
-        writer.WriteAttributeString("nillable", "true");
-        writer.WriteAttributeString("type", "ComicInfo");
-        writer.WriteEndElement();
-
-        writer.WriteStartElement("xs", "complexType", null);
-        writer.WriteAttributeString("name", "ComicInfo");
-
-        writer.WriteStartElement("xs", "sequence", null);
+        writer.WriteStartElement("ComicInfo", "http://www.w3.org/2001/XMLSchema");
 
         WriteXmlElement(writer, "Title", comicInfo.Title);
         WriteXmlElement(writer, "Series", comicInfo.Series);
@@ -233,9 +247,7 @@ public class CreateComicInfo : Node
             WriteXmlElement(writer, "Day", comicInfo.ReleaseDate.Value.Day.ToString());
         }
 
-        writer.WriteEndElement(); // Close sequence
-        writer.WriteEndElement(); // Close complexType
-        writer.WriteEndElement(); // Close schema
+        writer.WriteEndElement(); // Close ComicInfo
         writer.WriteEndDocument();
         writer.Flush();
         
@@ -253,23 +265,8 @@ public class CreateComicInfo : Node
         if (value == null)
             return;
 
-        writer.WriteStartElement("xs", "element", null);
-        writer.WriteAttributeString("minOccurs", "0");
-        writer.WriteAttributeString("maxOccurs", "1");
-        writer.WriteAttributeString("name", name);
-        if (value is string)
-        {
-            writer.WriteAttributeString("default", "");
-            writer.WriteAttributeString("type", "xs:string");
-        }
-        else if (value is int || value is int?)
-        {
-            writer.WriteAttributeString("default", "-1");
-            writer.WriteAttributeString("type", "xs:int");
-        }
-
+        writer.WriteStartElement(name);
         writer.WriteValue(value);
-
         writer.WriteEndElement();
     }
 }

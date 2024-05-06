@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
 using FileFlows.Plugin.Helpers;
 
 namespace FileFlows.ComicNodes.Comics;
@@ -154,7 +155,7 @@ public class ComicConverter: Node
         if (Codec.ToLowerInvariant() is "webp" or "jpeg")
         {
             args.Logger?.ILog("Converting images to: " + Codec);
-            var rgxImages = new Regex(@"\.(jpeg|jpg|jpe|png|bmp|tiff|webp|gif)$", RegexOptions.IgnoreCase);
+            var rgxImages = new Regex(@"\.(jpeg|jpg|jp2|jpe|png|bmp|tiff|webp|gif)$", RegexOptions.IgnoreCase);
             var files = Directory.GetFiles(destinationPath, "*.*", SearchOption.AllDirectories);
             ImageOptions imageOptions = new()
             {
@@ -165,10 +166,13 @@ public class ComicConverter: Node
             args.Logger?.ILog("Quality: " + Quality);
             args.Logger?.ILog("MaxWidth: " + MaxWidth);
             args.Logger?.ILog("MaxHeight: " + MaxHeight);
+            args.Logger?.ILog("Total Files: " + files.Length);
             args.PartPercentageUpdate?.Invoke(0);
             int count = 0;
-            foreach (string file in files)
+
+            for (int i = 0; i < files.Length; i++)
             {
+                var file = files[i];
                 if (cancellation.IsCancellationRequested)
                     break;
                 try
@@ -183,23 +187,47 @@ public class ComicConverter: Node
                         continue;
                     }
 
-                    if (rgxImages.IsMatch(file))
-                    {
-                        args.Logger?.ILog("Converting image: " + file);
-                        string dest;
-                        if (Codec.ToLowerInvariant() == "webp")
-                        {
-                            dest = Path.ChangeExtension(file, "webp");
-                            args.ImageHelper.ConvertToWebp(file, dest, imageOptions);
-                        }
-                        else
-                        {
-                            dest = Path.ChangeExtension(file, "jpg");
-                            args.ImageHelper.ConvertToJpeg(file, dest, imageOptions);
-                        }
+                    // if (file.ToLowerInvariant().EndsWith(".jp2"))
+                    // {
+                    //     // special case
+                    //     if (ConvertJp2ToJpeg(args.Logger, ref file) == false)
+                    //     {
+                    //         args.FailureReason =
+                    //             "JPEG 2000 File detected which is only supported if ImageMagick is installed.";
+                    //         args.Logger?.ELog(args.FailureReason);
+                    //         break;
+                    //     }
+                    // }
 
-                        if (File.Exists(dest) && File.Exists(file) && file != dest)
-                            File.Delete(file);
+                    if (rgxImages.IsMatch(file) == false)
+                        continue;
+
+                    DateTime dt = DateTime.UtcNow;
+                    string dest;
+                    if (Codec.ToLowerInvariant() == "webp")
+                    {
+                        dest = Path.ChangeExtension(file, "webp");
+                        args.ImageHelper.ConvertToWebp(file, dest, imageOptions);
+                    }
+                    else
+                    {
+                        dest = Path.ChangeExtension(file, "jpg");
+                        args.ImageHelper.ConvertToJpeg(file, dest, imageOptions);
+                    }
+
+                    if (File.Exists(dest) == false)
+                    {
+                        args.FailureReason = "Failed to convert image: " + dest;
+                        args.Logger?.ELog(args.FailureReason);
+                        break;
+                    }
+
+                    args.Logger?.ILog($"Converted image [{DateTime.UtcNow.Subtract(dt)}]: {dest}");
+
+                    if (File.Exists(file) && file != dest)
+                    {
+                        args.Logger?.ILog("Deleting file: " + file);
+                        File.Delete(file);
                     }
                 }
                 finally
@@ -207,6 +235,7 @@ public class ComicConverter: Node
                     float total = files.Length;
                     args.PartPercentageUpdate?.Invoke((count++ / total) * 100);
                 }
+
             }
         }
 
@@ -218,6 +247,60 @@ public class ComicConverter: Node
         args.SetWorkingFile(newFile);   
 
         return 1;
+    }
+    
+    
+    
+
+    /// <summary>
+    /// Tries to use imagemagick to convert an image to JPEG
+    /// </summary>
+    /// <param name="logger">The logger</param>
+    /// <param name="file">the file to convert</param>
+    /// <returns>true if converted</returns>
+    private bool ConvertJp2ToJpeg(ILogger logger, ref string file)
+    {
+        try
+        {
+
+            string outFile = Path.ChangeExtension(file, "jpg");
+            // Start the ImageMagick convert process
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                FileName = "convert", // ImageMagick's convert command
+                ArgumentList = { file, outFile },
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+
+            using Process process = Process.Start(startInfo);
+            // Capture output
+            string output = process.StandardOutput.ReadToEnd();
+            string error = process.StandardError.ReadToEnd();
+            process.WaitForExit();
+
+            // Check for errors
+            if (string.IsNullOrEmpty(error) == false)
+            {
+                logger?.ELog($"Error occurred: {error}");
+                return false;
+            }
+            logger?.ILog("Converted JPEG 2000 File: " + file);
+            File.Delete(file);
+            
+            file = outFile;
+            
+
+            // Conversion successful
+            return true;
+        }
+        catch (Exception ex)
+        {
+            logger.ELog($"An error occurred converted the JPEG 2000 image: {ex.Message}");
+            return false;
+        }
     }
 
     /// <summary>
