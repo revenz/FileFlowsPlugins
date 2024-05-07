@@ -208,7 +208,7 @@ public class CreateComicInfo : Node
         if(info.Tags?.Any() == true)
             name += " " + string.Join(" ", info.Tags.Select(x => "(" + x + ")"));
 
-        return name += "." + extension;
+        return name += "." + extension.TrimStart('.');
     }
 
     /// <summary>
