@@ -38,7 +38,9 @@
         "Description": "Parses the path of a comic and create a comicinfo.xml file inside the comic book archive.",
         "Fields": {
           "Publisher": "Publisher",
-          "Publisher-Help": "If the comic is in a publisher directory, see help for more information."
+          "Publisher-Help": "If the comic is in a publisher directory, see help for more information.",
+          "RenameFile": "Rename File",
+          "RenameFile-Help": "If the file should be renamed `Series - Issue - Title.extension`"
         },
         "Outputs": {
           "1": "ComicInfo added to comic archive",

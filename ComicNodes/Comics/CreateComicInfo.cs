@@ -29,6 +29,12 @@ public class CreateComicInfo : Node
     /// </summary>
     [Boolean(1)]
     public bool Publisher { get; set; }
+    
+    /// <summary>
+    /// Gets or sets if the file should be renamed
+    /// </summary>
+    [Boolean(2)]
+    public bool RenameFile { get; set; }
 
     /// <inheritdoc />
     public override int Execute(NodeParameters args)
@@ -51,36 +57,38 @@ public class CreateComicInfo : Node
             return -1;
         }
 
-        if (result.Value == true)
+        if (result.Value)
         {
             args.Logger?.ILog("comicinfo.xml already present");
             return 2;
         }
 
-        var info = GetInfo(args.Logger, args.LibraryFileName, args.LibraryPath, Publisher);
-        if (info.Failed(out error))
+        var infoResult = GetInfo(args.Logger, args.LibraryFileName, args.LibraryPath, Publisher);
+        if (infoResult.Failed(out error))
         {
             args.FailureReason = error;
             args.Logger?.ELog(error);
             return -1;
         }
+
+        var info = infoResult.Value;
         args.Logger?.ILog("Got ComicInfo from filename");
 
         var newMetadata = new Dictionary<string, object?>
             {
-                { nameof(info.Value.Title), info.Value.Title },
-                { nameof(info.Value.Series), info.Value.Series },
-                { nameof(info.Value.Publisher), info.Value.Publisher },
-                { nameof(info.Value.Number), info.Value.Number },
-                { nameof(info.Value.Count), info.Value.Count },
-                { nameof(info.Value.Volume), info.Value.Volume },
-                { nameof(info.Value.AlternateSeries), info.Value.AlternateSeries },
-                { nameof(info.Value.AlternateNumber), info.Value.AlternateNumber },
-                { nameof(info.Value.AlternateCount), info.Value.AlternateCount },
-                { nameof(info.Value.Summary), info.Value.Summary },
-                { nameof(info.Value.Notes), info.Value.Notes },
-                { nameof(info.Value.ReleaseDate), info.Value.ReleaseDate },
-                { nameof(info.Value.Tags), info.Value.Tags?.Any() == true ? string.Join(", ", info.Value.Tags) : null }
+                { nameof(info.Title), info.Title },
+                { nameof(info.Series), info.Series },
+                { nameof(info.Publisher), info.Publisher },
+                { nameof(info.Number), info.Number },
+                { nameof(info.Count), info.Count },
+                { nameof(info.Volume), info.Volume },
+                { nameof(info.AlternateSeries), info.AlternateSeries },
+                { nameof(info.AlternateNumber), info.AlternateNumber },
+                { nameof(info.AlternateCount), info.AlternateCount },
+                { nameof(info.Summary), info.Summary },
+                { nameof(info.Notes), info.Notes },
+                { nameof(info.ReleaseDate), info.ReleaseDate },
+                { nameof(info.Tags), info.Tags?.Any() == true ? string.Join(", ", info.Tags) : null }
             }.Where(x => x.Value != null)
             .ToDictionary(x => x.Key, x => x.Value);
         
@@ -94,7 +102,7 @@ public class CreateComicInfo : Node
             }
         }
 
-        string xml = SerializeToXml(info.Value);
+        string xml = SerializeToXml(info);
         if (string.IsNullOrWhiteSpace(xml))
         {
             args.FailureReason = "Failed to serialize to XML";
@@ -118,6 +126,41 @@ public class CreateComicInfo : Node
         if (localFile != args.WorkingFile && args.FileService.FileMove(localFile, args.WorkingFile).Failed(out error))
         {
             args.Logger?.ELog("Failed to move saved file: " + error);
+        }
+
+        if (RenameFile)
+        {
+            if (info.Number == null && info.Volume?.StartsWith("Volume") == false)
+            {
+                args.Logger?.WLog("No issue number found, cannot rename");
+                return 1;
+            }
+            if (string.IsNullOrWhiteSpace(info.Series))
+            {
+                args.Logger?.WLog("No series found, cannot rename");
+                return 1;
+            }
+
+            string name = info.Series;
+            if (info.Number != null)
+                name += $" - #{info.Number + (info.Count > 0 ? $" (of {info.Count})" : "")}";
+            else
+                name += " - " + info.Series;
+            
+            if (string.IsNullOrWhiteSpace(info.Title) == false)
+                name += " - " + info.Title;
+
+            name += "." + FileHelper.GetExtension(args.WorkingFile); 
+            
+            string path = FileHelper.GetDirectory(args.WorkingFile);
+            string newFile = FileHelper.Combine(path, name);
+            args.Logger?.ILog("New file name: " + newFile);
+            if (args.FileService.FileMove(args.WorkingFile, newFile).Failed(out error))
+            {
+                args.Logger?.WLog("Failed ot rename file: " + error);
+            }
+            
+            args.SetWorkingFile(newFile);
         }
         
         return 1;
@@ -157,11 +200,20 @@ public class CreateComicInfo : Node
         {
             parts = shortname.Split('#');
             if (parts.Length < 2)
+            {
+                var lastChanceMatch = Regex.Match(shortname, @"(\d)+$");
+                if(lastChanceMatch.Success)
+                {
+                    info.Number = int.Parse(lastChanceMatch.Groups[1].Value);
+                    return info;
+                }
                 return Result<ComicInfo>.Fail("Invalid filename: " + shortname);
+            }
+
             parts[1] = '#' + parts[1];
         }
 
-        var issueNumberMatch = Regex.Match(parts[1], @"#(?<first>\d+)(?:\s+of\s+#(?<second>\d+))?");
+        var issueNumberMatch = Regex.Match(parts[1], @"[#]?(?<first>\d+)(?:\s+of\s+[#]?(?<second>\d+))?");
 
         if (issueNumberMatch.Success)
         {
@@ -184,7 +236,9 @@ public class CreateComicInfo : Node
         }
 
         if (parts.Length > 2)
-            info.Title = parts[2].Trim();
+        {
+            info.Title = Regex.Replace(parts[2], @"\s*\([^)]*\)\s*", " ").Trim();
+        }
 
         return info;
     }
