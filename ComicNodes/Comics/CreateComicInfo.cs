@@ -58,20 +58,6 @@ public class CreateComicInfo : Node
 
         var localFile = localFileResult.Value;
 
-        var result = args.ArchiveHelper.FileExists(localFile, "comicinfo.xml");
-        if (result.Failed(out error))
-        {
-            args.FailureReason = error;
-            args.Logger?.ELog(error);
-            return -1;
-        }
-
-        if (result.Value)
-        {
-            args.Logger?.ILog("comicinfo.xml already present");
-            return 2;
-        }
-
         var infoResult = GetInfo(args.Logger, args.LibraryFileName, args.LibraryPath, Publisher);
         if (infoResult.Failed(out error))
         {
@@ -111,30 +97,49 @@ public class CreateComicInfo : Node
             }
         }
 
-        string xml = SerializeToXml(info);
-        if (string.IsNullOrWhiteSpace(xml))
-        {
-            args.FailureReason = "Failed to serialize to XML";
-            args.Logger?.ELog(args.FailureReason);
-            return -1;
-        }
-        args.Logger?.ILog("Created XML of ComicInfo");
-
-        string comicInfoFile = FileHelper.Combine(args.TempPath, "comicinfo.xml");
-        args.Logger?.ILog("comicinfo.xml created: " + comicInfoFile);
-        File.WriteAllText(comicInfoFile, xml);
-
-        if (args.ArchiveHelper.AddToArchive(localFile, comicInfoFile).Failed(out error))
+        var result = args.ArchiveHelper.FileExists(localFile, "comicinfo.xml");
+        if (result.Failed(out error))
         {
             args.FailureReason = error;
             args.Logger?.ELog(error);
             return -1;
         }
-        args.Logger?.ILog("Added comicinfo.xml to archive");
-        
-        if (localFile != args.WorkingFile && args.FileService.FileMove(localFile, args.WorkingFile).Failed(out error))
+
+        if (result.Value && RenameFile == false)
         {
-            args.Logger?.ELog("Failed to move saved file: " + error);
+            args.Logger?.ILog("comicinfo.xml already present");
+            return 2;
+        }
+
+        if (result.Value == false)
+        {
+            string xml = SerializeToXml(info);
+            if (string.IsNullOrWhiteSpace(xml))
+            {
+                args.FailureReason = "Failed to serialize to XML";
+                args.Logger?.ELog(args.FailureReason);
+                return -1;
+            }
+
+            args.Logger?.ILog("Created XML of ComicInfo");
+
+            string comicInfoFile = FileHelper.Combine(args.TempPath, "comicinfo.xml");
+            args.Logger?.ILog("comicinfo.xml created: " + comicInfoFile);
+            File.WriteAllText(comicInfoFile, xml);
+
+            if (args.ArchiveHelper.AddToArchive(localFile, comicInfoFile).Failed(out error))
+            {
+                args.FailureReason = error;
+                args.Logger?.ELog(error);
+                return -1;
+            }
+
+            args.Logger?.ILog("Added comicinfo.xml to archive");
+            if (localFile != args.WorkingFile &&
+                args.FileService.FileMove(localFile, args.WorkingFile).Failed(out error))
+            {
+                args.Logger?.ELog("Failed to move saved file: " + error);
+            }
         }
 
         if (RenameFile)
