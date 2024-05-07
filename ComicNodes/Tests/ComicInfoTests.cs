@@ -121,6 +121,32 @@ public class ComicInfoTests : TestBase
 
     
     [TestMethod]
+    public void NameAndNumber2()
+    {
+        var result = CreateComicInfo.GetInfo(Logger,
+            "/home/john/Comics/Marvel/X-Men/X-Man/X-Man 005 (1995) (digital) (Sierra-HD).cbz", 
+            "/home/john/Comics",
+            true);
+
+        TestContext.WriteLine(Logger.ToString());
+
+        Assert.IsFalse(result.IsFailed);
+        var info = result.Value;
+        Assert.IsNotNull(info);
+        Assert.AreEqual("Marvel", info.Publisher);
+        Assert.AreEqual("X-Man", info.Series);
+        Assert.AreEqual(5, info.Number);
+
+        var xml = CreateComicInfo.SerializeToXml(info);
+        Assert.IsFalse(string.IsNullOrWhiteSpace(xml));
+        TestContext.WriteLine(new string('-', 70));
+        TestContext.WriteLine(xml);
+        
+        var name = CreateComicInfo.GetNewName(info, "cbz", 3);
+        Assert.AreEqual("X-Man - #005.cbz", name.Value);
+    }
+
+    [TestMethod]
     public void PhysicalFileTest()
     {
         const string FILE =

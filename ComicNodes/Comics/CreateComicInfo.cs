@@ -242,6 +242,8 @@ public class CreateComicInfo : Node
             parts = shortname.Split('#');
             if (parts.Length < 2)
             {
+                // remove any junk
+                shortname = Regex.Replace(shortname, @"\s*\([^)]*\)\s*", " ").Trim();
                 var lastChanceMatch = Regex.Match(shortname, @"(\d)+$");
                 if(lastChanceMatch.Success)
                 {
