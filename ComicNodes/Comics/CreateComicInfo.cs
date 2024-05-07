@@ -130,30 +130,14 @@ public class CreateComicInfo : Node
 
         if (RenameFile)
         {
-            if (info.Number == null && info.Volume?.StartsWith("Volume") == false)
+            var newNameResult = GetNewName(info, FileHelper.GetExtension(args.WorkingFile));
+            if (newNameResult.Failed(out error))
             {
-                args.Logger?.WLog("No issue number found, cannot rename");
+                args.Logger?.WLog(error);
                 return 1;
             }
-            if (string.IsNullOrWhiteSpace(info.Series))
-            {
-                args.Logger?.WLog("No series found, cannot rename");
-                return 1;
-            }
-
-            string name = info.Series;
-            if (info.Number != null)
-                name += $" - #{info.Number + (info.Count > 0 ? $" (of {info.Count})" : "")}";
-            else
-                name += " - " + info.Series;
-            
-            if (string.IsNullOrWhiteSpace(info.Title) == false)
-                name += " - " + info.Title;
-
-            name += "." + FileHelper.GetExtension(args.WorkingFile); 
-            
             string path = FileHelper.GetDirectory(args.WorkingFile);
-            string newFile = FileHelper.Combine(path, name);
+            string newFile = FileHelper.Combine(path, newNameResult.Value);
             args.Logger?.ILog("New file name: " + newFile);
             if (args.FileService.FileMove(args.WorkingFile, newFile).Failed(out error))
             {
@@ -164,6 +148,34 @@ public class CreateComicInfo : Node
         }
         
         return 1;
+    }
+
+    /// <summary>
+    /// Gets the name of the book
+    /// </summary>
+    /// <param name="info">the comic info</param>
+    /// <param name="extension">the extension to use</param>
+    /// <returns>the new name</returns>
+    internal static Result<string> GetNewName(ComicInfo info, string extension)
+    {
+        if (info.Number == null && info.Volume?.StartsWith("Volume") == false)
+            return Result<string>.Fail("No issue number found, cannot rename");
+        if (string.IsNullOrWhiteSpace(info.Series))
+            return Result<string>.Fail("No series found, cannot rename");
+
+        string name = info.Series;
+        if (info.Number != null)
+            name += $" - #{info.Number + (info.Count > 0 ? $" (of {info.Count})" : "")}";
+        else
+            name += " - " + info.Volume;
+            
+        if (string.IsNullOrWhiteSpace(info.Title) == false)
+            name += " - " + info.Title;
+        
+        if(info.Tags?.Any() == true)
+            name += " " + string.Join(" ", info.Tags.Select(x => "(" + x + ")"));
+
+        return name += "." + extension;
     }
 
     /// <summary>
@@ -194,6 +206,7 @@ public class CreateComicInfo : Node
         string shortname = FileHelper.GetShortFileName(libraryFile);
         info.Tags = GetTags(ref shortname);
         shortname = shortname[..shortname.LastIndexOf('.')];
+        (shortname, _) = ExtractYear(shortname);
         // Title - #number (of #) - Issue Title 
         var parts = shortname.Split(" - ");
         if (parts.Length < 2)
@@ -213,7 +226,7 @@ public class CreateComicInfo : Node
             parts[1] = '#' + parts[1];
         }
 
-        var issueNumberMatch = Regex.Match(parts[1], @"[#]?(?<first>\d+)(?:\s+of\s+[#]?(?<second>\d+))?");
+        var issueNumberMatch = Regex.Match(parts[1], @"(^|#)(?<first>\d+)(?:\s+of\s+[#]?(?<second>\d+))?");
 
         if (issueNumberMatch.Success)
         {
@@ -243,6 +256,29 @@ public class CreateComicInfo : Node
         return info;
     }
 
+    /// <summary>
+    /// Extracts the year from a file
+    /// </summary>
+    /// <param name="shortname">the name of the file</param>
+    /// <returns>the new name and the year if found</returns>
+    private static (string Name, string? Year) ExtractYear(string shortname)
+    {
+        string? year = null;
+
+        // Regular expression to match the year in the specified formats
+        Match match = Regex.Match(shortname, @"(?:(?:19|20)\d{2})|\((?:19|20)\d{2}\)|-(?:\s)?(?:19|20)\d{2}(?:\s)?-");
+
+        if (match.Success)
+        {
+            // Extract the matched year
+            year = match.Value.Trim('(', ')', '-', ' ');
+
+            // Remove the matched year from the input string
+            shortname = shortname.Remove(match.Index, match.Length).Trim();
+        }
+
+        return (shortname, year);
+    }
 
 
     /// <summary>

@@ -12,7 +12,7 @@ public class ComicInfoTests : TestBase
     public void Basic()
     {
         var result = CreateComicInfo.GetInfo(Logger,
-            "/home/john/Comics/DC/Batman (1939)/Batman - #1 - Batman vs. Joker [old] [great] [amazing].cbr", 
+            "/home/john/Comics/DC/Batman (1939)/Batman - #42 - Batman vs. Joker [old] [great] [amazing].cbr", 
             "/home/john/Comics",true);
 
         TestContext.WriteLine(Logger.ToString());
@@ -33,13 +33,16 @@ public class ComicInfoTests : TestBase
         Assert.IsFalse(string.IsNullOrWhiteSpace(xml));
         TestContext.WriteLine(new string('-', 70));
         TestContext.WriteLine(xml);
+        
+        var name = CreateComicInfo.GetNewName(info, "cbz");
+        Assert.AreEqual("Batman (1939) - #42 - Batman vs. Joker (old) (great) (amazing).cbz", name.Value);
     }
     
     [TestMethod]
     public void VolumeYear()
     {
         var result = CreateComicInfo.GetInfo(Logger,
-            "/home/john/Comics/actual/DC/He-Man and the Masters of the Universe/He-Man and the Masters of the Universe (2013)/He-Man and the Masters of the Universe - #001 - Desperate Times.cbr",
+            "/home/john/Comics/actual/DC/He-Man and the Masters of the Universe/He-Man and the Masters of the Universe (2013)/He-Man and the Masters of the Universe - #123 - Desperate Times.cbr",
             "/home/john/Comics/actual",
             true);
 
@@ -57,13 +60,16 @@ public class ComicInfoTests : TestBase
         Assert.IsFalse(string.IsNullOrWhiteSpace(xml));
         TestContext.WriteLine(new string('-', 70));
         TestContext.WriteLine(xml);
+        
+        var name = CreateComicInfo.GetNewName(info, "cbz");
+        Assert.AreEqual("He-Man and the Masters of the Universe (2013) - #123 - Desperate Times.cbz", name.Value);
     }
 
     [TestMethod]
     public void Volume()
     {
         var result = CreateComicInfo.GetInfo(Logger,
-            "/home/john/Comics/Marvel/Ultimate Spider-Man (2000)/Ultimate Spider-Man - v05 - Public Scrutiny.cbz", 
+            "/home/john/Comics/Marvel/Ultimate Spider-Man (2000)/Ultimate Spider-Man - v05 - Public Scrutiny (junk) (remove0245).cbz", 
             "/home/john/Comics",
             true);
 
@@ -81,6 +87,9 @@ public class ComicInfoTests : TestBase
         Assert.IsFalse(string.IsNullOrWhiteSpace(xml));
         TestContext.WriteLine(new string('-', 70));
         TestContext.WriteLine(xml);
+        
+        var name = CreateComicInfo.GetNewName(info, "cbz");
+        Assert.AreEqual("Ultimate Spider-Man (2000) - Volume 5 - Public Scrutiny.cbz", name.Value);
     }
     
     [TestMethod]
