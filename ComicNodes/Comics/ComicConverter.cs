@@ -58,10 +58,16 @@ public class ComicConverter: Node
     public bool EnsureTopDirectory { get; set; }
 
     /// <summary>
+    /// Gets or sets if non page images should be deleted
+    /// </summary>
+    [Boolean(3)]
+    public bool DeleteNonPageImages { get; set; }
+
+    /// <summary>
     /// Gets or sets the codec the images will be saved in
     /// </summary>
     [DefaultValue("")]
-    [Select(nameof(CodecOptions), 3)]
+    [Select(nameof(CodecOptions), 4)]
     public string Codec { get; set; } = string.Empty;
 
     private static List<ListOption> _CodecOptions;
@@ -89,7 +95,7 @@ public class ComicConverter: Node
     /// Gets or sets the quality
     /// </summary>
     [Range(0, 100)]
-    [Slider(4)]
+    [Slider(5)]
     [DefaultValue(75)]
     [ConditionEquals(nameof(Codec), "", true)]
     public int Quality { get; set; }
@@ -97,14 +103,14 @@ public class ComicConverter: Node
     /// <summary>
     /// Gets or sets the maximum width of images
     /// </summary>
-    [NumberInt(5)]
+    [NumberInt(6)]
     [ConditionEquals(nameof(Codec), "", true)]
     public int MaxWidth { get; set; }
     
     /// <summary>
     /// Gets or sets the maximum height of images
     /// </summary>
-    [NumberInt(6)]
+    [NumberInt(7)]
     [ConditionEquals(nameof(Codec), "", true)]
     public int MaxHeight { get; set; }
     
@@ -153,6 +159,7 @@ public class ComicConverter: Node
         }
 
         string destinationPath = Path.Combine(args.TempPath, Guid.NewGuid().ToString());
+        var rgxImages = new Regex(@"\.(jpeg|jpg|jp2|jpe|png|bmp|tiff|webp|gif)$", RegexOptions.IgnoreCase);
         
         Directory.CreateDirectory(destinationPath);
         if (Helpers.ComicExtractor
@@ -164,6 +171,22 @@ public class ComicConverter: Node
             return -1;
         }
 
+        if (DeleteNonPageImages)
+        {
+            foreach (var file in Directory.GetFiles("*.*", destinationPath, SearchOption.AllDirectories))
+            {
+                if(rgxImages.IsMatch(file) == false)
+                    continue;
+                string nameNoExtension = FileHelper.GetShortFileName(file);
+                nameNoExtension = nameNoExtension[..nameNoExtension.LastIndexOf(".", StringComparison.Ordinal)];
+                if (Regex.IsMatch(nameNoExtension, @"[\d]{2,}^") == false)
+                {
+                    args.Logger?.ILog("Deleting non page image: " + file);
+                    File.Delete(file);
+                }
+            }
+        }
+
         if (EnsureTopDirectory)
         {
             args.Logger?.ILog("Ensuring top directory");
@@ -173,7 +196,6 @@ public class ComicConverter: Node
         if (Codec.ToLowerInvariant() is "webp" or "jpeg")
         {
             args.Logger?.ILog("Converting images to: " + Codec);
-            var rgxImages = new Regex(@"\.(jpeg|jpg|jp2|jpe|png|bmp|tiff|webp|gif)$", RegexOptions.IgnoreCase);
             var files = Directory.GetFiles(destinationPath, "*.*", SearchOption.AllDirectories);
             ImageOptions imageOptions = new()
             {
