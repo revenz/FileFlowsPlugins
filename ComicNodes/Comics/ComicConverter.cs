@@ -173,7 +173,7 @@ public class ComicConverter: Node
 
         if (DeleteNonPageImages)
         {
-            foreach (var file in Directory.GetFiles("*.*", destinationPath, SearchOption.AllDirectories))
+            foreach (var file in Directory.GetFiles(destinationPath, "*.*", SearchOption.AllDirectories))
             {
                 if(rgxImages.IsMatch(file) == false)
                     continue;
