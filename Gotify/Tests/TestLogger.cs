@@ -24,11 +24,13 @@ internal class TestLogger : ILogger
     {
         if (args == null || args.Length == 0)
             return;
+#pragma warning disable IL2026
         string message = type + " -> " +
             string.Join(", ", args.Select(x =>
             x == null ? "null" :
             x.GetType().IsPrimitive || x is string ? x.ToString() :
             System.Text.Json.JsonSerializer.Serialize(x)));
+#pragma warning restore IL2026
         Messages.Add(message);
     }
 

@@ -76,7 +76,7 @@ public class WebImageScraper : Node
             string path = string.Empty;
             if (lines.Length > 1)
             {
-                Uri.TryCreate(line, UriKind.Absolute, out Uri uri);
+                Uri.TryCreate(line, UriKind.Absolute, out Uri? uri);
                 if (uri != null)
                 {
                     string uriPath = uri.AbsolutePath.Trim('/');
@@ -114,7 +114,7 @@ public class WebImageScraper : Node
         {
             await File.WriteAllLinesAsync(fileName, urls);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             // Handle file writing error
         }
@@ -168,7 +168,7 @@ public class WebImageScraper : Node
     /// <param name="depth">The current depth of link following.</param>
     /// <param name="baseUrl">The base URL for domain comparison.</param>
     /// <returns>A list of image URLs extracted from the URL and its sub-links.</returns>
-    private async Task<List<string>> ProcessUrlAndGetImageUrls(ILogger logger, string url, int depth, string baseUrl)
+    private async Task<List<string>> ProcessUrlAndGetImageUrls(ILogger logger, string url, int depth, string? baseUrl)
     {
         var imageUrls = new List<string>();
         if (++PageCount > MaxPages)
@@ -176,7 +176,7 @@ public class WebImageScraper : Node
         
         if (string.IsNullOrEmpty(baseUrl))
         {
-            Uri.TryCreate(url, UriKind.Absolute, out Uri uri);
+            Uri.TryCreate(url, UriKind.Absolute, out Uri? uri);
             baseUrl = uri?.GetLeftPart(UriPartial.Path); // Retrieve URL up to path level
         }
     

@@ -13,6 +13,7 @@
     <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
     <Description>Flow element for the processing of video files, including but not limited to video file conversion, video file detection, upscaling, downscaling, and transcoding.</Description>
     <RootNamespace> FileFlows.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;CS8618;CS8601;CS8602;CS8603;CS8604;CS8618;CS8625;CS8765;CS8767;</NoWarn>

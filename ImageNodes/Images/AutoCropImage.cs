@@ -1,5 +1,4 @@
-﻿using SixLabors.ImageSharp.Formats;
-using SixLabors.ImageSharp.PixelFormats;
+﻿using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using System.ComponentModel;
 using ImageMagick;

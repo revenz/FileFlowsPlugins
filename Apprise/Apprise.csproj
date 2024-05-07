@@ -14,6 +14,7 @@
 	<Product>Apprise</Product>
 	<PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
 	<Description>Lets you send Apprise messages to a server</Description>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>

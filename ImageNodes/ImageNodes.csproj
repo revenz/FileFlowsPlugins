@@ -13,6 +13,7 @@
     <Product>Image</Product>
     <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
     <Description>Nodes for processing images files.  This plugin contains nodes to convert and manipulate images.</Description>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup Condition=" '$(Configuration)' == 'Debug'">
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />

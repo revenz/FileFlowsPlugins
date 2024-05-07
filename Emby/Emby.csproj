@@ -14,6 +14,7 @@
     <Product>Emby</Product>
     <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
     <Description>Emby plugin that lets you update Emby with any changes</Description>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Emby.en.json" />

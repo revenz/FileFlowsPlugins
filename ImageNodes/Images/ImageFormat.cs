@@ -18,7 +18,7 @@ public class ImageFormat: ImageNode
         
         if(formatOpts.format?.Name == CurrentFormat)
         {
-            args.Logger?.ILog("File already in format: " + formatOpts.format.Name);
+            args.Logger?.ILog("File already in format: " + (formatOpts.format?.Name ?? string.Empty));
             return 2;
         }
 

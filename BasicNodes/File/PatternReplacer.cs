@@ -19,8 +19,8 @@ public class PatternReplacer : Node
     public override FlowElementType Type => FlowElementType.Process;
     /// <inheritdoc />
     public override string Icon => "fas fa-exchange-alt";
-
-    public string Group => "File";
+    /// <inheritdoc />
+    public override string Group => "File";
 
     /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/filename-pattern-replacer";
@@ -108,7 +108,10 @@ public class PatternReplacer : Node
                 // this might not be a regex, but try it first
                 updated = Regex.Replace(updated, replacement.Key, value, RegexOptions.IgnoreCase);
             }
-            catch (Exception ex) { }
+            catch (Exception)
+            {
+                // Ignored
+            }
 
             updated = updated.Replace(replacement.Key, value);
         }

@@ -15,9 +15,9 @@ namespace FileFlows.ImageNodes.Images;
 public abstract class ImageNode : ImageBaseNode
 {
     [Select(nameof(FormatOptions), 1)]
-    public string Format { get; set; }
+    public string Format { get; set; } = string.Empty;
     
-    private static List<ListOption> _FormatOptions;
+    private static List<ListOption>? _FormatOptions;
     public static List<ListOption> FormatOptions
     {
         get

@@ -13,6 +13,7 @@
     <Product>Telegram</Product>
     <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
     <Description>Lets you send Telegram messages</Description>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Telegram.en.json" />

@@ -12,6 +12,7 @@
     <Product>Site Scraping</Product>
     <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
     <Description>Flow elements used to scrape website for data/images etc.</Description>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup Condition=" '$(Configuration)' == 'Debug'">
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />

@@ -43,7 +43,7 @@ public class CreateComicInfo : Node
 
         var localFile = localFileResult.Value;
 
-        var result = ZipHelper.FileExists(localFile, "comicinfo.xml");
+        var result = args.ArchiveHelper.FileExists(localFile, "comicinfo.xml");
         if (result.Failed(out error))
         {
             args.FailureReason = error;
@@ -107,7 +107,7 @@ public class CreateComicInfo : Node
         args.Logger?.ILog("comicinfo.xml created: " + comicInfoFile);
         File.WriteAllText(comicInfoFile, xml);
 
-        if (ZipHelper.AddToArchive(localFile, comicInfoFile).Failed(out error))
+        if (args.ArchiveHelper.AddToArchive(localFile, comicInfoFile).Failed(out error))
         {
             args.FailureReason = error;
             args.Logger?.ELog(error);

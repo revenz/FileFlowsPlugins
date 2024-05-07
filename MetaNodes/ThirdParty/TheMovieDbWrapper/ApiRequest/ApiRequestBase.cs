@@ -34,9 +34,9 @@ internal abstract class ApiRequestBase
     public async Task<ApiQueryResponse<T>> QueryAsync<T>( string command, Func<string, T> deserializer )
         => await QueryAsync( command, new Dictionary<string, string>(), deserializer );
 
-    public async Task<ApiQueryResponse<T>> QueryAsync<T>( string command, IDictionary<string, string> parameters, Func<string, T> deserializer )
+    public async Task<ApiQueryResponse<T>> QueryAsync<T>( string command, IDictionary<string, string> parameters, Func<string, T>? deserializer )
     {
-        deserializer ??= JsonConvert.DeserializeObject<T>;
+        deserializer ??= (string str) => JsonConvert.DeserializeObject<T>(str);
 
         using HttpClient client = CreateClient();
         string cmd = CreateCommand( command, parameters );

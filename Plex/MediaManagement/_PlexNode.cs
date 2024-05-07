@@ -1,13 +1,10 @@
 ﻿using FileFlows.Plex.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace FileFlows.Plex.MediaManagement;
 
+/// <summary>
+/// Plex flow element
+/// </summary>
 public abstract class PlexNode:Node
 {
     /// <inheritdoc />
@@ -20,15 +17,13 @@ public abstract class PlexNode:Node
     public override bool NoEditorOnAdd => true;
     /// <inheritdoc />
     public override string Icon => "svg:plex";
-    
-    [Text(1)]
-    public string ServerUrl { get; set; }
 
-    [Text(2)]
-    public string AccessToken { get; set; }
+    [Text(1)] public string ServerUrl { get; set; } = string.Empty;
+
+    [Text(2)] public string AccessToken { get; set; } = string.Empty;
 
     [KeyValue(3, null)]
-    public List<KeyValuePair<string, string>> Mapping { get; set; }
+    public List<KeyValuePair<string, string>>? Mapping { get; set; }
 
     public override int Execute(NodeParameters args)
     {
@@ -79,7 +74,9 @@ public abstract class PlexNode:Node
         {
             var options = new System.Text.Json.JsonSerializerOptions();
             options.PropertyNameCaseInsensitive = true;
-            sections = System.Text.Json.JsonSerializer.Deserialize<PlexSections>(sectionsResponse.body, options);
+#pragma warning disable IL2026
+            sections = System.Text.Json.JsonSerializer.Deserialize<PlexSections>(sectionsResponse.body, options)!;
+#pragma warning restore IL2026
         }
         catch (Exception ex)
         {
@@ -123,7 +120,7 @@ public abstract class PlexNode:Node
     protected abstract int ExecuteActual(NodeParameters args, PlexDirectory directory, string url, string mappedPath, string accessToken);
 
 
-    private Func<HttpClient, string, (bool success, string body)> _GetWebRequest;
+    private Func<HttpClient, string, (bool success, string body)>? _GetWebRequest;
     internal Func<HttpClient, string, (bool success, string body)> GetWebRequest
     {
         get
@@ -148,7 +145,7 @@ public abstract class PlexNode:Node
             return _GetWebRequest;
         }
     }
-    private Func<HttpClient, string, (bool success, string body)> _PutWebRequest;
+    private Func<HttpClient, string, (bool success, string body)>? _PutWebRequest;
     internal Func<HttpClient, string, (bool success, string body)> PutWebRequest
     {
         get

@@ -460,23 +460,6 @@ public class LocalFileService : IFileService
         FileHelper.ChangeOwner(logger, path, file: isFile, ownerGroup: OwnerGroup);
         
         logMethod(logger.ToString());
-        
-        return;
-        
-
-        if (OperatingSystem.IsLinux())
-        {
-            var filePermissions = FileHelper.ConvertLinuxPermissionsToUnixFileMode(permissions.Value);
-            if (filePermissions == UnixFileMode.None)
-            {
-                logMethod("SetPermissions: Invalid file permissions: " + permissions.Value);
-                return;
-            }
-            
-            File.SetUnixFileMode(path, filePermissions);
-            logMethod($"SetPermissions: Permission [{filePermissions}] set on file: " + path);
-        }
-
     }
 }
 #endif

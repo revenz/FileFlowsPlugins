@@ -111,6 +111,15 @@ public class ComicConverter: Node
     /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
+        var localFileResult = args.FileService.GetLocalPath(args.WorkingFile);
+        if (localFileResult.Failed(out var error))
+        {
+            args.FailureReason = "Failed getting local file: " + error;
+            args.Logger?.ELog(args.FailureReason);
+            return -1;
+        }
+
+        var localFile = localFileResult.Value;
         string currentFormat = new FileInfo(args.WorkingFile).Extension;
         if (string.IsNullOrEmpty(currentFormat))
         {
@@ -123,9 +132,12 @@ public class ComicConverter: Node
             currentFormat = currentFormat[1..]; // remove the dot
         currentFormat = currentFormat.ToUpper();
 
+        args.Logger?.ILog("Current Format: " + currentFormat);
+        args.Logger?.ILog("Desired Format: " + Format);
 
         var metadata = new Dictionary<string, object>();
-        int pageCount = GetPageCount(args, currentFormat, args.WorkingFile);
+        int pageCount = GetPageCount(args, currentFormat, localFile);
+        args.Logger?.ILog("Page Count: " + pageCount);
         metadata.Add("Format", currentFormat);
         metadata.Add("Pages", pageCount);
         args.RecordStatisticRunningTotals("COMIC_FORMAT", currentFormat);
@@ -143,8 +155,14 @@ public class ComicConverter: Node
         string destinationPath = Path.Combine(args.TempPath, Guid.NewGuid().ToString());
         
         Directory.CreateDirectory(destinationPath);
-        if (Helpers.ComicExtractor.Extract(args, args.WorkingFile, destinationPath, halfProgress: true, cancellation: cancellation.Token) == false)
+        if (Helpers.ComicExtractor
+            .Extract(args, localFile, destinationPath, halfProgress: true, cancellation: cancellation.Token)
+            .Failed(out error))
+        {
+            args.FailureReason = "Failed to extract comic: " + error;
+            args.Logger?.ELog(args.FailureReason);
             return -1;
+        }
 
         if (EnsureTopDirectory)
         {
@@ -186,19 +204,7 @@ public class ComicConverter: Node
                         File.Delete(file);
                         continue;
                     }
-
-                    // if (file.ToLowerInvariant().EndsWith(".jp2"))
-                    // {
-                    //     // special case
-                    //     if (ConvertJp2ToJpeg(args.Logger, ref file) == false)
-                    //     {
-                    //         args.FailureReason =
-                    //             "JPEG 2000 File detected which is only supported if ImageMagick is installed.";
-                    //         args.Logger?.ELog(args.FailureReason);
-                    //         break;
-                    //     }
-                    // }
-
+                    
                     if (rgxImages.IsMatch(file) == false)
                         continue;
 
@@ -249,60 +255,6 @@ public class ComicConverter: Node
         return 1;
     }
     
-    
-    
-
-    /// <summary>
-    /// Tries to use imagemagick to convert an image to JPEG
-    /// </summary>
-    /// <param name="logger">The logger</param>
-    /// <param name="file">the file to convert</param>
-    /// <returns>true if converted</returns>
-    private bool ConvertJp2ToJpeg(ILogger logger, ref string file)
-    {
-        try
-        {
-
-            string outFile = Path.ChangeExtension(file, "jpg");
-            // Start the ImageMagick convert process
-            ProcessStartInfo startInfo = new ProcessStartInfo
-            {
-                FileName = "convert", // ImageMagick's convert command
-                ArgumentList = { file, outFile },
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
-
-            using Process process = Process.Start(startInfo);
-            // Capture output
-            string output = process.StandardOutput.ReadToEnd();
-            string error = process.StandardError.ReadToEnd();
-            process.WaitForExit();
-
-            // Check for errors
-            if (string.IsNullOrEmpty(error) == false)
-            {
-                logger?.ELog($"Error occurred: {error}");
-                return false;
-            }
-            logger?.ILog("Converted JPEG 2000 File: " + file);
-            File.Delete(file);
-            
-            file = outFile;
-            
-
-            // Conversion successful
-            return true;
-        }
-        catch (Exception ex)
-        {
-            logger.ELog($"An error occurred converted the JPEG 2000 image: {ex.Message}");
-            return false;
-        }
-    }
-
     /// <summary>
     /// Cancels the conversion
     /// </summary>
@@ -318,9 +270,9 @@ public class ComicConverter: Node
     /// </summary>
     /// <param name="args">the node parameters</param>
     /// <param name="format">the format</param>
-    /// <param name="workingFile">the working file to get the page count for</param>
+    /// <param name="file">the file to get the page count for</param>
     /// <returns>the number of pages</returns>
-    private int GetPageCount(NodeParameters args, string format, string workingFile)
+    private int GetPageCount(NodeParameters args, string format, string file)
     {
         if (format == null)
             return 0;
@@ -328,9 +280,9 @@ public class ComicConverter: Node
         switch (format)
         {
             case "PDF":
-                return Helpers.PdfHelper.GetPageCount(workingFile);
+                return Helpers.PdfHelper.GetPageCount(file);
             default:
-                return Helpers.GenericExtractor.GetImageCount(args, workingFile);
+                return args.ArchiveHelper.GetFileCount(file,@"\.(jpeg|jpg|jpe|jp2|png|bmp|tiff|webp|gif)$");
         }
     }
 
@@ -347,7 +299,7 @@ public class ComicConverter: Node
         string file = Path.Combine(args.TempPath, Guid.NewGuid() + "." + format.ToLower());
         args.Logger?.ILog("Creating comic: " + file);
         if (format == "CBZ")
-            Helpers.ZipHelper.Compress(args, directory, file);
+            args.ArchiveHelper.Compress(directory, file);
         //else if (format == "CB7")
         //    Helpers.SevenZipHelper.Compress(args, directory, file + ".7z");
         else if (format == "PDF")

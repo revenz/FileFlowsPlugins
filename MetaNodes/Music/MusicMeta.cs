@@ -140,15 +140,18 @@ namespace MetaNodes.Music
                         return tag.Artists;
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception)
+            {
+                // Ignored
+            }
 
             // try find it from the filename....
             var parts = args.RelativeFile.Replace("\\", "/").Split('/');
             if (parts.Length == 3)
                 return parts[0]; // artist/album/song.mp3
-            else if (parts.Length > 3)
+            if (parts.Length > 3)
                 return parts[parts.Length - 3];
-            else if (parts.Length == 2)
+            if (parts.Length == 2)
                 return parts[0];
 
             // not in path. try looking for it in the filename

@@ -24,7 +24,11 @@ public class ImageResizer: ImageNode
     [Select(nameof(ResizeModes), 2)]
     public ResizeMode Mode { get; set; }
 
-    private static List<ListOption> _ResizeModes;
+    private static List<ListOption>? _ResizeModes;
+    
+    /// <summary>
+    /// Gets the resize modes
+    /// </summary>
     public static List<ListOption> ResizeModes
     {
         get

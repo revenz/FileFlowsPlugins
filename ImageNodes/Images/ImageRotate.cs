@@ -15,7 +15,10 @@ public class ImageRotate: ImageNode
     [Select(nameof(AngleOptions), 2)]
     public int Angle { get; set; }
 
-    private static List<ListOption> _AngleOptions;
+    private static List<ListOption>? _AngleOptions;
+    /// <summary>
+    /// Gest the Angle Options
+    /// </summary>
     public static List<ListOption> AngleOptions
     {
         get
@@ -24,9 +27,9 @@ public class ImageRotate: ImageNode
             {
                 _AngleOptions = new List<ListOption>
                 {
-                    new ListOption { Value = 90, Label = "90"},
-                    new ListOption { Value = 180, Label = "180"},
-                    new ListOption { Value = 270, Label = "270"}
+                    new () { Value = 90, Label = "90"},
+                    new () { Value = 180, Label = "180"},
+                    new () { Value = 270, Label = "270"}
                 };
             }
             return _AngleOptions;

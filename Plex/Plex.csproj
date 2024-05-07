@@ -14,6 +14,7 @@
     <Product>Plex</Product>
     <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
     <Description>Plex plugin that lets you update Plex with any changes</Description>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <None Update="i18n\*.json">

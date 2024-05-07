@@ -168,9 +168,9 @@ File shrunk in size by: {{ difference | file_size }} / {{ percent }}%
 
 
             string url = $"https://discordapp.com/api/webhooks/{settings.WebhookId}/{settings.WebhookToken}";
-
+#pragma warning disable IL2026
             var content = new StringContent(JsonSerializer.Serialize(webhook), Encoding.UTF8, "application/json");
-
+#pragma warning restore IL2026
             using var httpClient = new HttpClient();
             var response = httpClient.PostAsync(url, content).Result;
             if (response.IsSuccessStatusCode)

@@ -14,6 +14,7 @@
     <Product>Discord</Product>
     <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
     <Description>Allows you to send messages to a Discord server.</Description>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="DiscordNodes.en.json" />

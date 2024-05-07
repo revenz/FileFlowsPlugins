@@ -13,6 +13,7 @@
     <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
     <Description>Basic flow elements for FileFlows.  This plugin contains basic and common flow elements to process files.
 This plugin is required for FileFlows to work.</Description>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;CS8618;CS8601;CS8602;CS8603;CS8604;CS8618;CS8625;CS8765;CS8767;CS8618l;CS8600</NoWarn>
@@ -24,9 +25,6 @@ This plugin is required for FileFlows to work.</Description>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="3.3.1" />
     <PackageReference Include="MSTest.TestFramework" Version="3.3.1" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="SharpCompress" Version="0.36.0" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Plugin">

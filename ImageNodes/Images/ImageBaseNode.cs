@@ -16,7 +16,7 @@ public abstract class ImageBaseNode:Node
     /// <summary>
     /// Gets or sets the current format of the image.
     /// </summary>
-    protected string CurrentFormat { get; private set; }
+    protected string? CurrentFormat { get; private set; }
 
     /// <summary>
     /// Gets or sets the current width of the image.
@@ -72,7 +72,7 @@ public abstract class ImageBaseNode:Node
     /// </summary>
     /// <param name="args">The NodeParameters</param>
     /// <param name="variables">Additional variables associated with the image (optional).</param>
-    protected void UpdateImageInfo(NodeParameters args, Dictionary<string, object> variables = null)
+    protected void UpdateImageInfo(NodeParameters args, Dictionary<string, object>? variables = null)
     {
         string extension = FileHelper.GetExtension(args.WorkingFile).ToLowerInvariant().TrimStart('.');
         if (extension == "heic")
@@ -124,7 +124,7 @@ public abstract class ImageBaseNode:Node
     /// <param name="format">The format of the image.</param>
     /// <param name="variables">Additional variables associated with the image (optional).</param>
     /// <param name="dateTaken">The date when the image was taken (optional).</param>
-    protected void UpdateImageInfo(NodeParameters args, int width, int height, string format, Dictionary<string, object> variables = null, DateTime? dateTaken = null)
+    protected void UpdateImageInfo(NodeParameters args, int width, int height, string format, Dictionary<string, object>? variables = null, DateTime? dateTaken = null)
     {
         var imageInfo = new ImageInfo
         {

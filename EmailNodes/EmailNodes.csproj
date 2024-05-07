@@ -16,6 +16,7 @@
     <Product>Email</Product>
     <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
     <Description>This plugin allows you to send an email while executing a Flow.</Description>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup Condition=" '$(Configuration)' == 'Debug'">
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />

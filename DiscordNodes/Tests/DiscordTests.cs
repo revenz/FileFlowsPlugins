@@ -11,7 +11,7 @@ public class DiscordTests
     [TestMethod]
     public void Discord_Simple_Message()
     {
-        var args = new NodeParameters("test.file", new TestLogger(), false, string.Empty, null);;
+        var args = new NodeParameters("test.file", new TestLogger(), false, string.Empty, null!);
         args.GetPluginSettingsJson = (string input) =>
         {
             return File.ReadAllText("../../../settings.json");
@@ -26,7 +26,7 @@ public class DiscordTests
     [TestMethod]
     public void Discord_Basic_Message()
     {
-        var args = new NodeParameters("test.file", new TestLogger(), false, string.Empty, null);;
+        var args = new NodeParameters("test.file", new TestLogger(), false, string.Empty, null!);
         args.GetPluginSettingsJson = (string input) =>
         {
             return File.ReadAllText("../../../settings.json");

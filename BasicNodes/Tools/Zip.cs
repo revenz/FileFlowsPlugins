@@ -42,7 +42,7 @@ public class Zip : Node
     public string DestinationPath
     {
         get => _DestinationPath;
-        set { _DestinationPath = value ?? ""; }
+        set => _DestinationPath = value ?? string.Empty;
     }
 
     /// <summary>
@@ -52,7 +52,7 @@ public class Zip : Node
     public string DestinationFile
     {
         get => _DestinationFile;
-        set { _DestinationFile = value ?? ""; }
+        set => _DestinationFile = value ?? string.Empty;
     }
 
     /// <summary>
@@ -121,39 +121,16 @@ public class Zip : Node
                     args.Logger?.ELog("Cannot zip remote directories");
                     return -1;
                 }
-                var dir = new DirectoryInfo(args.WorkingFile);
-                var files = dir.GetFiles("*.*", SearchOption.AllDirectories);
-                using FileStream fs = new FileStream(tempZip, FileMode.Create);
-                using ZipArchive arch = new ZipArchive(fs, ZipArchiveMode.Create);
-                args?.PartPercentageUpdate(0);
-                float current = 0;
-                float count = files.Length;
-                foreach (var file in files)
+                args.ArchiveHelper.Compress(args.WorkingFile, tempZip, allDirectories: true, percentCallback:(percent) =>
                 {
-                    ++count;
-                    if (string.Equals(file.FullName, destFile, StringComparison.CurrentCultureIgnoreCase))
-                        continue; // cant zip the zip we are creating
-                    string relative = file.FullName[(dir.FullName.Length + 1)..];
-                    try
-                    {
-                        arch.CreateEntryFromFile(file.FullName, relative, CompressionLevel.SmallestSize);
-                    }
-                    catch (Exception ex)
-                    {
-                        args.Logger?.WLog("Failed to add file to zip: " + file.FullName + " => " + ex.Message);
-                    }
-
-                    args?.PartPercentageUpdate((current / count) * 100);
-                }
-
+                    args.PartPercentageUpdate(percent);
+                });
                 args?.PartPercentageUpdate(100);
             }
             else
             {
                 string localFile = args.FileService.GetLocalPath(args.WorkingFile);
-                using FileStream fs = new FileStream(tempZip, FileMode.Create);
-                using ZipArchive arch = new ZipArchive(fs, ZipArchiveMode.Create);
-                arch.CreateEntryFromFile(localFile, FileHelper.GetShortFileName(args.LibraryFileName));
+                args.ArchiveHelper.Compress(localFile, tempZip);
             }
 
             if (System.IO.File.Exists(tempZip) == false)

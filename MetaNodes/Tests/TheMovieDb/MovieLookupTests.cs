@@ -186,10 +186,12 @@ public class MovieLookupTests
         
         var md = MovieLookup.GetVideoMetadata(args, movieApi, 414906, @"D:\videos\temp");
         Assert.IsNotNull(md);
+#pragma warning disable IL2026
         string json = System.Text.Json.JsonSerializer.Serialize(md, new System.Text.Json.JsonSerializerOptions
         {
             WriteIndented = true
         });
+#pragma warning restore IL2026
         File.WriteAllText(@"D:\videos\metadata.json", json);
     }
     [TestMethod]

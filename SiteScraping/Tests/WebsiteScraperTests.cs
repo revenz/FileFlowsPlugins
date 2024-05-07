@@ -15,7 +15,7 @@ public class WebsiteScraperTests
         var temp = "/home/john/Pictures/scrapped/temp";
         if (Directory.Exists(temp) == false)
             Directory.CreateDirectory(temp);
-        var args = new NodeParameters(file, logger, false, string.Empty, null)
+        var args = new NodeParameters(file, logger, false, string.Empty, null!)
         {
             TempPath = temp
         };

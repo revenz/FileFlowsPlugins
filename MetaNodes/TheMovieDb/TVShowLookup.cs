@@ -120,7 +120,7 @@ public class TVShowLookup : Node
         return 1;
     }
 
-    internal static (string LookupName, string Year) GetLookupName(string filename, bool useFolderName)
+    internal static (string? LookupName, string? Year) GetLookupName(string filename, bool useFolderName)
     {
         var fileInfo = new FileInfo(filename);
         string lookupName;

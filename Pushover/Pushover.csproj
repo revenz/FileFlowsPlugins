@@ -13,6 +13,7 @@
     <Product>Pushover</Product>
     <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
     <Description>Lets you send Pushover messages to a server</Description>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <None Update="i18n\*.json">

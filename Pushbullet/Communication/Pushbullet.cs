@@ -117,12 +117,14 @@ File shrunk in size by: {{ difference | file_size }} / {{ percent }}%
             httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", settings.ApiToken);
 
             // Create the request content
+#pragma warning disable IL2026
             var content = new StringContent(JsonSerializer.Serialize(
             new {
                 type = "note",
                 title,
                 body 
             }), Encoding.UTF8, "application/json");
+#pragma warning restore IL2026
 
             
             var response = httpClient.PostAsync("https://api.pushbullet.com/v2/pushes", content).Result;

@@ -23,11 +23,13 @@ public class FFprobeAudioInfo
     {
         try
         {
-            var ffAudioFormatInfo = System.Text.Json.JsonSerializer.Deserialize<FFprobeAudioInfo>(json,
+#pragma warning disable IL2026
+            var ffAudioFormatInfo = JsonSerializer.Deserialize<FFprobeAudioInfo>(json,
                 new JsonSerializerOptions()
                 {
                     PropertyNameCaseInsensitive = true
                 });
+#pragma warning restore IL2026
             return ffAudioFormatInfo.Format;
         }
         catch (Exception ex)

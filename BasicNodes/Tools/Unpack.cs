@@ -1,9 +1,6 @@
-using System.Diagnostics;
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
-using System.IO.Compression;
 using FileFlows.BasicNodes;
-using SharpCompress.Archives;
 using System.IO;
 
 namespace BasicNodes.Tools;
@@ -13,9 +10,13 @@ namespace BasicNodes.Tools;
 /// </summary>
 public class Unpack: Node
 {
+    /// <inheritdoc />
     public override int Inputs => 1;
+    /// <inheritdoc />
     public override int Outputs => 1;
+    /// <inheritdoc />
     public override FlowElementType Type => FlowElementType.Process;
+    /// <inheritdoc />
     public override string Icon => "fas fa-file-archive";
     /// <summary>
     /// Gets the Help URL for this element
@@ -25,6 +26,9 @@ public class Unpack: Node
     private string _DestinationPath = string.Empty;
     private string _file = string.Empty;
 
+    /// <summary>
+    /// Gets or sets the destination path
+    /// </summary>
     [Folder(1)]
     public string DestinationPath
     {
@@ -32,13 +36,17 @@ public class Unpack: Node
         set { _DestinationPath = value ?? ""; }
     }
 
+    /// <summary>
+    /// Gets or sets the file to unpack
+    /// </summary>
     [TextVariable(2)]
     public string File
     {
         get => _file;
-        set { _file = value ?? ""; }
+        set => _file = value ?? string.Empty;
     }
 
+    /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
         try
@@ -58,10 +66,11 @@ public class Unpack: Node
             if (Directory.Exists(destDir) == false)
                 Directory.CreateDirectory(destDir);
 
-            if (fileInfo.Extension.ToLower() == ".zip")
-                ZipFile.ExtractToDirectory(filename, destDir, true);
-            else    
-                Extract(args, args.WorkingFile, destDir);
+            args.ArchiveHelper.Extract(filename, destDir, (percent) =>
+            {
+                args.PartPercentageUpdate(percent);
+            });
+
             
             return 1;
         }
@@ -70,60 +79,5 @@ public class Unpack: Node
             args.Logger?.ELog("Failed unzip: " + ex.Message + Environment.NewLine + ex.StackTrace);
             return -1;
         }
-    }
-    
-    /// <summary>
-    /// Unpacks a file
-    /// </summary>
-    /// <param name="args">the node parameters</param>
-    /// <param name="workingFile">the file to extract</param>
-    /// <param name="destinationPath">the location to extract to</param>
-    private void Extract(NodeParameters args, string workingFile, string destinationPath)
-    {
-        bool isRar = workingFile.ToLowerInvariant().EndsWith(".cbr") || workingFile.ToLowerInvariant().EndsWith(".rar");
-        try
-        {
-            ArchiveFactory.WriteToDirectory(workingFile, destinationPath, new ()
-            {
-                ExtractFullPath = true
-            });
-        }
-        catch (Exception ex) when (isRar && ex.Message.Contains("Unknown Rar Header"))
-        {
-            UnrarCommandLineExtract(args, workingFile, destinationPath);
-        }
-    }
-    
-    
-    /// <summary>
-    /// Unpacks a folder
-    /// </summary>
-    /// <param name="args">the node parameters</param>
-    /// <param name="workingFile">the file to extract</param>
-    /// <param name="destinationPath">the location to extract to</param>
-    void UnrarCommandLineExtract(NodeParameters args, string workingFile, string destinationPath)
-    {
-        var process = new Process();
-        string unrar = args.GetToolPath("unrar")?.EmptyAsNull() ?? "unrar";
-        process.StartInfo.FileName = unrar;
-        process.StartInfo.ArgumentList.Add("x");
-        process.StartInfo.ArgumentList.Add("-o+");
-        process.StartInfo.ArgumentList.Add(workingFile);
-        process.StartInfo.ArgumentList.Add(destinationPath);
-        process.StartInfo.UseShellExecute = false;
-        process.StartInfo.RedirectStandardOutput = true;
-        process.StartInfo.RedirectStandardError = true;
-        process.StartInfo.CreateNoWindow = true;
-        process.Start();
-        string output = process.StandardError.ReadToEnd();
-        string error = process.StandardError.ReadToEnd();
-        process.WaitForExit();
-
-        args.Logger?.ILog("Unrar output:\n" + output);
-        if (string.IsNullOrWhiteSpace(error) == false)
-            args.Logger?.ELog("Unrar error:\n" + error);
-
-        if (process.ExitCode != 0)
-            throw new Exception(error?.EmptyAsNull() ?? "Failed to extract rar file");
     }
 }

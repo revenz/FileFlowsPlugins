@@ -11,7 +11,7 @@ public class PushoverTests
     [TestMethod]
     public void Pushover_Basic_Message()
     {
-        var args = new NodeParameters("test.file", new TestLogger(), false, string.Empty, null);
+        var args = new NodeParameters("test.file", new TestLogger(), false, string.Empty, null!);
         args.GetPluginSettingsJson = (string input) =>
         {
             return File.ReadAllText("../../../../../pushover.json");
