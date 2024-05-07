@@ -155,7 +155,10 @@ public class CreateComicInfo : Node
         var parts = shortname.Split(" - ");
         if (parts.Length < 2)
         {
-            return Result<ComicInfo>.Fail("Invalid filename: " + shortname);
+            parts = shortname.Split('#');
+            if (parts.Length < 2)
+                return Result<ComicInfo>.Fail("Invalid filename: " + shortname);
+            parts[1] = '#' + parts[1];
         }
 
         var issueNumberMatch = Regex.Match(parts[1], @"#(?<first>\d+)(?:\s+of\s+#(?<second>\d+))?");
