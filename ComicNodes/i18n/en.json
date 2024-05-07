@@ -40,7 +40,9 @@
           "Publisher": "Publisher",
           "Publisher-Help": "If the comic is in a publisher directory, see help for more information.",
           "RenameFile": "Rename File",
-          "RenameFile-Help": "If the file should be renamed `Series - Issue - Title.extension`"
+          "RenameFile-Help": "If the file should be renamed `Series - Issue - Title.extension`",
+          "IssueDigits": "Issue Digits",
+          "IssueDigits-Help": "Will pad the issue number with leading zeros for up to this amount.\nFor example, for issue 1 if padding is 3, then the issue will appear as #001"
         },
         "Outputs": {
           "1": "ComicInfo added to comic archive",

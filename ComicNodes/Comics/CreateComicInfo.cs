@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Xml;
 using FileFlows.ComicNodes.Helpers;
 using FileHelper = FileFlows.Plugin.Helpers.FileHelper;
@@ -35,6 +36,14 @@ public class CreateComicInfo : Node
     /// </summary>
     [Boolean(2)]
     public bool RenameFile { get; set; }
+    
+    /// <summary>
+    /// Gets or sets how many digits the issues should use when renaming
+    /// </summary>
+    [NumberInt(3)]
+    [DefaultValue(3)]
+    [ConditionEquals(nameof(RenameFile), true)]
+    public int IssueDigits { get; set; }
 
     /// <inheritdoc />
     public override int Execute(NodeParameters args)
@@ -130,7 +139,7 @@ public class CreateComicInfo : Node
 
         if (RenameFile)
         {
-            var newNameResult = GetNewName(info, FileHelper.GetExtension(args.WorkingFile));
+            var newNameResult = GetNewName(info, FileHelper.GetExtension(args.WorkingFile), IssueDigits);
             if (newNameResult.Failed(out error))
             {
                 args.Logger?.WLog(error);
@@ -155,8 +164,9 @@ public class CreateComicInfo : Node
     /// </summary>
     /// <param name="info">the comic info</param>
     /// <param name="extension">the extension to use</param>
+    /// <param name="issueDigits">the number of digits to pad by</param>
     /// <returns>the new name</returns>
-    internal static Result<string> GetNewName(ComicInfo info, string extension)
+    internal static Result<string> GetNewName(ComicInfo info, string extension, int issueDigits)
     {
         if (info.Number == null && info.Volume?.StartsWith("Volume") == false)
             return Result<string>.Fail("No issue number found, cannot rename");
@@ -165,7 +175,25 @@ public class CreateComicInfo : Node
 
         string name = info.Series;
         if (info.Number != null)
-            name += $" - #{info.Number + (info.Count > 0 ? $" (of {info.Count})" : "")}";
+        {
+            if (issueDigits > 0)
+            {
+                // Pad the number with leading zeros based on the specified number of digits
+                string paddedNumber = info.Number.Value.ToString().PadLeft(issueDigits, '0');
+
+                // Add the padded number to the name
+                name += $" - #{paddedNumber}";
+
+                // Optionally add information about the count
+                if (info.Count > 0)
+                {
+                    name += $" (of {info.Count})";
+                }
+            }
+            else
+                name += $" - #{info.Number + (info.Count > 0 ? $" (of {info.Count})" : "")}";
+            
+        }
         else
             name += " - " + info.Volume;
             
@@ -217,7 +245,7 @@ public class CreateComicInfo : Node
                 var lastChanceMatch = Regex.Match(shortname, @"(\d)+$");
                 if(lastChanceMatch.Success)
                 {
-                    info.Number = int.Parse(lastChanceMatch.Groups[1].Value);
+                    info.Number = int.Parse(lastChanceMatch.Value);
                     return info;
                 }
                 return Result<ComicInfo>.Fail("Invalid filename: " + shortname);

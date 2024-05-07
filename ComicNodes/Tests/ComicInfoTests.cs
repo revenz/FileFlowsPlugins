@@ -34,7 +34,7 @@ public class ComicInfoTests : TestBase
         TestContext.WriteLine(new string('-', 70));
         TestContext.WriteLine(xml);
         
-        var name = CreateComicInfo.GetNewName(info, "cbz");
+        var name = CreateComicInfo.GetNewName(info, "cbz", 0);
         Assert.AreEqual("Batman (1939) - #42 - Batman vs. Joker (old) (great) (amazing).cbz", name.Value);
     }
     
@@ -61,7 +61,7 @@ public class ComicInfoTests : TestBase
         TestContext.WriteLine(new string('-', 70));
         TestContext.WriteLine(xml);
         
-        var name = CreateComicInfo.GetNewName(info, "cbz");
+        var name = CreateComicInfo.GetNewName(info, "cbz", 2);
         Assert.AreEqual("He-Man and the Masters of the Universe (2013) - #123 - Desperate Times.cbz", name.Value);
     }
 
@@ -88,9 +88,37 @@ public class ComicInfoTests : TestBase
         TestContext.WriteLine(new string('-', 70));
         TestContext.WriteLine(xml);
         
-        var name = CreateComicInfo.GetNewName(info, "cbz");
+        var name = CreateComicInfo.GetNewName(info, "cbz", 0);
         Assert.AreEqual("Ultimate Spider-Man (2000) - Volume 5 - Public Scrutiny.cbz", name.Value);
     }
+    
+    
+    [TestMethod]
+    public void NameAndNumber()
+    {
+        var result = CreateComicInfo.GetInfo(Logger,
+            "/home/john/Comics/Marvel/X-Men/X-Man/X-Man 45.cbz", 
+            "/home/john/Comics",
+            true);
+
+        TestContext.WriteLine(Logger.ToString());
+
+        Assert.IsFalse(result.IsFailed);
+        var info = result.Value;
+        Assert.IsNotNull(info);
+        Assert.AreEqual("Marvel", info.Publisher);
+        Assert.AreEqual("X-Man", info.Series);
+        Assert.AreEqual(45, info.Number);
+
+        var xml = CreateComicInfo.SerializeToXml(info);
+        Assert.IsFalse(string.IsNullOrWhiteSpace(xml));
+        TestContext.WriteLine(new string('-', 70));
+        TestContext.WriteLine(xml);
+        
+        var name = CreateComicInfo.GetNewName(info, "cbz", 3);
+        Assert.AreEqual("X-Man - #045.cbz", name.Value);
+    }
+
     
     [TestMethod]
     public void PhysicalFileTest()
