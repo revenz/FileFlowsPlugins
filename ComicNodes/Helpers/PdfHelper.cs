@@ -22,7 +22,7 @@ internal class PdfHelper
 
             var file = Path.Combine(destinationDirectory,
                 filePrefix + "-" + i.ToString(new string('0', pageCount.ToString().Length)));
-            var result = args.ImageHelper.SaveImage(rawBytes, file);
+            var result = args!.ImageHelper.SaveImage(rawBytes, file);
             if (result.Failed(out string error))
             {
                 args.Logger?.WLog("Failed to save image: " + error);
@@ -52,8 +52,8 @@ internal class PdfHelper
     /// <param name="halfProgress">if the NodePArameter.PartPercentageUpdate should start at 50%</param>
     internal static void Create(NodeParameters args, string directory, string output, bool halfProgress = true)
     {
-        if (args?.PartPercentageUpdate != null)
-            args?.PartPercentageUpdate(halfProgress ? 50 : 0);
+        if (args.PartPercentageUpdate != null)
+            args.PartPercentageUpdate(halfProgress ? 50 : 0);
         var rgxImages = new Regex(@"\.(jpeg|jpg|jpe|png|webp)$");
         var files = Directory.GetFiles(directory).Where(x => rgxImages.IsMatch(x)).ToArray();
 
@@ -64,11 +64,11 @@ internal class PdfHelper
             if (file.ToLowerInvariant().EndsWith(".png") || file.ToLowerInvariant().EndsWith(".webp"))
             {
                 string jpegImage = Path.ChangeExtension(file, "jpg");
-                args.ImageHelper.ConvertToJpeg(file, jpegImage, null);
+                args!.ImageHelper.ConvertToJpeg(file, jpegImage, null);
                 file = jpegImage;
             }
 
-            (int width, int height) = args.ImageHelper.GetDimensions(file).Value;
+            (int width, int height) = args!.ImageHelper.GetDimensions(file).Value;
             
             var jpeg = new JpegImage
             {

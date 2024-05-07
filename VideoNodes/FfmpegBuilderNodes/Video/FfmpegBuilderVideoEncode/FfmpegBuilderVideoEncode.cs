@@ -102,7 +102,7 @@ public partial class FfmpegBuilderVideoEncode:VideoEncodeBase
 
         string encoder = Environment.GetEnvironmentVariable("HW_OFF") == "1" || 
             (
-                args.Variables?.TryGetValue("HW_OFF", out object oHwOff) == true && (oHwOff as bool? == true || oHwOff?.ToString() == "1")
+                args.Variables?.TryGetValue("HW_OFF", out object? oHwOff) == true && (oHwOff as bool? == true || oHwOff?.ToString() == "1")
             ) ? ENCODER_CPU : this.Encoder;
 
         args.Logger?.ILog("Quality: " + Quality);
@@ -171,8 +171,8 @@ public partial class FfmpegBuilderVideoEncode:VideoEncodeBase
     private static IEnumerable<string> H264(NodeParameters args, bool tenBit, int quality, string encoder, string speed)
     {
         List<string> parameters = new List<string>();
-        string[] bit10Filters = null;
-        string[] non10BitFilters = null;
+        string[]? bit10Filters = null;
+        string[]? non10BitFilters = null;
         if (encoder == ENCODER_CPU)
             parameters.AddRange(H26x_CPU(false, quality, speed, out bit10Filters));
         else if(IsMac && encoder == ENCODER_MAC)
@@ -215,8 +215,8 @@ public partial class FfmpegBuilderVideoEncode:VideoEncodeBase
     {
         // hevc_qsv -load_plugin hevc_hw -pix_fmt p010le -profile:v main10 -global_quality 21 -g 24 -look_ahead 1 -look_ahead_depth 60
         List<string> parameters = new List<string>();
-        string[] bit10Filters = null;
-        string[] non10BitFilters = null;
+        string[]? bit10Filters = null;
+        string[]? non10BitFilters = null;
         bool qsv = false;
         if (encoder == ENCODER_CPU)
             parameters.AddRange(H26x_CPU(true, quality, speed, out bit10Filters));

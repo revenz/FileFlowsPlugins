@@ -12,7 +12,7 @@ public class ComicTests : TestBase
     public void Comic_Pdf_To_Cbz()
     {
         var logger = new TestLogger();
-        var args = new NodeParameters(@"D:\comics\testfiles\fp1.pdf", logger, false, string.Empty, null);
+        var args = new NodeParameters(@"D:\comics\testfiles\fp1.pdf", logger, false, string.Empty, null!);
         args.TempPath = @"D:\comics\temp";
 
         var node = new ComicConverter();
@@ -27,7 +27,7 @@ public class ComicTests : TestBase
     public void Comic_Cbz_To_Pdf()
     {
         var logger = new TestLogger();
-        var args = new NodeParameters(@"D:\comics\testfiles\mb.cbz", logger, false, string.Empty, null);
+        var args = new NodeParameters(@"D:\comics\testfiles\mb.cbz", logger, false, string.Empty, null!);
         args.TempPath = @"D:\comics\temp";
 
         var node = new ComicConverter();
@@ -42,7 +42,7 @@ public class ComicTests : TestBase
     public void Comic_Cb7_To_Cbz()
     {
         var logger = new TestLogger();
-        var args = new NodeParameters(@"D:\comics\testfiles\cb7.cb7", logger, false, string.Empty, null);
+        var args = new NodeParameters(@"D:\comics\testfiles\cb7.cb7", logger, false, string.Empty, null!);
         args.TempPath = @"D:\comics\temp";
 
         var node = new ComicConverter();
@@ -57,7 +57,7 @@ public class ComicTests : TestBase
     public void Comic_Cbr_To_Cbz()
     {
         var logger = new TestLogger();
-        var args = new NodeParameters(@"D:\comics\testfiles\bm001.cbr", logger, false, string.Empty, null);
+        var args = new NodeParameters(@"D:\comics\testfiles\bm001.cbr", logger, false, string.Empty, null!);
         args.TempPath = @"D:\comics\temp";
 
         var node = new ComicConverter();

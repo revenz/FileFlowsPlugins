@@ -29,7 +29,7 @@ public class ComicConverter: Node
     [Select(nameof(FormatOptions), 1)]
     public string Format { get; set; } = string.Empty;
 
-    private static List<ListOption> _FormatOptions;
+    private static List<ListOption>? _FormatOptions;
     /// <summary>
     /// Gets the format options
     /// </summary>
@@ -70,7 +70,7 @@ public class ComicConverter: Node
     [Select(nameof(CodecOptions), 4)]
     public string Codec { get; set; } = string.Empty;
 
-    private static List<ListOption> _CodecOptions;
+    private static List<ListOption>? _CodecOptions;
     /// <summary>
     /// Gets the format options
     /// </summary>

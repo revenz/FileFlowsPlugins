@@ -67,7 +67,7 @@ public class FfmpegBuilderSetDefaultTrack: FfmpegBuilderNode
     public override int Execute(NodeParameters args)
     {
         bool changes = false;
-        string language = args.ReplaceVariables(Language, stripMissing: true)?.ToLowerInvariant();
+        string? language = args.ReplaceVariables(Language, stripMissing: true)?.ToLowerInvariant();
         if (string.IsNullOrWhiteSpace(language))
         {
             // use index

@@ -96,7 +96,7 @@ public class FFMpegEncoder
         var result = new ProcessResult();
 
         var hwDecoderIndex = arguments.FindIndex(x => x == "-hwaccel");
-        string decoder = null;
+        string? decoder = null;
         if (hwDecoderIndex >= 0 && hwDecoderIndex < arguments.Count - 2)
         {
             var decoder2 = arguments[hwDecoderIndex + 1].ToLowerInvariant();
@@ -131,7 +131,7 @@ public class FFMpegEncoder
             OnStatChange?.Invoke("Decoder", decoder, recordStatistic: true);
         }
 
-        string encoder = null;
+        string? encoder = null;
         if (arguments.Any(x =>
                 x.ToLowerInvariant().Contains("hevc_qsv") || x.ToLowerInvariant().Contains("h264_qsv") ||
                 x.ToLowerInvariant().Contains("av1_qsv")))

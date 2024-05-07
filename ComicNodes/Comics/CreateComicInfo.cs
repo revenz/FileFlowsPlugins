@@ -66,7 +66,7 @@ public class CreateComicInfo : Node
         }
         args.Logger?.ILog("Got ComicInfo from filename");
 
-        var newMetadata = new Dictionary<string, object>
+        var newMetadata = new Dictionary<string, object?>
             {
                 { nameof(info.Value.Title), info.Value.Title },
                 { nameof(info.Value.Series), info.Value.Series },

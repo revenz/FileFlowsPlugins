@@ -272,19 +272,19 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
         if (comparison.StartsWith("{") && comparison.EndsWith("}"))
         {
             comparison = comparison[1..^1];
-            if (args?.Variables?.TryGetValue(comparison, out object variable) == true)
+            if (args?.Variables?.TryGetValue(comparison, out object? variable) == true)
                 comparison = variable?.ToString() ?? string.Empty;
             else
                 comparison = string.Empty;
         }
-        else if (args?.Variables?.TryGetValue(comparison, out object oVariable) == true)
+        else if (args?.Variables?.TryGetValue(comparison, out object? oVariable) == true)
         {
             comparison = oVariable?.ToString() ?? string.Empty;
         }
 
         if (property == nameof(stream.Language))
         {
-            object oOriginalLanguage = null;
+            object? oOriginalLanguage = null;
             args?.Variables?.TryGetValue("OriginalLanguage", out oOriginalLanguage);
             var originalLanguage = LanguageHelper.GetIso2Code(oOriginalLanguage?.ToString() ?? string.Empty);
             comparison = string.Join("|",

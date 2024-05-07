@@ -158,7 +158,7 @@ public class CreateAudioBook: AudioNode
 
         string outputFile = FileHelper.Combine(args.TempPath, Guid.NewGuid() + ".m4b");
 
-        string artwork = null; //FindArtwork(dir);
+        string? artwork = null; //FindArtwork(dir);
 
         List<string> execArgs = new() { 
             "-f",

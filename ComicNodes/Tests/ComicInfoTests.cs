@@ -24,7 +24,7 @@ public class ComicInfoTests : TestBase
         Assert.AreEqual("Batman (1939)", info.Series);
         Assert.AreEqual("1939", info.Volume);
         Assert.AreEqual("Batman vs. Joker", info.Title);
-        Assert.AreEqual(3, info.Tags.Length);
+        Assert.AreEqual(3, info.Tags!.Length);
         Assert.AreEqual("old", info.Tags[0]);
         Assert.AreEqual("great", info.Tags[1]);
         Assert.AreEqual("amazing", info.Tags[2]);

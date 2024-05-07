@@ -64,7 +64,9 @@ public abstract class TestBase
                 return;
             
             string json = File.ReadAllText(filename);
+#pragma warning disable IL2026
             var settings = JsonSerializer.Deserialize<TestSettings>(json);
+#pragma warning restore IL2026
             this.TestPath = settings.TestPath;
             this.TempPath = settings.TempPath;
             this.FfmpegPath = settings.FfmpegPath;

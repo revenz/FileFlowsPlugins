@@ -213,7 +213,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         {
             args.Logger?.ILog("HW_OFF detected");
         }
-        else if (Variables.TryGetValue("HW_OFF", out object oHwOff) && 
+        else if (Variables.TryGetValue("HW_OFF", out object? oHwOff) && 
                  (oHwOff as bool? == true || oHwOff?.ToString() == "1")
                  )
         {
@@ -241,7 +241,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                 
                 args.Logger?.ILog("Pixel Format: " + (video?.Stream?.PixelFormat?.EmptyAsNull() ?? "Unknown"));
                 bool targetIs10Bit = string.Join(" ", ffArgs).Contains("p010le");
-                string pxtFormat = video?.Stream?.PixelFormat;
+                string? pxtFormat = video?.Stream?.PixelFormat;
                 if (targetIs10Bit && video?.Stream?.Is10Bit == true)
                 {
                     args.Logger?.ILog(
@@ -569,7 +569,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             noDxva2 ? null : new [] { "-hwaccel", "dxva2" },
             noD3d11va ? null : new [] { "-hwaccel", "d3d11va" },
             noOpencl ? null : new [] { "-hwaccel", "opencl" },
-        };
+        }.Where(x => x != null).Select(x => x!).ToArray();
     }
 
     private static string[][] Decoders_hevc(NodeParameters args)
@@ -610,7 +610,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             noDxva2 ? null : new [] { "-hwaccel", "dxva2" },
             noD3d11va ? null : new [] { "-hwaccel", "d3d11va" },
             noOpencl ? null : new [] { "-hwaccel", "opencl" },
-        };
+        }.Where(x => x != null).Select(x => x!).ToArray();
     }
 
     private static string[][] Decoders_Default(NodeParameters args)
@@ -653,6 +653,6 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             noDxva2 ? null : new [] { "-hwaccel", "dxva2" },
             noD3d11va ? null : new [] { "-hwaccel", "d3d11va" },
             noOpencl ? null : new [] { "-hwaccel", "opencl" },
-        };
+        }.Where(x => x != null).Select(x => x!).ToArray();
     }
 }

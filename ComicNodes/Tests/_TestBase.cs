@@ -16,14 +16,14 @@ public abstract class TestBase
     /// <summary>
     /// The test context instance
     /// </summary>
-    private TestContext testContextInstance;
+    private TestContext? testContextInstance;
 
     /// <summary>
     /// Gets or sets the test context
     /// </summary>
     public TestContext TestContext
     {
-        get => testContextInstance;
+        get => testContextInstance!;
         set => testContextInstance = value;
     }
 

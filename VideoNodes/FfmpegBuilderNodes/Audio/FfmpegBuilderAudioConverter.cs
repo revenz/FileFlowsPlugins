@@ -250,7 +250,7 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
             }
             else
             {
-                string testValue = Field switch
+                string? testValue = Field switch
                 {
                     FIELD_LANGUAGE => track.Language?.EmptyAsNull() ?? track.Stream?.Language ?? string.Empty,
                     FIELD_TITLE => track.Title?.EmptyAsNull() ?? track.Stream?.Title ?? string.Empty,

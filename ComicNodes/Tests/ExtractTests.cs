@@ -12,7 +12,7 @@ public class ExtractTests
     public void Extract_Pdf()
     {
         var logger = new TestLogger();
-        var args = new NodeParameters(@"/home/john/Comics/unprocessed/Ghosts Book 1 Excerpt.pdf", logger, false, string.Empty, null);
+        var args = new NodeParameters(@"/home/john/Comics/unprocessed/Ghosts Book 1 Excerpt.pdf", logger, false, string.Empty, null!);
 
         var node = new ComicExtractor();
         node.DestinationPath = @"/home/john/Comics/extracted";
@@ -29,7 +29,7 @@ public class ExtractTests
     public void Extract_Cbr()
     {
         var logger = new TestLogger();
-        var args = new NodeParameters(@"D:\comics\testfiles\bm001.cbr", logger, false, string.Empty, null);
+        var args = new NodeParameters(@"D:\comics\testfiles\bm001.cbr", logger, false, string.Empty, null!);
 
         var node = new ComicExtractor();
         node.DestinationPath = @"D:\comics\converted\cbr";
@@ -46,7 +46,7 @@ public class ExtractTests
     public void Extract_Cbz()
     {
         var logger = new TestLogger();
-        var args = new NodeParameters(@"D:\comics\testfiles\mb.cbz", logger, false, string.Empty, null);
+        var args = new NodeParameters(@"D:\comics\testfiles\mb.cbz", logger, false, string.Empty, null!);
 
         var node = new ComicExtractor();
         node.DestinationPath = @"D:\comics\converted\cbz";
@@ -63,7 +63,7 @@ public class ExtractTests
     public void Extract_Cb7()
     {
         var logger = new TestLogger();
-        var args = new NodeParameters(@"D:\comics\testfiles\cb7.cb7", logger, false, string.Empty, null);
+        var args = new NodeParameters(@"D:\comics\testfiles\cb7.cb7", logger, false, string.Empty, null!);
 
         var node = new ComicExtractor();
         node.DestinationPath = @"D:\comics\converted\cb7";

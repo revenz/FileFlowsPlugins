@@ -24,7 +24,7 @@ public class FfmpegBuilderAudioNormalization : FfmpegBuilderNode
 
     internal const string LOUDNORM_TARGET = "I=-24:LRA=7:TP=-2.0";
 
-    [RequiresUnreferencedCode("")]
+    /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
         if (Model.AudioStreams?.Any() != true)
@@ -60,8 +60,8 @@ public class FfmpegBuilderAudioNormalization : FfmpegBuilderNode
 
             if (TwoPass)
             {
-                if (normalizedTracks.ContainsKey(audio.TypeIndex))
-                    item.stream.Filter.Add(normalizedTracks[audio.TypeIndex]);
+                if (normalizedTracks.TryGetValue(audio.TypeIndex, out var track))
+                    item.stream.Filter.Add(track);
                 else
                 {
                     string twoPass = DoTwoPass(this, args, FFMPEG, audio.TypeIndex, localFile);
@@ -78,10 +78,7 @@ public class FfmpegBuilderAudioNormalization : FfmpegBuilderNode
 
         return normalizing ? 1 : 2;
     }
-
-
-
-    [RequiresUnreferencedCode("Calls System.Text.Json.JsonSerializer.Deserialize<FileFlows.VideoNodes.AudioNormalization.LoudNormStats>(string, System.Text.Json.JsonSerializerOptions?)")]
+    
     public static string DoTwoPass(EncodingNode node, NodeParameters args, string ffmpegExe, int audioIndex, string localFile)
     {
         //-af loudnorm=I=-24:LRA=7:TP=-2.0"
@@ -108,9 +105,9 @@ public class FfmpegBuilderAudioNormalization : FfmpegBuilderNode
         json = json.Substring(0, json.IndexOf("}", StringComparison.Ordinal) + 1);
         if (string.IsNullOrEmpty(json))
             throw new Exception("Failed to parse TwoPass json");
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-        LoudNormStats stats = JsonSerializer.Deserialize<LoudNormStats>(json);
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning disable IL2026
+        LoudNormStats? stats = JsonSerializer.Deserialize<LoudNormStats>(json);
+#pragma warning restore IL2026
 
         if (stats.input_i == "-inf" || stats.input_lra == "-inf" || stats.input_tp == "-inf" || stats.input_thresh == "-inf" || stats.target_offset == "-inf")
         {

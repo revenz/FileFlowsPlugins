@@ -13,6 +13,7 @@
     <Product>Comic</Product>
     <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
     <Description>Flow elements for processing comic books (cbr, cbz, pdf etc)</Description>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="ComicNodes.en.json" />

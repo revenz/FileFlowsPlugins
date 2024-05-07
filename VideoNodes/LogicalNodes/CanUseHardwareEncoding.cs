@@ -307,7 +307,7 @@ public class CanUseHardwareEncoding:Node
                 ArgumentList = arguments.ToArray(),
                 Silent = true
             }).Result;
-            string output = cmd.Output?.Contains("va_openDriver() returns 0") == true ? null : cmd.Output;
+            string? output = cmd.Output?.Contains("va_openDriver() returns 0") == true ? null : cmd.Output;
             if (cmd.ExitCode != 0 || string.IsNullOrWhiteSpace(output) == false)
             {
                 string asStr = string.Join(" ", arguments.Select(x => x.Contains(" ") ? "\"" + x + "\"" : x));

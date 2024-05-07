@@ -23,7 +23,7 @@ public class ComicExtractor : Node
     /// </summary>
     [Required]
     [Folder(1)]
-    public string DestinationPath { get; set; }
+    public string DestinationPath { get; set; } = string.Empty;
 
     /// <inheritdoc />
     public override int Execute(NodeParameters args)

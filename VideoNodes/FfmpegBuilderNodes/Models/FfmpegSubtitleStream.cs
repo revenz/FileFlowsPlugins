@@ -32,7 +32,7 @@ public class FfmpegSubtitleStream : FfmpegStream
         bool containerSame =
             string.Equals(args.SourceExtension, args.DestinationExtension, StringComparison.InvariantCultureIgnoreCase);
         
-        string destCodec;
+        string? destCodec;
         if (Stream.Codec?.ToLowerInvariant().Equals("mov_text") == true &&
             args.DestinationExtension?.ToLowerInvariant()?.EndsWith("mkv") == true)
         {

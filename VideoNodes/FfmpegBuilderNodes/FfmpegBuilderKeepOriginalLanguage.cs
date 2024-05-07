@@ -80,8 +80,8 @@ public class FfmpegBuilderKeepOriginalLanguage: FfmpegBuilderNode
     /// <returns>the flow output to call next</returns>
     public override int Execute(NodeParameters args)
     {
-        string originalLanguage;
-        if (args.Variables.TryGetValue("OriginalLanguage", out object oValue) == false ||
+        string? originalLanguage;
+        if (args.Variables.TryGetValue("OriginalLanguage", out object? oValue) == false ||
             string.IsNullOrWhiteSpace(originalLanguage = oValue as string))
         {
             args.Logger?.ILog("OriginalLanguage variable was not set.");

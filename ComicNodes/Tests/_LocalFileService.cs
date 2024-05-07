@@ -16,7 +16,7 @@ public class LocalFileService : IFileService
     /// <summary>
     /// Gets or sets the allowed paths the file service can access
     /// </summary>
-    public string[] AllowedPaths { get; init; }
+    public string[]? AllowedPaths { get; init; }
     
     /// <summary>
     /// Gets or sets a function for replacing variables in a string.
@@ -25,7 +25,7 @@ public class LocalFileService : IFileService
     /// The function takes a string input, a boolean indicating whether to strip missing variables,
     /// and a boolean indicating whether to clean special characters.
     /// </remarks>
-    public ReplaceVariablesDelegate ReplaceVariables { get; set; }
+    public ReplaceVariablesDelegate? ReplaceVariables { get; set; }
     
     /// <summary>
     /// Gets or sets the permissions to use for files
@@ -35,7 +35,7 @@ public class LocalFileService : IFileService
     /// <summary>
     /// Gets or sets the owner:group to use for files
     /// </summary>
-    public string OwnerGroup { get; set; }
+    public string? OwnerGroup { get; set; }
 
     /// <summary>
     /// Gets or sets the logger used for logging
@@ -168,7 +168,7 @@ public class LocalFileService : IFileService
                 Name = fileInfo.Name,
                 FullName = fileInfo.FullName,
                 Length = fileInfo.Length,
-                Directory = fileInfo.DirectoryName
+                Directory = fileInfo.DirectoryName!
             };
         }
         catch (Exception ex)
@@ -257,7 +257,7 @@ public class LocalFileService : IFileService
             if (fileInfo.Exists == false)
                 return Result<bool>.Fail("File does not exist");
             var destDir = new FileInfo(destination).Directory;
-            if (destDir.Exists == false)
+            if (destDir!.Exists == false)
             {
                 destDir.Create();
                 SetPermissions(destDir.FullName);
@@ -286,7 +286,7 @@ public class LocalFileService : IFileService
                 return Result<bool>.Fail("File does not exist");
             
             var destDir = new FileInfo(destination).Directory;
-            if (destDir.Exists == false)
+            if (destDir!.Exists == false)
             {
                 destDir.Create();
                 SetPermissions(destDir.FullName);
@@ -434,7 +434,7 @@ public class LocalFileService : IFileService
         return true;
     }
 
-    public void SetPermissions(string path, int? permissions = null, Action<string> logMethod = null)
+    public void SetPermissions(string path, int? permissions = null, Action<string>? logMethod = null)
     {
         logMethod ??= (string message) => Logger?.ILog(message);
         
@@ -456,26 +456,9 @@ public class LocalFileService : IFileService
 
         FileHelper.SetPermissions(logger, path, file: isFile, permissions: permissions);
         
-        FileHelper.ChangeOwner(logger, path, file: isFile, ownerGroup: OwnerGroup);
+        FileHelper.ChangeOwner(logger, path, file: isFile, ownerGroup: OwnerGroup!);
         
         logMethod(logger.ToString());
-        
-        return;
-        
-
-        if (OperatingSystem.IsLinux())
-        {
-            var filePermissions = FileHelper.ConvertLinuxPermissionsToUnixFileMode(permissions.Value);
-            if (filePermissions == UnixFileMode.None)
-            {
-                logMethod("SetPermissions: Invalid file permissions: " + permissions.Value);
-                return;
-            }
-            
-            File.SetUnixFileMode(path, filePermissions);
-            logMethod($"SetPermissions: Permission [{filePermissions}] set on file: " + path);
-        }
-
     }
 }
 #endif

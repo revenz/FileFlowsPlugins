@@ -233,8 +233,10 @@ namespace FileFlows.VideoNodes
             // may be from non Legacy VideoNodes
             try
             {
+#pragma warning disable IL2026
                 string json = JsonSerializer.Serialize(args.Parameters[VIDEO_INFO]);
                 var vi = JsonSerializer.Deserialize<VideoInfo>(json);
+#pragma warning restore IL2026
                 if (vi == null)
                     throw new Exception("Failed to deserailize object");
                 return vi;

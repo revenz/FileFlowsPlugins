@@ -52,7 +52,7 @@ public class FfmpegBuilderAudioSetLanguage : FfmpegBuilderNode
     public override int Execute(NodeParameters args)
     {
         bool changes = false;
-        string language = args.ReplaceVariables(Language, stripMissing: true)?.ToLowerInvariant();
+        string? language = args.ReplaceVariables(Language, stripMissing: true)?.ToLowerInvariant();
         if (string.IsNullOrWhiteSpace(language))
         {
             args.Logger?.WLog("No language set");
@@ -63,9 +63,9 @@ public class FfmpegBuilderAudioSetLanguage : FfmpegBuilderNode
 
         if (language.ToLowerInvariant().Contains("orig"))
         {
-            if (Variables.TryGetValue("OriginalLanguage", out object oLang) == false || string.IsNullOrEmpty(oLang as string))
+            if (Variables.TryGetValue("OriginalLanguage", out object? oLang) == false || string.IsNullOrEmpty(oLang as string))
             {
-                args.Logger?.ILog("OriginalLanguage not found in varaibles.");
+                args.Logger?.ILog("OriginalLanguage not found in variables.");
                 return 2;
             }
 
