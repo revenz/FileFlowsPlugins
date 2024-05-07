@@ -179,7 +179,7 @@ public class ComicConverter: Node
                     continue;
                 string nameNoExtension = FileHelper.GetShortFileName(file);
                 nameNoExtension = nameNoExtension[..nameNoExtension.LastIndexOf(".", StringComparison.Ordinal)];
-                if (Regex.IsMatch(nameNoExtension, @"[\d]{2,}^") == false)
+                if (Regex.IsMatch(nameNoExtension, @"[\d]{2,}$") == false)
                 {
                     args.Logger?.ILog("Deleting non page image: " + file);
                     File.Delete(file);
