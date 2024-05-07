@@ -183,16 +183,23 @@ public class CreateComicInfo : Node
         {
             if (issueDigits > 0)
             {
-                // Pad the number with leading zeros based on the specified number of digits
-                string paddedNumber = info.Number.Value.ToString().PadLeft(issueDigits, '0');
-
-                // Add the padded number to the name
-                name += $" - #{paddedNumber}";
-
-                // Optionally add information about the count
-                if (info.Count > 0)
+                if (info.Volume == "Annual")
                 {
-                    name += $" (of {info.Count})";
+                    name += " - Annual " + info.Number;
+                }
+                else
+                {
+                    // Pad the number with leading zeros based on the specified number of digits
+                    string paddedNumber = info.Number.Value.ToString().PadLeft(issueDigits, '0');
+
+                    // Add the padded number to the name
+                    name += $" - #{paddedNumber}";
+
+                    // Optionally add information about the count
+                    if (info.Count > 0)
+                    {
+                        name += $" (of {info.Count})";
+                    }
                 }
             }
             else
@@ -226,10 +233,12 @@ public class CreateComicInfo : Node
         info.Series = FileHelper.GetDirectoryName(libraryFile);
 
         var yearMatch = Regex.Match(info.Series, @"\((?<year>(19|20)\d{2})\)");
+        int? year = null;
 
         if (yearMatch.Success)
         {
-            info.Volume = yearMatch.Groups["year"].Value;
+            year = int.Parse(yearMatch.Groups["year"].Value);
+            info.Volume = year.ToString();
             // info.Series = Regex.Replace(info.Series, @"\((19|20)\d{2}\)", "").Trim();
         }
 
@@ -239,7 +248,8 @@ public class CreateComicInfo : Node
         string shortname = FileHelper.GetShortFileName(libraryFile);
         info.Tags = GetTags(ref shortname);
         shortname = shortname[..shortname.LastIndexOf('.')];
-        (shortname, _) = ExtractYear(shortname);
+        (shortname, int? year2) = ExtractYear(shortname);
+        year ??= year2;
         // Title - #number (of #) - Issue Title 
         var parts = shortname.Split(" - ");
         if (parts.Length < 2)
@@ -253,6 +263,13 @@ public class CreateComicInfo : Node
                 if(lastChanceMatch.Success)
                 {
                     info.Number = int.Parse(lastChanceMatch.Value);
+                    return info;
+                }
+
+                if (shortname.ToLowerInvariant().Contains("annual") && year != null)
+                {
+                    info.Volume = "Annual";
+                    info.Number = year.Value;
                     return info;
                 }
                 return Result<ComicInfo>.Fail("Invalid filename: " + shortname);
@@ -296,9 +313,9 @@ public class CreateComicInfo : Node
     /// </summary>
     /// <param name="shortname">the name of the file</param>
     /// <returns>the new name and the year if found</returns>
-    private static (string Name, string? Year) ExtractYear(string shortname)
+    private static (string Name, int? Year) ExtractYear(string shortname)
     {
-        string? year = null;
+        int? year = null;
 
         // Regular expression to match the year in the specified formats
         Match match = Regex.Match(shortname, @"(?:(?:19|20)\d{2})|\((?:19|20)\d{2}\)|-(?:\s)?(?:19|20)\d{2}(?:\s)?-");
@@ -306,10 +323,24 @@ public class CreateComicInfo : Node
         if (match.Success)
         {
             // Extract the matched year
-            year = match.Value.Trim('(', ')', '-', ' ');
+            year = int.Parse(match.Value.Trim('(', ')', '-', ' '));
 
             // Remove the matched year from the input string
             shortname = shortname.Remove(match.Index, match.Length).Trim();
+        }
+        else
+        {
+            match = Regex.Match(shortname, @"'(\d{2})\b");
+
+            if (match.Success)
+            {
+                // Extract the matched year
+                int number = int.Parse(match.Groups[1].Value);
+                // Determine the year
+                year = number > 50 ? 1900 + number : 2000 + number;
+                // Remove the matched year from the input string
+                shortname = shortname.Remove(match.Index, match.Length).Trim();
+            }
         }
 
         return (shortname, year);
