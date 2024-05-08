@@ -127,6 +127,7 @@ public class VideoInfoHelper
         int videoIndex = 0;
         int audioIndex = 0;
         int attachmentIndex = 0;
+        bool webvtt = output.Contains("Unknown/unsupported AVCodecID S_TEXT/WEBVTT");
         foreach (Match sm in streamMatches)
         {
             if (sm.Value.Contains(" Video: "))
@@ -167,6 +168,9 @@ public class VideoInfoHelper
                     var match = Regex.Match(sm.Value, @"(?<=(Stream #))[\d]+:[\d]+");
                     if (match.Success)
                         sub.IndexString = match.Value;
+                    if ((string.IsNullOrEmpty(sub.Codec) || sub.Codec.ToLowerInvariant() == "none") && webvtt)
+                        sub.Codec = "webvtt";
+                        
                     vi.SubtitleStreams.Add(sub);
                 }
                 ++subtitleIndex;
