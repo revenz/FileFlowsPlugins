@@ -142,12 +142,16 @@ public class ComicConverter: Node
         args.Logger?.ILog("Desired Format: " + Format);
 
         var metadata = new Dictionary<string, object>();
-        int pageCount = GetPageCount(args, currentFormat, localFile);
-        args.Logger?.ILog("Page Count: " + pageCount);
         metadata.Add("Format", currentFormat);
-        metadata.Add("Pages", pageCount);
+        var pageCountResult = GetPageCount(args, currentFormat, localFile);
+        if (pageCountResult.Success(out int pageCount))
+        {
+            args.Logger?.ILog("Page Count: " + pageCount);
+            metadata.Add("Pages", pageCount);
+            args.RecordStatisticAverage("COMIC_PAGES", pageCount);
+        }
+
         args.RecordStatisticRunningTotals("COMIC_FORMAT", currentFormat);
-        args.RecordStatisticAverage("COMIC_PAGES", pageCount);
         args.SetMetadata(metadata);
         args.Logger?.ILog("Setting metadata: " + currentFormat);
 
@@ -294,7 +298,7 @@ public class ComicConverter: Node
     /// <param name="format">the format</param>
     /// <param name="file">the file to get the page count for</param>
     /// <returns>the number of pages</returns>
-    private int GetPageCount(NodeParameters args, string format, string file)
+    private Result<int> GetPageCount(NodeParameters args, string format, string file)
     {
         if (format == null)
             return 0;
