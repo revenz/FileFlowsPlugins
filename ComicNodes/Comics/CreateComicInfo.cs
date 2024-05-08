@@ -187,6 +187,10 @@ public class CreateComicInfo : Node
                 {
                     name += " - Annual " + info.Number;
                 }
+                else if (info.Number > 1960)
+                {
+                    name += " - " + info.Number;
+                }
                 else
                 {
                     // Pad the number with leading zeros based on the specified number of digits
@@ -234,8 +238,9 @@ public class CreateComicInfo : Node
 
         var yearMatch = Regex.Match(info.Series, @"\((?<year>(19|20)\d{2})\)");
         int? year = null;
+        bool yearInFolder = yearMatch.Success;
 
-        if (yearMatch.Success)
+        if (yearInFolder)
         {
             year = int.Parse(yearMatch.Groups["year"].Value);
             info.Volume = year.ToString();
@@ -270,6 +275,12 @@ public class CreateComicInfo : Node
                 {
                     info.Volume = "Annual";
                     info.Number = year.Value;
+                    return info;
+                }
+
+                if (year != null && yearInFolder == false)
+                {
+                    info.Number = year;
                     return info;
                 }
                 return Result<ComicInfo>.Fail("Invalid filename: " + shortname);

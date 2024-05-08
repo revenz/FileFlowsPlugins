@@ -229,6 +229,58 @@ public class ComicInfoTests : TestBase
         Assert.AreEqual("X-Man - Annual 2004.cbz", name.Value);
     }
     
+    [TestMethod]
+    public void AnnualNoAnnual()
+    {
+        var result = CreateComicInfo.GetInfo(Logger,
+            "/home/john/Comics/Marvel/X-Men/X-Man/X-Man 2004.cbz", 
+            "/home/john/Comics",
+            true);
+
+        TestContext.WriteLine(Logger.ToString());
+
+        Assert.IsFalse(result.IsFailed);
+        var info = result.Value;
+        Assert.IsNotNull(info);
+        Assert.AreEqual("Marvel", info.Publisher);
+        Assert.AreEqual("X-Man", info.Series);
+        Assert.AreEqual(2004, info.Number);
+
+        var xml = CreateComicInfo.SerializeToXml(info);
+        Assert.IsFalse(string.IsNullOrWhiteSpace(xml));
+        TestContext.WriteLine(new string('-', 70));
+        TestContext.WriteLine(xml);
+        
+        var name = CreateComicInfo.GetNewName(info, "cbz", 3);
+        Assert.AreEqual("X-Man - 2004.cbz", name.Value);
+    }
+    
+    
+    [TestMethod]
+    public void AnnualNoAnnual2()
+    {
+        var result = CreateComicInfo.GetInfo(Logger,
+            "/home/john/Comics/Zenoscope/Grimm Fairy Tales Specials/Grimm Fairy Tales 2016 Special (2016) (Digital).cbz", 
+            "/home/john/Comics",
+            true);
+
+        TestContext.WriteLine(Logger.ToString());
+
+        Assert.IsFalse(result.IsFailed);
+        var info = result.Value;
+        Assert.IsNotNull(info);
+        Assert.AreEqual("Zenoscope", info.Publisher);
+        Assert.AreEqual("Grimm Fairy Tales Specials", info.Series);
+        Assert.AreEqual(2016, info.Number);
+
+        var xml = CreateComicInfo.SerializeToXml(info);
+        Assert.IsFalse(string.IsNullOrWhiteSpace(xml));
+        TestContext.WriteLine(new string('-', 70));
+        TestContext.WriteLine(xml);
+        
+        var name = CreateComicInfo.GetNewName(info, "cbz", 3);
+        Assert.AreEqual("Grimm Fairy Tales Specials - 2016.cbz", name.Value);
+    }
     // [TestMethod]
     public void PhysicalFileTest()
     {
