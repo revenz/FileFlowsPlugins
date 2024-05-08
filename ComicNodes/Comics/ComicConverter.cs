@@ -339,7 +339,8 @@ public class ComicConverter: Node
 
         var metadata = new Dictionary<string, object>();
         metadata.Add("Format", format);
-        metadata.Add("Pages", GetPageCount(args, format, file));
+        if(GetPageCount(args, format, file).Success(out var count))
+            metadata.Add("Pages", count);
         args.SetMetadata(metadata);
         args.Logger?.ILog("Setting metadata: " + format);
 

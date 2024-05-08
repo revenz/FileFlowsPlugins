@@ -235,6 +235,11 @@ public class CreateComicInfo : Node
         // Publisher / Series (year?) / Title - #number (of #)- Issue Title.extension
         ComicInfo info = new();
         info.Series = FileHelper.GetDirectoryName(libraryFile);
+        if (info.Series.ToLowerInvariant() is "annuals" or "specials")
+        {
+            // go up one more directory
+            info.Series = FileHelper.GetDirectoryName(FileHelper.GetDirectory(libraryFile));
+        }
 
         var yearMatch = Regex.Match(info.Series, @"\((?<year>(19|20)\d{2})\)");
         int? year = null;

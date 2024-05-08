@@ -255,7 +255,59 @@ public class ComicInfoTests : TestBase
         Assert.AreEqual("X-Man - 2004.cbz", name.Value);
     }
     
+    [TestMethod]
+    public void AnnualsFolder()
+    {
+        var result = CreateComicInfo.GetInfo(Logger,
+            "/home/john/Comics/Marvel/X-Men/X-Man/Annuals/X-Man Annual 2004.cbz", 
+            "/home/john/Comics",
+            true);
+
+        TestContext.WriteLine(Logger.ToString());
+
+        Assert.IsFalse(result.IsFailed);
+        var info = result.Value;
+        Assert.IsNotNull(info);
+        Assert.AreEqual("Marvel", info.Publisher);
+        Assert.AreEqual("X-Man", info.Series);
+        Assert.AreEqual("Annual", info.Volume);
+        Assert.AreEqual(2004, info.Number);
+
+        var xml = CreateComicInfo.SerializeToXml(info);
+        Assert.IsFalse(string.IsNullOrWhiteSpace(xml));
+        TestContext.WriteLine(new string('-', 70));
+        TestContext.WriteLine(xml);
+        
+        var name = CreateComicInfo.GetNewName(info, "cbz", 3);
+        Assert.AreEqual("X-Man - Annual 2004.cbz", name.Value);
+    }
     
+    [TestMethod]
+    public void SpecialsFolder()
+    {
+        var result = CreateComicInfo.GetInfo(Logger,
+            "/home/john/Comics/Marvel/X-Men/X-Man/Specials/X-Man Annual 2004.cbz", 
+            "/home/john/Comics",
+            true);
+
+        TestContext.WriteLine(Logger.ToString());
+
+        Assert.IsFalse(result.IsFailed);
+        var info = result.Value;
+        Assert.IsNotNull(info);
+        Assert.AreEqual("Marvel", info.Publisher);
+        Assert.AreEqual("X-Man", info.Series);
+        Assert.AreEqual("Annual", info.Volume);
+        Assert.AreEqual(2004, info.Number);
+
+        var xml = CreateComicInfo.SerializeToXml(info);
+        Assert.IsFalse(string.IsNullOrWhiteSpace(xml));
+        TestContext.WriteLine(new string('-', 70));
+        TestContext.WriteLine(xml);
+        
+        var name = CreateComicInfo.GetNewName(info, "cbz", 3);
+        Assert.AreEqual("X-Man - Annual 2004.cbz", name.Value);
+    }
     [TestMethod]
     public void AnnualNoAnnual2()
     {
