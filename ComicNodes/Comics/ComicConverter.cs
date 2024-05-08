@@ -177,16 +177,32 @@ public class ComicConverter: Node
 
         if (DeleteNonPageImages)
         {
+            List<string> nonPages = new();
+            float imageCount = 0;
             foreach (var file in Directory.GetFiles(destinationPath, "*.*", SearchOption.AllDirectories))
             {
                 if(rgxImages.IsMatch(file) == false)
                     continue;
+                imageCount++;
                 string nameNoExtension = FileHelper.GetShortFileName(file);
                 nameNoExtension = nameNoExtension[..nameNoExtension.LastIndexOf(".", StringComparison.Ordinal)];
                 if (Regex.IsMatch(nameNoExtension, @"[\d]{2,}$") == false)
                 {
-                    args.Logger?.ILog("Deleting non page image: " + file);
-                    File.Delete(file);
+                    nonPages.Add(file);
+                }
+            }
+
+            if (nonPages.Any())
+            {
+                float percent = ((float)nonPages.Count) / imageCount * 100;
+                if (percent < 10)
+                {
+                    // only delete if the number of non images is low, we dont want to mistakenly identify all pages as non images
+                    foreach (var file in nonPages)
+                    {
+                        args.Logger?.ILog("Deleting non page image: " + file);
+                        File.Delete(file);
+                    }
                 }
             }
         }

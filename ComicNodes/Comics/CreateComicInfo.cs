@@ -194,7 +194,9 @@ public class CreateComicInfo : Node
                 else
                 {
                     // Pad the number with leading zeros based on the specified number of digits
-                    string paddedNumber = info.Number.Value.ToString().PadLeft(issueDigits, '0');
+                    string paddedNumber = info.Number < 0 ?
+                        ("-" + info.Number.Value.ToString()[1..].PadLeft(issueDigits -1, '0')) : 
+                        info.Number.Value.ToString().PadLeft(issueDigits, '0');
 
                     // Add the padded number to the name
                     name += $" - #{paddedNumber}";
@@ -268,8 +270,9 @@ public class CreateComicInfo : Node
             if (parts.Length < 2)
             {
                 // remove any junk
+                shortname = Regex.Replace(shortname, @"\(([\-]?\d+)\)", "$1").Trim();
                 shortname = Regex.Replace(shortname, @"\s*\([^)]*\)\s*", " ").Trim();
-                var lastChanceMatch = Regex.Match(shortname, @"(\d)+$");
+                var lastChanceMatch = Regex.Match(shortname, @"([\-]?\d)+$");
                 if(lastChanceMatch.Success)
                 {
                     info.Number = int.Parse(lastChanceMatch.Value);
