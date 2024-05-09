@@ -267,71 +267,153 @@ public class CreateComicInfo : Node
         string shortname = FileHelper.GetShortFileName(libraryFile);
         info.Tags = GetTags(ref shortname);
         shortname = shortname[..shortname.LastIndexOf('.')];
-        (shortname, int? year2) = ExtractYear(shortname);
-        year ??= year2;
+        //(shortname, int? year2) = ExtractYear(shortname);
+        // year ??= year2;
         // Title - #number (of #) - Issue Title 
+        var ofMatch = Regex.Match(shortname, @"\(of\s+#?(\d+)\)");
+        if (ofMatch.Success)
+        {
+            // Extract the issue number
+            var ofNumber = int.Parse(ofMatch.Groups[1].Value);
+            // Remove the issue number from the string
+            shortname = ofMatch.Groups[0].Success
+                ? shortname.Replace(ofMatch.Value, "").Trim()
+                : shortname;
+            
+            // Use the extracted issue number as needed
+            info.Count = ofNumber;
+        }
+        
+        //var issueNumberMatch2 = Regex.Match(shortname, @"(?<!['])[#]?\b(\-?\d{1,3})\b(?!\w)");
+        ExtractIssueNumber(info, ref shortname);
+
+        if (info.Number != null)
+            ExtractYear(ref shortname);
+        else 
+            ExtractAnnualInfo(info, ref shortname);
+
+        var volMatch = Regex.Match(shortname, @"\b[Vv](?:olume|ol)?\s*(\d+)\b", RegexOptions.IgnoreCase);
+        if (volMatch.Success)
+        {
+            info.Volume = "Volume " + int.Parse(volMatch.Groups[1].Value);
+            // Remove the issue number from the string
+            shortname = volMatch.Groups[0].Success
+                ? shortname.Replace(volMatch.Value, "").Trim()
+                : shortname;
+
+        }
+        
+        // remove any junk
+        shortname = Regex.Replace(shortname, @"\(([\-]?\d+)\)", "$1").Trim();
+        shortname = Regex.Replace(shortname, @"\s*\([^)]*\)\s*", " ").Trim();
         var parts = shortname.Split(" - ");
-        if (parts.Length < 2)
-        {
-            parts = shortname.Split('#');
-            if (parts.Length < 2)
-            {
-                // remove any junk
-                shortname = Regex.Replace(shortname, @"\(([\-]?\d+)\)", "$1").Trim();
-                shortname = Regex.Replace(shortname, @"\s*\([^)]*\)\s*", " ").Trim();
-                var lastChanceMatch = Regex.Match(shortname, @"([\-]?\d)+$");
-                if(lastChanceMatch.Success)
-                {
-                    info.Number = int.Parse(lastChanceMatch.Value);
-                    return info;
-                }
-
-                if (shortname.ToLowerInvariant().Contains("annual") && year != null)
-                {
-                    info.Volume = "Annual";
-                    info.Number = year.Value;
-                    return info;
-                }
-
-                if (year != null && yearInFolder == false)
-                {
-                    info.Number = year;
-                    return info;
-                }
-                return Result<ComicInfo>.Fail("Invalid filename: " + shortname);
-            }
-
-            parts[1] = '#' + parts[1];
-        }
-
-        var issueNumberMatch = Regex.Match(parts[1], @"(^|#)(?<first>\d+)(?:\s+of\s+[#]?(?<second>\d+))?");
-
-        if (issueNumberMatch.Success)
-        {
-            info.Number = int.Parse(issueNumberMatch.Groups["first"].Value);
-            info.Count = issueNumberMatch.Groups["second"].Success
-                ? int.Parse(issueNumberMatch.Groups["second"].Value)
-                : null;
-        }
-        else
-        {
-            var volMatch = Regex.Match(parts[1], @"\b[Vv](?:olume|ol)?\s*(\d+)\b", RegexOptions.IgnoreCase);
-            if (volMatch.Success)
-            {
-                info.Volume = "Volume " + int.Parse(volMatch.Groups[1].Value);
-            }
-            else
-            {
-                logger?.WLog("Issue number not found in: " + parts[1]);
-            }
-        }
-
-        if (parts.Length > 2)
-        {
-            info.Title = Regex.Replace(parts[2], @"\s*\([^)]*\)\s*", " ").Trim();
-        }
+        if (Regex.IsMatch(info.Series, "^(other|misc|miscellaneous|assorted)$",
+                RegexOptions.CultureInvariant | RegexOptions.IgnoreCase))
+            info.Series = parts[0].Trim();
+        if (parts.Length > 1)
+            info.Title = parts.Last();
+            
 
         return info;
+    }
+
+    private static void ExtractIssueNumber(ComicInfo info, ref string shortname)
+    {
+        // Define the regex pattern to match numbers up to 3 characters long
+        string pattern = @"\b(\d{1,3})\b";
+
+        // Match against the shortname using the regex pattern
+        MatchCollection matches = Regex.Matches(shortname, pattern);
+
+        // Iterate through the matches
+        foreach (Match match in matches)
+        {
+            int issueNumber;
+            if (int.TryParse(match.Groups[1].Value, out issueNumber))
+            {
+                // Check if the match is preceded by a hyphen
+                int matchIndex = match.Index;
+                if (matchIndex > 0 && shortname[matchIndex - 1] == '-')
+                {
+                    // Check if the hyphen is not part of a word and is preceded by specific characters
+                    if (matchIndex == 1 || shortname[matchIndex - 2] is '#' or ' ' or '(' or '[' or '.' or '_' or '-')
+                    {
+                        // Remove the issue number from the string
+                        shortname = shortname.Remove(matchIndex - 1, match.Length + 1).Trim();
+
+                        // Use the extracted issue number as needed
+                        info.Number = -issueNumber;
+                        return; // Exit the loop after finding the issue number
+                    }
+                }
+                else if (matchIndex == 0 || shortname[matchIndex - 1] is '#' or ' ' or '(' or '[' or '.' or '_' or '-')
+                {
+                    // Remove the issue number from the string
+                    shortname = shortname.Remove(matchIndex, match.Length).Trim();
+
+                    // Use the extracted issue number as needed
+                    info.Number = issueNumber;
+                    return; // Exit the loop after finding the issue number
+                }
+            }
+        }
+
+    }
+
+    private static void ExtractYear(ref string shortname)
+    {
+        var yearMatches = Regex.Matches(shortname, @"\b(?:\((19|20)\d{2}\)|\b(19|20)\d{2}\b)\b");
+        // Iterate over the matches in reverse order
+        for (int i = yearMatches.Count - 1; i >= 0; i--)
+        {
+            var match = yearMatches[i];
+            // Remove the year from the shortname string
+            shortname = shortname.Remove(match.Index, match.Length).Trim();
+        }
+    }
+
+    private static void ExtractAnnualInfo(ComicInfo info, ref string shortname)
+    {
+        int year;
+        // Match the "Annual" pattern followed by a year in various formats
+        var annualMatch = Regex.Match(shortname, @"\bAnnual\s*(?:['#]?\s*-?\s*)?(\d{2}|\d{4})\b");
+        if (annualMatch.Success == false)
+        {
+            var yearMatches = Regex.Matches(shortname, @"\b(?:\((19|20)\d{2}\)|\b(19|20)\d{2}\b)\b");
+            if (yearMatches.Count > 0)
+            {
+                // Extract the matched year
+                var lastMatch = yearMatches.Cast<Match>().Last();
+                year = int.Parse(lastMatch.Value.Trim('(', ')'));
+                if (info.Series?.Contains(year.ToString()) == true)
+                    return;
+
+                info.Number = year;
+                info.Volume = "Annual";
+                // Remove the year from the shortname string
+                shortname = shortname.Remove(lastMatch.Index, lastMatch.Length).Trim().Replace("()", string.Empty);
+            }
+            return;
+        }
+
+        string yearString = annualMatch.Groups[1].Value;
+
+        if (yearString.Length == 2) // Two-digit year
+        {
+            year = int.Parse(yearString);
+            year += year >= 40 ? 1900 : 2000;
+            info.Number = year;
+        }
+        else if (yearString.Length == 4) // Four-digit year
+        {
+            year = int.Parse(yearString);
+            info.Number = year;
+        }
+
+        info.Volume = "Annual";
+
+        // Remove "Annual + year" from the shortname string
+        shortname = shortname.Replace(annualMatch.Value, "").Trim();
     }
 
     /// <summary>

@@ -146,6 +146,32 @@ public class ComicInfoTests : TestBase
     }
     
     [TestMethod]
+    public void Other()
+    {
+        var result = CreateComicInfo.GetInfo(Logger,
+            "/home/john/Comics/Other/Something Random 12 - Random title.cbz", 
+            "/home/john/Comics",
+            true);
+
+        TestContext.WriteLine(Logger.ToString());
+
+        Assert.IsFalse(result.IsFailed);
+        var info = result.Value;
+        Assert.IsNotNull(info);
+        Assert.AreEqual("Other", info.Publisher);
+        Assert.AreEqual("Something Random", info.Series);
+        Assert.AreEqual(12, info.Number);
+        Assert.AreEqual("Random title", info.Title);
+
+        var xml = CreateComicInfo.SerializeToXml(info);
+        Assert.IsFalse(string.IsNullOrWhiteSpace(xml));
+        TestContext.WriteLine(new string('-', 70));
+        TestContext.WriteLine(xml);
+        
+        var name = CreateComicInfo.GetNewName(info, "cbz", 3);
+        Assert.AreEqual("Something Random - #012 - Random title.cbz", name.Value);
+    }
+    [TestMethod]
     public void NameAndNumber2()
     {
         var result = CreateComicInfo.GetInfo(Logger,
@@ -277,7 +303,7 @@ public class ComicInfoTests : TestBase
         TestContext.WriteLine(xml);
         
         var name = CreateComicInfo.GetNewName(info, "cbz", 3);
-        Assert.AreEqual("X-Man - 2004.cbz", name.Value);
+        Assert.AreEqual("X-Man - Annual 2004.cbz", name.Value);
     }
     
     [TestMethod]
@@ -356,7 +382,7 @@ public class ComicInfoTests : TestBase
         TestContext.WriteLine(xml);
         
         var name = CreateComicInfo.GetNewName(info, "cbz", 3);
-        Assert.AreEqual("Grimm Fairy Tales Specials - 2016.cbz", name.Value);
+        Assert.AreEqual("Grimm Fairy Tales Specials - Annual 2016.cbz", name.Value);
     }
     // [TestMethod]
     public void PhysicalFileTest()
