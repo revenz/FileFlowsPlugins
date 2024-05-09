@@ -68,6 +68,13 @@ public class CreateComicInfo : Node
 
         var info = infoResult.Value;
         args.Logger?.ILog("Got ComicInfo from filename");
+        args.Logger?.ILog("Series: " + info.Series);
+        if(info.Number != null)
+            args.Logger?.ILog("Issue: " + info.Number);
+        if(info.Volume != null)
+            args.Logger?.ILog("Volume: " + info.Volume);
+        if(string.IsNullOrWhiteSpace(info.Title) == false)
+            args.Logger?.ILog("Title: " + info.Title);
 
         var newMetadata = new Dictionary<string, object?>
             {
