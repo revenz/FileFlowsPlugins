@@ -1,7 +1,8 @@
+using FileFlows.Plugin;
+using FileFlows.Plugin.Attributes;
 using System.ComponentModel.DataAnnotations;
 
-namespace FileFlows.SiteScraping;
-
+namespace FileFlows.BasicNodes.Functions;
 /// <summary>
 /// A special flow element that iterates all files in a directory and process them through a sub flow
 /// </summary>
@@ -12,7 +13,7 @@ public class DirectoryIterator : Node
     /// <inheritdoc />
     public override int Outputs => 1;
     /// <inheritdoc />
-    public override FlowElementType Type => FlowElementType.Logic;
+    public override FlowElementType Type => FlowElementType.SubFlow;
     /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/directory-iterator";
     /// <inheritdoc /> 
@@ -41,7 +42,7 @@ public class DirectoryIterator : Node
     /// Gets or sets if all files or just the top directory files should be iterated over
     /// </summary>
     [Boolean(4)]
-    public bool AllFiles { get; set; }
+    public bool Recursive { get; set; }
 
     /// <inheritdoc />
     public override int Execute(NodeParameters args)

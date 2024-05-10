@@ -125,11 +125,27 @@
             "FileName-Help": "A path to either a file or folder to delete.\n\nIf left blank the current working file will be deleted."
           }
         },
+        "DirectoryIterator": {
+          "Description": "Iterates all files in a given directory and executes those files against a sub flow.",
+          "Outputs": {
+            "1": "Directory files iterated"
+          },
+          "Fields": {
+            "FileName": "Path",
+            "FileName-Help": "A path to either a file or folder to delete.\n\nIf left blank the current working file will be deleted."
+          }
+        },
         "FailFlow": {
           "Description": "Fails a flow immediately, useful if you want a certain path to just fail.",
           "Fields": {
-            "Reason": "Reason",
-            "Reason-Help": "An optional reason to log why this flow is failing."
+            "Flow": "Flow",
+            "Flow-Help": "The sub flow to execute the files against.",
+            "Directory": "Directory",
+            "Directory-Help": "The directory whose files will be iterated.",
+            "Pattern": "Pattern",
+            "Pattern-Help": "Any optional pattern to limit the files for iteration, this can be a wildcard pattern starting with a `*` or a regular expression.",
+            "Recursive": "Recursive",
+            "Recursive-Help": "If files in all sub directories should also be iterated, or if only the top level files should be iterated."
           }
         },
         "FileSize": {
@@ -404,18 +420,6 @@
             "DestinationPath-Help": "The destination folder where to unpack the file.",
             "File": "File",
             "File-Help": "The name of the file to unpack.  Can be left blank and if so the current working file will be used."
-          }
-        },
-        "Unzip": {
-          "Description": "Allows you to unzip a file",
-          "Outputs": {
-            "1": "File Unzipped"
-          },
-          "Fields": {
-            "DestinationPath": "Destination Folder",
-            "DestinationPath-Help": "The destination folder where to extract the zip file.",
-            "Zip": "Zip File",
-            "Zip-Help": "The filename of the zip to extract.  Can be left blank and if so the current working file will be used."
           }
         },
         "Zip": {

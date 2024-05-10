@@ -366,18 +366,6 @@
           "File-Help": "Der Name der zu entpackenden Datei. Kann leer gelassen werden. In diesem Fall wird der Name der zu entpackenden Datei verwendet."
         }
       },
-      "Unzip": {
-        "Description": "Ermöglicht das Entpacken einer Datei",
-        "Outputs": {
-          "1": "Datei entpackt"
-        },
-        "Fields": {
-          "DestinationPath": "Zielordner",
-          "DestinationPath-Help": "Der Zielordner, in den die ZIP-Datei entpackt werden soll.",
-          "Zip": "Zip File",
-          "Zip-Help": "The filename of the zip to extract.  Can be left blank and if so the current working file will be used."
-        }
-      },
       "Zip": {
         "Description": "Ermöglicht Ihnen, die Datei zu komprimieren",
         "Outputs": {
