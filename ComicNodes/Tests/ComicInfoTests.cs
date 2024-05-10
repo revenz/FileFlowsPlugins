@@ -145,6 +145,34 @@ public class ComicInfoTests : TestBase
         Assert.AreEqual("Cable (1993) - #-01.cbz", name.Value);
     }
     
+
+    [TestMethod]
+    public void NoTitle()
+    {
+        var result = CreateComicInfo.GetInfo(Logger,
+            "/home/john/Comics/Marvel/X-Men/X-Man/X-Man - #071.cbz", 
+            "/home/john/Comics",
+            true);
+
+        TestContext.WriteLine(Logger.ToString());
+
+        Assert.IsFalse(result.IsFailed);
+        var info = result.Value;
+        Assert.IsNotNull(info);
+        Assert.AreEqual("Marvel", info.Publisher);
+        Assert.AreEqual("X-Man", info.Series);
+        Assert.IsTrue(string.IsNullOrEmpty(info.Title));
+        Assert.AreEqual(71, info.Number);
+
+        var xml = CreateComicInfo.SerializeToXml(info);
+        Assert.IsFalse(string.IsNullOrWhiteSpace(xml));
+        TestContext.WriteLine(new string('-', 70));
+        TestContext.WriteLine(xml);
+        
+        var name = CreateComicInfo.GetNewName(info, "cbz", 3);
+        Assert.AreEqual("X-Man - #071.cbz", name.Value);
+    }
+
     [TestMethod]
     public void Other()
     {

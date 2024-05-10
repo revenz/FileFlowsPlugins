@@ -339,7 +339,13 @@ public class CreateComicInfo : Node
                     if (matchIndex == 1 || shortname[matchIndex - 2] is '#' or ' ' or '(' or '[' or '.' or '_' or '-')
                     {
                         // Remove the issue number from the string
-                        shortname = shortname.Remove(matchIndex - 1, match.Length + 1).Trim();
+                        int length = match.Length;
+                        if (shortname[matchIndex - 1] == '#')
+                        {
+                            matchIndex--;
+                            length++;
+                        }
+                        shortname = shortname.Remove(matchIndex - 1, length).Trim();
 
                         // Use the extracted issue number as needed
                         info.Number = -issueNumber;
@@ -349,7 +355,14 @@ public class CreateComicInfo : Node
                 else if (matchIndex == 0 || shortname[matchIndex - 1] is '#' or ' ' or '(' or '[' or '.' or '_' or '-')
                 {
                     // Remove the issue number from the string
-                    shortname = shortname.Remove(matchIndex, match.Length).Trim();
+                    int length = match.Length;
+                    if (shortname[matchIndex - 1] == '#')
+                    {
+                        matchIndex--;
+                        length++;
+                    }
+
+                    shortname = shortname.Remove(matchIndex, length).Trim();
 
                     // Use the extracted issue number as needed
                     info.Number = issueNumber;

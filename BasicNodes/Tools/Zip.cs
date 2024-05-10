@@ -123,8 +123,7 @@ public class Zip : Node
             {
                 destFile = FileHelper.GetShortFileName(args.FileName) + ".zip";
             }
-            if (destFile.ToLower().EndsWith(".zip") == false)
-                destFile += ".zip";
+            
             destFile = FileHelper.Combine(destDir, destFile);
 
             string tempZip = FileHelper.Combine(args.TempPath, Guid.NewGuid() + ".zip");
