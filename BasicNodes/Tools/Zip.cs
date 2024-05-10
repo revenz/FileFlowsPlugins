@@ -76,9 +76,11 @@ public class Zip : Node
 
         try
         {
+            args.Logger?.ILog("Path[0]:" + (Path?.EmptyAsNull() ?? "Use working file"));
             var path = string.IsNullOrWhiteSpace(Path)
                 ? args.WorkingFile
                 : args.ReplaceVariables(Path, stripMissing: true);
+            args.Logger?.ILog("Path[1]:" + path);
             
             if (args.FileService.DirectoryExists(path).Is(true))
             {
@@ -107,14 +109,13 @@ public class Zip : Node
             }
             else
             {
+                destDir = args.ReplaceVariables(destDir, stripMissing: true);
+                
                 // in case they set a linux path on windows or vice versa
                 destDir = destDir.Replace('\\', args.FileService.PathSeparator);
                 destDir = destDir.Replace('/', args.FileService.PathSeparator);
+                args.Logger?.ILog("Destination Directory: " + destDir);
 
-                destDir = args.ReplaceVariables(destDir, stripMissing: true);
-
-                // this converts it to the actual OS path
-                destDir = FileHelper.GetDirectory(destDir);
                 args.FileService.DirectoryCreate(destDir);
             }
 
