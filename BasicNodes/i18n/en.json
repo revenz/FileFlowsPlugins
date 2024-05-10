@@ -131,13 +131,6 @@
             "1": "Directory files iterated"
           },
           "Fields": {
-            "FileName": "Path",
-            "FileName-Help": "A path to either a file or folder to delete.\n\nIf left blank the current working file will be deleted."
-          }
-        },
-        "FailFlow": {
-          "Description": "Fails a flow immediately, useful if you want a certain path to just fail.",
-          "Fields": {
             "Flow": "Flow",
             "Flow-Help": "The sub flow to execute the files against.",
             "Directory": "Directory",
@@ -146,6 +139,13 @@
             "Pattern-Help": "Any optional pattern to limit the files for iteration, this can be a wildcard pattern starting with a `*` or a regular expression.",
             "Recursive": "Recursive",
             "Recursive-Help": "If files in all sub directories should also be iterated, or if only the top level files should be iterated."
+          }
+        },
+        "FailFlow": {
+          "Description": "Fails a flow immediately, useful if you want a certain path to just fail.",
+          "Fields": {
+            "Reason": "Reason",
+            "Reason-Help": "An optional reason to record why the flow failed."
           }
         },
         "FileSize": {

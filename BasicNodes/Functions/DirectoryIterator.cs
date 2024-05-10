@@ -3,6 +3,7 @@ using FileFlows.Plugin.Attributes;
 using System.ComponentModel.DataAnnotations;
 
 namespace FileFlows.BasicNodes.Functions;
+
 /// <summary>
 /// A special flow element that iterates all files in a directory and process them through a sub flow
 /// </summary>
@@ -13,12 +14,14 @@ public class DirectoryIterator : Node
     /// <inheritdoc />
     public override int Outputs => 1;
     /// <inheritdoc />
-    public override FlowElementType Type => FlowElementType.SubFlow;
+    public override FlowElementType Type => FlowElementType.Process;
     /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/directory-iterator";
     /// <inheritdoc /> 
     public override string Icon => "fas fa-sitemap";
-    
+    /// <inheritdoc /> 
+    public override string CustomColor => "var(--flow-subflow)";
+
     /// <summary>
     /// Gets or sets the flow to execute
     /// </summary>
