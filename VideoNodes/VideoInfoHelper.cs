@@ -127,7 +127,7 @@ public class VideoInfoHelper
         int videoIndex = 0;
         int audioIndex = 0;
         int attachmentIndex = 0;
-        bool webvtt = output.Contains("Unknown/unsupported AVCodecID S_TEXT/WEBVTT");
+        bool webvtt = output.Contains("Unknown/unsupported AVCodecID S_TEXT/WEBVTT"); // FF-1534
         foreach (Match sm in streamMatches)
         {
             if (sm.Value.Contains(" Video: "))

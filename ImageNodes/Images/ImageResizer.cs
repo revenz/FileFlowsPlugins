@@ -1,27 +1,28 @@
-﻿using SixLabors.ImageSharp.Formats;
-using SixLabors.ImageSharp.Formats.Bmp;
-using SixLabors.ImageSharp.Formats.Gif;
-using SixLabors.ImageSharp.Formats.Jpeg;
-using SixLabors.ImageSharp.Formats.Pbm;
-using SixLabors.ImageSharp.Formats.Png;
-using SixLabors.ImageSharp.Formats.Tga;
-using SixLabors.ImageSharp.Formats.Tiff;
-using SixLabors.ImageSharp.Formats.Webp;
-using SixLabors.ImageSharp.Processing;
+﻿using FileFlows.Plugin.Helpers;
+using FileFlows.Plugin.Types;
 
 namespace FileFlows.ImageNodes.Images;
 
+/// <summary>
+/// Flow element that resizes an image
+/// </summary>
 public class ImageResizer: ImageNode
 {
+    /// <inheritdoc />
     public override int Inputs => 1;
+    /// <inheritdoc />
     public override int Outputs => 1;
-    public override FlowElementType Type => FlowElementType.Process; 
+    /// <inheritdoc />
+    public override FlowElementType Type => FlowElementType.Process;
+    /// <inheritdoc /> 
     public override string Icon => "fas fa-expand";
-
+    /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/image-nodes/image-resizer";
 
-
-    [Select(nameof(ResizeModes), 2)]
+    /// <summary>
+    /// Gets or sets the resize mode
+    /// </summary>
+    [Select(nameof(ResizeModes), 3)]
     public ResizeMode Mode { get; set; }
 
     private static List<ListOption>? _ResizeModes;
@@ -37,67 +38,36 @@ public class ImageResizer: ImageNode
             {
                 _ResizeModes = new List<ListOption>
                 {
-                    new () { Value = ResizeMode.Fill, Label = "Fill (Stretches to fit)"},
-                    new () { Value = ResizeMode.Contain, Label = "Contain (Preserves aspect ratio but contained in bounds)"},
-                    new () { Value = ResizeMode.Cover, Label =  "Cover (Preserves aspect ratio)"},
-                    new () { Value = ResizeMode.Min, Label = "Min (Resizes the image until the shortest side reaches the set given dimension)"},
-                    new () { Value = ResizeMode.Max, Label = "Max (Constrains the resized image to fit the bounds of its container maintaining the original aspect ratio)"},
-                    new () { Value = ResizeMode.None, Label = "None (Not resized)"}
+                    new () { Value = ResizeMode.Fill, Label = "Fill"},
+                    new () { Value = ResizeMode.Contain, Label = "Contain"},
+                    new () { Value = ResizeMode.Cover, Label =  "Cover"},
+                    new () { Value = ResizeMode.Min, Label = "Min"},
+                    new () { Value = ResizeMode.Max, Label = "Max"},
+                    new () { Value = ResizeMode.Pad, Label = "Pad"}
                 };
             }
             return _ResizeModes;
         }
     }
     
-    [NumberInt(3)]
-    [Range(1, int.MaxValue)]
-    public int Width { get; set; }
-    [NumberInt(4)]
-    [Range(1, int.MaxValue)]
-    public int Height { get; set; }
-
-    [Boolean(5)]
-    public bool Percent { get; set; }
-
-    public override int Execute(NodeParameters args)
+    /// <summary>
+    /// Gets or sets the new width 
+    /// </summary>
+    [NumberPercent(5, "Labels.Pixels", 0, false)]
+    public NumberPercent? Width { get; set; }
+    
+    /// <summary>
+    /// Gets or sets the new height
+    /// </summary>
+    [NumberPercent(6, "Labels.Pixels", 0, false)]
+    public NumberPercent? Height { get; set; }
+    
+    /// <inheritdoc />
+    protected override Result<bool> PerformAction(NodeParameters args, string localFile, string destination)
     {
-        string inputFile = ConvertImageIfNeeded(args);
-        var format = Image.DetectFormat(inputFile);
-        using var image = Image.Load(inputFile);
-        SixLabors.ImageSharp.Processing.ResizeMode rzMode;
-        switch (Mode)
-        {
-            case ResizeMode.Contain: rzMode = SixLabors.ImageSharp.Processing.ResizeMode.Pad;
-                break;
-            case ResizeMode.Cover: rzMode = SixLabors.ImageSharp.Processing.ResizeMode.Crop;
-                break;
-            case ResizeMode.Fill: rzMode = SixLabors.ImageSharp.Processing.ResizeMode.Stretch;
-                break;
-            case ResizeMode.Min: rzMode = SixLabors.ImageSharp.Processing.ResizeMode.Min;
-                break;
-            case ResizeMode.Max: rzMode = SixLabors.ImageSharp.Processing.ResizeMode.Max;
-                break;
-            default: rzMode = SixLabors.ImageSharp.Processing.ResizeMode.BoxPad;
-                break;
-        }
-
-        var formatOpts = GetFormat(args);
-
-        float w = Width;
-        float h = Height;
-        if (Percent)
-        {
-            w = (int)(image.Width * (w / 100f));
-            h = (int)(image.Height * (h / 100f));
-        }
-        
-        image.Mutate(c => c.Resize(new ResizeOptions()
-        {
-            Size = new Size((int)w, (int)h),
-            Mode = rzMode
-        }));
-        
-        SaveImage(args, image, formatOpts.file, formatOpts.format ?? format);
-        return 1;
+        float w = Width!.Percentage ? (int)(CurrentWidth * (Width.Value / 100f)) : Width.Value;
+        float h = Height!.Percentage ? (int)(CurrentHeight * (Height.Value / 100f)) : Height.Value;
+            
+        return args.ImageHelper.Resize(localFile, destination, (int)w, (int)h, Mode, GetImageTypeFromFormat(), Quality);
     }
 }

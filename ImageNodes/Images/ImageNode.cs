@@ -1,23 +1,24 @@
-using System.Text.RegularExpressions;
-using ImageMagick;
-using SixLabors.ImageSharp.Formats;
-using SixLabors.ImageSharp.Formats.Bmp;
-using SixLabors.ImageSharp.Formats.Gif;
-using SixLabors.ImageSharp.Formats.Jpeg;
-using SixLabors.ImageSharp.Formats.Pbm;
-using SixLabors.ImageSharp.Formats.Png;
-using SixLabors.ImageSharp.Formats.Tga;
-using SixLabors.ImageSharp.Formats.Tiff;
-using SixLabors.ImageSharp.Formats.Webp;
+using System.ComponentModel;
+using FileFlows.Plugin.Helpers;
 
 namespace FileFlows.ImageNodes.Images;
 
+/// <summary>
+/// Base image flow element
+/// </summary>
 public abstract class ImageNode : ImageBaseNode
 {
-    [Select(nameof(FormatOptions), 1)]
+    /// <summary>
+    /// Gets or sets the format to save the image in
+    /// </summary>
+    [Select(nameof(FormatOptions), 51)]
     public string Format { get; set; } = string.Empty;
     
     private static List<ListOption>? _FormatOptions;
+    
+    /// <summary>
+    /// Gets the image format options
+    /// </summary>
     public static List<ListOption> FormatOptions
     {
         get
@@ -27,152 +28,103 @@ public abstract class ImageNode : ImageBaseNode
                 _FormatOptions = new List<ListOption>
                 {
                     new () { Value = "", Label = "Same as source"},
-                    new () { Value = IMAGE_FORMAT_BMP, Label = "Bitmap"},
-                    new () { Value = IMAGE_FORMAT_GIF, Label = "GIF"},
-                    new () { Value = IMAGE_FORMAT_JPEG, Label = "JPEG"},
-                    new () { Value = IMAGE_FORMAT_PBM, Label = "PBM"},
-                    new () { Value = IMAGE_FORMAT_PNG, Label = "PNG"},
-                    new () { Value = IMAGE_FORMAT_TIFF, Label = "TIFF"},
+                    new () { Value = "###GROUP###", Label = "Lossless Formats" },
+                    new () { Value = IMAGE_FORMAT_PNG, Label = "PNG" },
+                    new () { Value = IMAGE_FORMAT_BMP, Label = "Bitmap" },
+                    new () { Value = IMAGE_FORMAT_TIFF, Label = "TIFF" },
                     new () { Value = IMAGE_FORMAT_TGA, Label = "TGA" },
-                    new () { Value = IMAGE_FORMAT_WEBP, Label = "WebP"},
+                    new () { Value = IMAGE_FORMAT_WEBP, Label = "WebP" },
+                    new () { Value = "###GROUP###", Label = "Lossy Formats" },
+                    new () { Value = IMAGE_FORMAT_JPEG, Label = "JPEG" },
+                    new () { Value = IMAGE_FORMAT_GIF, Label = "GIF" },
+                    new () { Value = IMAGE_FORMAT_PBM, Label = "PBM" },
                 };
             }
             return _FormatOptions;
         }
     }
+    
+    /// <summary>
+    /// Gets or sets the quality to save the image in
+    /// </summary>
+    [Slider(52)]
+    [Range(1, 100)]
+    [DefaultValue(100)]
+    [ConditionEquals(nameof(Format), $"/^({IMAGE_FORMAT_WEBP}|{IMAGE_FORMAT_JPEG})$/")]
+    public int Quality { get; set; }
 
-    protected (IImageFormat? format, string file) GetFormat(NodeParameters args)
+    /// <summary>
+    /// Gets the image type from the image format
+    /// </summary>
+    /// <returns>the image type, or null to keep original</returns>
+    protected ImageType? GetImageTypeFromFormat()
     {
-        IImageFormat? format = null;
-        
-        var newFile = FileHelper.Combine(args.TempPath, Guid.NewGuid().ToString());
-        switch (this.Format)
+        switch (Format)
         {
-            case IMAGE_FORMAT_BMP:
-                newFile = newFile + ".bmp";
-                format = BmpFormat.Instance;
-                break; 
-            case IMAGE_FORMAT_GIF:
-                newFile = newFile + ".gif";
-                format = GifFormat.Instance;
-                break; 
-            case IMAGE_FORMAT_JPEG:
-                newFile = newFile + ".jpg";
-                format = JpegFormat.Instance;
-                break;
-            case IMAGE_FORMAT_PBM:
-                newFile = newFile + ".pbm";
-                format = PbmFormat.Instance;
-                break; 
-            case IMAGE_FORMAT_PNG:
-                newFile = newFile + ".png";
-                format = PngFormat.Instance;
-                break; 
-            case IMAGE_FORMAT_TIFF:
-                newFile = newFile + ".tiff";
-                format = TiffFormat.Instance;
-                break;
-            case IMAGE_FORMAT_TGA:
-                newFile = newFile + ".tga";
-                format = TgaFormat.Instance;
-                break; 
-            case IMAGE_FORMAT_WEBP:
-                newFile = newFile + ".webp";
-                format = WebpFormat.Instance;
-                break;
-            case "HEIC":
-                // cant save to this format, save to PNG
-                newFile = newFile + ".png";
-                format = PngFormat.Instance;
-                break; 
-            default:
-                newFile = newFile + "." + args.WorkingFile.Substring(args.WorkingFile.LastIndexOf(".") + 1);
-                newFile = Regex.Replace(newFile, @"\.heic$", ".png", RegexOptions.IgnoreCase);
-                break;
+            case IMAGE_FORMAT_BMP: return ImageType.Bmp;
+            case IMAGE_FORMAT_GIF: return ImageType.Gif;
+            case IMAGE_FORMAT_TGA: return ImageType.Tga;
+            case IMAGE_FORMAT_PNG: return ImageType.Png;
+            case IMAGE_FORMAT_PBM: return ImageType.Pbm;
+            case IMAGE_FORMAT_JPEG: return ImageType.Jpeg;
+            case IMAGE_FORMAT_TIFF: return ImageType.Tiff;
+            case IMAGE_FORMAT_WEBP: return ImageType.Webp;
         }
-
-        return (format, newFile);
+        return null;
     }
 
-    protected void SaveImage(NodeParameters args, Image img, string file, IImageFormat format, bool updateWorkingFile = true)
+    /// <summary>
+    /// Gets the image type extension with leading period
+    /// </summary>
+    /// <param name="file">the current file, will be used if the type is not set</param>
+    /// <returns>the extension with leading period</returns>
+    protected string GetImageTypeExtension(string file)
     {
-        string local = args.FileService.FileIsLocal(file)
-            ? file
-            : FileHelper.Combine(args.TempPath, Guid.NewGuid() + FileHelper.GetExtension(file));
-        
-        using var outStream = new System.IO.FileStream(local, System.IO.FileMode.Create);
-        img.Save(outStream, format);
-
-        if (local != file && args.FileService.FileMove(local, file).Failed(out string error))
-        {
-            args.Logger?.ELog("Failed to move saved file: " + error);
-            return;
-        }
-
-        if (updateWorkingFile)
-        {
-            args.SetWorkingFile(file);
-            UpdateImageInfo(args, img.Height, img.Height, format.Name, Variables);
-        }
+        var type = GetImageTypeFromFormat();
+        if (type == ImageType.Jpeg)
+            return ".jpg";
+        if (type == null)
+            return FileHelper.GetExtension(file);
+        return "." + (type.ToString()!.ToLowerInvariant());
     }
 
-    protected void SaveImage(NodeParameters args, ImageMagick.MagickImage img, string file, bool updateWorkingFile = true)
+    /// <inheritdoc />
+    public override int Execute(NodeParameters args)
     {
-        string local = args.FileService.FileIsLocal(file)
-            ? file
-            : FileHelper.Combine(args.TempPath, Guid.NewGuid() + FileHelper.GetExtension(file));
-        
-        using var outStream = new System.IO.FileStream(local, System.IO.FileMode.Create);
-
-        string origExtension = FileHelper.GetExtension(args.WorkingFile).ToLowerInvariant().TrimStart('.');
-        string newExtension = FileHelper.GetExtension(file).ToLowerInvariant().TrimStart('.');
-        if (origExtension != newExtension)
+        var localFile = args.FileService.GetLocalPath(args.WorkingFile);
+        if (localFile.Failed(out string error))
         {
-            switch (newExtension)
-            {
-                case "jpg":
-                case "jpeg":
-                    img.Format = MagickFormat.Jpeg;
-                    break;
-                case "png":
-                    img.Format = MagickFormat.Png;
-                    break;
-                case "gif":
-                    img.Format = MagickFormat.Gif;
-                    break;
-                case "bmp":
-                    img.Format = MagickFormat.Bmp;
-                    break;
-                case "tga":
-                    img.Format = MagickFormat.Tga;
-                    break;
-                case "webp":
-                    img.Format = MagickFormat.WebP;
-                    break;
-                case "webm":
-                    img.Format = MagickFormat.WebM;
-                    break;
-                default:
-                    if (Enum.TryParse(newExtension, true, out MagickFormat format))
-                        img.Format = format;
-                    break;
-            }
+            args.FailureReason = "Failed to get local file: " + localFile.Error;
+            args.Logger?.ELog(args.FailureReason);
+            return -1;
         }
 
-        img.Write(outStream);
+        var destination = FileHelper.Combine(args.TempPath, Guid.NewGuid() + GetImageTypeExtension(localFile));
+
+        var result = PerformAction(args, localFile, destination);
         
-        
-        if (updateWorkingFile)
+        if (result.Failed(out error))
         {
-            args.SetWorkingFile(file);
-            var format = Image.DetectFormat(local);
-            using var image = Image.Load(local);
-            UpdateImageInfo(args, img.Width, img.Height, format.Name, Variables);
+            args.FailureReason = error;
+            args.Logger?.ELog(args.FailureReason);
+            return -1;
         }
-        
-        if (local != file && args.FileService.FileMove(local, file).Failed(out string error))
-        {
-            args.Logger?.ELog("Failed to move saved file: " + error);
-        }
+
+        if (result == false)
+            return 2;
+
+        args.SetWorkingFile(destination);
+        ReadWorkingFileInfo(args);
+
+        return 1;
     }
+
+    /// <summary>
+    /// Performs the image action
+    /// </summary>
+    /// <param name="args">the node parameters</param>
+    /// <param name="localFile">the local file</param>
+    /// <param name="destination">the destination file to create</param>
+    /// <returns>true if successful (output 1), false if not (output 2), failure result if failed</returns>
+    protected abstract Result<bool> PerformAction(NodeParameters args, string localFile, string destination);
 }

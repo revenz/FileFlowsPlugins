@@ -1,7 +1,5 @@
 ﻿using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
-using System.IO.Compression;
-using System.IO;
 using FileFlows.Plugin.Helpers;
 
 namespace FileFlows.BasicNodes.File;
@@ -36,9 +34,15 @@ public class Zip : Node
     private string _DestinationFile = string.Empty;
 
     /// <summary>
-    /// Gets or sets the destination path for zipping.
+    /// Gets or sets the path to zip
     /// </summary>
     [Folder(1)]
+    public string Path { get; set; }
+
+    /// <summary>
+    /// Gets or sets the destination path for zipping.
+    /// </summary>
+    [Folder(2)]
     public string DestinationPath
     {
         get => _DestinationPath;
@@ -48,12 +52,18 @@ public class Zip : Node
     /// <summary>
     /// Gets or sets the destination file name for zipping.
     /// </summary>
-    [TextVariable(2)]
+    [TextVariable(3)]
     public string DestinationFile
     {
         get => _DestinationFile;
         set => _DestinationFile = value ?? string.Empty;
     }
+    
+    /// <summary>
+    /// Gets or sets if the working file should be updated to the zipped file
+    /// </summary>
+    [Boolean(4)]
+    public bool SetWorkingFile { get; set; }
 
     /// <summary>
     /// Executes the flow element
@@ -66,13 +76,18 @@ public class Zip : Node
 
         try
         {
-            if (args.FileService.DirectoryExists(args.WorkingFile).Is(true))
+            var path = string.IsNullOrWhiteSpace(Path)
+                ? args.WorkingFile
+                : args.ReplaceVariables(Path, stripMissing: true);
+            
+            if (args.FileService.DirectoryExists(path).Is(true))
             {
                 isDir = true;
             }
-            else if (args.FileService.FileExists(args.WorkingFile).Is(true) == false)
+            else if (args.FileService.FileExists(path).Is(true) == false)
             {
-                args.Logger?.ELog("File or folder does not exist: " + args.WorkingFile);
+                args.FailureReason = "File or folder does not exist: " + path;
+                args.Logger?.ELog(args.FailureReason);
                 return -1;
             }
 
@@ -85,7 +100,8 @@ public class Zip : Node
                     destDir = FileHelper.GetDirectory(args.FileName);
                 if (string.IsNullOrEmpty(destDir))
                 {
-                    args.Logger?.ELog("Failed to get destination directory");
+                    args.FailureReason ="Failed to get destination directory";
+                    args.Logger?.ELog(args.FailureReason);
                     return -1;
                 }
             }
@@ -113,15 +129,16 @@ public class Zip : Node
 
             string tempZip = FileHelper.Combine(args.TempPath, Guid.NewGuid() + ".zip");
 
-            args.Logger?.ILog($"Compressing '{args.WorkingFile}' to '{destFile}'");
+            args.Logger?.ILog($"Compressing '{path}' to '{destFile}'");
             if (isDir)
             {
-                if (args.FileService.FileIsLocal(args.WorkingFile) == false)
+                if (args.FileService.FileIsLocal(path) == false)
                 {
-                    args.Logger?.ELog("Cannot zip remote directories");
+                    args.FailureReason = "Cannot zip remote directories";
+                    args.Logger?.ELog(args.FailureReason);
                     return -1;
                 }
-                args.ArchiveHelper.Compress(args.WorkingFile, tempZip, allDirectories: true, percentCallback:(percent) =>
+                args.ArchiveHelper.Compress(path, tempZip, allDirectories: true, percentCallback:(percent) =>
                 {
                     args.PartPercentageUpdate(percent);
                 });
@@ -129,29 +146,34 @@ public class Zip : Node
             }
             else
             {
-                string localFile = args.FileService.GetLocalPath(args.WorkingFile);
+                string localFile = args.FileService.GetLocalPath(path);
                 args.ArchiveHelper.Compress(localFile, tempZip);
             }
 
             if (System.IO.File.Exists(tempZip) == false)
             {
-                args.Logger?.ELog("Failed to create zip: " + destFile);
+                args.FailureReason = "Failed to create zip: " + destFile;
+                args.Logger?.ELog(args.FailureReason);
                 return -1;
             }
 
             if (args.FileService.FileMove(tempZip, destFile, true).Failed(out string error))
             {
-                args.Logger?.ELog("Failed to move zip: " + error);
+                args.FailureReason = "Failed to move zip: " + error;
+                args.Logger?.ELog(args.FailureReason);
                 return -1;
             }
             
-            args.SetWorkingFile(destFile);
+            if(SetWorkingFile)
+                args.SetWorkingFile(destFile);
+            
             args.Logger?.ILog("Zip created at: " + destFile);
             return 1;
         }
         catch (Exception ex)
         {
-            args.Logger?.ELog("Failed creating zip: " + ex.Message + Environment.NewLine + ex.StackTrace);
+            args.FailureReason = "Failed creating zip: " + ex.Message;
+            args.Logger?.ELog(args.FailureReason + ex.Message + Environment.NewLine + ex.StackTrace);
             return -1;
         }
     }

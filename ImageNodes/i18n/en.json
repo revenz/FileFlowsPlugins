@@ -68,9 +68,7 @@
           "Width": "Width",
           "Height": "Height",
           "Mode": "Mode",
-          "Mode-Help": "The mode to use when resizing the image",
-          "Percent": "Percent",
-          "Percent-Help": "When selected, the width and height values become percentages, with 100 being 100%"
+          "Mode-Help": "The mode to use when resizing the image"
         }
       },
       "ImageRotate": {

@@ -1,17 +1,24 @@
-﻿using SixLabors.ImageSharp.Formats;
-using SixLabors.ImageSharp.Processing;
+﻿namespace FileFlows.ImageNodes.Images;
 
-namespace FileFlows.ImageNodes.Images;
-
+/// <summary>
+/// Flow element that rotates an image
+/// </summary>
 public class ImageRotate: ImageNode
 {
+    /// <inheritdoc />
     public override int Inputs => 1;
+    /// <inheritdoc />
     public override int Outputs => 1;
-    public override FlowElementType Type => FlowElementType.Process; 
+    /// <inheritdoc />
+    public override FlowElementType Type => FlowElementType.Process;
+    /// <inheritdoc /> 
     public override string Icon => "fas fa-undo";
-
+    /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/image-nodes/image-rotate";
 
+    /// <summary>
+    /// Gets or sets angle to rotate the image
+    /// </summary>
     [Select(nameof(AngleOptions), 2)]
     public int Angle { get; set; }
 
@@ -36,15 +43,7 @@ public class ImageRotate: ImageNode
         }
     }
 
-    public override int Execute(NodeParameters args)
-    {
-        string inputFile = ConvertImageIfNeeded(args);
-        var format = Image.DetectFormat(inputFile);
-        using var image = Image.Load(inputFile);
-        image.Mutate(c => c.Rotate(Angle));
-        var formatOpts = GetFormat(args);
-        SaveImage(args, image, formatOpts.file, formatOpts.format ?? format);
-        
-        return 1;
-    }
+    /// <inheritdoc />
+    protected override Result<bool> PerformAction(NodeParameters args, string localFile, string destination)
+        => args.ImageHelper.Rotate(localFile, destination, Angle, GetImageTypeFromFormat(), Quality);
 }

@@ -427,7 +427,11 @@
             "DestinationPath": "Destination Folder",
             "DestinationPath-Help": "The destination folder where to put the zip file.  If blank, the zip will be placed in the library root.",
             "DestinationFile": "Destination File",
-            "DestinationFile-Help": "The filename of the newly created zip.  If blank, the name of the item will be used as the zip file."
+            "DestinationFile-Help": "The filename of the newly created zip.  If blank, the name of the item will be used as the zip file.",
+            "Path": "Path",
+            "Path-Help": "The path to the file or folder to zip.  If blank, the working file will be zipped.",
+            "SetWorkingFile": "Set Working File",
+            "SetWorkingFile-Help": "If the newly created zip should become the new working file."
           }
         },
         "SevenZip": {

@@ -37,7 +37,6 @@ public class ImageFile : ImageBaseNode
             if (args.FileService.FileLastWriteTimeUtc(args.WorkingFile).Success(out DateTime writeTime))
                 args.Variables["ORIGINAL_LAST_WRITE_UTC"] = writeTime;
 
-            UpdateImageInfo(args, this.Variables);
             if(string.IsNullOrEmpty(base.CurrentFormat) == false)
                 args.RecordStatisticRunningTotals("IMAGE_FORMAT", base.CurrentFormat);
 
