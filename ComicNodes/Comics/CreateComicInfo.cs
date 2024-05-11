@@ -284,14 +284,6 @@ public class CreateComicInfo : Node
             info.Count = ofNumber;
         }
         
-        //var issueNumberMatch2 = Regex.Match(shortname, @"(?<!['])[#]?\b(\-?\d{1,3})\b(?!\w)");
-        ExtractIssueNumber(info, ref shortname);
-
-        if (info.Number != null)
-            ExtractYear(ref shortname);
-        else 
-            ExtractAnnualInfo(info, ref shortname);
-
         var volMatch = Regex.Match(shortname, @"\b[Vv](?:olume|ol)?\s*(\d+)\b", RegexOptions.IgnoreCase);
         if (volMatch.Success)
         {
@@ -302,6 +294,14 @@ public class CreateComicInfo : Node
                 : shortname;
 
         }
+        //var issueNumberMatch2 = Regex.Match(shortname, @"(?<!['])[#]?\b(\-?\d{1,3})\b(?!\w)");
+        ExtractIssueNumber(info, ref shortname);
+
+        if (info.Number != null)
+            ExtractYear(ref shortname);
+        else 
+            ExtractAnnualInfo(info, ref shortname);
+
         
         // remove any junk
         shortname = Regex.Replace(shortname, @"\(([\-]?\d+)\)", "$1").Trim();

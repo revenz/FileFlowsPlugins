@@ -92,6 +92,33 @@ public class ComicInfoTests : TestBase
         Assert.AreEqual("Ultimate Spider-Man (2000) - Volume 5 - Public Scrutiny.cbz", name.Value);
     }
     
+    [TestMethod]
+    public void Volume2()
+    {
+        var result = CreateComicInfo.GetInfo(Logger,
+            "/home/john/Comics/Marvel/X-Men/X-Men The Complete Age of Apocalypse Epic/X-Men The Complete Age of Apocalypse Epic - Vol 3.cbz", 
+            "/home/john/Comics",
+            true);
+
+        TestContext.WriteLine(Logger.ToString());
+
+        Assert.IsFalse(result.IsFailed);
+        var info = result.Value;
+        Assert.IsNotNull(info);
+        Assert.AreEqual("Marvel", info.Publisher);
+        Assert.AreEqual("X-Men The Complete Age of Apocalypse Epic", info.Series);
+        Assert.AreEqual("Volume 3", info.Volume);
+        Assert.AreEqual(null, info.Title);
+
+        var xml = CreateComicInfo.SerializeToXml(info);
+        Assert.IsFalse(string.IsNullOrWhiteSpace(xml));
+        TestContext.WriteLine(new string('-', 70));
+        TestContext.WriteLine(xml);
+        
+        var name = CreateComicInfo.GetNewName(info, "cbz", 0);
+        Assert.AreEqual("X-Men The Complete Age of Apocalypse Epic - Volume 3.cbz", name.Value);
+    }
+
     
     [TestMethod]
     public void NameAndNumber()
@@ -226,6 +253,7 @@ public class ComicInfoTests : TestBase
         var name = CreateComicInfo.GetNewName(info, "cbz", 3);
         Assert.AreEqual("Batman - The Killing Joke.cbz", name.Value);
     }
+    
     [TestMethod]
     public void NameAndNumber2()
     {
