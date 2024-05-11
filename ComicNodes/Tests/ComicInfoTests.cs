@@ -199,6 +199,33 @@ public class ComicInfoTests : TestBase
         var name = CreateComicInfo.GetNewName(info, "cbz", 3);
         Assert.AreEqual("Something Random - #012 - Random title.cbz", name.Value);
     }
+    
+    [TestMethod]
+    public void NoIssue()
+    {
+        var result = CreateComicInfo.GetInfo(Logger,
+            "/home/john/Comics/DC/Batman/Batman - The Killing Joke.cbz", 
+            "/home/john/Comics",
+            true);
+
+        TestContext.WriteLine(Logger.ToString());
+
+        Assert.IsFalse(result.IsFailed);
+        var info = result.Value;
+        Assert.IsNotNull(info);
+        Assert.AreEqual("DC", info.Publisher);
+        Assert.AreEqual("Batman", info.Series);
+        Assert.AreEqual(null, info.Number);
+        Assert.AreEqual("The Killing Joke", info.Title);
+
+        var xml = CreateComicInfo.SerializeToXml(info);
+        Assert.IsFalse(string.IsNullOrWhiteSpace(xml));
+        TestContext.WriteLine(new string('-', 70));
+        TestContext.WriteLine(xml);
+        
+        var name = CreateComicInfo.GetNewName(info, "cbz", 3);
+        Assert.AreEqual("Batman - The Killing Joke.cbz", name.Value);
+    }
     [TestMethod]
     public void NameAndNumber2()
     {

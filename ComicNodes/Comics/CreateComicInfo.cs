@@ -219,7 +219,7 @@ public class CreateComicInfo : Node
                 name += $" - #{info.Number + (info.Count > 0 ? $" (of {info.Count})" : "")}";
             
         }
-        else
+        else if(string.IsNullOrWhiteSpace(info.Volume) == false)
             name += " - " + info.Volume;
             
         if (string.IsNullOrWhiteSpace(info.Title) == false)
