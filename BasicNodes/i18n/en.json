@@ -41,7 +41,7 @@
             "AdditionalFilesFromOriginal": "Original Directory",
             "AdditionalFilesFromOriginal-Help": "If the additional files should be copied from the working directory or from the original directory.  Turn on for original directory.",
             "PreserverOriginalDates": "Preserve Dates",
-            "PreserverOriginalDates-Help": "If the original last write time of the original input file should be preserved."
+            "PreserverOriginalDates-Help": "If the original creation time and last write time of the original input file should be preserved."
           }
         },
         "DeleteSourceDirectory": {
@@ -262,7 +262,7 @@
             "AdditionalFilesFromOriginal": "Original Directory",
             "AdditionalFilesFromOriginal-Help": "If the additional files should be moved from the working directory or from the original directory.  Turn on for original directory.",
             "PreserverOriginalDates": "Preserve Dates",
-            "PreserverOriginalDates-Help": "If the original last write time of the original input file should be preserved."
+            "PreserverOriginalDates-Help": "If the original creation time and last write time of the original input file should be preserved."
           }
         },
         "OlderThan": {
@@ -324,7 +324,7 @@
           },
           "Fields": {
             "PreserverOriginalDates": "Preserve Dates",
-            "PreserverOriginalDates-Help": "If the original last write time of the original input file should be preserved."
+            "PreserverOriginalDates-Help": "If the original creation time and last write time of the original input file should be preserved."
           }
         },
         "Renamer": {
