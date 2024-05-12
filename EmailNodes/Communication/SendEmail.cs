@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using MailKit.Net.Smtp;
-using MimeKit;
+// using MailKit.Net.Smtp;
+// using MimeKit;
 
 namespace FileFlows.Communication;
 
@@ -15,6 +15,9 @@ public class SendEmail:Node
     public override int Outputs => 2;
     /// <inheritdoc />
     public override string Icon => "fas fa-envelope";
+
+    /// <inheritdoc />
+    public override string HelpUrl => "http://localhost:3000/docs/plugins/email";
 
     /// <inheritdoc />
     public override FlowElementType Type => FlowElementType.Communication;
@@ -75,36 +78,36 @@ File shrunk in size by: {{ difference | file_size }} / {{ percent }}%
     /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
-        try
+        if (Recipients?.Any() != true)
         {
-            var settings = args.GetPluginSettings<PluginSettings>();
-
-            if (string.IsNullOrEmpty(settings?.SmtpServer))
-            {
-                args.Logger?.ELog(
-                    "No SMTP Server configured, configure this under the 'Plugins > Email > Edit' page.");
-                return -1;
-            }
-
-            args.Logger?.ILog($"Got SMTP Server: {settings.SmtpServer} [{settings.SmtpPort}]");
-
-            string body = RenderBody(args);
-
-            string sender = settings.Sender ?? "fileflows@" + Environment.MachineName;
-            string subject = args.ReplaceVariables(this.Subject ?? String.Empty)?.EmptyAsNull() ??
-                             "Email from FileFlows";
-
-            SendMailKit(args, settings, sender, subject, body);
-
-            //SendDotNet(args, settings, sender, subject, body);
-
-            return 1;
+            args.FailureReason = "No recipients configured";
+            args.Logger?.ELog(args.FailureReason);
+            return -1;
         }
-        catch (Exception ex)
+        
+        string body = RenderBody(args);
+
+        string subject = args.ReplaceVariables(this.Subject ?? String.Empty)?.EmptyAsNull() ??
+                         "Email from FileFlows";
+
+        if (args.SendEmail == null)
         {
-            args.Logger?.WLog("Error sending message: " + ex.Message);
+            args.FailureReason = "SendEmail function is not set";
+            args.Logger?.ELog(args.FailureReason);
+            return -1;
+        }
+        var result = args.SendEmail(Recipients, subject, body);
+        if (result.Failed(out string error))
+        {
+            args.Logger?.ELog("Failed to send email: " + error);
             return 2;
         }
+
+        // SendMailKit(args, settings, sender, subject, body);
+
+        //SendDotNet(args, settings, sender, subject, body);
+
+        return 1;
     }
 
     /// <summary>
@@ -120,39 +123,39 @@ File shrunk in size by: {{ difference | file_size }} / {{ percent }}%
         return args.RenderTemplate!(this.Body);
     }
 
-    private void SendMailKit(NodeParameters args, PluginSettings settings, string sender, string subject, string body)
-    {
-        var message = new MimeMessage();
-        message.From.Add(new MailboxAddress(sender, sender));
-        if (Recipients?.Any() != true)
-        {
-            args.Logger?.ELog("No recipients");
-            return;
-        }
-        foreach (var recipient in Recipients)
-            message.To.Add(new MailboxAddress(recipient, recipient));
-        message.Subject = subject;
-        message.Body = new TextPart("plain")
-        {
-            Text = body
-        };
-
-        args.Logger?.ILog($"About to construct SmtpClient");
-        using (var client = new SmtpClient())
-        {
-            args.Logger?.ILog($"Connecting to SMTP Server: {settings.SmtpServer}:{settings.SmtpPort}");
-            client.Connect(settings.SmtpServer, settings.SmtpPort);
-
-            if (string.IsNullOrEmpty(settings.SmtpUsername) == false)
-            {
-                args.Logger?.ILog("Sending using credientials");
-                client.AuthenticationMechanisms.Remove("XOAUTH2");
-                client.Authenticate(settings.SmtpUsername, settings.SmtpPassword);
-            }
-            args.Logger?.ILog($"About to send message");
-            client.Send(message);
-            args.Logger?.ILog($"Message sent");
-            client.Disconnect(true);
-        }
-    }
+    // private void SendMailKit(NodeParameters args, PluginSettings settings, string sender, string subject, string body)
+    // {
+    //     var message = new MimeMessage();
+    //     message.From.Add(new MailboxAddress(sender, sender));
+    //     if (Recipients?.Any() != true)
+    //     {
+    //         args.Logger?.ELog("No recipients");
+    //         return;
+    //     }
+    //     foreach (var recipient in Recipients)
+    //         message.To.Add(new MailboxAddress(recipient, recipient));
+    //     message.Subject = subject;
+    //     message.Body = new TextPart("plain")
+    //     {
+    //         Text = body
+    //     };
+    //
+    //     args.Logger?.ILog($"About to construct SmtpClient");
+    //     using (var client = new SmtpClient())
+    //     {
+    //         args.Logger?.ILog($"Connecting to SMTP Server: {settings.SmtpServer}:{settings.SmtpPort}");
+    //         client.Connect(settings.SmtpServer, settings.SmtpPort);
+    //
+    //         if (string.IsNullOrEmpty(settings.SmtpUsername) == false)
+    //         {
+    //             args.Logger?.ILog("Sending using credientials");
+    //             client.AuthenticationMechanisms.Remove("XOAUTH2");
+    //             client.Authenticate(settings.SmtpUsername, settings.SmtpPassword);
+    //         }
+    //         args.Logger?.ILog($"About to send message");
+    //         client.Send(message);
+    //         args.Logger?.ILog($"Message sent");
+    //         client.Disconnect(true);
+    //     }
+    // }
 }

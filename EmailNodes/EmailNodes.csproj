@@ -24,9 +24,6 @@
     <PackageReference Include="MSTest.TestFramework" Version="3.3.1" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MailKit" Version="4.4.0" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="Plugin">
       <HintPath>..\FileFlows.Plugin.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
