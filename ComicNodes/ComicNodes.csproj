@@ -24,9 +24,6 @@
     <PackageReference Include="MSTest.TestFramework" Version="3.3.1" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Docnet.Core" Version="2.6.0" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="FileFlows.Plugin">
       <HintPath>..\FileFlows.Plugin.dll</HintPath>
     </Reference>

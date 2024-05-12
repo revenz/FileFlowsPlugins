@@ -143,7 +143,7 @@ public class ComicConverter: Node
         var metadata = new Dictionary<string, object>();
         metadata.Add("Format", currentFormat);
         var pageCountResult = GetPageCount(args, currentFormat, localFile);
-        if (pageCountResult.Success(out int pageCount))
+        if (pageCountResult.Success(out int pageCount) && pageCount > 0)
         {
             args.Logger?.ILog("Page Count: " + pageCount);
             metadata.Add("Pages", pageCount);
@@ -289,9 +289,15 @@ public class ComicConverter: Node
         if (cancellation.IsCancellationRequested)
             return -1;
         
-        string newFile = CreateComic(args, destinationPath, this.Format);
+        var newFileResult = CreateComic(args, destinationPath, this.Format);
+        if (newFileResult.Failed(out error))
+        {
+            args.FailureReason = "Failed Creating Comic: " + error;
+            args.Logger?.ELog(args.FailureReason);
+            return -1;
+        }
 
-        args.SetWorkingFile(newFile);   
+        args.SetWorkingFile(newFileResult.Value);   
 
         return 1;
     }
@@ -321,7 +327,7 @@ public class ComicConverter: Node
         switch (format)
         {
             case "PDF":
-                return Helpers.PdfHelper.GetPageCount(file);
+                return 0; //Helpers.PdfHelper.GetPageCount(file);
             default:
                 return args.ArchiveHelper.GetFileCount(file,@"\.(jpeg|jpg|jpe|jp2|png|bmp|tiff|webp|gif)$");
         }
@@ -335,18 +341,30 @@ public class ComicConverter: Node
     /// <param name="format">the format to create the comic</param>
     /// <returns>the path to the newly created comic</returns>
     /// <exception cref="Exception">if the format is not supported</exception>
-    private string CreateComic(NodeParameters args, string directory, string format)
+    private Result<string> CreateComic(NodeParameters args, string directory, string format)
     {
         string file = Path.Combine(args.TempPath, Guid.NewGuid() + "." + format.ToLower());
         args.Logger?.ILog("Creating comic: " + file);
+        int? pageCount = null;
         if (format == "CBZ")
             args.ArchiveHelper.Compress(directory, file);
         //else if (format == "CB7")
         //    Helpers.SevenZipHelper.Compress(args, directory, file + ".7z");
         else if (format == "PDF")
-            Helpers.PdfHelper.Create(args, directory, file);
+        {
+            var images = new DirectoryInfo(directory).GetFiles("*.*")
+                .Where(x => Regex.IsMatch(x.Extension, @"\.(jpeg|jpe|jpg|webp|png)$",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+                .OrderBy(x => x.Name)
+                .Select(x => x.FullName)
+                .ToArray();
+            if (args.ImageHelper.CreatePdfFromImages(file, images).Failed(out string error))
+                return Result<string>.Fail(error);
+            pageCount = images.Length;
+            //Helpers.PdfHelper.Create(args, directory, file);
+        }
         else
-            throw new Exception("Unknown format:" + format);
+            return Result<string>.Fail("Unknown format:" + format);
         Directory.Delete(directory, true);
         args.Logger?.ILog("Created comic: " + file);
         args.Logger?.ILog("Deleted temporary extraction directory: " + directory);
@@ -354,8 +372,12 @@ public class ComicConverter: Node
 
         var metadata = new Dictionary<string, object>();
         metadata.Add("Format", format);
-        if(GetPageCount(args, format, file).Success(out var count))
+        
+        if(pageCount != null)
+            metadata.Add("Pages", pageCount.Value);
+        else if(GetPageCount(args, format, file).Success(out var count) && count > 0)
             metadata.Add("Pages", count);
+        
         args.SetMetadata(metadata);
         args.Logger?.ILog("Setting metadata: " + format);
 

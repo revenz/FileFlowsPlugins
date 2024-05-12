@@ -31,7 +31,11 @@ internal class ComicExtractor
         args.Logger?.ILog("Extracting comic pages to: " + destinationPath);
 
         if (currentFormat == "PDF")
-            PdfHelper.Extract(args, file, destinationPath, "page", halfProgress: halfProgress, cancellation: cancellation);
+        {
+            args.ImageHelper.ExtractPdfImages(file, destinationPath);
+            // PdfHelper.Extract(args, file, destinationPath, "page", halfProgress: halfProgress,
+            //     cancellation: cancellation);
+        }
         else if (currentFormat is "CBZ" or "CB7" or "CBR" or "GZ" or "BZ2")
             return args.ArchiveHelper.Extract(file, destinationPath, (percent) =>
             {

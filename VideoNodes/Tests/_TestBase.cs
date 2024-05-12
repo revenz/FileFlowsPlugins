@@ -21,8 +21,8 @@ public abstract class TestBase
     /// </summary>
     public TestContext TestContext
     {
-        get { return testContextInstance; }
-        set { testContextInstance = value; }
+        get => testContextInstance;
+        set => testContextInstance = value;
     }
 
     public string TestPath { get; private set; }
