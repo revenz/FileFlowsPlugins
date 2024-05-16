@@ -52,7 +52,12 @@ public class FfmpegBuilderStart: FfmpegBuilderNode
     {
         VideoInfo videoInfo = GetVideoInfo(args);
         if (videoInfo == null)
+        {
+            args.FailureReason = "No VideoInformation found";
+            args.Logger?.ELog(args.FailureReason);
             return -1;
+        }
+
         this.Model = Models.FfmpegModel.CreateModel(videoInfo);
 
         args.Logger.ILog("FFMPEG Builder File: " + videoInfo.FileName);

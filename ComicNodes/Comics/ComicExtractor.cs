@@ -49,7 +49,7 @@ public class ComicExtractor : Node
 
         var metadata = new Dictionary<string, object>();
         metadata.Add("Format", args.WorkingFile[(args.WorkingFile.LastIndexOf(".", StringComparison.Ordinal) + 1)..].ToUpper());
-        var rgxImages = new Regex(@"\.(jpeg|jpg|jpe|png|bmp|tiff|webp|gif)$");
+        var rgxImages = new Regex(@"\.(jpeg|jpg|jpe|jp2|png|bmp|tiff|webp|gif)$");
         metadata.Add("Pages", Directory.GetFiles(dest, "*.*", SearchOption.AllDirectories).Count(x => rgxImages.IsMatch(x)));
         args.SetMetadata(metadata);
 

@@ -95,17 +95,20 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         var model = this.Model;
         if (model == null)
         {
-            args.Logger.ELog("FFMPEG Builder model is null");
+            args.FailureReason = "FFMPEG Builder model is null";
+            args.Logger.ELog(args.FailureReason);
             return -1;
         }
-        else if (model.VideoInfo == null)
+        if (model.VideoInfo == null)
         {
-            args.Logger.ELog("FFMPEG Builder VideoInfo is null");
+            args.FailureReason = "FFMPEG Builder VideoInfo is null";
+            args.Logger.ELog(args.FailureReason);
             return -1;
         }
-        else if (model.VideoInfo.FileName == null)
+        if (model.VideoInfo.FileName == null)
         {
-            args.Logger.ELog("FFMPEG Builder VideoInfo Filename is null");
+            args.FailureReason = "FFMPEG Builder VideoInfo Filename is null";
+            args.Logger.ELog(args.FailureReason);
             return -1;
         }
         List<string> ffArgs = new List<string>();
@@ -278,11 +281,13 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                     GetHardwareDecodingArgs(args, localFile, FFMPEG, video?.Stream?.Codec, pxtFormat, encodingParameters: encodingParameters);
                 if (decodingParameters.Any() == true)
                 {
-                    args.StatisticRecorderRunningTotals("DecoderParameters", string.Join(" ", decodingParameters));
+                    args.StatisticRecorderRunningTotals?.Invoke("DecoderParameters", string.Join(" ", decodingParameters));
                     startArgs.AddRange(decodingParameters);
                 }
             }
         }
+
+        startArgs.AddRange(["-c:s", "webvtt"]);
 
         foreach (var file in model.InputFiles)
         {
@@ -467,7 +472,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                     arguments = new VaapiAdjustments().Run(args.Logger, arguments);
                 }
 
-                args.AdditionalInfoRecorder("Testing", string.Join(" ", hw), 1, new TimeSpan(0, 0, 10));
+                args.AdditionalInfoRecorder?.Invoke("Testing", string.Join(" ", hw), 1, new TimeSpan(0, 0, 10));
 
                 try
                 {
@@ -515,7 +520,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         }
         finally
         {
-            args.AdditionalInfoRecorder("Testing", null, 1, new TimeSpan(0, 0, 10));
+            args.AdditionalInfoRecorder?.Invoke("Testing", null, 1, new TimeSpan(0, 0, 10));
             try
             {
                 if (System.IO.File.Exists(testFile))

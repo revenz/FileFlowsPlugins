@@ -4,6 +4,7 @@ using FileFlows.VideoNodes.FfmpegBuilderNodes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VideoNodes.Tests;
 using System.IO;
+using FileFlows.VideoNodes.Helpers;
 
 namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests;
 
@@ -30,7 +31,7 @@ public class FfmpegBuilder_VideoEncode_VideoEncodeTests: TestBase
         Assert.AreEqual(1, ffStart.Execute(args));
 
         FfmpegBuilderVideoEncode ffEncode = new();
-        ffEncode.Encoder = "VAAPI";
+        //ffEncode.Encoder = "VAAPI";
         //ffEncode.Encoder = "NVIDIA";
        // ffEncode.Encoder = "Intel QSV";
         ffEncode.Codec = codec;
@@ -250,6 +251,46 @@ public class FfmpegBuilder_VideoEncode_VideoEncodeTests: TestBase
 
         FfmpegBuilderExecutor ffExecutor = new();
         ffExecutor.HardwareDecoding = false;
+        ffExecutor.PreExecute(args);
+        int result = ffExecutor.Execute(args);
+        string log = logger.ToString();
+        TestContext.WriteLine(log);
+        Assert.AreEqual(1, result);
+    }
+
+    [TestMethod]
+    public void FfmpegBuilder_VideoEncode_WebVTT()
+    {
+        var logger = new TestLogger();
+        string ffmpeg = FfmpegPath;
+        const string FILE = "/home/john/Videos/webvtt/webvtt.mkv";
+        var vi = new VideoInfoHelper(ffmpeg, logger);
+        var vii = vi.Read(FILE);
+        var args = new NodeParameters(FILE, logger, false, string.Empty, new LocalFileService());
+        args.GetToolPathActual = (string tool) => ffmpeg;
+        args.TempPath = TempPath;
+        args.Parameters.Add("VideoInfo", vii.Value);
+        
+        FfmpegBuilderStart ffStart = new();
+        ffStart.PreExecute(args);
+        Assert.AreEqual(1, ffStart.Execute(args));
+
+        FfmpegBuilderVideoEncode ffEncode = new();
+        ffEncode.Quality = 28;
+        ffEncode.Speed = "fast";
+        ffEncode.Encoder = "CPU";
+        ffEncode.Codec = "h265";
+        ffEncode.PreExecute(args);
+        ffEncode.Execute(args);
+
+        FFmpegBuilderDurationStart ds = new();
+        ds.Start = new TimeSpan(0, 0, 0);
+        ds.Duration = new TimeSpan(0, 1, 0);
+        ds.PreExecute(args);
+        ds.Execute(args);
+
+        FfmpegBuilderExecutor ffExecutor = new();
+        ffExecutor.Strictness = "experimental";
         ffExecutor.PreExecute(args);
         int result = ffExecutor.Execute(args);
         string log = logger.ToString();
