@@ -3,6 +3,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using AudioNodes.Tests;
+using FileFlows.Plugin.Services;
 
 namespace FileFlows.AudioNodes.Tests;
 
@@ -112,17 +113,34 @@ public class ConvertTests :  AudioTestBase
 
 
     [TestMethod]
-    public void Convert_AacToMp3()
+    public void Convert_Mp3ToMp3_Bitrate()
     {
+        var args = GetNodeParameters(TestFile_Mp3);
+        var af = new AudioFile();
+        af.PreExecute(args);
+        af.Execute(args); // need to read the Audio info and set it
+        
+        ConvertToMP3 ele = new();
+        ele.PreExecute(args);
+        ele.Bitrate = 64; 
+        int output = ele.Execute(args);
+        TestContext.WriteLine(Logger.ToString());
 
-        const string file = @"D:\music\temp\37f315a0-4afc-4a72-a0b4-eb7eb681b9b3.aac";
-
-        ConvertToMP3 node = new();
-        var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty, null);;
-        args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
-        args.TempPath = @"D:\music\temp";
-        new AudioFile().Execute(args); // need to read the Audio info and set it
-        int output = node.Execute(args);
+        Assert.AreEqual(1, output);
+    }
+    [TestMethod]
+    public void Convert_Mp3ToMp3_Bitrate_Variable()
+    {
+        var args = GetNodeParameters(TestFile_Mp3);
+        var af = new AudioFile();
+        af.PreExecute(args);
+        af.Execute(args); // need to read the Audio info and set it
+        
+        ConvertToMP3 ele = new();
+        ele.PreExecute(args);
+        ele.Bitrate = 3; 
+        int output = ele.Execute(args);
+        TestContext.WriteLine(Logger.ToString());
 
         Assert.AreEqual(1, output);
     }
@@ -217,7 +235,7 @@ public class ConvertTests :  AudioTestBase
         node.PreExecute(args);
         int output = node.Execute(args);
 
-        string log = logger.ToString();
+        string log = Logger.ToString();
         TestContext.WriteLine(log);
 
         Assert.AreEqual(1, output);

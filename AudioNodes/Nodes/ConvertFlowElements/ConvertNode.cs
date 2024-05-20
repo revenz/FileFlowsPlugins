@@ -63,47 +63,44 @@ namespace FileFlows.AudioNodes
                 codec,
             };
             
-            if (Codec.ToLowerInvariant() == "mp3" ||  ogg || Codec.ToLowerInvariant() == "aac")
+            if(bitrate is > 10 and <= 20)
             {
-                if (bitrate is >= 10 and <= 20)
+                bool mp3 = Codec.Equals("mp3", StringComparison.InvariantCultureIgnoreCase);
+                bool aac = Codec.Equals("aac", StringComparison.InvariantCultureIgnoreCase);
+                if(mp3 == false && aac == false && ogg == false)
+                    throw new Exception("Variable bitrate not supported in codec: " + Codec);
+                
+                bitrate = (Bitrate - 10);
+                if (mp3)
                 {
-                    bitrate = (Bitrate - 10);
-                    if (Codec.ToLowerInvariant() == "mp3")
-                    {
-                        // ogg is reversed
-                        bitrate = 10 - bitrate;
-                    }
-
-
-                    args.Logger?.ILog($"Using variable bitrate setting '{bitrate}' for codec '{Codec}'");
-
-                    if (codec == "libfdk_aac")
-                    {
-                        ffArgs.AddRange(new[]
-                        {
-                            "-vbr",
-                            Math.Min(Math.Max(1, bitrate / 2), 5).ToString()
-                        });
-                    }
-                    else
-                    {
-                        ffArgs.AddRange(new[]
-                        {
-                            "-qscale:a",
-                            bitrate.ToString()
-                        });
-                    }
-
-                    if (Codec == "aac" && HighEfficiency)
-                    {
-                        extension = "m4a";
-                        ffArgs.AddRange(new[] { "-profile:a", "aac_he_v2" });
-                    }
+                    // ogg is reversed
+                    bitrate = 10 - bitrate;
                 }
-            }
-            else if(bitrate is > 10 and <= 20)
-            {
-                throw new Exception("Variable bitrate not supported in codec: " + Codec);
+
+                args.Logger?.ILog($"Using variable bitrate setting '{bitrate}' for codec '{Codec}'");
+
+                if (codec == "libfdk_aac")
+                {
+                    ffArgs.AddRange(new[]
+                    {
+                        "-vbr",
+                        Math.Min(Math.Max(1, bitrate / 2), 5).ToString()
+                    });
+                }
+                else
+                {
+                    ffArgs.AddRange(new[]
+                    {
+                        "-qscale:a",
+                        bitrate.ToString()
+                    });
+                }
+
+                if (Codec == "aac" && HighEfficiency)
+                {
+                    extension = "m4a";
+                    ffArgs.AddRange(new[] { "-profile:a", "aac_he_v2" });
+                }
             }
             else if (bitrate != 0)
             {
@@ -275,9 +272,15 @@ namespace FileFlows.AudioNodes
         /// <returns>the output to call next</returns>
         public override int Execute(NodeParameters args)
         {
-            AudioInfo AudioInfo = GetAudioInfo(args);
-            if (AudioInfo == null)
+            var aiResult = GetAudioInfo(args);
+            if (aiResult.Failed(out string error))
+            {
+                args.FailureReason = error;
+                args.Logger.ELog(error);
                 return -1;
+            }
+
+            AudioInfo AudioInfo = aiResult.Value;
             
             var ffmpegExeResult = GetFFmpeg(args);
             if (ffmpegExeResult.Failed(out string ffmpegError))
@@ -335,7 +338,7 @@ namespace FileFlows.AudioNodes
                     ffArgs.Add(twoPass.Normalization);
                 }
             }
-
+            
             var metadata = MetadataHelper.GetMetadataParameters(AudioInfo);
             if (metadata?.Any() == true)
                 ffArgs.AddRange(metadata);

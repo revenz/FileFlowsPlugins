@@ -62,7 +62,7 @@ public class CreateAudioBookTests : AudioTestBase
         
         int output = node.Execute(args);
 
-        var log = logger.ToString();
+        var log = Logger.ToString();
         TestContext.WriteLine(log);
         Assert.AreEqual(expected, output);
         

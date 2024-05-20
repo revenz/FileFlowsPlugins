@@ -5,25 +5,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AudioNodes.Tests;
 
-public abstract class AudioTestBase
+public abstract class AudioTestBase : TestBase
 {
-    private TestContext testContextInstance;
-
-    internal TestLogger logger = new ();
-
-    public TestContext TestContext
-    {
-        get { return testContextInstance; }
-        set { testContextInstance = value; }
-    }
-    
-    protected readonly string ffmpeg = (OperatingSystem.IsLinux() ? "/usr/local/bin/ffmpeg" :  @"C:\utils\ffmpeg\ffmpeg.exe");
-    protected readonly string ffprobe = (OperatingSystem.IsLinux() ? "/usr/local/bin/ffprobe" :  @"C:\utils\ffmpeg\ffprobe.exe");
-
-
     protected NodeParameters GetNodeParameters(string file, bool isDirectory = false)
     {
-        var args = new FileFlows.Plugin.NodeParameters(file, logger, isDirectory, string.Empty, new LocalFileService());
+        var args = new FileFlows.Plugin.NodeParameters(file, Logger, isDirectory, string.Empty, new LocalFileService());
         
         args.GetToolPathActual = (string tool) =>
         {
@@ -33,7 +19,7 @@ public abstract class AudioTestBase
                 return ffprobe;
             return null;
         };
-        args.TempPath = @"/home/john/Music/temp";
+        args.TempPath = TempPath;
 
         return args;
     }
