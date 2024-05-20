@@ -92,36 +92,48 @@ namespace FileFlows.VideoNodes
             }
             else if (success.successs == false)
             {
-                // look for known error messages
-                var lines = success.output.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries)
-                    .ToArray();
-                
-                if (lines.Count() >= 50) {
-                    lines = lines.TakeLast(50).ToArray();
+                if (string.IsNullOrWhiteSpace(success.abortReason) == false)
+                {
+                    args.FailureReason = success.abortReason;
                 }
+                else
+                {
+                    // look for known error messages
+                    var lines = success.output
+                        .Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries)
+                        .ToArray();
 
-                string line;
-                if (HasLine(lines, "is not supported by the bitstream filter", out line))
-                {
-                    // get that line, more efficiently that twice
-                    int codecIndex = line.IndexOf("Codec", StringComparison.InvariantCulture);
-                    if (codecIndex > 0)
-                        line = line[codecIndex..];
-                    int periodIndex = line.IndexOf(".", StringComparison.InvariantCulture);
-                    if (periodIndex > 0)
-                        line = line[..periodIndex];
-                    args.FailureReason = line;
-                }
-                else if (HasLine(lines, "codec not currently supported in container", out line))
-                {
-                    if (line.Contains("codec ttf")) // add more as i see them
-                        args.FailureReason = "Subtitle codec not currently supported in container";
-                    else // generic
-                        args.FailureReason = "Codec not currently supported in container";
-                }
-                else if (HasLine(lines, "encoding with ProRes Proxy/LT/422/422 HQ (apco, apcs, apcn, ap4h) profile, need YUV422P10 input", out line))
-                {
-                    args.FailureReason = "Encoding with ProRes Proxy/LT/422/422 HQ (apco, apcs, apcn, ap4h) profile, need YUV422P10 input";
+                    if (lines.Count() >= 50)
+                    {
+                        lines = lines.TakeLast(50).ToArray();
+                    }
+
+                    string line;
+                    if (HasLine(lines, "is not supported by the bitstream filter", out line))
+                    {
+                        // get that line, more efficiently that twice
+                        int codecIndex = line.IndexOf("Codec", StringComparison.InvariantCulture);
+                        if (codecIndex > 0)
+                            line = line[codecIndex..];
+                        int periodIndex = line.IndexOf(".", StringComparison.InvariantCulture);
+                        if (periodIndex > 0)
+                            line = line[..periodIndex];
+                        args.FailureReason = line;
+                    }
+                    else if (HasLine(lines, "codec not currently supported in container", out line))
+                    {
+                        if (line.Contains("codec ttf")) // add more as i see them
+                            args.FailureReason = "Subtitle codec not currently supported in container";
+                        else // generic
+                            args.FailureReason = "Codec not currently supported in container";
+                    }
+                    else if (HasLine(lines,
+                                 "encoding with ProRes Proxy/LT/422/422 HQ (apco, apcs, apcn, ap4h) profile, need YUV422P10 input",
+                                 out line))
+                    {
+                        args.FailureReason =
+                            "Encoding with ProRes Proxy/LT/422/422 HQ (apco, apcs, apcn, ap4h) profile, need YUV422P10 input";
+                    }
                 }
             }
             Encoder.AtTime -= AtTimeEvent;

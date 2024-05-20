@@ -287,8 +287,6 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             }
         }
 
-        startArgs.AddRange(["-c:s", "webvtt"]);
-
         foreach (var file in model.InputFiles)
         {
             startArgs.Add("-i");

@@ -22,6 +22,7 @@ public class FFMpegEncoder
 
     private Process process;
     DateTime startedAt;
+    private string? AbortReason;
 
     public FFMpegEncoder(string ffMpegExe, ILogger logger)
     {
@@ -39,7 +40,7 @@ public class FFMpegEncoder
     /// <param name="dontAddOutputFile">if the output file should not be added to the arguments</param>
     /// <param name="strictness">the strictness to use</param>
     /// <returns>the result and output of the encode</returns>
-    public (bool successs, string output) Encode(string input, string output, List<string> arguments, bool dontAddInputFile = false, bool dontAddOutputFile = false, string strictness = "-2")
+    public (bool successs, string output, string? abortReason) Encode(string input, string output, List<string> arguments, bool dontAddInputFile = false, bool dontAddOutputFile = false, string strictness = "-2")
     {
         arguments ??= new List<string> ();
         if (string.IsNullOrWhiteSpace(strictness))
@@ -74,7 +75,17 @@ public class FFMpegEncoder
         var task = ExecuteShellCommand(ffMpegExe, arguments, 0);
         task.Wait();
         Logger.ILog("Exit Code: " + task.Result.ExitCode);
-        return (task.Result.ExitCode == 0, task.Result.Output); // exitcode 0 means it was successful
+        return (task.Result.ExitCode == 0, task.Result.Output, task.Result.AbortReason); // exitcode 0 means it was successful
+    }
+
+    /// <summary>
+    /// Aborts the file process
+    /// </summary>
+    /// <param name="reason">the reason for the abort</param>
+    private void Abort(string reason)
+    {
+        this.AbortReason = reason;
+        Cancel();
     }
 
     internal void Cancel()
@@ -236,6 +247,9 @@ public class FFMpegEncoder
         }
         process = null;
 
+        if (this.AbortReason != null)
+            result.AbortReason = this.AbortReason;
+
         return result;
     }
     
@@ -270,10 +284,21 @@ public class FFMpegEncoder
         }
     }
 
+    private int PacketErrorCount = 0;
+
     private void CheckOutputLine(string line)
     {
         if (line.Contains("Skipping NAL unit"))
             return; // just slightly ignore these
+
+        if (line.Contains("Error submitting a packet to the muxer"))
+        {
+            if (++PacketErrorCount > 10)
+            {
+                // Abort
+                Abort("Error submitting a packet to the muxer");
+            }
+        }
         
         if (rgxTime.IsMatch(line))
         {
@@ -315,12 +340,30 @@ public class FFMpegEncoder
             return Task.FromResult<bool>(true);
         });
     }
-
-
+    /// <summary>
+    /// Represents the result of a process execution.
+    /// </summary>
     public struct ProcessResult
     {
+        /// <summary>
+        /// Indicates whether the process completed successfully.
+        /// </summary>
         public bool Completed;
+
+        /// <summary>
+        /// The exit code of the process, if available.
+        /// </summary>
         public int? ExitCode;
+
+        /// <summary>
+        /// The standard output of the process.
+        /// </summary>
         public string Output;
+
+        /// <summary>
+        /// The reason for process abortion, if the process was aborted.
+        /// </summary>
+        public string AbortReason;
     }
+
 }
