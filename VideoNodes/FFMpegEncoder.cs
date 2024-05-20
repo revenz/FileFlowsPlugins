@@ -284,19 +284,20 @@ public class FFMpegEncoder
         }
     }
 
-    private int PacketErrorCount = 0;
+    private int ErrorCount = 0;
 
     private void CheckOutputLine(string line)
     {
         if (line.Contains("Skipping NAL unit"))
             return; // just slightly ignore these
 
-        if (line.Contains("Error submitting a packet to the muxer"))
+        if (line.Contains("Error "))
         {
-            if (++PacketErrorCount > 10)
+            if (++ErrorCount > 20)
             {
                 // Abort
-                Abort("Error submitting a packet to the muxer");
+                Logger.ELog("Maximum number of errors triggered: " + line);
+                Abort(line);
             }
         }
         
