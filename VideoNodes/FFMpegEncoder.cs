@@ -291,7 +291,7 @@ public class FFMpegEncoder
         if (line.Contains("Skipping NAL unit"))
             return; // just slightly ignore these
 
-        if (line.Contains("Error "))
+        if (line.Contains("error ", StringComparison.InvariantCultureIgnoreCase))
         {
             if (++ErrorCount > 20)
             {
