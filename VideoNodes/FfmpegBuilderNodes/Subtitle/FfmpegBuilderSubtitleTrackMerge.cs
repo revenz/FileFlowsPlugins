@@ -1,20 +1,31 @@
-﻿using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
+﻿using System.IO;
+using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 
+/// <summary>
+/// Merges a subtitle into the FFmpeg Builder model
+/// </summary>
 public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
 {
+    /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/subtitle-track-merge";
-    
+    /// <inheritdoc />
     public override string Icon => "fas fa-comment-medical";
-
+    /// <inheritdoc />
     public override int Outputs => 2;
 
+    /// <summary>
+    /// Subtitles to include
+    /// </summary>
     [Checklist(nameof(Options), 1)]
     [Required]
     public List<string> Subtitles { get; set; }
 
-    private static List<ListOption> _Options;
+    private static List<ListOption>? _Options;
+    /// <summary>
+    /// Options for the subtitles 
+    /// </summary>
     public static List<ListOption> Options
     {
         get
@@ -36,16 +47,57 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
         }
     }
 
+    /// <summary>
+    /// Gets or sets if the source directory should be used or the working directory
+    /// </summary>
     [Boolean(2)]
     [DefaultValue(true)]
     public bool UseSourceDirectory { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets if the subtitle must match the filename
+    /// </summary>
     [Boolean(3)]
     public bool MatchFilename { get; set; }
+    
+    /// <summary>
+    /// Gets or sets the pattern to use
+    /// </summary>
+    [TextVariable(4)]
+    [ConditionEquals(nameof(MatchFilename), false)]
+    public string Pattern { get; set; }
+    
+    /// <summary>
+    /// Gets or sets the title of the subtitle
+    /// </summary>
+    [TextVariable(5)]
+    public string Title { get; set; }
+    
+    /// <summary>
+    /// Gets or sets the language
+    /// </summary>
+    [TextVariable(6)]
+    public string Language { get; set; }
+    
+    /// <summary>
+    /// Gets or sets if the subtitle is forced
+    /// </summary>
+    [Boolean(7)]
+    public bool Forced { get; set; }
+    
+    /// <summary>
+    /// Gets or sets if the subtitle is to be marked as the default
+    /// </summary>
+    [Boolean(8)]
+    public bool Default { get; set; }
 
-    [Boolean(4)]
+    /// <summary>
+    /// Gets or sets if the subtitle should be deleted afterwards
+    /// </summary>
+    [Boolean(9)]
     public bool DeleteAfterwards { get; set; }
     
+    /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
         var dir = UseSourceDirectory ? FileHelper.GetDirectory(args.LibraryFileName) : args.TempPath;
@@ -66,6 +118,8 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
             args.Logger?.ILog("Failed getting files: "+ files.Error);
             return 2;
         }
+
+        string? pattern = args.ReplaceVariables(Pattern ?? string.Empty, stripMissing: true).EmptyAsNull();
         
         foreach (var file in files.ValueOrDefault ?? new string[] {})
         {
@@ -93,19 +147,34 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
                     language = lang2;
                 forced = forced1 || forced2;
             }
+            else if (pattern != null)
+            {
+                string filename = new FileInfo(file).Name;
+                if (Regex.IsMatch(filename, pattern, RegexOptions.IgnoreCase | RegexOptions.CultureInvariant) == false)
+                {
+                    args.Logger?.ILog("Does not match pattern: " + filename);
+                    continue;
+                }
+                args.Logger?.ILog("Matches pattern: " + filename);
+            }
 
-            string subTitle = language;
+            language = language?.EmptyAsNull() ?? args.ReplaceVariables(Language ?? string.Empty, stripMissing: true);
+            forced |= Forced;
+            
+
+            string subTitle = args.ReplaceVariables(Title ?? string.Empty, stripMissing: true)?.EmptyAsNull() ?? language ?? string.Empty;
+            
             language = LanguageHelper.GetIso2Code(language.Split(' ').First()); // remove any SDH etc
             args.Logger.ILog("Adding file: " + file + " [" + ext + "]" + (string.IsNullOrEmpty(language) == false ? " (Language: " + language + ")" : ""));
             this.Model.InputFiles.Add(new InputFile(file) { DeleteAfterwards = this.DeleteAfterwards });
 
-            if (string.IsNullOrEmpty(subTitle))
-                subTitle = FileHelper.GetShortFileName(file).Replace("." + ext, "");
 
             this.Model.SubtitleStreams.Add(new FfmpegSubtitleStream
             {
                 Title = subTitle,
-                Language = string.IsNullOrEmpty(language) ? null : Regex.Replace(language, @" \([\w]+\)$", string.Empty).Trim(),                
+                Language = string.IsNullOrEmpty(language) ? null : Regex.Replace(language, @" \([\w]+\)$", string.Empty).Trim(),
+                IsDefault = Default,
+                IsForced = forced,
                 Stream = new SubtitleStream()
                 {
                     InputFileIndex = this.Model.InputFiles.Count - 1,
@@ -113,6 +182,7 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
                     Language = language,
                     Forced = forced,
                     Title = subTitle,
+                    Default = Default,
                     Codec = ext,
                     IndexString = (this.Model.InputFiles.Count - 1) + ":s:0"
                 },
@@ -126,6 +196,14 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
         return count > 0 ? 1 : 2;
     }
 
+    /// <summary>
+    /// Checks if the filename matches
+    /// </summary>
+    /// <param name="input">the input file</param>
+    /// <param name="other">the other file to check</param>
+    /// <param name="languageCode">the language code found in the subtitle</param>
+    /// <param name="forced">if the subtitle is detected as forced</param>
+    /// <returns>true if it matches, otherwise false</returns>
     internal bool FilenameMatches(string input, string other, out string languageCode, out bool forced)
     {
         languageCode = string.Empty;

@@ -1,61 +1,82 @@
 ﻿#if(DEBUG)
 
-namespace VideoNodes.Tests
+namespace VideoNodes.Tests;
+
+/// <summary>
+/// A logger for tests that stores the logs in memory
+/// </summary>
+public class TestLogger : ILogger
 {
-    using FileFlows.Plugin;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    private readonly List<string> Messages = new();
 
-    internal class TestLogger : ILogger
+    /// <summary>
+    /// Writes an information log message
+    /// </summary>
+    /// <param name="args">the log parameters</param>
+    public void ILog(params object[] args)
+        => Log(LogType.Info, args);
+
+    /// <summary>
+    /// Writes an debug log message
+    /// </summary>
+    /// <param name="args">the log parameters</param>
+    public void DLog(params object[] args)
+        => Log(LogType.Debug, args);
+
+    /// <summary>
+    /// Writes an warning log message
+    /// </summary>
+    /// <param name="args">the log parameters</param>
+    public void WLog(params object[] args)
+        => Log(LogType.Warning, args);
+
+    /// <summary>
+    /// Writes an error log message
+    /// </summary>
+    /// <param name="args">the log parameters</param>
+    public void ELog(params object[] args)
+        => Log(LogType.Error, args);
+
+    /// <summary>
+    /// Gets the tail of the log
+    /// </summary>
+    /// <param name="length">the number of messages to get</param>
+    public string GetTail(int length = 50)
     {
-        private List<string> Messages = new List<string>();
-
-        public void DLog(params object[] args) => Log("DBUG", args);
-
-        public void ELog(params object[] args) => Log("ERRR", args);
-
-        public void ILog(params object[] args) => Log("INFO", args);
-
-        public void WLog(params object[] args) => Log("WARN", args);
-
-        private void Log(string type, object[] args)
-        {
-            if (args == null || args.Length == 0)
-                return;
-#pragma warning disable IL2026
-            string message = type + " -> " +
-                string.Join(", ", args.Select(x =>
-                x == null ? "null" :
-                x.GetType().IsPrimitive || x is string ? x.ToString() :
-                System.Text.Json.JsonSerializer.Serialize(x)));
-#pragma warning restore IL2026
-            Messages.Add(message);
-        }
-
-        public bool Contains(string message)
-        {
-            if (string.IsNullOrWhiteSpace(message))
-                return false;
-
-            string log = string.Join(Environment.NewLine, Messages);
-            return log.Contains(message);
-        }
-
-        public override string ToString()
-            => string.Join(Environment.NewLine, this.Messages.ToArray());
-
-        public string GetTail(int length = 50)
-        {
-            if (length <= 0)
-                length = 50;
-            if (Messages.Count <= length)
-                return string.Join(Environment.NewLine, Messages);
-            return string.Join(Environment.NewLine, Messages.TakeLast(length));
-        }
+        if (Messages.Count <= length)
+            return string.Join(Environment.NewLine, Messages);
+        return string.Join(Environment.NewLine, Messages.TakeLast(50));
     }
+
+    /// <summary>
+    /// Logs a message
+    /// </summary>
+    /// <param name="type">the type of log to record</param>
+    /// <param name="args">the arguments of the message</param>
+    private void Log(LogType type, params object[] args)
+    {
+        #pragma warning disable IL2026
+        string message = type + " -> " + string.Join(", ", args.Select(x =>
+            x == null ? "null" :
+            x.GetType().IsPrimitive ? x.ToString() :
+            x is string ? x.ToString() :
+            System.Text.Json.JsonSerializer.Serialize(x)));
+        #pragma warning restore IL2026
+        Writer?.Invoke(message);
+        Messages.Add(message);
+    }
+
+    /// <summary>
+    /// Gets or sets an optional writer
+    /// </summary>
+    public Action<string> Writer { get; set; }
+
+    /// <summary>
+    /// Returns the entire log as a string
+    /// </summary>
+    /// <returns>the entire log</returns>
+    public override string ToString()
+        => string.Join(Environment.NewLine, Messages);
 }
 
 #endif

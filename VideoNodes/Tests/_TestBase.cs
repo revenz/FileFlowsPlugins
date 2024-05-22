@@ -37,6 +37,8 @@ public abstract class TestBase
     [TestInitialize]
     public void TestInitialize()
     {
+        Logger.Writer = (msg) => TestContext.WriteLine(msg);
+        
         if (System.IO.File.Exists("../../../test.settings.dev.json"))
         {
             LoadSettings("../../../test.settings.dev.json");
@@ -45,7 +47,7 @@ public abstract class TestBase
         {
             LoadSettings("../../../test.settings.json");
         }
-        this.TestPath = this.TestPath?.EmptyAsNull() ?? (IsLinux ? "~/src/ff-files/test-files" : @"d:\videos\testfiles");
+        this.TestPath = this.TestPath?.EmptyAsNull() ?? (IsLinux ? "~/src/ff-files/test-files/videos" : @"d:\videos\testfiles");
         this.TempPath = this.TempPath?.EmptyAsNull() ?? (IsLinux ? "~/src/ff-files/temp" : @"d:\videos\temp");
         this.FfmpegPath = this.FfmpegPath?.EmptyAsNull() ?? (IsLinux ? "/usr/local/bin/ffmpeg" :  @"C:\utils\ffmpeg\ffmpeg.exe");
         
@@ -93,6 +95,7 @@ public abstract class TestBase
     protected string TestFile_Tag => Path.Combine(TestPath, "tag.mp4");
     protected string TestFile_Sitcom => Path.Combine(TestPath, "sitcom.mkv");
     protected string TestFile_Pgs => Path.Combine(TestPath, "pgs.mkv");
+    protected string TestFile_Subtitle => Path.Combine(TestPath, "subtitle.mkv");
     protected string TestFile_Font => Path.Combine(TestPath, "font.mkv");
     protected string TestFile_DefaultSub => Path.Combine(TestPath, "default-sub.mkv");
     protected string TestFile_ForcedDefaultSub => Path.Combine(TestPath, "sub-forced-default.mkv");

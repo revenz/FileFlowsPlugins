@@ -484,6 +484,16 @@
           "UseSourceDirectory-Help": "If checked the original source directory will be searched, otherwise the working directory will be used.",
           "MatchFilename": "Match Filename",
           "MatchFilename-Help": "When checked only subtitles with the same filename as the input file or the working file will be merged",
+          "Pattern": "Pattern",
+          "Pattern-Help": "Optional regular expression to match files against.",
+          "Title": "Title",
+          "Title-Help": "The title of the subtitle, if not set the language will be used as the title if found.",
+          "Language": "Language",
+          "Language-Help": "Optional [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) language code for the added subtitle.",
+          "Forced": "Forced",
+          "Forced-Help": "If the subtitle should be forced",
+          "Default": "Default",
+          "Default-Help": "If the subtitle should be the default subtitle",
           "DeleteAfterwards": "Delete After Merging",
           "DeleteAfterwards-Help": "If the subtitle file should be deleted after being merged"
         }
