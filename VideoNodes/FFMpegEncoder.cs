@@ -45,12 +45,19 @@ public class FFMpegEncoder
         arguments ??= new List<string> ();
         if (string.IsNullOrWhiteSpace(strictness))
             strictness = "-2";
+        
 
         // -y means it will overwrite a file if output already exists
         if (dontAddInputFile == false) {
             arguments.Insert(0, "-i");
             arguments.Insert(1, input);
             arguments.Insert(2, "-y");
+        }
+
+        if (arguments.Any(x => x.Equals("webvtt", StringComparison.InvariantCultureIgnoreCase)))
+        {
+            arguments.Insert(0, "-c:s");
+            arguments.Insert(1, "webvtt");
         }
 
         if (dontAddOutputFile == false)

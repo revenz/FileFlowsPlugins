@@ -1,11 +1,10 @@
-using VideoNodes.Tests;
-
 #if(DEBUG)
 
-namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests;
-
+using VideoNodes.Tests;
 using FileFlows.VideoNodes.FfmpegBuilderNodes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests;
 
 /// <summary>
 /// Tests for FFmpeg Builder Subtitle Track Merge

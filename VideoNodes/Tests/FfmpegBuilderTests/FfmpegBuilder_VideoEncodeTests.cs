@@ -261,12 +261,10 @@ public class FfmpegBuilder_VideoEncode_VideoEncodeTests: TestBase
     [TestMethod]
     public void FfmpegBuilder_VideoEncode_WebVTT()
     {
-        var logger = new TestLogger();
         string ffmpeg = FfmpegPath;
-        const string FILE = "/home/john/Videos/webvtt/webvtt.mkv";
-        var vi = new VideoInfoHelper(ffmpeg, logger);
-        var vii = vi.Read(FILE);
-        var args = new NodeParameters(FILE, logger, false, string.Empty, new LocalFileService());
+        var vi = new VideoInfoHelper(ffmpeg, Logger);
+        var vii = vi.Read(TestFile_Webvtt);
+        var args = new NodeParameters(TestFile_Webvtt, Logger, false, string.Empty, new LocalFileService());
         args.GetToolPathActual = (string tool) => ffmpeg;
         args.TempPath = TempPath;
         args.Parameters.Add("VideoInfo", vii.Value);
@@ -278,23 +276,26 @@ public class FfmpegBuilder_VideoEncode_VideoEncodeTests: TestBase
         FfmpegBuilderVideoEncode ffEncode = new();
         ffEncode.Quality = 28;
         ffEncode.Speed = "fast";
-        ffEncode.Encoder = "CPU";
+        //ffEncode.Encoder = "CPU";
         ffEncode.Codec = "h265";
         ffEncode.PreExecute(args);
         ffEncode.Execute(args);
 
-        FFmpegBuilderDurationStart ds = new();
-        ds.Start = new TimeSpan(0, 0, 0);
-        ds.Duration = new TimeSpan(0, 1, 0);
-        ds.PreExecute(args);
-        ds.Execute(args);
+        FfmpegBuilderSubtitleFormatRemover remover = new();
+        remover.SubtitlesToRemove = ["webvtt"];
+        remover.PreExecute(args);
+        remover.Execute(args);
+
+        // FFmpegBuilderDurationStart ds = new();
+        // ds.Start = new TimeSpan(0, 0, 0);
+        // ds.Duration = new TimeSpan(0, 1, 0);
+        // ds.PreExecute(args);
+        // ds.Execute(args);
 
         FfmpegBuilderExecutor ffExecutor = new();
         ffExecutor.Strictness = "experimental";
         ffExecutor.PreExecute(args);
         int result = ffExecutor.Execute(args);
-        string log = logger.ToString();
-        TestContext.WriteLine(log);
         Assert.AreEqual(1, result);
     }
 }

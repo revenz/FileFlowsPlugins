@@ -52,8 +52,8 @@ public class FfmpegSubtitleStream : FfmpegStream
             }
         }
 
-        // if (destCodec == "copy" && Stream.Codec == "webvtt")
-        //     destCodec = "webvtt"; // FF-1534: webvtt issue
+        if (destCodec == "copy" && Stream.Codec == "webvtt")
+            destCodec = "webvtt"; // FF-1534: webvtt issue
 
         List<string> results= new List<string> { "-map", Stream.InputFileIndex + ":s:{sourceTypeIndex}", "-c:s:{index}", destCodec };
 
