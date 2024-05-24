@@ -98,10 +98,10 @@ namespace FileFlows.VideoNodes
             if (videoInfo.VideoStreams?.Any() == false)
                 return;
 
-            if (args.Parameters.ContainsKey(VIDEO_INFO))
-                args.Parameters[VIDEO_INFO] = videoInfo;
-            else
-                args.Parameters.Add(VIDEO_INFO, videoInfo);
+            args.Parameters[VIDEO_INFO] = videoInfo;
+
+            if (args.Variables.ContainsKey("vi.OriginalDuration") == false) // we only want to store this for the absolute original duration in the flow
+                args.Variables["vi.OriginalDuration"] = videoInfo.VideoStreams[0].Duration;
 
             variables["vi.VideoInfo"] = videoInfo;
             variables["vi.Width"] = videoInfo.VideoStreams[0].Width;

@@ -99,6 +99,17 @@
           "ValueHigh": " "
         }
       },
+      "VideoDurationCompare": {
+        "Description": "Compares the original duration of a video with its final duration.",
+        "Outputs": {
+          "1": "Video is within allowed duration difference",
+          "2": "Video is not within the allowed duration difference"
+        },
+        "Fields": {
+          "AllowedDifference": "Allowed Difference",
+          "AllowedDifference-Help": "The allowed time difference between the original duration of the video and the final duration."
+        }
+      },
       "FfmpegBuilderStart": {
         "Label": "FFMPEG Builder: Start",
         "Outputs": {

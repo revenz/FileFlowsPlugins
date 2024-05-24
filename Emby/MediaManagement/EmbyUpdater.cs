@@ -30,20 +30,22 @@ public class EmbyUpdater: Node
     public override int Execute(NodeParameters args)
     {
         var settings = args.GetPluginSettings<PluginSettings>();
-        string serverUrl = ServerUrl?.EmptyAsNull() ?? settings.ServerUrl;
-        string accessToken = AccessToken?.EmptyAsNull() ?? settings.AccessToken;
-        var mapping = (string.IsNullOrWhiteSpace(ServerUrl) ? settings.Mapping : Mapping) ?? new List<KeyValuePair<string, string>>();
-
-        if (string.IsNullOrWhiteSpace(accessToken))
-        {
-            args.Logger?.WLog("No access token set");
-            return 2;
-        }
+        var serverUrl = ServerUrl?.EmptyAsNull() ?? settings?.ServerUrl;
         if (string.IsNullOrWhiteSpace(serverUrl))
         {
-            args.Logger?.WLog("No server URL set");
-            return 2;
+            args.FailureReason = "No Emby server configured";
+            args.Logger?.ELog(args.FailureReason);
+            return -1;
         }
+        var accessToken = AccessToken?.EmptyAsNull() ?? settings?.AccessToken;
+        if (string.IsNullOrWhiteSpace(accessToken))
+        {
+            args.FailureReason = "No Emby access token configured";
+            args.Logger?.ELog(args.FailureReason);
+            return -1;
+        }
+        var mapping = (string.IsNullOrWhiteSpace(ServerUrl) ? settings?.Mapping : Mapping) 
+                      ?? new List<KeyValuePair<string, string>>();
 
         // get the path
         string path = args.WorkingFile;
