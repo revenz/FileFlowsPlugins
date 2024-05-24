@@ -33,6 +33,27 @@ public class FFmpegBuilder_SetTrackTtitlesTests
     }
 
     [TestMethod]
+    public void FormatTitle_DefaultCase_Success_Exclaim()
+    {
+        // Arrange
+        string formatter = "Track: lang / !codec / channels / default / bitrate / samplerate / cc / sdh / hi";
+        string separator = " / ";
+        string language = "English";
+        string codec = "AAC";
+        bool isDefault = true;
+        float bitrate = 128_000;
+        float channels = 2.0f;
+        int sampleRate = 44100;
+        bool isForced = false;
+
+        // Act
+        string result = FfmpegBuilderSetTrackTitles.FormatTitle(formatter, separator, language, codec, isDefault, bitrate, channels, sampleRate, isForced);
+
+        // Assert
+        Assert.AreEqual("Track: English / aac / Stereo / Default / 128Kbps / 44.1kHz", result);
+    }
+    
+    [TestMethod]
     public void FormatTitle_SDH()
     {
         // Arrange
@@ -329,6 +350,116 @@ public class FFmpegBuilder_SetTrackTtitlesTests
     }
 
 
+    
+    [TestMethod]
+    public void FormatTitle_Video_Resolution()
+    {
+        // Arrange
+        string formatter = "Track: lang / codec / fps / resolution / dimensions / pixelformat";
+        string separator = " / ";
+        string language = "English";
+        string codec = "HEVC";
+
+        ResolutionHelper.Resolution resolution = ResolutionHelper.Resolution.r720p;
+
+        // Act
+        string result = FfmpegBuilderSetTrackTitles.FormatTitle(formatter, separator, language, codec, 
+            resolution: resolution);
+
+        // Assert
+        Assert.AreEqual("Track: English / HEVC / 720P", result);
+        
+        // Act
+        formatter = "Track: lang / codec / fps / !resolution / dimensions / pixelformat";
+        result = FfmpegBuilderSetTrackTitles.FormatTitle(formatter, separator, language, codec, 
+            resolution: resolution);
+
+        // Assert
+        Assert.AreEqual("Track: English / HEVC / 720p", result);
+    }
+    
+    [TestMethod]
+    public void FormatTitle_Video_PixelFormat()
+    {
+        // Arrange
+        string formatter = "Track: lang / codec / fps / resolution / dimensions / pixelformat";
+        string separator = " / ";
+        string language = "English";
+        string codec = "HEVC";
+
+        string pixelFormat = "Nv12";
+
+        // Act
+        string result = FfmpegBuilderSetTrackTitles.FormatTitle(formatter, separator, language, codec, 
+            pixelFormat: pixelFormat);
+
+        // Assert
+        Assert.AreEqual("Track: English / HEVC / NV12", result);
+        
+        
+        // Act
+        formatter = "Track: lang / codec / fps / resolution / dimensions / !pixelformat";
+        result = FfmpegBuilderSetTrackTitles.FormatTitle(formatter, separator, language, codec, 
+            pixelFormat: pixelFormat);
+
+        // Assert
+        Assert.AreEqual("Track: English / HEVC / nv12", result);
+        
+        // Act
+        formatter = "Track: lang / codec / fps / resolution / dimensions / !pixelformat!";
+        result = FfmpegBuilderSetTrackTitles.FormatTitle(formatter, separator, language, codec, 
+            pixelFormat: pixelFormat);
+
+        // Assert
+        Assert.AreEqual("Track: English / HEVC / Nv12", result);
+    }
+    
+    [TestMethod]
+    public void FormatTitle_Video_Dimensions()
+    {
+        // Arrange
+        string formatter = "Track: lang / codec / fps / resolution / dimensions / pixelformat";
+        string separator = " / ";
+        string language = "English";
+        string codec = "HEVC";
+
+        string dimensions = "1920x1080";
+
+        // Act
+        string result = FfmpegBuilderSetTrackTitles.FormatTitle(formatter, separator, language, codec, 
+            dimensions: dimensions);
+
+        // Assert
+        Assert.AreEqual("Track: English / HEVC / 1920x1080", result);
+    }
+    
+    [TestMethod]
+    public void FormatTitle_Video_Fps()
+    {
+        // Arrange
+        string formatter = "Track: lang / codec / fps / resolution / dimensions / pixelformat";
+        string separator = " / ";
+        string language = "English";
+        string codec = "HEVC";
+
+        float fps = 23.9999997f;
+
+        // Act
+        string result = FfmpegBuilderSetTrackTitles.FormatTitle(formatter, separator, language, codec, 
+            fps: fps);
+
+        // Assert
+        Assert.AreEqual("Track: English / HEVC / 24FPS", result);
+
+        // Act
+        fps = 23.9999997f;
+        formatter = "Track: lang / codec / !fps / resolution / dimensions / pixelformat";
+        result = FfmpegBuilderSetTrackTitles.FormatTitle(formatter, separator, language, codec, 
+            fps: fps);
+
+        // Assert
+        Assert.AreEqual("Track: English / HEVC / 24fps", result);
+    }
 }
 
 #endif

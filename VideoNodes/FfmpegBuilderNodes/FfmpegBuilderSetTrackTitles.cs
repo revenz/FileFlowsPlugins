@@ -40,7 +40,8 @@ public class FfmpegBuilderSetTrackTitles: FfmpegBuilderNode
                 {
                     new () { Label = "Audio", Value = "Audio" },
                     new () { Label = "Subtitle", Value = "Subtitle" },
-                    new () { Label = "Both", Value = "Both" },
+                    new () { Label = "Audio and Subtitle", Value = "Both" },
+                    new () { Label = "Video" , Value = "Video"}
                 };
             }
             return _StreamTypeOptions;
@@ -66,6 +67,7 @@ public class FfmpegBuilderSetTrackTitles: FfmpegBuilderNode
     /// </summary>
     [Select(nameof(CommentaryFormatOptions), 4)]
     [DefaultValue("Commentary")]
+    [ConditionEquals(nameof(StreamType), "Video", inverse: true)]
     public string CommentaryFormat { get; set; }
 
     private static List<ListOption> _CommentaryFormatOptions;
@@ -156,7 +158,6 @@ public class FfmpegBuilderSetTrackTitles: FfmpegBuilderNode
                 }
                 else
                 {
-
                     track.Title = FormatTitle(Format, Separator,
                         track.Language?.EmptyAsNull() ?? track.Stream?.Language,
                         track.Codec?.EmptyAsNull() ?? track.Stream?.Codec,
@@ -176,6 +177,23 @@ public class FfmpegBuilderSetTrackTitles: FfmpegBuilderNode
                 args.Logger?.ILog($"Title changed from '{(originalTitle ?? string.Empty)}' to '{track.Title}'");
                 track.ForcedChange = true;
                 ++changes;
+            }
+        }
+
+        if (StreamType is "Video")
+        {
+            foreach (var track in Model.VideoStreams)
+            {
+                string originalTitle = track.Title;
+                track.Title = FormatTitle(Format, Separator,
+                    track.Language?.EmptyAsNull(),
+                    track.Codec?.EmptyAsNull() ?? track.Stream?.Codec,
+                    bitrate: track.Stream?.Bitrate ?? 0,
+                    fps: track.Stream?.FramesPerSecond ?? 0,
+                    pixelFormat: track.Stream?.PixelFormat?.EmptyAsNull(),
+                    resolution: track.Stream == null ? null : ResolutionHelper.GetResolution(track.Stream.Width, track.Stream.Height),
+                    dimensions: track.Stream == null ? null : track.Stream.Width + "x" + track.Stream.Height
+                );
             }
         }
 
@@ -236,9 +254,14 @@ public class FfmpegBuilderSetTrackTitles: FfmpegBuilderNode
     /// <param name="sdh">if the track is SDH</param>
     /// <param name="cc">if the track is closed captions</param>
     /// <param name="hi">if the track is hearing impared</param>
+    /// <param name="resolution">the tracks video resolution</param>
+    /// <param name="dimensions">the tracks video dimensions</param>
+    /// <param name="pixelFormat">the tracks video pixelFormat</param>
+    /// <param name="fps">the tracks video FPS</param>
     /// <returns>the formatted string</returns>
-    public static string FormatTitle(string formatter, string separator, string language, string codec, bool isDefault, float bitrate = 0,
-        float channels = 0, int sampleRate = 0, bool isForced = false, bool sdh = false, bool cc = false, bool hi = false)
+    internal static string FormatTitle(string formatter, string separator, string language, string codec, bool isDefault = false, float bitrate = 0,
+        float channels = 0, int sampleRate = 0, bool isForced = false, bool sdh = false, bool cc = false, bool hi = false,
+        ResolutionHelper.Resolution? resolution = null, string? dimensions = null, string? pixelFormat = null, float? fps = null)
     {
         if (string.IsNullOrWhiteSpace(formatter))
             return string.Empty;
@@ -281,6 +304,33 @@ public class FfmpegBuilderSetTrackTitles: FfmpegBuilderNode
         formatter = Replace(formatter, "sample-rate", sampleRate < 1 ? null : ((sampleRate / 1000f).ToString("0.0").Replace(".0", string.Empty) + "kHz"));
         formatter = Replace(formatter, "sample", sampleRate < 1 ? null : ((sampleRate / 1000f).ToString("0.0").Replace(".0", string.Empty) + "kHz"));
 
+        if(formatter.Contains("!fps")) // have to use this, since we're adding "fps" to the string, and without the else, the "fps" we added would be replaced
+            formatter = Replace(formatter, "!fps", fps > 0 ? fps + "fps" : string.Empty);
+        else
+            formatter = Replace(formatter, "fps", fps > 0 ? fps + "FPS" : string.Empty);
+        
+        formatter = Replace(formatter, "!resolution", resolution switch
+        {
+            ResolutionHelper.Resolution.r4k => "4k",
+            ResolutionHelper.Resolution.r1440p => "1440p",
+            ResolutionHelper.Resolution.r1080p => "1080p",
+            ResolutionHelper.Resolution.r720p => "720p",
+            ResolutionHelper.Resolution.r480p => "480p",
+            _ => "" 
+        });
+        formatter = Replace(formatter, "resolution", resolution switch
+        {
+            ResolutionHelper.Resolution.r4k => "4K",
+            ResolutionHelper.Resolution.r1440p => "1440P",
+            ResolutionHelper.Resolution.r1080p => "1080P",
+            ResolutionHelper.Resolution.r720p => "720P",
+            ResolutionHelper.Resolution.r480p => "480P",
+            _ => "" 
+        });
+        formatter = Replace(formatter, "!pixelformat!", pixelFormat ?? string.Empty);
+        formatter = Replace(formatter, "!pixelformat", pixelFormat?.ToLowerInvariant() ?? string.Empty);
+        formatter = Replace(formatter, "pixelformat", pixelFormat?.ToUpperInvariant() ?? string.Empty);
+        formatter = Replace(formatter, "dimensions", dimensions ?? string.Empty);
         
         // Remove standalone separators
         if(string.IsNullOrWhiteSpace(separator.Trim()) == false)
