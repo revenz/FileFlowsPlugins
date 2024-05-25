@@ -134,6 +134,10 @@ public class VideoHasStream : VideoNode
             args.Logger?.ILog("Checking deleted, ignoring FFmpeg model");
             ffmpegModel = null;
         }
+        
+        args.Logger?.ILog("Title to match: " + title);
+        args.Logger?.ILog("Codec to match: " + codec);
+        args.Logger?.ILog("Lang to match: " + lang);
 
         if (this.Stream == "Video")
         {
@@ -144,16 +148,29 @@ public class VideoHasStream : VideoNode
             found = streams.Where(x =>
             {
                 if (ValueMatch(title, x.Title) == MatchResult.NoMatch)
+                {
+                    args.Logger.ILog("Title does not match: " + x.Title);
                     return false;
-                if (string.IsNullOrWhiteSpace(x.CodecTag) == false && ValueMatch(codec, x.CodecTag) == MatchResult.Matched)
+                }
+
+                if (string.IsNullOrWhiteSpace(x.CodecTag) == false &&
+                    ValueMatch(codec, x.CodecTag) == MatchResult.Matched)
+                {
+                    args.Logger.ILog("Codec Tag does not match: " + x.CodecTag);
                     return true;
+                }
+
                 if (ValueMatch(codec, x.Codec) == MatchResult.NoMatch)
+                {
+                    args.Logger.ILog("Codec does not match: " + x.Codec);
                     return false;
+                }
                 return true;
             }).Any();
         }
         else if (this.Stream == "Audio")
         {
+            args.Logger?.ILog("Channels to match: " + Channels);
             var streams = ffmpegModel == null
                 ? videoInfo.AudioStreams
                 : ffmpegModel.AudioStreams.Where(x => x.Deleted == false).Select(x => x.Stream).ToList();
@@ -161,13 +178,30 @@ public class VideoHasStream : VideoNode
             found = streams.Where(x =>
             {
                 if (ValueMatch(title, x.Title) == MatchResult.NoMatch)
+                {
+                    args.Logger.ILog("Title does not match: " + x.Title);
                     return false;
+                }
+
                 if (ValueMatch(codec, x.Codec) == MatchResult.NoMatch)
+                {
+                    args.Logger.ILog("Codec does not match: " + x.Codec);
                     return false;
+                }
+
                 if (ValueMatch(lang, x.Language) == MatchResult.NoMatch)
+                {
+                    args.Logger.ILog("Language does not match: " + x.Language);
                     return false;
+                }
+
                 if (this.Channels > 0 && Math.Abs(x.Channels - this.Channels) > 0.05f)
+                {
+                    args.Logger.ILog("Channels does not match: " + x.Channels + ", Diff : " + Math.Abs(x.Channels - this.Channels));
                     return false;
+                }
+                args.Logger.ILog("Matching audio found: " + x);
+
                 return true;
             }).Any();
         }
@@ -180,11 +214,21 @@ public class VideoHasStream : VideoNode
             found = streams.Where(x =>
             {
                 if (ValueMatch(title, x.Title) == MatchResult.NoMatch)
+                {
+                    args.Logger.ILog("Title does not match: " + x.Title);
                     return false;
+                }
                 if (ValueMatch(codec, x.Codec) == MatchResult.NoMatch)
+                {
+                    args.Logger.ILog("Codec does not match: " + x.Codec);
                     return false;
+                }
+
                 if (ValueMatch(lang, x.Language) == MatchResult.NoMatch)
+                {
+                    args.Logger.ILog("Language does not match: " + x.Language);
                     return false;
+                }
                 return true;
             }).Any();
         }
@@ -222,7 +266,7 @@ public class VideoHasStream : VideoNode
                     return MatchResult.Matched;
             }
 
-            if (value.ToLower() == "hevc" && (pattern.ToLower() == "h265" || pattern == "265" || pattern.ToLower() == "h.265"))
+            if (value.ToLowerInvariant() == "hevc" && (pattern.ToLowerInvariant() is "h265" or "265" or "h.265"))
                 return MatchResult.Matched; // special case
 
             return pattern.ToLowerInvariant().Trim() == value.ToLowerInvariant().Trim()

@@ -101,6 +101,7 @@ public abstract class TestBase
     protected string TestFile_DefaultSub => Path.Combine(TestPath, "default-sub.mkv");
     protected string TestFile_ForcedDefaultSub => Path.Combine(TestPath, "sub-forced-default.mkv");
     protected string TestFile_DefaultIsForcedSub => Path.Combine(TestPath, "sub-default-is-forced.mkv");
+    protected string TestFile_5dot1 => Path.Combine(TestPath, "5.1.mkv");
     protected string TestFile_TwoPassNegInifinity => Path.Combine(TestPath, "audio_normal_neg_infinity.mkv");
     protected string TestFile_4k_h264mov => Path.Combine(TestPath, "4k_h264.mov");
     protected string TestFile_4k_h264mkv => Path.Combine(TestPath, "4k_h264.mkv");
