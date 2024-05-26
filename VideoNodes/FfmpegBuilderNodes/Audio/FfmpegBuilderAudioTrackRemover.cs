@@ -22,22 +22,19 @@ public class FfmpegBuilderAudioTrackRemover: FfmpegBuilderNode
     [NumberInt(3)]
     public int RemoveIndex { get; set; }
 
-
-    [TextVariable(4)]
-    [ConditionEquals(nameof(RemoveAll), false)]
-    public string Pattern { get; set; }
-
-    [Boolean(5)]
-    [ConditionEquals(nameof(RemoveAll), false)]
-    public bool NotMatching { get; set; }
-
+    /// <summary>
+    /// Gets or sets the type to match against
+    /// </summary>
     [Required]
-    [Select(nameof(MatchTypes), 6)]
+    [Select(nameof(MatchTypes), 4)]
     [DefaultValue(MatchTypeOption.Title)]
     [ConditionEquals(nameof(RemoveAll), false)]
     public MatchTypeOption MatchType { get; set; }
 
-    private static List<ListOption> _MatchTypes;
+    private static List<ListOption>? _MatchTypes;
+    /// <summary>
+    /// Gets the match types
+    /// </summary>
     public static List<ListOption> MatchTypes
     {
         get
@@ -54,6 +51,15 @@ public class FfmpegBuilderAudioTrackRemover: FfmpegBuilderNode
             return _MatchTypes;
         }
     }
+
+    [TextVariable(5)]
+    [ConditionEquals(nameof(RemoveAll), false)]
+    public string Pattern { get; set; }
+
+    [Boolean(6)]
+    [ConditionEquals(nameof(RemoveAll), false)]
+    public bool NotMatching { get; set; }
+
 
     /// <summary>
     /// Left in for legacy reasons, will be removed later
@@ -83,9 +89,9 @@ public class FfmpegBuilderAudioTrackRemover: FfmpegBuilderNode
             {
                 _StreamTypeOptions = new List<ListOption>
                 {
-                    new ListOption { Label = "Audio", Value = "Audio" },
-                    new ListOption { Label = "Video", Value = "Video" },
-                    new ListOption { Label = "Subtitle", Value = "Subtitle" }
+                    new () { Label = "Video", Value = "Video" },
+                    new () { Label = "Audio", Value = "Audio" },
+                    new () { Label = "Subtitle", Value = "Subtitle" }
                 };
             }
             return _StreamTypeOptions;
