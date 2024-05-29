@@ -165,7 +165,7 @@ public class MoveFile : Node
                 args.Logger?.ILog("Looking for additional files in directory: " + srcDir);
                 foreach (var additionalOrig in AdditionalFiles)
                 {
-                    string additional = additionalOrig;
+                    string additional = args.ReplaceVariables(additionalOrig, stripMissing: true);
                     if (Regex.IsMatch(additionalOrig, @"\.[a-z0-9A-Z]+$") == false)
                         additional = "*" + additional; // add the leading start for the search
                     

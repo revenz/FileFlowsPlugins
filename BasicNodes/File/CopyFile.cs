@@ -153,8 +153,9 @@ public class CopyFile : Node
         {
             try
             {
-                foreach (var additional in AdditionalFiles)
+                foreach (var additionalOrig in AdditionalFiles)
                 {
+                    string additional = args.ReplaceVariables(additionalOrig, stripMissing: true);
                     foreach(var addFile in args.FileService.GetFiles(srcDir, additional).ValueOrDefault ?? new string[] {})
                     {
                         try
