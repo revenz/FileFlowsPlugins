@@ -32,7 +32,7 @@ public class VideoHasStream : VideoNode
     [Select(nameof(StreamTypeOptions), 1)]
     public string Stream { get; set; }
 
-    private static List<ListOption> _StreamTypeOptions;
+    private static List<ListOption>? _StreamTypeOptions;
     /// <summary>
     /// Gets the types of streams available to check for
     /// </summary>
@@ -57,20 +57,20 @@ public class VideoHasStream : VideoNode
     /// Gets or sets the title to look for
     /// </summary>
     [TextVariable(2)]
-    public string Title { get; set; }
+    public string? Title { get; set; }
     
     /// <summary>
     /// Gets or sets the codec to look for
     /// </summary>
     [TextVariable(3)]
-    public string Codec { get; set; }
+    public string? Codec { get; set; }
     
     /// <summary>
     /// Gets or sets the language to look for
     /// </summary>
     [ConditionEquals(nameof(Stream), "Video", inverse: true)]
     [TextVariable(4)]
-    public string Language { get; set; }
+    public string? Language { get; set; }
     
     /// <summary>
     /// Gets or sets the number of channels to look for

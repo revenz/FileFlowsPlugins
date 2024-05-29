@@ -278,7 +278,10 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                 }
 
                 var decodingParameters =
-                    GetHardwareDecodingArgs(args, localFile, FFMPEG, video?.Stream?.Codec, pxtFormat, encodingParameters: encodingParameters);
+                    GetHardwareDecodingArgs(args, localFile, FFMPEG, video?.Stream?.Codec, pxtFormat, 
+                        encodingParameters: encodingParameters,
+                        inputPixelFormat: video.Stream.PixelFormat,
+                        destPixelFormat: targetIs10Bit ? "p010le" : (video?.Stream?.Is10Bit == false && video?.Stream?.Is12Bit == false) ? "nv12" : null);
                 if (decodingParameters.Any() == true)
                 {
                     args.StatisticRecorderRunningTotals?.Invoke("DecoderParameters", string.Join(" ", decodingParameters));
@@ -408,21 +411,35 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         return false;
     }
 
-    internal static string[] GetHardwareDecodingArgs(NodeParameters args, string localFile, string ffmpeg, string codec, string pixelFormat, List<string> encodingParameters = null)
+    /// <summary>
+    /// Gets the hardware decoder to user
+    /// </summary>
+    /// <param name="args">the node parameters</param>
+    /// <param name="localFile">the local file</param>
+    /// <param name="ffmpeg">the ffmpeg executable</param>
+    /// <param name="codec">the code to use</param>
+    /// <param name="pixelFormat">the pixel format to test</param>
+    /// <param name="encodingParameters">the encoding parameters</param>
+    /// <param name="inputPixelFormat">the input pixel format of the source video</param>
+    /// <param name="destPixelFormat">the true pixel format we will be encoding in</param>
+    /// <returns>the hardware decoding parameters</returns>
+    internal static string[] GetHardwareDecodingArgs(NodeParameters args, string localFile, string ffmpeg, string codec, string pixelFormat, 
+        List<string> encodingParameters = null, string inputPixelFormat = null, string destPixelFormat = null)
     {
-        string testFile = FileHelper.Combine(args.TempPath, Guid.NewGuid() + ".hwtest.mkv");
+        var testFile = FileHelper.Combine(args.TempPath, Guid.NewGuid() + ".hwtest.mkv");
         if (string.IsNullOrWhiteSpace(codec))
             return new string[] { };
         
         if (encodingParameters?.Any() == true)
             args.Logger?.ILog("Testing with encoding parameters:" + string.Join(" ", encodingParameters));
         
-        bool isH264 = codec.Contains("264");
-        bool isHevc = codec.Contains("265") || codec.ToLowerInvariant().Contains("hevc");
+        var isH264 = codec.Contains("264");
+        var isHevc = codec.Contains("265") || codec.ToLowerInvariant().Contains("hevc");
 
-        var decoders = isH264 ? Decoders_h264(args) :
-            isHevc ? Decoders_hevc(args) :
-            Decoders_Default(args);
+        bool pixelFormatChanged = inputPixelFormat != destPixelFormat;
+        var decoders = //isH264 ? Decoders_h264(args, inputPixelFormat, pixelFormatChanged) :
+            //isHevc ? Decoders_hevc(args, inputPixelFormat, pixelFormatChanged) :
+            Decoders_Default(args, inputPixelFormat, pixelFormatChanged);
         try
         {
             List<string> tested = new List<string>();
@@ -449,7 +466,10 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                 {
                     "-y",
                 };
-                arguments.AddRange(hw);
+                // filter hardware encoders need to go later on 
+                bool filterHardware = hw.Any(x => x.StartsWith("-filter"));
+                if(filterHardware == false)
+                    arguments.AddRange(hw);
                 arguments.AddRange(new[]
                 {
                     "-i", localFile,
@@ -459,12 +479,15 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                     //"-f", "null", "-",
                     //testFile
                 });
+                if (filterHardware)
+                    arguments.AddRange(hw);
+                
                 if (encodingParameters?.Any() == true)
                     arguments.AddRange(encodingParameters);
 
                 arguments.AddRange(new[] { "-f", "null", "-" });
                 
-                if (arguments.Any(x => x.ToLowerInvariant().Contains("vaapi")))
+                if (arguments.Any(x => x.Contains("vaapi", StringComparison.InvariantCultureIgnoreCase)))
                 {
                     args.Logger?.ILog("VAAPI detected adjusting parameters for testing");
                     arguments = new VaapiAdjustments().Run(args.Logger, arguments);
@@ -474,14 +497,12 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
 
                 try
                 {
-                    
                     string line = string.Join("", arguments);
                     if (tested.Contains(line))
                         continue; // avoids testing twice if the #FORMAT# already tested one
                     
                     tested.Add(line);
 
-                    DateTime dtStart = DateTime.Now;
                     const int timeout = 10;
                     var result = args.Execute(new ExecuteArgs
                     {
@@ -533,7 +554,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
     private static readonly bool IsMac = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
 
     
-    private static string[][] Decoders_h264(NodeParameters args)
+    private static string[][] Decoders_h264(NodeParameters args, string inputPixelFormat, bool pixelFormatChanged)
     {
         bool noNvidia =
             args.Variables.Any(x => x.Key?.ToLowerInvariant() == "nonvidia" && x.Value as bool? == true);
@@ -559,23 +580,24 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         return new[]
         {
             noVideoToolbox == false && IsMac ? new [] { "-hwaccel", "videotoolbox" } : null,
-            noNvidia ? null : new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "#FORMAT#" },
-            noNvidia ? null : new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "cuda" }, // this fails with Impossible to convert between the formats supported by the filter 'Parsed_crop_0' and the filter 'auto_scale_0'
-            noNvidia ? null : new [] { "-hwaccel", "cuda" },
-            noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "#FORMAT#" },
+            noNvidia ? null : ["-hwaccel", "cuda", "-hwaccel_output_format", "#FORMAT#"],
+            noNvidia ? null : ["-hwaccel", "cuda", "-hwaccel_output_format", "cuda"], // this fails with Impossible to convert between the formats supported by the filter 'Parsed_crop_0' and the filter 'auto_scale_0'
+            noNvidia ? null : ["-hwaccel", "cuda"],
+            noQsv || pixelFormatChanged == false ? null : [ "-filter:v:0", "vpp_qsv=format=" + (inputPixelFormat.Contains("10le") ? "yuv420p10le" : "nv12")],
+            noQsv ? null : ["-hwaccel", "qsv", "-hwaccel_output_format", "#FORMAT#"],
             //noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "p010le" },
-            noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "qsv" },
-            noQsv ? null : new [] { "-hwaccel", "qsv" },
-            noVaapi ? null : new [] { "-hwaccel", "vaapi" },
-            noVaapi ? null : new [] { "-hwaccel", "vaapi", "-hwaccel_output_format", "vaapi" },
-            noVulkan ? null : new [] { "-hwaccel", "vulkan", "-hwaccel_output_format", "vulkan" },
-            noDxva2 ? null : new [] { "-hwaccel", "dxva2" },
-            noD3d11va ? null : new [] { "-hwaccel", "d3d11va" },
-            noOpencl ? null : new [] { "-hwaccel", "opencl" },
+            noQsv ? null : ["-hwaccel", "qsv", "-hwaccel_output_format", "qsv"],
+            noQsv ? null : ["-hwaccel", "qsv"],
+            noVaapi ? null : ["-hwaccel", "vaapi"],
+            noVaapi ? null : ["-hwaccel", "vaapi", "-hwaccel_output_format", "vaapi"],
+            noVulkan ? null : ["-hwaccel", "vulkan", "-hwaccel_output_format", "vulkan"],
+            noDxva2 ? null : ["-hwaccel", "dxva2"],
+            noD3d11va ? null : ["-hwaccel", "d3d11va"],
+            noOpencl ? null : ["-hwaccel", "opencl"],
         }.Where(x => x != null).Select(x => x!).ToArray();
     }
 
-    private static string[][] Decoders_hevc(NodeParameters args)
+    private static string[][] Decoders_hevc(NodeParameters args, string inputPixelFormat, bool pixelFormatChanged)
     {
         bool noNvidia =
             args.Variables.Any(x => x.Key?.ToLowerInvariant() == "nonvidia" && x.Value as bool? == true);
@@ -604,6 +626,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             noNvidia ? null : new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "#FORMAT#" },
             noNvidia ? null : new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "cuda" }, // this fails with Impossible to convert between the formats supported by the filter 'Parsed_crop_0' and the filter 'auto_scale_0'
             noNvidia ? null : new [] { "-hwaccel", "cuda" },
+            noQsv || pixelFormatChanged == false ? null : [ "-filter:v:0", "vpp_qsv=format=" + (inputPixelFormat.Contains("10le") ? "yuv420p10le" : "nv12")],
             noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "#FORMAT#" },
             noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "qsv" },
             noQsv ? null : new [] { "-hwaccel", "qsv" },
@@ -616,7 +639,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         }.Where(x => x != null).Select(x => x!).ToArray();
     }
 
-    private static string[][] Decoders_Default(NodeParameters args)
+    private static string[][] Decoders_Default(NodeParameters args, string inputPixelFormat, bool pixelFormatChanged)
     {
         bool noNvidia =
             args.Variables.Any(x => x.Key?.ToLowerInvariant() == "nonvidia" && x.Value as bool? == true);
@@ -639,23 +662,26 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         bool noOpencl =
             args.Variables.Any(x => x.Key?.ToLowerInvariant() == "noopencl" && x.Value as bool? == true);
 
+        bool isWindows = OperatingSystem.IsWindows();
         
         return new[]
         {
-            noNvidia ? null : new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "#FORMAT#" },
-            noNvidia ? null : new [] { "-hwaccel", "cuda", "-hwaccel_output_format", "cuda" }, // this fails with Impossible to convert between the formats supported by the filter 'Parsed_crop_0' and the filter 'auto_scale_0'
-            noNvidia ? null : new [] { "-hwaccel", "cuda" },
-            noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "#FORMAT#" },
+            noVideoToolbox || IsMac == false ? null : new [] {"-hwaccel", "videotoolbox"},
+            noNvidia ? null : ["-hwaccel", "cuda", "-hwaccel_output_format", "#FORMAT#"],
+            noNvidia ? null : ["-hwaccel", "cuda", "-hwaccel_output_format", "cuda"], // this fails with Impossible to convert between the formats supported by the filter 'Parsed_crop_0' and the filter 'auto_scale_0'
+            noNvidia ? null : ["-hwaccel", "cuda"],
+            noQsv || pixelFormatChanged == false ? null : [ "-filter:v:0", "vpp_qsv=format=" + (inputPixelFormat.Contains("10le") ? "yuv420p10le" : "nv12")],
+            noQsv ? null : ["-hwaccel", "qsv", "-hwaccel_output_format", "#FORMAT#"],
             //noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "p010le" },
-            noQsv ? null : new [] { "-hwaccel", "qsv", "-hwaccel_output_format", "qsv" },
-            noQsv ? null : new [] { "-hwaccel", "qsv" },
-            noVaapi ? null : new [] { "-hwaccel", "vaapi" },
-            noVaapi ? null : new [] { "-hwaccel", "vaapi", "-v" },
-            noVaapi ? null : new [] { "-hwaccel", "vaapi", "-hwaccel_output_format", "vaapi" },
-            noVulkan ? null : new [] { "-hwaccel", "vulkan", "-hwaccel_output_format", "vulkan" },
-            noDxva2 ? null : new [] { "-hwaccel", "dxva2" },
-            noD3d11va ? null : new [] { "-hwaccel", "d3d11va" },
-            noOpencl ? null : new [] { "-hwaccel", "opencl" },
+            noQsv ? null : ["-hwaccel", "qsv", "-hwaccel_output_format", "qsv"],
+            noQsv ? null : ["-hwaccel", "qsv"],
+            noVaapi ? null : ["-hwaccel", "vaapi"],
+            noVaapi ? null : ["-hwaccel", "vaapi", "-v"],
+            noVaapi ? null : ["-hwaccel", "vaapi", "-hwaccel_output_format", "vaapi"],
+            noVulkan ? null : ["-hwaccel", "vulkan", "-hwaccel_output_format", "vulkan"],
+            noDxva2 || isWindows == false ? null : ["-hwaccel", "dxva2"],
+            noD3d11va || isWindows == false ? null : ["-hwaccel", "d3d11va"],
+            noOpencl ? null : ["-hwaccel", "opencl"],
         }.Where(x => x != null).Select(x => x!).ToArray();
     }
 }
