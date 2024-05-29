@@ -35,7 +35,7 @@ public partial class FfmpegBuilderVideoEncode:VideoEncodeBase
     /// Gets or sets the encoder to use
     /// </summary>
     [Select(nameof(Encoders), 2)]
-    [ConditionEquals(nameof(Codec), "/av1/", inverse: true)]
+    //[ConditionEquals(nameof(Codec), "/av1/", inverse: true)]
     public string Encoder { get; set; }
     /// <summary>
     /// Gets or sets the quality of the video encode

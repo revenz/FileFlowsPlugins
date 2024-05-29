@@ -29,7 +29,7 @@ public partial class FfmpegBuilderVideoBitrateEncode:VideoEncodeBase
     /// Gets or sets the encoder to use
     /// </summary>
     [Select(nameof(Encoders), 2)]
-    [ConditionEquals(nameof(Codec), "/av1/", inverse: true)]
+    //[ConditionEquals(nameof(Codec), "/av1/", inverse: true)]
     public string Encoder { get; set; } = string.Empty;
     
     /// <summary>
