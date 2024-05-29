@@ -126,7 +126,7 @@ public class VideoHasErrors: VideoNode
         string output = process.StandardError.ReadToEnd();
         process.WaitForExit();
 
-        if (output.Contains("error"))
+        if (output.ToLowerInvariant().Contains("error"))
         {
             args.Logger?.ILog("Errors detected in file");
             args.Logger?.WLog(output);

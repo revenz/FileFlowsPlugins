@@ -30,6 +30,7 @@ public abstract class TestBase
     public string TestPath { get; private set; }
     public string TempPath { get; private set; }
     public string FfmpegPath { get; private set; }
+    public string FfprobePath { get; private set; }
     
     public readonly bool IsWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
     public readonly bool IsLinux = RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
@@ -50,11 +51,12 @@ public abstract class TestBase
         this.TestPath = this.TestPath?.EmptyAsNull() ?? (IsLinux ? "~/src/ff-files/test-files/videos" : @"d:\videos\testfiles");
         this.TempPath = this.TempPath?.EmptyAsNull() ?? (IsLinux ? "~/src/ff-files/temp" : @"d:\videos\temp");
         this.FfmpegPath = this.FfmpegPath?.EmptyAsNull() ?? (IsLinux ? "/usr/local/bin/ffmpeg" :  @"C:\utils\ffmpeg\ffmpeg.exe");
-        
+        this.FfprobePath = this.FfmpegPath?.EmptyAsNull() ?? (IsLinux ? "/usr/local/bin/ffprobe" :  @"C:\utils\ffprobe\ffprobe.exe");
         
         this.TestPath = this.TestPath.Replace("~/", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/");
         this.TempPath = this.TempPath.Replace("~/", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/");
         this.FfmpegPath = this.FfmpegPath.Replace("~/", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/");
+        this.FfprobePath = this.FfprobePath.Replace("~/", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/");
         
         if (Directory.Exists(this.TempPath) == false)
             Directory.CreateDirectory(this.TempPath);
@@ -91,6 +93,7 @@ public abstract class TestBase
 
     protected string TestFile_MovText_Mp4 => Path.Combine(TestPath, "movtext.mp4");
     protected string TestFile_BasicMkv => Path.Combine(TestPath, "basic.mkv");
+    protected string TestFile_Corrupt => Path.Combine(TestPath, "corrupt.mkv");
     protected string TestFile_Webvtt => Path.Combine(TestPath, "webvtt4.mkv");
     protected string TestFile_Tag => Path.Combine(TestPath, "tag.mp4");
     protected string TestFile_Sitcom => Path.Combine(TestPath, "sitcom.mkv");
