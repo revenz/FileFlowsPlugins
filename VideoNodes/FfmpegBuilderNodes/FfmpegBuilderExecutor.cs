@@ -266,6 +266,8 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                 List<string> encodingParameters = new ();
                 if (video?.EncodingParameters?.Any() == true)
                 {
+                    encodingParameters.Add("-map");
+                    encodingParameters.Add("0:v:" + video.Stream.TypeIndex);
                     encodingParameters.Add("-c:v:" + video.Stream.TypeIndex);
                     encodingParameters.AddRange(video.EncodingParameters);
                     if (video.Filter?.Any() == true)
