@@ -195,6 +195,10 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
 
         startArgs.AddRange(new[] { "-fflags", "+genpts" }); //Generate missing PTS if DTS is present.
 
+        // arguments to add after the inputs have been added
+        // this is used by the qsv filter for hw decoding
+        List<string> afterStartArguments = new();
+
         if (ProbeSize >= 32)
         {
             startArgs.AddRange(new[]
@@ -287,10 +291,15 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                 if (decodingParameters.Any() == true)
                 {
                     args.StatisticRecorderRunningTotals?.Invoke("DecoderParameters", string.Join(" ", decodingParameters));
-                    startArgs.AddRange(decodingParameters);
+                    if(decodingParameters.Any(x => x.StartsWith("-filter")))
+                        afterStartArguments.AddRange(decodingParameters);
+                    else
+                        startArgs.AddRange(decodingParameters);
                 }
             }
         }
+        
+        
 
         foreach (var file in model.InputFiles)
         {
@@ -326,7 +335,8 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             startArgs.AddRange(new[] { "-movflags", "+faststart" });
         }
 
-        ffArgs = startArgs.Concat(ffArgs).ToList();
+        ffArgs = [..startArgs, ..afterStartArguments, ..ffArgs];
+        
         if (model.RemoveAttachments != true)
         {
             // FF-378: keep attachments (fonts etc)
@@ -334,7 +344,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         }
 
         // make any adjustments needed for hardware devices
-        ffArgs = EncoderAdjustments.EncoderAdjustment.Run(args.Logger, ffArgs);
+        ffArgs = EncoderAdjustment.Run(args.Logger, ffArgs);
 
         var ffmpeg = FFMPEG;
         
