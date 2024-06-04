@@ -20,7 +20,6 @@ public class AudioInfoHelper
 
     public Result<AudioInfo> Read(string filename)
     {
-        
         if (System.IO.File.Exists(filename) == false)
             return Result<AudioInfo>.Fail("File not found: " + filename);
         if (string.IsNullOrEmpty(ffMpegExe) || System.IO.File.Exists(ffMpegExe) == false)
@@ -35,145 +34,136 @@ public class AudioInfoHelper
 
         try
         {
-            using (var process = new Process())
+            var ffmpegOutput = ExecuteFfmpeg(ffMpegExe, filename);
+            if (ffmpegOutput.Failed(out string error))
+                return Result<AudioInfo>.Fail("Failed reading ffmpeg info: " + error);
+            var output = ffmpegOutput.Value;
+
+            Logger.ILog("Audio Information:" + Environment.NewLine + output);
+
+            if (output.IndexOf("Input #0", StringComparison.Ordinal) < 0)
+                return Result<AudioInfo>.Fail("Failed to read audio information for file");
+
+            if (output.ToLower().Contains("mp3"))
+                mi.Codec = "mp3";
+            else if (output.ToLower().Contains("ogg"))
+                mi.Codec = "ogg";
+            else if (output.ToLower().Contains("flac"))
+                mi.Codec = "flac";
+            else if (output.ToLower().Contains("wav"))
+                mi.Codec = "wav";
+            else if (filename.ToLower().EndsWith(".mp3"))
+                mi.Codec = "mp3";
+            else if (filename.ToLower().EndsWith(".ogg"))
+                mi.Codec = "ogg";
+            else if (filename.ToLower().EndsWith(".flac"))
+                mi.Codec = "flac";
+            else if (filename.ToLower().EndsWith(".wav"))
+                mi.Codec = "wav";
+
+            foreach (string line in output.Split('\n'))
             {
-                process.StartInfo = new ProcessStartInfo();
-                process.StartInfo.FileName = ffMpegExe;
-                process.StartInfo.UseShellExecute = false;
-                process.StartInfo.RedirectStandardOutput = true;
-                process.StartInfo.RedirectStandardError = true;
-                process.StartInfo.CreateNoWindow = true;
-                process.StartInfo.Arguments = $"-hide_banner -i \"{filename}\"";
-                process.Start();
-                string output = process.StandardError.ReadToEnd();
-                string error = process.StandardError.ReadToEnd();
-                process.WaitForExit();
+                int colonIndex = line.IndexOf(":", StringComparison.Ordinal);
+                if (colonIndex < 1)
+                    continue;
 
-                if (string.IsNullOrEmpty(error) == false && error != "At least one output file must be specified")
-                    return Result<AudioInfo>.Fail("Failed reading ffmpeg info: " + error);
+                string lowLine = line.ToLower().Trim();
 
-                Logger.ILog("Audio Information:" + Environment.NewLine + output);
-
-                if(output.IndexOf("Input #0", StringComparison.Ordinal) < 0)
-                    return Result<AudioInfo>.Fail("Failed to read audio information for file");
-
-                if (output.ToLower().Contains("mp3"))
-                    mi.Codec = "mp3";
-                else if (output.ToLower().Contains("ogg"))
-                    mi.Codec = "ogg";
-                else if (output.ToLower().Contains("flac"))
-                    mi.Codec = "flac";
-                else if (output.ToLower().Contains("wav"))
-                    mi.Codec = "wav";
-                else if (filename.ToLower().EndsWith(".mp3"))
-                    mi.Codec = "mp3";
-                else if (filename.ToLower().EndsWith(".ogg"))
-                    mi.Codec = "ogg";
-                else if (filename.ToLower().EndsWith(".flac"))
-                    mi.Codec = "flac";
-                else if (filename.ToLower().EndsWith(".wav"))
-                    mi.Codec = "wav";
-
-                foreach (string line in output.Split('\n'))
+                if (lowLine.StartsWith("language"))
+                    mi.Language = line[(colonIndex + 1)..].Trim();
+                else if (lowLine.StartsWith("track") && lowLine.Contains("total") == false)
                 {
-                    int colonIndex = line.IndexOf(":", StringComparison.Ordinal);
-                    if(colonIndex < 1)
-                        continue;
-
-                    string lowLine = line.ToLower().Trim();
-
-                    if (lowLine.StartsWith("language"))
-                        mi.Language = line[(colonIndex + 1)..].Trim();
-                    else if (lowLine.StartsWith("track") && lowLine.Contains("total") == false)
+                    if (mi.Track < 1)
                     {
-                        if (mi.Track < 1)
+                        var trackMatch = Regex.Match(line.Substring(colonIndex + 1).Trim(), @"^[\d]+");
+                        if (trackMatch.Success && int.TryParse(trackMatch.Value, out int value))
+                            mi.Track = value;
+                    }
+                }
+                else if (lowLine.StartsWith("artist") || lowLine.StartsWith("album_artist"))
+                {
+                    if (string.IsNullOrWhiteSpace(mi.Artist))
+                        mi.Artist = line[(colonIndex + 1)..].Trim();
+                }
+                else if (lowLine.StartsWith("title") && lowLine.Contains(".jpg") == false)
+                {
+                    if (string.IsNullOrWhiteSpace(mi.Title))
+                        mi.Title = line[(colonIndex + 1)..].Trim();
+                }
+                else if (lowLine.StartsWith("album"))
+                {
+                    if (string.IsNullOrWhiteSpace(mi.Album))
+                        mi.Album = line[(colonIndex + 1)..].Trim();
+                }
+                else if (lowLine.StartsWith("disc"))
+                {
+                    if (int.TryParse(line[(colonIndex + 1)..].Trim(), out int value))
+                        mi.Disc = value;
+                }
+                else if (lowLine.StartsWith("disctotal") || lowLine.StartsWith("totaldiscs"))
+                {
+                    if (int.TryParse(line[(colonIndex + 1)..].Trim(), out int value))
+                        mi.TotalDiscs = value;
+                }
+                else if (lowLine.StartsWith("date") || lowLine.StartsWith("retail date") ||
+                         lowLine.StartsWith("retaildate") || lowLine.StartsWith("originaldate") ||
+                         lowLine.StartsWith("original date"))
+                {
+                    if (int.TryParse(line[(colonIndex + 1)..].Trim(), out int value))
+                    {
+                        if (mi.Date < new DateTime(1900, 1, 1))
+                            mi.Date = new DateTime(value, 1, 1);
+                    }
+                    else if (DateTime.TryParse(line[(colonIndex + 1)..].Trim(), out DateTime dtValue) &&
+                             dtValue.Year > 1900)
+                        mi.Date = dtValue;
+                }
+                else if (lowLine.StartsWith("genre"))
+                {
+                    if (mi.Genres?.Any() != true)
+                        mi.Genres = line[(colonIndex + 1)..].Trim().Split(' ');
+                }
+                else if (lowLine.StartsWith("encoder"))
+                    mi.Encoder = line[(colonIndex + 1)..].Trim();
+                else if (lowLine.StartsWith("duration"))
+                {
+                    if (mi.Duration < 1)
+                    {
+                        string temp = line[(colonIndex + 1)..].Trim();
+                        if (temp.IndexOf(",", StringComparison.Ordinal) > 0)
                         {
-                            var trackMatch = Regex.Match(line.Substring(colonIndex + 1).Trim(), @"^[\d]+");
-                            if (trackMatch.Success && int.TryParse(trackMatch.Value, out int value))
-                                mi.Track = value;
+                            temp = temp.Substring(0, temp.IndexOf(","));
+                            if (TimeSpan.TryParse(temp, out TimeSpan value))
+                                mi.Duration = (long)value.TotalSeconds;
                         }
                     }
-                    else if (lowLine.StartsWith("artist") || lowLine.StartsWith("album_artist"))
-                    {
-                        if (string.IsNullOrWhiteSpace(mi.Artist))
-                            mi.Artist = line[(colonIndex + 1)..].Trim();
-                    }
-                    else if (lowLine.StartsWith("title") && lowLine.Contains(".jpg") == false)
-                    {
-                        if (string.IsNullOrWhiteSpace(mi.Title))
-                            mi.Title = line[(colonIndex + 1)..].Trim();
-                    }
-                    else if (lowLine.StartsWith("album"))
-                    {
-                        if (string.IsNullOrWhiteSpace(mi.Album))
-                            mi.Album = line[(colonIndex + 1)..].Trim();
-                    }
-                    else if (lowLine.StartsWith("disc"))
-                    {
-                        if (int.TryParse(line[(colonIndex + 1)..].Trim(), out int value))
-                            mi.Disc = value;
-                    }
-                    else if (lowLine.StartsWith("disctotal") || lowLine.StartsWith("totaldiscs"))
-                    {
-                        if (int.TryParse(line[(colonIndex + 1)..].Trim(), out int value))
-                            mi.TotalDiscs = value;
-                    }
-                    else if (lowLine.StartsWith("date") || lowLine.StartsWith("retail date") || lowLine.StartsWith("retaildate") || lowLine.StartsWith("originaldate") || lowLine.StartsWith("original date"))
-                    {
-                        if (int.TryParse(line[(colonIndex + 1)..].Trim(), out int value))
-                        {
-                            if(mi.Date < new DateTime(1900, 1, 1))
-                                mi.Date = new DateTime(value, 1, 1);
-                        }
-                        else if(DateTime.TryParse(line[(colonIndex + 1)..].Trim(), out DateTime dtValue) && dtValue.Year > 1900)
-                            mi.Date = dtValue; 
-                    }
-                    else if (lowLine.StartsWith("genre"))
-                    {
-                        if(mi.Genres?.Any() != true)
-                            mi.Genres = line[(colonIndex + 1)..].Trim().Split(' ');
-                    }
-                    else if (lowLine.StartsWith("encoder"))
-                        mi.Encoder = line[(colonIndex + 1)..].Trim();
-                    else if (lowLine.StartsWith("duration"))
-                    {
-                        if (mi.Duration < 1)
-                        {
-                            string temp = line[(colonIndex + 1)..].Trim();
-                            if (temp.IndexOf(",", StringComparison.Ordinal) > 0)
-                            {
-                                temp = temp.Substring(0, temp.IndexOf(","));
-                                if (TimeSpan.TryParse(temp, out TimeSpan value))
-                                    mi.Duration = (long)value.TotalSeconds;
-                            }
-                        }
-                    }
-
-
-                    if (line.ToLower().IndexOf("bitrate:", StringComparison.Ordinal) > 0)
-                    {
-                        string br = line.Substring(line.ToLower().IndexOf("bitrate:", StringComparison.Ordinal) + "bitrate:".Length).Trim();
-                        if (br.IndexOf(" ", StringComparison.Ordinal) > 0)
-                        {
-                            int multiplier = br.ToLower().IndexOf("kb/s", StringComparison.Ordinal) > 0 ? 1024 : 
-                                             br.ToLower().IndexOf("mb/s", StringComparison.Ordinal) > 0 ? 1024 * 1024 : 
-                                             1; 
-                            br = br.Substring(0, br.IndexOf(" "));
-                            if (long.TryParse(br, out long value))
-                                mi.Bitrate = value * multiplier;
-                        }
-                    }
-
-                    var match = Regex.Match(line, @"([\d]+) Hz");
-                    if (match.Success)
-                    {
-                        mi.Frequency = int.Parse(match.Groups[1].Value);
-                    }
-
-                    if (line.IndexOf(" stereo,", StringComparison.Ordinal) > 0)
-                        mi.Channels = 2;
                 }
 
+
+                if (line.ToLower().IndexOf("bitrate:", StringComparison.Ordinal) > 0)
+                {
+                    string br = line
+                        .Substring(line.ToLower().IndexOf("bitrate:", StringComparison.Ordinal) + "bitrate:".Length)
+                        .Trim();
+                    if (br.IndexOf(" ", StringComparison.Ordinal) > 0)
+                    {
+                        int multiplier = br.ToLower().IndexOf("kb/s", StringComparison.Ordinal) > 0 ? 1024 :
+                            br.ToLower().IndexOf("mb/s", StringComparison.Ordinal) > 0 ? 1024 * 1024 :
+                            1;
+                        br = br.Substring(0, br.IndexOf(" "));
+                        if (long.TryParse(br, out long value))
+                            mi.Bitrate = value * multiplier;
+                    }
+                }
+
+                var match = Regex.Match(line, @"([\d]+) Hz");
+                if (match.Success)
+                {
+                    mi.Frequency = int.Parse(match.Groups[1].Value);
+                }
+
+                if (line.IndexOf(" stereo,", StringComparison.Ordinal) > 0)
+                    mi.Channels = 2;
             }
         }
         catch (Exception ex)
@@ -190,76 +180,157 @@ public class AudioInfoHelper
 
         return mi;
     }
-
+    
     public Result<AudioInfo> ReadFromFFprobe(string file)
     {
         try
         {
-            using (var process = new Process())
+            var ffprobeResult = ExecuteFfprobe(ffprobe, file);
+            if (ffprobeResult.Failed(out string error))
             {
-                process.StartInfo = new ProcessStartInfo();
-                process.StartInfo.FileName = ffprobe;
-                process.StartInfo.UseShellExecute = false;
-                process.StartInfo.RedirectStandardOutput = true;
-                process.StartInfo.RedirectStandardError = true;
-                process.StartInfo.CreateNoWindow = true;
-                process.StartInfo.ArgumentList.Add("-v");
-                process.StartInfo.ArgumentList.Add("error");
-                process.StartInfo.ArgumentList.Add("-select_streams");
-                process.StartInfo.ArgumentList.Add("a:0");
-                process.StartInfo.ArgumentList.Add("-show_format");
-                process.StartInfo.ArgumentList.Add("-of");
-                process.StartInfo.ArgumentList.Add("json");
-                process.StartInfo.ArgumentList.Add(file);
-                process.Start();
-
-                string output = process.StandardError.ReadToEnd();
-                string error = process.StandardError.ReadToEnd();
-                process.WaitForExit();
-
-                if (string.IsNullOrEmpty(error) == false && error != "At least one output file must be specified")
-                {
-                    Logger.ELog("Failed reading ffmpeg info: " + error);
-                    return Result<AudioInfo>.Fail("Failed reading ffmpeg info: " + error);
-                }
-
-                var result = FFprobeAudioInfo.Parse(output);
-                if (result.IsFailed)
-                    return Result<AudioInfo>.Fail(result.Error);
-
-                var audioInfo = new AudioInfo();
-                audioInfo.Album = result.Value.Tags.Album;
-                audioInfo.Artist = result.Value.Tags.Artist;
-                audioInfo.Bitrate = result.Value.Bitrate;
-                audioInfo.Codec = result.Value.FormatName;
-                if (DateTime.TryParse(result.Value.Tags.Date ?? string.Empty, out DateTime date))
-                    audioInfo.Date = date;
-                else if (int.TryParse(result.Value.Tags.Date ?? string.Empty, out int year))
-                    audioInfo.Date = new DateTime(year, 1, 1);
-
-                if (int.TryParse(result.Value.Tags.Disc ?? string.Empty, out int disc))
-                    audioInfo.Disc = disc;
-                audioInfo.Duration = (long)result.Value.Duration.TotalSeconds;
-                audioInfo.Genres = result.Value.Tags?.Genre
-                    .Split(new string[] { ";", "," }, StringSplitOptions.RemoveEmptyEntries)?.Select(x => x.Trim())
-                    ?.ToArray();
-                audioInfo.Title = result.Value.Tags.Title;
-                if (int.TryParse(result.Value.Tags.Track, out int track))
-                    audioInfo.Track = track;
-                if (int.TryParse(result.Value.Tags.TotalDiscs, out int totalDiscs))
-                    audioInfo.TotalDiscs = totalDiscs;
-                if (int.TryParse(result.Value.Tags.TotalTracks, out int totalTracks))
-                    audioInfo.TotalTracks = totalTracks;
-
-                return audioInfo;
+                Logger.WLog("Failed reading information from FFprobe: " + Environment.NewLine + error);
+                return Result<AudioInfo>.Fail(error);
             }
+
+            var output = ffprobeResult.Value;
+            var result = FFprobeAudioInfo.Parse(output);
+            if (result.IsFailed)
+                return Result<AudioInfo>.Fail(result.Error);
+
+            var audioInfo = new AudioInfo();
+            audioInfo.Album = result.Value.Tags.Album;
+            audioInfo.Artist = result.Value.Tags.Artist;
+            audioInfo.Bitrate = result.Value.Bitrate;
+            audioInfo.Codec = result.Value.FormatName;
+            if (DateTime.TryParse(result.Value.Tags.Date ?? string.Empty, out DateTime date))
+                audioInfo.Date = date;
+            else if (int.TryParse(result.Value.Tags.Date ?? string.Empty, out int year))
+                audioInfo.Date = new DateTime(year, 1, 1);
+
+            if (int.TryParse(result.Value.Tags.Disc ?? string.Empty, out int disc))
+                audioInfo.Disc = disc;
+            audioInfo.Duration = (long)result.Value.Duration.TotalSeconds;
+            audioInfo.Genres = result.Value.Tags?.Genre
+                .Split(new string[] { ";", "," }, StringSplitOptions.RemoveEmptyEntries)?.Select(x => x.Trim())
+                ?.ToArray();
+            audioInfo.Title = result.Value.Tags.Title;
+            if (int.TryParse(result.Value.Tags.Track, out int track))
+                audioInfo.Track = track;
+            if (int.TryParse(result.Value.Tags.TotalDiscs, out int totalDiscs))
+                audioInfo.TotalDiscs = totalDiscs;
+            if (int.TryParse(result.Value.Tags.TotalTracks, out int totalTracks))
+                audioInfo.TotalTracks = totalTracks;
+
+            return audioInfo;
         }
         catch (Exception ex)
         {
             return Result<AudioInfo>.Fail(ex.Message);
         }
     }
+    
+    /// <summary>
+    /// Executes the ffmpeg process with the given file and returns the output or an error message.
+    /// </summary>
+    /// <param name="ffmpeg">The path to the ffmpeg executable.</param>
+    /// <param name="file">The file to be probed by ffprobe.</param>
+    /// <returns>A Result object containing the output string if successful, or an error message if not.</returns>
+    public Result<string> ExecuteFfmpeg(string ffmpeg, string file)
+    {
+        try
+        {
+            using (var process = new Process())
+            {
+                process.StartInfo = new ProcessStartInfo
+                {
+                    FileName = ffmpeg,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    CreateNoWindow = true,
+                    ArgumentList = {
+                        "-hide_banner", 
+                        "-i",
+                        file
+                    }
+                };
+                process.Start();
 
+                bool exited = process.WaitForExit(60000);
+                if (exited == false)
+                {
+                    process.Kill();
+                    string pkOutput = process.StandardError.ReadToEnd()?.EmptyAsNull() ?? process.StandardOutput.ReadToEnd();
+                    return Result<string>.Fail("Process timed out." + Environment.NewLine + pkOutput);
+                }
+
+                string output = process.StandardOutput.ReadToEnd();
+                string error = process.StandardError.ReadToEnd();
+
+                if (string.IsNullOrEmpty(error) == false)
+                    return Result<string>.Fail($"Failed reading ffmpeg info: {error}");
+
+                return output;
+            }
+        }
+        catch (Exception ex)
+        {
+            return Result<string>.Fail($"An error occurred: {ex.Message}");
+        }
+    }
+    
+    /// <summary>
+    /// Executes the ffprobe process with the given file and returns the output or an error message.
+    /// </summary>
+    /// <param name="ffprobe">The path to the ffprobe executable.</param>
+    /// <param name="file">The file to be probed by ffprobe.</param>
+    /// <returns>A Result object containing the output string if successful, or an error message if not.</returns>
+    public Result<string> ExecuteFfprobe(string ffprobe, string file)
+    {
+        try
+        {
+            using (var process = new Process())
+            {
+                process.StartInfo = new ProcessStartInfo
+                {
+                    FileName = ffprobe,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    CreateNoWindow = true,
+                    ArgumentList = {
+                        "-v", "error",
+                        "-select_streams", "a:0",
+                        "-show_format",
+                        "-of", "json",
+                        file
+                    }
+                };
+                process.Start();
+
+                bool exited = process.WaitForExit(60000);
+                if (exited == false)
+                {
+                    process.Kill();
+                    string pkOutput = process.StandardError.ReadToEnd()?.EmptyAsNull() ?? process.StandardOutput.ReadToEnd();
+                    return Result<string>.Fail("Process timed out." + Environment.NewLine + pkOutput);
+                }
+
+                string output = process.StandardOutput.ReadToEnd();
+                string error = process.StandardError.ReadToEnd();
+
+                if (string.IsNullOrEmpty(error) == false)
+                    return Result<string>.Fail($"Failed reading ffmpeg info: {error}");
+
+                return output;
+            }
+        }
+        catch (Exception ex)
+        {
+            return Result<string>.Fail($"An error occurred: {ex.Message}");
+        }
+    }
+    
     public AudioInfo ReadMetaData(string file)
     {
         using var tfile = TagLib.File.Create(file);
