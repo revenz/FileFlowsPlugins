@@ -211,7 +211,7 @@ public class AudioInfoHelper
                 audioInfo.Disc = disc;
             audioInfo.Duration = (long)result.Value.Duration.TotalSeconds;
             audioInfo.Genres = result.Value.Tags?.Genre
-                .Split(new string[] { ";", "," }, StringSplitOptions.RemoveEmptyEntries)?.Select(x => x.Trim())
+                ?.Split(new string[] { ";", "," }, StringSplitOptions.RemoveEmptyEntries)?.Select(x => x.Trim())
                 ?.ToArray();
             audioInfo.Title = result.Value.Tags.Title;
             if (int.TryParse(result.Value.Tags.Track, out int track))
@@ -264,13 +264,11 @@ public class AudioInfoHelper
                     return Result<string>.Fail("Process timed out." + Environment.NewLine + pkOutput);
                 }
 
+                // we use error here, since we're not specify an output file, FFmpeg will report it as an error, but we don't care
                 string output = process.StandardOutput.ReadToEnd();
                 string error = process.StandardError.ReadToEnd();
 
-                if (string.IsNullOrEmpty(error) == false)
-                    return Result<string>.Fail($"Failed reading ffmpeg info: {error}");
-
-                return output;
+                return output?.EmptyAsNull() ?? error;
             }
         }
         catch (Exception ex)

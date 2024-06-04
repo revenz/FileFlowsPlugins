@@ -1,6 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 
 namespace FileFlows.AudioNodes;
 
@@ -19,17 +21,18 @@ public class FFprobeAudioInfo
     /// </summary>
     /// <param name="json">the json output from FFprobe</param>
     /// <returns>the AudioFormatInfo parsed</returns>
+    [RequiresUnreferencedCode("")]
     public static Result<AudioFormatInfo> Parse(string json)
     {
         try
         {
-#pragma warning disable IL2026
             var ffAudioFormatInfo = JsonSerializer.Deserialize<FFprobeAudioInfo>(json,
                 new JsonSerializerOptions()
                 {
+                    TypeInfoResolver = new DefaultJsonTypeInfoResolver(),
+                    IgnoreNullValues = true,
                     PropertyNameCaseInsensitive = true
                 });
-#pragma warning restore IL2026
             return ffAudioFormatInfo.Format;
         }
         catch (Exception ex)

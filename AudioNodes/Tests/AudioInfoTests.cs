@@ -4,10 +4,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
+using AudioNodes.Tests;
 
 namespace FileFlows.AudioNodes.Tests;
 [TestClass]
-public class AudioInfoTests
+public class AudioInfoTests: AudioTestBase
 {
     const string file = @"/home/john/Music/test/test.wav";
     readonly string ffmpegExe = (OperatingSystem.IsLinux() ? "/usr/local/bin/ffmpeg" :  @"C:\utils\ffmpeg\ffmpeg.exe");
@@ -16,17 +17,16 @@ public class AudioInfoTests
     [TestMethod]
     public void AudioInfo_SplitTrack()
     {
-        var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters(file, logger,  false, string.Empty, null);;
-        args.GetToolPathActual = (string tool) => ffmpegExe;
-        args.TempPath = @"/home/john/Music/temp";
+        var args = GetNodeParameters(TestFile_Mp3);
+        var af = new AudioFile();
+        af.PreExecute(args);
+        var result = af.Execute(args); // need to read the Audio info and set it
 
-        var result = new AudioInfoHelper(ffmpegExe, ffprobe, args.Logger).Read(args.WorkingFile);
-        Assert.IsFalse(result.IsFailed);
+        Assert.AreEqual(1, result);
 
-        var AudioInfo = result.Value;
+        var AudioInfo = args.Parameters["AudioInfo"] as AudioInfo;
 
-        Assert.AreEqual(9, AudioInfo.Track);
+        Assert.AreEqual(4, AudioInfo.Track);
     }
 
     [TestMethod]
