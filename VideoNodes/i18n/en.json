@@ -222,7 +222,9 @@
           "Pattern": "Pattern",
           "Pattern-Help": "A string or regular expression to match against, eg \"commentary\" to match commentary exactly or \".*commentary.*\" to match commentary anywhere in the string",
           "NotMatching": "Not Matching",
-          "NotMatching-Help": "If audio tracks NOT matching the pattern should be converted"
+          "NotMatching-Help": "If audio tracks NOT matching the pattern should be converted",
+          "BitratePerChannel": "Bitrate Per Channel",
+          "BitratePerChannel-Help": "If the bitrate specified should be per channel"
         }
       },
       "FfmpegBuilderAudioNormalization": {

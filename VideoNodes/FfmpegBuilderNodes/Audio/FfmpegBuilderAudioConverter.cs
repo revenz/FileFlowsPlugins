@@ -167,12 +167,18 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
             return _BitrateOptions;
         }
     }
+    
+    /// <summary>
+    /// Gets or sets if the bitrate specified should be per channel
+    /// </summary>
+    [Boolean(5)]
+    public bool BitratePerChannel { get; set; }
 
     /// <summary>
     /// Gets or sets the field to match again
     /// </summary>
     [DefaultValue("")]
-    [Select(nameof(FieldOptions), 5)]
+    [Select(nameof(FieldOptions), 6)]
     public string Field { get; set; }
     /// <summary>
     /// The field options
@@ -217,14 +223,14 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
     /// <summary>
     /// Gets or sets the pattern to match against
     /// </summary>
-    [TextVariable(6)]
+    [TextVariable(7)]
     [ConditionEquals(nameof(Field), "", true)]
     public string Pattern { get; set; }
 
     /// <summary>
     /// Gets or sets if the pattern should not match
     /// </summary>
-    [Boolean(7)]
+    [Boolean(8)]
     [ConditionEquals(nameof(Field), "", true)]
     public bool NotMatching { get; set; }
 
@@ -329,7 +335,33 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
             codec = PcmFormat;
         
         bool codecSame = stream.Stream.Codec?.ToLowerInvariant() == codec;
-        bool channelsSame = Channels == 0 || Math.Abs(Channels - stream.Stream.Channels) < 0.05f;
+        
+        int originalChannels = FfmpegBuilderAudioAddTrack.GetAudioBitrateChannels(args.Logger, stream.Channels, string.Empty); 
+        int totalChannels = FfmpegBuilderAudioAddTrack.GetAudioBitrateChannels(args.Logger, Channels < 1 ? stream.Channels : Channels, codec);
+        
+        bool channelsSame = originalChannels == totalChannels;
+
+        int bitrate = Bitrate;
+        if (BitratePerChannel && bitrate > 0)
+        {
+            args.Logger?.ILog("Total channels: " + totalChannels);
+            args.Logger?.ILog("Bitrate Per Channel: " + bitrate);
+
+            if (bitrate == 1)
+            {
+                // same as source
+                // so we need to get the bitrate of the original, and divide that by the number of channels
+                // then times it by the number of channels we are now using
+                bitrate = (int)(totalChannels * ((stream.Stream.Bitrate / 1000) / stream.Stream.Channels));
+            }
+            else
+            {
+                bitrate = totalChannels * bitrate;
+            }
+
+            args.Logger?.ILog("Total Bitrate: " + bitrate);
+        }
+        
         bool bitrateSame = Bitrate < 2 || stream.Stream.Bitrate == 0 ||
                            Math.Abs(stream.Stream.Bitrate - Bitrate) < 0.05f;
 

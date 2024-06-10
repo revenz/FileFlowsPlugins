@@ -216,13 +216,8 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
             audio.Codec = Codec;
             int sampleRate = SampleRate == 1 ? audio.Stream.SampleRate : SampleRate;
             
-            int totalChannels = GetAudioBitrateChannels(audio);
-            if (totalChannels == 8 && Codec == "eac3")
-            {
-                args.Logger?.ILog("EAC3 detected with 7.1, switch to 5.1");
-                totalChannels = 6;
-                Channels = 6;
-            }
+            int totalChannels = GetAudioBitrateChannels(args.Logger, Channels < 1 ? audio.Channels : Channels, Codec);
+            int channels = Channels < 1 ? 0 : totalChannels;
 
             int bitrate = Bitrate;
             if (BitratePerChannel)
@@ -234,11 +229,11 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
                 args.Logger?.ILog("Total Bitrate: " + bitrate);
             }
 
-            audio.EncodingParameters.AddRange(GetNewAudioTrackParameters(args, audio, Codec, Channels, bitrate, sampleRate));
-            if (this.Channels > 0)
+            audio.EncodingParameters.AddRange(GetNewAudioTrackParameters(args, audio, Codec, channels, bitrate, sampleRate));
+            if (channels > 0)
             {
-                args.Logger?.ILog("Setting channels to: " + Channels);
-                audio.Channels = this.Channels;
+                args.Logger?.ILog("Setting channels to: " + channels);
+                audio.Channels = channels;
             }
         }
 
@@ -258,12 +253,13 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
     /// <summary>
     /// Gets how many channels there are including sub channels, eg. 5.1 is 6 channels
     /// </summary>
+    /// <param name="logger">the logger</param>
     /// <param name="audio">the audio track</param>
+    /// <param name="channels">the channels</param>
+    /// <param name="codec">the codec, some codecs limit the number of channels, such as eac3</param>
     /// <returns>the number of channels for the bitrate calculation</returns>
-    private int GetAudioBitrateChannels(FfmpegAudioStream audio)
+    internal static int GetAudioBitrateChannels(ILogger logger, float channels, string codec)
     {
-        float channels = (Channels > 0 ? Channels : audio.Channels);
-        
         // Check if there are any decimal parts in the channels
         float decimalPart = channels - (int)channels;
 
@@ -273,14 +269,17 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
         if (additionalChannels == 0 && channels.ToString(CultureInfo.InvariantCulture).Contains("."))
         {
             var str = channels.ToString(CultureInfo.InvariantCulture);
-            Args?.Logger?.ILog("Decimal channel detected in string but not in float: " + str);
+            logger?.ILog("Decimal channel detected in string but not in float: " + str);
             str = str.Substring(str.LastIndexOf(".", StringComparison.Ordinal) + 1);
             additionalChannels = int.Parse(str);
-            Args?.Logger?.ILog("New additional channels detected: " + additionalChannels);
+            logger?.ILog("New additional channels detected: " + additionalChannels);
         }
 
         // Total channels including sub-channels
         int totalChannels = (int)channels + additionalChannels;
+        
+        if (totalChannels == 8 && codec == "eac3")
+            totalChannels = 6;
 
         return totalChannels;
     }

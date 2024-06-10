@@ -128,6 +128,7 @@ public class AudioInfoTests: AudioTestBase
     }
     
     [TestMethod]
+    [RequiresUnreferencedCode("")]
     public void AudioFormatInfoTest()
     {
         string ffmpegOutput = @"{

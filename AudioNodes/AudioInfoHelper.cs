@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+
 //using System.IO;
 using System.Text.RegularExpressions;
 using TagLib.Matroska;
@@ -180,7 +182,8 @@ public class AudioInfoHelper
 
         return mi;
     }
-    
+
+    [UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "<Pending>")]
     public Result<AudioInfo> ReadFromFFprobe(string file)
     {
         try

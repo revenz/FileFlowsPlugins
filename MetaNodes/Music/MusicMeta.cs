@@ -35,9 +35,6 @@ namespace MetaNodes.Music
             int trackNumber = FindTrack(args, artist, album);
             int year = FindYear(args, artist, album);
             string track = FindTrackName(args, artist, album);
-            //Query q = new Query("FileFlows.MusicBrainzTagger", "0.0.1");
-            //findalbu
-            //q.FindArtists(artist);
 
             Variables["music.Artist"] = artist;
             Variables["music.Album"] = album;

@@ -105,6 +105,11 @@ public class TestFileService : IFileService
         throw new NotImplementedException();
     }
 
+    public Result<long> DirectorySize(string path)
+    {
+        throw new NotImplementedException();
+    }
+
     public Result<bool> SetCreationTimeUtc(string path, DateTime date)
     {
         throw new NotImplementedException();
