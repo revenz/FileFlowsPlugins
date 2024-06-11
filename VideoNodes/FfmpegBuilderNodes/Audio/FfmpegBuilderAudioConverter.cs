@@ -373,7 +373,7 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
 
         stream.Codec = Codec.ToLowerInvariant();
 
-        stream.EncodingParameters.AddRange(FfmpegBuilderAudioAddTrack.GetNewAudioTrackParameters(args, stream, codec, Channels, Bitrate, 0));
+        stream.EncodingParameters.AddRange(FfmpegBuilderAudioAddTrack.GetNewAudioTrackParameters(args, stream, codec, Channels, bitrate, 0));
         return true;
     }
 }
