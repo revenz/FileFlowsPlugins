@@ -94,7 +94,7 @@ public class VideoExtractAudio : AudioSelectionEncodingNode
                 { "ExtractedAudioFile", outputFile }
             });
             if (SetWorkingFile)
-                args.SetWorkingFile(OutputFile, dontDelete: true);
+                args.SetWorkingFile(outputFile, dontDelete: true);
 
             return 1;
         }
