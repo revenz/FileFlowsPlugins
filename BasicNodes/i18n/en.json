@@ -356,6 +356,19 @@
             "Value-Help": "The value of the variable to set."
           }
         },
+        "SetWorkingFile": {
+          "Label": "Set Working File",
+          "Description": "Updates the current working file to the one specified.",
+          "Outputs": {
+            "1": "Working File Set"
+          },
+          "Fields": {
+            "File": "File",
+            "File-Description": "The path to the new working file or folder.",
+            "DontDeletePrevious": "Don't Delete Previous",
+            "DontDeletePrevious-Help": "If the previous *temporary* working file should *not* be deleted.\nOnly temporary files will be deleted, files that have been created by FileFlows into the runners temporary directory."
+          }
+        },
         "Sleep": {
           "Description": "Pauses the flow",
           "Outputs": {
