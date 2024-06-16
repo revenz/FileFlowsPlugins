@@ -143,7 +143,7 @@ public class LocalFileService : IFileService
             return Result<bool>.Fail("Cannot access protected path: " + path);
         try
         {
-            return File.Exists(path);
+            return System.IO.File.Exists(path);
         }
         catch (Exception)
         {
@@ -309,7 +309,7 @@ public class LocalFileService : IFileService
             return Result<bool>.Fail("Cannot access protected path: " + path);
         try
         {
-            File.AppendAllText(path, text);
+            System.IO.File.AppendAllText(path, text);
             SetPermissions(path);
             return true;
         }
@@ -349,11 +349,11 @@ public class LocalFileService : IFileService
         
         try
         {
-            if (File.Exists(path))
-                File.SetLastWriteTimeUtc(path, DateTime.UtcNow);
+            if (System.IO.File.Exists(path))
+                System.IO.File.SetLastWriteTimeUtc(path, DateTime.UtcNow);
             else
             {
-                File.Create(path);
+                System.IO.File.Create(path);
                 SetPermissions(path);
             }
 
@@ -376,10 +376,10 @@ public class LocalFileService : IFileService
             return Result<bool>.Fail("Cannot access protected path: " + path);
         try
         {
-            if (!File.Exists(path))
+            if (!System.IO.File.Exists(path))
                 return Result<bool>.Fail("File not found.");
 
-            File.SetCreationTimeUtc(path, date);
+            System.IO.File.SetCreationTimeUtc(path, date);
             return Result<bool>.Success(true);
         }
         catch (Exception ex)
@@ -394,10 +394,10 @@ public class LocalFileService : IFileService
             return Result<bool>.Fail("Cannot access protected path: " + path);
         try
         {
-            if (!File.Exists(path))
+            if (!System.IO.File.Exists(path))
                 return Result<bool>.Fail("File not found.");
 
-            File.SetLastWriteTimeUtc(path, date);
+            System.IO.File.SetLastWriteTimeUtc(path, date);
             return Result<bool>.Success(true);
         }
         catch (Exception ex)
@@ -449,7 +449,7 @@ public class LocalFileService : IFileService
             permissions = 777;
         
 
-        if ((File.Exists(path) == false && Directory.Exists(path) == false))
+        if ((System.IO.File.Exists(path) == false && Directory.Exists(path) == false))
         {
             logMethod("SetPermissions: File doesnt existing, skipping");
             return;

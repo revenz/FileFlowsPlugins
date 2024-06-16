@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
+using FileFlows.BasicNodes.Helpers;
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
 using FileFlows.Plugin.Helpers;
@@ -156,49 +157,24 @@ public class MoveFile : Node
         if(AdditionalFiles?.Any() == true)
         {
             args.Logger?.ILog("Additional Files: " + string.Join(", ", AdditionalFiles));
+            var addFiles = FolderHelper.GetAdditionalFiles(args.Logger, args.FileService, args.ReplaceVariables,
+                shortNameLookup, srcDir, AdditionalFiles);
             
-            try
+            string destDir = FileHelper.GetDirectory(dest);
+            foreach (var addFile in addFiles)
             {
-                string destDir = FileHelper.GetDirectory(dest);
-                args.FileService.DirectoryCreate(destDir);
-
-                args.Logger?.ILog("Looking for additional files in directory: " + srcDir);
-                foreach (var additionalOrig in AdditionalFiles)
+                try
                 {
-                    string additional = args.ReplaceVariables(additionalOrig, stripMissing: true);
-                    if (Regex.IsMatch(additionalOrig, @"\.[a-z0-9A-Z]+$") == false)
-                        additional = "*" + additional; // add the leading start for the search
-                    
-                    args.Logger?.ILog("Looking for additional files: " + additional);
-                    var srcDirFiles = args.FileService.GetFiles(srcDir, additional).ValueOrDefault ?? new string[] { };
-                    foreach(var addFile in srcDirFiles)
-                    {
-                        try
-                        {
-                            if (Regex.IsMatch(additional, @"\*\.[a-z0-9A-Z]+$"))
-                            {
-                                // make sure the file starts with same name
-                                var addFileName = FileHelper.GetShortFileName(addFile);
-                                if (addFileName.ToLowerInvariant().StartsWith(shortNameLookup.ToLowerInvariant()) ==
-                                    false)
-                                    continue;
-                            }
-                            args.Logger?.ILog("Additional files: " + addFile);
+                    args.Logger?.ILog("Additional files: " + addFile);
                             
-                            string addFileDest = destDir + args.FileService.PathSeparator + FileHelper.GetShortFileName(addFile);
-                            args.FileService.FileMove(addFile, addFileDest, true);
-                            args.Logger?.ILog("Moved file: \"" + addFile + "\" to \"" + addFileDest + "\"");
-                        }
-                        catch(Exception ex)
-                        {
-                            args.Logger?.ILog("Failed moving file: \"" + addFile + "\": " + ex.Message);
-                        }
-                    }
+                    string addFileDest = FileHelper.Combine(destDir, FileHelper.GetShortFileName(addFile));
+                    args.FileService.FileMove(addFile, addFileDest, true);
+                    args.Logger?.ILog("Moved file: \"" + addFile + "\" to \"" + addFileDest + "\"");
                 }
-            }
-            catch(Exception ex)
-            {
-                args.Logger.WLog("Error moving additional files: " + ex.Message);
+                catch(Exception ex)
+                {
+                    args.Logger?.ILog("Failed moving file: \"" + addFile + "\": " + ex.Message);
+                }
             }
         }
         else

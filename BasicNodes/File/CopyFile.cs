@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using FileFlows.BasicNodes.Helpers;
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
 using FileFlows.Plugin.Helpers;
@@ -151,35 +152,29 @@ public class CopyFile : Node
 
         if (AdditionalFiles?.Any() == true)
         {
-            try
+            string shortNameLookup = FileHelper.GetShortFileName(AdditionalFilesFromOriginal ? args.FileName : inputFile);
+            if (shortNameLookup.LastIndexOf(".", StringComparison.InvariantCulture) > 0)
+                shortNameLookup = shortNameLookup[..shortNameLookup.LastIndexOf(".", StringComparison.Ordinal)];
+            
+            args.Logger?.ILog("Additional Files: " + string.Join(", ", AdditionalFiles));
+            var addFiles = FolderHelper.GetAdditionalFiles(args.Logger, args.FileService, args.ReplaceVariables,
+                shortNameLookup, srcDir, AdditionalFiles);
+
+            foreach (var addFile in addFiles)
             {
-                foreach (var additionalOrig in AdditionalFiles)
+                try
                 {
-                    string additional = args.ReplaceVariables(additionalOrig, stripMissing: true);
-                    foreach(var addFile in args.FileService.GetFiles(srcDir, additional).ValueOrDefault ?? new string[] {})
-                    {
-                        try
-                        {
-                            string shortName = FileHelper.GetShortFileName(addFile);
-                            
-                            string addFileDest = destDir + args.FileService.PathSeparator + shortName;
-                            args.FileService.FileCopy(addFile, addFileDest, true);
-                            //args.CopyFile(addFile, addFileDest, updateWorkingFile: false);
+                    string shortName = FileHelper.GetShortFileName(addFile);
 
-                            //FileHelper.ChangeOwner(args.Logger, addFileDest, file: true);
+                    string addFileDest = destDir + args.FileService.PathSeparator + shortName;
+                    args.FileService.FileCopy(addFile, addFileDest, true);
 
-                            args.Logger?.ILog("Copied file: \"" + addFile + "\" to \"" + addFileDest + "\"");
-                        }
-                        catch (Exception ex)
-                        {
-                            args.Logger?.ILog("Failed copying file: \"" + addFile + "\": " + ex.Message);
-                        }
-                    }
+                    args.Logger?.ILog("Copied file: \"" + addFile + "\" to \"" + addFileDest + "\"");
                 }
-            }
-            catch (Exception ex)
-            {
-                args.Logger.WLog("Error copying additional files: " + ex.Message);
+                catch (Exception ex)
+                {
+                    args.Logger?.ILog("Failed copying file: \"" + addFile + "\": " + ex.Message);
+                }
             }
         }
 

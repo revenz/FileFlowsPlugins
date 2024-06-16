@@ -13,7 +13,7 @@ namespace BasicNodes.Tests
         private string CreateFile(int size)
         {
             string tempFile = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());  
-            File.WriteAllText(tempFile, new string('a', size));
+            System.IO.File.WriteAllText(tempFile, new string('a', size));
             return tempFile;
 
         }
@@ -70,7 +70,7 @@ namespace BasicNodes.Tests
             var logger = new TestLogger();
             var args = new FileFlows.Plugin.NodeParameters(tempFile, logger, false, string.Empty, null);
             Assert.IsTrue(args.WorkingFileSize > 0);
-            File.Delete(tempFile);
+            System.IO.File.Delete(tempFile);
 
             string wfFile = CreateFile(1);
             args.SetWorkingFile(wfFile);
@@ -86,7 +86,7 @@ namespace BasicNodes.Tests
             string tempFile = CreateFile(2);
             var logger = new TestLogger();
             var args = new FileFlows.Plugin.NodeParameters(tempFile, logger, false, string.Empty, null);
-            File.Delete(tempFile);
+            System.IO.File.Delete(tempFile);
 
             string wfFile = CreateFile(20);
             args.SetWorkingFile(wfFile);
@@ -102,7 +102,7 @@ namespace BasicNodes.Tests
             string tempFile = CreateFile(2);
             var logger = new TestLogger();
             var args = new FileFlows.Plugin.NodeParameters(tempFile, logger, false, string.Empty, null);
-            File.Delete(tempFile);
+            System.IO.File.Delete(tempFile);
 
             string wfFile = CreateFile(2);
             args.SetWorkingFile(wfFile);
