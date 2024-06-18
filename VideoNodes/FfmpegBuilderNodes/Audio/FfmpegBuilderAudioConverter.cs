@@ -15,7 +15,6 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
     /// <inheritdoc />
     public override int Outputs => 2;
 
-
     /// <summary>
     /// Gets or sets the codec to use
     /// </summary>

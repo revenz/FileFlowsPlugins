@@ -3,6 +3,7 @@ using FileFlows.Plugin.Attributes;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 using FileFlows.BasicNodes.Helpers;
+using FileFlows.Plugin.Helpers;
 
 namespace FileFlows.BasicNodes.Functions;
 
@@ -83,7 +84,7 @@ public class Matches : Node
 
                 if (MathHelper.IsMathOperation(match.Value))
                 {
-                    if (MathHelper.IsTrue(strValue, match.Value))
+                    if (MathHelper.IsTrue(match.Value, strValue))
                     {
                         args.Logger?.ILog($"Match found '{match.Value}' = {strValue}");
                         return output;
