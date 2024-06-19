@@ -70,7 +70,7 @@ public class DeleteSourceDirectory : Node
             if (pathIndex < 0)
             {
                 args.Logger?.ILog("File is in library root, will not delete");
-                return 1;
+                return 2;
             }
 
             topdir = args.RelativeFile[..pathIndex];
