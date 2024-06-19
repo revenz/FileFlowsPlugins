@@ -52,44 +52,35 @@ public class DeleteSourceDirectory : Node
             .TrimEnd('/')
             .TrimEnd('\\');
 
-        args.Logger?.ILog("Library File Name: " + args.LibraryFileName);
-        args.Logger?.ILog("Library Path: " + libraryPath);
-        args.Logger?.ILog("Relative File: " + args.RelativeFile);
-        //args.Logger?.ILog("IsRemote: " + args.IsRemote);
-
-        int pathIndex = args.RelativeFile.IndexOfAny(new[] { '\\', '/' });
-        if (pathIndex < 0)
+        string topdir;
+        if (args.FileService.DirectoryExists(args.LibraryFileName))
         {
-            args.Logger?.ILog("File is in library root, will not delete");
-            return base.Execute(args);
+            args.Logger?.ILog("Library Folder Name: " + args.LibraryFileName);
+            args.Logger?.ILog("Library Path: " + libraryPath);
+            args.Logger?.ILog("Relative Folder: " + args.RelativeFile);
+            topdir = args.RelativeFile;
         }
+        else
+        {
+            args.Logger?.ILog("Library File Name: " + args.LibraryFileName);
+            args.Logger?.ILog("Library Path: " + libraryPath);
+            args.Logger?.ILog("Relative File: " + args.RelativeFile);
 
-        string topdir = args.RelativeFile.Substring(0, pathIndex);
+            int pathIndex = args.RelativeFile.IndexOfAny(['\\', '/']);
+            if (pathIndex < 0)
+            {
+                args.Logger?.ILog("File is in library root, will not delete");
+                return 1;
+            }
+
+            topdir = args.RelativeFile[..pathIndex];
+        }
 
         string pathSeparator = args.FileService.PathSeparator.ToString();
 
         args.Logger?.ILog("Path Separator: " + pathSeparator);
         string pathToDelete = libraryPath.EndsWith(pathSeparator) ? libraryPath + topdir : libraryPath + pathSeparator + topdir;
         args.Logger?.ILog("Path To Delete: " + pathToDelete);
-
-        // if (args.IsRemote)
-        // {
-        //     if (args.LibraryFileName.StartsWith(pathToDelete))
-        //     {
-        //         args.Logger?.ILog("Deleting original file remotely: " + args.LibraryFileName);
-        //         args.DeleteRemote(args.LibraryFileName, false,
-        //             null); // first delete the source file since its in this directory we are deleting
-        //     }
-        //     
-        //     args.Logger?.ILog("Sending request to delete remote path: " + pathToDelete);
-        //
-        //     bool deleted = args.DeleteRemote(pathToDelete, IfEmpty, IncludePatterns);
-        //     if (deleted)
-        //         args.Logger?.ILog("Successfully deleted remote path: " + pathToDelete);
-        //     else
-        //         args.Logger?.WLog("Failed to delete remote path: " + pathToDelete);
-        //     return deleted ? 1 : 2;
-        // }
 
         if (IfEmpty)
         {

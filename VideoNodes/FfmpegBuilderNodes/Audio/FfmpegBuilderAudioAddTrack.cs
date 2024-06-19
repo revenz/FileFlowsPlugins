@@ -280,6 +280,8 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
         
         if (totalChannels == 8 && codec == "eac3")
             totalChannels = 6;
+        
+        logger?.ILog("Total Channels: " + totalChannels);
 
         return totalChannels;
     }

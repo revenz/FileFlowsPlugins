@@ -74,17 +74,11 @@ public class VideoHasStream : VideoNode
     
     /// <summary>
     /// Gets or sets the number of channels to look for
-    /// </summary>
-    [Obsolete]
-    public float Channels { get; set; }
-    
-    /// <summary>
-    /// Gets or sets the number of channels to look for
     /// This is a string so math operations can be done
     /// </summary>
     [ConditionEquals(nameof(Stream), "Audio")]
     [MathValue(5)]
-    public string ChannelsValue { get; set; }
+    public string Channels { get; set; }
     
     /// <summary>
     /// Gets or sets if deleted tracks should also be checked
@@ -130,8 +124,6 @@ public class VideoHasStream : VideoNode
             args.Logger?.ELog(args.FailureReason);
             return -1;
         }
-
-        var channels = ChannelsValue?.EmptyAsNull() ?? (Channels > 0 ? "=" + Channels : string.Empty);
 
         bool found = false;
         string title = args.ReplaceVariables(Title, stripMissing: true);
@@ -179,7 +171,7 @@ public class VideoHasStream : VideoNode
         }
         else if (this.Stream == "Audio")
         {
-            args.Logger?.ILog("Channels to match: " + channels);
+            args.Logger?.ILog("Channels to match: " + Channels);
             var streams = ffmpegModel == null
                 ? videoInfo.AudioStreams
                 : ffmpegModel.AudioStreams.Where(x => x.Deleted == false).Select(x => x.Stream).ToList();
@@ -204,9 +196,9 @@ public class VideoHasStream : VideoNode
                     return false;
                 }
 
-                if (string.IsNullOrWhiteSpace(channels) == false && MathHelper.IsFalse(channels, x.Channels))
+                if (string.IsNullOrWhiteSpace(Channels) == false && args.MathHelper.IsFalse(Channels, x.Channels))
                 {
-                    args.Logger.ILog("Channels does not match: " + x.Channels + ", Diff : " + Math.Abs(x.Channels - this.Channels));
+                    args.Logger.ILog("Channels does not match: " + x.Channels + " vs " + Channels);
                     return false;
                 }
                 args.Logger.ILog("Matching audio found: " + x);

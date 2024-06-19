@@ -115,7 +115,7 @@ public class VideoHasStreamTests : TestBase
         var vii = vi.Read(file);
 
         VideoHasStream node = new();
-        node.Channels = 5.1f;
+        node.Channels = "=5.1";
         node.Stream = "Audio";
 
         var args = new NodeParameters(file, Logger, false, string.Empty, new LocalFileService());
@@ -132,7 +132,77 @@ public class VideoHasStreamTests : TestBase
     }
 
 
+    [TestMethod]
+    public void VideoHasStream_Audio_Channels_GreaterOrEqual()
+    {
+        string file = TestFile_5dot1;
+        var vi = new VideoInfoHelper(FfmpegPath, Logger);
+        var vii = vi.Read(file);
 
+        VideoHasStream node = new();
+        node.Channels = ">=4.5";
+        node.Stream = "Audio";
+
+        var args = new NodeParameters(file, Logger, false, string.Empty, new LocalFileService());
+        args.GetToolPathActual = (string tool) => FfmpegPath;
+        args.TempPath = TempPath;
+
+        var vf = new VideoFile();
+        vf.PreExecute(args);
+        Assert.AreEqual(1, vf.Execute(args));
+
+        int output = node.Execute(args);
+
+        Assert.AreEqual(1, output);
+    }
+    
+    [TestMethod]
+    public void VideoHasStream_Audio_Channels_Between()
+    {
+        string file = TestFile_5dot1;
+        var vi = new VideoInfoHelper(FfmpegPath, Logger);
+        var vii = vi.Read(file);
+
+        VideoHasStream node = new();
+        node.Channels = "5<>5.1";
+        node.Stream = "Audio";
+
+        var args = new NodeParameters(file, Logger, false, string.Empty, new LocalFileService());
+        args.GetToolPathActual = (string tool) => FfmpegPath;
+        args.TempPath = TempPath;
+
+        var vf = new VideoFile();
+        vf.PreExecute(args);
+        Assert.AreEqual(1, vf.Execute(args));
+
+        int output = node.Execute(args);
+
+        Assert.AreEqual(1, output);
+    }
+
+    [TestMethod]
+    public void VideoHasStream_Audio_Channels_NotBetween()
+    {
+        string file = TestFile_5dot1;
+        var vi = new VideoInfoHelper(FfmpegPath, Logger);
+        var vii = vi.Read(file);
+
+        VideoHasStream node = new();
+        node.Channels = "2><3";
+        node.Stream = "Audio";
+
+        var args = new NodeParameters(file, Logger, false, string.Empty, new LocalFileService());
+        args.GetToolPathActual = (string tool) => FfmpegPath;
+        args.TempPath = TempPath;
+
+        var vf = new VideoFile();
+        vf.PreExecute(args);
+        Assert.AreEqual(1, vf.Execute(args));
+
+        int output = node.Execute(args);
+
+        Assert.AreEqual(1, output);
+    }
     [TestMethod]
     public void VideoHasStream_Audio_Channels_Pass_61()
     {
@@ -203,7 +273,7 @@ public class VideoHasStreamTests : TestBase
   Stream #0:1(ger): Audio: dts (DTS-ES), 48000 Hz, 6.1, fltp, 1536 kb/s (default)");
 
         VideoHasStream node = new();
-        node.Channels = 6.1f;
+        node.Channels = "=6.1";
         node.Stream = "Audio";
 
         var args = new NodeParameters(null, Logger, false, string.Empty, new LocalFileService());
@@ -223,7 +293,7 @@ public class VideoHasStreamTests : TestBase
         var vii = vi.Read(file);
 
         VideoHasStream node = new();
-        node.Channels = 2;
+        node.Channels = "=2";
         node.Stream = "Audio";
 
         var args = new NodeParameters(file, new TestLogger(), false, string.Empty, null);;

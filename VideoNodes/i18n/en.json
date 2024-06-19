@@ -887,7 +887,7 @@
           "Language": "Language",
           "Language-Help": "A regular expression used to test the stream language",
           "Channels": "Channels",
-          "Channels-Help": "The number of channels to test for.  Set to 0 to ignore this check",
+          "Channels-Help": "The number of channels to test for.  Leave blank to ignore this check",
           "CheckDeleted": "Check Deleted",
           "CheckDeleted-Help": "If deleted tracks should also be checked",
           "Invert": "Invert",

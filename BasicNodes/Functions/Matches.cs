@@ -82,9 +82,9 @@ public class Matches : Node
                     return output;
                 }
 
-                if (MathHelper.IsMathOperation(match.Value))
+                if (args.MathHelper.IsMathOperation(match.Value))
                 {
-                    if (MathHelper.IsTrue(match.Value, strValue))
+                    if (args.MathHelper.IsTrue(match.Value, strValue))
                     {
                         args.Logger?.ILog($"Match found '{match.Value}' = {strValue}");
                         return output;
