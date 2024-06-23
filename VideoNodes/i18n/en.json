@@ -891,7 +891,11 @@
           "CheckDeleted": "Check Deleted",
           "CheckDeleted-Help": "If deleted tracks should also be checked",
           "Invert": "Invert",
-          "Invert-Help": "Inverts the result, so effectively becomes `Video Does Not Have Stream`"
+          "Invert-Help": "Inverts the result, so effectively becomes `Video Does Not Have Stream`",
+          "Forced": "Forced",
+          "Forced-Help": "If this stream should be a forced stream or not.",
+          "Default": "Default",
+          "Default-Help": "If this stream should be a default stream or not."
         }
       },
       "VideoBitrateGreaterThan": {

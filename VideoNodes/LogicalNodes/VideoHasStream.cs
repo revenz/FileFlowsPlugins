@@ -87,9 +87,65 @@ public class VideoHasStream : VideoNode
     public bool CheckDeleted { get; set; }
     
     /// <summary>
+    /// Gets or sets the forced status to check for
+    /// </summary>
+    [Select(nameof(ForcedOptions), 7)]
+    [ConditionEquals(nameof(Stream), "Subtitle")]
+    public string Forced { get; set; }
+
+    private static List<ListOption>? _ForcedOptions;
+    /// <summary>
+    /// Gets the forced options
+    /// </summary>
+    public static List<ListOption> ForcedOptions
+    {
+        get
+        {
+            if (_ForcedOptions == null)
+            {
+                _ForcedOptions = new List<ListOption>
+                {
+                    new () { Label = "Any", Value = "" },
+                    new () { Label = "Forced", Value = "Forced" },
+                    new () { Label = "Not Forced", Value = "Not Forced" }
+                };
+            }
+            return _ForcedOptions;
+        }
+    }
+    
+    /// <summary>
+    /// Gets or sets the default status to check for
+    /// </summary>
+    [Select(nameof(DefaultOptions), 8)]
+    [ConditionEquals(nameof(Stream), "Video", inverse: true)]
+    public string Default { get; set; }
+
+    private static List<ListOption>? _DefaultOptions;
+    /// <summary>
+    /// Gets the default options
+    /// </summary>
+    public static List<ListOption> DefaultOptions
+    {
+        get
+        {
+            if (_DefaultOptions == null)
+            {
+                _DefaultOptions = new List<ListOption>
+                {
+                    new () { Label = "Any", Value = "" },
+                    new () { Label = "Default", Value = "Default" },
+                    new () { Label = "Not Default", Value = "Not Default" }
+                };
+            }
+            return _DefaultOptions;
+        }
+    }
+    
+    /// <summary>
     /// Gets or sets if result should be inverted
     /// </summary>
-    [Boolean(7)]
+    [Boolean(10)]
     public bool Invert { get; set; }
 
     /// <summary>
@@ -172,6 +228,7 @@ public class VideoHasStream : VideoNode
         else if (this.Stream == "Audio")
         {
             args.Logger?.ILog("Channels to match: " + Channels);
+            args.Logger?.ILog("Default to match: " + (Default ?? string.Empty));
             var streams = ffmpegModel == null
                 ? videoInfo.AudioStreams
                 : ffmpegModel.AudioStreams.Where(x => x.Deleted == false).Select(x => x.Stream).ToList();
@@ -201,6 +258,17 @@ public class VideoHasStream : VideoNode
                     args.Logger.ILog("Channels does not match: " + x.Channels + " vs " + Channels);
                     return false;
                 }
+
+                if (string.IsNullOrEmpty(Default) == false)
+                {
+                    bool wantDefault = Default == "Default";
+                    if (x.Default != wantDefault)
+                    {
+                        args.Logger.ILog("Defaults does not match: " + x.Default + " vs " + wantDefault);
+                        return false;
+                    }
+                }
+                
                 args.Logger.ILog("Matching audio found: " + x);
 
                 return true;
@@ -229,6 +297,25 @@ public class VideoHasStream : VideoNode
                 {
                     args.Logger.ILog("Language does not match: " + x.Language);
                     return false;
+                }
+
+                if (string.IsNullOrEmpty(Default) == false)
+                {
+                    bool wantDefault = Default == "Default";
+                    if (x.Default != wantDefault)
+                    {
+                        args.Logger.ILog("Defaults does not match: " + x.Default + " vs " + wantDefault);
+                        return false;
+                    }
+                }
+                if (string.IsNullOrEmpty(Forced) == false)
+                {
+                    bool wantForced = Forced == "Forced";
+                    if (x.Forced != wantForced)
+                    {
+                        args.Logger.ILog("Forced does not match: " + x.Forced + " vs " + Forced);
+                        return false;
+                    }
                 }
                 return true;
             }).Any();
