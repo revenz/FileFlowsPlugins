@@ -68,6 +68,7 @@ public class HasHardLinks: Node
     {
         try
         {
+            args.Logger?.ILog("HasHardLinkWindows: " + file);
             // Get file attributes
             FileAttributes attributes = System.IO.File.GetAttributes(file);
 
@@ -100,6 +101,7 @@ public class HasHardLinks: Node
     {
         try
         {
+            args.Logger?.ILog("HasHardLinkLinux: " + file);
             Process process = new Process();
             process.StartInfo.FileName = "stat";
             process.StartInfo.ArgumentList.Add("-c");
@@ -114,6 +116,11 @@ public class HasHardLinks: Node
             string output = process.StandardOutput.ReadToEnd();
             string error = process.StandardError.ReadToEnd();
             process.WaitForExit();
+            
+            if(string.IsNullOrWhiteSpace(output) == false)
+                args.Logger?.ILog("Standard Output: " + output);
+            if(string.IsNullOrWhiteSpace(error) == false)
+                args.Logger?.ILog("Error Output: " + error);
 
             int linkCount;
             if (int.TryParse(output.Trim(), out linkCount))
@@ -150,6 +157,7 @@ public class HasHardLinks: Node
     {
         try
         {
+            args.Logger?.ILog("HasHardLinkMacOS: " + file);
             Process process = new Process();
             process.StartInfo.FileName = "stat";
             process.StartInfo.ArgumentList.Add("-f");
@@ -161,7 +169,13 @@ public class HasHardLinks: Node
 
             process.Start();
             string output = process.StandardOutput.ReadToEnd();
+            string error = process.StandardError.ReadToEnd();
             process.WaitForExit();
+            
+            if(string.IsNullOrWhiteSpace(output) == false)
+                args.Logger?.ILog("Standard Output: " + output);
+            if(string.IsNullOrWhiteSpace(error) == false)
+                args.Logger?.ILog("Error Output: " + error);
 
             int linkCount;
             if (int.TryParse(output.Trim(), out linkCount))
