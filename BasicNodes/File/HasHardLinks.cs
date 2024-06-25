@@ -117,6 +117,7 @@ public class HasHardLinks: Node
             string error = process.StandardError.ReadToEnd();
             process.WaitForExit();
             
+            args.Logger?.ILog("Exit Code: "+ process.ExitCode);
             if(string.IsNullOrWhiteSpace(output) == false)
                 args.Logger?.ILog("Standard Output: " + output);
             if(string.IsNullOrWhiteSpace(error) == false)
