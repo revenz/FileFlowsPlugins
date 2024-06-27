@@ -252,7 +252,7 @@ public class TVShowLookup : Node
         if (reYear.Success)
         {
             year = reYear.Value;
-            cleanedText = text.Replace(year, string.Empty);
+            cleanedText = text.Replace(year, string.Empty).Replace("()", "");
         }
         else
         {
@@ -261,7 +261,7 @@ public class TVShowLookup : Node
             if (reYearAlt.Success)
             {
                 year = reYearAlt.Value.Trim('.');
-                cleanedText = text.Replace(reYearAlt.Value, string.Empty);
+                cleanedText = text.Replace(reYearAlt.Value, string.Empty).Replace("..", ".");
             }
         }
 
