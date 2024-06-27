@@ -195,8 +195,8 @@ public class TVShowLookup : Node
     {
         // Replace "1x02" format with "s1e02"
         text = Regex.Replace(text, @"(?<season>\d+)x(?<episode>\d+)", "s${season}e${episode}", RegexOptions.IgnoreCase);
-        // Replace "s01.02" with "s01e02"
-        text = Regex.Replace(text, @"(?<season>s\d+)\.(?<episode>\d+)", "${season}e${episode}", RegexOptions.IgnoreCase);
+        // Replace "s01.02" or "s01.e02" with "s01e02"
+        text = Regex.Replace(text, @"(?<season>s\d+)\.(e)?(?<episode>\d+)", "${season}e${episode}", RegexOptions.IgnoreCase);
 
         // string year = null;
         // var reYear = Regex.Match(text, @"\((19|20)[\d]{2}\)", RegexOptions.CultureInvariant);
