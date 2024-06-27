@@ -126,6 +126,7 @@ public class NfoFileCreator : Node
         if (args.FileService.FileMove(tempFile, output).Failed(out string error))
         {
             args.FailureReason = error;
+            args.Logger?.ELog(error);
             return -1;
         }
         args.Logger.ILog("NFO File Created at: " + output);

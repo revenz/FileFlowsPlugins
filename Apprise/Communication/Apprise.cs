@@ -128,10 +128,7 @@ File shrunk in size by: {{ difference | file_size }} / {{ percent }}%
                 type = this.MessageType?.EmptyAsNull() ?? "info"
             };
 
-#pragma warning disable IL2026 // Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code
             var json = JsonSerializer.Serialize(data);
-#pragma warning restore IL2026 // Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code
-
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             using var httpClient = new HttpClient();

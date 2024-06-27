@@ -8,13 +8,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace MetaNodes.Tests.TheMovieDb;
 
 [TestClass]
-public class TVShowLookupTests
+public class TVShowLookupTests : TestBase
 {
     [TestMethod]
     public void TheBatman_Filename()
     {
-        var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters("/test/tv/The Batman/Season 2/The Batman.s02e01.mkv", logger, false, string.Empty, null);
+        var args = GetNodeParameters("The Batman/Season 2/The Batman.s02e01.mkv");
 
         var element = new TVShowLookup();
         element.UseFolderName = false;
@@ -33,12 +32,32 @@ public class TVShowLookupTests
         Assert.AreEqual(2004, args.Variables["tvshow.Year"]);
     }
     
+    [TestMethod]
+    public void YearInFilename()
+    {
+        var args = GetNodeParameters("TestFolder/Eric.2024.S01.01.mkv");
+
+        var element = new TVShowLookup();
+        element.UseFolderName = false;
+
+        var result = element.Execute(args);
+        Assert.AreEqual(1, result);
+        Assert.IsTrue(args.Parameters.ContainsKey(Globals.TV_SHOW_INFO));
+
+        var info = args.Parameters[Globals.TV_SHOW_INFO] as TVShowInfo;
+        Assert.IsNotNull(info);
+
+        Assert.AreEqual("Eric", info.Name);
+        Assert.AreEqual(2024, info.FirstAirDate.Year);
+        Assert.AreEqual("en", info.OriginalLanguage);
+        Assert.AreEqual("Eric", args.Variables["tvshow.Title"]);
+        Assert.AreEqual(2024, args.Variables["tvshow.Year"]);
+    }
         
     [TestMethod]
     public void TvdbID_Test()
     {
-        var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters("/media/TV/The Walking Dead (2010) [tvdbid-153021]/Season 07/S07E03 - The Cell [HDTV-1080p][AAC 5.1][h265].mkv", logger, false, string.Empty, null);
+        var args = GetNodeParameters("The Walking Dead (2010) [tvdbid-153021]/Season 07/S07E03 - The Cell [HDTV-1080p][AAC 5.1][h265].mkv");
 
         var element = new TVShowLookup();
         element.UseFolderName = true;
@@ -60,8 +79,7 @@ public class TVShowLookupTests
     [TestMethod]
     public void TheBatman_Folder()
     {
-        var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters("/test/tv/The Batman/Season 2/The Batman.s02e01.mkv", logger, false, string.Empty, null);
+        var args = GetNodeParameters("The Batman/Season 2/The Batman.s02e01.mkv");
 
         var element = new TVShowLookup();
         element.UseFolderName = true;
@@ -83,8 +101,7 @@ public class TVShowLookupTests
     [TestMethod]
     public void SquidGame_Filename()
     {
-        var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters("/test/tv/Squid Game/Season 1/Squid.Game.1x01-02.mkv", logger, false, string.Empty, null);
+        var args = GetNodeParameters("Squid Game/Season 1/Squid.Game.1x01-02.mkv");
 
         var element = new TVShowLookup();
         element.UseFolderName = false;
@@ -106,8 +123,7 @@ public class TVShowLookupTests
     [TestMethod]
     public void SquidGame_Folder()
     {
-        var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters("/test/tv/Squid Game/Season 1/Squid.Game.1x01-02.mkv", logger, false, string.Empty, null);
+        var args = GetNodeParameters("Squid Game/Season 1/Squid.Game.1x01-02.mkv");
 
         var element = new TVShowLookup();
         element.UseFolderName = true;

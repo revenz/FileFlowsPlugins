@@ -301,9 +301,7 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
             rgxLanguage = new Regex(language, RegexOptions.IgnoreCase);
         }
         catch (Exception) { }
-#pragma warning disable IL2026 // Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code
         var bestAudio = streams.Where(x => System.Text.Json.JsonSerializer.Serialize(x).ToLower().Contains("commentary") == false)
-#pragma warning restore IL2026 // Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code
         .OrderBy(x =>
         {
             if (language != string.Empty)

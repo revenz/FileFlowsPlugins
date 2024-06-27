@@ -105,9 +105,7 @@ public class FfmpegBuilderAudioNormalization : FfmpegBuilderNode
         json = json.Substring(0, json.IndexOf("}", StringComparison.Ordinal) + 1);
         if (string.IsNullOrEmpty(json))
             throw new Exception("Failed to parse TwoPass json");
-#pragma warning disable IL2026
         LoudNormStats? stats = JsonSerializer.Deserialize<LoudNormStats>(json);
-#pragma warning restore IL2026
 
         if (stats.input_i == "-inf" || stats.input_lra == "-inf" || stats.input_tp == "-inf" || stats.input_thresh == "-inf" || stats.target_offset == "-inf")
         {

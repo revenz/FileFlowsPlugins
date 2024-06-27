@@ -3,33 +3,20 @@
 using System.Diagnostics.CodeAnalysis;
 using DM.MovieApi.MovieDb.Movies;
 using DM.MovieApi.MovieDb.TV;
+using FileFlows.Plugin;
 using MetaNodes.TheMovieDb;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MetaNodes.Tests.TheMovieDb;
 
 [TestClass]
-public class TVEpisodeLookupTests
+public class TVEpisodeLookupTests : TestBase
 {
-    /// <summary>
-    /// The test context instance
-    /// </summary>
-    private TestContext testContextInstance;
 
-    /// <summary>
-    /// Gets or sets the test context
-    /// </summary>
-    public TestContext TestContext
-    {
-        get { return testContextInstance; }
-        set { testContextInstance = value; }
-    }
-    
     [TestMethod]
     public void TheBatman_s02e01()
     {
-        var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters("/test/tv/The Batman/Season 2/The Batman.s02e01.mkv", logger, false, string.Empty, null);
+        var args = GetNodeParameters("The Batman/Season 2/The Batman.s02e01.mkv");
 
         var element = new TVEpisodeLookup();
 
@@ -46,8 +33,7 @@ public class TVEpisodeLookupTests
     [TestMethod]
     public void TheBatman_2x03()
     {
-        var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters("/test/tv/The Batman/Season 2/The Batman - 2x03.mkv", logger, false, string.Empty, null);
+        var args = GetNodeParameters("The Batman/Season 2/The Batman - 2x03.mkv");
 
         var element = new TVEpisodeLookup();
 
@@ -64,13 +50,11 @@ public class TVEpisodeLookupTests
     [TestMethod]
     public void WithYear()
     {
-        var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters("/test/tv/Paradise PD (2018) - S04E04 - Good Jeans (1080p NF WEB-DL x265 t3nzin).mkv", logger, false, string.Empty, null);
+        var args = GetNodeParameters("Paradise PD (2018) - S04E04 - Good Jeans (1080p NF WEB-DL x265 t3nzin).mkv");
 
         var element = new TVEpisodeLookup();
 
         var result = element.Execute(args);
-        TestContext.WriteLine(logger.ToString());
         
         Assert.AreEqual(1, result);
         
@@ -86,8 +70,7 @@ public class TVEpisodeLookupTests
     [TestMethod]
     public void TheBatman_3x01_2()
     {
-        var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters("/test/tv/The Batman/Season 3/The Batman - 3x01-2.mkv", logger, false, string.Empty, null);
+        var args = GetNodeParameters("The Batman/Season 3/The Batman - 3x01-2.mkv");
 
         var element = new TVEpisodeLookup();
 
@@ -105,8 +88,7 @@ public class TVEpisodeLookupTests
     [TestMethod]
     public void TheBatman_s4e12_13()
     {
-        var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters("/test/tv/The Batman/Season 4/The Batman - s4e12-13.mkv", logger, false, string.Empty, null);
+        var args = GetNodeParameters("The Batman/Season 4/The Batman - s4e12-13.mkv");
 
         var element = new TVEpisodeLookup();
 
@@ -124,8 +106,7 @@ public class TVEpisodeLookupTests
     [TestMethod]
     public void TheBatman_s5e1_2_3()
     {
-        var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters("/test/tv/The Batman/Season 5/The Batman - s5e1-3.mkv", logger, false, string.Empty, null);
+        var args = GetNodeParameters("The Batman/Season 5/The Batman - s5e1-3.mkv");
 
         var element = new TVEpisodeLookup();
 
@@ -145,8 +126,7 @@ public class TVEpisodeLookupTests
     [TestMethod]
     public void TheBatman_2x03_nfo()
     {
-        var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters("/test/tv/The Batman/Season 2/The Batman - 2x03.mkv", logger, false, string.Empty, null);
+        var args = GetNodeParameters("The Batman/Season 2/The Batman - 2x03.mkv");
 
         var element = new TVEpisodeLookup();
 
@@ -166,8 +146,7 @@ public class TVEpisodeLookupTests
     [TestMethod]
     public void TheBatman_s5e1_2_3_Nfo()
     {
-        var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters("/test/tv/The Batman/Season 5/The Batman - s5e1-3.mkv", logger, false, string.Empty, null);
+        var args = GetNodeParameters("The Batman/Season 5/The Batman - s5e1-3.mkv");
 
         var element = new TVEpisodeLookup();
 
@@ -184,7 +163,6 @@ public class TVEpisodeLookupTests
     [TestMethod]
     public void VariousTests()
     {
-        var logger = new TestLogger();
         foreach (var test in new TVLookupTestData[]
                  {
                      new("See",
@@ -204,7 +182,7 @@ public class TVEpisodeLookupTests
             (string lookupName, string year) = TVShowLookup.GetLookupName(test.Path, true);
             Assert.AreEqual(test.Show, lookupName);
             //
-            // var args = new FileFlows.Plugin.NodeParameters(test.Path, logger, false, string.Empty, null);
+            // var args = GetNodeParameters(test.Path);
             //
             // var element = new TVEpisodeLookup();
             //

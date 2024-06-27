@@ -57,13 +57,11 @@ public class TestLogger : ILogger
     /// <param name="args">the arguments of the message</param>
     private void Log(LogType type, params object[] args)
     {
-        #pragma warning disable IL2026
         string message = type + " -> " + string.Join(", ", args.Select(x =>
             x == null ? "null" :
             x.GetType().IsPrimitive ? x.ToString() :
             x is string ? x.ToString() :
             System.Text.Json.JsonSerializer.Serialize(x)));
-        #pragma warning restore IL2026
         Writer?.Invoke(message);
         Messages.Add(message);
     }

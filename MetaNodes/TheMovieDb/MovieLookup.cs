@@ -1,9 +1,9 @@
 ﻿using System.Text.RegularExpressions;
 using DM.MovieApi;
-using DM.MovieApi.ApiResponse;
 using DM.MovieApi.MovieDb.Movies;
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
+using FileHelper = FileFlows.Plugin.Helpers.FileHelper;
 
 namespace MetaNodes.TheMovieDb;
 
@@ -51,9 +51,6 @@ public class MovieLookup : Node
             { "movie.Year", 2005 }
         };
     }
-
-    internal const string MovieDbBearerToken = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZjVlNTAyNmJkMDM4YmZjZmU2MjI2MWU2ZGEwNjM0ZiIsInN1YiI6IjRiYzg4OTJjMDE3YTNjMGY5MjAwMDIyZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.yMwyT8DEK1rF1gQMKJ-ZSy-dUGxFs5T345XwBLrvrWE";
-
     /// <summary>
     /// Gets or sets if the folder name should be used
     /// </summary>
@@ -67,8 +64,7 @@ public class MovieLookup : Node
     /// <returns>the output to call next</returns>
     public override int Execute(NodeParameters args)
     {
-        var fileInfo = new FileInfo(args.FileName);
-        string lookupName = UseFolderName ? fileInfo.Directory.Name : fileInfo.Name.Substring(0, fileInfo.Name.LastIndexOf(fileInfo.Extension));
+        string lookupName = UseFolderName ? FileHelper.GetDirectoryName(args.LibraryFileName) : FileHelper.GetShortFileNameWithoutExtension(args.LibraryFileName);
         lookupName = lookupName.Replace(".", " ").Replace("_", " ");
 
         // look for year
@@ -77,25 +73,27 @@ public class MovieLookup : Node
         if (match != null)
         {
             year = match.Value;
-            lookupName = lookupName.Substring(0, lookupName.IndexOf(year)).Trim();
+            lookupName = lookupName[..lookupName.IndexOf(year, StringComparison.Ordinal)].TrimEnd('(');
         }
 
         // remove double spaces in case they were added when removing the year
         while (lookupName.IndexOf("  ", StringComparison.Ordinal) > 0)
             lookupName = lookupName.Replace("  ", " ");
+
+        lookupName = lookupName.TrimEnd('(', '-');
         
         args.Logger?.ILog("Lookup name: " + lookupName);
 
         // RegisterSettings only needs to be called one time when your application starts-up.
-        MovieDbFactory.RegisterSettings(MovieDbBearerToken);
+        MovieDbFactory.RegisterSettings(Globals.MovieDbBearerToken);
 
         var movieApi = MovieDbFactory.Create<IApiMovieRequest>().Value;
 
-        ApiSearchResponse<MovieInfo> response = movieApi.SearchByTitleAsync(lookupName).Result;
+        var response = movieApi.SearchByTitleAsync(lookupName).Result;
         
 
         // try find an exact match
-        var result = response.Results.OrderBy(x =>
+        var results = response.Results.OrderBy(x =>
             {
                 if (string.IsNullOrEmpty(year) == false)
                 {
@@ -128,7 +126,7 @@ public class MovieLookup : Node
                     13 => "xiii",
                     _ => string.Empty
                 };
-                string ln = lookupName.Substring(0, lookupName.LastIndexOf(number.ToString())).ToLower().Trim().Replace(" ", "");
+                string ln = lookupName[..lookupName.LastIndexOf(number.ToString(), StringComparison.Ordinal)].ToLower().Trim().Replace(" ", "");
                 string softTitle = x.Title.ToLower().Replace(" ", "").Trim();
                 if (softTitle == ln + roman)
                     return 0;
@@ -137,8 +135,9 @@ public class MovieLookup : Node
                 return 1;
              })
             .ThenBy(x => lookupName.ToLower().Trim().Replace(" ", "").StartsWith(x.Title.ToLower().Trim().Replace(" ", "")) ? 0 : 1)
-            .ThenBy(x => x.Title)
-            .FirstOrDefault();
+            // .ThenBy(x => x.Title)
+            .ToList();
+        var result = results.FirstOrDefault();
 
         if (result == null)
             return 2; // no match
@@ -165,7 +164,6 @@ public class MovieLookup : Node
 
         args.UpdateVariables(Variables);
         return 1;
-
     }
 
 
@@ -205,7 +203,7 @@ public class MovieLookup : Node
             }
             catch (Exception)
             {
-
+                // Ignored
             }
         }
         

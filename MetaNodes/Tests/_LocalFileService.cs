@@ -5,7 +5,7 @@ using FileFlows.Plugin.Services;
 using System.IO;
 using FileHelper = FileFlows.Plugin.Helpers.FileHelper;
 
-namespace BasicNodes.Tests;
+namespace MetaNodes.Tests;
 
 /// <summary>
 /// Local file service

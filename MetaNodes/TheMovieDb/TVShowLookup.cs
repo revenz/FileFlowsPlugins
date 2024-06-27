@@ -5,6 +5,7 @@ using DM.MovieApi.MovieDb.Movies;
 using DM.MovieApi.MovieDb.TV;
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
+using FileFlows.Plugin.Helpers;
 
 namespace MetaNodes.TheMovieDb;
 
@@ -52,9 +53,7 @@ public class TVShowLookup : Node
             { "tvshow.Year", 2004 }
         };
     }
-
-    internal const string MovieDbBearerToken = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZjVlNTAyNmJkMDM4YmZjZmU2MjI2MWU2ZGEwNjM0ZiIsInN1YiI6IjRiYzg4OTJjMDE3YTNjMGY5MjAwMDIyZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.yMwyT8DEK1rF1gQMKJ-ZSy-dUGxFs5T345XwBLrvrWE";
-
+    
     /// <summary>
     /// Gets or sets if the folder name should be used
     /// </summary>
@@ -68,10 +67,10 @@ public class TVShowLookup : Node
     /// <returns>the output to call next</returns>
     public override int Execute(NodeParameters args)
     {
-        (string lookupName, string year) = GetLookupName(args.FileName, UseFolderName);
+        (string lookupName, string year) = GetLookupName(args.LibraryFileName, UseFolderName);
 
         // RegisterSettings only needs to be called one time when your application starts-up.
-        MovieDbFactory.RegisterSettings(MovieDbBearerToken);
+        MovieDbFactory.RegisterSettings(Globals.MovieDbBearerToken);
 
         var movieApi = MovieDbFactory.Create<IApiTVShowRequest>().Value;
         
@@ -81,18 +80,26 @@ public class TVShowLookup : Node
         
 
         // try find an exact match
-        var result = response.Results.OrderBy(x =>
+        var results = response.Results.OrderByDescending(x =>
             {
                 if (string.IsNullOrEmpty(year) == false)
                 {
-                    return year == x.FirstAirDate.Year.ToString() ? 0 : 1;
+                    if(year == x.FirstAirDate.Year.ToString())
+                        return 2;
+                    // sometimes the user may have hte date off by one, or the app may have 
+                    if(year == (x.FirstAirDate.Year - 1).ToString())
+                        return 1;
+                    if(year == (x.FirstAirDate.Year + 1).ToString())
+                        return 1;
+                    return 0;
                 }
                 return 0;
             })
             .ThenBy(x => x.Name.ToLower().Trim().Replace(" ", "") == lookupName.ToLower().Trim().Replace(" ", "") ? 0 : 1)
             .ThenBy(x => lookupName.ToLower().Trim().Replace(" ", "").StartsWith(x.Name.ToLower().Trim().Replace(" ", "")) ? 0 : 1)
-            .ThenBy(x => x.Name)
-            .FirstOrDefault();
+            // .ThenBy(x => x.Name)
+            .ToList();
+        var result = results.FirstOrDefault();
 
         if (result == null)
         {
@@ -122,17 +129,16 @@ public class TVShowLookup : Node
 
     internal static (string? LookupName, string? Year) GetLookupName(string filename, bool useFolderName)
     {
-        var fileInfo = new FileInfo(filename);
         string lookupName;
         if (useFolderName)
         {
-            lookupName = fileInfo.Directory.Name;
+            lookupName = FileHelper.GetDirectoryName(filename);
             if (Regex.IsMatch(lookupName, "^(Season|Staffel|Saison|Specials)", RegexOptions.IgnoreCase))
-                lookupName = fileInfo.Directory.Parent.Name;
+                lookupName = FileHelper.GetDirectoryName(FileHelper.GetDirectory(filename));
         }
         else
         {
-            lookupName = fileInfo.Name[..fileInfo.Name.LastIndexOf(fileInfo.Extension, StringComparison.Ordinal)];
+            lookupName = FileHelper.GetShortFileNameWithoutExtension(filename);
         }
         
         var result = GetTVShowInfo(lookupName);
@@ -189,16 +195,20 @@ public class TVShowLookup : Node
     {
         // Replace "1x02" format with "s1e02"
         text = Regex.Replace(text, @"(?<season>\d+)x(?<episode>\d+)", "s${season}e${episode}", RegexOptions.IgnoreCase);
+        // Replace "s01.02" with "s01e02"
+        text = Regex.Replace(text, @"(?<season>s\d+)\.(?<episode>\d+)", "${season}e${episode}", RegexOptions.IgnoreCase);
 
-        string year = null;
-        var reYear = Regex.Match(text, @"\((19|20)[\d]{2}\)", RegexOptions.CultureInvariant);
-        if (reYear.Success)
-        {
-            year = reYear.Value;
-            text = text.Replace(year, string.Empty);
-            year = year[1..^1]; // remove the ()
-        }
-
+        // string year = null;
+        // var reYear = Regex.Match(text, @"\((19|20)[\d]{2}\)", RegexOptions.CultureInvariant);
+        // if (reYear.Success)
+        // {
+        //     year = reYear.Value;
+        //     text = text.Replace(year, string.Empty);
+        //     year = year[1..^1]; // remove the ()
+        // }
+        (text, var year) = ExtractYearAndCleanText(text);
+        
+        
         string pattern = @"^(?<showName>[\w\s.-]+)[. _-]?(?:(s|S)(?<season>\d+)(e|E)(?<episode>\d+)(?:-(?<lastEpisode>\d+))?)";
 
         Match match = Regex.Match(text, pattern);
@@ -219,5 +229,57 @@ public class TVShowLookup : Node
         int? lastEpisode = string.IsNullOrEmpty(lastEpisodeStr) ? (int?)null : int.Parse(lastEpisodeStr);
 
         return (show, season, episode, lastEpisode, year);
+    }
+    
+    
+    /// <summary>
+    /// Extracts the year from the given text if it matches specific patterns and removes it from the text.
+    /// </summary>
+    /// <param name="text">The input text containing a potential year.</param>
+    /// <returns>
+    /// A tuple containing the cleaned text and the extracted year.
+    /// The year is extracted only if it falls between 1950 and 5 years from the current year.
+    /// </returns>
+    static (string cleanedText, string? year) ExtractYearAndCleanText(string text)
+    {
+        string year = null;
+        int currentYear = DateTime.Now.Year;
+        int upperYearLimit = currentYear + 5;
+        var cleanedText = text;
+
+        // Match year in parentheses (e.g., (2024))
+        var reYear = Regex.Match(text, $@"(19[5-9]\d|20[0-{upperYearLimit % 100 / 10}]\d|{upperYearLimit})(?=[^\d]|$)", RegexOptions.CultureInvariant);
+        if (reYear.Success)
+        {
+            year = reYear.Value;
+            cleanedText = text.Replace(year, string.Empty);
+        }
+        else
+        {
+            // Match dot-separated year (e.g., .2024.)
+            var reYearAlt = Regex.Match(text, $@"\.(19[5-9]\d|20[0-{upperYearLimit % 100 / 10}]\d|{upperYearLimit})\.", RegexOptions.CultureInvariant);
+            if (reYearAlt.Success)
+            {
+                year = reYearAlt.Value.Trim('.');
+                cleanedText = text.Replace(reYearAlt.Value, string.Empty);
+            }
+        }
+
+        // Validate the extracted year
+        if (year != null)
+        {
+            int yearInt = int.Parse(year);
+            if (yearInt < 1950 || yearInt > upperYearLimit)
+            {
+                year = null;
+                cleanedText = text; // restore it
+            }
+            else
+            {
+                cleanedText = cleanedText.Replace("  ", " ").Replace("..", ".");
+            }
+        }
+
+        return (cleanedText, year);
     }
 }

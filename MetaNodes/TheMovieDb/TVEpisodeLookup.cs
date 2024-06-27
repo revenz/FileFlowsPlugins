@@ -2,6 +2,8 @@
 using DM.MovieApi.MovieDb.TV;
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
+using Microsoft.VisualStudio.TestPlatform.Utilities.Helpers;
+using FileHelper = FileFlows.Plugin.Helpers.FileHelper;
 
 namespace MetaNodes.TheMovieDb;
 
@@ -61,9 +63,7 @@ public class TVEpisodeLookup : Node
             { "tvepisode.Overview", "Joker makes Batman laugh" },
         };
     }
-
-    internal const string MovieDbBearerToken = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZjVlNTAyNmJkMDM4YmZjZmU2MjI2MWU2ZGEwNjM0ZiIsInN1YiI6IjRiYzg4OTJjMDE3YTNjMGY5MjAwMDIyZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.yMwyT8DEK1rF1gQMKJ-ZSy-dUGxFs5T345XwBLrvrWE";
-
+    
     /// <summary>
     /// Executes the flow element
     /// </summary>
@@ -71,11 +71,9 @@ public class TVEpisodeLookup : Node
     /// <returns>the output to call next</returns>
     public override int Execute(NodeParameters args)
     {
-        string filename = args.FileName.Replace("\\", "/");
-        filename = filename[(filename.LastIndexOf("/", StringComparison.Ordinal) + 1)..];
-        filename = filename[..filename.LastIndexOf(".", StringComparison.Ordinal)];
+        string filename = FileHelper.GetShortFileNameWithoutExtension(args.LibraryFileName);
         
-        (string lookupName, string year) = TVShowLookup.GetLookupName(filename, UseFolderName);
+        (string lookupName, string year) = TVShowLookup.GetLookupName(args.LibraryFileName, UseFolderName);
 
         (string showName, int? season, int? episode, int? lastEpisode, string year2) = TVShowLookup.GetTVShowInfo(filename);
 
@@ -94,7 +92,7 @@ public class TVEpisodeLookup : Node
         args.Logger?.ILog($"Found show info from filename '{lookupName}' season '{season}' episode '{(episode + (lastEpisode == null ? "" : "-" + lastEpisode))}'");
 
         // RegisterSettings only needs to be called one time when your application starts-up.
-        MovieDbFactory.RegisterSettings(MovieDbBearerToken);
+        MovieDbFactory.RegisterSettings(Globals.MovieDbBearerToken);
 
         var movieApi = MovieDbFactory.Create<IApiTVShowRequest>().Value;
         

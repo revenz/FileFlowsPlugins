@@ -6,7 +6,6 @@
     <FileVersion>1.0.4.189</FileVersion>
     <ProductVersion>1.0.4.189</ProductVersion>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <PublishTrimmed>true</PublishTrimmed>
     <Company>FileFlows</Company>
     <Authors>John Andrews</Authors>
     <Product>Site Scraping</Product>

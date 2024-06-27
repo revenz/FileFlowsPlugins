@@ -7,7 +7,6 @@
     <FileVersion>1.1.1.528</FileVersion>
     <ProductVersion>1.1.1.528</ProductVersion>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <PublishTrimmed>true</PublishTrimmed>
     <Company>FileFlows</Company>
     <Authors>John Andrews</Authors>
     <Product>Telegram</Product>

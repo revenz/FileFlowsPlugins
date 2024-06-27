@@ -74,9 +74,7 @@ public abstract class PlexNode:Node
         {
             var options = new System.Text.Json.JsonSerializerOptions();
             options.PropertyNameCaseInsensitive = true;
-#pragma warning disable IL2026
             sections = System.Text.Json.JsonSerializer.Deserialize<PlexSections>(sectionsResponse.body, options)!;
-#pragma warning restore IL2026
         }
         catch (Exception ex)
         {

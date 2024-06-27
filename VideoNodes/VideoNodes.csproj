@@ -6,7 +6,6 @@
     <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
     <FileVersion>1.1.1.528</FileVersion>
     <ProductVersion>1.1.1.528</ProductVersion>
-    <PublishTrimmed>true</PublishTrimmed>
     <Company>FileFlows</Company>
     <Authors>John Andrews</Authors>
     <Product>Video</Product>

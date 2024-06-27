@@ -7,7 +7,6 @@
     <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
     <FileVersion>1.0.4.189</FileVersion>
     <ProductVersion>1.0.4.189</ProductVersion>
-    <PublishTrimmed>true</PublishTrimmed>
     <Company>FileFlows</Company>
     <Authors>John Andrews</Authors>
     <Product>Checksum</Product>

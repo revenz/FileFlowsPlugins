@@ -34,10 +34,8 @@ internal class VideoMetadata
     {
         try
         {
-#pragma warning disable IL2026
             string json = JsonSerializer.Serialize(source);
             var result = JsonSerializer.Deserialize<VideoMetadata>(json);
-#pragma warning restore IL2026
             return result ?? new ();
         }
         catch (Exception)
