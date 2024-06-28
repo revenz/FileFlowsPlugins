@@ -2,7 +2,6 @@
 using DM.MovieApi.MovieDb.TV;
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
-using Microsoft.VisualStudio.TestPlatform.Utilities.Helpers;
 using FileHelper = FileFlows.Plugin.Helpers.FileHelper;
 
 namespace MetaNodes.TheMovieDb;
