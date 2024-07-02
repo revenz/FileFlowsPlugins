@@ -57,7 +57,7 @@ public class WriteText : Node
         args.Logger?.ILog($"Text: {text}");
         args.Logger?.ILog($"File: {file}");
 
-        var result = args.FileService.FileAppendAllText(file, text);
+        var result = args.FileService.FileAppendAllText(file, text + Environment.NewLine);
         if (result.Failed(out var error))
         {
             args.FailureReason = "File writing file: " + error;
