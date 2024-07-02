@@ -501,6 +501,18 @@
             "Options": "Options",
             "Options-Help": "The string to match against."
           }
+        },
+        "WriteText": {
+          "Description": "Writes text to a file",
+          "Outputs": {
+            "1": "Text written to file"
+          },
+          "Fields": {
+            "File": "File",
+            "File-Help": "The file to write the text to.",
+            "Text": "Text",
+            "Text-Help": "The text to write to the file.  If left blank the current working file full path will be written."
+          }
         }
       }
     }
