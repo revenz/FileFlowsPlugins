@@ -126,7 +126,7 @@ public class HasHardLinks: Node
             int linkCount;
             if (int.TryParse(output.Trim(), out linkCount))
             {
-                if (linkCount > 1)
+                if (linkCount > 0)
                 {
                     args.Logger?.ILog("The file has hard links.");
                     return true;
@@ -181,7 +181,7 @@ public class HasHardLinks: Node
             int linkCount;
             if (int.TryParse(output.Trim(), out linkCount))
             {
-                if (linkCount > 1)
+                if (linkCount > 0)
                 {
                     args.Logger?.ILog("The file has hard links.");
                     return true;
