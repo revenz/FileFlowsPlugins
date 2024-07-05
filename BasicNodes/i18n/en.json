@@ -220,6 +220,35 @@
             "2": "Is not processing on node"
           }
         },
+        "IsDocker": {
+          "Description": "Determines if this flow is running on Docker",
+          "Outputs": {
+            "1": "Is running on Docker",
+            "2": "Is not running on Docker"
+          }
+        },
+        "IsLinux": {
+          "Description": "Determines if this flow is running on Linux",
+          "Outputs": {
+            "1": "Is running on Linux",
+            "2": "Is not running on Linux"
+          }
+        },
+        "IsMacOS": {
+          "Label": "Is MacOS",
+          "Description": "Determines if this flow is running on MacOS",
+          "Outputs": {
+            "1": "Is running on MacOS",
+            "2": "Is not running on MacOS"
+          }
+        },
+        "IsWindows": {
+          "Description": "Determines if this flow is running on Windows",
+          "Outputs": {
+            "1": "Is running on Windows",
+            "2": "Is not running on Windows"
+          }
+        },
         "Log": {
           "Description": "Logs a message to the flow log",
           "Outputs": {
