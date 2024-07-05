@@ -78,7 +78,6 @@ public class EmbedArtworkTests : AudioTestBase
         var result = convertNode.Execute(args);
         var log = Logger.ToString();
         Assert.AreEqual(1, result);
-        Logger.Clear();
         
         var ele = new EmbedArtwork();
         var output = ele.Execute(args);

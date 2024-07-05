@@ -113,6 +113,23 @@ public class ConvertTests :  AudioTestBase
 
 
     [TestMethod]
+    public void Convert_AacHighEfficient()
+    {
+        var args = GetNodeParameters(TestFile_Mp3);
+        var af = new AudioFile();
+        af.PreExecute(args);
+        af.Execute(args); // need to read the Audio info and set it
+        
+        ConvertToAAC ele = new();
+        ele.HighEfficiency = true;
+        ele.Bitrate = 192;
+        ele.PreExecute(args);
+        int output = ele.Execute(args);
+
+        Assert.AreEqual(1, output);
+    }
+    
+    [TestMethod]
     public void Convert_Mp3ToMp3_Bitrate()
     {
         var args = GetNodeParameters(TestFile_Mp3);

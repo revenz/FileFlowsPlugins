@@ -9,7 +9,7 @@ public abstract class AudioTestBase : TestBase
 {
     protected NodeParameters GetNodeParameters(string file, bool isDirectory = false)
     {
-        var args = new FileFlows.Plugin.NodeParameters(file, Logger, isDirectory, string.Empty, new LocalFileService());
+        var args = new NodeParameters(file, Logger, isDirectory, string.Empty, new LocalFileService());
         
         args.GetToolPathActual = (string tool) =>
         {

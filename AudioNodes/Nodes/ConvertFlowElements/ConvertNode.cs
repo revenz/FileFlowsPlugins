@@ -109,6 +109,11 @@ namespace FileFlows.AudioNodes
                     "-ab",
                     (bitrate == -1 ? GetSourceBitrate(args).ToString() : bitrate + "k")
                 });
+                if (Codec == "aac" && HighEfficiency)
+                {
+                    extension = "m4a";
+                    ffArgs.AddRange(new[] { "-profile:a", "aac_he_v2" });
+                }
             }
 
             if (SampleRate > 0)

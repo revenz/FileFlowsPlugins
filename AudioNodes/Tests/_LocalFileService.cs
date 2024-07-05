@@ -367,7 +367,7 @@ public class LocalFileService : IFileService
 
     public Result<long> DirectorySize(string path)
     {
-        throw new NotImplementedException();
+        return 0;
     }
 
     public Result<bool> SetCreationTimeUtc(string path, DateTime date)

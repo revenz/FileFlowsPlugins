@@ -39,6 +39,7 @@ public abstract class TestBase
     [TestInitialize]
     public void TestInitialize()
     {
+        Logger.Writer = (msg) => TestContext.WriteLine(msg);
         this.TestPath = this.TestPath?.EmptyAsNull() ?? (IsLinux ? "~/src/ff-files/test-files/audio" : @"d:\audio\testfiles");
         this.TempPath = this.TempPath?.EmptyAsNull() ?? (IsLinux ? "~/src/ff-files/temp" : @"d:\audio\temp");
         this.FfmpegPath = this.FfmpegPath?.EmptyAsNull() ?? (IsLinux ? "/usr/local/bin/ffmpeg" :  @"C:\utils\ffmpeg\ffmpeg.exe");
