@@ -23,9 +23,9 @@ Contains flow elements to lookup movie information from TheMovieDB, and music in
     <NoWarn>1701;1702;CS8618;CS8601;CS8602;CS8603;CS8604;CS8618;CS8625;CS8765;CS8767;CS8618l;CS8600</NoWarn>
   </PropertyGroup>
   <ItemGroup Condition=" '$(Configuration)' == 'Debug'">
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="3.3.1" />
-    <PackageReference Include="MSTest.TestFramework" Version="3.3.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.4.3" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.4.3" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="ID3" Version="0.6.0" />

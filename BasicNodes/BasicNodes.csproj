@@ -21,9 +21,9 @@ This plugin is required for FileFlows to work.</Description>
     <NoWarn>1701;1702;CS8618;CS8601;CS8602;CS8603;CS8604;CS8618;CS8625;CS8765;CS8767;CS8618l;CS8600</NoWarn>
   </PropertyGroup>
   <ItemGroup Condition=" '$(Configuration)' == 'Debug'">
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="3.3.1" />
-    <PackageReference Include="MSTest.TestFramework" Version="3.3.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.4.3" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.4.3" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Plugin">
