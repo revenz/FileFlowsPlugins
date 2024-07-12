@@ -284,7 +284,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                 }
 
                 var decodingParameters =
-                    GetHardwareDecodingArgs(args, localFile, FFMPEG, video?.Stream?.Codec, pxtFormat, 
+                    GetHardwareDecodingArgs(args, model, localFile, FFMPEG, video?.Stream?.Codec, pxtFormat, 
                         encodingParameters: encodingParameters,
                         inputPixelFormat: video.Stream.PixelFormat,
                         destPixelFormat: targetIs10Bit ? "p010le" : (video?.Stream?.Is10Bit == false && video?.Stream?.Is12Bit == false) ? "nv12" : null);
@@ -344,7 +344,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         }
 
         // make any adjustments needed for hardware devices
-        ffArgs = EncoderAdjustment.Run(args.Logger, ffArgs);
+        ffArgs = EncoderAdjustment.Run(args.Logger, model, ffArgs);
 
         var ffmpeg = FFMPEG;
         
@@ -427,6 +427,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
     /// Gets the hardware decoder to user
     /// </summary>
     /// <param name="args">the node parameters</param>
+    /// <param name="model">the FFmpeg Builder model</param>
     /// <param name="localFile">the local file</param>
     /// <param name="ffmpeg">the ffmpeg executable</param>
     /// <param name="codec">the code to use</param>
@@ -435,7 +436,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
     /// <param name="inputPixelFormat">the input pixel format of the source video</param>
     /// <param name="destPixelFormat">the true pixel format we will be encoding in</param>
     /// <returns>the hardware decoding parameters</returns>
-    internal static string[] GetHardwareDecodingArgs(NodeParameters args, string localFile, string ffmpeg, string codec, string pixelFormat, 
+    internal static string[] GetHardwareDecodingArgs(NodeParameters args, FfmpegModel? model, string localFile, string ffmpeg, string codec, string pixelFormat, 
         List<string> encodingParameters = null, string inputPixelFormat = null, string destPixelFormat = null)
     {
         var testFile = FileHelper.Combine(args.TempPath, Guid.NewGuid() + ".hwtest.mkv");
@@ -502,7 +503,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                 if (arguments.Any(x => x.Contains("vaapi", StringComparison.InvariantCultureIgnoreCase)))
                 {
                     args.Logger?.ILog("VAAPI detected adjusting parameters for testing");
-                    arguments = new VaapiAdjustments().Run(args.Logger, arguments);
+                    arguments = new VaapiAdjustments().Run(args.Logger, model, arguments);
                 }
 
                 args.AdditionalInfoRecorder?.Invoke("Testing", string.Join(" ", hw), 1, new TimeSpan(0, 0, 10));

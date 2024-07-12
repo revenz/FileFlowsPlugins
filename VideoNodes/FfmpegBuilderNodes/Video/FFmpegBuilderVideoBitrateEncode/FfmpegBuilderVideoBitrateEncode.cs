@@ -87,7 +87,7 @@ public partial class FfmpegBuilderVideoBitrateEncode:VideoEncodeBase
         {
             bool tenBit = Codec == CODEC_AV1_10BIT || stream.Stream.Is10Bit;
             args.Logger?.ILog("10 Bit: " + tenBit);
-            var encodingParameters = AV1(args, tenBit, Bitrate, encoder).ToArray();
+            var encodingParameters = AV1(args, tenBit, Bitrate, encoder, Model.Device).ToArray();
             
             args.Logger?.ILog("Encoding Parameters: " +
                               string.Join(" ", encodingParameters.Select(x => x.Contains(" ") ? "\"" + x + "\"" : x)));
@@ -138,14 +138,14 @@ public partial class FfmpegBuilderVideoBitrateEncode:VideoEncodeBase
         return modified.ToArray();
     }
 
-    internal static IEnumerable<string> GetEncodingParameters(NodeParameters args, string codec, int bitrate, string encoder, float fps)
+    internal static IEnumerable<string> GetEncodingParameters(NodeParameters args, string codec, int bitrate, string encoder, float fps, string device)
     {
         if (codec == CODEC_H264)
             return H264(args, false, encoder, bitrate).Select(x => x.Replace("{index}", "0")); 
         if (codec == CODEC_H265 || codec == CODEC_H265_10BIT)
             return H265(null, args, codec == CODEC_H265_10BIT, bitrate, encoder, fps).Select(x => x.Replace("{index}", "0"));
         if(codec == CODEC_AV1)
-            return AV1(args, codec == CODEC_AV1_10BIT, bitrate, encoder).Select(x => x.Replace("{index}", "0")); 
+            return AV1(args, codec == CODEC_AV1_10BIT, bitrate, encoder, device).Select(x => x.Replace("{index}", "0")); 
             
         throw new Exception("Unsupported codec: " + codec);
     }
@@ -265,7 +265,7 @@ public partial class FfmpegBuilderVideoBitrateEncode:VideoEncodeBase
     }
 
     
-    private static IEnumerable<string> AV1(NodeParameters args, bool tenBit, int bitrate, string encoder)
+    private static IEnumerable<string> AV1(NodeParameters args, bool tenBit, int bitrate, string encoder, string device)
     {
         // hevc_qsv -load_plugin hevc_hw -pix_fmt p010le -profile:v main10 -global_quality 21 -g 24 -look_ahead 1 -look_ahead_depth 60
         List<string> parameters = new List<string>();
@@ -275,14 +275,14 @@ public partial class FfmpegBuilderVideoBitrateEncode:VideoEncodeBase
         else if(encoder == ENCODER_NVIDIA)
             parameters.AddRange(AV1_Nvidia(bitrate));
         else if(encoder == ENCODER_QSV)
-            parameters.AddRange(AV1_Qsv(bitrate));
+            parameters.AddRange(AV1_Qsv(bitrate, device));
         else if(encoder == ENCODER_AMF)
             parameters.AddRange(AV1_Amd(bitrate));
         
         else if (CanUseHardwareEncoding.CanProcess_Nvidia_AV1(args))
             parameters.AddRange(AV1_Nvidia(bitrate));
         else if (CanUseHardwareEncoding.CanProcess_Qsv_AV1(args))
-            parameters.AddRange(AV1_Qsv(bitrate));
+            parameters.AddRange(AV1_Qsv(bitrate, device));
         else if (CanUseHardwareEncoding.CanProcess_Amd_AV1(args))
             parameters.AddRange(AV1_Amd(bitrate));
         else

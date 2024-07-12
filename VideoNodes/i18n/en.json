@@ -625,6 +625,17 @@
           "Index-Help": "The index of the track to set as default, only used if language is not specified."
         }
       },
+      "FfmpegBuilderSetDevice": {
+        "Label": "FFMPEG Builder: Set Device",
+        "Description": "Sets the device to use for hardware encoding/decoder if the encoder/decoder supports it.",
+        "Outputs": {
+          "1": "Device set"
+        },
+        "Fields": {
+          "Device": "Device",
+          "Device-Help": "The path to the device, or leave blank if no device should be specified."
+        }
+      },
       "FfmpegBuilderSetFps": {
         "Label": "FFMPEG Builder: Set FPS",
         "Description": "Set the frames per second (FPS) in the FFmpeg Builder",

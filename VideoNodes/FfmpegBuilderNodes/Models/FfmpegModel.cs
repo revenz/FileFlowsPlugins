@@ -90,6 +90,11 @@
         /// </summary>
         public TimeSpan? StartTime { get; set; }
 
+        /// <summary>
+        /// Gets or sest the device to use
+        /// </summary>
+        public string? Device { get; set; }
+
         internal static FfmpegModel CreateModel(VideoInfo info)
         {
             var model = new FfmpegModel(info);

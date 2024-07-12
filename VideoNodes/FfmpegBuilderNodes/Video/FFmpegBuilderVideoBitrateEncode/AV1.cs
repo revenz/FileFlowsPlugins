@@ -60,8 +60,9 @@ public partial class FfmpegBuilderVideoBitrateEncode
     /// AV1 QSV encoding
     /// </summary>
     /// <param name="bitrate">the bitrate in Kbps</param>
+    /// <param name="device">the device from the FFmpeg Builder Model</param>
     /// <returns>the encoding parameters</returns>
-    private static IEnumerable<string> AV1_Qsv(int bitrate)
+    private static IEnumerable<string> AV1_Qsv(int bitrate, string device)
     {
         var args = new List<string>
         {
@@ -71,9 +72,14 @@ public partial class FfmpegBuilderVideoBitrateEncode
             "-maxrate", bitrate + "k",
             "-bufsize", (bitrate * 2) + "k"
         };
-        if(VaapiHelper.VaapiLinux)
-            args.AddRange(new [] { "-qsv_device", VaapiHelper.VaapiRenderDevice});
-        
+        if (VaapiHelper.VaapiLinux)
+        {
+            if(string.IsNullOrEmpty(device))
+                args.AddRange(new[] { "-qsv_device", VaapiHelper.VaapiRenderDevice });
+            else if(device != "NONE")
+                args.AddRange(new[] { "-qsv_device", device  });
+        }
+
         return args.ToArray();
     }
 }

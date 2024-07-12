@@ -1,6 +1,7 @@
 #if(DEBUG)
 
 using FileFlows.VideoNodes.FfmpegBuilderNodes.EncoderAdjustments;
+using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace VideoNodes.Tests;
@@ -59,7 +60,7 @@ public class VaapiAdjustmentTests: TestBase
         };
 
         var logger = new TestLogger();
-        var updated = new VaapiAdjustments().Run(logger, inputParameters);
+        var updated = new VaapiAdjustments().Run(logger, null!, inputParameters);
         Assert.AreEqual("-vf", updated[9]);
         Assert.AreEqual("format=nv12,hwupload,scale_vaapi=1280:-2", updated[10]);
         int index = updated.FindIndex(x => x.StartsWith("-filter:v"));
@@ -119,7 +120,7 @@ public class VaapiAdjustmentTests: TestBase
         };
 
         var logger = new TestLogger();
-        var updated = new VaapiAdjustments().Run(logger, inputParameters);
+        var updated = new VaapiAdjustments().Run(logger, null!, inputParameters);
         Assert.AreEqual("-vf", updated[9]);
         Assert.AreEqual("format=nv12,hwupload,scale_vaapi=1280:-2", updated[10]);
         Assert.IsFalse(updated.Any(x => x.StartsWith("-filter:v")));

@@ -1,3 +1,4 @@
+using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
 using FileFlows.VideoNodes.Helpers;
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes.EncoderAdjustments;
@@ -18,19 +19,32 @@ public class VaapiAdjustments : IEncoderAdjustment
     /// <summary>
     /// Runt the adjustments
     /// </summary>
+    /// <param name="logger">the logger to use</param>
+    /// <param name="model">the ffmpeg builder model</param>
     /// <param name="args">the ffmpeg args</param>
     /// <returns>the adjusted arguments</returns>
-    public List<string> Run(ILogger logger, List<string> args)
+    public List<string> Run(ILogger logger, FfmpegModel? model, List<string> args)
     {
         //logger.ILog("Original VAAPI parameters: \n" + string.Join("\n", args));
         int iIndex = args.IndexOf("-i");
         if (iIndex >= 0 && VaapiHelper.VaapiLinux)
         {
-            args.InsertRange(iIndex, new[]
+            if (string.IsNullOrEmpty(model?.Device))
             {
-                "-vaapi_device",
-                VaapiHelper.VaapiRenderDevice
-            });
+                args.InsertRange(iIndex, new[]
+                {
+                    "-vaapi_device",
+                    VaapiHelper.VaapiRenderDevice
+                });
+            }else if (model?.Device != "NONE")
+            {
+                args.InsertRange(iIndex, new[]
+                {
+                    "-vaapi_device",
+                    model.Device
+                });
+                
+            }
         }
         
         // "-pix_fmt:v:{index}", "p010le", "-profile:v:{index}", "main10"

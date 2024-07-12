@@ -85,10 +85,11 @@ public partial class FfmpegBuilderVideoEncode
     /// <summary>
     /// AV1 QSV encoding
     /// </summary>
+    /// <param name="device">the device from the FFmpeg Builder model</param>
     /// <param name="quality">the quality</param>
     /// <param name="speed">the speed</param>
     /// <returns>the encoding parameters</returns>
-    private static IEnumerable<string> AV1_Qsv(int quality, string speed)
+    private static IEnumerable<string> AV1_Qsv(string device, int quality, string speed)
     {
         switch (speed)
         {
@@ -109,9 +110,14 @@ public partial class FfmpegBuilderVideoEncode
             "-global_quality:v", quality.ToString(),
             "-preset", speed
         };
-        if(VaapiHelper.VaapiLinux)
-            args.AddRange(new [] { "-qsv_device", VaapiHelper.VaapiRenderDevice});
-        
+        if (VaapiHelper.VaapiLinux)
+        {
+            if(string.IsNullOrEmpty(device))
+                args.AddRange(new[] { "-qsv_device", VaapiHelper.VaapiRenderDevice });
+            else if(device != "NONE")
+                args.AddRange(new[] { "-qsv_device", device});
+        }
+
         return args.ToArray();
     }
 }

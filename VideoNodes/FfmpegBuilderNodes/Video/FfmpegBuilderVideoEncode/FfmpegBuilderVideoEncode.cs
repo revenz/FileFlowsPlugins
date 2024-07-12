@@ -130,7 +130,7 @@ public partial class FfmpegBuilderVideoEncode:VideoEncodeBase
         {
             bool tenBit = Codec == CODEC_AV1_10BIT || stream.Stream.Is10Bit;
             args.Logger?.ILog("10 Bit: " + tenBit);
-            var encodingParameters = AV1(args, tenBit, Quality, encoder, Speed).ToArray();
+            var encodingParameters = AV1(args, tenBit, Quality, encoder, Speed, Model.Device).ToArray();
             args.Logger?.ILog("Encoding Parameters: " +
                               string.Join(" ", encodingParameters.Select(x => x.Contains(" ") ? "\"" + x + "\"" : x)));
             stream.EncodingParameters.AddRange(encodingParameters);
@@ -154,14 +154,14 @@ public partial class FfmpegBuilderVideoEncode:VideoEncodeBase
         return 1;
     }
 
-    internal static IEnumerable<string> GetEncodingParameters(NodeParameters args, string codec, int quality, string encoder, float fps, string speed)
+    internal static IEnumerable<string> GetEncodingParameters(NodeParameters args, string codec, int quality, string encoder, float fps, string speed, string? device = null)
     {
         if (codec == CODEC_H264)
             return H264(args, false, quality, encoder, speed).Select(x => x.Replace("{index}", "0")); 
         if (codec == CODEC_H265 || codec == CODEC_H265_10BIT)
             return H265(null, args, codec == CODEC_H265_10BIT, quality, encoder, fps, speed).Select(x => x.Replace("{index}", "0"));
         if(codec == CODEC_AV1)
-            return AV1(args, codec == CODEC_AV1_10BIT, quality, encoder, speed).Select(x => x.Replace("{index}", "0")); 
+            return AV1(args, codec == CODEC_AV1_10BIT, quality, encoder, speed, device).Select(x => x.Replace("{index}", "0")); 
             
         throw new Exception("Unsupported codec: " + codec);
     }
@@ -281,7 +281,7 @@ public partial class FfmpegBuilderVideoEncode:VideoEncodeBase
     }
 
     
-    private static IEnumerable<string> AV1(NodeParameters args, bool tenBit, int quality, string encoder, string speed)
+    private static IEnumerable<string> AV1(NodeParameters args, bool tenBit, int quality, string encoder, string speed, string device)
     {
         // hevc_qsv -load_plugin hevc_hw -pix_fmt p010le -profile:v main10 -global_quality 21 -g 24 -look_ahead 1 -look_ahead_depth 60
         List<string> parameters = new List<string>();
@@ -291,14 +291,14 @@ public partial class FfmpegBuilderVideoEncode:VideoEncodeBase
         else if(encoder == ENCODER_NVIDIA)
             parameters.AddRange(AV1_Nvidia(quality, speed));
         else if(encoder == ENCODER_QSV)
-            parameters.AddRange(AV1_Qsv(quality, speed));
+            parameters.AddRange(AV1_Qsv(device, quality, speed));
         else if(encoder == ENCODER_AMF)
             parameters.AddRange(AV1_Amd(quality, speed));
         
         else if (CanUseHardwareEncoding.CanProcess_Nvidia_AV1(args))
             parameters.AddRange(AV1_Nvidia(quality, speed));
         else if (CanUseHardwareEncoding.CanProcess_Qsv_AV1(args))
-            parameters.AddRange(AV1_Qsv(quality, speed));
+            parameters.AddRange(AV1_Qsv(device, quality, speed));
         else if (CanUseHardwareEncoding.CanProcess_Amd_AV1(args))
             parameters.AddRange(AV1_Amd(quality, speed));
         else
