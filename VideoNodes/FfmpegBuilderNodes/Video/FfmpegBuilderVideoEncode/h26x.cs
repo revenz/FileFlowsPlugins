@@ -46,9 +46,16 @@ public partial class FfmpegBuilderVideoEncode
             {
                 "hevc_qsv",
                 "-load_plugin", "hevc_hw",
-                "-g",  (fps < 1 ? 29.97 : fps).ToString(CultureInfo.InvariantCulture)
+                // -g is gop/keyframe not framerate
+                //"-g",  (fps < 1 ? 29.97 : fps).ToString(CultureInfo.InvariantCulture)
             });
-            
+
+            if (fps > 0)
+            {
+                parameters.AddRange(["-r", fps.ToString(CultureInfo.InvariantCulture)]);
+                parameters.AddRange(["-g", ((int)Math.Round(fps * 5)).ToString(CultureInfo.InvariantCulture)]);
+            }
+
         }
         else
         {
