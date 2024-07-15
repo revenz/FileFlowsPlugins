@@ -49,7 +49,7 @@ public class ReplaceOriginal : Node
         {
             args.Logger?.ILog("Working file is same as original, nothing to do.");
             return 1;
-        };
+        }
         var wfExtension = FileHelper.GetExtension(args.WorkingFile);
         if (args.FileName.ToLower().EndsWith(wfExtension.ToLower()))
         {
