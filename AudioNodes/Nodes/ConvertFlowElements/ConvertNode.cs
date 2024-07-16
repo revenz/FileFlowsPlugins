@@ -16,10 +16,26 @@ namespace FileFlows.AudioNodes
         /// </summary>
         protected bool HighEfficiency { get; set; }
 
+        /// <summary>
+        /// Gets the bitrate of the source file
+        /// </summary>
+        /// <param name="args">the node parameters</param>
+        /// <returns>the source bitrate</returns>
         protected long GetSourceBitrate(NodeParameters args)
         {
             var info = GetAudioInfo(args).Value;
             return info.Bitrate;
+        }
+
+        /// <summary>
+        /// Gets the channels of the source file
+        /// </summary>
+        /// <param name="args">the node parameters</param>
+        /// <returns>the source channels</returns>
+        protected long GetSourceChannels(NodeParameters args)
+        {
+            var info = GetAudioInfo(args).Value;
+            return info.Channels;
         }
 
         public override int Inputs => 1;
@@ -99,7 +115,14 @@ namespace FileFlows.AudioNodes
                 if (Codec == "aac" && HighEfficiency)
                 {
                     extension = "m4a";
-                    ffArgs.AddRange(new[] { "-profile:a", "aac_he_v2" });
+                    if(Channels is > 0 and <= 2)
+                        ffArgs.AddRange(new[] { "-profile:a", "aac_he_v2" });
+                    else if(Channels > 0)
+                        ffArgs.AddRange(new[] { "-profile:a", "aac_he" });
+                    else if(GetSourceChannels(args) <= 2)
+                        ffArgs.AddRange(new[] { "-profile:a", "aac_he_v2" });
+                    else
+                        ffArgs.AddRange(new[] { "-profile:a", "aac_he" });
                 }
             }
             else if (bitrate != 0)
