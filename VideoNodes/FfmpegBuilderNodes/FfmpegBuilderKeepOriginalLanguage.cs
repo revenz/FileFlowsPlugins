@@ -88,16 +88,26 @@ public class FfmpegBuilderKeepOriginalLanguage: FfmpegBuilderNode
             return 2;
         }
         args.Logger?.ILog("OriginalLanguage: " + originalLanguage);
+        if (AdditionalLanguages?.Any() == true)
+        {
+            foreach (var lang in AdditionalLanguages)
+            {
+                args.Logger?.ILog("Additional Language: " + lang);
+            }
+        }
 
         int changes = 0;
         if(StreamType is "Audio" or "Both")
         {
+            args.Logger?.ILog("Processing Audio Streams");
             changes += ProcessStreams(args, Model.AudioStreams, originalLanguage);
         }
         if(StreamType is "Subtitle" or "Both")
         {
+            args.Logger?.ILog("Processing Subtitle Streams");
             changes += ProcessStreams(args, Model.SubtitleStreams, originalLanguage);
         }
+        args.Logger?.ILog("Changes: " + changes);
 
         return changes > 0 ? 1 : 2;
     }
@@ -124,11 +134,11 @@ public class FfmpegBuilderKeepOriginalLanguage: FfmpegBuilderNode
             if (TreatEmptyAsOriginal && string.IsNullOrWhiteSpace(stream.Language))
                 deleted = false;
             else
-                deleted = KeepStream(originalLanguage, stream.Language) == false;
+                deleted = KeepStream(args.Logger, originalLanguage, stream.Language) == false;
 
             if (deleted == false)
             {
-                string lang = LanguageHelper.GetIso1Code(stream.Language?.EmptyAsNull() ?? originalLanguage);
+                string lang = LanguageHelper.GetIso2Code(stream.Language?.EmptyAsNull() ?? originalLanguage);
                 if (foundLanguages.Contains(lang) == false)
                     foundLanguages.Add(lang);
                 else if (KeepOnlyFirst)
@@ -155,19 +165,30 @@ public class FfmpegBuilderKeepOriginalLanguage: FfmpegBuilderNode
         return changed;
     }
 
-    private bool KeepStream(string originalLanguage, string streamLanguage)
+    private bool KeepStream(ILogger logger, string originalLanguage, string streamLanguage)
     {
         if (LanguageMatches(streamLanguage, originalLanguage))
+        {
+            logger?.ILog($"Language '{streamLanguage}' matches original language '{originalLanguage}'");
             return true;
+        }
+
         if (AdditionalLanguages?.Any() != true)
+        {
+            logger?.ILog($"Language '{streamLanguage}' did not match.");
             return false;
+        }
 
         foreach (var lang in this.AdditionalLanguages)
         {
             if (LanguageMatches(streamLanguage, lang))
+            {
+                logger?.ILog($"Language '{streamLanguage}' matches additional language '{lang}'");
                 return true;
+            }
         }
 
+        logger?.ILog($"Language '{streamLanguage}' did not match any wanted language.");
         return false;
     }
 
