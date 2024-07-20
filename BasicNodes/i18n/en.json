@@ -82,6 +82,32 @@
             "OutputErrorVariable-Help": "An optional variable name to store the process error output into"
           }
         },
+        "DirectoryDateCompare": {
+          "Description": "Checks if the directory creation or last write time matches the specified date constraint.",
+          "Outputs": {
+            "1": "Matches the date constraint.",
+            "2": "Does not match the date constraint."
+          },
+          "Fields": {
+            "Path": "Path",
+            "Path-Help": "The path to the file to check.  Leave empty to check the current working file.\nIf a file is specified the directory containing the file will be checked.",
+            "Date": "Date",
+            "DateComparision": "Comparision"
+          }
+        },
+        "FileDateCompare": {
+          "Description": "Checks if the file creation or last write time matches the specified date constraint.",
+          "Outputs": {
+            "1": "Matches the date constraint.",
+            "2": "Does not match the date constraint."
+          },
+          "Fields": {
+            "FileName": "File Name",
+            "FileName-Help": "The file to check.  Leave empty to check the current working file.",
+            "Date": "Date",
+            "DateComparision": "Comparision"
+          }
+        },
         "FileExtension": {
           "Description": "Checks if the file has one of the configured extensions.\n\nOutput 1: Matches\nOutput 2: Does not match",
           "Outputs": {
