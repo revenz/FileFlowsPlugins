@@ -45,6 +45,16 @@ public class TestFileService : IFileService
         throw new NotImplementedException();
     }
 
+    public Result<DateTime> DirectoryCreationTimeUtc(string path)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Result<DateTime> DirectoryLastWriteTimeUtc(string path)
+    {
+        throw new NotImplementedException();
+    }
+
     public Result<bool> FileExists(string path)
     {
         throw new NotImplementedException();
