@@ -90,7 +90,7 @@
           },
           "Fields": {
             "Path": "Path",
-            "Path-Help": "The path to the file to check.  Leave empty to check the current working file.\nIf a file is specified the directory containing the file will be checked.",
+            "Path-Help": "The path to the folder to check.  Leave empty to check the current working file.\nIf a file is specified the directory containing the file will be checked.",
             "Date": "Date",
             "DateComparision": "Comparision"
           }

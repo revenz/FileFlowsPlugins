@@ -134,12 +134,15 @@ public class FileDateCompare : Node
         }
 
         // then it must be a between or not between
-        var minutes = now.Subtract(date).TotalMinutes;
         int low = Math.Min(DateComparision.Value1, DateComparision.Value2);
-        int high = Math.Max(DateComparision.Value1, DateComparision.Value2); 
-        bool isBetween = minutes >= low && minutes <= high;
+        int high = Math.Max(DateComparision.Value1, DateComparision.Value2);
+
+        DateTime lowDate = now.AddMinutes(-low);
+        DateTime highDate = now.AddMinutes(-high);
+        
+        bool isBetween = now >= lowDate && now <= highDate;
         args.Logger?.ILog(
-            $"Date is {(isBetween ? "" : "not ")}between {low} minutes and {high} minutes");
+            $"Date is {(isBetween ? "" : "not ")}between {lowDate:yyyy-MM-ddTHH:mm:ss}Z and {highDate:yyyy-MM-ddTHH:mm:ss}Z");
 
         if (DateComparision.Comparison is DateCompareMode.Between)
         {

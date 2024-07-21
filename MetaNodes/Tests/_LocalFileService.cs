@@ -140,6 +140,16 @@ public class LocalFileService : IFileService
         }
     }
 
+    public Result<DateTime> DirectoryCreationTimeUtc(string path)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Result<DateTime> DirectoryLastWriteTimeUtc(string path)
+    {
+        throw new NotImplementedException();
+    }
+
     public Result<bool> FileExists(string path)
     {
         if (IsProtectedPath(ref path))

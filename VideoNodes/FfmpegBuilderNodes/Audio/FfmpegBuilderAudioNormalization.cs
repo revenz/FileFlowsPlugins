@@ -64,7 +64,15 @@ public class FfmpegBuilderAudioNormalization : FfmpegBuilderNode
                     item.stream.Filter.Add(track);
                 else
                 {
-                    string twoPass = DoTwoPass(this, args, FFMPEG, audio.TypeIndex, localFile);
+                    var twoPassResult = DoTwoPass(this, args, FFMPEG, audio.TypeIndex, localFile);
+                    if (twoPassResult.Failed(out var error))
+                    {
+                        args.Logger?.ELog(error);
+                        args.FailureReason = error;
+                        return -1;
+                    }
+
+                    var twoPass = twoPassResult.Value;
                     item.stream.Filter.Add(twoPass);
                     normalizedTracks.Add(audio.TypeIndex, twoPass); 
                 }
@@ -79,7 +87,7 @@ public class FfmpegBuilderAudioNormalization : FfmpegBuilderNode
         return normalizing ? 1 : 2;
     }
     
-    public static string DoTwoPass(EncodingNode node, NodeParameters args, string ffmpegExe, int audioIndex, string localFile)
+    public static Result<string> DoTwoPass(EncodingNode node, NodeParameters args, string ffmpegExe, int audioIndex, string localFile)
     {
         //-af loudnorm=I=-24:LRA=7:TP=-2.0"
         string output;
@@ -95,17 +103,27 @@ public class FfmpegBuilderAudioNormalization : FfmpegBuilderNode
         }, out output, updateWorkingFile: false, dontAddInputFile: true);
 
         if (result == false)
-            throw new Exception("Failed to process audio track");
+            return Result<string>.Fail("Failed to process audio track");
 
         int index = output.LastIndexOf("{", StringComparison.Ordinal);
         if (index == -1)
-            throw new Exception("Failed to detected json in output");
+            return Result<string>.Fail("Failed to detected json in output");
 
         string json = output[index..];
         json = json.Substring(0, json.IndexOf("}", StringComparison.Ordinal) + 1);
         if (string.IsNullOrEmpty(json))
-            throw new Exception("Failed to parse TwoPass json");
-        LoudNormStats? stats = JsonSerializer.Deserialize<LoudNormStats>(json);
+            return Result<string>.Fail("Failed to parse TwoPass json");
+        LoudNormStats? stats;
+        try
+        {
+            stats = JsonSerializer.Deserialize<LoudNormStats>(json);
+        }
+        catch (Exception ex)
+        {
+            args.Logger.ELog("Failed to parse JSON: " +ex.Message);
+            args.Logger.ELog("JSON:" +  json);
+            return Result<string>.Fail("Failed to parse JSON output from FFmpeg");
+        }
 
         if (stats.input_i == "-inf" || stats.input_lra == "-inf" || stats.input_tp == "-inf" || stats.input_thresh == "-inf" || stats.target_offset == "-inf")
         {
