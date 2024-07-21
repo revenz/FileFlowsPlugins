@@ -1,5 +1,6 @@
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
+using FileFlows.Plugin.Types;
 
 namespace FileFlows.BasicNodes.File;
 
@@ -19,16 +20,15 @@ public class FileSize : Node
     /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/file-size";
 
-
     /// <summary>
     /// Gets or sets the lower value
     /// </summary>
     [NumberInt(1)]
     public int Lower { get; set; }
+    
     /// <summary>
     /// Gets or sets the upper value
     /// </summary>
-
     [NumberInt(2)]
     public int Upper { get; set; }
 
