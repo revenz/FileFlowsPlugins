@@ -261,14 +261,12 @@ public class FfmpegBuilder_BasicTests : TestBase
     [TestMethod]
     public void FfmpegBuilder_AddAc3Aac_Normalize()
     {
-        const string file = @"D:\videos\unprocessed\dummy.mkv";
-        var logger = new TestLogger();
-        const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
-        var vi = new VideoInfoHelper(ffmpeg, logger);
+        const string file = @"/home/john/src/ff-files/test-files/videos/basic {tvdb-71470}.mkv";
+        var vi = new VideoInfoHelper(FfmpegPath, Logger);
         var vii = vi.Read(file);
-        var args = new NodeParameters(file, logger, false, string.Empty, null);
-        args.GetToolPathActual = (string tool) => ffmpeg;
-        args.TempPath = @"D:\videos\temp";
+        var args = new NodeParameters(file, Logger, false, string.Empty, new LocalFileService());
+        args.GetToolPathActual = (string tool) => FfmpegPath;
+        args.TempPath = @"/home/john/src/ff-files/temp";
         args.Parameters.Add("VideoInfo", vii);
 
 
@@ -299,7 +297,7 @@ public class FfmpegBuilder_BasicTests : TestBase
         ffAddAudio2.Execute(args);
 
         FfmpegBuilderAudioNormalization ffAudioNormalize = new();
-        ffAudioNormalize.TwoPass = false;
+        ffAudioNormalize.TwoPass = true;
         ffAudioNormalize.AllAudio = true;
         ffAudioNormalize.PreExecute(args);
         ffAudioNormalize.Execute(args);
@@ -308,7 +306,6 @@ public class FfmpegBuilder_BasicTests : TestBase
         ffExecutor.PreExecute(args);
         int result = ffExecutor.Execute(args);
 
-        string log = logger.ToString();
         Assert.AreEqual(1, result);
     }
 

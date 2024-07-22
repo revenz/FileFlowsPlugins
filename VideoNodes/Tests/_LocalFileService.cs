@@ -377,7 +377,27 @@ public class LocalFileService : IFileService
 
     public Result<long> DirectorySize(string path)
     {
-        throw new NotImplementedException();
+        if (string.IsNullOrWhiteSpace(path))
+            return 0;
+        
+        if (File.Exists(path))
+            path = new FileInfo(path).Directory?.FullName ?? string.Empty;
+        
+        if (string.IsNullOrWhiteSpace(path))
+            return 0;
+        
+        if (Directory.Exists(path) == false)
+            return 0;
+        
+        try
+        {
+            DirectoryInfo dir = new DirectoryInfo(path);
+            return dir.EnumerateFiles("*.*", SearchOption.AllDirectories).Sum(x => x.Length);
+        }
+        catch (Exception)
+        {
+            return 0;
+        }
     }
 
     public Result<bool> SetCreationTimeUtc(string path, DateTime date)
