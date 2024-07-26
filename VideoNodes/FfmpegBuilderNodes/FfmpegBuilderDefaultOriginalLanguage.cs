@@ -85,7 +85,15 @@ public class FfmpegBuilderDefaultOriginalLanguage: FfmpegBuilderNode
             changes += ProcessStreams(args, Model.SubtitleStreams, originalLanguage);
         }
 
-        return changes > 0 ? 1 : 2;
+        if (changes < 1)
+        {
+            args.Logger?.ILog("No changes detected");
+            return 2;
+        }
+
+        Model.ForceEncode = true;
+        args.Logger?.ILog("Changes detected forcing encoding in FFmpeg Builder model");
+        return 1;
     }
 
     private int ProcessStreams<T>(NodeParameters args, List<T> streams, string originalLanguage) where T : FfmpegStream
