@@ -124,6 +124,7 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
             {
                 _ChannelsOptions = new List<ListOption>
                 {
+                    new () { Label = "Automatic", Value = 1000f},
                     new () { Label = "Same as source", Value = 0},
                     new () { Label = "Mono", Value = 1f},
                     new () { Label = "Stereo", Value = 2f},
@@ -335,8 +336,12 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
         
         bool codecSame = stream.Stream.Codec?.ToLowerInvariant() == codec;
         
-        int originalChannels = FfmpegBuilderAudioAddTrack.GetAudioBitrateChannels(args.Logger, stream.Channels, string.Empty); 
-        int totalChannels = FfmpegBuilderAudioAddTrack.GetAudioBitrateChannels(args.Logger, Channels < 1 ? stream.Channels : Channels, codec);
+        
+        int originalChannels = FfmpegBuilderAudioAddTrack.GetAudioBitrateChannels(args.Logger, stream.Channels, string.Empty);
+
+        var channels = this.Channels > 999f ? 0 : this.Channels == 0 ? originalChannels : this.Channels; 
+        
+        int totalChannels = FfmpegBuilderAudioAddTrack.GetAudioBitrateChannels(args.Logger, channels, codec);
         
         bool channelsSame = originalChannels == totalChannels;
 
@@ -372,7 +377,7 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
 
         stream.Codec = Codec.ToLowerInvariant();
 
-        stream.EncodingParameters.AddRange(FfmpegBuilderAudioAddTrack.GetNewAudioTrackParameters(args, stream, codec, Channels, bitrate, 0));
+        stream.EncodingParameters.AddRange(FfmpegBuilderAudioAddTrack.GetNewAudioTrackParameters(args, stream, codec, channels, bitrate, 0));
         return true;
     }
 }
