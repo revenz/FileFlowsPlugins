@@ -135,7 +135,14 @@ namespace FileFlows.AudioNodes
                 if (Codec == "aac" && HighEfficiency)
                 {
                     extension = "m4a";
-                    ffArgs.AddRange(new[] { "-profile:a", "aac_he_v2" });
+                    if(Channels is > 0 and <= 2)
+                        ffArgs.AddRange(new[] { "-profile:a", "aac_he_v2" });
+                    else if(Channels > 0)
+                        ffArgs.AddRange(new[] { "-profile:a", "aac_he" });
+                    else if(GetSourceChannels(args) <= 2)
+                        ffArgs.AddRange(new[] { "-profile:a", "aac_he_v2" });
+                    else
+                        ffArgs.AddRange(new[] { "-profile:a", "aac_he" });
                 }
             }
 
