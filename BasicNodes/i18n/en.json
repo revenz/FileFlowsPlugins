@@ -138,7 +138,9 @@
           },
           "Fields": {
             "FileName": "File Name",
-            "FileName-Help": "The file to check.  Leave empty to check the current working file."
+            "FileName-Help": "The file to check.  Leave empty to check the current working file.",
+            "Count": "Count",
+            "Count-Help": "The number of hard links required to call output 1."
           }
         },
         "Delete": {

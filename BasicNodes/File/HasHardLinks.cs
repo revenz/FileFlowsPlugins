@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.IO;
 using FileFlows.Plugin;
@@ -30,6 +31,13 @@ public class HasHardLinks: Node
     [TextVariable(1)]
     public string FileName { get; set; }
 
+    /// <summary>
+    /// Gets or sets the number of hard links to check for
+    /// </summary>
+    [NumberInt(2)]
+    [Range(1, 1000)]
+    public int Count { get; set; }
+
     /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
@@ -41,13 +49,16 @@ public class HasHardLinks: Node
             return -1;
         }
 
+        int count = Math.Min(1, Count);
+        args.Logger?.ILog("Required hard links: " + count);
+
         bool hasHardLinks = false;
         if (OperatingSystem.IsWindows())
-            hasHardLinks = HasHardLinkWindows(args, file);
+            hasHardLinks = HasHardLinkWindows(args, file, count);
         else if(OperatingSystem.IsLinux())
-            hasHardLinks = HasHardLinkLinux(args, file);
+            hasHardLinks = HasHardLinkLinux(args, file, count);
         else if(OperatingSystem.IsMacOS())
-            hasHardLinks = HasHardLinkMacOS(args, file);
+            hasHardLinks = HasHardLinkMacOS(args, file, count);
         else
         {
             args.Logger?.WLog("Unable to determine operating system to check for hard links");
@@ -63,8 +74,9 @@ public class HasHardLinks: Node
     /// </summary>
     /// <param name="args">Node parameters containing logger.</param>
     /// <param name="file">File path to check for hard links.</param>
+    /// <param name="count">the required number of hard links</param>
     /// <returns>True if the file has hard links; otherwise, false.</returns>
-    bool HasHardLinkWindows(NodeParameters args, string file)
+    bool HasHardLinkWindows(NodeParameters args, string file, int count)
     {
         try
         {
@@ -96,8 +108,9 @@ public class HasHardLinks: Node
     /// </summary>
     /// <param name="args">Node parameters containing logger.</param>
     /// <param name="file">File path to check for hard links.</param>
+    /// <param name="count">the required number of hard links</param>
     /// <returns>True if the file has hard links; otherwise, false.</returns>
-    bool HasHardLinkLinux(NodeParameters args, string file)
+    bool HasHardLinkLinux(NodeParameters args, string file, int count)
     {
         try
         {
@@ -123,15 +136,15 @@ public class HasHardLinks: Node
             if(string.IsNullOrWhiteSpace(error) == false)
                 args.Logger?.ILog("Error Output: " + error);
 
-            int linkCount;
-            if (int.TryParse(output.Trim(), out linkCount))
+            if (int.TryParse(output.Trim(), out var linkCount))
             {
                 if (linkCount > 0)
                 {
-                    args.Logger?.ILog("The file has hard links.");
-                    return true;
+                    args.Logger?.ILog($"The file has {linkCount} hard links.");
+                    if (linkCount >= count)
+                        return true;
                 }
-                args.Logger?.ILog("The file does not have hard links.");
+                args.Logger?.ILog("The file does not have the required number of hard links.");
                 return false;
             }
             
@@ -153,8 +166,9 @@ public class HasHardLinks: Node
     /// </summary>
     /// <param name="args">Node parameters containing logger.</param>
     /// <param name="file">File path to check for hard links.</param>
+    /// <param name="count">the required number of hard links</param>
     /// <returns>True if the file has hard links; otherwise, false.</returns>
-    public bool HasHardLinkMacOS(NodeParameters args, string file)
+    public bool HasHardLinkMacOS(NodeParameters args, string file, int count)
     {
         try
         {
@@ -178,19 +192,19 @@ public class HasHardLinks: Node
             if(string.IsNullOrWhiteSpace(error) == false)
                 args.Logger?.ILog("Error Output: " + error);
 
-            int linkCount;
-            if (int.TryParse(output.Trim(), out linkCount))
+            if (int.TryParse(output.Trim(), out var linkCount))
             {
                 if (linkCount > 0)
                 {
-                    args.Logger?.ILog("The file has hard links.");
-                    return true;
+                    args.Logger?.ILog($"The file has {linkCount} hard links.");
+                    if (linkCount >= count)
+                        return true;
                 }
                 args.Logger?.ILog("The file does not have hard links.");
                 return false; 
             }
             
-            args.Logger?.ILog("Failed to retrieve link count.");
+            args.Logger?.ILog("The file does not have the required number of hard links.");
             return false;
         }
         catch (Exception ex)
