@@ -93,7 +93,6 @@ public class CopyFile : Node
     /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
-         
         var destParts = MoveFile.GetDestinationPathParts(args, DestinationPath, DestinationFile, CopyFolder);
         if (destParts.Filename == null)
             return -1;

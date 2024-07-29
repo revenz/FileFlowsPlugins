@@ -19,7 +19,6 @@ public class ReadVideoInfo: EncodingNode
     public override Dictionary<string, object> Variables => _Variables;
 
 
-
     /// <summary>
     /// Constructs and instance of the flow element
     /// </summary>
