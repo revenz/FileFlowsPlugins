@@ -26,17 +26,21 @@ public class SubtitleExtractor : EncodingNode
     [Text(1)]
     public string Language { get; set; }
     /// <summary>
+    /// Gets or sets the title to extract
+    /// </summary>
+    [Text(2)]
+    public string Title { get; set; }
+    /// <summary>
     /// Gets or sets if all subtitles should be extracted
     /// </summary>
-    [Boolean(2)]
+    [Boolean(3)]
     public bool ExtractAll { get; set; }
     /// <summary>
     /// Gets or sets the destination output file
     /// </summary>
-    [File(3)]
+    [File(4)]
     [ConditionEquals(nameof(ExtractAll), false)]
     public string OutputFile { get; set; }
-    
     
     // /// <summary>
     // /// Gets or sets if the new file should be set as the current working file
@@ -47,12 +51,12 @@ public class SubtitleExtractor : EncodingNode
     /// <summary>
     /// Gets or sets if only forced subtitles should be extracted
     /// </summary>
-    [Boolean(4)]
+    [Boolean(5)]
     public bool ForcedOnly { get; set; }
     /// <summary>
     /// Gets or sets if only text subtitles should be extracted
     /// </summary>
-    [Boolean(5)]
+    [Boolean(6)]
     public bool OnlyTextSubtitles { get; set; }
     
     private Dictionary<string, object> _Variables;
@@ -93,9 +97,41 @@ public class SubtitleExtractor : EncodingNode
 
                 if (ForcedOnly && x.Forced == false)
                     return false;
+
+                if (string.IsNullOrWhiteSpace(Title) == false)
+                {
+                    if (GeneralHelper.IsRegex(Title))
+                    {
+                        try
+                        {
+                            var rgx = new Regex(Title, RegexOptions.IgnoreCase);
+                            if (rgx.IsMatch(x.Title ?? string.Empty) == false)
+                            {
+                                args.Logger?.ILog(
+                                    $"Title does not match '{Title}' against value: {(x.Title ?? string.Empty)}");
+                                return false;
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            args.Logger?.WLog($"Failed matching regex '{Title}' against value: {(x.Title ?? string.Empty)}");
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        if ((x.Title ?? string.Empty).Contains(Title, StringComparison.InvariantCultureIgnoreCase) ==
+                            false)
+                        {
+                            args.Logger?.ILog($"Title does not match '{Title}' against value: {(x.Title ?? string.Empty)}");
+                            return false;
+                        }
+                    }
+                }
+                
                 if(string.IsNullOrWhiteSpace(Language))
                     return true;
-                if (x.Language?.ToLowerInvariant() == Language.ToLowerInvariant())
+                if ((x.Language?.ToLowerInvariant()).Equals(Language, StringComparison.InvariantCultureIgnoreCase))
                     return true;
 
                 try
@@ -106,6 +142,7 @@ public class SubtitleExtractor : EncodingNode
                 }
                 catch (Exception)
                 {
+                    args.Logger?.WLog($"Failed matching regex '{Language}' against value: {(x.Title ?? string.Empty)}");
                 }
 
                 return false;
