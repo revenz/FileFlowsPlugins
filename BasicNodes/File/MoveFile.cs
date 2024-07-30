@@ -125,7 +125,9 @@ public class MoveFile : Node
             if (args.MoveFile(dest).Failed(out var error))
             {
                 args.Logger?.WLog("Failed to moving working file: " + error);
-                args.FailureReason = "Failed to move file: " + error;
+                if (error.Contains(": ") == false)
+                    error = "Failed to move file: " + error;
+                args.FailureReason = error;
                 args.Logger?.ELog(args.FailureReason);
                 return -1;
             }
@@ -134,7 +136,9 @@ public class MoveFile : Node
         {
             if (args.FileService.FileMove(inputFile, dest).Failed(out string error))
             {
-                args.FailureReason = "Failed to move file: " + error;
+                if (error.Contains(": ") == false)
+                    error = "Failed to move file: " + error;
+                args.FailureReason = error;
                 args.Logger?.ELog(args.FailureReason);
                 return -1;
             }
