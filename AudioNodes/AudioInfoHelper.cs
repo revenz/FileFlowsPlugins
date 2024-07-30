@@ -32,7 +32,16 @@ public class AudioInfoHelper
         if (result.IsFailed == false)
             mi = result.Value;
         else
-            mi = ReadMetaData(filename);
+        {
+            try
+            {
+                mi = ReadMetaData(filename);
+            }
+            catch (Exception)
+            {
+                mi = new AudioInfo();
+            }
+        }
 
         try
         {
@@ -363,9 +372,10 @@ public class AudioInfoHelper
 
     public void ParseFileNameInfo(string filename, AudioInfo mi)
     {
-        using var tfile = TagLib.File.Create(filename);
         try
         {
+            using var tfile = TagLib.File.Create(filename);
+            
             var fileInfo = new System.IO.FileInfo(filename);
 
             bool dirty = false;
@@ -457,10 +467,6 @@ public class AudioInfoHelper
         catch (Exception ex)
         {
             Logger?.WLog("Failed parsing Audio info from filename: " + ex.Message + Environment.NewLine + ex.StackTrace);
-        }
-        finally
-        {
-            tfile.Dispose();
         }
     }
 

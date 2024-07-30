@@ -32,17 +32,23 @@ public class AudioInfoTests: AudioTestBase
     [TestMethod]
     public void AudioInfo_NormalTrack()
     {
-
         const string file = @"\\oracle\Audio\Taylor Swift\Speak Now\Taylor Swift - Speak Now - 08 - Never Grow Up.mp3";
-        const string ffmpegExe = @"C:\utils\ffmpeg\ffmpeg.exe";
 
-        var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty, null);;
-        args.GetToolPathActual = (string tool) => ffmpegExe;
-        args.TempPath = @"D:\music\temp";
-
-        var AudioInfo = new AudioInfoHelper(ffmpegExe, ffprobe, args.Logger).Read(args.WorkingFile);
+        var args = GetNodeParameters(file, false);
+        var AudioInfo = new AudioInfoHelper(ffmpeg, ffprobe, args.Logger).Read(args.WorkingFile);
 
         Assert.AreEqual(8, AudioInfo.Value.Track);
+    }
+
+    [TestMethod]
+    public void AudioInfo_LargeWav()
+    {
+        string file = Path.Combine(TestPath, "large-wav.wav");
+
+        var args = GetNodeParameters(file, false);
+        var AudioInfo = new AudioInfoHelper(ffmpeg, ffprobe, args.Logger).Read(args.WorkingFile);
+
+        Assert.AreEqual(96000, AudioInfo.Value.Frequency);
     }
 
     [TestMethod]
