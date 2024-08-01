@@ -19,7 +19,9 @@ public class Function : Node
     /// <inheritdoc />
     public override bool FailureNode => true;
     /// <inheritdoc />
-    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/function"; 
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/function";
+    /// <inheritdoc />
+    public override string Group => "Scripting";
 
     /// <summary>
     /// Gets or sets the number of outputs
@@ -40,11 +42,14 @@ public class Function : Node
     public override int Execute(NodeParameters args)
     {
         if (string.IsNullOrEmpty(Code))
-            return -1; // no code, flow cannot continue doesnt know what to do
+        {
+            args.FailureReason = "No code specified in Function script";
+            args.Logger?.ELog(args.FailureReason);
+            return -1; // no code, flow cannot continue doesn't know what to do
+        }
 
         try
         {
-
             return args.ScriptExecutor.Execute(new FileFlows.Plugin.Models.ScriptExecutionArgs
             {
                 Args = args,
@@ -53,6 +58,7 @@ public class Function : Node
         }
         catch (Exception ex)
         {
+            args.FailureReason = "Failed executing function: " + ex.Message;
             args.Logger?.ELog("Failed executing function: " + ex.Message + Environment.NewLine + ex.StackTrace);
             return -1;
         }
