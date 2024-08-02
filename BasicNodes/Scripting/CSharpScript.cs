@@ -11,7 +11,7 @@ namespace BasicNodes.Scripting;
 public class CSharpScript : ScriptBase
 {
     /// <inheritdoc />
-    public override string Icon => "svg:cs";
+    public override string Icon => "svg:csharp";
 
     /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/charp-script";

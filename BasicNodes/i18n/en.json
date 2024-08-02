@@ -40,6 +40,25 @@
           "Code": "Code"
         }
       },
+      "CSharpScript": {
+        "Label": "C# Script",
+        "Description": "Allows you to execute a C# code inside the Flow.",
+        "Outputs": {
+          "1": "returned 1",
+          "2": "returned 2",
+          "3": "returned 3",
+          "4": "returned 4",
+          "5": "returned 5",
+          "6": "returned 6",
+          "7": "returned 7",
+          "8": "returned 8",
+          "9": "returned 9",
+          "10": "returned 10"
+        },
+        "Fields": {
+          "Code": "Code"
+        }
+      },
       "ShellScript": {
         "Label": "Shell Script",
         "Description": "Allows you to execute a shell (.sh) script in a Unix-like environment.",
@@ -77,583 +96,564 @@
         "Fields": {
           "Code": "Code"
         }
-      }
-    },
-    "CSharpScript": {
-      "Label": "Sea Sharp Script",
-      "Description": "Allows you to execute a C# code inside the Flow.",
-      "Outputs": {
-        "1": "returned 1",
-        "2": "returned 2",
-        "3": "returned 3",
-        "4": "returned 4",
-        "5": "returned 5",
-        "6": "returned 6",
-        "7": "returned 7",
-        "8": "returned 8",
-        "9": "returned 9",
-        "10": "returned 10"
       },
-      "Fields": {
-        "Code": "Code"
-      }
-    },
-    "CopyFile": {
-      "Description": "Copies a file to the destination folder",
-      "Outputs": {
-        "1": "File copied"
+      "CopyFile": {
+        "Description": "Copies a file to the destination folder",
+        "Outputs": {
+          "1": "File copied"
+        },
+        "Fields": {
+          "InputFile": "File To Copy",
+          "InputFile-Help": "The file to copy, if left empty then the working file will be copied",
+          "InputFile-Placeholder": "Working File",
+          "DestinationPath": "Destination Folder",
+          "DestinationPath-Help": "The folder where the file will be copied to",
+          "DestinationFile": "Destination File",
+          "DestinationFile-Help": "The filename to copy the file to.  If empty, the original filename will be used",
+          "CopyFolder": "Copy Folder",
+          "CopyFolder-Help": "If the relative library folder structure should be copied too",
+          "AdditionalFiles": "Additional Files",
+          "AdditionalFiles-Help": "Additional files to copy from the directory to the new directory.\nEach value can contain a combination of valid literal path and wildcard (* and ?) characters, but it doesn''t support regular expressions.",
+          "AdditionalFilesFromOriginal": "Original Directory",
+          "AdditionalFilesFromOriginal-Help": "If the additional files should be copied from the working directory or from the original directory.  Turn on for original directory.",
+          "PreserverOriginalDates": "Preserve Dates",
+          "PreserverOriginalDates-Help": "If the original creation time and last write time of the original input file should be preserved."
+        }
       },
-      "Fields": {
-        "InputFile": "File To Copy",
-        "InputFile-Help": "The file to copy, if left empty then the working file will be copied",
-        "InputFile-Placeholder": "Working File",
-        "DestinationPath": "Destination Folder",
-        "DestinationPath-Help": "The folder where the file will be copied to",
-        "DestinationFile": "Destination File",
-        "DestinationFile-Help": "The filename to copy the file to.  If empty, the original filename will be used",
-        "CopyFolder": "Copy Folder",
-        "CopyFolder-Help": "If the relative library folder structure should be copied too",
-        "AdditionalFiles": "Additional Files",
-        "AdditionalFiles-Help": "Additional files to copy from the directory to the new directory.\nEach value can contain a combination of valid literal path and wildcard (* and ?) characters, but it doesn''t support regular expressions.",
-        "AdditionalFilesFromOriginal": "Original Directory",
-        "AdditionalFilesFromOriginal-Help": "If the additional files should be copied from the working directory or from the original directory.  Turn on for original directory.",
-        "PreserverOriginalDates": "Preserve Dates",
-        "PreserverOriginalDates-Help": "If the original creation time and last write time of the original input file should be preserved."
-      }
-    },
-    "DeleteSourceDirectory": {
-      "Label": "Delete Source Folder",
-      "Outputs": {
-        "1": "Source directory deleted",
-        "2": "Directory was NOT deleted"
+      "DeleteSourceDirectory": {
+        "Label": "Delete Source Folder",
+        "Outputs": {
+          "1": "Source directory deleted",
+          "2": "Directory was NOT deleted"
+        },
+        "Description": "Deletes the source folder of the original library file",
+        "Fields": {
+          "IfEmpty": "If Empty",
+          "IfEmpty-Help": "Only delete the source folder if the it is empty",
+          "IncludePatterns": "Include Patterns",
+          "IncludePatterns-Help": "Optional, if set only files matching these patterns will be counted to see if the folder is empty.   Any of these patterns can match."
+        }
       },
-      "Description": "Deletes the source folder of the original library file",
-      "Fields": {
-        "IfEmpty": "If Empty",
-        "IfEmpty-Help": "Only delete the source folder if the it is empty",
-        "IncludePatterns": "Include Patterns",
-        "IncludePatterns-Help": "Optional, if set only files matching these patterns will be counted to see if the folder is empty.   Any of these patterns can match."
-      }
-    },
-    "Executor": {
-      "Description": "Execute the following process against the file.\nOutput 1: The process returned the success exit code\nOutput 2: The process return a non-successful exit code.",
-      "Outputs": {
-        "1": "Process returned success",
-        "2": "Process returned failure"
+      "Executor": {
+        "Description": "Execute the following process against the file.\nOutput 1: The process returned the success exit code\nOutput 2: The process return a non-successful exit code.",
+        "Outputs": {
+          "1": "Process returned success",
+          "2": "Process returned failure"
+        },
+        "Fields": {
+          "FileName": "File Name",
+          "FileName-Help": "The name of the file to execute",
+          "Arguments": "Arguments",
+          "Arguments-Help": "The arguments to be passed to the process to execute",
+          "WorkingDirectory": "Working Folder",
+          "WorkingDirectory-Help": "The folder where the process will be executed from",
+          "SuccessCode": "Success Code",
+          "SuccessCode-Help": "The exit code of the process indicating the process was successful.  Usually this should be 0.",
+          "Timeout": "Timeout",
+          "Timeout-Help": "How long the process can run for before being terminated.  Use 0 for no timeout.",
+          "Timeout-Suffix": "seconds",
+          "OutputVariable": "Output Variable",
+          "OutputVariable-Help": "An optional variable name to store the process output into",
+          "OutputErrorVariable": "Output Error Variable",
+          "OutputErrorVariable-Help": "An optional variable name to store the process error output into"
+        }
       },
-      "Fields": {
-        "FileName": "File Name",
-        "FileName-Help": "The name of the file to execute",
-        "Arguments": "Arguments",
-        "Arguments-Help": "The arguments to be passed to the process to execute",
-        "WorkingDirectory": "Working Folder",
-        "WorkingDirectory-Help": "The folder where the process will be executed from",
-        "SuccessCode": "Success Code",
-        "SuccessCode-Help": "The exit code of the process indicating the process was successful.  Usually this should be 0.",
-        "Timeout": "Timeout",
-        "Timeout-Help": "How long the process can run for before being terminated.  Use 0 for no timeout.",
-        "Timeout-Suffix": "seconds",
-        "OutputVariable": "Output Variable",
-        "OutputVariable-Help": "An optional variable name to store the process output into",
-        "OutputErrorVariable": "Output Error Variable",
-        "OutputErrorVariable-Help": "An optional variable name to store the process error output into"
-      }
-    },
-    "DirectoryDateCompare": {
-      "Description": "Checks if the directory creation or last write time matches the specified date constraint.",
-      "Outputs": {
-        "1": "Matches the date constraint.",
-        "2": "Does not match the date constraint."
+      "DirectoryDateCompare": {
+        "Description": "Checks if the directory creation or last write time matches the specified date constraint.",
+        "Outputs": {
+          "1": "Matches the date constraint.",
+          "2": "Does not match the date constraint."
+        },
+        "Fields": {
+          "Path": "Path",
+          "Path-Help": "The path to the folder to check.  Leave empty to check the current working file.\nIf a file is specified the directory containing the file will be checked.",
+          "Date": "Date",
+          "DateComparision": "Comparision"
+        }
       },
-      "Fields": {
-        "Path": "Path",
-        "Path-Help": "The path to the folder to check.  Leave empty to check the current working file.\nIf a file is specified the directory containing the file will be checked.",
-        "Date": "Date",
-        "DateComparision": "Comparision"
-      }
-    },
-    "FileDateCompare": {
-      "Description": "Checks if the file creation or last write time matches the specified date constraint.",
-      "Outputs": {
-        "1": "Matches the date constraint.",
-        "2": "Does not match the date constraint."
+      "FileDateCompare": {
+        "Description": "Checks if the file creation or last write time matches the specified date constraint.",
+        "Outputs": {
+          "1": "Matches the date constraint.",
+          "2": "Does not match the date constraint."
+        },
+        "Fields": {
+          "FileName": "File Name",
+          "FileName-Help": "The file to check.  Leave empty to check the current working file.",
+          "Date": "Date",
+          "DateComparision": "Comparision"
+        }
       },
-      "Fields": {
-        "FileName": "File Name",
-        "FileName-Help": "The file to check.  Leave empty to check the current working file.",
-        "Date": "Date",
-        "DateComparision": "Comparision"
-      }
-    },
-    "FileExtension": {
-      "Description": "Checks if the file has one of the configured extensions.\n\nOutput 1: Matches\nOutput 2: Does not match",
-      "Outputs": {
-        "1": "Extension match",
-        "2": "Extension did not match"
+      "FileExtension": {
+        "Description": "Checks if the file has one of the configured extensions.\n\nOutput 1: Matches\nOutput 2: Does not match",
+        "Outputs": {
+          "1": "Extension match",
+          "2": "Extension did not match"
+        },
+        "Fields": {
+          "Extensions": "Extensions",
+          "Extensions-Help": "A list of case insensitive file extensions that will be matched against.\nOutput 1 Matches\nOutput 2: Does not match"
+        }
       },
-      "Fields": {
-        "Extensions": "Extensions",
-        "Extensions-Help": "A list of case insensitive file extensions that will be matched against.\nOutput 1 Matches\nOutput 2: Does not match"
-      }
-    },
-    "FileExists": {
-      "Description": "Checks if a file exists\n\nOutput 1: File exists\nOutput 2: File does not exist",
-      "Outputs": {
-        "1": "File exists",
-        "2": "File does not exist"
+      "FileExists": {
+        "Description": "Checks if a file exists\n\nOutput 1: File exists\nOutput 2: File does not exist",
+        "Outputs": {
+          "1": "File exists",
+          "2": "File does not exist"
+        },
+        "Fields": {
+          "FileName": "File Name",
+          "FileName-Help": "The file to check.  Leave empty to check the current working file."
+        }
       },
-      "Fields": {
-        "FileName": "File Name",
-        "FileName-Help": "The file to check.  Leave empty to check the current working file."
-      }
-    },
-    "HasHardLinks": {
-      "Description": "Checks if a file has hard links to it or not",
-      "Outputs": {
-        "1": "Hard links detected",
-        "2": "No hard links detected"
+      "HasHardLinks": {
+        "Description": "Checks if a file has hard links to it or not",
+        "Outputs": {
+          "1": "Hard links detected",
+          "2": "No hard links detected"
+        },
+        "Fields": {
+          "FileName": "File Name",
+          "FileName-Help": "The file to check.  Leave empty to check the current working file.",
+          "Count": "Count",
+          "Count-Help": "The number of hard links required to call output 1."
+        }
       },
-      "Fields": {
-        "FileName": "File Name",
-        "FileName-Help": "The file to check.  Leave empty to check the current working file.",
-        "Count": "Count",
-        "Count-Help": "The number of hard links required to call output 1."
-      }
-    },
-    "Delete": {
-      "Description": "Deletes a file or folder",
-      "Outputs": {
-        "1": "File deleted"
+      "Delete": {
+        "Description": "Deletes a file or folder",
+        "Outputs": {
+          "1": "File deleted"
+        },
+        "Fields": {
+          "FileName": "Path",
+          "FileName-Help": "A path to either a file or folder to delete.\n\nIf left blank the current working file will be deleted."
+        }
       },
-      "Fields": {
-        "FileName": "Path",
-        "FileName-Help": "A path to either a file or folder to delete.\n\nIf left blank the current working file will be deleted."
-      }
-    },
-    "DirectoryIterator": {
-      "Description": "Iterates all files in a given directory and executes those files against a sub flow.",
-      "Outputs": {
-        "1": "Directory files iterated"
+      "DirectoryIterator": {
+        "Description": "Iterates all files in a given directory and executes those files against a sub flow.",
+        "Outputs": {
+          "1": "Directory files iterated"
+        },
+        "Fields": {
+          "Flow": "Flow",
+          "Flow-Help": "The sub flow to execute the files against.",
+          "Directory": "Directory",
+          "Directory-Help": "The directory whose files will be iterated.",
+          "Pattern": "Pattern",
+          "Pattern-Help": "Any optional pattern to limit the files for iteration, this can be a wildcard pattern starting with a `*` or a regular expression.",
+          "Recursive": "Recursive",
+          "Recursive-Help": "If files in all sub directories should also be iterated, or if only the top level files should be iterated."
+        }
       },
-      "Fields": {
-        "Flow": "Flow",
-        "Flow-Help": "The sub flow to execute the files against.",
-        "Directory": "Directory",
-        "Directory-Help": "The directory whose files will be iterated.",
-        "Pattern": "Pattern",
-        "Pattern-Help": "Any optional pattern to limit the files for iteration, this can be a wildcard pattern starting with a `*` or a regular expression.",
-        "Recursive": "Recursive",
-        "Recursive-Help": "If files in all sub directories should also be iterated, or if only the top level files should be iterated."
-      }
-    },
-    "FailFlow": {
-      "Description": "Fails a flow immediately, useful if you want a certain path to just fail.",
-      "Fields": {
-        "Reason": "Reason",
-        "Reason-Help": "An optional reason to record why the flow failed."
-      }
-    },
-    "FileSize": {
-      "Description": "Checks if the file size matches the configured parameters. The values are in megabytes.\n\nOutput 1: Matches\nOutput 2: Does not match",
-      "Outputs": {
-        "1": "File size within range",
-        "2": "File size not within range"
+      "FailFlow": {
+        "Description": "Fails a flow immediately, useful if you want a certain path to just fail.",
+        "Fields": {
+          "Reason": "Reason",
+          "Reason-Help": "An optional reason to record why the flow failed."
+        }
       },
-      "Fields": {
-        "Comparison": "Comparison",
-        "Lower": "Greater Than",
-        "Lower-Suffix": "MB",
-        "Lower-Help": "The value it must be greater than this number of megabytes",
-        "Upper": "Less Than",
-        "Upper-Suffix": "MB",
-        "Upper-Help": "The value it must be less than than this number of megabytes. Leave as 0 to not test the upper limit."
-      }
-    },
-    "FileSizeCompare": {
-      "Description": "Checks if the file size has changed sized from the original file.",
-      "Outputs": {
-        "1": "Smaller than original",
-        "2": "Same size as original",
-        "3": "Larger than original"
-      }
-    },
-    "FileSizeWithin": {
-      "Description": "Checks if the new file size is within the allowed range of the original file size.",
-      "Value": "Value",
-      "Value-Help": "The difference allowed for the file size, this value can be either plus or minus this difference.",
-      "Outputs": {
-        "1": "File size is within allowed range",
-        "2": "File size is not within allowed range"
-      }
-    },
-    "Function": {
-      "Outputs": {
-        "1": "returned 1",
-        "2": "returned 2",
-        "3": "returned 3",
-        "4": "returned 4",
-        "5": "returned 5",
-        "6": "returned 6",
-        "7": "returned 7",
-        "8": "returned 8",
-        "9": "returned 9",
-        "10": "returned 10"
+      "FileSize": {
+        "Description": "Checks if the file size matches the configured parameters. The values are in megabytes.\n\nOutput 1: Matches\nOutput 2: Does not match",
+        "Outputs": {
+          "1": "File size within range",
+          "2": "File size not within range"
+        },
+        "Fields": {
+          "Comparison": "Comparison",
+          "Lower": "Greater Than",
+          "Lower-Suffix": "MB",
+          "Lower-Help": "The value it must be greater than this number of megabytes",
+          "Upper": "Less Than",
+          "Upper-Suffix": "MB",
+          "Upper-Help": "The value it must be less than than this number of megabytes. Leave as 0 to not test the upper limit."
+        }
       },
-      "Fields": {
-        "Outputs": "Outputs",
-        "Template": "Template",
-        "Template-Help": "WARNING: This will replace whatever is in the code block with the template you select.",
-        "Code": "Code",
-        "Code-Help": "return -1 for error and flow to stop.  return 0 for flow to complete.  return 1 or more for the desired output to be called"
-      }
-    },
-    "GotoFlow": {
-      "Description": "This lets you switch to a different flow to process.  This flow will exit and the parameters and working file will be passed into the new Flow",
-      "Fields": {
-        "Flow": "Flow",
-        "UpdateFlowUsed": "Update Flow",
-        "UpdateFlowUsed-Help": "If the files `Flow` should be updated to reference this new Flow or leave it as the original Flow."
-      }
-    },
-    "Reprocess": {
-      "Description": "The flow element allows you to reprocess the original library file with a different processing node.\n\n If the same processing node is selected as the one currently processing the file, the flow will fail.",
-      "Fields": {
-        "Node": "Node",
-        "Node-Help": "The processing node to process this file."
-      }
-    },
-    "IsProcessingOnNode": {
-      "Description": "Checks if the flow is currently processing on a specified processing node.",
-      "Fields": {
-        "Node": "Node",
-        "Node-Help": "The processing node to check."
+      "FileSizeCompare": {
+        "Description": "Checks if the file size has changed sized from the original file.",
+        "Outputs": {
+          "1": "Smaller than original",
+          "2": "Same size as original",
+          "3": "Larger than original"
+        }
       },
-      "Outputs": {
-        "1": "Is processing on node",
-        "2": "Is not processing on node"
-      }
-    },
-    "IsDocker": {
-      "Description": "Determines if this flow is running on Docker",
-      "Outputs": {
-        "1": "Is running on Docker",
-        "2": "Is not running on Docker"
-      }
-    },
-    "IsLinux": {
-      "Description": "Determines if this flow is running on Linux",
-      "Outputs": {
-        "1": "Is running on Linux",
-        "2": "Is not running on Linux"
-      }
-    },
-    "IsMacOS": {
-      "Label": "Is MacOS",
-      "Description": "Determines if this flow is running on MacOS",
-      "Outputs": {
-        "1": "Is running on MacOS",
-        "2": "Is not running on MacOS"
-      }
-    },
-    "IsWindows": {
-      "Description": "Determines if this flow is running on Windows",
-      "Outputs": {
-        "1": "Is running on Windows",
-        "2": "Is not running on Windows"
-      }
-    },
-    "Log": {
-      "Description": "Logs a message to the flow log",
-      "Outputs": {
-        "1": "Message logged"
-      },
-      "Fields": {
-        "LogType": "Type",
-        "Message": "Message"
-      }
-    },
-    "Matches": {
-      "Description": "Compares a set of values and matches conditions to see which output should be called",
-      "Fields": {
-        "MatchConditions": "",
-        "MatchConditionsKey": "Value",
-        "MatchConditionsValue": "Expression",
-        "MatchConditions-Help": "The matches to test which output should be called."
-      }
-    },
-    "MoveFile": {
-      "Description": "Moves a file to the destination folder",
-      "Outputs": {
-        "1": "File moved",
-        "2": "File moved, however original file could not be deleted"
-      },
-      "Fields": {
-        "InputFile": "File To Move",
-        "InputFile-Help": "The file to move, if left empty then the working file will be moved",
-        "InputFile-Placeholder": "Working File",
-        "DestinationPath": "Destination Folder",
-        "DestinationPath-Help": "The folder where the file will be moved to",
-        "DestinationFile": "Destination File",
-        "DestinationFile-Help": "The filename to move the file to.  If empty, the original filename will be used",
-        "MoveFolder": "Copy Folder",
-        "MoveFolder-Help": "If the relative library folder structure should be copied too",
-        "DeleteOriginal": "Delete Original",
-        "DeleteOriginal-Help": "If the original file should be deleted, this will only happen if the working file is different to the original file",
-        "AdditionalFiles": "Additional Files",
-        "AdditionalFiles-Help": "Additional files to move from the directory to the new directory.\nEach value can contain a combination of valid literal path and wildcard (* and ?) characters, but it doesn''t support regular expressions.",
-        "AdditionalFilesFromOriginal": "Original Directory",
-        "AdditionalFilesFromOriginal-Help": "If the additional files should be moved from the working directory or from the original directory.  Turn on for original directory.",
-        "PreserverOriginalDates": "Preserve Dates",
-        "PreserverOriginalDates-Help": "If the original creation time and last write time of the original input file should be preserved."
-      }
-    },
-    "OlderThan": {
-      "Description": "Checks if a folder is older than the range specified",
-      "Outputs": {
-        "1": "File is older",
-        "2": "File is not older"
-      },
-      "Fields": {
-        "Number": "Number",
-        "Unit": "Unit",
-        "Date": "Date"
-      }
-    },
-    "OriginalFile": {
-      "Description": "Sets the current working file in the flow to the original file that started the flow",
-      "Outputs": {
-        "1": "Working file set to original file"
-      }
-    },
-    "PatternMatch": {
-      "Description": "Tests the working file and original file against a regular expression.\n\nOutput 1: Matches expression\nOutput 2: Does not match",
-      "Outputs": {
-        "1": "Matches expression",
-        "2": "Does NOT match"
-      },
-      "Fields": {
-        "Pattern": "Pattern",
-        "Pattern-Help": "A regular expression, using the C# specification for regular expressions."
-      }
-    },
-    "PatternReplacer": {
-      "Label": "Filename Pattern Replacer",
-      "Description": "Lets you make replacements in the filename.  Can use regular expressions for replacements, or simple string replacements.\n\nOutput 1: Replacement done\nOutput 2: No replacement done",
-      "Outputs": {
-        "1": "Replacement done",
-        "2": "No replacement done"
-      },
-      "Fields": {
-        "Replacements": "Replacements",
-        "ReplacementsKey": "Pattern",
-        "ReplacementsValue": "Value",
-        "UseWorkingFileName": "Use Working Filename",
-        "UseWorkingFileName-Help": "If current working filename should be used, or if false, the original filename of the incoming file will be used."
-      }
-    },
-    "Random": {
-      "Label": "Random",
-      "Description": "Chooses a random output",
-      "Fields": {
-        "Outputs": "Outputs",
-        "Outputs-Help": "The number of outputs that could possible be called."
-      }
-    },
-    "ReplaceOriginal": {
-      "Description": "Replaces the original file with the working file.\n\nIf the extension is different on the working file, the original file will be deleted and the working file will be moved to the original with the new extension.\nE.g. from File.avi to File.mkv",
-      "Outputs": {
-        "1": "Original file replaced"
-      },
-      "Fields": {
-        "PreserverOriginalDates": "Preserve Dates",
-        "PreserverOriginalDates-Help": "If the original creation time and last write time of the original input file should be preserved."
-      }
-    },
-    "Renamer": {
-      "Description": "Renames the working file.\nVariables can be used by entering the key '{' inside the Pattern field.",
-      "Outputs": {
-        "1": "File renamed"
-      },
-      "Fields": {
-        "Pattern": "New Name",
-        "Pattern-Help": "The new name of the file.  Can use variables. Any empty () and '{}' will be removed.",
-        "DestinationPath": "Destination Folder",
-        "DestinationPath-Help": "If the file should be moved to a different folder.",
-        "LogOnly": "Log Only",
-        "LogOnly-Help": "Turn on if you just want to test this flow element without it actually renaming the file",
-        "CsvFile": "CSV File",
-        "CsvFile-Help": "Will append to this file the original name and the renamed file.  Useful when using ''Log Only'' to test the renamer before changing files."
-      }
-    },
-    "SetVariable": {
-      "Label": "Set Variable",
-      "Description": "Sets a variable in the flow.",
-      "Outputs": {
-        "1": "Variable set"
-      },
-      "Fields": {
-        "Variable": "Variable",
-        "Variable-Help": "The name of the variable to set",
+      "FileSizeWithin": {
+        "Description": "Checks if the new file size is within the allowed range of the original file size.",
         "Value": "Value",
-        "Value-Help": "The value of the variable to set."
-      }
-    },
-    "SetWorkingFile": {
-      "Label": "Set Working File",
-      "Description": "Updates the current working file to the one specified.",
-      "Outputs": {
-        "1": "Working File Set"
+        "Value-Help": "The difference allowed for the file size, this value can be either plus or minus this difference.",
+        "Outputs": {
+          "1": "File size is within allowed range",
+          "2": "File size is not within allowed range"
+        }
       },
-      "Fields": {
-        "File": "File",
-        "File-Description": "The path to the new working file or folder.",
-        "DontDeletePrevious": "Don't Delete Previous",
-        "DontDeletePrevious-Help": "If the previous *temporary* working file should *not* be deleted.\nOnly temporary files will be deleted, files that have been created by FileFlows into the runners temporary directory."
-      }
-    },
-    "Sleep": {
-      "Description": "Pauses the flow",
-      "Outputs": {
-        "1": "Flow resumed"
+      "Function": {
+        "Outputs": {
+          "1": "returned 1",
+          "2": "returned 2",
+          "3": "returned 3",
+          "4": "returned 4",
+          "5": "returned 5",
+          "6": "returned 6",
+          "7": "returned 7",
+          "8": "returned 8",
+          "9": "returned 9",
+          "10": "returned 10"
+        },
+        "Fields": {
+          "Outputs": "Outputs",
+          "Template": "Template",
+          "Template-Help": "WARNING: This will replace whatever is in the code block with the template you select.",
+          "Code": "Code",
+          "Code-Help": "return -1 for error and flow to stop.  return 0 for flow to complete.  return 1 or more for the desired output to be called"
+        }
       },
-      "Fields": {
-        "Milliseconds": "Milliseconds",
-        "Milliseconds-Help": "How long to sleep the flow for.  Must be between 1 millisecond and 1 hour"
-      }
-    },
-    "Touch": {
-      "Description": "Touches a file or directory and sets the last write time to now.",
-      "Outputs": {
-        "1": "Successfully touched item"
+      "GotoFlow": {
+        "Description": "This lets you switch to a different flow to process.  This flow will exit and the parameters and working file will be passed into the new Flow",
+        "Fields": {
+          "Flow": "Flow",
+          "UpdateFlowUsed": "Update Flow",
+          "UpdateFlowUsed-Help": "If the files `Flow` should be updated to reference this new Flow or leave it as the original Flow."
+        }
       },
-      "Fields": {
-        "FileName": "File Name",
-        "FileName-Help": "Full filename of file or folder to touch.\nIf left blank the working file will be used."
-      }
-    },
-    "VariableMatch": {
-      "Description": "Tests if a input matches a stored Variable",
-      "Fields": {
-        "Variable": "Variable",
-        "Variable-Help": "The variable to match against",
-        "Input": "Input",
-        "Input-Help": "The input to match the variable against."
+      "Reprocess": {
+        "Description": "The flow element allows you to reprocess the original library file with a different processing node.\n\n If the same processing node is selected as the one currently processing the file, the flow will fail.",
+        "Fields": {
+          "Node": "Node",
+          "Node-Help": "The processing node to process this file."
+        }
       },
-      "Outputs": {
-        "1": "Input matched variable",
-        "2": "Input did not match variable"
-      }
-    },
-    "WebRequest": {
-      "Description": "Allows you to send a web request",
-      "Outputs": {
-        "1": "Successfully sent",
-        "2": "Request returned a non-successful status code"
+      "IsProcessingOnNode": {
+        "Description": "Checks if the flow is currently processing on a specified processing node.",
+        "Fields": {
+          "Node": "Node",
+          "Node-Help": "The processing node to check."
+        },
+        "Outputs": {
+          "1": "Is processing on node",
+          "2": "Is not processing on node"
+        }
       },
-      "Fields": {
-        "Url": "URL",
-        "Url-Help": "The URL of the request",
-        "Method": "Method",
-        "Method-Help": "The web method to use when sending this request",
-        "ContentType": "Content Type",
-        "ContentType-Help": "The Content-Type of the message to send",
-        "Headers": "Headers",
-        "Headers-Help": "Optional headers to send with the request",
-        "HeadersKey": "Key",
-        "HeadersValue": "Value",
-        "Body": "Body",
-        "Body-Help": "The body of the request being sent.  Variables can be used in this field."
-      }
-    },
-    "Unpack": {
-      "Description": "Allows you to unpack an archive (zip, rar, tar, etc)",
-      "Outputs": {
-        "1": "File Unpacked"
+      "IsDocker": {
+        "Description": "Determines if this flow is running on Docker",
+        "Outputs": {
+          "1": "Is running on Docker",
+          "2": "Is not running on Docker"
+        }
       },
-      "Fields": {
-        "DestinationPath": "Destination Folder",
-        "DestinationPath-Help": "The destination folder where to unpack the file.",
-        "File": "File",
-        "File-Help": "The name of the file to unpack.  Can be left blank and if so the current working file will be used."
-      }
-    },
-    "Zip": {
-      "Description": "Allows you to zip the input",
-      "Outputs": {
-        "1": "Zip created"
+      "IsLinux": {
+        "Description": "Determines if this flow is running on Linux",
+        "Outputs": {
+          "1": "Is running on Linux",
+          "2": "Is not running on Linux"
+        }
       },
-      "Fields": {
-        "DestinationPath": "Destination Folder",
-        "DestinationPath-Help": "The destination folder where to put the zip file.  If blank, the zip will be placed in the library root.",
-        "DestinationFile": "Destination File",
-        "DestinationFile-Help": "The filename of the newly created zip.  If blank, the name of the item will be used as the zip file.",
-        "Path": "Path",
-        "Path-Help": "The path to the file or folder to zip.  If blank, the working file will be zipped.",
-        "SetWorkingFile": "Set Working File",
-        "SetWorkingFile-Help": "If the newly created zip should become the new working file."
-      }
-    },
-    "SevenZip": {
-      "Label": "7-Zip",
-      "Description": "Allows you to 7zip the input",
-      "Outputs": {
-        "1": "7zip created"
+      "IsMacOS": {
+        "Label": "Is MacOS",
+        "Description": "Determines if this flow is running on MacOS",
+        "Outputs": {
+          "1": "Is running on MacOS",
+          "2": "Is not running on MacOS"
+        }
       },
-      "Fields": {
-        "DestinationPath": "Destination Folder",
-        "DestinationPath-Help": "The destination folder where to put the 7zip file.  If blank, the 7zip will be placed in the library root.",
-        "DestinationFile": "Destination File",
-        "DestinationFile-Help": "The filename of the newly created 7zip.  If blank, the name of the item will be used as the 7zip file.",
-        "CompressionLevel": "Compression Level",
-        "CompressionLevel-Help": "The level of compression to use when compressing the level.",
-        "CompressionMethod": "Compression Method",
-        "CompressionMethod-Help": "The compression method used for compression, LZMA2 is recommended."
-      }
-    },
-    "IfBoolean": {
-      "Description": "Tests if a Variable is true or false",
-      "Outputs": {
-        "1": "True",
-        "2": "False"
+      "IsWindows": {
+        "Description": "Determines if this flow is running on Windows",
+        "Outputs": {
+          "1": "Is running on Windows",
+          "2": "Is not running on Windows"
+        }
       },
-      "Fields": {
-        "Variable": "Variable",
-        "Variable-Help": "The name of the variable to check"
-      }
-    },
-    "IfString": {
-      "Description": "Tests if a Variable is matches a string",
-      "Outputs": {
-        "1": "Matched string 1",
-        "2": "Matched string 2",
-        "3": "Matched string 3",
-        "4": "Matched string 4",
-        "5": "Matched string 5",
-        "6": "Matched string 6",
-        "7": "Matched string 7",
-        "8": "Matched string 8",
-        "9": "Matched string 9",
-        "10": "Matched string 10"
+      "Log": {
+        "Description": "Logs a message to the flow log",
+        "Outputs": {
+          "1": "Message logged"
+        },
+        "Fields": {
+          "LogType": "Type",
+          "Message": "Message"
+        }
       },
-      "Fields": {
-        "Variable": "Variable",
-        "Variable-Help": "The name of the variable to check",
-        "Outputs": "Outputs",
-        "Outputs-Help": "This should match the number of options there are",
-        "Options": "Options",
-        "Options-Help": "The string to match against."
-      }
-    },
-    "WriteText": {
-      "Description": "Writes text to a file",
-      "Outputs": {
-        "1": "Text written to file"
+      "Matches": {
+        "Description": "Compares a set of values and matches conditions to see which output should be called",
+        "Fields": {
+          "MatchConditions": "",
+          "MatchConditionsKey": "Value",
+          "MatchConditionsValue": "Expression",
+          "MatchConditions-Help": "The matches to test which output should be called."
+        }
       },
-      "Fields": {
-        "File": "File",
-        "File-Help": "The file to write the text to.",
-        "Text": "Text",
-        "Text-Help": "The text to write to the file.  If left blank the current working file full path will be written."
+      "MoveFile": {
+        "Description": "Moves a file to the destination folder",
+        "Outputs": {
+          "1": "File moved",
+          "2": "File moved, however original file could not be deleted"
+        },
+        "Fields": {
+          "InputFile": "File To Move",
+          "InputFile-Help": "The file to move, if left empty then the working file will be moved",
+          "InputFile-Placeholder": "Working File",
+          "DestinationPath": "Destination Folder",
+          "DestinationPath-Help": "The folder where the file will be moved to",
+          "DestinationFile": "Destination File",
+          "DestinationFile-Help": "The filename to move the file to.  If empty, the original filename will be used",
+          "MoveFolder": "Copy Folder",
+          "MoveFolder-Help": "If the relative library folder structure should be copied too",
+          "DeleteOriginal": "Delete Original",
+          "DeleteOriginal-Help": "If the original file should be deleted, this will only happen if the working file is different to the original file",
+          "AdditionalFiles": "Additional Files",
+          "AdditionalFiles-Help": "Additional files to move from the directory to the new directory.\nEach value can contain a combination of valid literal path and wildcard (* and ?) characters, but it doesn''t support regular expressions.",
+          "AdditionalFilesFromOriginal": "Original Directory",
+          "AdditionalFilesFromOriginal-Help": "If the additional files should be moved from the working directory or from the original directory.  Turn on for original directory.",
+          "PreserverOriginalDates": "Preserve Dates",
+          "PreserverOriginalDates-Help": "If the original creation time and last write time of the original input file should be preserved."
+        }
+      },
+      "OlderThan": {
+        "Description": "Checks if a folder is older than the range specified",
+        "Outputs": {
+          "1": "File is older",
+          "2": "File is not older"
+        },
+        "Fields": {
+          "Number": "Number",
+          "Unit": "Unit",
+          "Date": "Date"
+        }
+      },
+      "OriginalFile": {
+        "Description": "Sets the current working file in the flow to the original file that started the flow",
+        "Outputs": {
+          "1": "Working file set to original file"
+        }
+      },
+      "PatternMatch": {
+        "Description": "Tests the working file and original file against a regular expression.\n\nOutput 1: Matches expression\nOutput 2: Does not match",
+        "Outputs": {
+          "1": "Matches expression",
+          "2": "Does NOT match"
+        },
+        "Fields": {
+          "Pattern": "Pattern",
+          "Pattern-Help": "A regular expression, using the C# specification for regular expressions."
+        }
+      },
+      "PatternReplacer": {
+        "Label": "Filename Pattern Replacer",
+        "Description": "Lets you make replacements in the filename.  Can use regular expressions for replacements, or simple string replacements.\n\nOutput 1: Replacement done\nOutput 2: No replacement done",
+        "Outputs": {
+          "1": "Replacement done",
+          "2": "No replacement done"
+        },
+        "Fields": {
+          "Replacements": "Replacements",
+          "ReplacementsKey": "Pattern",
+          "ReplacementsValue": "Value",
+          "UseWorkingFileName": "Use Working Filename",
+          "UseWorkingFileName-Help": "If current working filename should be used, or if false, the original filename of the incoming file will be used."
+        }
+      },
+      "Random": {
+        "Label": "Random",
+        "Description": "Chooses a random output",
+        "Fields": {
+          "Outputs": "Outputs",
+          "Outputs-Help": "The number of outputs that could possible be called."
+        }
+      },
+      "ReplaceOriginal": {
+        "Description": "Replaces the original file with the working file.\n\nIf the extension is different on the working file, the original file will be deleted and the working file will be moved to the original with the new extension.\nE.g. from File.avi to File.mkv",
+        "Outputs": {
+          "1": "Original file replaced"
+        },
+        "Fields": {
+          "PreserverOriginalDates": "Preserve Dates",
+          "PreserverOriginalDates-Help": "If the original creation time and last write time of the original input file should be preserved."
+        }
+      },
+      "Renamer": {
+        "Description": "Renames the working file.\nVariables can be used by entering the key '{' inside the Pattern field.",
+        "Outputs": {
+          "1": "File renamed"
+        },
+        "Fields": {
+          "Pattern": "New Name",
+          "Pattern-Help": "The new name of the file.  Can use variables. Any empty () and '{}' will be removed.",
+          "DestinationPath": "Destination Folder",
+          "DestinationPath-Help": "If the file should be moved to a different folder.",
+          "LogOnly": "Log Only",
+          "LogOnly-Help": "Turn on if you just want to test this flow element without it actually renaming the file",
+          "CsvFile": "CSV File",
+          "CsvFile-Help": "Will append to this file the original name and the renamed file.  Useful when using ''Log Only'' to test the renamer before changing files."
+        }
+      },
+      "SetVariable": {
+        "Label": "Set Variable",
+        "Description": "Sets a variable in the flow.",
+        "Outputs": {
+          "1": "Variable set"
+        },
+        "Fields": {
+          "Variable": "Variable",
+          "Variable-Help": "The name of the variable to set",
+          "Value": "Value",
+          "Value-Help": "The value of the variable to set."
+        }
+      },
+      "SetWorkingFile": {
+        "Label": "Set Working File",
+        "Description": "Updates the current working file to the one specified.",
+        "Outputs": {
+          "1": "Working File Set"
+        },
+        "Fields": {
+          "File": "File",
+          "File-Description": "The path to the new working file or folder.",
+          "DontDeletePrevious": "Don't Delete Previous",
+          "DontDeletePrevious-Help": "If the previous *temporary* working file should *not* be deleted.\nOnly temporary files will be deleted, files that have been created by FileFlows into the runners temporary directory."
+        }
+      },
+      "Sleep": {
+        "Description": "Pauses the flow",
+        "Outputs": {
+          "1": "Flow resumed"
+        },
+        "Fields": {
+          "Milliseconds": "Milliseconds",
+          "Milliseconds-Help": "How long to sleep the flow for.  Must be between 1 millisecond and 1 hour"
+        }
+      },
+      "Touch": {
+        "Description": "Touches a file or directory and sets the last write time to now.",
+        "Outputs": {
+          "1": "Successfully touched item"
+        },
+        "Fields": {
+          "FileName": "File Name",
+          "FileName-Help": "Full filename of file or folder to touch.\nIf left blank the working file will be used."
+        }
+      },
+      "VariableMatch": {
+        "Description": "Tests if a input matches a stored Variable",
+        "Fields": {
+          "Variable": "Variable",
+          "Variable-Help": "The variable to match against",
+          "Input": "Input",
+          "Input-Help": "The input to match the variable against."
+        },
+        "Outputs": {
+          "1": "Input matched variable",
+          "2": "Input did not match variable"
+        }
+      },
+      "WebRequest": {
+        "Description": "Allows you to send a web request",
+        "Outputs": {
+          "1": "Successfully sent",
+          "2": "Request returned a non-successful status code"
+        },
+        "Fields": {
+          "Url": "URL",
+          "Url-Help": "The URL of the request",
+          "Method": "Method",
+          "Method-Help": "The web method to use when sending this request",
+          "ContentType": "Content Type",
+          "ContentType-Help": "The Content-Type of the message to send",
+          "Headers": "Headers",
+          "Headers-Help": "Optional headers to send with the request",
+          "HeadersKey": "Key",
+          "HeadersValue": "Value",
+          "Body": "Body",
+          "Body-Help": "The body of the request being sent.  Variables can be used in this field."
+        }
+      },
+      "Unpack": {
+        "Description": "Allows you to unpack an archive (zip, rar, tar, etc)",
+        "Outputs": {
+          "1": "File Unpacked"
+        },
+        "Fields": {
+          "DestinationPath": "Destination Folder",
+          "DestinationPath-Help": "The destination folder where to unpack the file.",
+          "File": "File",
+          "File-Help": "The name of the file to unpack.  Can be left blank and if so the current working file will be used."
+        }
+      },
+      "Zip": {
+        "Description": "Allows you to zip the input",
+        "Outputs": {
+          "1": "Zip created"
+        },
+        "Fields": {
+          "DestinationPath": "Destination Folder",
+          "DestinationPath-Help": "The destination folder where to put the zip file.  If blank, the zip will be placed in the library root.",
+          "DestinationFile": "Destination File",
+          "DestinationFile-Help": "The filename of the newly created zip.  If blank, the name of the item will be used as the zip file.",
+          "Path": "Path",
+          "Path-Help": "The path to the file or folder to zip.  If blank, the working file will be zipped.",
+          "SetWorkingFile": "Set Working File",
+          "SetWorkingFile-Help": "If the newly created zip should become the new working file."
+        }
+      },
+      "SevenZip": {
+        "Label": "7-Zip",
+        "Description": "Allows you to 7zip the input",
+        "Outputs": {
+          "1": "7zip created"
+        },
+        "Fields": {
+          "DestinationPath": "Destination Folder",
+          "DestinationPath-Help": "The destination folder where to put the 7zip file.  If blank, the 7zip will be placed in the library root.",
+          "DestinationFile": "Destination File",
+          "DestinationFile-Help": "The filename of the newly created 7zip.  If blank, the name of the item will be used as the 7zip file.",
+          "CompressionLevel": "Compression Level",
+          "CompressionLevel-Help": "The level of compression to use when compressing the level.",
+          "CompressionMethod": "Compression Method",
+          "CompressionMethod-Help": "The compression method used for compression, LZMA2 is recommended."
+        }
+      },
+      "IfBoolean": {
+        "Description": "Tests if a Variable is true or false",
+        "Outputs": {
+          "1": "True",
+          "2": "False"
+        },
+        "Fields": {
+          "Variable": "Variable",
+          "Variable-Help": "The name of the variable to check"
+        }
+      },
+      "IfString": {
+        "Description": "Tests if a Variable is matches a string",
+        "Outputs": {
+          "1": "Matched string 1",
+          "2": "Matched string 2",
+          "3": "Matched string 3",
+          "4": "Matched string 4",
+          "5": "Matched string 5",
+          "6": "Matched string 6",
+          "7": "Matched string 7",
+          "8": "Matched string 8",
+          "9": "Matched string 9",
+          "10": "Matched string 10"
+        },
+        "Fields": {
+          "Variable": "Variable",
+          "Variable-Help": "The name of the variable to check",
+          "Outputs": "Outputs",
+          "Outputs-Help": "This should match the number of options there are",
+          "Options": "Options",
+          "Options-Help": "The string to match against."
+        }
+      },
+      "WriteText": {
+        "Description": "Writes text to a file",
+        "Outputs": {
+          "1": "Text written to file"
+        },
+        "Fields": {
+          "File": "File",
+          "File-Help": "The file to write the text to.",
+          "Text": "Text",
+          "Text-Help": "The text to write to the file.  If left blank the current working file full path will be written."
+        }
       }
     }
   }
