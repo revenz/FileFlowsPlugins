@@ -22,7 +22,7 @@
         }
       },
       "BatScript": {
-        "Label": "BAT Script",
+        "Label": "Batch (.bat)",
         "Description": "Allows you to execute a batch (.bat) script in a Windows environment.",
         "Outputs": {
           "1": "returned 1",
@@ -41,7 +41,7 @@
         }
       },
       "CSharpScript": {
-        "Label": "C# Script",
+        "Label": "C# Function",
         "Description": "Allows you to execute a C# code inside the Flow.",
         "Outputs": {
           "1": "returned 1",
@@ -60,7 +60,7 @@
         }
       },
       "ShellScript": {
-        "Label": "Shell Script",
+        "Label": "Shell (.sh))",
         "Description": "Allows you to execute a shell (.sh) script in a Unix-like environment.",
         "Outputs": {
           "1": "returned 1",
@@ -79,7 +79,7 @@
         }
       },
       "PowerShellScript": {
-        "Label": "PowerShell Script",
+        "Label": "PowerShell (.ps1)",
         "Description": "Allows you to execute a PowerShell (.ps1) script in a Windows environment.",
         "Outputs": {
           "1": "returned 1",

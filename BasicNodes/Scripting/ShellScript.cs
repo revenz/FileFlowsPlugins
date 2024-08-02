@@ -12,7 +12,7 @@ namespace FileFlows.BasicNodes.Scripting;
 public class ShellScript : ScriptBase
 {
     /// <inheritdoc />
-    public override string Icon => "svg:sh";
+    public override string Icon => "svg:bash";
     /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/shell-script";
 

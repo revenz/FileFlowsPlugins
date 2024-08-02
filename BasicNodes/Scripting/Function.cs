@@ -15,7 +15,7 @@ public class Function : Node
     /// <inheritdoc />
     public override FlowElementType Type => FlowElementType.Logic;
     /// <inheritdoc />
-    public override string Icon => "fas fa-code";
+    public override string Icon => "svg:javascript";
     /// <inheritdoc />
     public override bool FailureNode => true;
     /// <inheritdoc />

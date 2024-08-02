@@ -13,7 +13,7 @@ namespace FileFlows.BasicNodes.Scripting;
 public class BatScript : ScriptBase
 {
     /// <inheritdoc />
-    public override string Icon => "svg:bat";
+    public override string Icon => "svg:dos";
     /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/bat-script";
     /// <inheritdoc />

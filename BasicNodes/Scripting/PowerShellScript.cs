@@ -13,7 +13,7 @@ namespace FileFlows.BasicNodes.Scripting;
 public class PowerShellScript : ScriptBase
 {
     /// <inheritdoc />
-    public override string Icon => "svg:ps1";
+    public override string Icon => "svg:powershell";
     /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/powershell-script";
 
