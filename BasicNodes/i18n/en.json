@@ -25,19 +25,35 @@
         "Label": "BAT Script",
         "Description": "Allows you to execute a batch (.bat) script in a Windows environment.",
         "Outputs": {
-          "1": "Success - The batch script executed successfully with an exit code of 0.",
-          "2": "Failure - The batch script execution failed or returned a non-zero exit code."
+          "1": "returned 1",
+          "2": "returned 2",
+          "3": "returned 3",
+          "4": "returned 4",
+          "5": "returned 5",
+          "6": "returned 6",
+          "7": "returned 7",
+          "8": "returned 8",
+          "9": "returned 9",
+          "10": "returned 10"
         },
         "Fields": {
           "Code": "Code"
         }
       },
-      "ShScript": {
-        "Label": "SH Script",
+      "ShellScript": {
+        "Label": "Shell Script",
         "Description": "Allows you to execute a shell (.sh) script in a Unix-like environment.",
         "Outputs": {
-          "1": "Success - The shell script executed successfully with an exit code of 0.",
-          "2": "Failure - The shell script execution failed or returned a non-zero exit code."
+          "1": "returned 1",
+          "2": "returned 2",
+          "3": "returned 3",
+          "4": "returned 4",
+          "5": "returned 5",
+          "6": "returned 6",
+          "7": "returned 7",
+          "8": "returned 8",
+          "9": "returned 9",
+          "10": "returned 10"
         },
         "Fields": {
           "Code": "Code"
@@ -47,12 +63,39 @@
         "Label": "PowerShell Script",
         "Description": "Allows you to execute a PowerShell (.ps1) script in a Windows environment.",
         "Outputs": {
-          "1": "Success - The PowerShell script executed successfully with an exit code of 0.",
-          "2": "Failure - The PowerShell script execution failed or returned a non-zero exit code."
+          "1": "returned 1",
+          "2": "returned 2",
+          "3": "returned 3",
+          "4": "returned 4",
+          "5": "returned 5",
+          "6": "returned 6",
+          "7": "returned 7",
+          "8": "returned 8",
+          "9": "returned 9",
+          "10": "returned 10"
         },
         "Fields": {
           "Code": "Code"
         }
+      }
+    },
+    "CSharpScript": {
+      "Label": "Sea Sharp Script",
+      "Description": "Allows you to execute a C# code inside the Flow.",
+      "Outputs": {
+        "1": "returned 1",
+        "2": "returned 2",
+        "3": "returned 3",
+        "4": "returned 4",
+        "5": "returned 5",
+        "6": "returned 6",
+        "7": "returned 7",
+        "8": "returned 8",
+        "9": "returned 9",
+        "10": "returned 10"
+      },
+      "Fields": {
+        "Code": "Code"
       }
     },
     "CopyFile": {

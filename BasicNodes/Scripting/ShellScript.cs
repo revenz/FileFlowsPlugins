@@ -1,6 +1,5 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
 using BasicNodes.Scripting;
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
@@ -8,24 +7,24 @@ using FileFlows.Plugin.Attributes;
 namespace FileFlows.BasicNodes.Scripting;
 
 /// <summary>
-/// Flow element that executes a PowerShell script
+/// Flow element that executes a Shell script
 /// </summary>
-public class PowerShellScript : ScriptBase
+public class ShellScript : ScriptBase
 {
     /// <inheritdoc />
-    public override string Icon => "svg:ps1";
+    public override string Icon => "svg:sh";
     /// <inheritdoc />
-    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/powershell-script";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/shell-script";
 
     /// <inheritdoc />
-    protected override ScriptLanguage Language => ScriptLanguage.PowerShell;
-    
+    protected override ScriptLanguage Language => ScriptLanguage.Shell;
+
     /// <summary>
     /// Gets or sets the code to execute
     /// </summary>
     [Required]
     [DefaultValue(@"
-# A PowerShell script can communicate with FileFlows to determine which output to call next by using exit codes.
+# A Shell script can communicate with FileFlows to determine which output to call next by using exit codes.
 # Exit codes are zero-based, so:
 # Exit Code 0 corresponds to Output 1
 # Exit Code 1 corresponds to Output 2
@@ -33,20 +32,20 @@ public class PowerShellScript : ScriptBase
 # and so on. Exit codes outside the defined range will be treated as a failure output.
 
 # Replace {file.FullName} and {file.Orig.FullName} with actual values
-$WorkingFile = '{file.FullName}'
-$OriginalFile = '{file.Orig.FullName}'
+WorkingFile=""{file.FullName}""
+OriginalFile=""{file.Orig.FullName}""
 
 # Example commands using the variables
-Write-Output ""Working on file: $WorkingFile""
-Write-Output ""Original file location: $OriginalFile""
+echo ""Working on file: $WorkingFile""
+echo ""Original file location: $OriginalFile""
 
-# Add your actual PowerShell commands below
+# Add your actual shell commands below
 # Example: Copy the working file to a backup location
-# Copy-Item -Path $WorkingFile -Destination ""C:\Backup\$([System.IO.Path]::GetFileName($WorkingFile))""
+# cp ""$WorkingFile"" ""/path/to/backup/$(basename \""$WorkingFile\"")""
 
 # Set the exit code to 0
 exit 0
 ")]
-    [Code(2, "powershell")]
+    [Code(2, "sh")]
     public override string Code { get; set; }
 }
