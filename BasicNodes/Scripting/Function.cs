@@ -13,7 +13,7 @@ public class Function : Node
     /// <inheritdoc />
     public override int Inputs => 1;
     /// <inheritdoc />
-    public override FlowElementType Type => FlowElementType.Logic;
+    public override FlowElementType Type => FlowElementType.Process;
     /// <inheritdoc />
     public override string Icon => "svg:javascript";
     /// <inheritdoc />
