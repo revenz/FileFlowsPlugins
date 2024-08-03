@@ -21,8 +21,6 @@ public class HasHardLinks: Node
     public override string Icon => "fas fa-link";
     /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/has-hard-links";
-    /// <inheritdoc />
-    public override bool NoEditorOnAdd => true;
 
     /// <summary>
     /// Gets or sets the name of the file to check
@@ -49,7 +47,7 @@ public class HasHardLinks: Node
             return -1;
         }
 
-        int count = Math.Min(1, Count);
+        int count = Math.Max(1, Count);
         args.Logger?.ILog("Required hard links: " + count);
 
         bool hasHardLinks = false;
