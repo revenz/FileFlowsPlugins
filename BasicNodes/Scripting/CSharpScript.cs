@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
 
-namespace BasicNodes.Scripting;
+namespace FileFlows.BasicNodes.Scripting;
 
 /// <summary>
 /// Flow element that executes a CSharp script
@@ -18,6 +18,9 @@ public class CSharpScript : ScriptBase
 
     /// <inheritdoc />
     protected override ScriptLanguage Language => ScriptLanguage.CSharp;
+
+    /// <inheritdoc />
+    public override string Group => "Scripting:1";
 
     /// <summary>
     /// Gets or sets the code to execute

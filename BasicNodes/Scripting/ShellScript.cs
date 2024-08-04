@@ -1,6 +1,5 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using BasicNodes.Scripting;
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
 

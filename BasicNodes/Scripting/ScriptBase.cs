@@ -2,7 +2,7 @@ using System.ComponentModel;
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
 
-namespace BasicNodes.Scripting;
+namespace FileFlows.BasicNodes.Scripting;
 
 /// <summary>
 /// Base for a script
@@ -46,6 +46,7 @@ public abstract class ScriptBase : Node
         var result = args.ScriptExecutor.Execute(new()
         {
             Args = args,
+            Logger = args.Logger,
             Code = Language is ScriptLanguage.CSharp or ScriptLanguage.JavaScript ? Code : args.ReplaceVariables(Code),
             ScriptType = ScriptType.Flow,
             Language = Language

@@ -1,7 +1,5 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
-using BasicNodes.Scripting;
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
 
@@ -10,12 +8,12 @@ namespace FileFlows.BasicNodes.Scripting;
 /// <summary>
 /// Flow element that executes a bat script
 /// </summary>
-public class BatScript : ScriptBase
+public class BatchScript : ScriptBase
 {
     /// <inheritdoc />
     public override string Icon => "svg:dos";
     /// <inheritdoc />
-    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/bat-script";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/scripting/batch-script";
     /// <inheritdoc />
     protected override ScriptLanguage Language => ScriptLanguage.Batch;
     

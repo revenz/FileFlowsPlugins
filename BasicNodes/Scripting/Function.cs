@@ -19,10 +19,10 @@ public class Function : Node
     /// <inheritdoc />
     public override bool FailureNode => true;
     /// <inheritdoc />
-    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/function";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/scripting/function";
     /// <inheritdoc />
-    public override string Group => "Scripting";
-
+    public override string Group => "Scripting:0";
+    
     /// <summary>
     /// Gets or sets the number of outputs
     /// </summary>

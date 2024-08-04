@@ -1,7 +1,5 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
-using BasicNodes.Scripting;
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
 

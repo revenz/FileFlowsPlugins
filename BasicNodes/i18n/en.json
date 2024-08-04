@@ -21,8 +21,8 @@
           "1": "Library Folder"
         }
       },
-      "BatScript": {
-        "Label": "Batch (.bat)",
+      "BatchScript": {
+        "Label": "Batch Script (.bat)",
         "Description": "Allows you to execute a batch (.bat) script in a Windows environment.",
         "Outputs": {
           "1": "returned 1",
@@ -60,7 +60,7 @@
         }
       },
       "ShellScript": {
-        "Label": "Shell (.sh))",
+        "Label": "Shell Script (.sh)",
         "Description": "Allows you to execute a shell (.sh) script in a Unix-like environment.",
         "Outputs": {
           "1": "returned 1",
@@ -79,7 +79,7 @@
         }
       },
       "PowerShellScript": {
-        "Label": "PowerShell (.ps1)",
+        "Label": "PowerShell Script (.ps1)",
         "Description": "Allows you to execute a PowerShell (.ps1) script in a Windows environment.",
         "Outputs": {
           "1": "returned 1",
@@ -286,6 +286,7 @@
         }
       },
       "Function": {
+        "Label": "Function",
         "Outputs": {
           "1": "returned 1",
           "2": "returned 2",
