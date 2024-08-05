@@ -14,7 +14,7 @@ public class CSharpScript : ScriptBase
     public override string Icon => "svg:csharp";
 
     /// <inheritdoc />
-    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/charp-script";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/charp";
 
     /// <inheritdoc />
     protected override ScriptLanguage Language => ScriptLanguage.CSharp;

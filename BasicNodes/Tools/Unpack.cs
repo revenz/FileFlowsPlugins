@@ -21,7 +21,6 @@ public class Unpack: Node
     /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/unpack";
     
-
     /// <summary>
     /// Gets or sets the destination path
     /// </summary>
