@@ -47,9 +47,11 @@ public abstract class ScriptBase : Node
         {
             Args = args,
             Logger = args.Logger,
+            TempPath = args.TempPath,
             Code = Language is ScriptLanguage.CSharp or ScriptLanguage.JavaScript ? Code : args.ReplaceVariables(Code),
             ScriptType = ScriptType.Flow,
-            Language = Language
+            Language = Language,
+            NotificationCallback = args.NotificationCallback
         });
         
         if (result.Failed(out var error))
