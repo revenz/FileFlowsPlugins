@@ -82,6 +82,29 @@
           "Angle": "Angle",
           "Angle-Help": "The rotation angle"
         }
+      },
+      "IsImage": {
+        "Description": "Tests if a file is an image file.",
+        "Outputs": {
+          "1": "File is a recognized image file",
+          "2": "File is not a recognized image file"
+        },
+        "Fields": {
+          "File": "File",
+          "File-Placeholder": "If blank current working file",
+          "File-Help": "Optional path to the file to check, if left blank then the current working file will be checked."
+        }
+      },
+      "PixelCheck": {
+        "Description": "This flow element verifies if an image's total pixel count exceeds the specified threshold.",
+        "Outputs": {
+          "1": "Image has greater or equal to the number of pixels specified",
+          "2": "Image has fewer pixels number than the required pixels specified"
+        },
+        "Fields": {
+          "Pixels": "Pixels",
+          "Pixels-Help": "The number of pixels an image should contain.  This is calculated by the width of the image multiplied by its height."
+        }
       }
     }
   }

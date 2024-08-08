@@ -97,6 +97,9 @@
           "Code": "Code"
         }
       },
+      "CompleteFlow": {
+        "Description": "Completes/ends the flow as successful"
+      },
       "CopyFile": {
         "Description": "Copies a file to the destination folder",
         "Outputs": {
@@ -243,6 +246,18 @@
           "Pattern-Help": "Any optional pattern to limit the files for iteration, this can be a wildcard pattern starting with a `*` or a regular expression.",
           "Recursive": "Recursive",
           "Recursive-Help": "If files in all sub directories should also be iterated, or if only the top level files should be iterated."
+        }
+      },
+      "ListIterator": {
+        "Description": "Iterates all strings in a given list and executes those strings against a sub flow.",
+        "Outputs": {
+          "1": "List iterated"
+        },
+        "Fields": {
+          "Flow": "Flow",
+          "Flow-Help": "The sub flow to execute the strings against.",
+          "List": "List",
+          "List-Help": "A name of a variable containing the list to iterate."
         }
       },
       "FailFlow": {

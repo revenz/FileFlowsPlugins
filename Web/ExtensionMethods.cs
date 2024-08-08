@@ -1,4 +1,4 @@
-﻿namespace FileFlows.Plex;
+﻿namespace FileFlows.Web;
 
 /// <summary>
 /// Extension methods

@@ -34,7 +34,6 @@ public class Delete : Node
     /// </summary>
     [TextVariable(1)] public string FileName { get; set; }
 
-
     /// <summary>
     /// Executes the flow element
     /// </summary>
@@ -45,7 +44,6 @@ public class Delete : Node
         string path = args.ReplaceVariables(this.FileName ?? string.Empty, stripMissing: true);
         if (string.IsNullOrEmpty(path))
             path = args.WorkingFile;
-
 
         if (args.FileService.DirectoryExists(path).Is(true))
         {

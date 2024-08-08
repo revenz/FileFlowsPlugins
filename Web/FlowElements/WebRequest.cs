@@ -1,4 +1,4 @@
-﻿namespace FileFlows.BasicNodes.Tools;
+﻿namespace FileFlows.Web;
 
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
@@ -21,26 +21,19 @@ public class WebRequest : Node
     /// <inheritdoc />
     public override string Icon => "fas fa-globe";
     /// <inheritdoc />
-    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/web-request";
-
-    /// <inheritdoc />
-    public override bool Obsolete => true;
-
-    /// <inheritdoc />
-    public override string ObsoleteMessage =>
-        "This flow element has been replaced by the Web Request flow element in the Web plugin.  This flow element will be removed in a future update.";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/web/web-request";
 
     /// <summary>
     /// Gets or sets the URL
     /// </summary>
     [TextVariable(1)]
-    public string Url { get; set; }
+    public string Url { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets the method
     /// </summary>
     [Select(nameof(MethodOptions), 2)]
-    public string Method { get; set; }
+    public string Method { get; set; } = null!;
 
     private static List<ListOption>? _MethodOptions;
     
@@ -69,7 +62,7 @@ public class WebRequest : Node
     /// Gets or sets the content type
     /// </summary>
     [Select(nameof(ContentTypeOptions), 3)]
-    public string ContentType { get; set; }
+    public string ContentType { get; set; } = null!;
 
     private static List<ListOption>? _ContentTypeOptions;
     /// <summary>
@@ -103,11 +96,11 @@ public class WebRequest : Node
     /// Gets or sets the body of the request
     /// </summary>
     [TextArea(5, variables: true)]
-    public string Body { get; set; }
+    public string Body { get; set; } = null!;
 
 
     private Dictionary<string, object>? _Variables;
-    public override Dictionary<string, object> Variables => _Variables;
+    public override Dictionary<string, object> Variables => _Variables!;
     
     /// <summary>
     /// Initialises a new instace of the web request
@@ -128,7 +121,6 @@ public class WebRequest : Node
         {
             using var client = new HttpClient();
 
-
             string url = VariablesHelper.ReplaceVariables(this.Url, args.Variables, true, false, encoder: (string input) =>
             {
                 if (string.IsNullOrEmpty(input))
@@ -143,7 +135,7 @@ public class WebRequest : Node
                 "DELETE" => HttpMethod.Delete,
                 _ => HttpMethod.Get
             };
-            args.Logger.ILog("Requesting: [" + method + "] " + url);
+            args.Logger?.ILog("Requesting: [" + method + "] " + url);
             HttpRequestMessage message = new HttpRequestMessage(method, url);
 
             if(this.Headers?.Any() == true)
@@ -174,7 +166,7 @@ public class WebRequest : Node
 
             if (result.IsSuccessStatusCode == false)
             {
-                args.Logger.WLog("Non successfully status code returned: " + result.StatusCode);
+                args.Logger?.WLog("Non successfully status code returned: " + result.StatusCode);
                 return 2;
             }
             args.Logger?.ILog("Successful status code returned: " + result.StatusCode);

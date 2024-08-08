@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using FileFlows.Plugin;
 
 namespace FileFlows.BasicNodes.File;
@@ -5,7 +6,7 @@ namespace FileFlows.BasicNodes.File;
 /// <summary>
 /// Basic Input file, the default input node
 /// </summary>
-public class InputFile : Node
+public partial class InputFile : Node
 {
     /// <summary>
     /// Gets the number of outputs
@@ -31,6 +32,11 @@ public class InputFile : Node
     /// <returns>the output to call next</returns>
     public override int Execute(NodeParameters args)
     {
+        if (UrlRegex().IsMatch(args.WorkingFile))
+        {
+            args.Logger?.ILog("URL Detected: "  + args.WorkingFile);
+            return 1;
+        }
         try
         {
             if(args.FileService.FileExists(args.WorkingFile).Is(true) == false)
@@ -49,4 +55,11 @@ public class InputFile : Node
             return -1;
         }
     }
+
+    /// <summary>
+    /// Regex to detect a URL
+    /// </summary>
+    /// <returns>the URL regex</returns>
+    [GeneratedRegex("^http(s)://", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)]
+    private static partial Regex UrlRegex();
 }
