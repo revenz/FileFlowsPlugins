@@ -40,6 +40,9 @@
           "Pattern-Help": "An optional case insensitive regular expression to match the results against, only results matching this will be accepted."
         }
       },
+      "InputUrl": {
+        "Label": "Input URL"
+      },
       "WebRequest": {
         "Description": "Allows you to send a web request",
         "Outputs": {

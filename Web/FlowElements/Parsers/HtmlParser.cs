@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text.RegularExpressions;
+using HtmlAgilityPack;
 
 namespace FileFlows.Web.FlowElements;
 
@@ -50,7 +51,7 @@ public abstract class HtmlParser : Node
 
         var html = result.Value;
 
-        var list = ParseHtml(args.Logger, html);
+        var list = ParseHtml(args, html);
 
         var pattern = args.ReplaceVariables(Pattern ?? string.Empty, stripMissing: true);
         if (string.IsNullOrWhiteSpace(pattern) == false)
@@ -87,7 +88,8 @@ public abstract class HtmlParser : Node
             args.Logger?.ILog("Found item: " + item);
         }
 
-        args.Variables[VariableName] = list;
+        if(string.IsNullOrWhiteSpace(VariableName) == false)
+            args.Variables[VariableName] = list;
         // current list is the default current list FileFLows will use in a list flow element if no list is specified
         args.Variables["CurrentList"] = list;
         
@@ -97,10 +99,10 @@ public abstract class HtmlParser : Node
     /// <summary>
     /// Parses the HTML
     /// </summary>
-    /// <param name="logger">the logger to use</param>
+    /// <param name="args">the node parameters</param>
     /// <param name="html">the HTML to parse</param>
     /// <returns>the items found while pasrsing</returns>
-    protected abstract List<string> ParseHtml(ILogger? logger, string html);
+    protected abstract List<string> ParseHtml(NodeParameters args, string html);
 
     /// <summary>
     /// Gets the file content
@@ -137,5 +139,61 @@ public abstract class HtmlParser : Node
         }
 
         return File.ReadAllText(localFileResult.Value);
+    }
+    
+    
+    /// <summary>
+    /// Parses the HTML for the specified tags and attributes
+    /// </summary>
+    /// <param name="args">the node parameters</param>
+    /// <param name="html">the HTML to parse</param>
+    /// <param name="tags">the HTML tags to look for</param>
+    /// <param name="attributes">the attributes to look for</param>
+    /// <returns>a list of matching URLs</returns>
+    protected List<string> ParseHtmlForUrls(NodeParameters args, string html, string[] tags, string[] attributes)
+    {
+        var htmlDoc = new HtmlDocument();
+        htmlDoc.LoadHtml(html);
+
+        Uri? baseUri = null;
+        if (args.Variables.TryGetValue("Url", out var oUrl) && oUrl is string sBaseUrl)
+        {
+            baseUri = new Uri(sBaseUrl);
+            args.Logger?.ILog("Base URL: " + baseUri);
+        }
+
+        List<string> results = new();
+
+
+        foreach (var tag in tags)
+        {
+            var nodes = htmlDoc.DocumentNode.SelectNodes($"//{tag}");
+            if (nodes == null) continue;
+
+            foreach (var ele in nodes)
+            {
+                foreach (var att in attributes)
+                {
+                    var srcValue = ele.GetAttributeValue(att, string.Empty);
+                    if (!string.IsNullOrEmpty(srcValue))
+                    {
+                        if (srcValue.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+                        {
+                            results.Add(srcValue);
+                        }
+                        else if (baseUri != null)
+                        {
+                            if (Uri.TryCreate(srcValue, UriKind.Relative, out var relativeSrcUri))
+                            {
+                                var absoluteSrcUri = new Uri(baseUri, relativeSrcUri);
+                                results.Add(absoluteSrcUri.ToString());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return results;
     }
 }

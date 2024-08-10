@@ -33,18 +33,53 @@ public class HtmlLinkParser : HtmlParser
     protected override string VariableName => "Links";
 
     /// <inheritdoc />
-    protected override List<string> ParseHtml(ILogger? logger, string html)
+    protected override List<string> ParseHtml(NodeParameters args, string html)
+        => ParseHtmlForUrls(args, html, ["a"], ["href"]);
+
+    private List<string> ParseHtmlOld(ILogger? logger, string html)
     {
         var urls = new List<string>();
         var regex = new Regex("<a[^>]+href=(\"([^\"]*)\"|'([^']*)'|([^\\s>]+))", RegexOptions.IgnoreCase);
         var matches = regex.Matches(html);
 
+        string? baseUrl = null;
+        if (Variables.TryGetValue("Url", out var oUrl) && oUrl is string sBaseUrl)
+        {
+            try
+            {
+                var uri = new Uri(sBaseUrl);
+
+                // Get the absolute path without the query parameters
+                baseUrl = uri.GetLeftPart(UriPartial.Path);
+
+                // Ensure the path ends with a slash
+                if (baseUrl.EndsWith("/") == false)
+                    baseUrl += "/";
+
+                // Use the folderPath as needed
+                logger?.ILog("Base URL: " + baseUrl);
+            }
+            catch (Exception)
+            {
+                // Ignored
+            }
+        }
+        
         foreach (Match match in matches)
         {
             if (match.Groups.Count > 1)
             {
                 var url = match.Groups[1].Value.TrimStart('"', '\'').TrimEnd('"', '\'');
-                urls.Add(WebUtility.HtmlDecode(url));
+                url = WebUtility.HtmlDecode(url);
+                if (baseUrl != null && Regex.IsMatch(url, "^http(s)://", RegexOptions.IgnoreCase) == false)
+                {
+                    logger?.ILog("Relative URL: " + url);
+                    if (url.StartsWith("/"))
+                        url = url[1..];
+                    url = baseUrl + url;
+                    logger?.ILog("Absolute URL: " + url);
+                }
+                urls.Add(url);
             }
         }
         

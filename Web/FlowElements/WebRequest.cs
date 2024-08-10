@@ -1,4 +1,4 @@
-﻿namespace FileFlows.Web;
+﻿namespace FileFlows.Web.FlowElements;
 
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
@@ -22,6 +22,8 @@ public class WebRequest : Node
     public override string Icon => "fas fa-globe";
     /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/web/web-request";
+    /// <inheritdoc />
+    public override string Group => "Web";
 
     /// <summary>
     /// Gets or sets the URL

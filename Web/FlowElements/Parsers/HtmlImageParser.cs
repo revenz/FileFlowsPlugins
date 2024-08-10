@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text.RegularExpressions;
+using HtmlAgilityPack;
 
 namespace FileFlows.Web.FlowElements;
 
@@ -33,7 +34,10 @@ public class HtmlImageParser : HtmlParser
     protected override string VariableName => "ImageUrls";
 
     /// <inheritdoc />
-    protected override List<string> ParseHtml(ILogger? logger, string html)
+    protected override List<string> ParseHtml(NodeParameters args, string html)
+        => ParseHtmlForUrls(args, html, ["img"], ["src", "content"]);
+
+    private List<string> ParseHtmlOld(ILogger? logger, string html)
     {
         var imageUrls = new List<string>();
         var regex = new Regex("<img[^>]+src=(\"([^\"]*)\"|'([^']*)'|([^\\s>]+))", RegexOptions.IgnoreCase);
