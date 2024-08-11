@@ -53,6 +53,10 @@ public class Function : Node
             return args.ScriptExecutor.Execute(new FileFlows.Plugin.Models.ScriptExecutionArgs
             {
                 Args = args,
+                Logger = args.Logger,
+                TempPath = args.TempPath,
+                Language = ScriptLanguage.JavaScript,
+                ScriptType = ScriptType.Flow,
                 Code = Code
             });
         }
