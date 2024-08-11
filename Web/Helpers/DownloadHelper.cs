@@ -38,7 +38,10 @@ public static class DownloadHelper
 
         try
         {
-            var tempFile = Path.Combine(destinationPath, Guid.NewGuid().ToString());
+
+            string filename = GetFilenameFromUrl(logger, url)?.EmptyAsNull() ?? Guid.NewGuid().ToString();
+            
+            var tempFile = Path.Combine(destinationPath, filename);
 
             using (var response = client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead).Result)
             {
@@ -112,7 +115,34 @@ public static class DownloadHelper
             return Result<string>.Fail($"Exception during download: {ex.Message}");
         }
     }
+    /// <summary>
+    /// Extracts the filename from a URL, excluding any query parameters.
+    /// </summary>
+    /// <param name="logger">the logger to use</param>
+    /// <param name="url">The URL from which to extract the filename.</param>
+    /// <returns>The filename if present; otherwise, an empty string.</returns>
+    public static string GetFilenameFromUrl(ILogger logger, string url)
+    {
+        try
+        {
+            Uri uri = new Uri(url);
+            string path = uri.AbsolutePath;
+            string filename = Path.GetFileName(path);
 
+            // If the filename contains a '.', it's likely a file, otherwise, it's a directory
+            if (filename.Contains('.'))
+            {
+                return filename;
+            }
+        }
+        catch (Exception ex)
+        {
+            // Handle any errors
+            logger.WLog($"Error parsing URL: {ex.Message}");
+        }
+
+        return string.Empty;
+    }
 
     /// <summary>
     /// Gets the file extension from the content type.
