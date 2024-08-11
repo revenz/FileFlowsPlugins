@@ -1,0 +1,19 @@
+{
+  "Flow": {
+    "Parts": {
+      "UploadToNextcloud": {
+        "Outputs": {
+          "1": "Was successfully uploaded to Nextcloud",
+          "2": "Failed ot upload to Nextcloud"
+        },
+        "Description": "Uploads a file to Nextcloud",
+        "Fields": {
+          "File": "File",
+          "Url-Help": "The file to upload, leave empty to use the current working file.",
+          "DestinationPath": "Destination",
+          "DestinationPath-Help": "The location and filename, i.e. the full path, of the file in Nextcloud."
+        }
+      }
+    }
+  }
+}
