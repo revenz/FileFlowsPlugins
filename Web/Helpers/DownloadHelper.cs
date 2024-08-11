@@ -39,9 +39,12 @@ public static class DownloadHelper
         try
         {
 
+            logger.ILog("Downloading: " + url);
             string filename = GetFilenameFromUrl(logger, url)?.EmptyAsNull() ?? Guid.NewGuid().ToString();
+            logger.ILog("Filename: " + filename);
             
             var tempFile = Path.Combine(destinationPath, filename);
+            logger.ILog("Temp File: " + tempFile);
 
             using (var response = client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead).Result)
             {
