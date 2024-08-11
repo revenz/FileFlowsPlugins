@@ -30,6 +30,8 @@ public class SetVariable : Node
     /// </summary>
     [TextVariable(2)]
     public string Value { get; set; }
+    /// <inheritdoc />
+    public override bool FailureNode => true;
 
     /// <inheritdoc />
     public override int Execute(NodeParameters args)

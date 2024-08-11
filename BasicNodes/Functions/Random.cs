@@ -36,6 +36,8 @@ public class Random : Node
     /// Gets the URL for the help page
     /// </summary>
     public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/random";
+    /// <inheritdoc />
+    public override bool FailureNode => true;
 
     /// <summary>
     /// Executes the node

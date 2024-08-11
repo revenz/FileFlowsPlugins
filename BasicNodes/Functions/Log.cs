@@ -19,6 +19,8 @@ public class Log : Node
     public override string Icon => "far fa-file-alt";
     /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/log"; 
+    /// <inheritdoc />
+    public override bool FailureNode => true;
     
     /// <summary>
     /// Gets or sets teh log type

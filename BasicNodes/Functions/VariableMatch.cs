@@ -14,12 +14,18 @@ namespace FileFlows.BasicNodes.Functions;
 /// </summary>
 public class VariableMatch : Node
 {
+    /// <inheritdoc />
     public override int Inputs => 1;
+    /// <inheritdoc />
     public override int Outputs => 2;
-
+    /// <inheritdoc />
     public override FlowElementType Type => FlowElementType.Logic;
+    /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/variable-match";
+    /// <inheritdoc />
     public override string Icon => "fas fa-equals";
+    /// <inheritdoc />
+    public override bool FailureNode => true;
 
     [Required]
     [Select("VARIABLE_LIST", 1)]
@@ -31,6 +37,7 @@ public class VariableMatch : Node
 
 
 
+    /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
         string test= args.ReplaceVariables(Input, stripMissing: true);

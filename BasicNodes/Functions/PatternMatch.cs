@@ -21,6 +21,8 @@ public class PatternMatch : Node
     public override string Icon => "fas fa-equals";
     /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/pattern-match";
+    /// <inheritdoc />
+    public override bool FailureNode => true;
 
     private Dictionary<string, object> _Variables;
     /// <inheritdoc />
