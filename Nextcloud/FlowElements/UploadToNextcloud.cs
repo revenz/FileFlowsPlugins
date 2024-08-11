@@ -58,7 +58,8 @@ public class UploadToNextcloud : Node
         }
 
         var file = args.ReplaceVariables(File ?? string.Empty, stripMissing: true)?.EmptyAsNull() ?? args.WorkingFile;
-        var destination = args.ReplaceVariables(DestinationPath ?? string.Empty, stripMissing: true);
+        var destination = args.ReplaceVariables(DestinationPath ?? string.Empty, stripMissing: true) ?? string.Empty;
+        destination = destination.TrimStart('/');
 
         if (string.IsNullOrWhiteSpace(destination))
         {
@@ -74,6 +75,9 @@ public class UploadToNextcloud : Node
             args.Logger?.ELog(args.FailureReason);
             return -1;
         }
+
+        args.Logger?.ILog("File: " + local.Value);
+        args.Logger?.ILog("Destination: " + destination);
 
         var uploader = new NextcloudUploader(args.Logger!, settings.Url, settings.Username, settings.Password);
         var result = uploader.UploadFile(local.Value, destination);
