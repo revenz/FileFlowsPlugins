@@ -15,7 +15,7 @@ public class FileExists: Node
     /// <inheritdoc />
     public override FlowElementType Type => FlowElementType.Logic;
     /// <inheritdoc />
-    public override string Icon => "fas fa-question-circle";
+    public override string Icon => "fas fa-question";
     /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/file-exists";
     /// <inheritdoc />
