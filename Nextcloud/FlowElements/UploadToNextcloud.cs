@@ -19,6 +19,8 @@ public class UploadToNextcloud : Node
     public override string Icon => "svg:nextcloud";
     /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/nextcloud/upload-to-next-cloud";
+    /// <inheritdoc />
+    public override string Group => "Nextcloud";
 
     /// <summary>
     /// Gets or sets the destination path
