@@ -1,9 +1,12 @@
 namespace FileFlows.Nextcloud;
 
+/// <summary>
+/// Nextcloud plugin
+/// </summary>
 public class Plugin : FileFlows.Plugin.IPlugin
 {
     /// <inheritdoc />
-    public Guid Uid => new Guid("162b4ed0-da61-42de-85e1-576b9d7a2f82");
+    public Guid Uid => new Guid("c9aff033-ae5b-45ad-81b0-8691c850242a");
     /// <inheritdoc />
     public string Name => "Nextcloud";
     /// <inheritdoc />
