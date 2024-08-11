@@ -57,6 +57,7 @@ public class Function : Node
                 TempPath = args.TempPath,
                 Language = ScriptLanguage.JavaScript,
                 ScriptType = ScriptType.Flow,
+                AdditionalArguments = args.Variables,
                 Code = Code
             });
         }
