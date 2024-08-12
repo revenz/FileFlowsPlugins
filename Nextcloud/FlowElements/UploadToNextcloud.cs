@@ -36,8 +36,15 @@ public class UploadToNextcloud : Node
     
     public override int Execute(NodeParameters args)
     {
+        if (args.Licensed == false)
+        {
+            args.FailureReason = "Nextcloud requires a FileFlows license";
+            args.Logger?.ELog(args.FailureReason);
+            return -1;
+        }
+        
         var settings = args.GetPluginSettings<PluginSettings>();
-
+        
         if (string.IsNullOrWhiteSpace(settings?.Url))
         {
             args.FailureReason = "No Nextcloud URL set";
