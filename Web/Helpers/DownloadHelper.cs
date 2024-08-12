@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text.RegularExpressions;
+using FileFlows.Plugin.Helpers;
 
 namespace FileFlows.Web.Helpers;
 
@@ -78,7 +79,13 @@ public static class DownloadHelper
                         }
                     }
 
-                    tempFile += fileExtension;
+                    if (string.IsNullOrWhiteSpace(fileExtension) == false)
+                    {
+                        if(string.IsNullOrWhiteSpace(FileHelper.GetExtension(tempFile)) == false)
+                            tempFile = FileHelper.ChangeExtension(tempFile, fileExtension);
+                        else
+                            tempFile += fileExtension;
+                    }
                 }
 
                 using (var contentStream = response.Content.ReadAsStreamAsync().Result)
