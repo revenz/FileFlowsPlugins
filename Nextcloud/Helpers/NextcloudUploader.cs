@@ -18,9 +18,10 @@ public class NextcloudUploader(ILogger logger, string nextcloudUrl, string usern
         var handler = new HttpClientHandler
         {
             // Customize the handler as needed
-            ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true // Ignore certificate errors
+            ServerCertificateCustomValidationCallback =
+                (sender, cert, chain, sslPolicyErrors) => true // Ignore certificate errors
         };
-        client = new HttpClient( handler );
+        client = new HttpClient(handler);
     }
 
 
@@ -34,11 +35,11 @@ public class NextcloudUploader(ILogger logger, string nextcloudUrl, string usern
     {
         logger?.ILog("Uploading file: " + localFilePath);
         try
-        { 
+        {
             string remoteFolder = remoteFilePath.Replace("\\", "/");
             remoteFolder = string.Join("/", remoteFolder.Split("/")[..^1]);
             logger?.ILog("Remote Folder: " + remoteFolder);
-            
+
             var fileStream = File.OpenRead(localFilePath);
 
             int chunkIndex = 1;
@@ -55,7 +56,7 @@ public class NextcloudUploader(ILogger logger, string nextcloudUrl, string usern
             {
                 int bytesToRead = (int)Math.Min(chunkSize, fileSize - fileStream.Position);
                 byte[] buffer = new byte[bytesToRead];
-                fileStream.Read(buffer, 0, bytesToRead);
+                _ = fileStream.Read(buffer, 0, bytesToRead);
 
                 var chunkStream = new MemoryStream(buffer);
 
@@ -70,6 +71,7 @@ public class NextcloudUploader(ILogger logger, string nextcloudUrl, string usern
                 {
                     UploadFilePart(chunkStream, remoteFilePath).Wait();
                 }
+
                 chunkStream.Dispose();
 
                 chunkIndex++;
@@ -93,7 +95,7 @@ public class NextcloudUploader(ILogger logger, string nextcloudUrl, string usern
     private async Task<bool> UploadFilePart(MemoryStream compressedStream, string remoteFilePath)
     {
         logger?.ILog("Uploading file: " + remoteFilePath);
-    
+
         try
         {
             // Create the WebDAV request URL
@@ -101,7 +103,8 @@ public class NextcloudUploader(ILogger logger, string nextcloudUrl, string usern
 
             // Set the credentials
             var byteArray = new UTF8Encoding().GetBytes($"{username}:{password}");
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+            client.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
 
             // Set the content
             compressedStream.Position = 0;
@@ -122,46 +125,61 @@ public class NextcloudUploader(ILogger logger, string nextcloudUrl, string usern
             // Handle any errors
             logger?.ELog($"Error uploading file: {ex.Message}");
         }
-    
+
         return false;
     }
 
-
     /// <summary>
-    /// Creates a folder on the WebDAV server at the specified path.
+    /// Creates a folder on the WebDAV server at the specified path, ensuring all parent directories are created.
     /// </summary>
     /// <param name="remoteFolderPath">The path of the folder to be created on the server.</param>
     /// <returns>True if the folder creation is successful, otherwise false.</returns>
     private async Task<bool> CreateFolder(string remoteFolderPath)
     {
         logger?.ILog("Creating folder: " + remoteFolderPath);
+
         try
         {
             // Create the WebDAV request URL
-            string url = $"{nextcloudUrl.TrimEnd('/')}/remote.php/dav/files/{username}/{remoteFolderPath.TrimStart('/')}";
+            string baseUrl = $"{nextcloudUrl.TrimEnd('/')}/remote.php/dav/files/{username}";
 
-            // Set the credentials
-            var byteArray = new UTF8Encoding().GetBytes($"{username}:{password}");
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+            // Split the remoteFolderPath into parts and create each folder sequentially
+            string[] folders = remoteFolderPath.Trim('/').Split('/');
+            string currentPath = string.Empty;
 
-            // Create the MKCOL request
-            HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("MKCOL"), url);
-
-            // Send the request
-            HttpResponseMessage response = await client.SendAsync(request);
-
-            // Check for success
-            if (response.StatusCode == HttpStatusCode.Created)
+            foreach (var folder in folders)
             {
-                return true;
+                currentPath = string.IsNullOrEmpty(currentPath) ? folder : $"{currentPath}/{folder}";
+                string url = $"{baseUrl}/{currentPath}";
+
+                // Set the credentials
+                var byteArray = new UTF8Encoding().GetBytes($"{username}:{password}");
+                client.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+
+                // Create the MKCOL request
+                HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("MKCOL"), url);
+
+                // Send the request
+                HttpResponseMessage response = await client.SendAsync(request);
+
+                // Check for success, ignore if it already exists
+                if (response.StatusCode != HttpStatusCode.Created &&
+                    response.StatusCode != HttpStatusCode.MethodNotAllowed)
+                {
+                    logger?.ELog($"Failed to create folder: {currentPath}, Status: {response.StatusCode}");
+                    return false;
+                }
             }
+
+            return true;
         }
         catch (Exception ex)
         {
             // Handle any errors
             logger?.ELog($"Error creating folder: {ex.Message}");
+            return false;
         }
-    
-        return false;
     }
+
 }
