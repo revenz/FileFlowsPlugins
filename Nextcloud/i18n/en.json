@@ -1,4 +1,17 @@
 {
+  "Plugins": {
+    "Nextcloud": {
+      "Description": "A plugin that allows you to upload files to Nextcloud.",
+      "Fields": {
+        "Url": "URL",
+        "Url-Help":"The URL of the Nextcloud server",
+        "Username": "Username",
+        "Username-Help":"The username of the user to upload to.",
+        "Password": "Password",
+        "Password-Help":"The application-specific password you created for FileFlows for this Nextcloud user."
+      }
+    }
+  },
   "Flow": {
     "Parts": {
       "UploadToNextcloud": {
@@ -9,7 +22,7 @@
         "Description": "Uploads a file to Nextcloud",
         "Fields": {
           "File": "File",
-          "Url-Help": "The file to upload, leave empty to use the current working file.",
+          "File-Help": "The file to upload, leave empty to use the current working file.",
           "DestinationPath": "Destination",
           "DestinationPath-Help": "The location and filename, i.e. the full path, of the file in Nextcloud."
         }
