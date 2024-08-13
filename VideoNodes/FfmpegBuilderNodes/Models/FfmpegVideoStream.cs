@@ -85,6 +85,7 @@ public class FfmpegVideoStream : FfmpegStream
             {
                 results.Add($"-metadata:s:v:{args.OutputTypeIndex}");
                 results.Add($"title=");
+                ForcedChange = true;
             }
             return results.ToArray();
         }
