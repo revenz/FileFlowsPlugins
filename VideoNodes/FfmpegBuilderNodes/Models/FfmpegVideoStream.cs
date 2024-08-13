@@ -74,13 +74,18 @@ public class FfmpegVideoStream : FfmpegStream
     public override string[] GetParameters(GetParametersArgs args)
     {
         if (Deleted)
-            return new string[] { };
+            return [];
 
         var results = new List<string> { "-map", "0:v:{sourceTypeIndex}" };
         if (Filter.Any() == false && EncodingParameters.Any() == false && AdditionalParameters.Any() == false)
         {
             results.Add("-c:v:{index}");
             results.Add("copy");
+            if (Title == REMOVED)
+            {
+                results.Add($"-metadata:s:v:{args.OutputTypeIndex}");
+                results.Add($"title=");
+            }
             return results.ToArray();
         }
         else
