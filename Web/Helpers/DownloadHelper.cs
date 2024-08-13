@@ -36,10 +36,8 @@ public static class DownloadHelper
             client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36");
         }
 
-
         try
         {
-
             logger.ILog("Downloading: " + url);
             string filename = GetFilenameFromUrl(logger, url)?.EmptyAsNull() ?? Guid.NewGuid().ToString();
             logger.ILog("Filename: " + filename);
@@ -67,18 +65,6 @@ public static class DownloadHelper
                 }
                 else
                 {
-                    if (fileExtension == null)
-                    {
-                        // Check for common file headers if the content type is not recognized
-                        var buffer = new byte[512];
-                        using (var contentStream = response.Content.ReadAsStreamAsync().Result)
-                        {
-                            contentStream.Read(buffer, 0, buffer.Length);
-                            fileExtension = GetFileExtensionFromHeader(buffer) ?? ".html";
-                            contentStream.Position = 0; // Reset stream position for reading again
-                        }
-                    }
-
                     if (string.IsNullOrWhiteSpace(fileExtension) == false)
                     {
                         if(string.IsNullOrWhiteSpace(FileHelper.GetExtension(tempFile)) == false)
@@ -167,6 +153,7 @@ public static class DownloadHelper
             case "image/jpeg": return ".jpg";
             case "image/png": return ".png";
             case "image/gif": return ".gif";
+            case "image/webp": return ".webp";
             case "application/pdf": return ".pdf";
             case "application/zip": return ".zip";
             case "application/json": return ".json";
