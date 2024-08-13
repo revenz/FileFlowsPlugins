@@ -122,7 +122,7 @@ public static class DownloadHelper
         }
         catch (Exception ex)
         {
-            return Result<string>.Fail($"Exception during download: {ex.Message}");
+            return Result<string>.Fail($"Exception during download: {ex.Message}{Environment.NewLine}{ex.StackTrace}");
         }
     }
     /// <summary>

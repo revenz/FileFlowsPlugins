@@ -18,7 +18,7 @@ public class FFmpegBuilderWatermark: FfmpegBuilderNode
     /// <inheritdoc />
     public override string Icon => "far fa-copyright";
     /// <inheritdoc />
-    public override bool Enterprise => true;
+    public override LicenseLevel LicenseLevel => LicenseLevel.Enterprise;
 
     /// <summary>
     /// Gets or sets the watermark image

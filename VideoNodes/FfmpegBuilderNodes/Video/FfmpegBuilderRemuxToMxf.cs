@@ -13,8 +13,8 @@ public class FfmpegBuilderRemuxToMxf : FfmpegBuilderNode
     /// <summary>
     /// Gets that this is an enterprise flow element
     /// </summary>
-    public override bool Enterprise => true;
-    
+    public override LicenseLevel LicenseLevel => LicenseLevel.Enterprise;
+
     /// <inheritdoc />
     public override string Icon => "svg:mxf";
 

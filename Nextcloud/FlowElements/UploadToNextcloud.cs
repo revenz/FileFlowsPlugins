@@ -22,6 +22,9 @@ public class UploadToNextcloud : Node
     /// <inheritdoc />
     public override string Group => "Nextcloud";
 
+    /// <inheritdoc />
+    public override LicenseLevel LicenseLevel => LicenseLevel.Standard;
+
     /// <summary>
     /// Gets or sets the destination path
     /// </summary>
@@ -33,16 +36,9 @@ public class UploadToNextcloud : Node
     /// </summary>
     [TextVariable(2)]
     public string File { get; set; } = null!;
-    
+
     public override int Execute(NodeParameters args)
     {
-        if (args.Licensed == false)
-        {
-            args.FailureReason = "Nextcloud requires a FileFlows license";
-            args.Logger?.ELog(args.FailureReason);
-            return -1;
-        }
-        
         var settings = args.GetPluginSettings<PluginSettings>();
         
         if (string.IsNullOrWhiteSpace(settings?.Url))

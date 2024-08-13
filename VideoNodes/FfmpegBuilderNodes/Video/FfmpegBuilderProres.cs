@@ -17,10 +17,10 @@ public class FfmpegBuilderProres : FfmpegBuilderNode
     /// <summary>
     /// Gets that this is an enterprise flow element
     /// </summary>
-    public override bool Enterprise => true;
+    public override LicenseLevel LicenseLevel => LicenseLevel.Enterprise;
     
     /// <summary>
-    /// Gets or sets the profile to use
+    /// Gets or sets the encoder to use
     /// </summary>
     [Select(nameof(Encoders), 1)]
     [DefaultValue(4)]
@@ -120,12 +120,6 @@ public class FfmpegBuilderProres : FfmpegBuilderNode
     /// <returns>the output to call next</returns>
     public override int Execute(NodeParameters args)
     {
-        if (args.Enterprise != true)
-        {
-            args.Logger.ELog("Requires an Enterprise license to use this flow element.");
-            return -1;
-        }
-        
         var stream = Model.VideoStreams.FirstOrDefault(x => x.Deleted == false);
         if (stream == null)
         {
