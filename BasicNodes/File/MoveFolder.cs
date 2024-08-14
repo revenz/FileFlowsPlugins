@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using FileFlows.Plugin;
@@ -39,6 +40,7 @@ public class MoveFolder : Node
     /// Gets or sets a sub folder should be created
     /// </summary>
     [Boolean(3)]
+    [DefaultValue(true)]
     public bool CreateSubfolder { get; set; }
 
     /// <inheritdoc />
