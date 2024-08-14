@@ -5,7 +5,7 @@ using FileFlows.Plugin.Attributes;
 namespace FileFlows.BasicNodes.File;
 
 /// <summary>
-/// Flow element that moves a directory
+/// Flow element that moves a folder
 /// </summary>
 public class MoveDirectory : Node
 {

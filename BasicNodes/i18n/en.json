@@ -409,9 +409,9 @@
         }
       },
       "MoveFolder": {
-        "Description": "Moves a directory",
+        "Description": "Moves a folder",
         "Outputs": {
-          "1": "Directory moved"
+          "1": "Folder moved"
         },
         "Fields": {
           "SourcePath": "Source",
