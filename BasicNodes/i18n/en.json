@@ -407,6 +407,16 @@
           "MatchConditions-Help": "The matches to test which output should be called."
         }
       },
+      "MoveDirectory": {
+        "Description": "Moves a directory",
+        "Outputs": {
+          "1": "Directory moved",
+        },
+        "SourcePath": "Directory",
+        "SourcePath-Help": "The directory to move, if left blank the Working File will be used, if this is not a directory., then the flow element will fail",
+        "DestinationPath": "Destination",
+        "DestinationPath-Help": "The destination directory to move the Directory into."
+      },
       "MoveFile": {
         "Description": "Moves a file to the destination folder",
         "Outputs": {
