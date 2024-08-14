@@ -6,9 +6,9 @@ using FileFlows.Plugin.Models;
 namespace FileFlows.BasicNodes.File;
 
 /// <summary>
-/// Flow element that compares if a Directory is older than the given period
+/// Flow element that compares if a Folder is older than the given period
 /// </summary>
-public class DirectoryDateCompare : Node
+public class FolderDateCompare : Node
 {
     /// <inheritdoc />
     public override int Inputs => 1;
