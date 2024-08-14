@@ -7,7 +7,7 @@ namespace FileFlows.BasicNodes.File;
 /// <summary>
 /// Flow element that moves a folder
 /// </summary>
-public class MoveDirectory : Node
+public class MoveFolder : Node
 {
     /// <inheritdoc />
     public override int Inputs => 1;
