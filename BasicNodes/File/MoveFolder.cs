@@ -23,7 +23,7 @@ public class MoveDirectory : Node
     /// <summary>
     /// Gets or sets the source path to move
     /// </summary>
-    [TextVariable(1)]
+    [Folder(1)]
     public string SourcePath { get; set; }
 
     /// <summary>

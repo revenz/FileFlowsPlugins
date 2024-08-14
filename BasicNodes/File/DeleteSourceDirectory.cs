@@ -28,7 +28,7 @@ public class DeleteSourceDirectory : Node
     /// <summary>
     /// Gets the Help URL
     /// </summary>
-    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/delete-source-directory";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/delete-source-folder";
 
     /// <summary>
     /// Gets or sets if the directory should only be deleted if empty

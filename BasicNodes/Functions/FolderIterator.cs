@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations;
 namespace FileFlows.BasicNodes.Functions;
 
 /// <summary>
-/// A special flow element that iterates all files in a directory and process them through a sub flow
+/// A special flow element that iterates all files in a folder and process them through a sub flow
 /// </summary>
-public class DirectoryIterator : Node
+public class FolderIterator : Node
 {
     /// <inheritdoc />
     public override int Inputs => 1;
@@ -16,7 +16,7 @@ public class DirectoryIterator : Node
     /// <inheritdoc />
     public override FlowElementType Type => FlowElementType.Process;
     /// <inheritdoc />
-    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/directory-iterator";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/folder-iterator";
     /// <inheritdoc /> 
     public override string Icon => "fas fa-sitemap";
     /// <inheritdoc /> 
@@ -29,11 +29,11 @@ public class DirectoryIterator : Node
     public ObjectReference? Flow { get; set; }
     
     /// <summary>
-    /// Gets or sets the directory to iterate
+    /// Gets or sets the folder to iterate
     /// </summary>
     [Required]
     [Folder(2)]
-    public string? Directory { get; set; }
+    public string? Folder { get; set; }
     
     /// <summary>
     /// Gets or set the pattern to iterate over

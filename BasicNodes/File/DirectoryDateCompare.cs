@@ -23,7 +23,7 @@ public class DirectoryDateCompare : Node
     public override string Icon => "fas fa-calendar";
 
     /// <inheritdoc />
-    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/directory-date-compare";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/folder-date-compare";
 
     /// <summary>
     /// Gets or sets the path of the folder  to check
