@@ -417,7 +417,9 @@
           "SourcePath": "Source",
           "SourcePath-Help": "The folder to move, if left blank the Working File will be used, if this is not a folder, then the flow element will fail.",
           "DestinationPath": "Destination",
-          "DestinationPath-Help": "The destination folder to move the source folder into."
+          "DestinationPath-Help": "The destination folder to move the source folder to.",
+          "CreateSubfolder": "Create Subfolder",
+          "CreateSubfolder-Help": "If a subfolder with the name of the source folder will be created in the destination folder."
         }
       },
       "MoveFile": {

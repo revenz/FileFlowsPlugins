@@ -1,6 +1,8 @@
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
+using FileFlows.Plugin.Helpers;
 
 namespace FileFlows.BasicNodes.File;
 
@@ -33,6 +35,12 @@ public class MoveFolder : Node
     [Folder(2)]
     public string DestinationPath { get; set; }
 
+    /// <summary>
+    /// Gets or sets a sub folder should be created
+    /// </summary>
+    [Boolean(3)]
+    public bool CreateSubfolder { get; set; }
+
     /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
@@ -61,6 +69,13 @@ public class MoveFolder : Node
             args.FailureReason = "No destination path set";
             args.Logger?.ELog(args.FailureReason);
             return -1;
+        }
+
+        if (CreateSubfolder)
+        {
+            var subfolder = new DirectoryInfo(source).Name;
+            args.Logger?.ILog("Creating sub folder: " + subfolder);
+            dest = FileHelper.Combine(dest, subfolder);
         }
         
         args.Logger?.ILog("Moving Directory: " + source);
