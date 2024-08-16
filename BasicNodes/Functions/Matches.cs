@@ -93,6 +93,7 @@ public class Matches : Node
             }
             catch (Exception)
             {
+                // Ignored
             }
         }
 

@@ -6,12 +6,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace BasicNodes.Tests;
 
 [TestClass]
-public class MatchesTests
+public class MatchesTests : TestBase
 {
     [TestMethod]    
     public void Matches_Math()
     {
-        var logger = new TestLogger();
         Matches ele = new ();
         ele.MatchConditions = new()
         {
@@ -19,13 +18,36 @@ public class MatchesTests
             new("{file.Size}", ">100KB"),
             new("{file.Size}", ">10MB"),
         };
-        var args = new FileFlows.Plugin.NodeParameters(null, logger,
+        var args = new FileFlows.Plugin.NodeParameters(null, Logger,
             false, string.Empty, new LocalFileService());
         args.Variables["file.Size"] = 120_000; // 120KB
 
         var result = ele.Execute(args);
-        var log = logger.ToString();
         Assert.AreEqual(2, result);
+    }
+    [TestMethod]    
+    public void Matches_EqualsOne()
+    {
+        foreach (var test in new[]
+                 {
+                     ((object)1, "=1"),
+                     ((object)"1", "=1"),
+                     ((object)1, "1"),
+                     ((object)"1", "1"),
+                 })
+        {
+            Matches ele = new();
+            ele.MatchConditions = new()
+            {
+                new("{myVariable}", test.Item2)
+            };
+            var args = new FileFlows.Plugin.NodeParameters(null, Logger,
+                false, string.Empty, new LocalFileService());
+            args.Variables["myVariable"] = test.Item1;
+
+            var result = ele.Execute(args);
+            Assert.AreEqual(1, result);
+        }
     }
 
     [TestMethod]    
