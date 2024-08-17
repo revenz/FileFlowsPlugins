@@ -1,6 +1,6 @@
 ﻿namespace FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
 
-public abstract class FfmpegStream
+public abstract class FfmpegStream : IVideoStream
 {
     public const string REMOVED = "###REMOVED###";
 

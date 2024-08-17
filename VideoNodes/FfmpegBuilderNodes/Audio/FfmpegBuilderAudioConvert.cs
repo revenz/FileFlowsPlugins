@@ -6,24 +6,22 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 /// <summary>
 /// FFmpeg Builder flow element that converts audio
 /// </summary>
-public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
+public class FfmpegBuilderAudioConvert : TrackSelectorFlowElement<FfmpegBuilderAudioConvert>
 {
     /// <inheritdoc />
-    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/audio-converter";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/audio-convert";
     /// <inheritdoc />
     public override string Icon => "fas fa-comments";
     /// <inheritdoc />
     public override int Outputs => 2;
     /// <inheritdoc />
-    public override bool Obsolete => true;
-    /// <inheritdoc />
-    public override string ObsoleteMessage => "Replaced with Audio FFmpeg Builder: Audio Convert";
+    protected override string AutomaticLabel => "All Audio";
 
     /// <summary>
     /// Gets or sets the codec to use
     /// </summary>
     [DefaultValue("aac")]
-    [Select(nameof(CodecOptions), 1)]
+    [Select(nameof(CodecOptions), 11)]
     public string Codec { get; set; }
 
     /// <summary>
@@ -60,7 +58,7 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
     /// Gets or sets the PCM format
     /// </summary>
     [DefaultValue("pcm_s16le")]
-    [Select(nameof(PcmFormats), 2)]
+    [Select(nameof(PcmFormats), 12)]
     [ConditionEquals(nameof(Codec), "pcm")]
     public string PcmFormat { get; set; }
 
@@ -111,7 +109,7 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
     /// Gets or sets the number of channels for the converted audio
     /// </summary>
     [DefaultValue(0)]
-    [Select(nameof(ChannelsOptions), 3)]
+    [Select(nameof(ChannelsOptions), 13)]
     public float Channels { get; set; }
     /// <summary>
     /// The channel options
@@ -143,7 +141,7 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
     /// <summary>
     /// Gets or sets the bitrate
     /// </summary>
-    [Select(nameof(BitrateOptions), 4)]
+    [Select(nameof(BitrateOptions), 14)]
     public int Bitrate { get; set; }
     /// <summary>
     /// The bitrate options
@@ -175,68 +173,8 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
     /// <summary>
     /// Gets or sets if the bitrate specified should be per channel
     /// </summary>
-    [Boolean(5)]
+    [Boolean(15)]
     public bool BitratePerChannel { get; set; }
-
-    /// <summary>
-    /// Gets or sets the field to match again
-    /// </summary>
-    [DefaultValue("")]
-    [Select(nameof(FieldOptions), 6)]
-    public string Field { get; set; }
-    /// <summary>
-    /// The field options
-    /// </summary>
-    private static List<ListOption> _FieldOptions;
-
-    /// <summary>
-    /// Constant for the Title field
-    /// </summary>
-    internal const string FIELD_TITLE = "Title";
-    /// <summary>
-    /// Constant for the Language field
-    /// </summary>
-    internal const string FIELD_LANGUAGE = "Language";
-    /// <summary>
-    /// Constant for the Codec field
-    /// </summary>
-    internal const string FIELD_CODEC = "Codec";
-
-    /// <summary>
-    /// Gets the field options
-    /// </summary>
-    public static List<ListOption> FieldOptions
-    {
-        get
-        {
-            if (_FieldOptions == null)
-            {
-                _FieldOptions = new List<ListOption>
-                {
-                    new() { Label = "Convert All", Value = "" },
-                    new() { Label = "Title", Value = FIELD_TITLE },
-                    new() { Label = "Language", Value = FIELD_LANGUAGE },
-                    new() { Label = "Codec", Value = FIELD_CODEC },
-                };
-            }
-
-            return _FieldOptions;
-        }
-    }
-
-    /// <summary>
-    /// Gets or sets the pattern to match against
-    /// </summary>
-    [TextVariable(7)]
-    [ConditionEquals(nameof(Field), "", true)]
-    public string Pattern { get; set; }
-
-    /// <summary>
-    /// Gets or sets if the pattern should not match
-    /// </summary>
-    [Boolean(8)]
-    [ConditionEquals(nameof(Field), "", true)]
-    public bool NotMatching { get; set; }
 
     /// <inheritdoc />
     public override int Execute(NodeParameters args)
@@ -253,60 +191,7 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
                 continue;
             }
 
-            bool convert = false;
-            if (string.IsNullOrEmpty(this.Field))
-            {
-                convert = true;
-            }
-            else
-            {
-                string? testValue = Field switch
-                {
-                    FIELD_LANGUAGE => track.Language?.EmptyAsNull() ?? track.Stream?.Language ?? string.Empty,
-                    FIELD_TITLE => track.Title?.EmptyAsNull() ?? track.Stream?.Title ?? string.Empty,
-                    FIELD_CODEC => track.Codec?.EmptyAsNull() ?? track.Stream?.Codec ?? string.Empty,
-                    _ => null
-                };
-                if (testValue == null)
-                {
-                    args.Logger?.ILog("Failed to load test value for stream: " + track);
-                    continue;
-                }
-
-                string pattern = this.Pattern ?? string.Empty;
-
-                if (GeneralHelper.IsRegex(pattern))
-                {
-                    try
-                    {
-                        convert =
-                            new Regex(pattern, RegexOptions.CultureInvariant | RegexOptions.IgnoreCase).IsMatch(
-                                testValue);
-                        if (NotMatching)
-                            convert = !convert;
-                    }
-                    catch (Exception ex)
-                    {
-                        args.Logger?.WLog("Invalid pattern: " + ex.Message);
-                        continue;
-                    }
-                }
-                else if (Field == FIELD_LANGUAGE)
-                {
-                    args.Logger?.ILog("Matching language using language helper.");
-                    convert = LanguageHelper.AreSame(pattern, testValue);
-                    if (NotMatching)
-                        convert = !convert;
-                }
-                else
-                {
-                    convert = string.Equals(pattern, testValue, StringComparison.InvariantCultureIgnoreCase);
-                    if (NotMatching)
-                        convert = !convert;
-                }
-            }
-
-            if (convert == false)
+            if (CustomTrackSelection && StreamMatches(track) == false)
             {
                 args.Logger?.ILog("Stream does not match conditions: " + track);
                 continue;
@@ -315,12 +200,12 @@ public class FfmpegBuilderAudioConverter : FfmpegBuilderNode
             bool convertResult = ConvertTrack(args, track);
             if (convertResult)
             {
-                args.Logger?.ILog($"Stream {track} matches pattern and will be converted");
+                args.Logger?.ILog($"Stream {track} matches and will be converted");
                 converting = true;
             }
             else
             {
-                args.Logger?.ILog($"Stream {track} matches pattern but will not be converted");
+                args.Logger?.ILog($"Stream {track} matches but will not be converted");
             }
         }
         return converting ? 1 : 2;

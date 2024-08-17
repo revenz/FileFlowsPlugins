@@ -6,7 +6,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 /// <summary>
 /// FFmpeg Builder: Add Audio Track
 /// </summary>
-public class FfmpegBuilderAudioAddTrack : TrackSelectorFlowElement
+public class FfmpegBuilderAudioAddTrack : TrackSelectorFlowElement<FfmpegBuilderAudioAddTrack>
 {
     /// <summary>
     /// Gets the icon for this flow element

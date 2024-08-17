@@ -31,7 +31,7 @@ public class FailFlow : Node
     /// <summary>
     /// Gets or sets the reason to fail the flow
     /// </summary>
-    [Text(1)]
+    [TextVariable(1)]
     public string Reason { get; set; }
 
     /// <summary>
@@ -41,9 +41,10 @@ public class FailFlow : Node
     /// <returns>-1 to indicate the flow should fail</returns>
     public override int Execute(NodeParameters args)
     {
-        if (string.IsNullOrWhiteSpace(Reason) == false)
+        string reason = args.ReplaceVariables(Reason ?? string.Empty, stripMissing: true);
+        if (string.IsNullOrWhiteSpace(reason) == false)
         {
-            args.Logger.ILog("Failing flow: " + Reason);
+            args.Logger.ILog("Failing flow: " + reason);
             args.FailureReason = Reason;
         }
         else

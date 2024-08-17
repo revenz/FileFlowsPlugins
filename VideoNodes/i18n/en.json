@@ -205,6 +205,30 @@
           "UseLanguageCode-Help": "If the language code of the audio track should be used instead of the title"
         }
       },
+      "FfmpegBuilderAudioConvert": {
+        "Label": "FFMPEG Builder: Audio Convert",
+        "Outputs": {
+          "1": "Tracks to be converted",
+          "2": "No tracks to be converted"
+        },
+        "Description": "Allows you to convert all tracks matching the parameters to be converted.",
+        "Fields": {
+          "CustomTrackSelection": "Convert",
+          "TrackSelectionOptions": "Matching",
+          "TrackSelectionOptionsKey": "Property",
+          "TrackSelectionOptionsValue": "Value", 
+          "Channels": "Channels",
+          "Channels-Help": "The number of channels this new audio track will be.\nIf you specify more channels than the source, FFMPEG will automatically upmix it.\nIf you specify fewer channels than the source, FFMPEG will automatically down mix it.",
+          "PcmFormat": "Format",
+          "PcmFormat-Help": "The PCM format to use for encoding PCM audio.",
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "Bitrate of the audio track",
+          "Codec": "Codec",
+          "Codec-Help": "The codec to use to encode the audio",
+          "BitratePerChannel": "Bitrate Per Channel",
+          "BitratePerChannel-Help": "If the bitrate specified should be per channel"
+        }
+      },
       "FfmpegBuilderAudioConverter": {
         "Label": "FFMPEG Builder: Audio Converter",
         "Outputs": {

@@ -46,10 +46,27 @@ public class VideoInfo
     public List<AttachmentStream> Attachments { get; set; } = new();
 }
 
+public interface IVideoStream
+{
+    /// <summary>
+    /// Gets or sets the stream title (name)
+    /// </summary>
+    string Title { get; set; }
+    /// <summary>
+    /// Gets or sets the codec of the stream
+    /// </summary>
+    string Codec { get; set; }
+    /// <summary>
+    /// Gets or sets the stream language
+    /// </summary>
+    string Language { get; set; }
+    
+}
+
 /// <summary>
 /// Metadata about a stream in a video file
 /// </summary>
-public class VideoFileStream
+public class VideoFileStream : IVideoStream
 {
     /// <summary>
     /// The original index of the stream in the overall video
@@ -63,6 +80,10 @@ public class VideoFileStream
     /// The stream title (name)
     /// </summary>
     public string Title { get; set; } = "";
+    /// <summary>
+    /// The language of the stream
+    /// </summary>
+    public string Language { get; set; }
 
     /// <summary>
     /// The bitrate(BPS) of the video stream in bytes per second
@@ -167,10 +188,6 @@ public class VideoStream : VideoFileStream
 /// </summary>
 public class AudioStream : VideoFileStream
 {
-    /// <summary>
-    /// The language of the stream
-    /// </summary>
-    public string Language { get; set; }
 
     /// <summary>
     /// The channels of the stream
@@ -213,11 +230,6 @@ public class AudioStream : VideoFileStream
 /// </summary>
 public class SubtitleStream : VideoFileStream
 {
-    /// <summary>
-    /// The language of the stream
-    /// </summary>
-    public string Language { get; set; }
-
     /// <summary>
     /// If this is a forced subtitle
     /// </summary>
