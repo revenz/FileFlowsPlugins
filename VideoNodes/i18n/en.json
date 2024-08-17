@@ -161,6 +161,10 @@
         },
         "Description": "Adds a new audio track to FFMPEG Builder which will be added once the builder is executed.",
         "Fields": {
+          "CustomTrackSelection": "Source Track Selection",
+          "TrackSelectionOptions": "Track Selection",
+          "TrackSelectionOptionsKey": "Property",
+          "TrackSelectionOptionsValue": "Value",
           "Index": "Index",
           "Index-Help": "The index where to insert the new audio track.  0 based, so to insert the new audio track as the first track set this to 0.",
           "Channels": "Channels",

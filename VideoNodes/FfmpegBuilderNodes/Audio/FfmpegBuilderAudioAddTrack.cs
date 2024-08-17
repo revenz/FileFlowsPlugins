@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using System.Globalization;
-using System.Runtime.InteropServices;
+﻿using System.Globalization;
 using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
@@ -8,7 +6,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 /// <summary>
 /// FFmpeg Builder: Add Audio Track
 /// </summary>
-public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
+public class FfmpegBuilderAudioAddTrack : TrackSelectorFlowElement
 {
     /// <summary>
     /// Gets the icon for this flow element
@@ -18,10 +16,13 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
     /// Gets the help URL for this flow element
     /// </summary>
     public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/audio-add-track";
+    
+    
+    
     /// <summary>
     /// Gets or sets the index to insert this track
     /// </summary>
-    [NumberInt(1)]
+    [NumberInt(3)]
     [Range(0, 100)]
     [DefaultValue(1)]
     public int Index { get; set; }
@@ -29,7 +30,7 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
     /// Gets or sets the codec to to use
     /// </summary>
     [DefaultValue("aac")]
-    [Select(nameof(CodecOptions), 1)]
+    [Select(nameof(CodecOptions), 4)]
     public string Codec { get; set; }
 
     private static List<ListOption> _CodecOptions;
@@ -59,7 +60,7 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
     /// Gets or sets the audio channels for the new track
     /// </summary>
     [DefaultValue(2f)]
-    [Select(nameof(ChannelsOptions), 2)]
+    [Select(nameof(ChannelsOptions), 5)]
     public float Channels { get; set; }
 
     private static List<ListOption> _ChannelsOptions;
@@ -87,13 +88,13 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
     /// <summary>
     /// Gets or sets the bitrate
     /// </summary>
-    [Select(nameof(BitrateOptions), 3)]
+    [Select(nameof(BitrateOptions), 6)]
     public int Bitrate { get; set; }
     
     /// <summary>
     /// Gets or sets if the bitrate specified should be per channel
     /// </summary>
-    [Boolean(4)]
+    [Boolean(7)]
     public bool BitratePerChannel { get; set; }
 
     private static List<ListOption> _BitrateOptions;
@@ -125,7 +126,7 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
     /// Gets or sets the sample rate
     /// </summary>
     [DefaultValue(0)]
-    [Select(nameof(SampleRateOptions), 5)]
+    [Select(nameof(SampleRateOptions), 8)]
     public int SampleRate { get; set; }
 
     private static List<ListOption> _SampleRateOptions;
@@ -158,17 +159,17 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
     /// Gets or sets the language of the new track
     /// </summary>
     [DefaultValue("eng")]
-    [TextVariable(6)]
+    [TextVariable(9)]
     public string Language { get; set; }
     /// <summary>
     /// Gets or sets if the title of the new track should be removed
     /// </summary>
-    [Boolean(7)]
+    [Boolean(10)]
     public bool RemoveTitle { get; set; }
     /// <summary>
     /// Gets or sets the title of the new track
     /// </summary>
-    [TextVariable(8)]
+    [TextVariable(11)]
     [ConditionEquals(nameof(RemoveTitle), false)]
     public string NewTitle { get; set; }
     
@@ -186,21 +187,21 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
         }
         var audio = new FfmpegAudioStream();
 
-        var bestAudio = GetBestAudioTrack(args, Model.AudioStreams.Select(x => x.Stream));
-        if (bestAudio == null)
+        var sourceAudio = GetSourceTrack<AudioStream>() ?? GetBestAudioTrack(args, Model.AudioStreams.Select(x => x.Stream));
+        if (sourceAudio == null)
         {
             args.Logger.ELog("No source audio track found");
             args.FailureReason = "No source audio track found";
             return -1;
         }
 
-        audio.Stream = bestAudio;
+        audio.Stream = sourceAudio;
         audio.Channels = audio.Stream.Channels;
 
         bool directCopy = false;
-        if(bestAudio.Codec.ToLower() == this.Codec.ToLower())
+        if(sourceAudio.Codec.ToLower() == this.Codec.ToLower())
         {
-            if((Channels == 0 || Math.Abs(Channels - bestAudio.Channels) < 0.05f) && Bitrate <= 2)
+            if((Channels == 0 || Math.Abs(Channels - sourceAudio.Channels) < 0.05f) && Bitrate <= 2)
             {
                 directCopy = true;
             }
@@ -208,8 +209,8 @@ public class FfmpegBuilderAudioAddTrack : FfmpegBuilderNode
 
         if (directCopy)
         {
-            audio.Codec = bestAudio.Codec;
-            args.Logger?.ILog($"Source audio is already in appropriate format, just copying that track: {bestAudio.IndexString}, Channels: {bestAudio.Channels}, Codec: {bestAudio.Codec}");
+            audio.Codec = sourceAudio.Codec;
+            args.Logger?.ILog($"Source audio is already in appropriate format, just copying that track: {sourceAudio.IndexString}, Channels: {sourceAudio.Channels}, Codec: {sourceAudio.Codec}");
         }
         else
         {

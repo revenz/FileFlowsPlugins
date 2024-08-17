@@ -52,7 +52,7 @@ public class Matches : Node
                     value = varValue;
                 else
                     value = args.ReplaceVariables(match.Key, stripMissing: true);
-                string strValue = value?.ToString() ?? string.Empty;
+                string strValue = value?.ToString()?.Trim() ?? string.Empty;
                 
                 if (GeneralHelper.IsRegex(match.Value))
                 {
@@ -76,12 +76,9 @@ public class Matches : Node
                     return output;
                 }
 
-                if (match.Value == strValue)
-                {
-                    args.Logger?.ILog($"Match found '{match.Value}' = {strValue}");
+                if (args.StringHelper.Matches(match.Value, match.Value))
                     return output;
-                }
-
+                
                 if (args.MathHelper.IsMathOperation(match.Value))
                 {
                     if (args.MathHelper.IsTrue(match.Value, strValue))

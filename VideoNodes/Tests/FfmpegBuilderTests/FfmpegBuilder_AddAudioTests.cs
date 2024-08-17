@@ -8,17 +8,14 @@ using VideoNodes.Tests;
 namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests;
 
 [TestClass]
-public class FfmpegBuilder_AddAudioTests
+public class FfmpegBuilder_AddAudioTests : TestBase
 {
     VideoInfo vii;
     NodeParameters args;
     private void Prepare()
     {
-        const string file = @"D:\videos\unprocessed\basic.mkv";
-        var logger = new TestLogger();
-        const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
-        var vi = new VideoInfoHelper(ffmpeg, logger);
-        vii = vi.Read(file);
+        var vi = new VideoInfoHelper(FfmpegPath, Logger);
+        vii = vi.Read(TestFile_BasicMkv);
         vii.AudioStreams = new List<AudioStream>
         {
             new AudioStream
@@ -54,15 +51,36 @@ public class FfmpegBuilder_AddAudioTests
                 Channels = 5.1f
             }
         };
-        args = new NodeParameters(file, logger, false, string.Empty, null);
-        args.GetToolPathActual = (string tool) => ffmpeg;
-        args.TempPath = @"D:\videos\temp";
+        args = new NodeParameters(TestFile_BasicMkv, Logger, false, string.Empty, new LocalFileService());
+        args.GetToolPathActual = (string tool) => FfmpegPath;
+        args.TempPath = TempPath;
         args.Parameters.Add("VideoInfo", vii);
 
 
         FfmpegBuilderStart ffStart = new();
         ffStart.PreExecute(args);
         Assert.AreEqual(1, ffStart.Execute(args));
+    }
+
+    [TestMethod]
+    public void FfmpegBuilder_AddAudio_GetSource_1()
+    {
+        Prepare();
+        FfmpegBuilderAudioAddTrack  ffAddAudio = new();
+        ffAddAudio.CustomTrackSelection = true;
+        ffAddAudio.TrackSelectionOptions = new()
+        {
+            new("Codec", "AC*"),
+            new("Language", "English"),
+            new("Codec", "!aac"),
+        };
+        ffAddAudio.PreExecute(args);
+        var source = ffAddAudio.GetSourceTrack<AudioStream>();
+        Assert.IsNotNull(source);
+        Logger.ILog("Source Track: " + source);
+        Assert.AreEqual("en", source.Language);
+        Assert.AreEqual("AC3", source.Codec);
+
     }
 
     [TestMethod]
