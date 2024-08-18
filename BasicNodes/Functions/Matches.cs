@@ -54,11 +54,13 @@ public class Matches : Node
                     value = args.ReplaceVariables(match.Key, stripMissing: true);
                 string strValue = value?.ToString()?.Trim() ?? string.Empty;
                 
+                args.Logger?.ILog("Testing match value: " + strValue);
+                
                 if (GeneralHelper.IsRegex(match.Value))
                 {
                     if (Regex.IsMatch(strValue, match.Value, RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
                     {
-                        args.Logger?.ILog($"Match found '{match.Value}' = {value}");
+                        args.Logger?.ILog($"Match found '{match.Value}' = {strValue}");
                         return output;
                     }
                 }
