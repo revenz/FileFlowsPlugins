@@ -78,7 +78,7 @@ public class Matches : Node
                     return output;
                 }
 
-                if (args.StringHelper.Matches(match.Value, match.Value))
+                if (args.StringHelper.Matches(strValue, match.Value))
                     return output;
                 
                 if (args.MathHelper.IsMathOperation(match.Value))

@@ -25,6 +25,26 @@ public class MatchesTests : TestBase
         var result = ele.Execute(args);
         Assert.AreEqual(2, result);
     }
+    
+    
+    [TestMethod]    
+    public void Matches_MathFailString()
+    {
+        Matches ele = new ();
+        ele.MatchConditions = new()
+        {
+            new("{file.Size}", "<=100KB"),
+            new("{file.Size}", ">100KB"),
+            new("{file.Size}", ">10MB"),
+        };
+        var args = new FileFlows.Plugin.NodeParameters(null, Logger,
+            false, string.Empty, new LocalFileService());
+        args.Variables["file.Size"] = "Some String"; // 120KB
+
+        var result = ele.Execute(args);
+        Assert.AreEqual(4, result);
+    }
+    
     [TestMethod]    
     public void Matches_EqualsOne()
     {
@@ -53,26 +73,24 @@ public class MatchesTests : TestBase
     [TestMethod]    
     public void Matches_String()
     {
-        var logger = new TestLogger();
         Matches ele = new ();
         ele.MatchConditions = new()
         {
-            new("{file.Name}", "triggerthis"),
+            new("{file.Name}", "nopetriggerthis"),
             new("{file.Name}", "DontTriggerThis"),
             new("{file.Name}", "TriggerThis"),
         };
-        var args = new FileFlows.Plugin.NodeParameters(null, logger,
+        var args = new FileFlows.Plugin.NodeParameters(null, Logger,
             false, string.Empty, new LocalFileService());
         args.Variables["file.Name"] = "TriggerThis";
 
         var result = ele.Execute(args);
-        var log = logger.ToString();
         Assert.AreEqual(3, result);
     }
+    
     [TestMethod]    
     public void Matches_NoMatch()
     {
-        var logger = new TestLogger();
         Matches ele = new ();
         ele.MatchConditions = new()
         {
@@ -80,19 +98,17 @@ public class MatchesTests : TestBase
             new("{file.Name}", "DontTriggerThis"),
             new("{file.Name}", "TriggerThis"),
         };
-        var args = new FileFlows.Plugin.NodeParameters(null, logger,
+        var args = new FileFlows.Plugin.NodeParameters(null, Logger,
             false, string.Empty, new LocalFileService());
         args.Variables["file.Name"] = "Nothing";
 
         var result = ele.Execute(args);
-        var log = logger.ToString();
         Assert.AreEqual(4, result);
     }
     
     [TestMethod]    
     public void Matches_Regex()
     {
-        var logger = new TestLogger();
         Matches ele = new ();
         ele.MatchConditions = new()
         {
@@ -100,19 +116,17 @@ public class MatchesTests : TestBase
             new("{file.Name}", ".*batman.*"),
             new("{file.Name}", "TriggerThis"),
         };
-        var args = new FileFlows.Plugin.NodeParameters(null, logger,
+        var args = new FileFlows.Plugin.NodeParameters(null, Logger,
             false, string.Empty, new LocalFileService());
         args.Variables["file.Name"] = "Superman vs Batman (2017)";
 
         var result = ele.Execute(args);
-        var log = logger.ToString();
         Assert.AreEqual(2, result);
     }
     
     [TestMethod]    
     public void Matches_True()
     {
-        var logger = new TestLogger();
         Matches ele = new ();
         ele.MatchConditions = new()
         {
@@ -120,12 +134,11 @@ public class MatchesTests : TestBase
             new("{file.Deleted}", "true"),
             new("{file.Name}", "TriggerThis"),
         };
-        var args = new FileFlows.Plugin.NodeParameters(null, logger,
+        var args = new FileFlows.Plugin.NodeParameters(null, Logger,
             false, string.Empty, new LocalFileService());
         args.Variables["file.Deleted"] = true;
 
         var result = ele.Execute(args);
-        var log = logger.ToString();
         Assert.AreEqual(2, result);
     }
     
@@ -133,7 +146,6 @@ public class MatchesTests : TestBase
     [TestMethod]    
     public void Matches_True_1()
     {
-        var logger = new TestLogger();
         Matches ele = new ();
         ele.MatchConditions = new()
         {
@@ -141,19 +153,17 @@ public class MatchesTests : TestBase
             new("{file.Deleted}", "true"),
             new("{file.Name}", "TriggerThis"),
         };
-        var args = new FileFlows.Plugin.NodeParameters(null, logger,
+        var args = new FileFlows.Plugin.NodeParameters(null, Logger,
             false, string.Empty, new LocalFileService());
         args.Variables["file.Deleted"] = 1;
 
         var result = ele.Execute(args);
-        var log = logger.ToString();
         Assert.AreEqual(2, result);
     }
     
     [TestMethod]    
     public void Matches_False()
     {
-        var logger = new TestLogger();
         Matches ele = new ();
         ele.MatchConditions = new()
         {
@@ -161,12 +171,11 @@ public class MatchesTests : TestBase
             new("{file.Deleted}", "false"),
             new("{file.Name}", "TriggerThis"),
         };
-        var args = new FileFlows.Plugin.NodeParameters(null, logger,
+        var args = new FileFlows.Plugin.NodeParameters(null, Logger,
             false, string.Empty, new LocalFileService());
         args.Variables["file.Deleted"] = false;
 
         var result = ele.Execute(args);
-        var log = logger.ToString();
         Assert.AreEqual(2, result);
     }
     
@@ -174,7 +183,6 @@ public class MatchesTests : TestBase
     [TestMethod]    
     public void Matches_False_0()
     {
-        var logger = new TestLogger();
         Matches ele = new ();
         ele.MatchConditions = new()
         {
@@ -182,12 +190,11 @@ public class MatchesTests : TestBase
             new("{file.Deleted}", "false"),
             new("{file.Name}", "TriggerThis"),
         };
-        var args = new FileFlows.Plugin.NodeParameters(null, logger,
+        var args = new FileFlows.Plugin.NodeParameters(null, Logger,
             false, string.Empty, new LocalFileService());
         args.Variables["file.Deleted"] = 0;
 
         var result = ele.Execute(args);
-        var log = logger.ToString();
         Assert.AreEqual(2, result);
     }
 }
