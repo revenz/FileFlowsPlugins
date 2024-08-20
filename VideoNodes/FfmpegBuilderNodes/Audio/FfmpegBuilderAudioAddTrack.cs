@@ -16,9 +16,11 @@ public class FfmpegBuilderAudioAddTrack : TrackSelectorFlowElement<FfmpegBuilder
     /// Gets the help URL for this flow element
     /// </summary>
     public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/audio-add-track";
-    
-    
-    
+
+    /// <inheritdoc />
+    public override int Outputs => 2;
+
+
     /// <summary>
     /// Gets or sets the index to insert this track
     /// </summary>
@@ -190,9 +192,8 @@ public class FfmpegBuilderAudioAddTrack : TrackSelectorFlowElement<FfmpegBuilder
         var sourceAudio = CustomTrackSelection ? GetSourceTrack<AudioStream>() : GetBestAudioTrack(args, Model.AudioStreams.Select(x => x.Stream));
         if (sourceAudio == null)
         {
-            args.Logger.ELog("No source audio track found");
-            args.FailureReason = "No source audio track found";
-            return -1;
+            args.Logger.WLog("No source audio track found");
+            return 2;
         }
 
         audio.Stream = sourceAudio;
