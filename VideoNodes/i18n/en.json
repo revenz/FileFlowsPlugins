@@ -157,7 +157,8 @@
       "FfmpegBuilderAudioAddTrack": {
         "Label": "FFMPEG Builder: Audio Add Track",
         "Outputs": {
-          "1": "Added audio track to FFMPEG Builder"
+          "1": "Added audio track to FFMPEG Builder",
+          "2": "No suitable source audio track found to create new audio track from"
         },
         "Description": "Adds a new audio track to FFMPEG Builder which will be added once the builder is executed.",
         "Fields": {
