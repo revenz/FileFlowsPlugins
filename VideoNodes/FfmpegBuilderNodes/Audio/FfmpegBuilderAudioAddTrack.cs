@@ -186,8 +186,8 @@ public class FfmpegBuilderAudioAddTrack : TrackSelectorFlowElement<FfmpegBuilder
             return 1;
         }
         var audio = new FfmpegAudioStream();
-
-        var sourceAudio = GetSourceTrack<AudioStream>() ?? GetBestAudioTrack(args, Model.AudioStreams.Select(x => x.Stream));
+        
+        var sourceAudio = CustomTrackSelection ? GetSourceTrack<AudioStream>() : GetBestAudioTrack(args, Model.AudioStreams.Select(x => x.Stream));
         if (sourceAudio == null)
         {
             args.Logger.ELog("No source audio track found");
