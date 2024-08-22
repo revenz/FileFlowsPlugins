@@ -134,22 +134,22 @@ public class HasHardLinks: Node
             if(string.IsNullOrWhiteSpace(error) == false)
                 args.Logger?.ILog("Error Output: " + error);
 
-            if (int.TryParse(output.Trim(), out var linkCount))
+            if (int.TryParse(output.Trim(), out var linkCount) == false)
             {
-                if (linkCount > 0)
-                {
-                    args.Logger?.ILog($"The file has {linkCount} hard links.");
-                    if (linkCount >= count)
-                        return true;
-                }
-                args.Logger?.ILog("The file does not have the required number of hard links.");
+
+                args.Logger?.ILog("Failed to retrieve link count.");
                 return false;
             }
+
+            --linkCount;
             
-            if(string.IsNullOrWhiteSpace(error))
-                args.Logger?.ELog(error);
-            
-            args.Logger?.ILog("Failed to retrieve link count.");
+            if (linkCount > 0)
+            {
+                args.Logger?.ILog($"The file has {linkCount} hard links.");
+                if (linkCount >= count)
+                    return true;
+            }
+            args.Logger?.ILog("The file does not have the required number of hard links.");
             return false;
         }
         catch (Exception ex)
@@ -184,26 +184,28 @@ public class HasHardLinks: Node
             string output = process.StandardOutput.ReadToEnd();
             string error = process.StandardError.ReadToEnd();
             process.WaitForExit();
-            
-            if(string.IsNullOrWhiteSpace(output) == false)
+
+            if (string.IsNullOrWhiteSpace(output) == false)
                 args.Logger?.ILog("Standard Output: " + output);
-            if(string.IsNullOrWhiteSpace(error) == false)
+            if (string.IsNullOrWhiteSpace(error) == false)
                 args.Logger?.ILog("Error Output: " + error);
 
-            if (int.TryParse(output.Trim(), out var linkCount))
+            if (int.TryParse(output.Trim(), out var linkCount) == false)
             {
-                if (linkCount > 0)
-                {
-                    args.Logger?.ILog($"The file has {linkCount} hard links.");
-                    if (linkCount >= count)
-                        return true;
-                }
-                args.Logger?.ILog("The file does not have hard links.");
-                return false; 
+                args.Logger?.ILog("The file does not have the required number of hard links.");
+                return false;
             }
+
+            linkCount -= 1; // every file has at least one hard link we want the additional hard links
             
-            args.Logger?.ILog("The file does not have the required number of hard links.");
-            return false;
+            if (linkCount > 0)
+            {
+                args.Logger?.ILog($"The file has {linkCount} hard links.");
+                if (linkCount >= count)
+                    return true;
+            }
+            args.Logger?.ILog("The file does not have hard links.");
+            return false; 
         }
         catch (Exception ex)
         {

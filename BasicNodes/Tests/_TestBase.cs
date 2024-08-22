@@ -4,6 +4,9 @@ using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using FileFlows.BasicNodes;
+using FileFlows.Plugin.Helpers;
+using FileFlows.Plugin.Services;
+using Moq;
 
 namespace BasicNodes.Tests;
 
@@ -19,6 +22,8 @@ public abstract class TestBase
     private TestContext testContextInstance;
 
     internal TestLogger Logger = new();
+
+    protected Mock<IFileService> MockFileService = new();
 
     /// <summary>
     /// Gets or sets the test context
@@ -38,6 +43,8 @@ public abstract class TestBase
     [TestInitialize]
     public void TestInitialize()
     {
+        FileHelper.DontChangeOwner = true;
+        FileHelper.DontSetPermissions = true;
         Logger.Writer = (msg) => TestContext.WriteLine(msg);
         
         this.TestPath = this.TestPath?.EmptyAsNull() ?? (IsLinux ? "~/src/ff-files/test-files/videos" : @"d:\videos\testfiles");
@@ -48,15 +55,22 @@ public abstract class TestBase
         
         if (Directory.Exists(this.TempPath) == false)
             Directory.CreateDirectory(this.TempPath);
+
+        TestStarting();
     }
 
     [TestCleanup]
     public void CleanUp()
     {
+        TestCleanUp();
         TestContext.WriteLine(Logger.ToString());
     }
 
     protected virtual void TestStarting()
+    {
+
+    }
+    protected virtual void TestCleanUp()
     {
 
     }

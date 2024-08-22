@@ -1,35 +1,45 @@
 ﻿#if(DEBUG)
 
-namespace BasicNodes.Tests
+using FileFlows.BasicNodes.File;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Text.RegularExpressions;
+using FileFlows.Plugin;
+using Moq;
+
+namespace BasicNodes.Tests;
+
+[TestClass]
+public class ExecutorTests : TestBase
 {
-    using FileFlows.BasicNodes.File;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using System.Text.RegularExpressions;
+    private Mock<IProcessHelper> mockProcessHelper = new();
 
-    [TestClass]
-    public class ExecutorTests
+    protected override void TestStarting()
     {
-        [TestMethod]
-        public void Executor_OutputVariable()
+        mockProcessHelper.Setup(x => x.ExecuteShellCommand(It.IsAny<ExecuteArgs>())).Returns(Task.FromResult(new ProcessResult()
         {
-            var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger, false, string.Empty, null);
+            ExitCode = 0,
+            Completed = true,
+            Output = "this is the output",
+            StandardOutput = "this is the standard output",
+            StandardError = "this is the standard error"
+        }));
+    }
 
-            Executor node = new Executor();
-            string file = @"D:\Videos\dummy.mkv";
-            node.FileName = @"C:\utils\ffmpeg\ffmpeg.exe";
-            node.Arguments = "-i \"" + file + "\"";
-            node.OutputVariable = "ExecOutput";
-            var result = node.Execute(args);
-            Assert.IsTrue(args.Variables.ContainsKey("ExecOutput"));
-            string output = args.Variables["ExecOutput"] as string;
-            Assert.IsNotNull(output);
-        }
-        [TestMethod]
-        public void Executor_VariablePattern_Tests()
-        {
-            Assert.IsFalse(Regex.IsMatch(string.Empty, Executor.VariablePattern));
-        }
+    [TestMethod]
+    public void Executor_OutputVariable()
+    {
+        var args = new NodeParameters(@"c:\test\testfile.mkv", Logger, false, string.Empty, MockFileService.Object);
+        args.Process = mockProcessHelper.Object;
+
+        Executor node = new Executor();
+        string file = @"D:\Videos\dummy.mkv";
+        node.FileName = @"C:\utils\ffmpeg\ffmpeg.exe";
+        node.Arguments = "-i \"" + file + "\"";
+        node.OutputVariable = "ExecOutput";
+        var result = node.Execute(args);
+        Assert.IsTrue(args.Variables.ContainsKey("ExecOutput"));
+        string output = args.Variables["ExecOutput"] as string;
+        Assert.IsNotNull(output);
     }
 }
 

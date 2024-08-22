@@ -27,7 +27,7 @@ public class FileSizeCompare : Node
         if (result.IsFailed)
         {
             // try get from variables
-            if (args.Variables.ContainsKey("file.Orig.Size") && args.Variables["file.Orig.Size"] is long tSize && tSize > 0)
+            if (args.Variables.TryGetValue("file.Orig.Size", out object? value) && value is long tSize && tSize > 0)
             {
                 origSize = tSize;
             }
