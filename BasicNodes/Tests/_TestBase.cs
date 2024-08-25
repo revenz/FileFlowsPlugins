@@ -34,7 +34,13 @@ public abstract class TestBase
         set => testContextInstance = value;
     }
 
-    public string TestPath { get; private set; }
+    /// <summary>
+    /// A File created for the test
+    /// </summary>
+    public string TempFile { get; private set; }
+    /// <summary>
+    /// A path in the temp directory created for the test
+    /// </summary>
     public string TempPath { get; private set; }
     
     public readonly bool IsWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
@@ -47,11 +53,11 @@ public abstract class TestBase
         FileHelper.DontSetPermissions = true;
         Logger.Writer = (msg) => TestContext.WriteLine(msg);
         
-        this.TestPath = this.TestPath?.EmptyAsNull() ?? (IsLinux ? "~/src/ff-files/test-files/videos" : @"d:\videos\testfiles");
-        this.TempPath = this.TempPath?.EmptyAsNull() ?? (IsLinux ? "~/src/ff-files/temp" : @"d:\videos\temp");
         
-        this.TestPath = this.TestPath.Replace("~/", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/");
-        this.TempPath = this.TempPath.Replace("~/", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/");
+        TempPath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), Guid.NewGuid().ToString());
+        System.IO.Directory.CreateDirectory(TempPath);
+        TempFile = System.IO.Path.Combine(TempPath, Guid.NewGuid() + ".txt");
+        System.IO.File.WriteAllText(TempFile, Guid.NewGuid().ToString());
         
         if (Directory.Exists(this.TempPath) == false)
             Directory.CreateDirectory(this.TempPath);

@@ -12,7 +12,7 @@ public class WriteTextTests : TestBase
     [TestMethod]
     public void WorkingFile_Csv()
     {
-        var args = new FileFlows.Plugin.NodeParameters(@"/test/file.mkv", new TestLogger(), false, string.Empty, MockFileService.Object);
+        var args = new FileFlows.Plugin.NodeParameters(@"/test/file.mkv", Logger, false, string.Empty, MockFileService.Object);
 
         var output = WriteText.GetText(args, "", "file.csv");
         Assert.AreEqual("\"/test/file.mkv\"", output);
@@ -21,7 +21,7 @@ public class WriteTextTests : TestBase
     [TestMethod]
     public void WorkingFile_Text()
     {
-        var args = new FileFlows.Plugin.NodeParameters(@"/test/file.mkv", new TestLogger(), false, string.Empty, MockFileService.Object);
+        var args = new FileFlows.Plugin.NodeParameters(@"/test/file.mkv", Logger, false, string.Empty, MockFileService.Object);
 
         var output = WriteText.GetText(args, "", "file.txt");
         Assert.AreEqual("/test/file.mkv", output);
@@ -30,7 +30,7 @@ public class WriteTextTests : TestBase
     [TestMethod]
     public void CsvArgs()
     {
-        var args = new FileFlows.Plugin.NodeParameters(@"/test/file.mkv", new TestLogger(), false, string.Empty, MockFileService.Object);
+        var args = new FileFlows.Plugin.NodeParameters(@"/test/file.mkv", Logger, false, string.Empty, MockFileService.Object);
         args.Variables["file.Name"] = "file.mkv";
         args.Variables["ext"] = "mkv";
 
@@ -41,7 +41,7 @@ public class WriteTextTests : TestBase
     [TestMethod]
     public void CsvArg()
     {
-        var args = new FileFlows.Plugin.NodeParameters(@"/test/file.mkv", new TestLogger(), false, string.Empty, MockFileService.Object);
+        var args = new FileFlows.Plugin.NodeParameters(@"/test/file.mkv", Logger, false, string.Empty, MockFileService.Object);
         args.Variables["file.Name"] = "file.mkv";
 
         var output = WriteText.GetText(args, "{file.Name}", "file.csv");

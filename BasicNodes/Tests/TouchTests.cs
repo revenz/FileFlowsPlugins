@@ -6,21 +6,20 @@ using FileFlows.BasicNodes.File;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 [TestClass]
-public class TouchTests
+public class TouchTests : TestBase
 {
     FileFlows.Plugin.NodeParameters Args;
 
-    [TestInitialize]
-    public void TestStarting()
+    protected override void TestStarting()
     {
-        Args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", new TestLogger(), false, string.Empty, null);;
+        Args = new FileFlows.Plugin.NodeParameters(TempFile, Logger, false, string.Empty, new LocalFileService());
     }
 
     [TestMethod]
     public void Touch_File()
     {
         Touch node = new ();
-        node.FileName = @"D:\videos\testfiles\basic.mkv";
+        node.FileName = TempFile;
         var result = node.Execute(Args);
         Assert.AreEqual(1, result);
     }
@@ -29,7 +28,7 @@ public class TouchTests
     public void Touch_Folder()
     {
         Touch node = new();
-        node.FileName = @"D:\videos\testfiles";
+        node.FileName = TempPath;
         var result = node.Execute(Args);
         Assert.AreEqual(1, result);
     }
