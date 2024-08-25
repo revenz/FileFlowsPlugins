@@ -15,22 +15,32 @@ public class MoveTests : TestBase
     [TestMethod]
     public void MoveTests_Variable_Filename()
     {
-        var args = new NodeParameters(@"/home/user/test/tv4a-starwarsrebels.s01e15-1080p.mkv", Logger, false, string.Empty, new LocalFileService());
-
+        string fileName = Guid.NewGuid().ToString();
+        var tempFile = Path.Combine(Path.GetTempPath(),fileName+ ".mkv");
+        System.IO.File.WriteAllText(tempFile, "this is a temp file ");
+        var args = new NodeParameters(tempFile, Logger, 
+            false, string.Empty, new LocalFileService());
+        args.InitFile(tempFile);
+        
         string dest = MoveFile.GetDestinationPath(args, @"D:\test", "{file.Name}");
 
-        Assert.AreEqual(@"D:/test/tv4a-starwarsrebels.s01e15-1080p.mkv", dest);
+        Assert.AreEqual($"D:/test/{fileName}.mkv", dest);
     }
     
     [TestMethod]
     public void MoveTests_Variable_FilenameExt()
     {
-        var args = new NodeParameters(@"/home/user/test/tv4a-starwarsrebels.s01e15-1080p.mkv", Logger, false, string.Empty, new LocalFileService());
-
+        string fileName = Guid.NewGuid().ToString();
+        var tempFile = Path.Combine(Path.GetTempPath(),fileName+ ".mkv");
+        System.IO.File.WriteAllText(tempFile, "this is a temp file ");
+        var args = new NodeParameters(tempFile, Logger, 
+            false, string.Empty, new LocalFileService());
+        args.InitFile(tempFile);
+        
         // ensure we dont double up the extension after FF-154
         string dest = MoveFile.GetDestinationPath(args, @"D:\test", "{file.Name}{file.Extension}");
 
-        Assert.AreEqual(@"D:/test/tv4a-starwarsrebels.s01e15-1080p.mkv", dest);
+        Assert.AreEqual($"D:/test/{fileName}.mkv", dest);
     }
 
     [TestMethod]
@@ -51,50 +61,67 @@ public class MoveTests : TestBase
     [TestMethod]
     public void MoveTests_Variable_Ext()
     {
-        var args = new NodeParameters(@"/home/user/test/tv4a-starwarsrebels.s01e15-1080p.mkv", Logger, false, string.Empty, new LocalFileService());
+        string fileName = Guid.NewGuid().ToString();
+        var tempFile = Path.Combine(Path.GetTempPath(),fileName+ ".mkv");
+        System.IO.File.WriteAllText(tempFile, "this is a temp file ");
+        var args = new NodeParameters(tempFile, Logger, 
+            false, string.Empty, new LocalFileService());
+        args.InitFile(tempFile);
 
         // ensure we dont double up the extension after FF-154
         string dest = MoveFile.GetDestinationPath(args, @"D:\test", "{file.Name}{ext}");
 
-        Assert.AreEqual(@"D:/test/tv4a-starwarsrebels.s01e15-1080p.mkv", dest);
+        Assert.AreEqual($"D:/test/{fileName}.mkv", dest);
     }
 
     [TestMethod]
     public void MoveTests_Variable_Original_Filename()
     {
-        var args = new NodeParameters(@"/home/user/test/tv4a-starwarsrebels.s01e15-1080p.mkv", Logger, false, string.Empty, new LocalFileService());
-
+        string fileName = Guid.NewGuid().ToString();
+        var tempFile = Path.Combine(Path.GetTempPath(),fileName+ ".mkv");
+        System.IO.File.WriteAllText(tempFile, "this is a temp file ");
+        var args = new NodeParameters(tempFile, Logger, 
+            false, string.Empty, new LocalFileService());
+        args.InitFile(tempFile);
+        
         string dest = MoveFile.GetDestinationPath(args, @"D:\test", "{file.Orig.FileName}");
 
-        Assert.AreEqual(@"D:/test/tv4a-starwarsrebels.s01e15-1080p.mkv", dest);
+        Assert.AreEqual($@"D:/test/{fileName}.mkv", dest);
     }
     
     [TestMethod]
     public void MoveTests_Variable_Original_FilenameExt()
     {
-        var args = new NodeParameters(@"/home/user/test/tv4a-starwarsrebels.s01e15-1080p.mkv", Logger, false, string.Empty, new LocalFileService());
-
+        string fileName = Guid.NewGuid().ToString();
+        var tempFile = Path.Combine(Path.GetTempPath(),fileName+ ".mkv");
+        System.IO.File.WriteAllText(tempFile, "this is a temp file ");
+        var args = new NodeParameters(tempFile, Logger, 
+            false, string.Empty, new LocalFileService());
+        args.InitFile(tempFile);
         // ensure we dont double up the extension after FF-154
         string dest = MoveFile.GetDestinationPath(args, @"D:\test", "{file.Orig.FileName}{file.Orig.Extension}");
 
-        Assert.AreEqual(@"D:/test/tv4a-starwarsrebels.s01e15-1080p.mkv", dest);
+        Assert.AreEqual($@"D:/test/{fileName}.mkv", dest);
     }
     [TestMethod]
     public void MoveTests_Variable_Original_NoExtension()
     {
+        string fileName = Guid.NewGuid().ToString();
+        var tempFile = Path.Combine(Path.GetTempPath(),fileName+ ".mkv.mkv");
+        System.IO.File.WriteAllText(tempFile, "this is a temp file ");
+        var args = new NodeParameters(tempFile, Logger, 
+            false, string.Empty, new LocalFileService());
+        args.InitFile(tempFile);
         
-        var args = new NodeParameters(@"/home/user/test/tv4a-starwarsrebels.s01e15-1080p.mkv", Logger, false, string.Empty, new LocalFileService());
-
         // ensure we dont double up the extension after FF-154
         string dest = MoveFile.GetDestinationPath(args, @"D:\test", "{file.Orig.FileNameNoExtension}");
 
-        Assert.AreEqual(@"D:/test/tv4a-starwarsrebels.mkv", dest);
+        Assert.AreEqual($@"D:/test/{fileName}.mkv", dest);
     }
     
     [TestMethod]
     public void MoveTests_MoveFolder()
     {
-        
         var args = new NodeParameters(@"\\tower\downloads\downloaded\tv\The.Walking.Dead.Dead.City.S01E04\some-file.mkv", Logger, false, string.Empty, new LocalFileService());
         args.RelativeFile = @"The.Walking.Dead.Dead.City.S01E04\some-file.mkv";
 
@@ -110,11 +137,22 @@ public class MoveTests : TestBase
     [TestMethod]
     public void MoveTests_AdditionalFiles()
     {
-        var args = new NodeParameters(@"/home/john/Videos/move-me/dir/basic.mkv", Logger, false, string.Empty, new LocalFileService());
+        var tempDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+        Directory.CreateDirectory(tempDir);
+        
+        var tempDir2 = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+        Directory.CreateDirectory(tempDir2);
+        
+        var tempFilePrefix = Path.Combine(tempDir, Guid.NewGuid().ToString());
+        var tempFile = tempFilePrefix + ".mkv";
+        System.IO.File.WriteAllText(tempFile, "test file");
+        var tempFileSrt = tempFilePrefix + ".srt";
+        System.IO.File.WriteAllText(tempFileSrt, "srt file");
+        var args = new NodeParameters(tempFile, Logger, false, string.Empty, new LocalFileService());
 
         var ele = new MoveFile();
         ele.AdditionalFiles = new[] { "*.srt" };
-        ele.DestinationPath = "/home/john/Videos/converted";
+        ele.DestinationPath = tempDir2;
         var result = ele.Execute(args);
         Assert.AreEqual(1, result);
     }

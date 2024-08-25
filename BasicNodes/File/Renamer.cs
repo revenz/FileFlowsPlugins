@@ -63,7 +63,7 @@ public class Renamer : Node
         // remove empty [], (), {}
         newFile = newFile.Replace("()", "").Replace("{}", "").Replace("[]", "");
         // remove double space that may have been introduced by empty [], () removals
-        while (newFile.IndexOf("  ") >= 0)
+        while (newFile.IndexOf("  ", StringComparison.Ordinal) >= 0)
             newFile = newFile.Replace("  ", " ");
         newFile = Regex.Replace(newFile, @"\s(\.[\w\d]+)$", "$1");
         newFile = newFile.Replace(" \\", "\\");
