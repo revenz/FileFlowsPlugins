@@ -1,11 +1,12 @@
 #if(DEBUG)
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PluginTestLibrary;
 
 namespace FileFlows.Telegram.Tests;
 
 [TestClass]
-public class TelegramTests
+public class TelegramTests : TestBase
 {
     [TestMethod]
     public void SendMessage()

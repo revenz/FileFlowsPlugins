@@ -25,6 +25,7 @@ This plugin is required for FileFlows to work.</Description>
     <PackageReference Include="MSTest.TestAdapter" Version="3.4.3" />
     <PackageReference Include="MSTest.TestFramework" Version="3.4.3" />
     <PackageReference Include="Moq" Version="4.20.70" />
+    <ProjectReference Include="..\PluginTestLibrary\PluginTestLibrary.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Plugin">

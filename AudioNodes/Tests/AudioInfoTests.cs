@@ -2,22 +2,19 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Text.Json;
 using AudioNodes.Tests;
+using FileFlows.AudioNodes.Helpers;
+using Moq;
 
 namespace FileFlows.AudioNodes.Tests;
 [TestClass]
 public class AudioInfoTests: AudioTestBase
 {
-    const string file = @"/home/john/Music/test/test.wav";
-    readonly string ffmpegExe = (OperatingSystem.IsLinux() ? "/usr/local/bin/ffmpeg" :  @"C:\utils\ffmpeg\ffmpeg.exe");
-    readonly string ffprobe = (OperatingSystem.IsLinux() ? "/usr/local/bin/ffprobe" :  @"C:\utils\ffmpeg\ffprobe.exe");
-    
+
     [TestMethod]
     public void AudioInfo_SplitTrack()
     {
-        var args = GetNodeParameters(TestFile_Mp3);
+        var args = GetNodeParameters();
         var af = new AudioFile();
         af.PreExecute(args);
         var result = af.Execute(args); // need to read the Audio info and set it
@@ -26,63 +23,46 @@ public class AudioInfoTests: AudioTestBase
 
         var AudioInfo = args.Parameters["AudioInfo"] as AudioInfo;
 
-        Assert.AreEqual(4, AudioInfo.Track);
+        Assert.AreEqual(8, AudioInfo.Track);
     }
 
     [TestMethod]
     public void AudioInfo_NormalTrack()
     {
-        const string file = @"\\oracle\Audio\Taylor Swift\Speak Now\Taylor Swift - Speak Now - 08 - Never Grow Up.mp3";
-
-        var args = GetNodeParameters(file, false);
-        var AudioInfo = new AudioInfoHelper(ffmpeg, ffprobe, args.Logger).Read(args.WorkingFile);
+        var args = GetNodeParameters();
+        var AudioInfo = new AudioInfoHelper(FFprobe, FFprobe, Logger).Read(args.WorkingFile);
 
         Assert.AreEqual(8, AudioInfo.Value.Track);
     }
 
     [TestMethod]
-    public void AudioInfo_LargeWav()
-    {
-        string file = Path.Combine(TestPath, "large-wav.wav");
-
-        var args = GetNodeParameters(file, false);
-        var AudioInfo = new AudioInfoHelper(ffmpeg, ffprobe, args.Logger).Read(args.WorkingFile);
-
-        Assert.AreEqual(96000, AudioInfo.Value.Frequency);
-    }
-
-    [TestMethod]
     public void AudioInfo_GetMetaData()
     {
-        var logger = new TestLogger();
-        foreach (string file in Directory.GetFiles(@"/home/john/Music/test"))
-        {
-            var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty, null);
-            args.GetToolPathActual = (string tool) => ffmpegExe;
+        var args = GetNodeParameters();
 
-            // laod the variables
-            Assert.AreEqual(1, new AudioFile().Execute(args));
+        // load the variables
+        var audioFile = new AudioFile();
+        audioFile.PreExecute(args);
+        Assert.AreEqual(1, audioFile.Execute(args));
 
-            var audio = new AudioInfoHelper(ffmpegExe, ffprobe, args.Logger).Read(args.WorkingFile).Value;
+        var audio = new AudioInfoHelper(FFmpeg, FFprobe, Logger).Read(args.WorkingFile).Value;
 
-            string folder = args.ReplaceVariables("{audio.ArtistThe} ({audio.Year})");
-            Assert.AreEqual($"{audio.Artist} ({audio.Date.Year})", folder);
+        string folder = args.ReplaceVariables("{audio.ArtistThe} ({audio.Year})");
+        Assert.AreEqual($"{audio.Artist} ({audio.Date.Year})", folder);
 
-            string fname = args.ReplaceVariables("{audio.Artist} - {audio.Album} - {audio.Track:##} - {audio.Title}");
-            Assert.AreEqual($"{audio.Artist} - {audio.Track.ToString("00")} - {audio.Title}", fname);
-        }
+        string fname = args.ReplaceVariables("{audio.Artist} - {audio.Album} - {audio.Track|##} - {audio.Title}");
+        Assert.AreEqual($"{audio.Artist} - {audio.Album} - {audio.Track:00} - {audio.Title}", fname);
     }
 
     [TestMethod]
     public void AudioInfo_FileNameMetadata()
     {
-        const string ffmpegExe = @"C:\utils\ffmpeg\ffmpeg.exe";
-        var logger = new TestLogger();
-        string file = @"\\jor-el\Audio\Meat Loaf\Bat out of Hell II- Back Into Hell… (1993)\Meat Loaf - Bat out of Hell II- Back Into Hell… - 03 - I’d Do Anything for Love (but I Won’t Do That).flac";
-        
         var audio = new AudioInfo();
 
-        new AudioInfoHelper(ffmpegExe, ffprobe, logger).ParseFileNameInfo(file, audio);
+        string file =
+            "/media/Meat Loaf/Bat out of Hell II- Back Into Hell… (1993)/03 - I’d Do Anything for Love (but I Won’t Do That).mp3";
+
+        new AudioInfoHelper(FFmpeg, FFprobe, Logger).ParseFileNameInfo(file, audio);
 
         Assert.AreEqual("Meat Loaf", audio.Artist);
         Assert.AreEqual("Bat out of Hell II- Back Into Hell…", audio.Album);
@@ -90,19 +70,16 @@ public class AudioInfoTests: AudioTestBase
         Assert.AreEqual("I’d Do Anything for Love (but I Won’t Do That)", audio.Title);
         Assert.AreEqual(3, audio.Track);
     }
-    
-    
 
     [TestMethod]
     public void AudioInfo_Bitrate()
     {
-        var logger = new TestLogger();
-        var file = @"/home/john/Music/test/test.mp3";
-        var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty, null);
-        args.GetToolPathActual = (string tool) => ffmpegExe;
+        var args = GetNodeParameters(AudioOgg);
 
         // load the variables
-        Assert.AreEqual(1, new AudioFile().Execute(args));
+        var audioFile = new AudioFile();
+        audioFile.PreExecute(args);
+        Assert.AreEqual(1, audioFile.Execute(args));
         
         // convert to 192
         var convert = new ConvertAudio();
@@ -113,7 +90,7 @@ public class AudioInfoTests: AudioTestBase
         int result = convert.Execute(args);
         Assert.AreEqual(1, result);
 
-        var audio = new AudioInfoHelper(ffmpegExe, ffprobe, args.Logger).Read(args.WorkingFile).Value;
+        var audio = new AudioInfoHelper(FFmpeg, FFprobe, Logger).Read(args.WorkingFile).Value;
         Assert.AreEqual(192 * 1024, audio.Bitrate);
 
         var md = new Dictionary<string, object>();
@@ -129,12 +106,9 @@ public class AudioInfoTests: AudioTestBase
         convert.PreExecute(args);
         result = convert.Execute(args);
         Assert.AreEqual(2, result);
-
-        string log = logger.ToString();
     }
     
     [TestMethod]
-    [RequiresUnreferencedCode("")]
     public void AudioFormatInfoTest()
     {
         string ffmpegOutput = @"{
@@ -163,7 +137,6 @@ public class AudioInfoTests: AudioTestBase
             }
         }";
 
-        // Deserialize the JSON using System.Text.Json
         var result = FFprobeAudioInfo.Parse(ffmpegOutput);
         Assert.IsFalse(result.IsFailed);
         var audioFormatInfo = result.Value;

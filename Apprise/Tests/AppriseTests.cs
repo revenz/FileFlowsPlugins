@@ -2,54 +2,58 @@
 
 using FileFlows.Apprise.Communication;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using PluginTestLibrary;
 
 namespace FileFlows.Apprise.Tests;
 
 [TestClass]
-public class AppriseTests
+public class AppriseTests : TestBase
 {
+    private Mock<IAppriseApi> mockApi = new();
+    private NodeParameters Args = null!;
+    
+    protected override void TestStarting()
+    {
+        Args = new NodeParameters(TempFile, Logger, false, string.Empty, new LocalFileService());
+        Args.RenderTemplate = (arg) => arg;
+    }
+
+
     [TestMethod]
     public void Apprise_Basic_All()
     {
-        var args = new NodeParameters("test.file", new TestLogger(), false, string.Empty, null!);;
-        args.GetPluginSettingsJson = (string input) =>
-        {
-            return File.ReadAllText("../../../settings.json");
-        };
-
         var node = new FileFlows.Apprise.Communication.Apprise();
+        node.Api = mockApi.Object;
+        mockApi.Setup(x => x.Send(It.IsAny<ILogger>(), It.IsAny<string?>(), It.IsAny<string[]?>(), It.IsAny<string>()))
+            .Returns(true);
         node.Message = "a message";
-        Assert.AreEqual(1, node.Execute(args));
+        Assert.AreEqual(1, node.Execute(Args));
     }
 
     [TestMethod]
     public void Apprise_Basic_Valid()
     {
-        var args = new NodeParameters("test.file", new TestLogger(), false, string.Empty, null!);;
-        args.GetPluginSettingsJson = (string input) =>
-        {
-            return File.ReadAllText("../../../settings.json");
-        };
-
         var node = new FileFlows.Apprise.Communication.Apprise();
+        node.Api = mockApi.Object;
+        mockApi.Setup(x => x.Send(It.IsAny<ILogger>(), It.IsAny<string?>(), It.IsAny<string[]?>(), It.IsAny<string>()))
+            .Returns(true);
         node.Message = "a message";
-        node.Tag = new[] { "test" };
-        Assert.AreEqual(1, node.Execute(args));
+        node.Tag = [ "test" ];
+        Assert.AreEqual(1, node.Execute(Args));
     }
 
     [TestMethod]
     public void Apprise_Basic_Invalid()
     {
-        var args = new NodeParameters("test.file", new TestLogger(), false, string.Empty, null!);
-        args.GetPluginSettingsJson = (string input) =>
-        {
-            return File.ReadAllText("../../../settings.json");
-        };
-
         var node = new FileFlows.Apprise.Communication.Apprise();
+        node.Api = mockApi.Object;
+        mockApi.Setup(x => x.Send(It.IsAny<ILogger>(), It.IsAny<string?>(), It.IsAny<string[]?>(), It.IsAny<string>()))
+            .Returns(false);
+
         node.Message = "a message";
-        node.Tag = new[] { "invalid" };
-        Assert.AreEqual(2, node.Execute(args));
+        node.Tag = [ "invalid" ];
+        Assert.AreEqual(2, node.Execute(Args));
     }
 }
 

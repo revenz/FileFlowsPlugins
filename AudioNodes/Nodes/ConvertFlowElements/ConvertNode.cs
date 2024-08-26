@@ -349,6 +349,11 @@ namespace FileFlows.AudioNodes
                     args.Logger?.ILog($"Audio file already '{DefaultExtension}' at bitrate '{AudioInfo.Bitrate} bps ({(AudioInfo.Bitrate / 1000)} KBps)'");
                     return 2;
                 }
+                if(AudioInfo.Bitrate <= Bitrate * 1024) // this bitrate is in Kbps, whereas AudioInfo.Bitrate is bytes per second
+                {
+                    args.Logger?.ILog($"Audio file already '{DefaultExtension}' at bitrate '{AudioInfo.Bitrate} bps ({(AudioInfo.Bitrate / 1024)} KBps)'");
+                    return 2;
+                }
             }
 
 

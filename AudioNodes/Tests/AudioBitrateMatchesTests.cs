@@ -9,9 +9,6 @@ namespace FileFlows.AudioNodes.Tests;
 [TestClass]
 public class AudioBitrateMatchesTests
 {
-    const string file = @"/home/john/Music/test/test.mp3";
-    readonly string ffmpegExe = (OperatingSystem.IsLinux() ? "/usr/bin/ffmpeg" :  @"C:\utils\ffmpeg\ffmpeg.exe");
-    readonly string ffprobe = (OperatingSystem.IsLinux() ? "/usr/bin/ffprobe" :  @"C:\utils\ffmpeg\ffprobe.exe");
     
     [TestMethod]
     public void AudioInfo_SplitTrack()

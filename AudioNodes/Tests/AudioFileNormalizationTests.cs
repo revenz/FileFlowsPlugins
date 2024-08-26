@@ -1,5 +1,6 @@
-﻿#if(DEBUG)
+﻿using AudioNodes.Tests;
 
+#if(DEBUG)
 
 namespace FileFlows.AudioNodes.Tests;
 
@@ -13,68 +14,40 @@ using System.Threading.Tasks;
 using System.IO;
 
 [TestClass]
-public class AudioFileNormalizationTests
+public class AudioFileNormalizationTests : AudioTestBase
 {
     [TestMethod]
     public void AudioFileNormalization_Mp3()
     {
+        var args = GetNodeParameters();
+        
+        var audioFile = new AudioFile();
+        audioFile.PreExecute(args);
+        audioFile.Execute(args); // need to read the Audio info and set it
 
-        const string file = @"D:\music\unprocessed\01-billy_joel-movin_out.mp3";
-
-        AudioFileNormalization node = new ();
-        var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty, null);
-        args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
-        args.TempPath = @"D:\music\temp";
-        new AudioFile().Execute(args); // need to read the Audio info and set it
+        AudioFileNormalization node = new();
+        node.PreExecute(args);
         int output = node.Execute(args);
-
-        string log = logger.ToString();
 
         Assert.AreEqual(1, output);
     }
-    [TestMethod]
-    public void AudioFileNormalization_Bulk()
-    {
-
-        foreach (var file in Directory.GetFiles(@"D:\music\unprocessed"))
-        {
-
-            AudioFileNormalization node = new();
-            var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty, null);
-            args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
-            args.TempPath = @"D:\music\temp";
-            new AudioFile().Execute(args); // need to read the Audio info and set it
-            int output = node.Execute(args);
-
-            string log = logger.ToString();
-
-            Assert.AreEqual(1, output);
-        }
-    }
-
 
     [TestMethod]
     public void AudioFileNormalization_ConvertFlacToMp3()
     {
+        var args = GetNodeParameters(AudioFlac);
 
-        const string file = @"D:\music\flacs\03-billy_joel-dont_ask_me_why.flac";
-        var logger = new TestLogger();
-        var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty, null);
-        args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
-        args.TempPath = @"D:\music\temp";
-
-        new AudioFile().Execute(args); // need to read the Audio info and set it
+        var audioFile = new AudioFile();
+        audioFile.PreExecute(args);
+        audioFile.Execute(args); // need to read the Audio info and set it0
 
         ConvertToMP3 convertNode = new();
+        convertNode.PreExecute(args);
         int output = convertNode.Execute(args);
 
-
         AudioFileNormalization normalNode = new();
+        normalNode.PreExecute(args);
         output = normalNode.Execute(args);
-
-        string log = logger.ToString();
 
         Assert.AreEqual(1, output);
     }

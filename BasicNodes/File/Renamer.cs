@@ -67,6 +67,7 @@ public class Renamer : Node
             newFile = newFile.Replace("  ", " ");
         newFile = Regex.Replace(newFile, @"\s(\.[\w\d]+)$", "$1");
         newFile = newFile.Replace(" \\", "\\");
+        newFile = newFile.Replace(" /", "/");
 
         args.Logger?.ILog("New File: " + newFile);
         

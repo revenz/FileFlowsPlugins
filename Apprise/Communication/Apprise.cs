@@ -86,33 +86,42 @@ File shrunk in size by: {{ difference | file_size }} / {{ percent }}%
             return _MessageTemplates;
         }
     }
+
+    internal IAppriseApi? Api;
     
     /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
         try
         {
-            var settings = args.GetPluginSettings<PluginSettings>();
-
-            if (string.IsNullOrWhiteSpace(settings?.Endpoint))
+            if (Api == null)
             {
-                args.Logger?.WLog("No endpoint set");
-                return 2;
-            }
+                var settings = args.GetPluginSettings<PluginSettings>();
 
-            if (string.IsNullOrWhiteSpace(settings?.ServerUrl))
-            {
-                args.Logger?.WLog("No server URL set");
-                return 2;
-            }
+                var endpoint = settings?.Endpoint;
+                var serverUrl = settings?.ServerUrl;
 
-            string url = settings.ServerUrl;
-            if (url.EndsWith("/") == false)
-                url += "/";
-            if (settings.Endpoint.EndsWith("/"))
-                url += settings.Endpoint[1..];
-            else
-                url += settings.Endpoint;
+                if (string.IsNullOrWhiteSpace(endpoint))
+                {
+                    args.Logger?.WLog("No endpoint set");
+                    return 2;
+                }
+
+                if (string.IsNullOrWhiteSpace(serverUrl))
+                {
+                    args.Logger?.WLog("No server URL set");
+                    return 2;
+                }
+
+                string url = serverUrl;
+                if (url.EndsWith('/') == false)
+                    url += "/";
+                if (endpoint.EndsWith('/'))
+                    url += endpoint[1..];
+                else
+                    url += endpoint;
+                Api = new AppriseApi(url);
+            }
 
             string message = args.RenderTemplate!(this.Message);
             if (string.IsNullOrWhiteSpace(message))
@@ -121,24 +130,9 @@ File shrunk in size by: {{ difference | file_size }} / {{ percent }}%
                 return 2;
             }
 
-            object data = new
-            {
-                body = message,
-                tag = Tag?.Any() != true ? "all" : String.Join(";", this.Tag),
-                type = this.MessageType?.EmptyAsNull() ?? "info"
-            };
+            var result = Api.Send(args.Logger!, MessageType, Tag, message);
 
-            var json = JsonSerializer.Serialize(data);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            using var httpClient = new HttpClient();
-            var response = httpClient.PostAsync(url, content).Result;
-            if (response.IsSuccessStatusCode)
-                return 1;
-
-            string error = response.Content.ReadAsStringAsync().Result;
-            args.Logger?.WLog("Error from Apprise: " + error);
-            return 2;
+            return result ? 1 : 2;
 
         }
         catch (Exception ex)

@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Text.RegularExpressions;
 
 [TestClass]
-public class MoveTests2
+public class MoveTests2 : TestBase
 {
     
     /// <summary>
@@ -18,15 +18,17 @@ public class MoveTests2
     [TestMethod]
     public void MoveTests_AdditionalFiles()
     {
-        var logger = new TestLogger();
-        var fileService = new LocalFileService();
-        var args = new NodeParameters(@"/home/john/Videos/move-me/basic.mkv", logger, false, string.Empty, fileService);
+        var additionalFile = System.IO.Path.Combine(TempPath, Guid.NewGuid() + ".srt");
+        System.IO.File.WriteAllText(additionalFile, Guid.NewGuid().ToString());
+        var destPath = System.IO.Path.Combine(TempPath, Guid.NewGuid().ToString());
+        
+        var args = new NodeParameters(TempFile, Logger, false, string.Empty, new LocalFileService());
+        args.InitFile(TempFile);
 
         var ele = new MoveFile();
-        ele.AdditionalFiles = new[] { "*.srt" };
-        ele.DestinationPath = "/home/john/Videos/converted";
+        ele.AdditionalFiles = ["*.srt"];
+        ele.DestinationPath = destPath;
         var result = ele.Execute(args);
-        var log = logger.ToString();
         Assert.AreEqual(1, result);
     }
 }

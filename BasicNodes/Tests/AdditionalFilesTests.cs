@@ -3,6 +3,7 @@
 using System.IO;
 using FileFlows.BasicNodes.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PluginTestLibrary;
 
 namespace BasicNodes.Tests;
 

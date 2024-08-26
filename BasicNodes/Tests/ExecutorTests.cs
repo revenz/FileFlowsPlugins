@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Text.RegularExpressions;
 using FileFlows.Plugin;
 using Moq;
+using PluginTestLibrary;
 
 namespace BasicNodes.Tests;
 

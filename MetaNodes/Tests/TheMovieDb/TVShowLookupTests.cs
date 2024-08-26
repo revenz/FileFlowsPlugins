@@ -4,6 +4,7 @@ using DM.MovieApi.MovieDb.Movies;
 using DM.MovieApi.MovieDb.TV;
 using MetaNodes.TheMovieDb;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PluginTestLibrary;
 
 namespace MetaNodes.Tests.TheMovieDb;
 

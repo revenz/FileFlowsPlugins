@@ -8,3 +8,6 @@ global using FileFlows.Plugin;
 global using FileFlows.Plugin.Attributes;
 
 global using FileHelper = FileFlows.Plugin.Helpers.FileHelper;
+#if(DEBUG)
+global using PluginTestLibrary;
+#endif

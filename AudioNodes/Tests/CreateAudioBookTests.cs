@@ -7,7 +7,7 @@ namespace FileFlows.AudioNodes.Tests;
 
 
 [TestClass]
-public class CreateAudioBookTests : AudioTestBase
+public class CreateAudioBookTests : TestBase
 {
     [TestMethod]
     public void CreateAudioBookTest_01()

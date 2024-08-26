@@ -7,46 +7,42 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace AudioNodes.Tests;
 
 [TestClass]
-public class EmbedArtworkTests : AudioTestBase
+public class EmbedArtworkTests : TestBase
 {
 
     [TestMethod]
     public void SingleArtwork()
     {
-        var logger = new TestLogger();
         const string file = "/home/john/Music/unprocessed/Aqua/Aquarium (1997)/Aqua - Aquarium - 03 - Barbie Girl.flac";
-        var args = new NodeParameters(file, logger, false, string.Empty, new LocalFileService())
+        var args = new NodeParameters(file, Logger, false, string.Empty, new LocalFileService())
         {
             LibraryFileName = file
         };
         
-        args.GetToolPathActual = (string tool) => ffmpeg;
+        args.GetToolPathActual = (string tool) => "ffmpeg";
         args.TempPath = @"/home/john/Music/temp";
         var ele = new EmbedArtwork();
         var output = ele.Execute(args);
 
-        var log = logger.ToString();
         Assert.AreEqual(1, output);
     }
     
     [TestMethod]
     public void CovertArtwork()
     {
-        var logger = new TestLogger();
         //const string file = "/home/john/Music/unprocessed/Aqua/Aquarium (1997)/zombie.mp3";
         const string file =
             "/home/john/Music/unprocessed/Aqua/Aquarius (2000)/Aqua - Aquarius - 01 - Cartoon Heroes.flac";
-        var args = new NodeParameters(file, logger, false, string.Empty, new LocalFileService())
+        var args = new NodeParameters(file, Logger, false, string.Empty, new LocalFileService())
         {
             LibraryFileName = file
         };
         
-        args.GetToolPathActual = (string tool) => ffmpeg;
+        args.GetToolPathActual = (string tool) => "ffmpeg";
         args.TempPath = @"/home/john/Music/temp";
         var ele = new EmbedArtwork();
         var output = ele.Execute(args);
 
-        var log = logger.ToString();
         Assert.AreEqual(1, output);
     }
 
@@ -76,14 +72,11 @@ public class EmbedArtworkTests : AudioTestBase
 
         convertNode.PreExecute(args);
         var result = convertNode.Execute(args);
-        var log = Logger.ToString();
         Assert.AreEqual(1, result);
         
         var ele = new EmbedArtwork();
         var output = ele.Execute(args);
 
-        log = Logger.ToString();
-        TestContext.WriteLine(log);
         Assert.AreEqual(1, output);
         System.IO.File.Move(args.WorkingFile,
             FileHelper.Combine(FileHelper.GetDirectory(args.WorkingFile),

@@ -2,16 +2,17 @@
 
 using FileFlows.Gotify.Communication;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PluginTestLibrary;
 
 namespace FileFlows.Gotify.Tests;
 
 [TestClass]
-public class GotifyTests
+public class GotifyTests : TestBase
 {
     [TestMethod]
     public void Gotify_Basic_Message()
     {
-        var args = new NodeParameters("test.file", new TestLogger(), false, string.Empty, null!);
+        var args = new NodeParameters("test.file", Logger, false, string.Empty, new LocalFileService());
         args.GetPluginSettingsJson = (string input) =>
         {
             return File.ReadAllText("../../../settings.json");

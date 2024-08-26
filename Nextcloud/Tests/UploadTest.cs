@@ -2,6 +2,7 @@
 
 using FileFlows.Nextcloud.FlowElements;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PluginTestLibrary;
 
 namespace FileFlows.Nextcloud.Tests;
 

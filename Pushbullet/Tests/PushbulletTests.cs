@@ -1,17 +1,17 @@
 ﻿#if(DEBUG)
 
-using FileFlows.Pushbullet.Communication;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PluginTestLibrary;
 
 namespace FileFlows.Pushbullet.Tests;
 
 [TestClass]
-public class PushbulletTests
+public class PushbulletTests : TestBase
 {
     [TestMethod]
     public void Pushbullet_Basic_Message()
     {
-        var args = new NodeParameters("test.file", new TestLogger(), false, string.Empty, null!);
+        var args = new NodeParameters("test.file", Logger, false, string.Empty, new LocalFileService());
         args.GetPluginSettingsJson = (string input) =>
         {
             return File.ReadAllText("../../../../../Pushbullet.json");
