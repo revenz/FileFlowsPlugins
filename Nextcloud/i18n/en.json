@@ -17,7 +17,7 @@
       "UploadToNextcloud": {
         "Outputs": {
           "1": "Was successfully uploaded to Nextcloud",
-          "2": "Failed ot upload to Nextcloud"
+          "2": "Failed to upload to Nextcloud"
         },
         "Description": "Uploads a file to Nextcloud",
         "Fields": {
