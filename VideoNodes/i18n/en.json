@@ -48,7 +48,7 @@
         "Description": "Converts an audio file into a video file and generates a video based on the audio",
         "Fields": {
           "Visualization": "Visualisation",
-          "Visualization-Help": "The visualation to use in the generated video.  See Help for examples",
+          "Visualization-Help": "The visualization to use in the generated video.  See Help for examples",
           "Container": "Container",
           "Resolution": "Resolution",
           "Codec": "Codec",
@@ -553,7 +553,7 @@
         }
       },
       "FfmpegBuilderPreExecute": {
-        "Label": "FFMPEG Buidler: Pre-Execute",
+        "Label": "FFMPEG Builder: Pre-Execute",
         "Description": "This element lets you run custom code just prior to the [FFmpeg Builder: Executor](https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder) executes FFmpeg.\n\nThis allows you to alter the arguments passed into FFmpeg.",
         "Outputs": {
           "1": "Pre-Execute set"
@@ -563,7 +563,7 @@
         }
       },
       "FfmpegBuilderProres": {
-        "Label": "FFMPEG Buidler: Prores",
+        "Label": "FFMPEG Builder: Prores",
         "Description": "Encodes the video to the prores format.",
         "Outputs": {
           "1": "Video set to use prores"
@@ -618,9 +618,9 @@
       },
       "FfmpegBuilderRemuxToWebm": {
         "Label": "FFMPEG Builder: Remux to WEBM",
-        "Description": "Remuxes a video file into a WEGM container.",
+        "Description": "Remuxes a video file into a WEBM container.",
         "Outputs": {
-          "1": "FFMPEG Builder set to remux to WEGM"
+          "1": "FFMPEG Builder set to remux to WEBM"
         }
       },
       "FfmpegBuilderScaler": {
@@ -882,7 +882,7 @@
       },
       "VideoAlreadyProcessed": {
         "Label": "Video Already Processed",
-        "Description": "Test if a video file has already been processed bv FileFlows",
+        "Description": "Test if a video file has already been processed by FileFlows",
         "Outputs": {
           "1": "Video has already been processed",
           "2": "Video has not been processed"
