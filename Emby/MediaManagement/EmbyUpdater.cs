@@ -67,7 +67,7 @@ public class EmbyUpdater: Node
 
 
         string url = serverUrl;
-        if (url.EndsWith("/") == false)
+        if (url.EndsWith('/') == false)
             url += "/";
         url += "Library/Media/Updated";
         
@@ -119,5 +119,11 @@ public class EmbyUpdater: Node
             }
             return _GetWebRequest;
         }
+        #if(DEBUG)
+        set
+        {
+            _GetWebRequest = value;
+        }
+        #endif
     }
 }
