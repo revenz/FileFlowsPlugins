@@ -82,7 +82,7 @@ public class UploadToNextcloud : Node
         args.Logger?.ILog("File: " + local.Value);
         args.Logger?.ILog("Destination: " + destination);
 
-        var uploader = new NextcloudUploader(args.Logger!, settings.Url, settings.Username, settings.Password);
+        var uploader = GetUploader(args.Logger!, settings.Url, settings.Username, settings.Password);
         var result = uploader.UploadFile(local.Value, destination);
         if(result.Failed(out error))
         {
@@ -93,5 +93,31 @@ public class UploadToNextcloud : Node
         
         args.Logger?.ILog("File successfully uploaded");
         return 1;
+    }
+    /// <summary>
+    /// The function to get the nextcloud uploader
+    /// </summary>
+    private Func<ILogger, string, string, string, INextcloudUploader>? _GetUploader;
+    
+    /// <summary>
+    /// Gets the function to get the next cloud uploader used to send a request
+    /// </summary>
+    internal Func<ILogger, string, string, string, INextcloudUploader> GetUploader
+    {
+        get
+        {
+            if(_GetUploader == null)
+            {
+                _GetUploader = (logger, url, username, password) =>
+                    new NextcloudUploader(logger, url, username, password);
+            }
+            return _GetUploader;
+        }
+#if(DEBUG)
+        set
+        {
+            _GetUploader = value;
+        }
+#endif
     }
 }

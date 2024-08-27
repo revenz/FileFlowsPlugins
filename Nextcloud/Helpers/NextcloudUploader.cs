@@ -3,13 +3,27 @@ using System.Net;
 namespace FileFlows.Nextcloud.Helpers;
 
 /// <summary>
+/// Nextcloud uploader
+/// </summary>
+public interface INextcloudUploader
+{
+    /// <summary>
+    /// Uploads a file to Nextcloud
+    /// </summary>
+    /// <param name="localFilePath">The full path to the file on disk to be uploaded.</param>
+    /// <param name="remoteFilePath">The path in Nextcloud where the file should be uploaded.</param>
+    /// <returns>True if the file was uploaded successfully; otherwise, false.</returns>
+    Result<bool> UploadFile(string localFilePath, string remoteFilePath);
+}
+
+/// <summary>
 /// Helper class for uploading files to Nextcloud
 /// </summary>
 /// <param name="logger">the Logger to use</param>
 /// <param name="nextcloudUrl">The URL of the Nextcloud instance.</param>
 /// <param name="username">The username for authentication.</param>
 /// <param name="password">The password for authentication.</param>
-public class NextcloudUploader(ILogger logger, string nextcloudUrl, string username, string password)
+public class NextcloudUploader(ILogger logger, string nextcloudUrl, string username, string password) : INextcloudUploader
 {
     private static HttpClient client;
 
@@ -25,12 +39,7 @@ public class NextcloudUploader(ILogger logger, string nextcloudUrl, string usern
     }
 
 
-    /// <summary>
-    /// Uploads a file to Nextcloud
-    /// </summary>
-    /// <param name="localFilePath">The full path to the file on disk to be uploaded.</param>
-    /// <param name="remoteFilePath">The path in Nextcloud where the file should be uploaded.</param>
-    /// <returns>True if the file was uploaded successfully; otherwise, false.</returns>
+    /// <inheritdoc />
     public Result<bool> UploadFile(string localFilePath, string remoteFilePath)
     {
         logger?.ILog("Uploading file: " + localFilePath);
