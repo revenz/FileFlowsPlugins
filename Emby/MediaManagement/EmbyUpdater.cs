@@ -91,8 +91,14 @@ public class EmbyUpdater: Node
         return 1;
     }
 
+    /// <summary>
+    /// The method used to send the request
+    /// </summary>
     private Func<HttpClient, string, string, string, (bool success, string body)>? _GetWebRequest;
     
+    /// <summary>
+    /// Gets the method used to send a request
+    /// </summary>
     internal Func<HttpClient, string, string, string, (bool success, string body)> GetWebRequest
     {
         get

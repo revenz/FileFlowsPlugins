@@ -127,32 +127,75 @@ File shrunk in size by: {{ difference | file_size }} / {{ percent }}%
 
             object data = new
             {
-                title = title,
-                message = message,
+                title,
+                message,
                 priority = this.Priority < 0 ? 2 : this.Priority,
             };
 
-            var content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json");
-
             string url = settings.ServerUrl;
-            if (url.EndsWith("/") == false)
+            if (url.EndsWith('/') == false)
                 url += "/";
             url += "message";
 
             using var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("X-Gotify-Key", settings.AccessToken);
-            var response = httpClient.PostAsync(url, content).Result;
-            if (response.IsSuccessStatusCode)
-                return 1;
 
-            string error = response.Content.ReadAsStringAsync().Result;
-            args.Logger?.WLog("Error from Gotify: " + error);
-            return 2;
+            var updateResponse = GetWebRequest(httpClient, url, settings.AccessToken, JsonSerializer.Serialize(data));
+            if (updateResponse.success == false)
+            {
+                if(string.IsNullOrWhiteSpace(updateResponse.body) == false)
+                    args.Logger?.WLog("Error for Gotify:" + updateResponse.body);
+                return 2;
+            }
+            return 1;
         }
         catch (Exception ex)
         {
             args.Logger?.WLog("Error sending message: " + ex.Message);
             return 2;
         } 
+    }
+    
+    
+
+    /// <summary>
+    /// The method used to send the request
+    /// </summary>
+    private Func<HttpClient, string, string, string, (bool success, string body)>? _GetWebRequest;
+    
+    /// <summary>
+    /// Gets the method used to send a request
+    /// </summary>
+    internal Func<HttpClient, string, string, string, (bool success, string body)> GetWebRequest
+    {
+        get
+        {
+            if(_GetWebRequest == null)
+            {
+                _GetWebRequest = (HttpClient client, string url, string accessToken, string json) =>
+                {
+                    try
+                    {
+                        var content = new StringContent(json, Encoding.UTF8, "application/json");
+                        client.DefaultRequestHeaders.Add("X-Gotify-Key", accessToken);
+                        var response = client.PostAsync(url, content).Result;
+                        var respnoseBody = response.Content.ReadAsStringAsync().Result;
+                        if(response.IsSuccessStatusCode)
+                            return (response.IsSuccessStatusCode, respnoseBody);
+                        return (response.IsSuccessStatusCode, respnoseBody?.EmptyAsNull() ?? response.ReasonPhrase ?? string.Empty);
+                    }
+                    catch(Exception ex)
+                    {
+                        return (false, ex.Message);
+                    }
+                };
+            }
+            return _GetWebRequest;
+        }
+#if(DEBUG)
+        set
+        {
+            _GetWebRequest = value;
+        }
+#endif
     }
 }
