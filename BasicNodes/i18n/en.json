@@ -172,7 +172,7 @@
           "Path": "Path",
           "Path-Help": "The path to the folder to check.  Leave empty to check the current working file.\nIf a file is specified the folder containing the file will be checked.",
           "Date": "Date",
-          "DateComparision": "Comparision"
+          "DateComparision": "Comparison"
         }
       },
       "FileDateCompare": {
@@ -185,7 +185,7 @@
           "FileName": "File Name",
           "FileName-Help": "The file to check.  Leave empty to check the current working file.",
           "Date": "Date",
-          "DateComparision": "Comparision"
+          "DateComparision": "Comparison"
         }
       },
       "FileExtension": {
