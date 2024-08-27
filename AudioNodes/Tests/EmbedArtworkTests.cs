@@ -1,27 +1,19 @@
 #if(DEBUG)
 
-using FileFlows.AudioNodes;
-using FileFlows.AudioNodes.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace AudioNodes.Tests;
+namespace FileFlows.AudioNodes.Tests;
 
 [TestClass]
-public class EmbedArtworkTests : TestBase
+public class EmbedArtworkTests : AudioTestBase
 {
 
     [TestMethod]
     public void SingleArtwork()
     {
-        const string file = "/home/john/Music/unprocessed/Aqua/Aquarium (1997)/Aqua - Aquarium - 03 - Barbie Girl.flac";
-        var args = new NodeParameters(file, Logger, false, string.Empty, new LocalFileService())
-        {
-            LibraryFileName = file
-        };
-        
-        args.GetToolPathActual = (string tool) => "ffmpeg";
-        args.TempPath = @"/home/john/Music/temp";
+        var args = GetAudioNodeParameters();
         var ele = new EmbedArtwork();
+        ele.PreExecute(args);
         var output = ele.Execute(args);
 
         Assert.AreEqual(1, output);
@@ -30,17 +22,10 @@ public class EmbedArtworkTests : TestBase
     [TestMethod]
     public void CovertArtwork()
     {
-        //const string file = "/home/john/Music/unprocessed/Aqua/Aquarium (1997)/zombie.mp3";
-        const string file =
-            "/home/john/Music/unprocessed/Aqua/Aquarius (2000)/Aqua - Aquarius - 01 - Cartoon Heroes.flac";
-        var args = new NodeParameters(file, Logger, false, string.Empty, new LocalFileService())
-        {
-            LibraryFileName = file
-        };
+        var args = GetAudioNodeParameters(AudioFlac);
         
-        args.GetToolPathActual = (string tool) => "ffmpeg";
-        args.TempPath = @"/home/john/Music/temp";
         var ele = new EmbedArtwork();
+        ele.PreExecute(args);
         var output = ele.Execute(args);
 
         Assert.AreEqual(1, output);
@@ -61,10 +46,7 @@ public class EmbedArtworkTests : TestBase
     
     void ConvertAudio(Node convertNode)
     {
-        //const string file = "/home/john/Music/unprocessed/Aqua/Aquarium (1997)/zombie.mp3";
-        const string file =
-            "/home/john/Music/unprocessed/Aqua/Aquarius (2000)/Aqua - Aquarius - 01 - Cartoon Heroes.flac";
-        var args = GetNodeParameters(file);
+        var args = GetAudioNodeParameters(AudioFlac);
 
         var audioFile = new AudioFile();
         audioFile.PreExecute(args);

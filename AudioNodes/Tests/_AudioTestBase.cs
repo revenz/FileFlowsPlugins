@@ -1,7 +1,8 @@
-using TagLib.Riff;
+#if(DEBUG)
+
 using File = System.IO.File;
 
-namespace AudioNodes.Tests;
+namespace FileFlows.AudioNodes.Tests;
 
 /// <summary>
 /// Test base dor the audio tests
@@ -48,11 +49,15 @@ public abstract class AudioTestBase : TestBase
     /// Gets the Node Parameters
     /// </summary>
     /// <param name="filename">the file to initialise, will use AudioMp3 if not set</param>
+    /// <param name="isDirectory">if the file is directory
     /// <returns>the node parameters</returns>
-    public NodeParameters GetNodeParameters(string? filename = null)
+    public NodeParameters GetAudioNodeParameters(string? filename = null, bool isDirectory = false)
     {
         filename ??= AudioMp3;
-        var args = new NodeParameters(filename, Logger, false, string.Empty, new LocalFileService());
+        var args = new NodeParameters(filename, Logger, isDirectory, string.Empty, new LocalFileService())
+        {
+            LibraryFileName = filename
+        };
         args.InitFile(filename);
 
         FFmpeg = File.Exists("/usr/local/bin/ffmpeg") ? "/usr/local/bin/ffmpeg" : "ffmpeg";
@@ -67,5 +72,6 @@ public abstract class AudioTestBase : TestBase
         args.TempPath = TempPath;
         return args;
     }
-    
 }
+
+#endif

@@ -2,9 +2,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
-using AudioNodes.Tests;
-using FileFlows.Plugin.Services;
-
 namespace FileFlows.AudioNodes.Tests;
 
 [TestClass]
@@ -21,7 +18,7 @@ public class ConvertTests : AudioTestBase
                 node.Codec = codec;
                 node.Bitrate = quality + 10;
                 node.HighEfficiency = true;
-                var args = GetNodeParameters(AudioFlac);
+                var args = GetAudioNodeParameters(AudioFlac);
                 var af = new AudioFile();
                 Assert.IsTrue(af.PreExecute(args));
                 af.Execute(args); // need to read the Audio info and set it
@@ -38,7 +35,7 @@ public class ConvertTests : AudioTestBase
     [TestMethod]
     public void Convert_FlacToMp3()
     {
-        var args = GetNodeParameters(AudioFlac);
+        var args = GetAudioNodeParameters(AudioFlac);
         var af = new AudioFile();
         af.PreExecute(args);
         af.Execute(args); // need to read the Audio info and set it
@@ -53,7 +50,7 @@ public class ConvertTests : AudioTestBase
     [TestMethod]
     public void Convert_Mp3ToWAV()
     {
-        var args = GetNodeParameters();
+        var args = GetAudioNodeParameters();
         var af = new AudioFile();
         af.PreExecute(args);
         af.Execute(args); // need to read the Audio info and set it
@@ -68,7 +65,7 @@ public class ConvertTests : AudioTestBase
     [TestMethod]
     public void Convert_Mp3ToOgg()
     {
-        var args = GetNodeParameters();
+        var args = GetAudioNodeParameters();
         var af = new AudioFile();
         af.PreExecute(args);
         af.Execute(args); // need to read the Audio info and set it
@@ -86,7 +83,7 @@ public class ConvertTests : AudioTestBase
     [TestMethod]
     public void Convert_AacHighEfficient()
     {
-        var args = GetNodeParameters();
+        var args = GetAudioNodeParameters();
         var af = new AudioFile();
         af.PreExecute(args);
         af.Execute(args); // need to read the Audio info and set it
@@ -103,7 +100,7 @@ public class ConvertTests : AudioTestBase
     [TestMethod]
     public void Convert_Mp3ToMp3_Bitrate()
     {
-        var args = GetNodeParameters();
+        var args = GetAudioNodeParameters();
         var af = new AudioFile();
         af.PreExecute(args);
         af.Execute(args); // need to read the Audio info and set it
@@ -120,7 +117,7 @@ public class ConvertTests : AudioTestBase
     [TestMethod]
     public void Convert_Mp3ToMp3_Bitrate_Variable()
     {
-        var args = GetNodeParameters();
+        var args = GetAudioNodeParameters();
         var af = new AudioFile();
         af.PreExecute(args);
         af.Execute(args); // need to read the Audio info and set it
@@ -137,7 +134,7 @@ public class ConvertTests : AudioTestBase
     [TestMethod]
     public void Convert_Mp3_AlreadyMp3()
     {
-        var args = GetNodeParameters();
+        var args = GetAudioNodeParameters();
         var af = new AudioFile();
         af.PreExecute(args);
         af.Execute(args); // need to read the Audio info and set it
@@ -155,7 +152,7 @@ public class ConvertTests : AudioTestBase
     [TestMethod]
     public void Convert_TwoPass()
     {
-        var args = GetNodeParameters();
+        var args = GetAudioNodeParameters();
         var af = new AudioFile();
         af.PreExecute(args);
         af.Execute(args); // need to read the Audio info and set it

@@ -149,12 +149,14 @@ public class CreateAudioBook: AudioNode
             ++chapterCount;
             return chapter;
         }));
-        args.Logger?.ILog("Metadata Content:\n" + metadataContents);
         System.IO.File.WriteAllText(metadataFile, metadataContents);
+        args.Logger?.ILog("Created Metadata File: " + metadataFile);
+        args.Logger?.ILog("Metadata Content:\n" + metadataContents);
         string inputFiles = FileHelper.Combine(args.TempPath, Guid.NewGuid() + ".txt");
         string strInputFiles = string.Join("\n", files.Select(x => $"file '{x}'"));
-        System.IO.File.WriteAllText(inputFiles, strInputFiles);
-        args.Logger?.ILog("Input Files:\n" + inputFiles);
+        System.IO.File.WriteAllText(inputFiles, strInputFiles);;
+        args.Logger?.ILog("Input File: " + inputFiles);
+        args.Logger?.ILog("Input Files:\n" + strInputFiles);
 
         string outputFile = FileHelper.Combine(args.TempPath, Guid.NewGuid() + ".m4b");
 

@@ -1,17 +1,8 @@
-﻿using AudioNodes.Tests;
-
-#if(DEBUG)
+﻿#if(DEBUG)
 
 namespace FileFlows.AudioNodes.Tests;
 
-using FileFlows.AudioNodes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 
 [TestClass]
 public class AudioFileNormalizationTests : AudioTestBase
@@ -19,7 +10,7 @@ public class AudioFileNormalizationTests : AudioTestBase
     [TestMethod]
     public void AudioFileNormalization_Mp3()
     {
-        var args = GetNodeParameters();
+        var args = GetAudioNodeParameters();
         
         var audioFile = new AudioFile();
         audioFile.PreExecute(args);
@@ -35,7 +26,7 @@ public class AudioFileNormalizationTests : AudioTestBase
     [TestMethod]
     public void AudioFileNormalization_ConvertFlacToMp3()
     {
-        var args = GetNodeParameters(AudioFlac);
+        var args = GetAudioNodeParameters(AudioFlac);
 
         var audioFile = new AudioFile();
         audioFile.PreExecute(args);

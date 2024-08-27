@@ -1,12 +1,9 @@
 ﻿#if(DEBUG)
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics.CodeAnalysis;
-using AudioNodes.Tests;
-using FileFlows.AudioNodes.Helpers;
-using Moq;
 
 namespace FileFlows.AudioNodes.Tests;
+
 [TestClass]
 public class AudioInfoTests: AudioTestBase
 {
@@ -14,7 +11,7 @@ public class AudioInfoTests: AudioTestBase
     [TestMethod]
     public void AudioInfo_SplitTrack()
     {
-        var args = GetNodeParameters();
+        var args = GetAudioNodeParameters();
         var af = new AudioFile();
         af.PreExecute(args);
         var result = af.Execute(args); // need to read the Audio info and set it
@@ -29,7 +26,7 @@ public class AudioInfoTests: AudioTestBase
     [TestMethod]
     public void AudioInfo_NormalTrack()
     {
-        var args = GetNodeParameters();
+        var args = GetAudioNodeParameters();
         var AudioInfo = new AudioInfoHelper(FFprobe, FFprobe, Logger).Read(args.WorkingFile);
 
         Assert.AreEqual(8, AudioInfo.Value.Track);
@@ -38,7 +35,7 @@ public class AudioInfoTests: AudioTestBase
     [TestMethod]
     public void AudioInfo_GetMetaData()
     {
-        var args = GetNodeParameters();
+        var args = GetAudioNodeParameters();
 
         // load the variables
         var audioFile = new AudioFile();
@@ -74,7 +71,7 @@ public class AudioInfoTests: AudioTestBase
     [TestMethod]
     public void AudioInfo_Bitrate()
     {
-        var args = GetNodeParameters(AudioOgg);
+        var args = GetAudioNodeParameters(AudioOgg);
 
         // load the variables
         var audioFile = new AudioFile();
