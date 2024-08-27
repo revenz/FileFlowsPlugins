@@ -109,28 +109,13 @@ File shrunk in size by: {{ difference | file_size }} / {{ percent }}%
                 return 2;
             }
 
-            using var httpClient = new HttpClient();
-
             string title = args.ReplaceVariables(this.Title, stripMissing: true);
-            
-            // Set the authorization header with the Access Token
-            httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", settings.ApiToken);
+            var result = GetWebRequest(settings.ApiToken, title, body);
 
-            // Create the request content
-            var content = new StringContent(JsonSerializer.Serialize(
-            new {
-                type = "note",
-                title,
-                body 
-            }), Encoding.UTF8, "application/json");
-            
-            var response = httpClient.PostAsync("https://api.pushbullet.com/v2/pushes", content).Result;
-
-            if (response.IsSuccessStatusCode)
+            if (result.success)
                 return 1;
 
-            string error = response.Content.ReadAsStringAsync().Result;
-            args.Logger?.WLog("Error from Pushbullet: " + error);
+            args.Logger?.WLog("Error from Pushbullet: " + result.body);
             return 2;
         }
         catch (Exception ex)
@@ -138,5 +123,58 @@ File shrunk in size by: {{ difference | file_size }} / {{ percent }}%
             args.Logger?.WLog("Error sending message: " + ex.Message);
             return 2;
         } 
+    }
+    
+    /// <summary>
+    /// The method used to send the request
+    /// </summary>
+    private Func<string, string, string, (bool success, string body)>? _GetWebRequest;
+    
+    /// <summary>
+    /// Gets the method used to send a request
+    /// </summary>
+    internal Func<string, string, string, (bool success, string body)> GetWebRequest
+    {
+        get
+        {
+            if(_GetWebRequest == null)
+            {
+                _GetWebRequest = (apiToken, title, body) =>
+                {
+                    try
+                    {
+                        using var httpClient = new HttpClient();
+            
+                        // Set the authorization header with the Access Token
+                        httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiToken);
+
+                        // Create the request content
+                        var content = new StringContent(JsonSerializer.Serialize(
+                            new {
+                                type = "note",
+                                title,
+                                body 
+                            }), Encoding.UTF8, "application/json");
+            
+                        var response = httpClient.PostAsync("https://api.pushbullet.com/v2/pushes", content).Result;
+
+                        string responseBody = response.Content.ReadAsStringAsync().Result;
+
+                        return (response.IsSuccessStatusCode, responseBody);
+                    }
+                    catch(Exception ex)
+                    {
+                        return (false, ex.Message);
+                    }
+                };
+            }
+            return _GetWebRequest;
+        }
+#if(DEBUG)
+        set
+        {
+            _GetWebRequest = value;
+        }
+#endif
     }
 }

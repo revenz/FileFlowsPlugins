@@ -72,29 +72,6 @@ File shrunk in size by: {{ difference | file_size }} / {{ percent }}%
         }
     }
 
-    /// <summary>
-    /// Sends a telegram message
-    /// </summary>
-    /// <param name="botToken">the bot token</param>
-    /// <param name="chatId">the chat id</param>
-    /// <param name="message">the message to send</param>
-    /// <returns>true if successful, otherwise false</returns>
-    internal static bool SendMessage(string botToken, string chatId, string message)
-    {
-        using (HttpClient client = new HttpClient())
-        {
-            string apiUrl = $"https://api.telegram.org/bot{botToken}/sendMessage";
-            
-            var content = new FormUrlEncodedContent(new[]
-            {
-                new KeyValuePair<string, string>("chat_id", chatId),
-                new KeyValuePair<string, string>("text", message)
-            });
-
-            var response = client.PostAsync(apiUrl, content).Result;
-            return response.IsSuccessStatusCode;
-        }
-    }
 
     /// <summary>
     /// Executes the flow element
@@ -129,12 +106,66 @@ File shrunk in size by: {{ difference | file_size }} / {{ percent }}%
 
             var result = SendMessage(settings.BotToken, settings.ChatId, message);
 
-            return result ? 1 : 2;
+            if (result.success)
+                return 1;
+
+            args.Logger?.WLog("Error from Telegram: " + result.body);
+            return 2;
         }
         catch (Exception ex)
         {
             args.Logger?.WLog("Error sending message: " + ex.Message);
             return 2;
         } 
+    }
+    
+    
+    /// <summary>
+    /// The method used to send the request
+    /// </summary>
+    private Func<string, string, string, (bool success, string body)>? _SendMessage;
+    
+    /// <summary>
+    /// Gets the method used to send a request
+    /// </summary>
+    internal Func<string, string, string, (bool success, string body)> SendMessage
+    {
+        get
+        {
+            if(_SendMessage == null)
+            {
+                _SendMessage = (string botToken, string chatId, string message) =>
+                {
+                    try
+                    {
+                        using HttpClient client = new HttpClient();
+                        
+                            string apiUrl = $"https://api.telegram.org/bot{botToken}/sendMessage";
+            
+                            var content = new FormUrlEncodedContent(new[]
+                            {
+                                new KeyValuePair<string, string>("chat_id", chatId),
+                                new KeyValuePair<string, string>("text", message)
+                            });
+
+                            var response = client.PostAsync(apiUrl, content).Result;
+                            string responseBody = response.Content.ReadAsStringAsync().Result;
+
+                        return (response.IsSuccessStatusCode, responseBody);
+                    }
+                    catch(Exception ex)
+                    {
+                        return (false, ex.Message);
+                    }
+                };
+            }
+            return _SendMessage;
+        }
+#if(DEBUG)
+        set
+        {
+            _SendMessage = value;
+        }
+#endif
     }
 }

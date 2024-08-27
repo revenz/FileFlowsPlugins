@@ -155,36 +155,11 @@ File shrunk in size by: {{ difference | file_size }} / {{ percent }}%
                 args.Logger?.WLog("No message to send");
                 return 2;
             }
-
-            List<KeyValuePair<string, string>> parameters = new ()
-            {
-                new ("token", settings.ApiToken),
-                new ("user", settings.UserKey),
-                new ("message", message),
-                new ("priority", Priority.ToString())
-            };
-
-            if (Priority == 2)
-            {
-                int expire = Expire < 1 ? 1 : (Expire > 86400 ? 86400 : Expire);
-                
-                parameters.Add(new("expire", expire.ToString()));
-                int retry = Retry < 30 ? 30 : (Retry > 86400 ? 86400 : Retry);
-                
-                parameters.Add(new("retry", retry.ToString()));
-            }
-
-            var content = new FormUrlEncodedContent(parameters);
-
-            using var httpClient = new HttpClient();
-            
-            var response = httpClient.PostAsync("https://api.pushover.net/1/messages.json", content).Result;
-
-            if (response.IsSuccessStatusCode)
+            var result = GetWebRequest(settings.ApiToken, settings.UserKey, message, Priority.ToString());
+            if (result.success)
                 return 1;
 
-            string error = response.Content.ReadAsStringAsync().Result;
-            args.Logger?.WLog("Error from Pushover: " + error);
+            args.Logger?.WLog("Error from Pushover: " + result.body);
             return 2;
         }
         catch (Exception ex)
@@ -192,5 +167,68 @@ File shrunk in size by: {{ difference | file_size }} / {{ percent }}%
             args.Logger?.WLog("Error sending message: " + ex.Message);
             return 2;
         } 
+    }
+    
+    /// <summary>
+    /// The method used to send the request
+    /// </summary>
+    private Func<string, string, string, string, (bool success, string body)>? _GetWebRequest;
+    
+    /// <summary>
+    /// Gets the method used to send a request
+    /// </summary>
+    internal Func<string, string, string, string, (bool success, string body)> GetWebRequest
+    {
+        get
+        {
+            if(_GetWebRequest == null)
+            {
+                _GetWebRequest = (token, user, message, priority) =>
+                {
+                    try
+                    {
+                        
+                        List<KeyValuePair<string, string>> parameters = new ()
+                        {
+                            new ("token", token),
+                            new ("user", user),
+                            new ("message", message),
+                            new ("priority", Priority.ToString())
+                        };
+
+                        if (Priority == 2)
+                        {
+                            int expire = Expire < 1 ? 1 : (Expire > 86400 ? 86400 : Expire);
+                
+                            parameters.Add(new("expire", expire.ToString()));
+                            int retry = Retry < 30 ? 30 : (Retry > 86400 ? 86400 : Retry);
+                
+                            parameters.Add(new("retry", retry.ToString()));
+                        }
+
+                        var content = new FormUrlEncodedContent(parameters);
+
+                        using var httpClient = new HttpClient();
+            
+                        var response = httpClient.PostAsync("https://api.pushover.net/1/messages.json", content).Result;
+
+                        string responseBody = response.Content.ReadAsStringAsync().Result;
+
+                        return (response.IsSuccessStatusCode, responseBody);
+                    }
+                    catch(Exception ex)
+                    {
+                        return (false, ex.Message);
+                    }
+                };
+            }
+            return _GetWebRequest;
+        }
+#if(DEBUG)
+        set
+        {
+            _GetWebRequest = value;
+        }
+#endif
     }
 }
