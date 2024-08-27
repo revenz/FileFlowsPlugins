@@ -112,6 +112,7 @@ public abstract class PlexNode:Node
             args.Logger?.WLog("Failed to find Plex section for path: " + path);
             return 2;
         }
+        args.Logger?.ILog("Found section: " + (section.Key ?? "no-key"));
         return ExecuteActual(args, section, serverUrl, path, accessToken);
     }
 
@@ -142,6 +143,9 @@ public abstract class PlexNode:Node
             }
             return _GetWebRequest;
         }
+        #if(DEBUG)
+        set => _GetWebRequest = value;
+        #endif
     }
     private Func<HttpClient, string, (bool success, string body)>? _PutWebRequest;
     internal Func<HttpClient, string, (bool success, string body)> PutWebRequest
@@ -167,5 +171,8 @@ public abstract class PlexNode:Node
             }
             return _PutWebRequest;
         }
+#if(DEBUG)
+        set => _PutWebRequest = value;
+#endif
     }
 }

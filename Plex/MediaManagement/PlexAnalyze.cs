@@ -54,18 +54,18 @@ public class PlexAnalyze : PlexNode
     internal PlexMedia[] GetPlexMedia(HttpClient httpClient, NodeParameters args, string baseUrl, string urlPath, string token, int depth = 0)
     {
         if (depth > 10)
-            return new PlexMedia[] { };
-        if (urlPath.StartsWith("/") && baseUrl.EndsWith("/"))
+            return [];
+        if (urlPath.StartsWith('/') && baseUrl.EndsWith('/'))
             urlPath = urlPath[1..];
 
         string fullUrl = baseUrl + urlPath;
-        fullUrl += (fullUrl.IndexOf("?", StringComparison.Ordinal) > 0 ? "&" : "?") + "X-Plex-Token=" + token;
+        fullUrl += (fullUrl.IndexOf('?', StringComparison.Ordinal) > 0 ? "&" : "?") + "X-Plex-Token=" + token;
         var updateResponse = GetWebRequest(httpClient, fullUrl);
         if (updateResponse.success == false)
         {
             if (string.IsNullOrWhiteSpace(updateResponse.body) == false)
                 args.Logger?.WLog("Failed to get files from Plex:" + updateResponse.body);
-            return new PlexMedia[] { };
+            return [];
         }
     
 
@@ -81,9 +81,10 @@ public class PlexAnalyze : PlexNode
         catch (Exception ex)
         {
             args.Logger?.ELog("Failed deserializing sections json: " + ex.Message);
-            return new PlexMedia[] { };
+            return [];
         }
-        var list = metadata ?? new List<PlexMetadata>();
+
+        var list = metadata ?? new();
         var results = new List<PlexMedia>();
 
         foreach(var item in list)
@@ -94,7 +95,6 @@ public class PlexAnalyze : PlexNode
                     media.RatingKey = item.RatingKey;
 
                 results.AddRange(item.Media);
-                continue;
             }
             else if(string.IsNullOrEmpty(item?.Key) == false && depth < 10)
             {
