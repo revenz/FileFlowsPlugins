@@ -13,6 +13,8 @@
     <Description>Basic flow elements for FileFlows.  This plugin contains basic and common flow elements to process files.
 This plugin is required for FileFlows to work.</Description>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <ParallelizeAssemblies>true</ParallelizeAssemblies>
+    <MaxParallelThreads>4</MaxParallelThreads>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;CS8618;CS8601;CS8602;CS8603;CS8604;CS8618;CS8625;CS8765;CS8767;CS8618l;CS8600</NoWarn>

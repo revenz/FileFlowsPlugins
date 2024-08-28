@@ -13,6 +13,8 @@
     <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
     <Description>Flow elements for processing Audio files.  This plugin contains flow elements to convert Audio files to different formats.  Flow elements to parse the Audio information from a file.</Description>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <ParallelizeAssemblies>true</ParallelizeAssemblies>
+    <MaxParallelThreads>4</MaxParallelThreads>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;CS8618;CS8601;CS8602;CS8603;CS8604;CS8618;CS8625;CS8765;CS8767;</NoWarn>
