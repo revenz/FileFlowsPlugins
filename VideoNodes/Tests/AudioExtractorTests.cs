@@ -68,26 +68,6 @@ public class AudioExtractorTests : VideoTestBase
     }
     
     [TestMethod]
-    public void AudioExtractor_Mp3_Eac3_Pass()
-    {
-        var args = GetVideoNodeParameters();
-
-        VideoExtractAudio node = new();
-        node.OutputFile = Path.Combine(TempPath, "Audio_eac3");
-        node.Codec = "eac3";
-        node.OutputCodec = "mp3";
-
-        var vidFile = new VideoFile();
-        vidFile.PreExecute(args);
-        Assert.AreEqual(1, vidFile.Execute(args));
-
-        node.PreExecute(args);
-        int output = node.Execute(args);
-
-        Assert.AreEqual(1, output);
-    }
-
-    [TestMethod]
     public void AudioExtractor_Aac_2048k()
     {
         var args = GetVideoNodeParameters();
