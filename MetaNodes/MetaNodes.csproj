@@ -15,6 +15,8 @@
     <Description>A plugin that contains Meta information flow elements used to lookup meta information on files.
 
 Contains flow elements to lookup movie information from TheMovieDB, and music information from ID3 tags inside the file.</Description>
+    <ParallelizeAssemblies>true</ParallelizeAssemblies>
+    <MaxParallelThreads>4</MaxParallelThreads>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;CS8618;CS8601;CS8602;CS8603;CS8604;CS8618;CS8625;CS8765;CS8767;CS8618l;CS8600</NoWarn>
