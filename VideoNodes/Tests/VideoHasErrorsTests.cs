@@ -6,20 +6,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace VideoNodes.Tests;
 
 [TestClass]
-public class VideoHasErrorsTests : TestBase
+public class VideoHasErrorsTests : VideoTestBase
 {
     [TestMethod]
     public void VideoHasErrors_Video()
     {
-        string file = TestFile_Corrupt;
-        var args = new NodeParameters(file, Logger, false, string.Empty, new LocalFileService());
-        args.GetToolPathActual = (string tool) =>
-        {
-            if(tool.ToLowerInvariant() == "ffmpeg") return FfmpegPath;
-            if(tool.ToLowerInvariant() == "ffprobe") return FfprobePath;
-            return null;
-        };
-        args.TempPath = TempPath;
+        var args = GetVideoNodeParameters(VideoCorrupt);
 
         VideoFile vf = new();
         vf.PreExecute(args);

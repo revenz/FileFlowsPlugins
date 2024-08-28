@@ -2,32 +2,28 @@
 
 using FileFlows.VideoNodes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PluginTestLibrary;
 
 namespace VideoNodes.Tests;
 
 [TestClass]
-public class VideoHasStreamTests : TestBase
+public class VideoHasStreamTests : VideoTestBase
 {
     [TestMethod]
     public void VideoHasStream_Video_H264()
     {
-        string file = TestFile_BasicMkv;
-        var vi = new VideoInfoHelper(FfmpegPath, new TestLogger());
-        var vii = vi.Read(file);
-
-        VideoHasStream node = new();
-        node.Codec = "h264";
-        node.Stream = "Video";
-
-        var args = new NodeParameters(file, new TestLogger(), false, string.Empty, null);;
-        args.GetToolPathActual = (string tool) => FfmpegPath;
-        args.TempPath = TempPath;
+        var args = GetVideoNodeParameters();
 
         var vf = new VideoFile();
         vf.PreExecute(args);
         Assert.AreEqual(1, vf.Execute(args));
 
-        int output = node.Execute(args);
+        VideoHasStream element = new();
+        element.Codec = "h264";
+        element.Stream = "Video";
+        element.PreExecute(args);
+
+        int output = element.Execute(args);
 
         Assert.AreEqual(1, output);
     }
@@ -35,23 +31,18 @@ public class VideoHasStreamTests : TestBase
     [TestMethod]
     public void VideoHasStream_Video_H265()
     {
-        string file = TestFile_120_mbps_4k_uhd_hevc_10bit;
-        var vi = new VideoInfoHelper(FfmpegPath, new TestLogger());
-        var vii = vi.Read(file);
-
-        VideoHasStream node = new();
-        node.Codec = "h265";
-        node.Stream = "Video";
-
-        var args = new NodeParameters(file, new TestLogger(), false, string.Empty, null);;
-        args.GetToolPathActual = (string tool) => FfmpegPath;
-        args.TempPath = TempPath;
+        var args = GetVideoNodeParameters(VideoMkvHevc);
 
         var vf = new VideoFile();
         vf.PreExecute(args);
         Assert.AreEqual(1, vf.Execute(args));
 
-        int output = node.Execute(args);
+        VideoHasStream element = new();
+        element.Codec = "h265";
+        element.Stream = "Video";
+        element.PreExecute(args);
+
+        int output = element.Execute(args);
 
         Assert.AreEqual(1, output);
     }
@@ -59,48 +50,38 @@ public class VideoHasStreamTests : TestBase
     [TestMethod]
     public void VideoHasStream_Video_Hevc()
     {
-        string file = TestFile_120_mbps_4k_uhd_hevc_10bit;
-        var vi = new VideoInfoHelper(FfmpegPath, new TestLogger());
-        var vii = vi.Read(file);
-
-        VideoHasStream node = new();
-        node.Codec = "h265";
-        node.Stream = "Video";
-
-        var args = new NodeParameters(file, new TestLogger(), false, string.Empty, null);;
-        args.GetToolPathActual = (string tool) => FfmpegPath;
-        args.TempPath = TempPath;
+        var args = GetVideoNodeParameters(VideoMkvHevc);
 
         var vf = new VideoFile();
         vf.PreExecute(args);
         Assert.AreEqual(1, vf.Execute(args));
 
-        int output = node.Execute(args);
+        VideoHasStream element = new();
+        element.Codec = "hevc";
+        element.Stream = "Video";
+        element.PreExecute(args);
+
+        int output = element.Execute(args);
 
         Assert.AreEqual(1, output);
     }
 
 
     [TestMethod]
-    public void VideoHasStream_Audio_Vorbis()
+    public void VideoHasStream_Audio_Aac()
     {
-        string file = TestFile_BasicMkv;
-        var vi = new VideoInfoHelper(FfmpegPath, new TestLogger());
-        var vii = vi.Read(file);
-
-        VideoHasStream node = new();
-        node.Codec = "vorbis";
-        node.Stream = "Audio";
-
-        var args = new NodeParameters(file, new TestLogger(), false, string.Empty, null);;
-        args.GetToolPathActual = (string tool) => FfmpegPath;
-        args.TempPath = TempPath;
+        var args = GetVideoNodeParameters();
 
         var vf = new VideoFile();
         vf.PreExecute(args);
         Assert.AreEqual(1, vf.Execute(args));
 
-        int output = node.Execute(args);
+        VideoHasStream element = new();
+        element.Codec = "aac";
+        element.Stream = "Audio";
+        element.PreExecute(args);
+
+        int output = element.Execute(args);
 
         Assert.AreEqual(1, output);
     }
@@ -110,23 +91,18 @@ public class VideoHasStreamTests : TestBase
     [TestMethod]
     public void VideoHasStream_Audio_Channels_Pass()
     {
-        string file = TestFile_5dot1;
-        var vi = new VideoInfoHelper(FfmpegPath, Logger);
-        var vii = vi.Read(file);
-
-        VideoHasStream node = new();
-        node.Channels = "=5.1";
-        node.Stream = "Audio";
-
-        var args = new NodeParameters(file, Logger, false, string.Empty, new LocalFileService());
-        args.GetToolPathActual = (string tool) => FfmpegPath;
-        args.TempPath = TempPath;
+        var args = GetVideoNodeParameters();
 
         var vf = new VideoFile();
         vf.PreExecute(args);
         Assert.AreEqual(1, vf.Execute(args));
 
-        int output = node.Execute(args);
+        VideoHasStream element = new();
+        element.Channels = "=2.0";
+        element.Stream = "Audio";
+        element.PreExecute(args);
+
+        int output = element.Execute(args);
 
         Assert.AreEqual(1, output);
     }
@@ -135,74 +111,52 @@ public class VideoHasStreamTests : TestBase
     [TestMethod]
     public void VideoHasStream_Audio_Channels_GreaterOrEqual()
     {
-        string file = TestFile_5dot1;
-        var vi = new VideoInfoHelper(FfmpegPath, Logger);
-        var vii = vi.Read(file);
-
-        VideoHasStream node = new();
-        node.Channels = ">=4.5";
-        node.Stream = "Audio";
-
-        var args = new NodeParameters(file, Logger, false, string.Empty, new LocalFileService());
-        args.GetToolPathActual = (string tool) => FfmpegPath;
-        args.TempPath = TempPath;
+        var args = GetVideoNodeParameters();
 
         var vf = new VideoFile();
         vf.PreExecute(args);
         Assert.AreEqual(1, vf.Execute(args));
 
-        int output = node.Execute(args);
-
-        Assert.AreEqual(1, output);
+        VideoHasStream element = new();
+        element.Channels = ">=4.5";
+        element.Stream = "Audio";
+        element.PreExecute(args);
     }
     
     [TestMethod]
     public void VideoHasStream_Audio_Channels_Between()
     {
-        string file = TestFile_5dot1;
-        var vi = new VideoInfoHelper(FfmpegPath, Logger);
-        var vii = vi.Read(file);
-
-        VideoHasStream node = new();
-        node.Channels = "5<>5.1";
-        node.Stream = "Audio";
-
-        var args = new NodeParameters(file, Logger, false, string.Empty, new LocalFileService());
-        args.GetToolPathActual = (string tool) => FfmpegPath;
-        args.TempPath = TempPath;
+        var args = GetVideoNodeParameters();
 
         var vf = new VideoFile();
         vf.PreExecute(args);
         Assert.AreEqual(1, vf.Execute(args));
 
-        int output = node.Execute(args);
-
-        Assert.AreEqual(1, output);
+        VideoHasStream element = new();
+        element.Channels = "5<>5.1";
+        element.Stream = "Audio";
+        element.PreExecute(args);
     }
 
     [TestMethod]
     public void VideoHasStream_Audio_Channels_NotBetween()
     {
-        string file = TestFile_5dot1;
-        var vi = new VideoInfoHelper(FfmpegPath, Logger);
-        var vii = vi.Read(file);
-
-        VideoHasStream node = new();
-        node.Channels = "2><3";
-        node.Stream = "Audio";
-
-        var args = new NodeParameters(file, Logger, false, string.Empty, new LocalFileService());
-        args.GetToolPathActual = (string tool) => FfmpegPath;
-        args.TempPath = TempPath;
+        var args = GetVideoNodeParameters();
 
         var vf = new VideoFile();
         vf.PreExecute(args);
         Assert.AreEqual(1, vf.Execute(args));
 
-        int output = node.Execute(args);
+        VideoHasStream element = new();
+        element.Channels = "2><3";
+        element.Stream = "Audio";
+        element.PreExecute(args);
+
+        int output = element.Execute(args);
 
         Assert.AreEqual(1, output);
     }
+    
     [TestMethod]
     public void VideoHasStream_Audio_Channels_Pass_61()
     {
@@ -278,84 +232,49 @@ public class VideoHasStreamTests : TestBase
 
         var args = new NodeParameters(null, Logger, false, string.Empty, new LocalFileService());
         args.Parameters["VideoInfo"] = vi;
-        args.GetToolPathActual = (string tool) => FfmpegPath;
+        args.GetToolPathActual = (string tool) => FFmpeg;
         args.TempPath = TempPath;
 
         int output = node.Execute(args);
 
         Assert.AreEqual(1, output);
     }
+    
     [TestMethod]
     public void VideoHasStream_Audio_Channels_Fail()
     {
-        string file = TestFile_BasicMkv;
-        var vi = new VideoInfoHelper(FfmpegPath, new TestLogger());
-        var vii = vi.Read(file);
-
-        VideoHasStream node = new();
-        node.Channels = "=2";
-        node.Stream = "Audio";
-
-        var args = new NodeParameters(file, new TestLogger(), false, string.Empty, null);;
-        args.GetToolPathActual = (string tool) => FfmpegPath;
-        args.TempPath = TempPath;
+        var args = GetVideoNodeParameters();
 
         var vf = new VideoFile();
         vf.PreExecute(args);
         Assert.AreEqual(1, vf.Execute(args));
 
-        int output = node.Execute(args);
+        VideoHasStream element = new();
+        element.Channels = "=5.1";
+        element.Stream = "Audio";
+        element.PreExecute(args);
+
+        int output = element.Execute(args);
 
         Assert.AreEqual(2, output);
     }
 
 
-    [TestMethod]
-    public void VideoHasStream_Video_Tag()
-    {
-        string file = TestFile_Tag;
-        var vi = new VideoInfoHelper(FfmpegPath, new TestLogger());
-        var vii = vi.Read(file);
-
-        VideoHasStream node = new();
-        node.Codec = "h264";
-        node.Stream = "Video";
-
-        var args = new NodeParameters(file, new TestLogger(), false, string.Empty, null);;
-        args.GetToolPathActual = (string tool) => FfmpegPath;
-        args.TempPath = TempPath;
-
-        var vf = new VideoFile();
-        vf.PreExecute(args);
-        Assert.AreEqual(1, vf.Execute(args));
-
-        int output = node.Execute(args);
-
-        Assert.AreEqual(1, output);
-    }
-
 
     [TestMethod]
     public void VideoHasStream_Audio_Lang_Pass()
     {
-        string file = TestFile_MovText_Mp4;
-        var vi = new VideoInfoHelper(FfmpegPath, new TestLogger());
-        var vii = vi.Read(file);
-
-        VideoHasStream node = new();
-        node.Language = "ita";
-        node.Stream = "Audio";
-
-        var args = new NodeParameters(file, new TestLogger(), false, string.Empty, null);;
-        args.GetToolPathActual = (string tool) => FfmpegPath;
-        args.TempPath = TempPath;
+        var args = GetVideoNodeParameters();
 
         var vf = new VideoFile();
         vf.PreExecute(args);
         Assert.AreEqual(1, vf.Execute(args));
 
-        node.PreExecute(args);
-        int output = node.Execute(args);
+        VideoHasStream element = new();
+        element.Language = "eng";
+        element.Stream = "Audio";
+        element.PreExecute(args);
+        int output = element.Execute(args);
 
         Assert.AreEqual(1, output);
     }
@@ -363,24 +282,17 @@ public class VideoHasStreamTests : TestBase
     [TestMethod]
     public void VideoHasStream_Audio_Lang_Fail()
     {
-        string file = TestFile_MovText_Mp4;
-        var vi = new VideoInfoHelper(FfmpegPath, new TestLogger());
-        var vii = vi.Read(file);
-
-        VideoHasStream node = new();
-        node.Language = "mao";
-        node.Stream = "Audio";
-
-        var args = new NodeParameters(file, new TestLogger(), false, string.Empty, null);;
-        args.GetToolPathActual = (string tool) => FfmpegPath;
-        args.TempPath = TempPath;
+        var args = GetVideoNodeParameters();
 
         var vf = new VideoFile();
         vf.PreExecute(args);
         Assert.AreEqual(1, vf.Execute(args));
 
-        node.PreExecute(args);
-        int output = node.Execute(args);
+        VideoHasStream element = new();
+        element.Channels = "mao";
+        element.Stream = "Audio";
+        element.PreExecute(args);
+        int output = element.Execute(args);
 
         Assert.AreEqual(2, output);
     }

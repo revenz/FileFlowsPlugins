@@ -5,13 +5,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace VideoNodes.Tests;
 
 [TestClass]
-public class VideoIsInterlacedTests
+public class VideoIsInterlacedTests : VideoTestBase
 {
     [TestMethod]
     public void NotInterlaced()
     {
-        var logger = new TestLogger();
-        
         string ffmpegOutput = @"
       NUMBER_OF_BYTES : 3632640
       _STATISTICS_WRITING_APP: mkvmerge v60.0.0 ('Are We Copies?') 64-bit
@@ -30,19 +28,16 @@ video:510kB audio:25542kB subtitle:0kB other streams:0kB global headers:0kB muxi
 [Parsed_idet_0 @ 0x5618bf1fba40] Single frame detection: TFF:     0 BFF:     0 Progressive:   374 Undetermined:   715
 [Parsed_idet_0 @ 0x5618bf1fba40] Multi frame detection: TFF:     0 BFF:     0 Progressive:  1089 Undetermined:     0";
         
-        bool interlaced = VideoIsInterlaced.IsVideoInterlaced(logger, ffmpegOutput, 10);
-        var log = logger.ToString();
+        bool interlaced = VideoIsInterlaced.IsVideoInterlaced(Logger, ffmpegOutput, 10);
         
         Assert.IsFalse(interlaced);
-        Assert.IsTrue(log.Contains("Total Progressive Frames: " + (374 + 1089)));
+        Assert.IsTrue(Logger.ToString().Contains("Total Progressive Frames: " + (374 + 1089)));
     }
     
     
     [TestMethod]
     public void IsInterlaced()
     {
-        var logger = new TestLogger();
-        
         string ffmpegOutput = @"
       NUMBER_OF_BYTES : 3632640
       _STATISTICS_WRITING_APP: mkvmerge v60.0.0 ('Are We Copies?') 64-bit
@@ -61,10 +56,10 @@ video:510kB audio:25542kB subtitle:0kB other streams:0kB global headers:0kB muxi
 [Parsed_idet_0 @ 0x5618bf1fba40] Single frame detection: TFF:     420 BFF:     0 Progressive:   374 Undetermined:   715
 [Parsed_idet_0 @ 0x5618bf1fba40] Multi frame detection: TFF:     65 BFF:     0 Progressive:  1089 Undetermined:     0";
         
-        bool interlaced = VideoIsInterlaced.IsVideoInterlaced(logger, ffmpegOutput, 10);
-        var log = logger.ToString();
+        bool interlaced = VideoIsInterlaced.IsVideoInterlaced(Logger, ffmpegOutput, 10);
         
         Assert.IsTrue(interlaced);
+        string log = Logger.ToString();
         Assert.IsTrue(log.Contains("Total Progressive Frames: " + (374 + 1089)));
         Assert.IsTrue(log.Contains("Total Interlaced Frames: " + (420 + 65)));
     }

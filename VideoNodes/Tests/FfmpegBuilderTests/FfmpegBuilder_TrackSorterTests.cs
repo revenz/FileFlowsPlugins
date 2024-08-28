@@ -8,25 +8,24 @@ using VideoNodes.Tests;
 namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests;
 
 [TestClass]
-public class FfmpegBuilder_TrackSorterTests
+public class FfmpegBuilder_TrackSorterTests : VideoTestBase
 {
-    private TestContext testContextInstance;
-
-    public TestContext TestContext
-    {
-        get { return testContextInstance; }
-        set { testContextInstance = value; }
-    }
-
     VideoInfo vii;
     NodeParameters args;
-    TestLogger logger = new TestLogger();
+
+    protected override void TestStarting()
+    {
+        Prepare();
+    }
+
     private void Prepare(string german = "deu")
     {
-        const string file = @"D:\videos\unprocessed\basic.mkv";
-        const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
-        var vi = new VideoInfoHelper(ffmpeg, logger);
-        vii = vi.Read(file);
+        args = GetVideoNodeParameters();
+        VideoFile vf = new VideoFile();
+        vf.PreExecute(args);
+        vf.Execute(args);
+        vii = (VideoInfo)args.Parameters["VideoInfo"];
+        
         vii.AudioStreams = new List<AudioStream>
         {
             new AudioStream
@@ -95,11 +94,6 @@ public class FfmpegBuilder_TrackSorterTests
                 Codec = "movtext"
             }
         };
-        args = new NodeParameters(file, logger, false, string.Empty, null);
-        args.GetToolPathActual = (string tool) => ffmpeg;
-        args.TempPath = @"D:\videos\temp";
-        args.Parameters.Add("VideoInfo", vii);
-
 
         FfmpegBuilderStart ffStart = new();
         ffStart.PreExecute(args);
@@ -116,7 +110,6 @@ public class FfmpegBuilder_TrackSorterTests
     {
         // Arrange
         
-        var args = new NodeParameters(logger);
         var trackSorter = new FfmpegBuilderTrackSorter();
         List<FfmpegAudioStream> streams = new List<FfmpegAudioStream>
         {
@@ -135,8 +128,6 @@ public class FfmpegBuilder_TrackSorterTests
         // Act
         var sorted = trackSorter.SortStreams(args, streams);
 
-        string log = logger.ToString();
-        TestContext.WriteLine(log);
 
         // Assert
         Assert.AreEqual(3, sorted[0].Index);
@@ -154,8 +145,6 @@ public class FfmpegBuilder_TrackSorterTests
     public void ProcessStreams_SortsStreamsBasedOnChannels()
     {
         // Arrange
-        
-        var args = new NodeParameters(logger);
         var trackSorter = new FfmpegBuilderTrackSorter();
         List<FfmpegAudioStream> streams = new List<FfmpegAudioStream>
         {
@@ -172,8 +161,6 @@ public class FfmpegBuilder_TrackSorterTests
 
         // Act
         var result = trackSorter.ProcessStreams(args, streams);
-        string log = logger.ToString();
-        TestContext.WriteLine(log);
 
         // Assert
         Assert.AreEqual(2, streams[0].Index);
@@ -181,7 +168,7 @@ public class FfmpegBuilder_TrackSorterTests
         Assert.AreEqual(1, streams[2].Index);
 
         // Additional assertions for logging
-        Assert.AreEqual("2 / fr / aac / 5.1 / Default", streams[0].ToString());
+        Assert.AreEqual("2 / fr / aac / 5.1", streams[0].ToString());
         Assert.AreEqual("3 / en / ac3 / 7.1", streams[1].ToString());
         Assert.AreEqual("1 / en / aac / 2.0", streams[2].ToString());
     }
@@ -190,8 +177,6 @@ public class FfmpegBuilder_TrackSorterTests
     public void ProcessStreams_SortsStreamsBasedOnLanguageThenCodec()
     {
         // Arrange
-        
-        var args = new NodeParameters(logger);
         var trackSorter = new FfmpegBuilderTrackSorter();
         List<FfmpegAudioStream> streams = new List<FfmpegAudioStream>
         {
@@ -209,8 +194,6 @@ public class FfmpegBuilder_TrackSorterTests
 
         // Act
         var result = trackSorter.ProcessStreams(args, streams);
-        string log = logger.ToString();
-        TestContext.WriteLine(log);
 
         // Assert
         Assert.AreEqual(3, streams[0].Index);
@@ -218,7 +201,7 @@ public class FfmpegBuilder_TrackSorterTests
         Assert.AreEqual(2, streams[2].Index);
 
         // Additional assertions for logging
-        Assert.AreEqual("3 / en / ac3 / 7.1 / Default", streams[0].ToString());
+        Assert.AreEqual("3 / en / ac3 / 7.1", streams[0].ToString());
         Assert.AreEqual("1 / en / aac / 2.0", streams[1].ToString());
         Assert.AreEqual("2 / fr / aac / 5.1", streams[2].ToString());
     }
@@ -227,8 +210,6 @@ public class FfmpegBuilder_TrackSorterTests
     public void ProcessStreams_SortsStreamsBasedOnCustomMathOperation()
     {
         // Arrange
-        
-        var args = new NodeParameters(logger);
         var trackSorter = new FfmpegBuilderTrackSorter();
         List<FfmpegAudioStream> streams = new List<FfmpegAudioStream>
         {
@@ -245,8 +226,6 @@ public class FfmpegBuilder_TrackSorterTests
 
         // Act
         var result = trackSorter.ProcessStreams(args, streams);
-        string log = logger.ToString();
-        TestContext.WriteLine(log);
 
         // Assert
         Assert.AreEqual(2, streams[0].Index);
@@ -254,7 +233,7 @@ public class FfmpegBuilder_TrackSorterTests
         Assert.AreEqual(1, streams[2].Index);
 
         // Additional assertions for logging
-        Assert.AreEqual("2 / fr / aac / 5.1 / Default", streams[0].ToString());
+        Assert.AreEqual("2 / fr / aac / 5.1", streams[0].ToString());
         Assert.AreEqual("3 / en / ac3 / 7.1", streams[1].ToString());
         Assert.AreEqual("1 / en / aac / 2.0", streams[2].ToString());
     }
@@ -264,8 +243,6 @@ public class FfmpegBuilder_TrackSorterTests
     public void ProcessStreams_SortsStreamsBasedOnRegex()
     {
         // Arrange
-        
-        var args = new NodeParameters(logger);
         var trackSorter = new FfmpegBuilderTrackSorter();
         List<FfmpegAudioStream> streams = new List<FfmpegAudioStream>
         {
@@ -282,8 +259,6 @@ public class FfmpegBuilder_TrackSorterTests
 
         // Act
         var result = trackSorter.ProcessStreams(args, streams);
-        string log = logger.ToString();
-        TestContext.WriteLine(log);
 
         // Assert
         Assert.AreEqual(1, streams[0].Index);
@@ -291,7 +266,7 @@ public class FfmpegBuilder_TrackSorterTests
         Assert.AreEqual(2, streams[2].Index);
 
         // Additional assertions for logging
-        Assert.AreEqual("1 / en / ac3 / 2.0 / Default", streams[0].ToString());
+        Assert.AreEqual("1 / en / ac3 / 2.0", streams[0].ToString());
         Assert.AreEqual("3 / en / ac3 / 7.1", streams[1].ToString());
         Assert.AreEqual("2 / fr / eac3 / 5.1", streams[2].ToString());
     }
@@ -300,8 +275,6 @@ public class FfmpegBuilder_TrackSorterTests
     public void ProcessStreams_SortsStreamsBasedOnMultipleSorters()
     {
         // Arrange
-        
-        var args = new NodeParameters(logger);
         var trackSorter = new FfmpegBuilderTrackSorter();
         List<FfmpegAudioStream> streams = new List<FfmpegAudioStream>
         {
@@ -327,8 +300,6 @@ public class FfmpegBuilder_TrackSorterTests
 
         // Act
         var result = trackSorter.ProcessStreams(args, streams);
-        string log = logger.ToString();
-        TestContext.WriteLine(log);
 
         // Assert
         
@@ -358,8 +329,6 @@ public class FfmpegBuilder_TrackSorterTests
     public void ProcessStreams_SortsStreamsBasedOnBitrate()
     {
         // Arrange
-        
-        var args = new NodeParameters(logger);
         var trackSorter = new FfmpegBuilderTrackSorter();
         List<FfmpegAudioStream> streams = new List<FfmpegAudioStream>
         {
@@ -377,8 +346,6 @@ public class FfmpegBuilder_TrackSorterTests
 
         // Act
         var sorted = trackSorter.SortStreams(args, streams);
-        string log = logger.ToString();
-        TestContext.WriteLine(log);
 
         // Assert
         Assert.AreEqual(3, sorted[0].Index);
@@ -397,8 +364,6 @@ public class FfmpegBuilder_TrackSorterTests
     public void ProcessStreams_SortsStreamsBasedOnChannelsAsc()
     {
         // Arrange
-        
-        var args = new NodeParameters(logger);
         var trackSorter = new FfmpegBuilderTrackSorter();
         List<FfmpegAudioStream> streams = new List<FfmpegAudioStream>
         {
@@ -417,8 +382,6 @@ public class FfmpegBuilder_TrackSorterTests
 
         // Act
         var sorted = trackSorter.SortStreams(args, streams);
-        string log = logger.ToString();
-        TestContext.WriteLine(log);
 
         // Assert
         Assert.AreEqual(1, sorted[0].Index);
@@ -439,8 +402,6 @@ public class FfmpegBuilder_TrackSorterTests
     public void ProcessStreams_SortsStreamsBasedOnChannelsDesc()
     {
         // Arrange
-        
-        var args = new NodeParameters(logger);
         var trackSorter = new FfmpegBuilderTrackSorter();
         List<FfmpegAudioStream> streams = new List<FfmpegAudioStream>
         {
@@ -458,9 +419,6 @@ public class FfmpegBuilder_TrackSorterTests
 
         // Act
         var sorted = trackSorter.SortStreams(args, streams);
-        string log = logger.ToString();
-        TestContext.WriteLine(log);
-
         // Assert
         Assert.AreEqual(3, sorted[0].Index);
         Assert.AreEqual(4, sorted[1].Index);
@@ -479,8 +437,6 @@ public class FfmpegBuilder_TrackSorterTests
     public void ProcessStreams_SortsStreamsBasedOnBitrateInvert()
     {
         // Arrange
-        
-        var args = new NodeParameters(logger);
         var trackSorter = new FfmpegBuilderTrackSorter();
         List<FfmpegAudioStream> streams = new List<FfmpegAudioStream>
         {
@@ -498,8 +454,6 @@ public class FfmpegBuilder_TrackSorterTests
 
         // Act
         var sorted = trackSorter.SortStreams(args, streams);
-        string log = logger.ToString();
-        TestContext.WriteLine(log);
 
         // Assert
         Assert.AreEqual(2, sorted[0].Index);
@@ -518,8 +472,6 @@ public class FfmpegBuilder_TrackSorterTests
     public void ProcessStreams_SortsStreamsBasedOnBitrateAndCodec()
     {
         // Arrange
-        
-        var args = new NodeParameters(logger);
         var trackSorter = new FfmpegBuilderTrackSorter();
         List<FfmpegAudioStream> streams = new List<FfmpegAudioStream>
         {
@@ -538,8 +490,6 @@ public class FfmpegBuilder_TrackSorterTests
 
         // Act
         var sorted = trackSorter.SortStreams(args, streams);
-        string log = logger.ToString();
-        TestContext.WriteLine(log);
 
         // Assert
         Assert.AreEqual(4, sorted[0].Index);
@@ -563,8 +513,6 @@ public class FfmpegBuilder_TrackSorterTests
     public void ProcessStreams_SortsStreamsBasedOnBitrateUnit()
     {
         // Arrange
-        
-        var args = new NodeParameters(logger);
         var trackSorter = new FfmpegBuilderTrackSorter();
         List<FfmpegAudioStream> streams = new List<FfmpegAudioStream>
         {
@@ -582,8 +530,6 @@ public class FfmpegBuilder_TrackSorterTests
 
         // Act
         var sorted = trackSorter.SortStreams(args, streams);
-        string log = logger.ToString();
-        TestContext.WriteLine(log);
 
         // Assert
         Assert.AreEqual(2, sorted[0].Index);
@@ -603,8 +549,6 @@ public class FfmpegBuilder_TrackSorterTests
     public void ProcessStreams_SortsStreamsBasedOnLanguage()
     {
         // Arrange
-        
-        var args = new NodeParameters(logger);
         var trackSorter = new FfmpegBuilderTrackSorter();
         List<FfmpegAudioStream> streams = new List<FfmpegAudioStream>
         {
@@ -625,8 +569,6 @@ public class FfmpegBuilder_TrackSorterTests
 
         // Act
         var sorted = trackSorter.SortStreams(args, streams);
-        string log = logger.ToString();
-        TestContext.WriteLine(log);
 
         // Assert
         Assert.AreEqual(1, sorted[0].Index);
@@ -656,8 +598,6 @@ public class FfmpegBuilder_TrackSorterTests
     public void ProcessStreams_SortsStreamsBasedOnLanguageRegex()
     {
         // Arrange
-        
-        var args = new NodeParameters(logger);
         var trackSorter = new FfmpegBuilderTrackSorter();
         List<FfmpegAudioStream> streams = new List<FfmpegAudioStream>
         {
@@ -678,8 +618,6 @@ public class FfmpegBuilder_TrackSorterTests
 
         // Act
         var sorted = trackSorter.SortStreams(args, streams);
-        string log = logger.ToString();
-        TestContext.WriteLine(log);
 
         // Assert
         Assert.AreEqual(1, sorted[0].Index);
@@ -708,8 +646,6 @@ public class FfmpegBuilder_TrackSorterTests
     public void ProcessStreams_SortsStreamsBasedOnLanguageRegexOriginal()
     {
         // Arrange
-        
-        var args = new NodeParameters(logger);
         var trackSorter = new FfmpegBuilderTrackSorter();
         List<FfmpegAudioStream> streams = new List<FfmpegAudioStream>
         {
@@ -732,8 +668,6 @@ public class FfmpegBuilder_TrackSorterTests
 
         // Act
         var sorted = trackSorter.SortStreams(args, streams);
-        string log = logger.ToString();
-        TestContext.WriteLine(log);
 
         // Assert
         Assert.AreEqual(4, sorted[0].Index);
@@ -778,15 +712,13 @@ public class FfmpegBuilder_TrackSorterTests
         trackSorter.PreExecute(args);
         var result = trackSorter.Execute(args);
 
-        string log = logger.ToString();
-        TestContext.WriteLine(log);
         
         // Assert
         Assert.AreEqual(1, result);
         var model = GetFFmpegModel();
         
         // Additional assertions for logging
-        Assert.AreEqual("0 / en / AC3 / 5.1 / Default", model.AudioStreams[0].ToString());
+        Assert.AreEqual("0 / en / AC3 / 5.1", model.AudioStreams[0].ToString());
         Assert.AreEqual("3 / deu / AAC / 5.1", model.AudioStreams[1].ToString());
         Assert.AreEqual("1 / en / AAC / Directors Commentary / 2.0", model.AudioStreams[2].ToString());
         Assert.AreEqual("2 / fre / AAC / 2.0", model.AudioStreams[3].ToString());
@@ -810,16 +742,13 @@ public class FfmpegBuilder_TrackSorterTests
         // Act
         trackSorter.PreExecute(args);
         var result = trackSorter.Execute(args);
-
-        string log = logger.ToString();
-        TestContext.WriteLine(log);
         
         // Assert
         Assert.AreEqual(1, result);
         var model = GetFFmpegModel();
         
         // Additional assertions for logging
-        Assert.AreEqual("2 / fre / srt / Default", model.SubtitleStreams[0].ToString());
+        Assert.AreEqual("2 / fre / srt", model.SubtitleStreams[0].ToString());
         Assert.AreEqual("3 / deu / movtext", model.SubtitleStreams[1].ToString());
         Assert.AreEqual("0 / en / movtext", model.SubtitleStreams[2].ToString());
         Assert.AreEqual("1 / en / subrip", model.SubtitleStreams[3].ToString());
@@ -843,9 +772,6 @@ public class FfmpegBuilder_TrackSorterTests
         // Act
         trackSorter.PreExecute(args);
         var result = trackSorter.Execute(args);
-
-        string log = logger.ToString();
-        TestContext.WriteLine(log);
         
         // Assert
         Assert.AreEqual(1, result);
@@ -877,16 +803,13 @@ public class FfmpegBuilder_TrackSorterTests
         // Act
         trackSorter.PreExecute(args);
         var result = trackSorter.Execute(args);
-
-        string log = logger.ToString();
-        TestContext.WriteLine(log);
         
         // Assert
         Assert.AreEqual(1, result);
         var model = GetFFmpegModel();
         
         // Additional assertions for logging
-        Assert.AreEqual("0 / en / AC3 / 5.1 / Default", model.AudioStreams[0].ToString());
+        Assert.AreEqual("0 / en / AC3 / 5.1", model.AudioStreams[0].ToString());
         Assert.AreEqual("2 / fre / AAC / 2.0", model.AudioStreams[1].ToString());
         Assert.AreEqual("3 / deu / AAC / 5.1", model.AudioStreams[2].ToString());
         Assert.AreEqual("1 / en / AAC / Directors Commentary / 2.0", model.AudioStreams[3].ToString());

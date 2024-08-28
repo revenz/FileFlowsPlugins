@@ -8,7 +8,7 @@ using FileFlows.VideoNodes.VideoNodes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 [TestClass]
-public class AudioToVideoTests : TestBase
+public class AudioToVideoTests : VideoTestBase
 {
     [TestMethod]
     public void AudioToVideo_Waves_h265()
@@ -27,15 +27,7 @@ public class AudioToVideoTests : TestBase
 
     private void TestStyle(string codec, AudioToVideo.VisualizationStyle style)
     {
-        var logger = new TestLogger();
-        string file = @"D:\music\unprocessed\01-billy_joel-movin_out.mp3";
-        var vi = new VideoInfoHelper(FfmpegPath, logger);
-        var vii = vi.Read(file);
-
-        var args = new NodeParameters(file, logger, false, string.Empty, null);
-        args.GetToolPathActual = (string tool) => FfmpegPath;
-        args.TempPath = TempPath;
-
+        var args = GetVideoNodeParameters(AudioMp3);
 
         AudioToVideo node = new();
         node.Container = "mkv";
@@ -48,7 +40,6 @@ public class AudioToVideoTests : TestBase
         node.PreExecute(args);
         int output = node.Execute(args);
 
-        var log = logger.ToString();
         Assert.AreEqual(1, output);
     }
 }

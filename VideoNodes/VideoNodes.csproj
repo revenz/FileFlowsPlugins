@@ -27,6 +27,9 @@
     <PackageReference Include="MSTest.TestAdapter" Version="3.4.3" />
     <PackageReference Include="MSTest.TestFramework" Version="3.4.3" />
     <ProjectReference Include="..\PluginTestLibrary\PluginTestLibrary.csproj" />
+    <Content Include="Tests\Resources\**\*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Plugin">

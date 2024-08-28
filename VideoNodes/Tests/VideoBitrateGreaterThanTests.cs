@@ -6,13 +6,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace VideoNodes.Tests;
 
 [TestClass]
-public class VideoBitrateGreaterThanTests : TestBase
+public class VideoBitrateGreaterThanTests : VideoTestBase
 {
     [TestMethod]
     public void IsGreaterThan_NoAudio_NoVideoBitrate()
     {
-        var logger = new TestLogger();
-        var args = new NodeParameters(logger)
+        var args = new NodeParameters(Logger)
         {
             Parameters = new()
             {
@@ -38,8 +37,7 @@ public class VideoBitrateGreaterThanTests : TestBase
     [TestMethod]
     public void IsNotGreaterThan_NoAudio_NoVideoBitrate()
     {
-        var logger = new TestLogger();
-        var args = new NodeParameters(logger)
+        var args = new NodeParameters(Logger)
         {
             Parameters = new()
             {
@@ -65,8 +63,7 @@ public class VideoBitrateGreaterThanTests : TestBase
     [TestMethod]
     public void IsNotGreaterThan_WithAudio_NoVideoBitrate()
     {
-        var logger = new TestLogger();
-        var args = new NodeParameters(logger)
+        var args = new NodeParameters(Logger)
         {
             Parameters = new()
             {
@@ -90,20 +87,18 @@ public class VideoBitrateGreaterThanTests : TestBase
             }
         };
         var estimated = (5001 * 1000) - (2000) - (5001 * 0.05);
-        logger.ILog($"Test Estimated Bitrate: {estimated} BPS / {estimated / 1000} KBps");
+        Logger.ILog($"Test Estimated Bitrate: {estimated} BPS / {estimated / 1000} KBps");
         
         var element = new VideoBitrateGreaterThan();
         element.Bitrate = (int)(estimated / 1000f) + 1;
         var result = element.Execute(args);
-        var log = logger.ToString();
         Assert.AreEqual(2, result);
     }
     
     [TestMethod]
     public void IsGreaterThan_WithAudio_NoVideoBitrate()
     {
-        var logger = new TestLogger();
-        var args = new NodeParameters(logger)
+        var args = new NodeParameters(Logger)
         {
             Parameters = new()
             {
@@ -127,12 +122,11 @@ public class VideoBitrateGreaterThanTests : TestBase
             }
         };
         var estimated = Math.Round((5001 * 1000) - (2000) - (5001 * 0.05));
-        logger.ILog($"Test Estimated Bitrate: {estimated} BPS / {estimated / 1000} KBps");
+        Logger.ILog($"Test Estimated Bitrate: {estimated} BPS / {estimated / 1000} KBps");
         
         var element = new VideoBitrateGreaterThan();
         element.Bitrate = (int)Math.Round(estimated / 1000f) - 1;
         var result = element.Execute(args);
-        var log = logger.ToString();
         Assert.AreEqual(1, result);
     }
     
@@ -140,10 +134,7 @@ public class VideoBitrateGreaterThanTests : TestBase
     [TestMethod]
     public void LogTests()
     {
-        var logger = new TestLogger();
-
-        var output = VideoBitrateGreaterThan.CheckBitrate(logger, 120144000, 15000);
-        string log = logger.ToString();
+        var output = VideoBitrateGreaterThan.CheckBitrate(Logger, 120144000, 15000);
         Assert.AreEqual(1, output);
     }
 

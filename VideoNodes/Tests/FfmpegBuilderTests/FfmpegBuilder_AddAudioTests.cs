@@ -3,19 +3,23 @@
 using FileFlows.VideoNodes.FfmpegBuilderNodes;
 using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PluginTestLibrary;
 using VideoNodes.Tests;
 
 namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests;
 
 [TestClass]
-public class FfmpegBuilder_AddAudioTests : TestBase
+public class FfmpegBuilder_AddAudioTests : VideoTestBase
 {
     VideoInfo vii;
     NodeParameters args;
     private void Prepare()
     {
-        var vi = new VideoInfoHelper(FfmpegPath, Logger);
-        vii = vi.Read(TestFile_BasicMkv);
+        args = GetVideoNodeParameters();
+        VideoFile vf = new VideoFile();
+        vf.PreExecute(args);
+        vf.Execute(args);
+        vii = (VideoInfo)args.Parameters["VideoInfo"];
         vii.AudioStreams = new List<AudioStream>
         {
             new AudioStream
@@ -51,12 +55,7 @@ public class FfmpegBuilder_AddAudioTests : TestBase
                 Channels = 5.1f
             }
         };
-        args = new NodeParameters(TestFile_BasicMkv, Logger, false, string.Empty, new LocalFileService());
-        args.GetToolPathActual = (string tool) => FfmpegPath;
-        args.TempPath = TempPath;
-        args.Parameters.Add("VideoInfo", vii);
-
-
+        
         FfmpegBuilderStart ffStart = new();
         ffStart.PreExecute(args);
         Assert.AreEqual(1, ffStart.Execute(args));

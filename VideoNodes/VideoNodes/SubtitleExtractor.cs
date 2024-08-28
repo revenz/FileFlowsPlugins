@@ -244,20 +244,21 @@ public class SubtitleExtractor : EncodingNode
         var result = args.Process.ExecuteShellCommand(new ExecuteArgs
         {
             Command = ffmpegExe,
-            ArgumentList = textSubtitles ? 
-                new[] {
+            ArgumentList = textSubtitles ?
+                [
 
                     "-i", localFile,
                     "-map", subtitleStream,
                     tempOutput
-                } : 
-                new[] {
+                ]
+                :
+                [
 
                     "-i", localFile,
                     "-map", subtitleStream,
                     "-c:s", "copy",
                     tempOutput
-                }
+                ]
         }).Result;
         
         var of = new System.IO.FileInfo(tempOutput);

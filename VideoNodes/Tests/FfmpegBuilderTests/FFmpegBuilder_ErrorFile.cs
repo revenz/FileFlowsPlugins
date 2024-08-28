@@ -11,7 +11,7 @@ namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests;
 /// Tests for FFmpeg Builder for the Error file
 /// </summary>
 [TestClass]
-public class FFmpegBuild_ErrorFile : TestBase
+public class FFmpegBuild_ErrorFile : VideoTestBase
 {
     /// <summary>
     /// Tests a subtitle using a pattern
@@ -19,12 +19,7 @@ public class FFmpegBuild_ErrorFile : TestBase
     [TestMethod]
     public void ErrorFile()
     {
-        var args = new NodeParameters(TestFile_Error, Logger, false, TestPath, new LocalFileService())
-        {
-            LibraryFileName = TestFile_Error
-        };
-        args.GetToolPathActual = (string tool) => FfmpegPath;
-        args.TempPath = TempPath;
+        var args = GetVideoNodeParameters(VideoCorrupt);
         
         var vf = new VideoFile();
         vf.PreExecute(args);

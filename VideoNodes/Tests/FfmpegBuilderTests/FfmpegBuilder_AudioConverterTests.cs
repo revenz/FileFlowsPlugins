@@ -9,16 +9,17 @@ using System.IO;
 namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests;
 
 [TestClass]
-public class FfmpegBuilder_AudioConverterTests: TestBase
+public class FfmpegBuilder_AudioConverterTests: VideoTestBase
 {
     VideoInfo vii;
     NodeParameters args;
     private void Prepare()
     {
-        string file = Path.Combine(TestPath, "basic.mkv");
-        var logger = new TestLogger();
-        var vi = new VideoInfoHelper(FfmpegPath, logger);
-        vii = vi.Read(file);
+        args = GetVideoNodeParameters();
+        VideoFile vf = new VideoFile();
+        vf.PreExecute(args);
+        vf.Execute(args);
+        vii = (VideoInfo)args.Parameters["VideoInfo"];
         vii.AudioStreams = new List<AudioStream>
         {
             new AudioStream
@@ -77,10 +78,6 @@ public class FfmpegBuilder_AudioConverterTests: TestBase
                 Channels = 5.1f
             }
         };
-        args = new NodeParameters(file, logger, false, string.Empty, new LocalFileService());
-        args.GetToolPathActual = (string tool) => FfmpegPath;
-        args.TempPath = TempPath;
-        args.Parameters.Add("VideoInfo", vii);
 
 
         FfmpegBuilderStart ffStart = new();
@@ -170,13 +167,9 @@ public class FfmpegBuilder_AudioConverterTests: TestBase
     [TestMethod]
     public void FfmpegBuilder_AudioConverter_Opus_All()
     {
-        string file = Path.Combine(TestPath, "basic.mkv");
-        var logger = new TestLogger();
-        var vi = new VideoInfoHelper(FfmpegPath, logger);
-        var vii = vi.Read(file);
-        var args = new NodeParameters(file, logger, false, string.Empty, new LocalFileService());
-        args.GetToolPathActual = (string tool) => FfmpegPath;
-        args.TempPath = TempPath;
+        var vi = new VideoInfoHelper(FFmpeg, Logger);
+        var vii = vi.Read(VideoMkv);
+        var args = GetVideoNodeParameters(VideoMkv);
         args.Parameters.Add("VideoInfo", vii);
 
         FfmpegBuilderStart ffStart = new();
@@ -194,7 +187,6 @@ public class FfmpegBuilder_AudioConverterTests: TestBase
         ffExecutor.PreExecute(args);
         result = ffExecutor.Execute(args);
 
-        string log = logger.ToString();
         Assert.AreEqual(1, result);
 
         var newInfo = vi.Read(args.WorkingFile).Value;

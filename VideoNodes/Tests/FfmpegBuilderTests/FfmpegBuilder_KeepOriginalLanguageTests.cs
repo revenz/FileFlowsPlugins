@@ -8,17 +8,20 @@ using VideoNodes.Tests;
 namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests;
 
 [TestClass]
-public class FfmpegBuilder_KeepOriginalLanguageTests
+public class FfmpegBuilder_KeepOriginalLanguageTests : VideoTestBase
 {
     VideoInfo vii;
     NodeParameters args;
-    TestLogger logger = new TestLogger();
+    FfmpegModel Model;
+    
     private void Prepare(string german = "deu")
     {
-        const string file = @"D:\videos\unprocessed\basic.mkv";
-        const string ffmpeg = @"C:\utils\ffmpeg\ffmpeg.exe";
-        var vi = new VideoInfoHelper(ffmpeg, logger);
-        vii = vi.Read(file);
+        args = GetVideoNodeParameters();
+        VideoFile vf = new VideoFile();
+        vf.PreExecute(args);
+        vf.Execute(args);
+        vii = (VideoInfo)args.Parameters["VideoInfo"];
+        
         vii.AudioStreams = new List<AudioStream>
         {
             new AudioStream
@@ -86,11 +89,6 @@ public class FfmpegBuilder_KeepOriginalLanguageTests
                 Codec = "AAC"
             }
         };
-        args = new NodeParameters(file, logger, false, string.Empty, null);
-        args.GetToolPathActual = (string tool) => ffmpeg;
-        args.TempPath = @"D:\videos\temp";
-        args.Parameters.Add("VideoInfo", vii);
-
 
         FfmpegBuilderStart ffStart = new();
         ffStart.PreExecute(args);
@@ -112,8 +110,6 @@ public class FfmpegBuilder_KeepOriginalLanguageTests
         args.Variables["OriginalLanguage"] = "German";
         ffElement.PreExecute(args);
         var result = ffElement.Execute(args);
-        var log = logger.ToString();
-
         Assert.AreEqual(1, result);
         var model = GetFFmpegModel();
         var kept = model.AudioStreams.Where(x => x.Deleted == false).ToList();
@@ -132,7 +128,6 @@ public class FfmpegBuilder_KeepOriginalLanguageTests
         args.Variables["OriginalLanguage"] = "Maori";
         ffElement.PreExecute(args);
         var result = ffElement.Execute(args);
-        var log = logger.ToString();
 
         Assert.AreEqual(1, result);
         var model = GetFFmpegModel();
@@ -153,7 +148,6 @@ public class FfmpegBuilder_KeepOriginalLanguageTests
         args.Variables["OriginalLanguage"] = "French";
         ffElement.PreExecute(args);
         var result = ffElement.Execute(args);
-        var log = logger.ToString();
 
         Assert.AreEqual(1, result);
         var model = GetFFmpegModel();
@@ -175,8 +169,6 @@ public class FfmpegBuilder_KeepOriginalLanguageTests
         args.Variables["OriginalLanguage"] = "German";
         ffElement.PreExecute(args);
         var result = ffElement.Execute(args);
-        var log = logger.ToString();
-
         Assert.AreEqual(1, result);
         var model = GetFFmpegModel();
         var kept = model.AudioStreams.Where(x => x.Deleted == false).ToList();
@@ -199,7 +191,6 @@ public class FfmpegBuilder_KeepOriginalLanguageTests
         args.Variables["OriginalLanguage"] = "Maori";
         ffElement.PreExecute(args);
         var result = ffElement.Execute(args);
-        var log = logger.ToString();
 
         Assert.AreEqual(1, result);
         var model = GetFFmpegModel();
@@ -223,7 +214,6 @@ public class FfmpegBuilder_KeepOriginalLanguageTests
         args.Variables["OriginalLanguage"] = "French";
         ffElement.PreExecute(args);
         var result = ffElement.Execute(args);
-        var log = logger.ToString();
 
         Assert.AreEqual(1, result);
         var model = GetFFmpegModel();
@@ -253,7 +243,6 @@ public class FfmpegBuilder_KeepOriginalLanguageTests
         args.Variables["OriginalLanguage"] = "French";
         ffElement.PreExecute(args);
         var result = ffElement.Execute(args);
-        var log = logger.ToString();
 
         Assert.AreEqual(1, result);
         var model = GetFFmpegModel();
@@ -285,7 +274,6 @@ public class FfmpegBuilder_KeepOriginalLanguageTests
         args.Variables["OriginalLanguage"] = "de";
         ffElement.PreExecute(args);
         var result = ffElement.Execute(args);
-        var log = logger.ToString();
 
         Assert.AreEqual(1, result);
         var model = GetFFmpegModel();
