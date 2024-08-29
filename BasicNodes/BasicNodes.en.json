@@ -50,7 +50,9 @@
             "IfEmpty": "If Empty",
             "IfEmpty-Help": "Only delete the source folder if the it is empty",
             "IncludePatterns": "Include Patterns",
-            "IncludePatterns-Help": "Optional, if set only files matching these patterns will be counted to see if the folder is empty.   Any of these patterns can match."
+            "IncludePatterns-Help": "Optional, if set only files matching these patterns will be counted to see if the folder is empty.   Any of these patterns can match.",
+            "KeepParents": "Keep parent folders",
+            "KeepParents-Help": "Optional, if set parent folders will not be removed.\nThis only includes the folders inside of your library"
           }
         },
         "Executor": {

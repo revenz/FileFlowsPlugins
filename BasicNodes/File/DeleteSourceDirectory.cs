@@ -19,6 +19,9 @@ namespace FileFlows.BasicNodes.File
         [StringArray(2)]
         public string[] IncludePatterns { get; set; }
 
+        [Boolean(3)]
+        public bool KeepParents { get; set; }
+
         public override int Execute(NodeParameters args)
         {
             string path = args.FileName.Substring(0, args.FileName.Length - args.RelativeFile.Length);
@@ -41,7 +44,7 @@ namespace FileFlows.BasicNodes.File
                 if (IfEmpty)
                 {
                     string libFilePath = args.IsDirectory ? args.FileName : new FileInfo(args.FileName).DirectoryName;
-                    return RecursiveDelete(args, path, libFilePath, true);
+                    return RecursiveDelete(args, path, libFilePath, true, KeepParents);
                 }
 
 
@@ -56,7 +59,7 @@ namespace FileFlows.BasicNodes.File
             return base.Execute(args);
         }
 
-        private int RecursiveDelete(NodeParameters args, string root, string path, bool deleteSubFolders)
+        private int RecursiveDelete(NodeParameters args, string root, string path, bool deleteSubFolders, bool KeepParents)
         {
             args.Logger?.ILog("Checking directory to delete: " + path);
             DirectoryInfo dir = new DirectoryInfo(path);
@@ -117,7 +120,13 @@ namespace FileFlows.BasicNodes.File
                 return dir.Exists ? 2 : 1; // silenty fail
             }
 
-            return RecursiveDelete(args, root, dir.Parent.FullName, false);
+            if (KeepParents == true)
+            {
+                args.Logger?.ILog("Keeping parent folders, stopping deleting: " + root);
+                return 1;
+            }
+
+            return RecursiveDelete(args, root, dir.Parent.FullName, false, false);
         }
     }
 }
