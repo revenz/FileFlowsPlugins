@@ -8,6 +8,7 @@ using FileFlows.VideoNodes.VideoNodes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 [TestClass]
+[TestCategory("Slow")]
 public class AudioToVideoTests : VideoTestBase
 {
     [TestMethod]

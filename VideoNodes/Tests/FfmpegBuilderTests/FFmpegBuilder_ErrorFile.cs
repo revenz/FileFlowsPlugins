@@ -11,6 +11,7 @@ namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests;
 /// Tests for FFmpeg Builder for the Error file
 /// </summary>
 [TestClass]
+[TestCategory("Slow")]
 public class FFmpegBuild_ErrorFile : VideoTestBase
 {
     /// <summary>

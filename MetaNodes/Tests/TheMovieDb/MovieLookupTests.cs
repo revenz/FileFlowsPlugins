@@ -10,6 +10,7 @@ using PluginTestLibrary;
 namespace MetaNodes.Tests.TheMovieDb;
 
 [TestClass]
+[TestCategory("Slow")]
 public class MovieLookupTests : TestBase
 {
     [TestMethod]

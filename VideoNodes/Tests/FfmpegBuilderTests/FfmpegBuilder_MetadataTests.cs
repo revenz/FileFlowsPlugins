@@ -7,10 +7,9 @@ using VideoNodes.Tests;
 namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests;
 
 [TestClass]
+[TestCategory("Slow")]
 public class FfmpegBuilder_MetadataTests: VideoTestBase
 {
-
-
     [TestMethod]
     public void FfmpegBuilder_Metadata_Remover_Language()
     {

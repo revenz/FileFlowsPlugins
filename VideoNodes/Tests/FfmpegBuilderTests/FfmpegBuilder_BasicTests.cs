@@ -8,6 +8,7 @@ using VideoNodes.Tests;
 namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests;
 
 [TestClass]
+[TestCategory("Slow")]
 public class FfmpegBuilder_BasicTests : VideoTestBase
 {
     VideoInfo vii;

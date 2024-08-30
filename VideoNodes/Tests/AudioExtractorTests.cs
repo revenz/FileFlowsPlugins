@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 
 [TestClass]
+[TestCategory("Slow")]
 public class AudioExtractorTests : VideoTestBase
 {
     [TestMethod]

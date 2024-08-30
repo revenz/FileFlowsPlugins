@@ -11,6 +11,7 @@ using PluginTestLibrary;
 namespace MetaNodes.Tests.TheMovieDb;
 
 [TestClass]
+[TestCategory("Slow")]
 public class TVEpisodeLookupTests : TestBase
 {
 

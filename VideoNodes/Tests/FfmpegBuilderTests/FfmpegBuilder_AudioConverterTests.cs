@@ -165,6 +165,7 @@ public class FfmpegBuilder_AudioConverterTests: VideoTestBase
     }
     
     [TestMethod]
+    [TestCategory("Slow")]
     public void FfmpegBuilder_AudioConverter_Opus_All()
     {
         var vi = new VideoInfoHelper(FFmpeg, Logger);
