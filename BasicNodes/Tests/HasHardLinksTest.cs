@@ -78,7 +78,7 @@ public class HasHardLinksTest : TestBase
     [TestMethod]
     public void HasHardLink()
     {
-        testFile = Path.Combine(TempFile, Guid.NewGuid().ToString());
+        testFile = Path.Combine(TempPath, Guid.NewGuid().ToString());
         CreateHardLinkFile(testFile, 2);
         
         var args = new FileFlows.Plugin.NodeParameters(testFile, Logger, false, string.Empty, MockFileService.Object);
