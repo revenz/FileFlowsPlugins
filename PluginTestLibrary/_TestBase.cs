@@ -57,7 +57,7 @@ public abstract class TestBase
             tempPath = Path.GetTempPath();
         TempPath = System.IO.Path.Combine(tempPath, Guid.NewGuid().ToString());
         System.IO.Directory.CreateDirectory(TempPath);
-        TempFile = System.IO.Path.Combine(TempPath, Guid.NewGuid() + ".txt");
+        TempFile = System.IO.Path.Combine(TempPath, "tests", Guid.NewGuid() + ".txt");
         System.IO.File.WriteAllText(TempFile, Guid.NewGuid().ToString());
 
         if (Directory.Exists(this.TempPath) == false)
@@ -70,7 +70,8 @@ public abstract class TestBase
     public void CleanUp()
     {
         TestCleanUp();
-        TestContext.WriteLine(Logger.ToString());
+        if (Directory.Exists(TempPath))
+            Directory.Delete(TempPath, true);
     }
 
     protected virtual void TestStarting()
