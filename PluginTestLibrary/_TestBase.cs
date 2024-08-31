@@ -55,9 +55,9 @@ public abstract class TestBase
         var tempPath = Environment.GetEnvironmentVariable("FF_TEMP_PATH");
         if (string.IsNullOrWhiteSpace(tempPath))
             tempPath = Path.GetTempPath();
-        TempPath = System.IO.Path.Combine(tempPath, Guid.NewGuid().ToString());
+        TempPath = System.IO.Path.Combine(tempPath, "tests", Guid.NewGuid().ToString());
         System.IO.Directory.CreateDirectory(TempPath);
-        TempFile = System.IO.Path.Combine(TempPath, "tests", Guid.NewGuid() + ".txt");
+        TempFile = System.IO.Path.Combine(TempPath, Guid.NewGuid() + ".txt");
         System.IO.File.WriteAllText(TempFile, Guid.NewGuid().ToString());
 
         if (Directory.Exists(this.TempPath) == false)
