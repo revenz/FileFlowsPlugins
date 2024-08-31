@@ -34,7 +34,7 @@ public class AudioToVideoTests : VideoTestBase
         node.Container = "mkv";
         node.Resolution = "1280x720";
         node.Codec = codec;
-        node.HardwareEncoding = true;
+        node.HardwareEncoding = false;
         node.Visualization = style;
         if (node.Visualization == AudioToVideo.VisualizationStyle.Waves)
             node.Color = "#007bff";
