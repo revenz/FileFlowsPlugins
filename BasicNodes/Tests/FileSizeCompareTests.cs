@@ -11,7 +11,7 @@ public class FileSizeCompareTests : TestBase
 {
     private string CreateFile(int size)
     {
-        string tempFile = Path.Combine(Path.GetTempPath(), Guid.NewGuid() + ".tmp");  
+        string tempFile = Path.Combine(TempPath, Guid.NewGuid() + ".tmp");  
         System.IO.File.WriteAllText(tempFile, new string('a', size * 1000));
         return tempFile;
     }

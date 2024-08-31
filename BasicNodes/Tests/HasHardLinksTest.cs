@@ -78,7 +78,7 @@ public class HasHardLinksTest : TestBase
     [TestMethod]
     public void HasHardLink()
     {
-        testFile = Path.GetTempFileName();
+        testFile = Path.Combine(TempFile, Guid.NewGuid().ToString());
         CreateHardLinkFile(testFile, 2);
         
         var args = new FileFlows.Plugin.NodeParameters(testFile, Logger, false, string.Empty, MockFileService.Object);
@@ -92,7 +92,7 @@ public class HasHardLinksTest : TestBase
     [TestMethod]
     public void NoHardLinks()
     {
-        testFile = Path.GetTempFileName();
+        testFile = Path.Combine(TempFile, Guid.NewGuid().ToString());
         var args = new FileFlows.Plugin.NodeParameters(testFile, Logger, false, string.Empty, MockFileService.Object);
         
         HasHardLinks element = new ();

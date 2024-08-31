@@ -62,7 +62,7 @@
 //     
 //     protected NodeParameters GetNodeParameters(string filename)
 //     {
-//         string tempPath = Path.GetTempPath();
+//         string tempPath = TempPath;
 //         string libPath = Path.Combine(tempPath, "media");
 //         if (Directory.Exists(libPath) == false)
 //             Directory.CreateDirectory(libPath);

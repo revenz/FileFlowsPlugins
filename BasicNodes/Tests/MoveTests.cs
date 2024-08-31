@@ -16,7 +16,7 @@ public class MoveTests : TestBase
     public void MoveTests_Variable_Filename()
     {
         string fileName = Guid.NewGuid().ToString();
-        var tempFile = Path.Combine(Path.GetTempPath(),fileName+ ".mkv");
+        var tempFile = Path.Combine(TempPath,fileName+ ".mkv");
         System.IO.File.WriteAllText(tempFile, "this is a temp file ");
         var args = new NodeParameters(tempFile, Logger, 
             false, string.Empty, new LocalFileService());
@@ -31,7 +31,7 @@ public class MoveTests : TestBase
     public void MoveTests_Variable_FilenameExt()
     {
         string fileName = Guid.NewGuid().ToString();
-        var tempFile = Path.Combine(Path.GetTempPath(),fileName+ ".mkv");
+        var tempFile = Path.Combine(TempPath,fileName+ ".mkv");
         System.IO.File.WriteAllText(tempFile, "this is a temp file ");
         var args = new NodeParameters(tempFile, Logger, 
             false, string.Empty, new LocalFileService());
@@ -46,14 +46,14 @@ public class MoveTests : TestBase
     [TestMethod]
     public void MoveTests_Variable_FilenameNoExtension()
     {
-        var tempFileNoExtension = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+        var tempFileNoExtension = Path.Combine(TempPath, Guid.NewGuid().ToString());
         var tempFile = tempFileNoExtension + ".tmp";
         System.IO.File.WriteAllText(tempFile, "this is a temp file");
         var args = new NodeParameters(tempFile, Logger, false, string.Empty, new LocalFileService());
         args.InitFile(tempFile);
 
         // ensure we dont double up the extension after FF-154
-        string dest = MoveFile.GetDestinationPath(args, Path.GetTempPath(), "{file.NameNoExtension}");
+        string dest = MoveFile.GetDestinationPath(args, TempPath, "{file.NameNoExtension}");
 
         Assert.AreEqual(tempFileNoExtension, dest);
     }
@@ -62,7 +62,7 @@ public class MoveTests : TestBase
     public void MoveTests_Variable_Ext()
     {
         string fileName = Guid.NewGuid().ToString();
-        var tempFile = Path.Combine(Path.GetTempPath(),fileName+ ".mkv");
+        var tempFile = Path.Combine(TempPath,fileName+ ".mkv");
         System.IO.File.WriteAllText(tempFile, "this is a temp file ");
         var args = new NodeParameters(tempFile, Logger, 
             false, string.Empty, new LocalFileService());
@@ -78,7 +78,7 @@ public class MoveTests : TestBase
     public void MoveTests_Variable_Original_Filename()
     {
         string fileName = Guid.NewGuid().ToString();
-        var tempFile = Path.Combine(Path.GetTempPath(),fileName+ ".mkv");
+        var tempFile = Path.Combine(TempPath,fileName+ ".mkv");
         System.IO.File.WriteAllText(tempFile, "this is a temp file ");
         var args = new NodeParameters(tempFile, Logger, 
             false, string.Empty, new LocalFileService());
@@ -93,7 +93,7 @@ public class MoveTests : TestBase
     public void MoveTests_Variable_Original_FilenameExt()
     {
         string fileName = Guid.NewGuid().ToString();
-        var tempFile = Path.Combine(Path.GetTempPath(),fileName+ ".mkv");
+        var tempFile = Path.Combine(TempPath,fileName+ ".mkv");
         System.IO.File.WriteAllText(tempFile, "this is a temp file ");
         var args = new NodeParameters(tempFile, Logger, 
             false, string.Empty, new LocalFileService());
@@ -107,7 +107,7 @@ public class MoveTests : TestBase
     public void MoveTests_Variable_Original_NoExtension()
     {
         string fileName = Guid.NewGuid().ToString();
-        var tempFile = Path.Combine(Path.GetTempPath(),fileName+ ".mkv.mkv");
+        var tempFile = Path.Combine(TempPath,fileName+ ".mkv.mkv");
         System.IO.File.WriteAllText(tempFile, "this is a temp file ");
         var args = new NodeParameters(tempFile, Logger, 
             false, string.Empty, new LocalFileService());
@@ -137,10 +137,10 @@ public class MoveTests : TestBase
     [TestMethod]
     public void MoveTests_AdditionalFiles()
     {
-        var tempDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+        var tempDir = Path.Combine(TempPath, Guid.NewGuid().ToString());
         Directory.CreateDirectory(tempDir);
         
-        var tempDir2 = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+        var tempDir2 = Path.Combine(TempPath, Guid.NewGuid().ToString());
         Directory.CreateDirectory(tempDir2);
         
         var tempFilePrefix = Path.Combine(tempDir, Guid.NewGuid().ToString());

@@ -52,8 +52,10 @@ public abstract class TestBase
         FileHelper.DontSetPermissions = true;
         Logger.Writer = (msg) => TestContext.WriteLine(msg);
 
-
-        TempPath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), Guid.NewGuid().ToString());
+        var tempPath = Environment.GetEnvironmentVariable("FF_TEMP_PATH");
+        if (string.IsNullOrWhiteSpace(tempPath))
+            tempPath = Path.GetTempPath();
+        TempPath = System.IO.Path.Combine(tempPath, Guid.NewGuid().ToString());
         System.IO.Directory.CreateDirectory(TempPath);
         TempFile = System.IO.Path.Combine(TempPath, Guid.NewGuid() + ".txt");
         System.IO.File.WriteAllText(TempFile, Guid.NewGuid().ToString());
