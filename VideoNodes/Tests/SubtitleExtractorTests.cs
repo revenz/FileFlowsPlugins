@@ -31,6 +31,55 @@ public class SubtitleExtractorTests: VideoTestBase
             Assert.AreEqual(1, output);
         }
     }
+    
+    
+    [TestMethod]
+    public void French_Not_Canda()
+    {
+        var args = GetVideoNodeParameters(VideoSubtitles);
+        var vf = new VideoFile();
+        vf.PreExecute(args);
+        Assert.AreEqual(1, vf.Execute(args));
+        
+        SubtitleExtractor element = new();
+        element.Title = "^(?!.*canad).*$";
+        element.OutputFile = Path.Combine(TempPath, "subtitle");
+        element.Language = "fre";
+        element.ExtractAll = true;
+
+        element.PreExecute(args);
+        int output = element.Execute(args);
+        Assert.AreEqual(1, output);
+        
+        string log = Logger.ToString();
+        bool onlyOne = log.Contains("Extracted 1 subtitle");
+        Assert.IsTrue(onlyOne);
+        Assert.IsTrue(log.Contains("Title 'French (France)' does match"));
+    }
+    
+    [TestMethod]
+    public void French_Not_France()
+    {
+        var args = GetVideoNodeParameters(VideoSubtitles);
+        var vf = new VideoFile();
+        vf.PreExecute(args);
+        Assert.AreEqual(1, vf.Execute(args));
+        
+        SubtitleExtractor element = new();
+        element.Title = "^(?!.*france).*$";
+        element.OutputFile = Path.Combine(TempPath, "subtitle");
+        element.Language = "fre";
+        element.ExtractAll = true;
+
+        element.PreExecute(args);
+        int output = element.Execute(args);
+        Assert.AreEqual(1, output);
+        
+        string log = Logger.ToString();
+        bool onlyOne = log.Contains("Extracted 1 subtitle");
+        Assert.IsTrue(onlyOne);
+        Assert.IsTrue(log.Contains("Title 'French (Canada)' does match"));
+    }
 }
 
 

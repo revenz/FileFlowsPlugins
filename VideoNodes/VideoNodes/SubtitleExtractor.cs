@@ -111,6 +111,10 @@ public class SubtitleExtractor : EncodingNode
                                     $"Title does not match '{Title}' against value: {(x.Title ?? string.Empty)}");
                                 return false;
                             }
+                            else
+                            {
+                                args.Logger?.ILog($"Title '{x.Title}' does match");
+                            }
                         }
                         catch (Exception)
                         {
