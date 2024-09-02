@@ -406,7 +406,7 @@
           "StreamType": "Type",
           "StreamType-Help": "The type of tracks that should be updated",
           "AdditionalLanguages": "Additional Languages",
-          "AdditionalLanguages-Help": "An optional list of additional language codes to set on the tracks with missing languages.\n\nIt is recommended that an [ISO 639-2 language code](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) are used.",
+          "AdditionalLanguages-Help": "An optional list of additional language codes to keep.\n\nIt is recommended that an [ISO 639-2 language code](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) are used.",
           "KeepOnlyFirst": "Keep Only First",
           "KeepOnlyFirst-Help": "When enabled only the first track of each language would be kept.\n\nFor example if there were 2 English tracks, 3 Spanish tracks and 1 German track.  The original language was Spanish, additional languages was set to `eng`, then the result would be 1 English track and 1 Spanish track, the rest would be removed.",
           "FirstIfNone": "First If None",
