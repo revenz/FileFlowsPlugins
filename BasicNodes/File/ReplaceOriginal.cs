@@ -73,9 +73,9 @@ public class ReplaceOriginal : Node
         {
             // different extension, we will move the file, but then delete the original                
             string dest = FileHelper.ChangeExtension(args.FileName, wfExtension);
-            if(args.MoveFile(dest) == false)
+            if(args.MoveFile(dest).Failed(out var error))
             {
-                args.Logger?.ELog("Failed to move file to: " + dest);
+                args.Logger?.ELog("Failed to move file to: " + dest + Environment.NewLine + error);
                 return -1;
             }
 
