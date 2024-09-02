@@ -365,7 +365,9 @@ public class FfmpegBuilderAudioAddTrack : TrackSelectorFlowElement<FfmpegBuilder
         if (opus)
             codec = "libopus";
         bool eac3 = codec.ToLowerInvariant() == "eac3";
+        bool ac3 = codec.ToLowerInvariant() == "ac3";
         bool dts = codec.ToLowerInvariant().Contains("dts");
+
         
         // Prepare the options list
         var options = new List<string>
@@ -378,17 +380,27 @@ public class FfmpegBuilderAudioAddTrack : TrackSelectorFlowElement<FfmpegBuilder
         // Handle channels
         if (channels > 0)
         {
+            if (ac3 && channels > 5.9f)
+                channels = 6;
             options.Add("-ac:a:{index}");
             options.Add(channels.ToString(CultureInfo.InvariantCulture));
         }
-        else if ((opus || eac3 || dts) && stream.Channels > 1)
+        else if ((opus || eac3 || dts || ac3) && stream.Channels > 1)
         {
             // FF-1016: Opus needs this for side by side channel layout
             args.Logger?.ILog("Original Audio Channels: " + stream.Channels);
             if (Math.Abs(stream.Channels - 61) < 1)
             {
-                args.Logger?.ILog("Channels 61 detected setting to 8");
-                options.AddRange(new[] { "-ac:a:{index}", "8" });
+                if (ac3)
+                {
+                    args.Logger?.ILog("Channels 61 detected setting to maximum of 5.1 (6 Channels)");
+                    options.AddRange(new[] { "-ac:a:{index}", "6" });
+                }
+                else
+                {
+                    args.Logger?.ILog("Channels 61 detected setting to 8");
+                    options.AddRange(new[] { "-ac:a:{index}", "8" });
+                }
             }
             else if (stream.Channels is > 5 and <= 6 || Math.Abs(stream.Channels - 51) < 1)
             {
