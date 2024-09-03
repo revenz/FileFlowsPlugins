@@ -191,6 +191,9 @@ public class VideoHasStream : VideoNode
             args.Logger?.ILog("Checking deleted, ignoring FFmpeg model");
             ffmpegModel = null;
         }
+
+        if (Channels?.Trim() is "=" or ">" or "<" or "!=" or "<=" or ">="  or "==")
+            Channels = string.Empty; // incase the user selected one bu didnt enter anything else
         
         args.Logger?.ILog("Title to match: " + title);
         args.Logger?.ILog("Codec to match: " + codec);
