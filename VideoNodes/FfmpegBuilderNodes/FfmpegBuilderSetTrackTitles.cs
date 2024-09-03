@@ -194,6 +194,11 @@ public class FfmpegBuilderSetTrackTitles: FfmpegBuilderNode
                     resolution: track.Stream == null ? null : ResolutionHelper.GetResolution(track.Stream.Width, track.Stream.Height),
                     dimensions: track.Stream == null ? null : track.Stream.Width + "x" + track.Stream.Height
                 );
+                if (originalTitle == track.Title)
+                    continue;
+                args.Logger?.ILog($"Title changed from '{(originalTitle ?? string.Empty)}' to '{track.Title}'");
+                track.ForcedChange = true;
+                ++changes;
             }
         }
 

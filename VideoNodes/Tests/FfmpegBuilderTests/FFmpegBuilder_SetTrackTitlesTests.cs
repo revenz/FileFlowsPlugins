@@ -2,14 +2,15 @@
 
 using FileFlows.VideoNodes.FfmpegBuilderNodes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using VideoNodes.Tests;
 
 namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests;
 
 /// <summary>
-/// Tests for track reorders
+/// Tests the set track titltes
 /// </summary>
 [TestClass]
-public class FFmpegBuilder_SetTrackTtitlesTests
+public class FFmpegBuilder_SetTrackTitlesTests : VideoTestBase
 {
     [TestMethod]
     public void FormatTitle_DefaultCase_Success()
@@ -459,6 +460,62 @@ public class FFmpegBuilder_SetTrackTtitlesTests
 
         // Assert
         Assert.AreEqual("Track: English / HEVC / 24fps", result);
+    }
+
+    [TestMethod]
+    public void FormatTitle_Custom_Variable()
+    {
+        // Arrange
+        string formatter = "Track: lang / HDR / codec";
+        string separator = " / ";
+        string language = "English";
+        string codec = "HEVC";
+
+        float fps = 23.9999997f;
+
+        // Act
+        string result = FfmpegBuilderSetTrackTitles.FormatTitle(formatter, separator, language, codec, 
+            fps: fps);
+
+        // Assert
+        Assert.AreEqual("Track: English / HDR / HEVC", result);
+    }
+    
+    /// <summary>
+    /// Tests setting a track video title and actually processes the file
+    /// </summary>
+    [TestMethod]
+    public void SetVideoTitle_Process()
+    {
+        var args = GetVideoNodeParameters(VideoMkv);
+        
+        var vf = new VideoFile();
+        vf.PreExecute(args);
+        Assert.AreEqual(1, vf.Execute(args));
+
+        var ffStart = new FfmpegBuilderStart();
+        ffStart.PreExecute(args);
+        Assert.AreEqual(1, ffStart.Execute(args));
+
+        var ffSetTrackTitle = new FfmpegBuilderSetTrackTitles();
+        ffSetTrackTitle.Format = "lang / codec / resolution / fps";
+        ffSetTrackTitle.Separator = " / ";
+        ffSetTrackTitle.StreamType = "Video";
+        ffSetTrackTitle.PreExecute(args);
+        Assert.AreEqual(1, ffSetTrackTitle.Execute(args));
+        
+        var ffExecutor = new FfmpegBuilderExecutor();
+        ffExecutor.PreExecute(args);
+        Assert.AreEqual(1, ffExecutor.Execute(args));
+        
+        Logger.ILog("Working File: " + args.WorkingFile);
+        
+        var readVideoInfo = new ReadVideoInfo();
+        readVideoInfo.PreExecute(args);
+        Assert.AreEqual(1, readVideoInfo.Execute(args));
+
+        var videoInfo = (VideoInfo)args.Parameters["VideoInfo"];
+        Assert.AreEqual("H264 / 24FPS", videoInfo.VideoStreams[0].Title);
     }
 }
 

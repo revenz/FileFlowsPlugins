@@ -81,10 +81,10 @@ public class FfmpegVideoStream : FfmpegStream
         {
             results.Add("-c:v:{index}");
             results.Add("copy");
-            if (Title == REMOVED)
+            if (string.IsNullOrWhiteSpace(Title) == false)
             {
                 results.Add($"-metadata:s:v:{args.OutputTypeIndex}");
-                results.Add($"title=");
+                results.Add($"title={(Title == REMOVED ? "" : Title)}");
                 ForcedChange = true;
             }
             return results.ToArray();
