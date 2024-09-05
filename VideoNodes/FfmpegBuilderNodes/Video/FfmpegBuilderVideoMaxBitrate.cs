@@ -5,7 +5,7 @@
 ///// </summary>
 //public class FfmpegBuilderVideoMaxBitrate : FfmpegBuilderNode
 //{
-//    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/video-max-bitrate";
+//    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/video-max-bitrate";
     
 //    /// <summary>
 //    /// Gets or sets the maximum bitrate in K

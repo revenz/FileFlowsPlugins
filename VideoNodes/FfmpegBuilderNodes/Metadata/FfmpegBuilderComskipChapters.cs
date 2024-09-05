@@ -1,12 +1,20 @@
 ﻿using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
 using System.Text;
+using FileFlows.VideoNodes.Helpers;
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 
 public class FfmpegBuilderComskipChapters : FfmpegBuilderNode
 {
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/comskip-chapters";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/comskip-chapters";
     public override int Outputs => 2;
+    
+    
+    /// <summary>
+    /// Gets or sets if comskip should be run if no EDL file is found
+    /// </summary>
+    [Boolean(1)]
+    public bool RunComskipIfNoEdl { get; set; }
 
     public override int Execute(NodeParameters args)
     {
@@ -33,16 +41,24 @@ public class FfmpegBuilderComskipChapters : FfmpegBuilderNode
     {
         float totalTime = (float)videoInfo.VideoStreams[0].Duration.TotalSeconds;
 
-        string edlFile = args.WorkingFile.Substring(0, args.WorkingFile.LastIndexOf(".") + 1) + "edl";
-        if (File.Exists(edlFile) == false)
-            edlFile = args.WorkingFile.Substring(0, args.WorkingFile.LastIndexOf(".") + 1) + "edl";
-        if (File.Exists(edlFile) == false)
+        var edlFile = GetLocalEdlFile(args);
+        if (edlFile.IsFailed)
         {
-            args.Logger?.ILog("No EDL file found for file");
-            return string.Empty;
+            args.Logger.ILog(edlFile.Error);
+            if (RunComskipIfNoEdl == false)
+                return string.Empty;
+            var csResult = ComskipHelper.RunComskip(args, args.FileService.GetLocalPath(args.WorkingFile));
+            if (csResult.Failed(out string error))
+            {
+                args.Logger.ILog(error);
+                return string.Empty;
+            }
+
+            edlFile = csResult;
+            args.Logger?.ILog("Created EDL File: " + edlFile);
         }
 
-        string text = File.ReadAllText(edlFile) ?? string.Empty;
+        string text = System.IO.File.ReadAllText(edlFile) ?? string.Empty;
         float last = 0;
 
         StringBuilder metadata = new StringBuilder();
@@ -75,8 +91,8 @@ public class FfmpegBuilderComskipChapters : FfmpegBuilderNode
         }
         AddChapter(last, totalTime);
 
-        string tempMetaDataFile = Path.Combine(args.TempPath, Guid.NewGuid().ToString() + ".txt");
-        File.WriteAllText(tempMetaDataFile, metadata.ToString());
+        string tempMetaDataFile = System.IO.Path.Combine(args.TempPath, Guid.NewGuid() + ".txt");
+        System.IO.File.WriteAllText(tempMetaDataFile, metadata.ToString());
         return tempMetaDataFile;
 
         void AddChapter(float start, float end)
@@ -90,5 +106,23 @@ public class FfmpegBuilderComskipChapters : FfmpegBuilderNode
             metadata.AppendLine();
         }
 
+    }
+
+    /// <summary>
+    /// Gets the edl file to use locally if remote
+    /// </summary>
+    /// <param name="args">the node parameters</param>
+    /// <returns>the edl file</returns>
+    private Result<string> GetLocalEdlFile(NodeParameters args)
+    {
+        string edlFile = args.WorkingFile.Substring(0, args.WorkingFile.LastIndexOf(".", StringComparison.Ordinal) + 1) + "edl";
+        if (args.FileService.FileExists(edlFile))
+            return args.FileService.GetLocalPath(edlFile);
+        
+        edlFile = args.WorkingFile.Substring(0, args.WorkingFile.LastIndexOf(".", StringComparison.Ordinal) + 1) + "edl";
+        if (args.FileService.FileExists(edlFile))
+            return args.FileService.GetLocalPath(edlFile);
+        
+        return Result<string>.Fail("No EDL file found for file");
     }
 }

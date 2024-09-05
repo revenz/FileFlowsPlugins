@@ -1,64 +1,61 @@
-﻿namespace FileFlows.VideoNodes
+﻿namespace FileFlows.VideoNodes;
+
+/// <summary>
+/// Extension methods
+/// </summary>
+internal static class ExtensionMethods
 {
-    using System.Linq;
-    using System.Text.RegularExpressions;
-
-    internal static class ExtensionMethods
+    /// <summary>
+    /// Returns an empty string as null, otherwise returns the original string
+    /// </summary>
+    /// <param name="str">the input string</param>
+    /// <returns>the string or null if empty</returns>
+    public static string? EmptyAsNull(this string str)
     {
-        public static void AddOrUpdate(this Dictionary<string, object> dict, string key, object value) {
-            if (dict.ContainsKey(key))
-                dict[key] = value;
-            else
-                dict.Add(key, value);
-        }
-        public static string? EmptyAsNull(this string str)
+        return str == string.Empty ? null : str;
+    }
+
+    /// <summary>
+    /// Tries to perform a regex match
+    /// </summary>
+    /// <param name="regex">the regex</param>
+    /// <param name="input">the input string to match against</param>
+    /// <param name="match">the match if found</param>
+    /// <returns>true if matches, otherwise false</returns>
+    public static bool TryMatch(this Regex regex, string input, out Match match)
+    {
+        match = regex.Match(input);
+        return match.Success;
+    }
+    
+    /// <summary>
+    /// Trims the specified characters from the beginning and end of the string.
+    /// </summary>
+    /// <param name="input">The input string to trim.</param>
+    /// <param name="charsToTrim">The characters to trim from the string.</param>
+    /// <returns>A new string that has the specified characters removed from the beginning and end.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when input is null.</exception>
+    public static string TrimExtra(this string input, string charsToTrim)
+    {
+        if (input == null)
+            throw new ArgumentNullException(nameof(input));
+        
+        if (string.IsNullOrEmpty(charsToTrim))
+            return input.Trim();
+
+        int startIndex = 0;
+        int endIndex = input.Length - 1;
+
+        while (startIndex <= endIndex && (input[startIndex] == ' ' || charsToTrim.Contains(input[startIndex])))
         {
-            return str == string.Empty ? null : str;
+            startIndex++;
         }
 
-        public static bool TryMatch(this Regex regex, string input, out Match match)
+        while (endIndex >= startIndex && (input[endIndex] == ' ' || charsToTrim.Contains(input[endIndex])))
         {
-            match = regex.Match(input);
-            return match.Success;
+            endIndex--;
         }
 
-        public static IEnumerable<string> SplitCommandLine(this string commandLine)
-        {
-            bool inQuotes = false;
-
-            return commandLine.Split(c =>
-            {
-                if (c == '\"')
-                    inQuotes = !inQuotes;
-
-                return !inQuotes && c == ' ';
-            })
-            .Select(arg => arg.Trim().TrimMatchingQuotes('\"'))
-            .Where(arg => !string.IsNullOrEmpty(arg));
-        }
-        public static IEnumerable<string> Split(this string str,
-                                          Func<char, bool> controller)
-        {
-            int nextPiece = 0;
-
-            for (int c = 0; c < str.Length; c++)
-            {
-                if (controller(str[c]))
-                {
-                    yield return str.Substring(nextPiece, c - nextPiece);
-                    nextPiece = c + 1;
-                }
-            }
-
-            yield return str.Substring(nextPiece);
-        }
-        public static string TrimMatchingQuotes(this string input, char quote)
-        {
-            if ((input.Length >= 2) &&
-                (input[0] == quote) && (input[input.Length - 1] == quote))
-                return input.Substring(1, input.Length - 2);
-
-            return input;
-        }
+        return input.Substring(startIndex, endIndex - startIndex + 1);
     }
 }

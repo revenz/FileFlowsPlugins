@@ -1,41 +1,33 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>FileFlows.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
-	<FileVersion>1.0.6.501</FileVersion>
-	<ProductVersion>1.0.6.501</ProductVersion>
-	<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-	<PublishTrimmed>true</PublishTrimmed>
-	<Company>FileFlows</Company>
-	<Authors>John Andrews</Authors>
-	<Product>Gotify</Product>
-	<PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
-	<Description>Lets you send Gotify messages to a server</Description>
+    <FileVersion>1.1.1.528</FileVersion>
+    <ProductVersion>1.1.1.528</ProductVersion>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <Company>FileFlows</Company>
+    <Authors>John Andrews</Authors>
+    <Product>Gotify</Product>
+    <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
+    <Description>Lets you send Gotify messages to a server</Description>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="Gotify.en.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Gotify.en.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-	<ItemGroup Condition=" '$(Configuration)' == 'Debug'">
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
-		<PackageReference Include="MSTest.TestAdapter" Version="2.2.8" />
-		<PackageReference Include="MSTest.TestFramework" Version="2.2.8" />
-	</ItemGroup>
-
   <ItemGroup>
     <Reference Include="FileFlows.Plugin">
       <HintPath>..\FileFlows.Plugin.dll</HintPath>
     </Reference>
   </ItemGroup>
-
+  <ItemGroup Condition=" '$(Configuration)' == 'Debug'">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.4.3" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.4.3" />
+    <ProjectReference Include="..\PluginTestLibrary\PluginTestLibrary.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="i18n\*.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

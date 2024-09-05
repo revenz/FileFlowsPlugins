@@ -2,7 +2,9 @@
 
 public class FfmpegBuilderRemuxToMkv : FfmpegBuilderNode
 {
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/remux-to-mkv";
+    /// <inheritdoc />
+    public override string Icon => "svg:mkv";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/remux-to-mkv";
 
     public override int Execute(NodeParameters args)
     {

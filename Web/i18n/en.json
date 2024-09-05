@@ -1,0 +1,69 @@
+{
+  "Flow": {
+    "Parts": {
+      "Downloader": {
+        "Outputs": {
+          "1": "URL was successfully downloaded",
+          "2": "URL Failed to download"
+        },
+        "Description": "Downloads the specified URL",
+        "Fields": {
+          "Url": "URL",
+          "Url-Help": "The URL to download, leave empty to use the current working file, if the current working file is not a URL, then this will fail."
+        }
+      },
+      "HtmlImageParser": {
+        "Label": "HTML Image Parser",
+        "Outputs": {
+          "1": "Images found and stored in ImageUrls variable",
+          "2": "No images found"
+        },
+        "Fields": {
+          "Path": "File",
+          "Path-Description": "An optional file or variable to parse for Images, if not given then the working file will be parsed.",
+          "Pattern": "Pattern",
+          "Pattern-Placeholder": "Optional",
+          "Pattern-Help": "An optional case insensitive regular expression to match the results against, only results matching this will be accepted."
+        }
+      },
+      "HtmlLinkParser": {
+        "Label": "HTML Link Parser",
+        "Outputs": {
+          "1": "Link found and stored in Links variable",
+          "2": "No links found"
+        },
+        "Fields": {
+          "Path": "File",
+          "Path-Description": "An optional file or variable to parse for links, if not given then the working file will be parsed.",
+          "Pattern": "Pattern",
+          "Pattern-Placeholder": "Optional",
+          "Pattern-Help": "An optional case insensitive regular expression to match the results against, only results matching this will be accepted."
+        }
+      },
+      "InputUrl": {
+        "Label": "Input URL"
+      },
+      "WebRequest": {
+        "Description": "Allows you to send a web request",
+        "Outputs": {
+          "1": "Successfully sent",
+          "2": "Request returned a non-successful status code"
+        },
+        "Fields": {
+          "Url": "URL",
+          "Url-Help": "The URL of the request",
+          "Method": "Method",
+          "Method-Help": "The web method to use when sending this request",
+          "ContentType": "Content Type",
+          "ContentType-Help": "The Content-Type of the message to send",
+          "Headers": "Headers",
+          "Headers-Help": "Optional headers to send with the request",
+          "HeadersKey": "Key",
+          "HeadersValue": "Value",
+          "Body": "Body",
+          "Body-Help": "The body of the request being sent.  Variables can be used in this field."
+        }
+      }
+    }
+  }
+}

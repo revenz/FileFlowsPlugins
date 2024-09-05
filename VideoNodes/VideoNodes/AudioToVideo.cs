@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 namespace FileFlows.VideoNodes.VideoNodes;
 
 /// <summary>
-/// Node that converts a audio file into a video file and generates a video based on the audio
+/// Flow Element that converts a audio file into a video file and generates a video based on the audio
 /// </summary>
 public class AudioToVideo : EncodingNode
 {
     public override int Outputs => 1;
     public override int Inputs => 1;
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/audio-to-video";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/audio-to-video";
 
     public override string Icon => "fas fa-headphones";
 
@@ -135,7 +135,7 @@ public class AudioToVideo : EncodingNode
         if (Environment.GetEnvironmentVariable("HW_OFF") == "1")
             useHardwareEncoding = false;
         
-        var encodingParameters = FfmpegBuilderVideoEncode.GetEncodingParameters(args, this.Codec, 28, useHardwareEncoding);
+        var encodingParameters = FfmpegBuilderVideoEncode.GetEncodingParameters(args, this.Codec, 28, useHardwareEncoding ? string.Empty : "CPU", 29.97f, speed: "fast");
 
         if (Container.ToLower() == "mp4")
             ffArgs.AddRange(new[] { "-movflags", "+faststart" });

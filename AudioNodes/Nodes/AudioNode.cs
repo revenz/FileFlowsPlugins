@@ -6,47 +6,59 @@ namespace FileFlows.AudioNodes
     {
         public override string Icon => "fas fa-music";
 
-        protected string GetFFMpegExe(NodeParameters args)
+        protected string LocalWorkingFile;
+
+        public override bool PreExecute(NodeParameters args)
+        {
+            var localFile = args.FileService.GetLocalPath(args.WorkingFile);
+            if (localFile.IsFailed)
+            {
+                args.Logger?.ELog("Failed to get local file: " + localFile.Error);
+                return false;
+            }
+
+            LocalWorkingFile = localFile.Value;
+            return true;
+        }
+
+        /// <summary>
+        /// Gets the FFmpeg location
+        /// </summary>
+        /// <param name="args">the node parameters</param>
+        /// <returns>the FFmpeg location</returns>
+        protected Result<string> GetFFmpeg(NodeParameters args)
         {
             string ffmpeg = args.GetToolPath("FFMpeg");
             if (string.IsNullOrEmpty(ffmpeg))
-            {
-                args.Logger.ELog("FFMpeg tool not found.");
-                return "";
-            }
-            var fileInfo = new FileInfo(ffmpeg);
+                return Result<string>.Fail("FFmpeg tool not found.");
+            var fileInfo = new System.IO.FileInfo(ffmpeg);
             if (fileInfo.Exists == false)
-            {
-                args.Logger.ELog("FFMpeg tool configured by ffmpeg file does not exist.");
-                return "";
-            }
+                Result<string>.Fail("FFmpeg tool configured by ffmpeg file does not exist.");
             return fileInfo.FullName;
         }
 
-        protected string GetFFMpegPath(NodeParameters args)
+        /// <summary>
+        /// Gets the FFprobe location
+        /// </summary>
+        /// <param name="args">the node parameters</param>
+        /// <returns>the FFprobe location</returns>
+        protected Result<string> GetFFprobe(NodeParameters args)
         {
-            string ffmpeg = args.GetToolPath("FFMpeg");
+            string ffmpeg = args.GetToolPath("FFprobe");
             if (string.IsNullOrEmpty(ffmpeg))
-            {
-                args.Logger.ELog("FFMpeg tool not found.");
-                return "";
-            }
-            var fileInfo = new FileInfo(ffmpeg);
+                return Result<string>.Fail("FFprobe tool not found.");
+            
+            var fileInfo = new System.IO.FileInfo(ffmpeg);
             if (fileInfo.Exists == false)
-            {
-                args.Logger.ELog("FFMpeg tool configured by ffmpeg file does not exist.");
-                return "";
-            }
-            return fileInfo.DirectoryName;
+                return Result<string>.Fail("FFprobe tool configured by ffmpeg file does not exist.");
+            return fileInfo.FullName;
         }
 
+
         private const string Audio_INFO = "AudioInfo";
-        protected void SetAudioInfo(NodeParameters args, AudioInfo AudioInfo, Dictionary<string, object> variables)
+        internal void SetAudioInfo(NodeParameters args, AudioInfo AudioInfo, Dictionary<string, object> variables)
         {
-            if (args.Parameters.ContainsKey(Audio_INFO))
-                args.Parameters[Audio_INFO] = AudioInfo;
-            else
-                args.Parameters.Add(Audio_INFO, AudioInfo);
+            args.Parameters[Audio_INFO] = AudioInfo;
 
             if(AudioInfo.Artist.EndsWith(", The"))
                 variables.AddOrUpdate("audio.Artist", "The " + AudioInfo.Artist.Substring(0, AudioInfo.Artist.Length - ", The".Length).Trim());
@@ -110,34 +122,32 @@ namespace FileFlows.AudioNodes
                 return;
             dict.Add(name, value);  
         }
-
-        protected AudioInfo GetAudioInfo(NodeParameters args)
+        
+        /// <summary>
+        /// Gets the audio information previously read into the flow
+        /// </summary>
+        /// <param name="args">the node parameters</param>
+        /// <returns>the audio information</returns>
+        protected Result<AudioInfo> GetAudioInfo(NodeParameters args)
         {
             if (args.Parameters.ContainsKey(Audio_INFO) == false)
-            {
-                args.Logger.WLog("No codec information loaded, use a 'Audio File' node first");
-                return null;
-            }
-            var result = args.Parameters[Audio_INFO] as AudioInfo;
-            if (result == null)
-            {
-                args.Logger.WLog("AudioInfo not found for file");
-                return null;
-            }
+                return Result<AudioInfo>.Fail("No codec information loaded, use a 'Audio File' flow element first");
+            if (args.Parameters[Audio_INFO] is AudioInfo result == false)
+                return Result<AudioInfo>.Fail("AudioInfo not found for file");
             return result;
         }
 
-        protected bool ReadAudioFileInfo(NodeParameters args, string ffmpegExe, string filename)
+        protected bool ReadAudioFileInfo(NodeParameters args, string ffmpegExe, string ffprobe, string filename)
         {
-
-            var AudioInfo = new AudioInfoHelper(ffmpegExe, args.Logger).Read(filename);
-            if (AudioInfo.Duration == 0)
+            var result = new AudioInfoHelper(ffmpegExe, ffprobe, args.Logger).Read(filename);
+            if (result.Failed(out string error))
             {
-                args.Logger?.ILog("Failed to load Audio information.");
+                args.FailureReason = error;
+                args.Logger?.ELog(error);
                 return false;
             }
 
-            SetAudioInfo(args, AudioInfo, Variables);
+            SetAudioInfo(args, result.Value, Variables);
             return true;
         }
     }

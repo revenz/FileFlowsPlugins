@@ -2,7 +2,10 @@
 
 public class FfmpegBuilderRemuxToMov : FfmpegBuilderNode
 {
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/remux-to-mov";
+    /// <inheritdoc />
+    public override string Icon => "svg:mov";
+    /// <inheritdoc />
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/remux-to-mov";
 
     public override int Execute(NodeParameters args)
     {

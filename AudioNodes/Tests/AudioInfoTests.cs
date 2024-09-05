@@ -1,91 +1,147 @@
 ﻿#if(DEBUG)
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FileFlows.AudioNodes.Tests
+namespace FileFlows.AudioNodes.Tests;
+
+[TestClass]
+public class AudioInfoTests: AudioTestBase
 {
-    using FileFlows.AudioNodes;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
-    [TestClass]
-    public class AudioInfoTests
+    [TestMethod]
+    public void AudioInfo_SplitTrack()
     {
-        [TestMethod]
-        public void AudioInfo_SplitTrack()
-        {
+        var args = GetAudioNodeParameters();
+        var af = new AudioFile();
+        af.PreExecute(args);
+        var result = af.Execute(args); // need to read the Audio info and set it
 
-            const string file = @"\\oracle\Audio\The Cranberries\No Need To Argue\The Cranberries - No Need To Argue - 00 - I Don't Need (Demo).mp3";
-            const string ffmpegExe = @"C:\utils\ffmpeg\ffmpeg.exe";
+        Assert.AreEqual(1, result);
 
-            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
-            args.GetToolPathActual = (string tool) => ffmpegExe;
-            args.TempPath = @"D:\music\temp";
+        var AudioInfo = args.Parameters["AudioInfo"] as AudioInfo;
 
-            var AudioInfo = new AudioInfoHelper(ffmpegExe, args.Logger).Read(args.WorkingFile);
+        Assert.AreEqual(8, AudioInfo.Track);
+    }
 
-            Assert.AreEqual(9, AudioInfo.Track);
-        }
+    [TestMethod]
+    public void AudioInfo_NormalTrack()
+    {
+        var args = GetAudioNodeParameters();
+        var AudioInfo = new AudioInfoHelper(FFprobe, FFprobe, Logger).Read(args.WorkingFile);
 
-        [TestMethod]
-        public void AudioInfo_NormalTrack()
-        {
+        Assert.AreEqual(8, AudioInfo.Value.Track);
+    }
 
-            const string file = @"\\oracle\Audio\Taylor Swift\Speak Now\Taylor Swift - Speak Now - 08 - Never Grow Up.mp3";
-            const string ffmpegExe = @"C:\utils\ffmpeg\ffmpeg.exe";
+    [TestMethod]
+    public void AudioInfo_GetMetaData()
+    {
+        var args = GetAudioNodeParameters();
 
-            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
-            args.GetToolPathActual = (string tool) => ffmpegExe;
-            args.TempPath = @"D:\music\temp";
+        // load the variables
+        var audioFile = new AudioFile();
+        audioFile.PreExecute(args);
+        Assert.AreEqual(1, audioFile.Execute(args));
 
-            var AudioInfo = new AudioInfoHelper(ffmpegExe, args.Logger).Read(args.WorkingFile);
+        var audio = new AudioInfoHelper(FFmpeg, FFprobe, Logger).Read(args.WorkingFile).Value;
 
-            Assert.AreEqual(8, AudioInfo.Track);
-        }
+        string folder = args.ReplaceVariables("{audio.ArtistThe} ({audio.Year})");
+        Assert.AreEqual($"{audio.Artist} ({audio.Date.Year})", folder);
 
-        [TestMethod]
-        public void AudioInfo_GetMetaData()
-        {
-            const string ffmpegExe = @"C:\utils\ffmpeg\ffmpeg.exe";
-            var logger = new TestLogger();
-            foreach (string file in Directory.GetFiles(@"D:\videos\Audio"))
-            {
-                var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty);
-                args.GetToolPathActual = (string tool) => ffmpegExe;
+        string fname = args.ReplaceVariables("{audio.Artist} - {audio.Album} - {audio.Track|##} - {audio.Title}");
+        Assert.AreEqual($"{audio.Artist} - {audio.Album} - {audio.Track:00} - {audio.Title}", fname);
+    }
 
-                // laod the variables
-                Assert.AreEqual(1, new AudioFile().Execute(args));
+    [TestMethod]
+    public void AudioInfo_FileNameMetadata()
+    {
+        var audio = new AudioInfo();
 
-                var audio = new AudioInfoHelper(ffmpegExe, args.Logger).Read(args.WorkingFile);
+        string file =
+            "/media/Meat Loaf/Bat out of Hell II- Back Into Hell… (1993)/03 - I’d Do Anything for Love (but I Won’t Do That).mp3";
 
-                string folder = args.ReplaceVariables("{audio.ArtistThe} ({audio.Year})");
-                Assert.AreEqual($"{audio.Artist} ({audio.Date.Year})", folder);
+        new AudioInfoHelper(FFmpeg, FFprobe, Logger).ParseFileNameInfo(file, audio);
 
-                string fname = args.ReplaceVariables("{audio.Artist} - {audio.Album} - {audio.Track:##} - {audio.Title}");
-                Assert.AreEqual($"{audio.Artist} - {audio.Track.ToString("00")} - {audio.Title}", fname);
+        Assert.AreEqual("Meat Loaf", audio.Artist);
+        Assert.AreEqual("Bat out of Hell II- Back Into Hell…", audio.Album);
+        Assert.AreEqual(1993, audio.Date.Year);
+        Assert.AreEqual("I’d Do Anything for Love (but I Won’t Do That)", audio.Title);
+        Assert.AreEqual(3, audio.Track);
+    }
+
+    [TestMethod]
+    public void AudioInfo_Bitrate()
+    {
+        var args = GetAudioNodeParameters(AudioOgg);
+
+        // load the variables
+        var audioFile = new AudioFile();
+        audioFile.PreExecute(args);
+        Assert.AreEqual(1, audioFile.Execute(args));
+        
+        // convert to 192
+        var convert = new ConvertAudio();
+        convert.Bitrate = 192;
+        convert.SkipIfCodecMatches = false;
+        convert.Codec = "mp3";
+        convert.PreExecute(args);
+        int result = convert.Execute(args);
+        Assert.AreEqual(1, result);
+
+        var audio = new AudioInfoHelper(FFmpeg, FFprobe, Logger).Read(args.WorkingFile).Value;
+        Assert.AreEqual(192 * 1024, audio.Bitrate);
+
+        var md = new Dictionary<string, object>();
+        convert.SetAudioInfo(args, audio, md);
+        
+        Assert.AreEqual((192 * 1024).ToString(), md["audio.Bitrate"].ToString());
+        
+        // converting again should skip
+        convert = new();
+        convert.SkipIfCodecMatches = false;
+        convert.Codec = "mp3";
+        convert.Bitrate = 192;
+        convert.PreExecute(args);
+        result = convert.Execute(args);
+        Assert.AreEqual(2, result);
+    }
+    
+    [TestMethod]
+    public void AudioFormatInfoTest()
+    {
+        string ffmpegOutput = @"{
+            ""format"": {
+                ""filename"": ""Aqua - Aquarium - 03 - Barbie Girl.flac"",
+                ""nb_streams"": 1,
+                ""nb_programs"": 0,
+                ""format_name"": ""flac"",
+                ""format_long_name"": ""raw FLAC"",
+                ""start_time"": ""0.000000"",
+                ""duration"": ""197.906667"",
+                ""size"": ""25955920"",
+                ""bit_rate"": ""1049218"",
+                ""probe_score"": 100,
+                ""tags"": {
+                    ""TITLE"": ""Barbie Girl"",
+                    ""ARTIST"": ""Aqua"",
+                    ""ALBUM"": ""Aquarium"",
+                    ""track"": ""3"",
+                    ""DATE"": ""1997"",
+                    ""GENRE"": ""Eurodance"",
+                    ""TOTALTRACKS"": ""11"",
+                    ""disc"": ""1"",
+                    ""TOTALDISCS"": ""1""
+                }
             }
-        }
+        }";
 
-        [TestMethod]
-        public void AudioInfo_FileNameMetadata()
-        {
-            const string ffmpegExe = @"C:\utils\ffmpeg\ffmpeg.exe";
-            var logger = new TestLogger();
-            string file = @"\\jor-el\Audio\Meat Loaf\Bat out of Hell II- Back Into Hell… (1993)\Meat Loaf - Bat out of Hell II- Back Into Hell… - 03 - I’d Do Anything for Love (but I Won’t Do That).flac";
-            
-            var audio = new AudioInfo();
+        var result = FFprobeAudioInfo.Parse(ffmpegOutput);
+        Assert.IsFalse(result.IsFailed);
+        var audioFormatInfo = result.Value;
 
-            new AudioInfoHelper(ffmpegExe, logger).ParseFileNameInfo(file, audio);
-
-            Assert.AreEqual("Meat Loaf", audio.Artist);
-            Assert.AreEqual("Bat out of Hell II- Back Into Hell…", audio.Album);
-            Assert.AreEqual(1993, audio.Date.Year);
-            Assert.AreEqual("I’d Do Anything for Love (but I Won’t Do That)", audio.Title);
-            Assert.AreEqual(3, audio.Track);
-        }
+        Assert.AreEqual(1049218, audioFormatInfo.Bitrate);
+        Assert.AreEqual("Barbie Girl", audioFormatInfo.Tags?.Title);
+        Assert.AreEqual("Aqua", audioFormatInfo.Tags?.Artist);
+        Assert.AreEqual("3", audioFormatInfo.Tags?.Track);
     }
 }
 

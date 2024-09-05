@@ -5,25 +5,69 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
 {
     public abstract class FfmpegBuilderNode: EncodingNode
     {
-        protected const string MODEL_KEY = "FfmpegBuilderModel";
+        internal const string MODEL_KEY = "FfmpegBuilderModel";
 
+        /// <summary>
+        /// Gets the number of inputs
+        /// </summary>
         public override int Inputs => 1;
+        /// <summary>
+        /// Gets the number of outputs
+        /// </summary>
         public override int Outputs => 1;
+        /// <summary>
+        /// Gets the icon
+        /// </summary>
         public override string Icon => "far fa-file-video";
+        /// <summary>
+        /// Gets the flow element type
+        /// </summary>
         public override FlowElementType Type => FlowElementType.BuildPart;
-        public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder";
+        /// <summary>
+        /// Gets the help URL
+        /// </summary>
+        public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder";
 
 
+        /// <summary>
+        /// Runs any code that needs to run before the execution code
+        /// E.g. loads any variables that the Execute will use
+        /// </summary>
+        /// <param name="args">the node parameters</param>
+        /// <returns>true if successful, otherwise false and will fail the flow</returns>
+        /// <exception cref="Exception">throw if the video is not initialized</exception>
         public override bool PreExecute(NodeParameters args)
         {
             if (base.PreExecute(args) == false)
                 return false;
             
             if(this is FfmpegBuilderStart == false && Model == null)
-                throw new Exception("FFMPEG Builder Model not set, you must add and use the \"FFMPEG Builder Start\" node first");
+                throw new Exception("FFMPEG Builder Model not set, you must add and use the \"FFMPEG Builder Start\" flow element first");
 
-            if (this is FfmpegBuilderStart == false && Model.VideoInfo == null)
-                throw new Exception("FFMPEG Builder VideoInfo is null");
+            if (this is FfmpegBuilderStart == false)
+            {
+                if (Model.VideoInfo == null)
+                    throw new Exception("FFMPEG Builder VideoInfo is null");
+                string header = "------------------------ Starting FFmpeg Builder Model ------------------------";
+                args.Logger?.ILog(header);
+                foreach (var stream in Model.VideoStreams ?? new List<FfmpegVideoStream>())
+                {
+                    string line = "| Video Stream: " + stream;
+                    args.Logger?.ILog(line + new string(' ', Math.Max(1, header.Length - line.Length - 1)) + '|');
+                }
+                foreach (var stream in Model.AudioStreams ?? new List<FfmpegAudioStream>())
+                {
+                    string line = "| Audio Stream: " + stream;
+                    args.Logger?.ILog(line + new string(' ', Math.Max(1, header.Length - line.Length - 1)) + '|');
+                }
+                foreach (var stream in Model.SubtitleStreams ?? new List<FfmpegSubtitleStream>())
+                {
+                    string line = "| Subtitle Stream: " + stream;
+                    args.Logger?.ILog(line + new string(' ', Math.Max(1, header.Length - line.Length - 1)) + '|');
+                }
+
+                args.Logger?.ILog(new string('-', header.Length));
+            }
 
             return true;
         }
@@ -39,8 +83,8 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
         {
             get
             {
-                if (Args.Variables.ContainsKey(MODEL_KEY))
-                    return Args.Variables[MODEL_KEY] as FfmpegModel;
+                if (Args.Variables.TryGetValue(MODEL_KEY, out var variable))
+                    return variable as FfmpegModel;
                 return null;
             }
             set

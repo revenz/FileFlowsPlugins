@@ -1,10 +1,10 @@
-﻿using FileFlows.Plex.Models;
+﻿using System.Diagnostics.CodeAnalysis;
+using FileFlows.Plex.Models;
 
 namespace FileFlows.Plex.MediaManagement;
 
 public class PlexAnalyze : PlexNode
 {
-    public override string Icon => "fas fa-sync";
 
     protected override int ExecuteActual(NodeParameters args, PlexDirectory directory, string baseUrl, string mappedPath, string accessToken)
     {
@@ -40,7 +40,8 @@ public class PlexAnalyze : PlexNode
             return string.Empty;
         }
 
-        var item = media?.Where(x => x.Part?.Any(y => y.File?.Replace("\\", "/").ToLower() == file.Replace("\\", "/").ToLower()) == true)?.FirstOrDefault();
+        var item = media.Where(x => x.Part?.Any(y => 
+            string.Equals(y.File?.Replace("\\", "/"), file.Replace("\\", "/"), StringComparison.InvariantCultureIgnoreCase)) == true)?.FirstOrDefault();
         if(item == null)
         {
             args.Logger?.ILog($"No item matching '{file}' found in Plex.");
@@ -49,21 +50,22 @@ public class PlexAnalyze : PlexNode
         return item?.RatingKey ?? string.Empty;
     }
 
+    [UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "<Pending>")]
     internal PlexMedia[] GetPlexMedia(HttpClient httpClient, NodeParameters args, string baseUrl, string urlPath, string token, int depth = 0)
     {
         if (depth > 10)
-            return new PlexMedia[] { };
-        if (urlPath.StartsWith("/") && baseUrl.EndsWith("/"))
+            return [];
+        if (urlPath.StartsWith('/') && baseUrl.EndsWith('/'))
             urlPath = urlPath[1..];
 
         string fullUrl = baseUrl + urlPath;
-        fullUrl += (fullUrl.IndexOf("?") > 0 ? "&" : "?") + "X-Plex-Token=" + token;
+        fullUrl += (fullUrl.IndexOf('?', StringComparison.Ordinal) > 0 ? "&" : "?") + "X-Plex-Token=" + token;
         var updateResponse = GetWebRequest(httpClient, fullUrl);
         if (updateResponse.success == false)
         {
             if (string.IsNullOrWhiteSpace(updateResponse.body) == false)
                 args.Logger?.WLog("Failed to get files from Plex:" + updateResponse.body);
-            return new PlexMedia[] { };
+            return [];
         }
     
 
@@ -72,14 +74,17 @@ public class PlexAnalyze : PlexNode
         {
             var options = new System.Text.Json.JsonSerializerOptions();
             options.PropertyNameCaseInsensitive = true;
-            metadata = System.Text.Json.JsonSerializer.Deserialize<PlexSections>(updateResponse.body, options)?.MediaContainer?.Metadata?.ToList();
+            metadata = System.Text.Json.JsonSerializer.Deserialize<PlexSections>(updateResponse.body, options)
+                           ?.MediaContainer?.Metadata?.ToList()
+                       ?? new();
         }
         catch (Exception ex)
         {
             args.Logger?.ELog("Failed deserializing sections json: " + ex.Message);
-            return new PlexMedia[] { };
+            return [];
         }
-        var list = metadata ?? new List<PlexMetadata>();
+
+        var list = metadata ?? new();
         var results = new List<PlexMedia>();
 
         foreach(var item in list)
@@ -90,7 +95,6 @@ public class PlexAnalyze : PlexNode
                     media.RatingKey = item.RatingKey;
 
                 results.AddRange(item.Media);
-                continue;
             }
             else if(string.IsNullOrEmpty(item?.Key) == false && depth < 10)
             {

@@ -10,11 +10,18 @@ using System.ComponentModel.DataAnnotations;
 /// </summary>
 public class Sleep : Node
 {
+    /// <inheritdoc />
     public override int Inputs => 1;
+    /// <inheritdoc />
     public override int Outputs => 1;
+    /// <inheritdoc />
     public override FlowElementType Type => FlowElementType.Logic;
+    /// <inheritdoc />
     public override string Icon => "fas fa-clock";
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/sleep";
+    /// <inheritdoc />
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/sleep";
+    /// <inheritdoc />
+    public override bool FailureNode => true;
 
 
     [NumberInt(1)]

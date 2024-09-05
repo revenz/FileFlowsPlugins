@@ -1,164 +1,184 @@
-namespace FileFlows.BasicNodes.File
+using System.ComponentModel.DataAnnotations;
+using FileFlows.BasicNodes.Helpers;
+using FileFlows.Plugin;
+using FileFlows.Plugin.Attributes;
+using FileFlows.Plugin.Helpers;
+
+namespace FileFlows.BasicNodes.File;
+
+/// <summary>
+/// Node that copies a file
+/// </summary>
+public class CopyFile : Node
 {
-    using System.ComponentModel.DataAnnotations;
-    using FileFlows.Plugin;
-    using FileFlows.Plugin.Attributes;
-    using FileFlows.Plugin.Helpers;
+    /// <summary>
+    /// Gets the number of inputs
+    /// </summary>
+    public override int Inputs => 1;
+    
+    /// <summary>
+    /// Gets the number of outputs
+    /// </summary>
+    public override int Outputs => 1;
+    
+    /// <summary>
+    /// Gets the type of node 
+    /// </summary>
+    public override FlowElementType Type => FlowElementType.Process;
+    
+    /// <summary>
+    /// Gets the icon for this node
+    /// </summary>
+    public override string Icon => "far fa-copy";
 
     /// <summary>
-    /// Node that copies a file
+    /// Gets the help URL
     /// </summary>
-    public class CopyFile : Node
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/copy-file";
+
+    private string _DestinationPath = string.Empty;
+    private string _DestinationFile = string.Empty;
+
+
+    /// <summary>
+    /// Gets or sets the input file to move
+    /// </summary>
+    [TextVariable(1)]
+    public string InputFile{ get; set; }
+    
+    /// <summary>
+    /// Gets or sets the destination path to copy the file to
+    /// </summary>
+    [Required]
+    [Folder(2)]
+    public string DestinationPath 
+    { 
+        get => _DestinationPath;
+        set => _DestinationPath = value ?? string.Empty;
+    }
+    /// <summary>
+    /// Gets or sets the destination file 
+    /// </summary>
+    [TextVariable(3)]
+    public string DestinationFile
     {
-        /// <summary>
-        /// Gets the number of inputs
-        /// </summary>
-        public override int Inputs => 1;
+        get => _DestinationFile;
+        set => _DestinationFile = value ?? string.Empty;
+    }
+
+    /// <summary>
+    /// Gets or sets if the folder structure should be copied
+    /// </summary>
+    [Boolean(4)]
+    public bool CopyFolder { get; set; }
+
+    /// <summary>
+    /// Gets or sets additional files to copy
+    /// </summary>
+    [StringArray(5)]
+    public string[] AdditionalFiles { get; set; }
+
+    /// <summary>
+    /// Gets or sets if the additional files should be copied from the source location (true) or temporary location (false)
+    /// </summary>
+    [Boolean(6)]
+    public bool AdditionalFilesFromOriginal { get; set; }
+
+    /// <summary>
+    /// Gets or sets if the original files creation and last write time dates should be preserved
+    /// </summary>
+    [Boolean(7)]
+    public bool PreserverOriginalDates { get; set; }
+
+    /// <inheritdoc />
+    public override int Execute(NodeParameters args)
+    {
+        var destParts = MoveFile.GetDestinationPathParts(args, DestinationPath, DestinationFile, CopyFolder);
+        if (destParts.Filename == null)
+            return -1;
         
-        /// <summary>
-        /// Gets the number of outputs
-        /// </summary>
-        public override int Outputs => 1;
-        
-        /// <summary>
-        /// Gets the type of node 
-        /// </summary>
-        public override FlowElementType Type => FlowElementType.Process;
-        
-        /// <summary>
-        /// Gets the icon for this node
-        /// </summary>
-        public override string Icon => "far fa-copy";
-
-        /// <summary>
-        /// Gets the help URL
-        /// </summary>
-        public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/copy-file";
-
-        private string _DestinationPath = string.Empty;
-        private string _DestinationFile = string.Empty;
-
-        [Required]
-        [Folder(1)]
-        public string DestinationPath 
-        { 
-            get => _DestinationPath;
-            set { _DestinationPath = value ?? ""; }
-        }
-        [TextVariable(2)]
-        public string DestinationFile
+        string inputFile = args.ReplaceVariables(InputFile ?? string.Empty, stripMissing: true)?.EmptyAsNull() ?? args.WorkingFile;
+                          
+        // cant use new FileInfo(dest).Directory.Name here since
+        // if the folder is a linux folder and this node is running on windows
+        // /mnt, etc will be converted to c:\mnt and break the destination
+        var destDir = destParts.Path;
+        var destFile = destParts.Filename;
+        if(inputFile != args.WorkingFile && string.IsNullOrWhiteSpace(DestinationFile))
         {
-            get => _DestinationFile;
-            set { _DestinationFile = value ?? ""; }
+            destFile = FileHelper.GetShortFileName(inputFile);
+        }
+        string dest = FileHelper.Combine(destParts.Path, destFile);
+
+        //bool copied = args.CopyFile(args.WorkingFile, dest, updateWorkingFile: true);
+        //if (!copied)
+        //    return -1;
+        args.Logger?.ILog("File to copy: " + inputFile);
+        args.Logger?.ILog("Destination: " + dest);
+
+        if (args.FileService.FileCopy(inputFile, dest, true).Failed(out string error))
+        {
+            args.FailureReason = "Failed to copy file: " + error;
+            args.Logger?.ELog(args.FailureReason);
+            return -1;
         }
 
-        [Boolean(3)]
-        public bool CopyFolder { get; set; }
-
-        [StringArray(4)]
-        public string[] AdditionalFiles { get; set; }
-
-        [Boolean(5)]
-        public bool AdditionalFilesFromOriginal { get; set; }
-
-        private bool Canceled;
-
-        public override Task Cancel()
+        if (inputFile == args.WorkingFile)
         {
-            Canceled = true;
-            return base.Cancel();
+            args.Logger?.ILog("Setting working file to: " + dest);
+            args.SetWorkingFile(dest);
+
+            if (PreserverOriginalDates)
+            {
+                if (args.Variables.TryGetValue("ORIGINAL_CREATE_UTC", out object oCreateTimeUtc) &&
+                    args.Variables.TryGetValue("ORIGINAL_LAST_WRITE_UTC", out object oLastWriteUtc) &&
+                    oCreateTimeUtc is DateTime dtCreateTimeUtc && oLastWriteUtc is DateTime dtLastWriteUtc)
+                {
+                    args.Logger?.ILog("Preserving dates");
+                    args.FileService.SetLastWriteTimeUtc(dest, dtLastWriteUtc);
+                    args.FileService.SetCreationTimeUtc(dest, dtCreateTimeUtc);
+                }
+                else
+                {
+                    args.Logger?.WLog("Preserve dates is on but failed to get original dates from variables");
+                }
+            }
         }
 
+        var srcDir = FileHelper.GetDirectory(AdditionalFilesFromOriginal
+            ? args.FileName
+            : inputFile);
 
-        public override int Execute(NodeParameters args)
+        if (AdditionalFiles?.Any() == true)
         {
-            Canceled = false;
-            string dest = args.ReplaceVariables(DestinationPath, true);
-
-            args.Logger.ILog($"CopyFile.Dest[0] '{dest}'");
-            dest = dest.Replace("\\", Path.DirectorySeparatorChar.ToString());
-            dest = dest.Replace("/", Path.DirectorySeparatorChar.ToString());
-            args.Logger.ILog($"CopyFile.Dest[1] '{dest}'");
-            if (string.IsNullOrEmpty(dest))
-            {
-                args.Logger?.ELog("No destination specified");
-                return -1;
-            }
-
-            args.Logger.ILog($"CopyFile.Dest[2] '{dest}'");
-            if (CopyFolder)
-                dest = Path.Combine(dest, args.RelativeFile);
-            else
-                dest = Path.Combine(dest, new FileInfo(args.FileName).Name);
-            args.Logger.ILog($"CopyFile.Dest[3] '{dest}'");
-
-            var fiDest = new FileInfo(dest);
-            var fiWorking = new FileInfo(args.WorkingFile);
-            if (string.IsNullOrEmpty(fiDest.Extension) == false && fiDest.Extension != fiWorking.Extension)
-            {
-                dest = dest.Substring(0, dest.LastIndexOf(".")) + fiWorking.Extension;
-            }
-            args.Logger.ILog($"CopyFile.Dest[5] '{dest}'");
-
-            // cant use new FileInfo(dest).Directory.Name here since
-            // if the folder is a linux folder and this node is running on windows
-            // /mnt, etc will be converted to c:\mnt and break the destination
-            var destDir = dest.Substring(0, dest.Replace("\\", "/").LastIndexOf("/"));
-
-            if(string.IsNullOrEmpty(DestinationFile) == false)
-            {
-                // FF-154 - changed file.Name and file.Orig.Filename to be the full short filename including the extension
-                string destFile = DestinationFile;
-                destFile = destFile.Replace("{file.Orig.FileName}{file.Orig.Extension}", "{file.Orig.FileName}");
-                destFile = destFile.Replace("{file.Name}{file.Extension}", "{file.Name}");
-                destFile = destFile.Replace("{file.Name}{ext}", "{file.Name}");
-                destFile = args.ReplaceVariables(destFile);
-                dest = Path.Combine(destDir!, destFile);
-            }
-            args.Logger.ILog($"CopyFile.Dest[6] '{dest}'");
-
-            args.Logger.ILog($"CopyFileArgs: '{args.WorkingFile}', '{dest}'");
+            string shortNameLookup = FileHelper.GetShortFileName(AdditionalFilesFromOriginal ? args.FileName : inputFile);
+            if (shortNameLookup.LastIndexOf(".", StringComparison.InvariantCulture) > 0)
+                shortNameLookup = shortNameLookup[..shortNameLookup.LastIndexOf(".", StringComparison.Ordinal)];
             
-            bool copied = args.CopyFile(args.WorkingFile, dest, updateWorkingFile: true);
-            if (!copied)
-                return -1;
+            args.Logger?.ILog("Additional Files: " + string.Join(", ", AdditionalFiles));
+            var addFiles = FolderHelper.GetAdditionalFiles(args.Logger, args.FileService, args.ReplaceVariables,
+                shortNameLookup, srcDir, AdditionalFiles);
 
-            var srcDir = AdditionalFilesFromOriginal ? new FileInfo(args.MapPath(args.FileName)).DirectoryName : new FileInfo(args.MapPath(args.WorkingFile)).DirectoryName;
-
-            if (AdditionalFiles?.Any() == true)
+            foreach (var addFile in addFiles)
             {
                 try
                 {
-                    var diSrc = new DirectoryInfo(srcDir);
-                    foreach (var additional in AdditionalFiles)
-                    {
-                        foreach (var addFile in diSrc.GetFiles(additional))
-                        {
-                            try
-                            {
-                                string addFileDest = Path.Combine(destDir, addFile.Name);
-                                args.CopyFile(addFile.FullName, addFileDest, updateWorkingFile: false);
+                    string shortName = FileHelper.GetShortFileName(addFile);
 
-                                FileHelper.ChangeOwner(args.Logger, addFileDest, file: true);
+                    string addFileDest = destDir + args.FileService.PathSeparator + shortName;
+                    args.FileService.FileCopy(addFile, addFileDest, true);
 
-                                args.Logger?.ILog("Copied file: \"" + addFile.FullName + "\" to \"" + addFileDest + "\"");
-                            }
-                            catch (Exception ex)
-                            {
-                                args.Logger?.ILog("Failed copying file: \"" + addFile.FullName + "\": " + ex.Message);
-                            }
-                        }
-                    }
+                    args.Logger?.ILog("Copied file: \"" + addFile + "\" to \"" + addFileDest + "\"");
                 }
                 catch (Exception ex)
                 {
-                    args.Logger.WLog("Error copying additinoal files: " + ex.Message);
+                    args.Logger?.ILog("Failed copying file: \"" + addFile + "\": " + ex.Message);
                 }
             }
-
-            // not needed as args.CopyFile does this
-            //args?.SetWorkingFile(dest);
-            return 1;
         }
+
+        // not needed as args.CopyFile does this
+        //args?.SetWorkingFile(dest);
+        return 1;
     }
 }

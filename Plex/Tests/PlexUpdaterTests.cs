@@ -1,34 +1,56 @@
 ﻿#if(DEBUG)
 
+using System.Text.Json;
 using FileFlows.Plex.MediaManagement;
+using FileFlows.Plex.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PluginTestLibrary;
 
 namespace FileFlows.Plex.Tests;
 
 [TestClass]
-public class PlexUpdaterTests
+public class PlexUpdaterTests : TestBase
 {
     [TestMethod]
     public void Plex_Basic()
     {
-        var args = new NodeParameters(@"/media/movies/The Batman (2022)/The Batman.mkv", new TestLogger(), false, string.Empty);
-        args.GetPluginSettingsJson = (string input) =>
+        var args = GetNodeParameters(TempFile);
+        args.GetPluginSettingsJson = _ => """{"AccessToken": "access-token", "ServerUrl": "http://plex.test" }""";
+        
+        var element = new PlexUpdater();
+        element.GetWebRequest = (_, url) =>
         {
-            return File.ReadAllText("../../../settings.json");
+            if (url.Contains("library/sections"))
+                return (true, JsonSerializer.Serialize(new PlexSections()
+                {
+                    MediaContainer = new()
+                    {
+                        Directory =
+                        [
+                            new()
+                            {
+                                Location =
+                                [
+                                    new()
+                                    {
+                                        Id = 123,
+                                        Path = TempPath
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }));
+            return (true, "");
         };
-
-        var node = new PlexUpdater();
-        Assert.AreEqual(1, node.Execute(args));
+        Assert.AreEqual(1, element.Execute(args));
     }
 
     [TestMethod]
     public void Plex_Fail()
     {
-        var args = new NodeParameters(@"/media/unknownmovies/The Batman (2022)/The Batman.mkv", new TestLogger(), false, string.Empty);
-        args.GetPluginSettingsJson = (string input) =>
-        {
-            return File.ReadAllText("../../../settings.json");
-        };
+        var args = GetNodeParameters(TempFile);
+        args.GetPluginSettingsJson = _ => """{"AccessToken": "access-token", "ServerUrl": "http://plex.test" }""";
 
         var node = new PlexUpdater();
         Assert.AreEqual(2, node.Execute(args));
@@ -37,18 +59,44 @@ public class PlexUpdaterTests
     [TestMethod]
     public void Plex_Mapping()
     {
-        var args = new NodeParameters(@"/mnt/movies/The Batman (2022)/The Batman.mkv", new TestLogger(), false, string.Empty);
-        var settings = new PluginSettings();
-        settings.Mapping = new List<KeyValuePair<string, string>>();
-        settings.Mapping.Add(new KeyValuePair<string, string>("/mnt/movies", "/media/movies"));
-
-        args.GetPluginSettingsJson = (string input) =>
+        var args = GetNodeParameters(TempFile);
+        args.GetPluginSettingsJson = _ => JsonSerializer.Serialize(new PluginSettings
         {
-            return File.ReadAllText("../../../settings.json");
+            AccessToken = "access-token",
+            ServerUrl = "http://plex.test",
+            Mapping = new List<KeyValuePair<string, string>>()
+            {
+                new(TempPath, "/media/movies")
+            }
+        });
+        
+        var element = new PlexUpdater();
+        element.GetWebRequest = (_, url) =>
+        {
+            if (url.Contains("library/sections"))
+                return (true, JsonSerializer.Serialize(new PlexSections()
+                {
+                    MediaContainer = new()
+                    {
+                        Directory =
+                        [
+                            new()
+                            {
+                                Location =
+                                [
+                                    new()
+                                    {
+                                        Id = 123,
+                                        Path = "/media/movies"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }));
+            return (true, "");
         };
-
-        var node = new PlexUpdater();
-        Assert.AreEqual(1, node.Execute(args));
+        Assert.AreEqual(1, element.Execute(args));
     }
 
 }

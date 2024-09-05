@@ -8,30 +8,67 @@ namespace FileFlows.VideoNodes
 
     public abstract class EncodingNode : VideoNode
     {
+        /// <summary>
+        /// Gets the number of outputs
+        /// </summary>
         public override int Outputs => 2;
+        /// <summary>
+        /// Gets the number of inputs
+        /// </summary>
         public override int Inputs => 1;
+        /// <summary>
+        /// Gets the type of flow element this is
+        /// </summary>
         public override FlowElementType Type => FlowElementType.Process;
 
         protected TimeSpan TotalTime;
 
         private FFMpegEncoder Encoder;
 
-        public bool Encode(NodeParameters args, string ffmpegExe, List<string> ffmpegParameters, string extension = "mkv", string outputFile = "", bool updateWorkingFile = true, bool dontAddInputFile = false, bool dontAddOutputFile = false)
+        /// <summary>
+        /// Encodes a video
+        /// </summary>
+        /// <param name="args">the node parameters</param>
+        /// <param name="ffmpegExe">the FFmpeg executable</param>
+        /// <param name="ffmpegParameters">the FFmpeg parameters</param>
+        /// <param name="extension">the output fil extension</param>
+        /// <param name="outputFile">the output file</param>
+        /// <param name="updateWorkingFile">if the working file should be updated to the newly created file</param>
+        /// <param name="dontAddInputFile">if the input file should not be added to the arguments</param>
+        /// <param name="dontAddOutputFile">if the output file should not be added to the arguments</param>
+        /// <param name="strictness">the strictness to use</param>
+        /// <returns>true if the encode was successful</returns>
+        public bool Encode(NodeParameters args, string ffmpegExe, List<string> ffmpegParameters, string extension = "mkv", string outputFile = "", bool updateWorkingFile = true, bool dontAddInputFile = false, bool dontAddOutputFile = false, string strictness = "-2")
         {
             string output;
-            return Encode(args, ffmpegExe, ffmpegParameters, out output, extension, outputFile, updateWorkingFile, dontAddInputFile: dontAddInputFile, dontAddOutputFile: dontAddOutputFile);
+            return Encode(args, ffmpegExe, ffmpegParameters, out output, extension, outputFile, updateWorkingFile, dontAddInputFile: dontAddInputFile, dontAddOutputFile: dontAddOutputFile, strictness: strictness);
         }
 
-        public bool Encode(NodeParameters args, string ffmpegExe, List<string> ffmpegParameters, out string output, string extension = "mkv", string outputFile = "", bool updateWorkingFile = true, bool dontAddInputFile = false, bool dontAddOutputFile = false)
+        /// <summary>
+        /// Encodes a video
+        /// </summary>
+        /// <param name="args">the node parameters</param>
+        /// <param name="ffmpegExe">the FFmpeg executable</param>
+        /// <param name="ffmpegParameters">the FFmpeg parameters</param>
+        /// <param name="output">the output from the command</param>
+        /// <param name="extension">the output fil extension</param>
+        /// <param name="outputFile">the output file</param>
+        /// <param name="updateWorkingFile">if the working file should be updated to the newly created file</param>
+        /// <param name="dontAddInputFile">if the input file should not be added to the arguments</param>
+        /// <param name="dontAddOutputFile">if the output file should not be added to the arguments</param>
+        /// <param name="strictness">the strictness to use</param>
+        /// <returns>true if the encode was successful</returns>
+        public bool Encode(NodeParameters args, string ffmpegExe, List<string> ffmpegParameters, out string output, string extension = "mkv", string outputFile = "", bool updateWorkingFile = true, bool dontAddInputFile = false, bool dontAddOutputFile = false, string strictness = "-2")
         {
             if (string.IsNullOrEmpty(extension))
                 extension = "mkv";
 
             Encoder = new FFMpegEncoder(ffmpegExe, args.Logger);
             Encoder.AtTime += AtTimeEvent;
+            Encoder.OnStatChange += EncoderOnOnStatChange;
 
             if (string.IsNullOrEmpty(outputFile))
-                outputFile = Path.Combine(args.TempPath, Guid.NewGuid().ToString() + "." + extension);
+                outputFile = System.IO.Path.Combine(args.TempPath, Guid.NewGuid() + "." + extension);
 
             if (TotalTime.TotalMilliseconds == 0)
             {
@@ -39,24 +76,77 @@ namespace FileFlows.VideoNodes
                 if (videoInfo != null)
                 {
                     TotalTime = videoInfo.VideoStreams[0].Duration;
-                    args.Logger.ILog("### Total Time: " + TotalTime);
+                    args.Logger.ILog("### Total Run-Time Of Video: " + TotalTime);
                 }
             }
 
-            var success = Encoder.Encode(args.WorkingFile, outputFile, ffmpegParameters, dontAddInputFile: dontAddInputFile, dontAddOutputFile: dontAddOutputFile);
+            var success = Encoder.Encode(args.WorkingFile, outputFile, ffmpegParameters, dontAddInputFile: dontAddInputFile, dontAddOutputFile: dontAddOutputFile, strictness: strictness);
             args.Logger.ILog("Encoding successful: " + success.successs);
             if (success.successs && updateWorkingFile)
             {
                 args.SetWorkingFile(outputFile);
 
                 // get the new video info
-                var videoInfo = new VideoInfoHelper(ffmpegExe, args.Logger).Read(outputFile);
+                var videoInfo = new VideoInfoHelper(ffmpegExe, args.Logger).Read(outputFile).ValueOrDefault;
                 SetVideoInfo(args, videoInfo, this.Variables ?? new Dictionary<string, object>());
             }
+            else if (success.successs == false)
+            {
+                if (string.IsNullOrWhiteSpace(success.abortReason) == false)
+                {
+                    args.FailureReason = success.abortReason;
+                }
+                else
+                {
+                    // look for known error messages
+                    var lines = success.output
+                        .Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries)
+                        .ToArray();
+
+                    if (lines.Count() >= 50)
+                    {
+                        lines = lines.TakeLast(50).ToArray();
+                    }
+
+                    string line;
+                    if (HasLine(lines, "is not supported by the bitstream filter", out line))
+                    {
+                        // get that line, more efficiently that twice
+                        int codecIndex = line.IndexOf("Codec", StringComparison.InvariantCulture);
+                        if (codecIndex > 0)
+                            line = line[codecIndex..];
+                        int periodIndex = line.IndexOf(".", StringComparison.InvariantCulture);
+                        if (periodIndex > 0)
+                            line = line[..periodIndex];
+                        args.FailureReason = line;
+                    }
+                    else if (HasLine(lines, "codec not currently supported in container", out line))
+                    {
+                        if (line.Contains("codec ttf")) // add more as i see them
+                            args.FailureReason = "Subtitle codec not currently supported in container";
+                        else // generic
+                            args.FailureReason = "Codec not currently supported in container";
+                    }
+                    else if (HasLine(lines,
+                                 "encoding with ProRes Proxy/LT/422/422 HQ (apco, apcs, apcn, ap4h) profile, need YUV422P10 input",
+                                 out line))
+                    {
+                        args.FailureReason =
+                            "Encoding with ProRes Proxy/LT/422/422 HQ (apco, apcs, apcn, ap4h) profile, need YUV422P10 input";
+                    }
+                }
+            }
             Encoder.AtTime -= AtTimeEvent;
+            Encoder.OnStatChange -= EncoderOnOnStatChange;
             Encoder = null;
             output = success.output;
             return success.successs;
+
+            bool HasLine(string[] lines, string text, out string line)
+            {
+                line = lines.FirstOrDefault(x => x.Contains(text));
+                return line != null;
+            }
         }
 
         public override Task Cancel()
@@ -66,7 +156,7 @@ namespace FileFlows.VideoNodes
             return base.Cancel();
         }
 
-        void AtTimeEvent(TimeSpan time)
+        void AtTimeEvent(TimeSpan time, DateTime startedAt)
         {
             if (TotalTime.TotalMilliseconds == 0)
             {
@@ -76,6 +166,23 @@ namespace FileFlows.VideoNodes
             float percent = (float)((time.TotalMilliseconds / TotalTime.TotalMilliseconds) * 100);
             if(Args?.PartPercentageUpdate != null)
                 Args.PartPercentageUpdate(percent);
+            
+            // Calculate ETA to reach 100%
+            if (percent > 0)
+            {
+                TimeSpan elapsed = DateTime.Now - startedAt;
+                double remainingMilliseconds = elapsed.TotalMilliseconds * (100 - percent) / percent;
+                TimeSpan eta = TimeSpan.FromMilliseconds(remainingMilliseconds);
+
+                Args?.AdditionalInfoRecorder?.Invoke("ETA", TimeHelper.ToHumanReadableString(eta), 1, new TimeSpan(0, 1, 0));
+            }
+        }
+
+        private void EncoderOnOnStatChange(string name, string value, bool recordStatistic)
+        {
+            Args.AdditionalInfoRecorder?.Invoke(name, value, 1, new TimeSpan(0, 1, 0));
+            if(recordStatistic)
+                Args.RecordStatisticRunningTotals(name, value);
         }
 
         public string CheckVideoCodec(string ffmpeg, string vidparams)
@@ -184,7 +291,7 @@ namespace FileFlows.VideoNodes
                 else
                 {
                     // linux, crude method, look for nvidia in the /dev dir
-                    var dir = new DirectoryInfo("/dev");
+                    var dir = new System.IO.DirectoryInfo("/dev");
                     if (dir.Exists == false)
                         return false;
 

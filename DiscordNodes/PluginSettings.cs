@@ -1,18 +1,21 @@
-﻿namespace FileFlows.DiscordNodes
+﻿namespace FileFlows.DiscordNodes;
+
+/// <summary>
+/// THe Plugin settings
+/// </summary>
+public class PluginSettings:IPluginSettings
 {
-    using FileFlows.Plugin;
-    using FileFlows.Plugin.Attributes;
-    using System;
-    using System.ComponentModel.DataAnnotations;
+    /// <summary>
+    /// Gets or sets the webhook id for this plugin
+    /// </summary>
+    [Text(1)]
+    [Required]
+    public string WebhookId { get; set; } = string.Empty;
 
-    public class PluginSettings:IPluginSettings
-    {
-        [Text(1)]
-        [Required]
-        public string WebhookId { get; set; }
-
-        [Text(2)]
-        [Required]
-        public string WebhookToken { get; set; }
-    }
+    /// <summary>
+    /// Gets or sets the webhook token for this plugin
+    /// </summary>
+    [Text(2)]
+    [Required]
+    public string WebhookToken { get; set; } = string.Empty;
 }

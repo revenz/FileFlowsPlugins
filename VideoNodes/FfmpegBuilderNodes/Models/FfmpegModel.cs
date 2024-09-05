@@ -49,9 +49,19 @@
         }
 
         /// <summary>
-        /// Gets or sets if the builder should forcable execute even if nothing appears to have changed
+        /// Gets or sets if the builder should forcible execute even if nothing appears to have changed
         /// </summary>
         public bool ForceEncode { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the code to run prior to FFmpeg Executing 
+        /// </summary>
+        public string PreExecuteCode { get; set; }
+        
+        /// <summary>
+        /// Gets or sets if attachments should be removed from the output file
+        /// </summary>
+        public bool RemoveAttachments { get; set; }
 
         /// <summary>
         /// Gets or sets the video information for this video file
@@ -63,6 +73,27 @@
         {
             this._VideoInfo = info;
         }
+        
+        
+        /// <summary>
+        /// Gets or sets a watermark to apply
+        /// </summary>
+        internal WatermarkModel Watermark { get; set; }
+
+        /// <summary>
+        /// Gets or sets the cut duration of the video, ie the -t variable
+        /// </summary>
+        public TimeSpan? CutDuration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the start time of hte video, ie the -ss variable
+        /// </summary>
+        public TimeSpan? StartTime { get; set; }
+
+        /// <summary>
+        /// Gets or sest the device to use
+        /// </summary>
+        public string? Device { get; set; }
 
         internal static FfmpegModel CreateModel(VideoInfo info)
         {
@@ -75,6 +106,7 @@
                     Index = item.index,
                     Title = item.stream.Title,
                     Stream = item.stream,
+                    Codec = item.stream.Codec
                 });
             }
             foreach (var item in info.AudioStreams.Select((stream, index) => (stream, index)))
@@ -85,6 +117,9 @@
                     Title = item.stream.Title,
                     Language = item.stream.Language,
                     Stream = item.stream,
+                    Channels = item.stream.Channels,
+                    IsDefault = item.stream.Default,
+                    Codec = item.stream.Codec
                 });
             }
             foreach (var item in info.SubtitleStreams.Select((stream, index) => (stream, index)))
@@ -95,13 +130,22 @@
                     Title = item.stream.Title,
                     Language = item.stream.Language,
                     Stream = item.stream,
+                    IsDefault = item.stream.Default,
+                    IsForced = item.stream.Forced,
+                    Codec = item.stream.Codec
                 });
             }
 
             if(info.FileName.ToLower().EndsWith(".mp4"))
-                model.Extension = info.FileName.Substring(info.FileName.LastIndexOf(".") + 1);
-            if (info.FileName.ToLower().EndsWith(".mkv"))
-                model.Extension = info.FileName.Substring(info.FileName.LastIndexOf(".") + 1);
+                model.Extension = info.FileName[(info.FileName.LastIndexOf(".", StringComparison.Ordinal) + 1)..];
+            else if (info.FileName.ToLower().EndsWith(".mkv"))
+                model.Extension = info.FileName[(info.FileName.LastIndexOf(".", StringComparison.Ordinal) + 1)..];
+            else if (info.FileName.ToLower().EndsWith(".mov"))
+                model.Extension = info.FileName[(info.FileName.LastIndexOf(".", StringComparison.Ordinal) + 1)..];
+            else if (info.FileName.ToLower().EndsWith(".mxf"))
+                model.Extension = info.FileName[(info.FileName.LastIndexOf(".", StringComparison.Ordinal) + 1)..];
+            else if (info.FileName.ToLower().EndsWith(".webm"))
+                model.Extension = info.FileName[(info.FileName.LastIndexOf(".", StringComparison.Ordinal) + 1)..];
 
             return model;
         }

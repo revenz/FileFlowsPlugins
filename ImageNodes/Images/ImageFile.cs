@@ -6,7 +6,7 @@ public class ImageFile : ImageBaseNode
 {
     public override int Outputs => 1;
     public override FlowElementType Type => FlowElementType.Input;
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/image-nodes/image-file";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/image-nodes/image-file";
 
     public override string Icon => "fas fa-file-image";
 
@@ -20,7 +20,11 @@ public class ImageFile : ImageBaseNode
             { "img.Height", 1080 },
             { "img.Format", "PNG" },
             { "img.IsPortrait", true },
-            { "img.IsLandscape", false }
+            { "img.IsLandscape", false },
+
+            { "img.DateTaken.Year", 2020 },
+            { "img.DateTaken.Month", 4 },
+            { "img.DateTaken.Day", 20 }
         };
     }
 
@@ -28,9 +32,13 @@ public class ImageFile : ImageBaseNode
     {
         try
         {
-            UpdateImageInfo(args, this.Variables);
-            if(string.IsNullOrEmpty(base.CurrentFormat?.Name) == false)
-                args.RecordStatistic("IMAGE_FORMAT", base.CurrentFormat.Name);
+            if (args.FileService.FileCreationTimeUtc(args.WorkingFile).Success(out DateTime createTime))
+                args.Variables["ORIGINAL_CREATE_UTC"] = createTime;
+            if (args.FileService.FileLastWriteTimeUtc(args.WorkingFile).Success(out DateTime writeTime))
+                args.Variables["ORIGINAL_LAST_WRITE_UTC"] = writeTime;
+
+            if(string.IsNullOrEmpty(base.CurrentFormat) == false)
+                args.RecordStatisticRunningTotals("IMAGE_FORMAT", base.CurrentFormat);
 
             return 1;
         }

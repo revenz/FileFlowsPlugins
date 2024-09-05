@@ -2,7 +2,7 @@
 
 public class FfmpegBuilderScaler : FfmpegBuilderNode
 {
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/video-scaler";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/video-scaler";
 
 
     [Select(nameof(ResolutionOptions), 1)]
@@ -28,10 +28,11 @@ public class FfmpegBuilderScaler : FfmpegBuilderNode
                 {
                     // we use -2 here so the width is divisible by 2 and automatically scaled to
                     // the appropriate height, if we forced the height it could be stretched
-                    new ListOption { Value = "640:-2", Label = "480P"},
-                    new ListOption { Value = "1280:-2", Label = "720P"},
-                    new ListOption { Value = "1920:-2", Label = "1080P"},
-                    new ListOption { Value = "3840:-2", Label = "4K" }
+                    new () { Value = "640:-2", Label = "480P"},
+                    new () { Value = "1280:-2", Label = "720P"},
+                    new () { Value = "1920:-2", Label = "1080P"},
+                    new () { Value = "2560:-2", Label = "1440P"},
+                    new () { Value = "3840:-2", Label = "4K" }
                 };
             }
             return _ResolutionOptions;
@@ -44,6 +45,7 @@ public class FfmpegBuilderScaler : FfmpegBuilderNode
             return -1;
 
         bool scale1920 = Resolution.StartsWith("1920");
+        bool scale2560 = Resolution.StartsWith("2560");
         bool scale4k= Resolution.StartsWith("3840");
         bool scale720 = Resolution.StartsWith("1280");
         bool scale480 = Resolution.StartsWith("640");
@@ -59,6 +61,8 @@ public class FfmpegBuilderScaler : FfmpegBuilderNode
                     return Scale();
                 if (scale1920 && width > 1920)
                     return Scale();
+                if (scale2560 && width > 2560)
+                    return Scale();
                 if (scale720 && width > 1280)
                     return Scale();
                 if (scale480 && width > 640)
@@ -68,11 +72,13 @@ public class FfmpegBuilderScaler : FfmpegBuilderNode
             
             if (resolution == ResolutionHelper.Resolution.r1080p && scale1920)
                 return 2;
-            else if (resolution == ResolutionHelper.Resolution.r4k && scale4k)
+            if (resolution == ResolutionHelper.Resolution.r1440p && scale2560)
                 return 2;
-            else if (resolution == ResolutionHelper.Resolution.r720p && scale720)
+            if (resolution == ResolutionHelper.Resolution.r4k && scale4k)
                 return 2;
-            else if (resolution == ResolutionHelper.Resolution.r480p && scale480)
+            if (resolution == ResolutionHelper.Resolution.r720p && scale720)
+                return 2;
+            if (resolution == ResolutionHelper.Resolution.r480p && scale480)
                 return 2;
         }
         return Scale();

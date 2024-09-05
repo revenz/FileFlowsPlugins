@@ -1,0 +1,31 @@
+{
+  "Plugins": {
+    "Pushbullet": {
+      "Description": "A plugin that allows you to send messages to a Pushbullet server.",
+      "Fields": {
+        "UserKey": "User Key",
+        "UserKey-Help":"Your personal user key for receiving notifications.",
+        "ApiToken": "API Token",
+        "ApiToken-Help":"The application API token use for sending notifications."
+      }
+    }
+  },
+  "Flow": {
+    "Parts": {
+      "Pushbullet": {
+        "Outputs": {
+          "1": "Pushbullet message sent",
+          "2": "Pushbullet message failed to send"
+        },
+        "Description": "Sends a message via Pushbullet.",
+        "Fields": {
+          "Title": "Title",
+          "Message": "Message",
+          "Message-Help": "The message to send to the Pushbullet server",
+          "Priority": "Priority",
+          "Priority-Help": "The priority of the message being sent"
+        }
+      }
+    }
+  }
+}

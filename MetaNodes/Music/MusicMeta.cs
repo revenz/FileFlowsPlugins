@@ -8,10 +8,11 @@ namespace MetaNodes.Music
     {
         public override int Inputs => 1;
         public override int Outputs => 1;
-        public override string HelpUrl => "https://docs.fileflows.com/plugins/meta-nodes/music-meta";
+        public override string HelpUrl => "https://fileflows.com/docs/plugins/meta-nodes/music-meta";
 
         private Dictionary<string, object> _Variables;
         public override Dictionary<string, object> Variables => _Variables;
+        public override FlowElementType Type => FlowElementType.Process;
         public override string Icon => "fas fa-music";
 
         public MusicMeta()
@@ -34,9 +35,6 @@ namespace MetaNodes.Music
             int trackNumber = FindTrack(args, artist, album);
             int year = FindYear(args, artist, album);
             string track = FindTrackName(args, artist, album);
-            //Query q = new Query("FileFlows.MusicBrainzTagger", "0.0.1");
-            //findalbu
-            //q.FindArtists(artist);
 
             Variables["music.Artist"] = artist;
             Variables["music.Album"] = album;
@@ -139,15 +137,18 @@ namespace MetaNodes.Music
                         return tag.Artists;
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception)
+            {
+                // Ignored
+            }
 
             // try find it from the filename....
             var parts = args.RelativeFile.Replace("\\", "/").Split('/');
             if (parts.Length == 3)
                 return parts[0]; // artist/album/song.mp3
-            else if (parts.Length > 3)
+            if (parts.Length > 3)
                 return parts[parts.Length - 3];
-            else if (parts.Length == 2)
+            if (parts.Length == 2)
                 return parts[0];
 
             // not in path. try looking for it in the filename

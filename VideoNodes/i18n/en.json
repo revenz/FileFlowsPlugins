@@ -1,0 +1,995 @@
+{
+  "H": {
+    "264": "H.264",
+    "265": "H.265"
+  },
+  "5": { "1": "5.1" },
+  "7": { "1": "7.1" },
+  "Enums": {
+    "WatermarkPosition": {
+      "Center": "Center",
+      "TopLeft": "Top Left",
+      "TopRight": "Top Right",
+      "BottomRight": "Bottom Right",
+      "BottomLeft": "Bottom Left"      
+    }
+  },
+  "Flow": {
+    "Parts": {
+      "DisableAmd": {
+        "Label": "Disable AMD",
+        "Description": "Disables AMD AMF hardware encoder",
+        "Outputs": {
+          "1": "Disabled"
+        }
+      },
+      "DisableIntelQsv": {
+        "Label": "Disable Intel QSV",
+        "Description": "Disables Intel QSV hardware encoder",
+        "Outputs": {
+          "1": "Disabled"
+        }
+      },
+      "DisableNvidia": {
+        "Label": "Disable NVIDIA",
+        "Description": "Disables NVIDIA hardware encoder",
+        "Outputs": {
+          "1": "Disabled"
+        }
+      },
+      "DisableVaapi": {
+        "Label": "Disable VAAPI",
+        "Description": "Disables VAAPI hardware encoder",
+        "Outputs": {
+          "1": "Disabled"
+        }
+      },
+      "AudioToVideo": {
+        "Description": "Converts an audio file into a video file and generates a video based on the audio",
+        "Fields": {
+          "Visualization": "Visualisation",
+          "Visualization-Help": "The visualization to use in the generated video.  See Help for examples",
+          "Container": "Container",
+          "Resolution": "Resolution",
+          "Codec": "Codec",
+          "HardwareEncoding": "Hardware Encode",
+          "HardwareEncoding-Help": "When checked, will test to see if hardware encoders are found on the Processing Node, and if found will use hardware encoding, otherwise will fallback to CPU encoding.",
+          "Color": "Color",
+          "Color-Help": "Optional #RRGGBB color code to use for the sound waves, must be in the format #RRGGBB, for example #FF0090"
+        }
+      },
+      "CanUseHardwareEncoding": {
+        "Description": "Checks if the specified hardware encoder is currently available to the Flow.",
+        "Fields": {
+          "Encoder": "Encoder",
+          "Encoder-Help": "The hardware decoder to check"
+        }
+      },
+      "ComskipRemoveAds": {
+        "Description": "Uses a comskip EDL file and will remove commercials using that file.",
+        "Outputs": {
+          "1": "Commercials removed, saved to temporary file",
+          "2": "No commercials detected"
+        },
+        "Fields": {
+          "RunComskipIfNoEdl": "Run Comskip",
+          "RunComskipIfNoEdl-Help":"Run comskip against the file if no comskip (EDL) file is found." 
+        }
+      },
+      "VideoFile": {
+        "Description": "An input video file that has had its Video Information read and can be processed",
+        "Outputs": {
+          "1": "Video file from library"
+        },
+        "Fields": {
+          "ProbeSize": "Probe Size",
+          "ProbeSize-Suffix": "MB",
+          "ProbeSize-Help": "The probe size to use in FFMPEG when executing."
+        }
+      },
+      "VideoDuration": {
+        "Description": "Tests whether or not the duration of the video matches the given parameters.",
+        "Outputs": {
+          "1": "Video duration matches",
+          "2": "Video duration does not match"
+        },
+        "Fields": {
+          "Match": "Match",
+          "ValueLow": "Duration",
+          "ValueHigh": " "
+        }
+      },
+      "VideoDurationCompare": {
+        "Description": "Compares the original duration of a video with its final duration.",
+        "Outputs": {
+          "1": "Video is within allowed duration difference",
+          "2": "Video is not within the allowed duration difference"
+        },
+        "Fields": {
+          "AllowedDifference": "Allowed Difference",
+          "AllowedDifference-Help": "The allowed time difference between the original duration of the video and the final duration."
+        }
+      },
+      "FfmpegBuilderStart": {
+        "Label": "FFMPEG Builder: Start",
+        "Outputs": {
+          "1": "FFMPEG Builder created and ready to add FFMPEG Builder flow elements to"
+        },
+        "Description": "Creates an instance of the FFMPEG Builder which can build a FFMPEG argument to then execute with the FFMPEG Executor."
+      },
+      "FfmpegBuilderDeinterlace": {
+        "Label": "FFMPEG Builder: Deinterlace",
+        "Outputs": {
+          "1": "Added deinterlace filter to video stream"
+        },
+        "Fields": {
+          "Mode": "Mode",
+          "Mode-Help": "The deinterlacing method to use.  See help for more information."
+        }
+      },
+      "FfmpegBuilderExecutor": {
+        "Label": "FFMPEG Builder: Executor",
+        "Outputs": {
+          "1": "FFMPEG Builder ran successfully and created new temporary file",
+          "2": "No changes detected in FFMPEG Builder, file not created"
+        },
+        "Description": "Executes a FFMPEG Builder command created by other FFMPEG Builder flow elements.",
+        "Fields": {
+          "HardwareDecoding": "Hardware Decoding",
+          "HardwareDecoding-Help": "If the executor should attempt to use hardware decoding.  If not available the execution will proceed just without hardware decoding enabled.",
+          "Strictness": "Strictness",
+          "Strictness-Help": "Allows you to customize the strictness of FFmpeg.  This should be left on 'Experimental' for most users."
+        }
+      },
+      "FfmpegBuilderAddInputFile": {
+        "Label": "FFMPEG Builder: Add Input File",
+        "Outputs": {
+          "1": "File found and added",
+          "2": "No file found"
+        },
+        "Fields": {
+          "Pattern": "Pattern",
+          "Pattern-Help": "A regular expression used to search for input files",
+          "UseSourceDirectory": "Use Source Directory",
+          "UseSourceDirectory-Help": "If checked the original source directory will be searched, otherwise the working directory will be used."
+        }
+      },
+      "FfmpegBuilderAudioAddTrack": {
+        "Label": "FFMPEG Builder: Audio Add Track",
+        "Outputs": {
+          "1": "Added audio track to FFMPEG Builder",
+          "2": "No suitable source audio track found to create new audio track from"
+        },
+        "Description": "Adds a new audio track to FFMPEG Builder which will be added once the builder is executed.",
+        "Fields": {
+          "CustomTrackSelection": "Source Track Selection",
+          "TrackSelectionOptions": "Track Selection",
+          "TrackSelectionOptionsKey": "Property",
+          "TrackSelectionOptionsValue": "Value",
+          "Index": "Index",
+          "Index-Help": "The index where to insert the new audio track.  0 based, so to insert the new audio track as the first track set this to 0.",
+          "Channels": "Channels",
+          "Channels-Help": "The number of channels this new audio track will be.\nIf you specify more channels than the source, FFMPEG will automatically upmix it.\nIf you specify fewer channels than the source, FFMPEG will automatically down mix it.",
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "Bitrate of the new audio track",
+          "Codec": "Codec",
+          "Codec-Help": "The codec to use to encode the audio",
+          "SampleRate": "Sample Rate",
+          "SampleRate-Help": "The sample rate to use for the new audio track",
+          "Language": "Language",
+          "Language-Help": "Optional [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) language code to use.  Will attempt to find an audio track with this language code if not the best audio track will be used.",
+          "NewTitle": "New Title",
+          "NewTitle-Help": "Optional title for the newly created audio track.  If left blank the source title will be used",
+          "RemoveTitle": "Remove Title",
+          "RemoveTitle-Help": "If the source title should be removed and the track should have no title",
+          "BitratePerChannel": "Bitrate Per Channel",
+          "BitratePerChannel-Help": "If the bitrate specified should be per channel"
+        }
+      },
+      "FfmpegBuilderAudioAdjustVolume": {
+        "Label": "FFMPEG Builder: Audio Adjust Volume",
+        "Outputs": {
+          "1": "Audio tracks volume filter added to FFMPEG Builder",
+          "2": "Audio tracks were not adjusted"
+        },
+        "Description": "Adjusts audio tracks volume in a video file using FFMPEG",
+        "Fields": {
+          "AllAudio": "All Audio Tracks",
+          "AllAudio-Help": "If all audio tracks should be normalized or if just the first track should be",
+          "VolumePercent": "Volume Percent",
+          "VolumePercent-Help": "The percent of the adjusted volume.\n100 means no adjustment\n50 means half volume\n0 means muted",
+          "Pattern": "Pattern",
+          "Pattern-Help": "A regular expression to match against, eg \"commentary\" to remove commentary tracks",
+          "NotMatching": "Not Matching",
+          "NotMatching-Help": "If audio tracks NOT matching the pattern should be removed",
+          "UseLanguageCode": "Use Language Code",
+          "UseLanguageCode-Help": "If the language code of the audio track should be used instead of the title"
+        }
+      },
+      "FfmpegBuilderAudioConvert": {
+        "Label": "FFMPEG Builder: Audio Convert",
+        "Outputs": {
+          "1": "Tracks to be converted",
+          "2": "No tracks to be converted"
+        },
+        "Description": "Allows you to convert all tracks matching the parameters to be converted.",
+        "Fields": {
+          "CustomTrackSelection": "Convert",
+          "TrackSelectionOptions": "Matching",
+          "TrackSelectionOptionsKey": "Property",
+          "TrackSelectionOptionsValue": "Value", 
+          "Channels": "Channels",
+          "Channels-Help": "The number of channels this new audio track will be.\nIf you specify more channels than the source, FFMPEG will automatically upmix it.\nIf you specify fewer channels than the source, FFMPEG will automatically down mix it.",
+          "PcmFormat": "Format",
+          "PcmFormat-Help": "The PCM format to use for encoding PCM audio.",
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "Bitrate of the audio track",
+          "Codec": "Codec",
+          "Codec-Help": "The codec to use to encode the audio",
+          "BitratePerChannel": "Bitrate Per Channel",
+          "BitratePerChannel-Help": "If the bitrate specified should be per channel"
+        }
+      },
+      "FfmpegBuilderAudioConverter": {
+        "Label": "FFMPEG Builder: Audio Converter",
+        "Outputs": {
+          "1": "Tracks to be converted",
+          "2": "No tracks to be converted"
+        },
+        "Description": "Allows you to convert all tracks matching the parameters to be converted.",
+        "Fields": {
+          "Channels": "Channels",
+          "Channels-Help": "The number of channels this new audio track will be.\nIf you specify more channels than the source, FFMPEG will automatically upmix it.\nIf you specify fewer channels than the source, FFMPEG will automatically down mix it.",
+          "PcmFormat": "Format",
+          "PcmFormat-Help": "The PCM format to use for encoding PCM audio.",
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "Bitrate of the audio track",
+          "Codec": "Codec",
+          "Codec-Help": "The codec to use to encode the audio",
+          "Field": "Field",
+          "Field-Help": "The field to match the pattern against.  Leave the pattern empty to match anything with no value set.",
+          "Pattern": "Pattern",
+          "Pattern-Help": "A string or regular expression to match against, eg \"commentary\" to match commentary exactly or \".*commentary.*\" to match commentary anywhere in the string",
+          "NotMatching": "Not Matching",
+          "NotMatching-Help": "If audio tracks NOT matching the pattern should be converted",
+          "BitratePerChannel": "Bitrate Per Channel",
+          "BitratePerChannel-Help": "If the bitrate specified should be per channel"
+        }
+      },
+      "FfmpegBuilderAudioNormalization": {
+        "Label": "FFMPEG Builder: Audio Normalization",
+        "Outputs": {
+          "1": "Audio tracks were normalized and added to FFMPEG Builder",
+          "2": "No audio tracks were found to be normalized"
+        },
+        "Description": "Normalizes all audio tracks in a video file using FFMPEGs loudnorm filter",
+        "Fields": {
+          "TwoPass": "Two Pass",
+          "TwoPass-Help": "If the audio tracks should use two pass normalization.  This improves the normalization but increases the processing time.",
+          "AllAudio": "All Audio Tracks",
+          "AllAudio-Help": "If all audio tracks should be normalized or if just the first track should be",
+          "Pattern": "Pattern",
+          "Pattern-Help": "A regular expression to match against, eg \"commentary\" to remove commentary tracks",
+          "NotMatching": "Not Matching",
+          "NotMatching-Help": "If audio tracks NOT matching the pattern should be removed",
+          "UseLanguageCode": "Use Language Code",
+          "UseLanguageCode-Help": "If the language code of the audio track should be used instead of the title"
+        }
+      },
+      "FfmpegBuilderAudioTrackRemover": {
+        "Label": "FFMPEG Builder: Track Remover",
+        "Outputs": {
+          "1": "Tracks set to remove",
+          "2": "Tracks NOT set to removed"
+        },
+        "Description": "Allows you to remove tracks based on either their title or their language codes.\n\nAny title (or language code if set to \"Use Language Code\") that is blank will NOT be removed regardless of the pattern.",
+        "Fields": {
+          "StreamType": "Type",
+          "StreamType-Help": "The type of tracks to reorder in the FFMPEG Builder",
+          "RemoveAll": "Remove All",
+          "RemoveAll-Help": "Remove all current tracks from the output file.  You can use Add Track afterwards to add tracks of specific codecs",
+          "Pattern": "Pattern",
+          "Pattern-Help": "A regular expression to match against, eg \"commentary\" to remove commentary tracks",
+          "NotMatching": "Not Matching",
+          "NotMatching-Help": "If audio tracks NOT matching the pattern should be removed",
+          "UseLanguageCode": "Use Language Code",
+          "UseLanguageCode-Help": "If the language code of the track should be used instead of the title",
+          "RemoveIndex": "Remove Index",
+          "RemoveIndex-Help": "The start index where to remove the tracks from.  This allows you to remove all, or all matching, tracks after the starting index.\nSet to zero to remove all matching the parameters.\nSet to 1 to keep the first track and remove any after the first matching the parameters",
+          "MatchType": "Matches",
+          "MatchType-Help": "The value to match against."
+        }
+      },
+      "FfmpegBuilderAudioTrackReorder": {
+        "Label": "FFMPEG Builder: Track Reorder",
+        "Outputs": {
+          "1": "Tracks re-ordered in FFMPEG Builder",
+          "2": "Tracks NOT re-ordered"
+        },
+        "Description": "Allows you to reorder tracks in the preferred order.\n\nEnter the languages/audio codecs/channels in the order you want.  Any not listed will be ordered after the ones entered in their original order.\nIf there are multiple tracks with same language/codec/channels, they will be ordered first by the order you entered, then in their original order.\n\nNote the first track after reordering will be set as the default track..\n\nOutput 1: Tracks were reordered\nOutput 2: Tracks did not need reordering",
+        "Fields": {
+          "StreamType": "Type",
+          "StreamType-Help": "The type of tracks to reorder in the FFMPEG Builder",
+          "OrderedTracks": "Ordered Codecs",
+          "OrderedTracks-Help": "The order of codecs to the tracks by.  This is done after the languages (if any)",
+          "Languages": "Languages",
+          "Languages-Help": "The order of languages to sort the tracks by.  This sorting is done before the codec.",
+          "Channels": "Channels",
+          "Channels-Help": "The order of audio channels to sort the audio tracks by.  This sorting is done before languages.\nFor example \"5.1\",\"7.1\",\"6.2\",\"2\""
+        }
+      },
+      "FfmpegBuilderAudioSetLanguage": {
+        "Label": "FFMPEG Builder: Set Language",
+        "Outputs": {
+          "1": "Tracks updated in FFMPEG Builder",
+          "2": "Tracks NOT updated"
+        },
+        "Description": "Allows you to set the language for any tracks that have no language set.  If the track does have a language set, it will be skipped.\n\nOutput 1: Tracks were updated\nOutput 2: No tracks were needing to be updated",
+        "Fields": {
+          "StreamType": "Type",
+          "StreamType-Help": "The type of track to set the language for",
+          "Language": "Language",
+          "Language-Help": "The [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) language code to use."
+        }
+      },
+      "FfmpegBuilderAutoChapters": {
+        "Label": "FFMPEG Builder: Auto Chapters",
+        "Description": "Automatically detect scene changes in the video to generate chapters.",
+        "Outputs": {
+          "1": "Chapters generated and added to FFMPEG Builder",
+          "2": "No chapters detected or video already had chapters"
+        },
+        "Fields": {
+          "MinimumLength": "Minimum Length",
+          "MinimumLength-Suffix": "seconds",
+          "MinimumLength-Help": "The minimum length of a chapter in seconds",
+          "Percent": "Percent",
+          "Percent-Suffix": "%",
+          "Percent-Help": "The threshold percentage value to use for scene detection changes.  A good value is 45%"
+        }
+      },
+      "FfmpegBuilderComskipChapters": {
+        "Label": "FFMPEG Builder: Comskip Chapters",
+        "Description": "Uses a comskip EDL file and will create chapters given that EDL comskip file.",
+        "Outputs": {
+          "1": "Commercials chapters created, added to FFMPEG Builder",
+          "2": "No commercials detected"
+        },
+        "Fields": {
+          "RunComskipIfNoEdl": "Run Comskip",
+          "RunComskipIfNoEdl-Help":"Run comskip against the file if no comskip (EDL) file is found."
+        }
+      },
+      "FfmpegBuilderCustomParameters": {
+        "Label": "FFMPEG Builder: Custom Parameters",
+        "Description": "Lets you add custom parameters to the FFMPEG Builder for execution",
+        "Outputs": {
+          "1": "Parameters added"
+        },
+        "Fields": {
+          "Parameters": "Parameters",
+          "Parameters-Help": "The parameters to add to the FFMPEG Builder for execution",
+          "ForceEncode": "Force Encode",
+          "ForceEncode-Help": "If this should force the FFMPEG Builder Executor to always execute even if no changes are detected that would usually require the executor to run."
+        }
+      },
+      "FFmpegBuilderDurationStart": {
+        "Label": "FFMPEG Builder: Duration/Start",
+        "Descriptions": "This flow element enables users to define the starting point and duration for extracting a segment from a video.",
+        "Outputs": {
+          "1": "Duration/Start configured",
+          "2": "Failed to set duration/start"
+        },
+        "Fields": {
+          "Duration": "Duration",
+          "Duration-Help": "The duration of the video file, if 0, will not adjust the duration.",
+          "Start": "Start",
+          "Start-Help": "The start of the video file, if 0, will not adjust the start."
+        }
+      },
+      "FfmpegBuilderHdrToSdr": {
+        "Label": "FFMPEG Builder: HDR to SDR",
+        "Description": "Checks if a video stream is HDR and if it is updates the FFMPEG Builder to convert it to SDR",
+        "Outputs": {
+          "1": "HDR stream detected and updated FFMPEG Builder to convert",
+          "2": "No HDR stream found"
+        }
+      },
+      "FfmpegBuilderKeepOriginalLanguage": {
+        "Label": "FFMPEG Builder: Keep Original Language",
+        "Outputs": {
+          "1": "Tracks have been modified",
+          "2": "No tracks have been changed"
+        },
+        "Description": "This flow element that will keep only the original language and any additional languages the user defines.\n\nAll other language streams will be removed/marked for deletion.",
+        "Fields": {
+          "StreamType": "Type",
+          "StreamType-Help": "The type of tracks that should be updated",
+          "AdditionalLanguages": "Additional Languages",
+          "AdditionalLanguages-Help": "An optional list of additional language codes to keep.\n\nIt is recommended that an [ISO 639-2 language code](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) are used.",
+          "KeepOnlyFirst": "Keep Only First",
+          "KeepOnlyFirst-Help": "When enabled only the first track of each language would be kept.\n\nFor example if there were 2 English tracks, 3 Spanish tracks and 1 German track.  The original language was Spanish, additional languages was set to `eng`, then the result would be 1 English track and 1 Spanish track, the rest would be removed.",
+          "FirstIfNone": "First If None",
+          "FirstIfNone-Help": "When enabled, this ensures at least one track is kept.  If no tracks matching the original language and no tracks matching the additional languages are found, the first track will be kept regardless.\n\nThis avoids any issues of no audio left on the video.",
+          "TreatEmptyAsOriginal": "Treat Empty As Original",
+          "TreatEmptyAsOriginal-Help": "When enabled, any track that has no language set, will be treated as if it were the original language.\n\nFor example, original language is Maori, and a track has no language set on it, it will be treated as Maori."
+        }
+      },
+      "FfmpegBuilderMetadataRemover": {
+        "Label": "FFMPEG Builder: Metadata Remover",
+        "Description": "Removes metadata from the FFMPEG Builder so when the file is processed the selected metadata will be removed.\n\nNote: Only the metadata when this flow element is effected, if metadata is added after this node runs, that will not be effected.",
+        "Outputs": {
+          "1": "Metadata removed from FFMPEG Builder"
+        },
+        "Fields": {
+          "Video": "Video",
+          "Video-Help": "If video tracks should have this metadata removed",
+          "Audio": "Audio",
+          "Audio-Help": "If audio tracks should have this metadata removed",
+          "Subtitle": "Subtitle",
+          "Subtitle-Help": "If subtitle tracks should have this metadata removed",
+          "RemoveImages": "Remove Images",
+          "RemoveImages-Help": "If any images found in the metadata should be removed",
+          "RemoveTitle": "Remove Title",
+          "RemoveTitle-Help": "If the title should be removed from the tracks",
+          "RemoveLanguage": "Remove Language",
+          "RemoveLanguage-Help": "If the language should be removed from the tracks",
+          "RemoveAdditionalMetadata": "Remove Additional Metadata",
+          "RemoveAdditionalMetadata-Help": "If additional metadata should be removed.  Additional metadata is non-standard metadata that may have been added to a video file, eg by iTunes."
+        }
+      },
+      "FfmpegBuilderDefaultOriginalLanguage": {
+        "Label": "FFMPEG Builder: Default Original Language",
+        "Outputs": {
+          "1": "Tracks have been modified",
+          "2": "No tracks have been changed"
+        },
+        "Description": "This flow element will attempt to set the original language tracks as default.  It will try to find the first track matching the original language, and then set that as default.\n\nIf no tracks are found with the original language, then no changes are made.",
+        "Fields": {
+          "StreamType": "Type",
+          "StreamType-Help": "The type of tracks that should be updated",
+          "MakeFirst": "Make First",
+          "MakeFirst-Help": "If the original language track should also become the first track."
+        }
+      },
+      "FfmpegBuilderTrackSorter": {
+        "Label": "FFMPEG Builder: Track Sorter",
+        "Outputs": {
+          "1": "Tracks have been modified",
+          "2": "No tracks have been changed"
+        },
+        "Description": "This flow element sorts tracks based on sorting options set by the user.",
+        "Fields": {
+          "StreamType": "Type",
+          "StreamType-Help": "The type of tracks that should be updated",
+          "Sorters": "Sorters",
+          "Sorters-Help": "Add one or more sorting options to sort the tracks by.",
+          "SortersKey": "Field",
+          "SortersValue": "Value",
+          "SetFirstDefault": "Set Default",
+          "SetFirstDefault-Help": "If the first track should be set as default after the sort."
+        }
+      },
+      "FfmpegBuilderSubtitleClearDefault": {
+        "Label": "FFMPEG Builder: Subtitle Clear Default",
+        "Description": "This flow element will clear the default flag from subtitles.",
+        "Fields": {
+          "LeaveForced": "Leave Forced",
+          "LeaveForced-Help": "When checked all forced subtitles will not be touched, they will maintain their original setting.  This is executed prior to 'Set Forced Default' so takes precedent.",
+          "SetForcedDefault": "Set Forced Default",
+          "SetForcedDefault-Help": "When checked the first subtitle that is found with the Forced field set, will be set as default, all others will have their default flag cleared."
+        },
+        "Outputs": {
+          "1": "Subtitles default flags have been changed",
+          "2": "Subtitles had no changes made"
+        }
+      },
+      "FfmpegBuilderSubtitleFormatRemover": {
+        "Label": "FFMPEG Builder: Subtitle Format Remover",
+        "Description": "Removes subtitles from a video file if found.",
+        "Outputs": {
+          "1": "Subtitles marked for removal in FFMPEG Builder",
+          "2": "No subtitles to remove"
+        },
+        "Fields": {
+          "SubtitlesToRemove": "Subtitles To Remove",
+          "RemoveAll": "Remove All",
+          "RemoveAll-Help": "When checked, all subtitles will be removed from the file, otherwise only those selected below will be"
+        }
+      },
+      "FfmpegBuilderSubtitleTrackRemover": {
+        "Label": "FFMPEG Builder: Subtitle Track Remover",
+        "Outputs": {
+          "1": "Subtitles marked for removal in FFMPEG Builder",
+          "2": "No subtitles to remove"
+        },
+        "Description": "Allows you to remove subtitles based on either their title or their language codes.\n\nAny language (or title if set to \"Use Title\") that is blank will NOT be removed regardless of the pattern.",
+        "Fields": {
+          "Pattern": "Pattern",
+          "Pattern-Help": "A regular expression to match against, eg \"eng\" to remove English tracks",
+          "NotMatching": "Not Matching",
+          "NotMatching-Help": "If subtitles NOT matching the pattern should be removed",
+          "UseLanguageCode": "Use Language Code",
+          "UseLanguageCode-Help": "If the language code of the audio track should be used instead of the title"
+        }
+      },
+      "FfmpegBuilderSubtitleTrackMerge": {
+        "Label": "FFMPEG Builder: Subtitle Track Merge",
+        "Outputs": {
+          "1": "Subtitles found and added",
+          "2": "No subtitles found"
+        },
+        "Fields": {
+          "Subtitles": "Subtitles",
+          "Subtitles-Help": "Select which subtitles to search for to add",
+          "UseSourceDirectory": "Use Source Directory",
+          "UseSourceDirectory-Help": "If checked the original source directory will be searched, otherwise the working directory will be used.",
+          "MatchFilename": "Match Filename",
+          "MatchFilename-Help": "When checked only subtitles with the same filename as the input file or the working file will be merged",
+          "Pattern": "Pattern",
+          "Pattern-Help": "Optional regular expression to match files against.",
+          "Title": "Title",
+          "Title-Help": "The title of the subtitle, if not set the language will be used as the title if found.",
+          "Language": "Language",
+          "Language-Help": "Optional [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) language code for the added subtitle.",
+          "Forced": "Forced",
+          "Forced-Help": "If the subtitle should be forced",
+          "Default": "Default",
+          "Default-Help": "If the subtitle should be the default subtitle",
+          "DeleteAfterwards": "Delete After Merging",
+          "DeleteAfterwards-Help": "If the subtitle file should be deleted after being merged"
+        }
+      },
+      "FfmpegBuilderCropBlackBars": {
+        "Label": "FFMPEG Builder: Crop Black Bars",
+        "Description": "Updated FFMPEG Builder to crop black bars if detected",
+        "Outputs": {
+          "1": "FFMPEG Builder updated to crop black bars",
+          "2": "No black bars detected, not cropping"
+        },
+        "Fields": {
+          "CroppingThreshold": "Threshold",
+          "CroppingThreshold-Help": "The amount of pixels that must be greater than to crop.   E.g. if there's only 5 pixels detected as black space, you may consider this too small to crop."
+        }
+      },
+      "FfmpegBuilderPreExecute": {
+        "Label": "FFMPEG Builder: Pre-Execute",
+        "Description": "This element lets you run custom code just prior to the [FFmpeg Builder: Executor](https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder) executes FFmpeg.\n\nThis allows you to alter the arguments passed into FFmpeg.",
+        "Outputs": {
+          "1": "Pre-Execute set"
+        },
+        "Fields": {
+          "Code": "Code"
+        }
+      },
+      "FfmpegBuilderProres": {
+        "Label": "FFMPEG Builder: Prores",
+        "Description": "Encodes the video to the prores format.",
+        "Outputs": {
+          "1": "Video set to use prores"
+        },
+        "Fields": {
+          "Encoder": "Encoder",
+          "Encoder-Help": "Which FFmpeg prores encoder to use.",
+          "Quality": "Quality",
+          "Quality-Help": "0 for maximum quality, 32 for minimum quality.  9 to 13 are good values to use.",
+          "Profile": "Profile",
+          "PixelFormat": "Pixel Format"
+        }
+      },
+      "FfmpegBuilderRemoveAttachments": {
+        "Label": "FFMPEG Builder: Remove Attachments",
+        "Description": "Removes any attachments from the video, if there are any.",
+        "Outputs": {
+          "1": "FFMPEG Builder set to remove attachments."
+        }
+      },
+      "FfmpegBuilderRemuxToMkv": {
+        "Label": "FFMPEG Builder: Remux to MKV",
+        "Description": "Remuxes a video file into a MKV container.",
+        "Outputs": {
+          "1": "FFMPEG Builder set to remux to MKV"
+        }
+      },
+      "FfmpegBuilderRemuxToMxf": {
+        "Label": "FFMPEG Builder: Remux to MXF",
+        "Description": "Remuxes a video file into a MXF container.",
+        "Outputs": {
+          "1": "FFMPEG Builder set to remux to MXF"
+        }
+      },
+      "FfmpegBuilderRemuxToMP4": {
+        "Label": "FFMPEG Builder: Remux to MP4",
+        "Description": "Remuxes a video file into a MP4 container.",
+        "Outputs": {
+          "1": "FFMPEG Builder set to remux to MP4"
+        },
+        "Fields": {
+          "UseHvc1": "Use HVC1",
+          "UseHvc1-Help": "If HVC1 should be used instead of the default of HEV1"
+        }
+      },
+      "FfmpegBuilderRemuxToMov": {
+        "Label": "FFMPEG Builder: Remux to MOV",
+        "Description": "Remuxes a video file into a MOV container.",
+        "Outputs": {
+          "1": "FFMPEG Builder set to remux to MOV"
+        }
+      },
+      "FfmpegBuilderRemuxToWebm": {
+        "Label": "FFMPEG Builder: Remux to WEBM",
+        "Description": "Remuxes a video file into a WEBM container.",
+        "Outputs": {
+          "1": "FFMPEG Builder set to remux to WEBM"
+        }
+      },
+      "FfmpegBuilderScaler": {
+        "Label": "FFMPEG Builder: Video Scaler",
+        "Description": "This allows you to scale a video to the specified dimensions.  It will retain the aspect ratio of the video so if the video was 1920x1000 it would scale to 1280x668 if you select 720P.",
+        "Outputs": {
+          "1": "FFMPEG Builder scale filter added",
+          "2": "Video was already in/near the scaled resolution"
+        },
+        "Fields": {
+          "Force": "Force",
+          "Force-Help": "When checked the video will be force scaled even if the working file is already in this resolution (or near this resolution).",
+          "OnlyIfLarger": "Only If Larger",
+          "OnlyIfLarger-Help": "The video will only be scaled to this resolution if the video is currently larger than this resolution",
+          "Resolution": "Resolution"
+        }
+      },
+      "FfmpegBuilderSetDefaultTrack": {
+        "Label": "FFMPEG Builder: Set Default Track",
+        "Description": "Set a track as default in the FFmpeg builder.",
+        "Outputs": {
+          "1": "Track set as default",
+          "2": "Failed to set track as default"
+        },
+        "Fields": {
+          "StreamType": "Type",
+          "StreamType-Help": "The type of track to set as default in the FFMPEG Builder",
+          "Language": "Language",
+          "Language-Help": "Optional [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) language code to use.",
+          "Index": "Index",
+          "Index-Help": "The index of the track to set as default, only used if language is not specified."
+        }
+      },
+      "FfmpegBuilderSetDevice": {
+        "Label": "FFMPEG Builder: Set Device",
+        "Description": "Sets the device to use for hardware encoding/decoder if the encoder/decoder supports it.",
+        "Outputs": {
+          "1": "Device set"
+        },
+        "Fields": {
+          "Device": "Device",
+          "Device-Help": "The path to the device, or leave blank if no device should be specified."
+        }
+      },
+      "FfmpegBuilderSetFps": {
+        "Label": "FFMPEG Builder: Set FPS",
+        "Description": "Set the frames per second (FPS) in the FFmpeg Builder",
+        "Outputs": {
+          "1": "FPS updated",
+          "2": "No changes were necessary"
+        },
+        "Fields": {
+          "Fps": "FPS",
+          "Fps-Help": "The desired FPS, if the input FPS and the desired FPS do not match then FFMPEG will convert it, e.g (23.976, 24, 30, 60).",
+          "OnlyIfHigher": "Only If Higher",
+          "OnlyIfHigher-Help": "If the FPS should be adjusted only if the current FPS is more than the current."
+        }
+      },
+      "FfmpegBuilderSetTrackTitles": {
+        "Label": "FFMPEG Builder: Set Track Titles",
+        "Description": "Set track titles based on a formatter in the FFmpeg builder.",
+        "Outputs": {
+          "1": "Track titles updated",
+          "2": "No track titles were effected"
+        },
+        "Fields": {
+          "StreamType": "Type",
+          "StreamType-Help": "The type of track to set as default in the FFMPEG Builder",
+          "Format": "Format",
+          "Format-Help": "The formatter to use, see _Help_ for more information.",
+          "Separator": "Separator",
+          "Separator-Help": "The string separator used between format values, this is need to ensure no empty values are kept.",
+          "CommentaryFormat": "Commentary",
+          "CommentaryFormat-Help": "How commentary tracks should be treated, you can use the same formatter as other tracks or use a different method."
+        }
+      },
+      "FfmpegBuilderVideo10Bit": {
+        "Label": "FFMPEG Builder: Video 10 Bit",
+        "Description": "Sets FFMPEG Builder to encode the video streams in 10 Bit",
+        "Outputs": {
+          "1": "FFMPEG Builder video streams set to encode in 10 Bit"
+        }
+      },
+      "FfmpegBuilderVideoBitrate": {
+        "Label": "FFMPEG Builder: Video Bitrate",
+        "Description": "Sets FFMPEG Builder to encode the video given the bitrate",
+        "Outputs": {
+          "1": "FFMPEG Builder video streams updated"
+        },
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Suffix": "KB / %",
+          "Bitrate-Help": "The target bitrate of the video in kilobytes",
+          "Percent": "Percent",
+          "Percent-Help": "When selected the bitrate will be calculated as a percentage of the current bitrate."
+        }
+      },
+      "FfmpegBuilderVideoMaxBitrate": {
+        "Label": "FFMPEG Builder: Video Max Bitrate",
+        "Description": "Sets FFMPEG Builder limit the bitrate of video",
+        "Outputs": {
+          "1": "FFMPEG Builder video streams updated"
+        },
+        "Fields": {
+          "Bitrate": "Maximum Bitrate",
+          "Bitrate-Suffix": "KB",
+          "Bitrate-Help": "The maximum bitrate of the video in kilobytes"
+        }
+      },
+      "FfmpegBuilderVideoCodec": {
+        "Label": "FFMPEG Builder: Video Codec",
+        "Description": "Sets FFMPEG Builder to encode the video streams in the specified codec",
+        "Outputs": {
+          "1": "FFMPEG Builder video streams set to encode",
+          "2": "Video already in target codec, will not re-encode"
+        },
+        "Fields": {
+          "VideoCodec": "Video Codec",
+          "VideoCodec-Help": "The video codec the video should be in, for example hevc, h264.\nIf left empty all original video tracks will be copied.",
+          "VideoCodecParameters": "Video Codec Parameters",
+          "VideoCodecParameters-Help": "The parameters to use to encode the video, eg. \"hevc_nvenc -preset hq -crf 23\" to encode into hevc using the HQ preset a constant rate factor of 23 and using NVIDIA hardware acceleration.",
+          "Force": "Force Encode",
+          "Force-Help": "Will force a encode of the video even if it is already in the target Video Codec",
+          "DisableOtherVideoStreams": "Only First",
+          "DisableOtherVideoStreams-Help": "When checked if there are multiple video streams in the file, this will remove all but the first video stream from the file once executed."
+        }
+      },
+      "FfmpegBuilderVideoEncode": {
+        "Label": "FFMPEG Builder: Video Encode",
+        "Description": "Sets the FFMPEG Builder to encode the video with simple to use presets",
+        "Outputs": {
+          "1": "FFMPEG Builder video streams set to encode"
+        },
+        "Fields": {
+          "Codec": "Codec",
+          "Speed": "Speed",
+          "Encoder": "Encoder",
+          "Encoder-Help": "The encoder to force to use.  If you specify a hardware encoder that is unavailable, the encode will fail.",
+          "HardwareEncoding": "Hardware Encode",
+          "HardwareEncoding-Help": "When checked, will test to see if hardware encoders are found on the Processing Node, and if found will use hardware encoding, otherwise will fallback to CPU encoding.",
+          "Quality": "Quality",
+          "Quality-Help": "A logarithmic quality scale, so small changes in the this slider cause large changes in file size/quality.\nThe lower the number the higher the quality.\nSee Help for more information",
+          "Quality-Suffix": "(Higher Quality, larger file)"
+        }
+      },
+      "FfmpegBuilderVideoBitrateEncode": {
+        "Label": "FFMPEG Builder: Bitrate Encode",
+        "Description": "Sets the FFMPEG Builder to encode the video with simple to use presets based on Bitrate",
+        "Outputs": {
+          "1": "FFMPEG Builder video streams set to encode"
+        },
+        "Fields": {
+          "Codec": "Codec",
+          "Bitrate": "Bitrate",
+          "Bitrate-Suffix": "Kbps",
+          "Encoder": "Encoder",
+          "Encoder-Help": "The encoder to force to use.  If you specify a hardware encoder that is unavailable, the encode will fail.",
+          "HardwareEncoding": "Hardware Encode",
+          "HardwareEncoding-Help": "When checked, will test to see if hardware encoders are found on the Processing Node, and if found will use hardware encoding, otherwise will fallback to CPU encoding."
+        }        
+      },
+      "FfmpegBuilderVideoTag": {
+        "Label": "FFMPEG Builder: Video Tag",
+        "Description": "Sets a video tag on the file",
+        "Outputs": {
+          "1": "FFMPEG Builder tag added"
+        },
+        "Fields": {
+          "Tag": "Tag",
+          "Tag-Help": "The tag to add to the video file"
+        }
+      },
+      "FFmpegBuilderWatermark": {
+        "Label": "FFMPEG Builder: Watermark",
+        "Description": "Adds a watermark to a video file.",
+        "Outputs": {
+          "1": "Watermark added"
+        },
+        "Fields": {
+          "Image": "Image",
+          "Image-Help": "The image file to the watermark, for best results use a PNG file.",
+          "Position": "Position",
+          "Position-Help": "Where to place the watermark",
+          "Opacity": "Opacity",
+          "Opacity-Help": "Adjusts the transparency level of the overlay image, ranging from 0 (fully transparent) to 100 (fully opaque).",
+          "XPos": "X-Pos",
+          "XPos-Help": "The position of the watermark on the x-axis",
+          "YPos": "Y-Pos",
+          "YPos-Help": "The position of the watermark on the y-axis",
+          "Width": "Width",
+          "Width-Help": "Set a custom width of the image, or set to 0 for source width or scaled if height is set.",
+          "Height": "Height",
+          "Height-Help": "Set a custom height of the image, or set to 0 for source height or scaled if width is set."
+        }
+      },
+      "ReadVideoInfo": {
+        "Description": "Reads the video information from the current working file and updates the vi variables.",
+        "Outputs": {
+          "1": "File was a video file and information read into flow",
+          "2": "File was not a video file or failed to be read"
+        }
+      },
+      "SubtitleExtractor": {
+        "Description": "Extract a single subtitle tracks and saves it to the destination.  Can extract srt, ass, and ssa format.\nThis will NOT update the working file, and will keep the working file the same as the input file.\n\nOutput 1: Subtitles were extracted\nOutput 2: No subtitles found to extract",
+        "Outputs": {
+          "1": "Subtitles extracted",
+          "2": "No subtitles extracted"
+        },
+        "Fields": {
+          "Language": "Language",
+          "Language-Help": "The [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) language code to use.",
+          "Title": "Title",
+          "Title-Help": "Optionally, enter a title. This can be either a regular expression or a string that must appear in the title to be matched.",
+          "OutputFile": "Output File",
+          "OutputFile-Help": "Where to save the the output file to, e.g. \"'{folder.Orig.FullName}\\{file.Orig.FileName}.srt'\" to save it with the original file as a srt output.\nIf left blank an srt subtitle will be created in the same folder as the original input file.",
+          "SetWorkingFile": "Set as Working File",
+          "SetWorkingFile-Help": "When this is checked, if a subtitle is extracted, the working file will be changed to this extracted subtitle.  The original working file will NOT be deleted.",
+          "ForcedOnly": "Forced Only",
+          "ForcedOnly-Help": "If only forced subtitles should be extracted.",
+          "OnlyTextSubtitles": "Only Text Subtitles",
+          "OnlyTextSubtitles-Help": "If only text subtitles should be extracted, all image based subtitles will be skipped.",
+          "ExtractAll": "Extract All",
+          "ExtractAll-Help": "If all matching subtitles should be extracted."
+        }
+      },
+      "VideoBitCheck": {
+        "Label": "Video Bit Check",
+        "Description": "Checks if a video if 8-Bit, 10-Bit, 12-Bit or unknown.",
+        "Outputs": {
+          "1": "Video is 8-Bit",
+          "2": "Video is 10-Bit",
+          "3": "Video is 12-Bit",
+          "4": "Unknown"
+        }
+      },
+      "VideoIs8Bit": {
+        "Label": "Video Is 8-Bit",
+        "Description": "Tests if a video file is 8-Bit",
+        "Outputs": {
+          "1": "Video is 8-Bit",
+          "2": "Video is not 8-Bit"
+        }
+      },
+      "VideoIs10Bit": {
+        "Label": "Video Is 10-Bit",
+        "Description": "Tests if a video file is 10-Bit",
+        "Outputs": {
+          "1": "Video is 10-Bit",
+          "2": "Video is not 10-Bit"
+        }
+      },
+      "VideoIs12Bit": {
+        "Label": "Video Is 12-Bit",
+        "Description": "Tests if a video file is 12-Bit",
+        "Outputs": {
+          "1": "Video is 12-Bit",
+          "2": "Video is not 12-Bit"
+        }
+      },
+      "VideoAlreadyProcessed": {
+        "Label": "Video Already Processed",
+        "Description": "Test if a video file has already been processed by FileFlows",
+        "Outputs": {
+          "1": "Video has already been processed",
+          "2": "Video has not been processed"
+        }
+      },
+      "VideoIsInterlaced": {
+        "Label": "Video Is Interlaced",
+        "Description": "Tests if a video file is interlaced",
+        "Outputs": {
+          "1": "Video is interlaced",
+          "2": "Video is not interlaced"
+        },
+        "Fields": {
+          "Threshold": "Threshold",
+          "Threshold-Help": "The percentage of frames detected as interlaced the video must have to be considered interlaced"
+        }
+      },
+      "VideoHasErrors": {
+        "Label": "Video Has Errors",
+        "Description": "Tests if a video file contains any errors",
+        "Outputs": {
+          "1": "Contains an error",
+          "2": "Did not detect any errors"
+        },
+        "Fields": {
+          "HardwareDecoding": "Hardware Decoding",
+          "HardwareDecoding-Help": "If the an attempt to use hardware decoding should be made.  If not available the execution will proceed just without hardware decoding enabled."
+        }
+      },
+      "VideoHasStream": {
+        "Label": "Video Has Stream",
+        "Description": "Tests if a video file contains a track",
+        "Outputs": {
+          "1": "Contains the matching track",
+          "2": "Does not contain the matching track"
+        },
+        "Fields": {
+          "Stream": "Type",
+          "Stream-Help": "The type of stream to look for",
+          "Title": "Title",
+          "Title-Help": "A regular expression used to test the stream title",
+          "Codec": "Codec",
+          "Codec-Help": "A regular expression used to test the stream codec",
+          "Language": "Language",
+          "Language-Help": "A regular expression used to test the stream language",
+          "Channels": "Channels",
+          "Channels-Help": "The number of channels to test for.  Leave blank to ignore this check",
+          "CheckDeleted": "Check Deleted",
+          "CheckDeleted-Help": "If deleted tracks should also be checked",
+          "Invert": "Invert",
+          "Invert-Help": "Inverts the result, so effectively becomes `Video Does Not Have Stream`",
+          "Forced": "Forced",
+          "Forced-Help": "If this stream should be a forced stream or not.",
+          "Default": "Default",
+          "Default-Help": "If this stream should be a default stream or not."
+        }
+      },
+      "VideoBitrateGreaterThan": {
+        "Label": "Video Bitrate Greater Than",
+        "Description": "Tests if a videos bitrate is greater than a given bitrate.",
+        "Outputs": {
+          "1": "Bitrate is greater than",
+          "2": "Bitrate is not greater than"
+        },
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Suffix": "KBps"
+        }
+      },
+      "VideoExtractAudio": {
+        "Label": "Video Extract Audio",
+        "Description": "Extracts audio from a video file and saves it to a file",
+        "Outputs": {
+          "1": "Audio extracted and saved to a file",
+          "2": "Could not find a track to extract"
+        },
+        "Fields": {
+          "Title": "Title",
+          "Title-Help": "A regular expression used to test the stream title",
+          "Codec": "Codec",
+          "Codec-Help": "A regular expression used to test the stream codec",
+          "Language": "Language",
+          "Language-Help": "A regular expression used to test the stream language",
+          "Channels": "Channels",
+          "Channels-Help": "The number of channels the source track must be in to match.  Set to 0 to skip a channels match.",
+          "OutputFile": "Output File",
+          "OutputFile-Help": "Where to save the the output file to, e.g. \"'{folder.Orig.FullName}\\{file.Orig.FileName}.mp3'\" to save it with the original file as a mp3 output.\nIf no extension is set, the output codec will be used to determine the extension.",
+          "SetWorkingFile": "Set as Working File",
+          "SetWorkingFile-Help": "When this is checked, if a subtitle is extracted, the working file will be changed to this extracted subtitle.  The original working file will NOT be deleted.",
+          "OutputCodec": "Output Codec",
+          "OutputCodec-Help": "The codec to save the extract audio in",
+          "OutputBitrate": "Output Bitrate",
+          "OutputBitrate-Help": "The bitrate of the extracted audio track",
+          "NotMatching": "Not Matching",
+          "NotMatching-Help": "If an audio track NOT matching the pattern should be extracted"
+        }
+      },
+      "VideoResolution": {
+        "Label": "Video Resolution",
+        "Description": "Determines a video's resolution and outputs accordingly.",
+        "Outputs": {
+          "1": "Video Is 4K",
+          "2": "Video is 1080p",
+          "3": "Video is 720p",
+          "4": "Video is SD"
+        }
+      }
+    }
+  }
+}

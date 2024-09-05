@@ -1,158 +1,157 @@
 ﻿#if(DEBUG)
 
-namespace BasicNodes.Tests
+using System.IO;
+using FileFlows.BasicNodes.File;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace BasicNodes.Tests;
+
+[TestClass]
+public class RenamerTests : TestBase
 {
-    using FileFlows.BasicNodes.File;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-    [TestClass]
-    public class RenamerTests
+    [TestMethod]
+    public void Renamer_Extension()
     {
-        [TestMethod]
-        public void Renamer_Extension()
+        var ext = new FileInfo(TempFile).Extension;
+        var args = new FileFlows.Plugin.NodeParameters(TempFile, Logger, false, string.Empty, new LocalFileService());
+        args.Variables = new Dictionary<string, object>
         {
-            var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger, false, string.Empty);
-            args.Variables = new Dictionary<string, object>
-            {
-                { "movie.Title", "Ghostbusters" },
-                { "movie.Year", 1984 },
-                { "viResolution", "1080P" }
-            };
-            args.SetWorkingFile($@"c:\temp\{Guid.NewGuid()}.mkv", dontDelete: true);
+            { "movie.Title", "Ghostbusters" },
+            { "movie.Year", 1984 },
+            { "viResolution", "1080P" }
+        };
+        args.InitFile(TempFile);
 
 
-            Renamer node = new Renamer();
-            node.Pattern = @"{movie.Title} ({movie.Year})\{movie.Title} [{viResolution}]{ext}";
-            node.LogOnly = true;
+        Renamer node = new Renamer();
+        node.Pattern = @"{movie.Title} ({movie.Year})\{movie.Title} [{viResolution}].{ext}";
+        node.LogOnly = true;
 
-            var result = node.Execute(args);
-            Assert.AreEqual(1, result);
+        var result = node.Execute(args);
+        Assert.AreEqual(1, result);
 
-            string expectedShort = $@"c:\temp\Ghostbusters (1984){Path.DirectorySeparatorChar}Ghostbusters [1080P].mkv";
-            Assert.IsTrue(logger.Contains($"Renaming file to: " + expectedShort));
-        }
-        [TestMethod]
-        public void Renamer_Extension_DoubleDot()
+        string expectedShort = $"{TempPath}/Ghostbusters (1984)/Ghostbusters [1080P]{ext}";
+        Assert.IsTrue(Logger.Contains($"Renaming file to: " + expectedShort));
+    }
+    
+    [TestMethod]
+    public void Renamer_Extension_DoubleDot()
+    {
+        var ext = new FileInfo(TempFile).Extension;
+        var args = new FileFlows.Plugin.NodeParameters(TempFile, Logger, false, string.Empty, new LocalFileService());
+        args.Variables = new Dictionary<string, object>
         {
-            var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger, false, string.Empty);
-            args.Variables = new Dictionary<string, object>
-            {
-                { "movie.Title", "Ghostbusters" },
-                { "movie.Year", 1984 },
-                { "viResolution", "1080P" }
-            };
-            args.SetWorkingFile($@"c:\temp\{Guid.NewGuid()}.mkv", dontDelete: true);
+            { "movie.Title", "Ghostbusters" },
+            { "movie.Year", 1984 },
+            { "viResolution", "1080P" }
+        };
+        args.InitFile(TempFile);
 
+        Renamer node = new Renamer();
+        node.Pattern = @"{movie.Title} ({movie.Year})\{movie.Title} [{viResolution}].{ext}";
+        node.LogOnly = true;
 
-            Renamer node = new Renamer();
-            node.Pattern = @"{movie.Title} ({movie.Year})\{movie.Title} [{viResolution}].{ext}";
-            node.LogOnly = true;
+        var result = node.Execute(args);
+        Assert.AreEqual(1, result);
 
-            var result = node.Execute(args);
-            Assert.AreEqual(1, result);
+        string expectedShort = $"{TempPath}/Ghostbusters (1984)/Ghostbusters [1080P]{ext}";
+        Assert.IsTrue(Logger.Contains($"Renaming file to: " + expectedShort));
+    }
 
-            string expectedShort = $@"c:\temp\Ghostbusters (1984){Path.DirectorySeparatorChar}Ghostbusters [1080P].mkv";
-            Assert.IsTrue(logger.Contains($"Renaming file to: " + expectedShort));
-        }
-
-        [TestMethod]
-        public void Renamer_Empty_SquareBrackets()
+    [TestMethod]
+    public void Renamer_Empty_SquareBrackets()
+    {
+        var ext = new FileInfo(TempFile).Extension;
+        var args = new FileFlows.Plugin.NodeParameters(TempFile, Logger, false, string.Empty, new LocalFileService());
+        args.Variables = new Dictionary<string, object>
         {
-            var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger, false, string.Empty);
-            args.Variables = new Dictionary<string, object>
-            {
-                { "movie.Title", "Ghostbusters" },
-                { "movie.Year", 1984 }
-            };
-            args.SetWorkingFile($@"c:\temp\{Guid.NewGuid()}.mkv", dontDelete: true);
+            { "movie.Title", "Ghostbusters" },
+            { "movie.Year", 1984 }
+        };
+        args.InitFile(TempFile);
 
+        Renamer node = new Renamer();
+        node.Pattern = @"{movie.Title} ({movie.Year})\{movie.Title} [{viResolution}] {movie.Year}.{ext}";
+        node.LogOnly = true;
 
-            Renamer node = new Renamer();
-            node.Pattern = @"{movie.Title} ({movie.Year})\{movie.Title} [{viResolution}] {movie.Year}.{ext}";
-            node.LogOnly = true;
+        var result = node.Execute(args);
+        Assert.AreEqual(1, result);
 
-            var result = node.Execute(args);
-            Assert.AreEqual(1, result);
+        string expectedShort = $"{TempPath}/Ghostbusters (1984){Path.DirectorySeparatorChar}Ghostbusters 1984{ext}";
+        Assert.IsTrue(Logger.Contains($"Renaming file to: " + expectedShort));
+    }
 
-            string expectedShort = $@"c:\temp\Ghostbusters (1984){Path.DirectorySeparatorChar}Ghostbusters 1984.mkv";
-            Assert.IsTrue(logger.Contains($"Renaming file to: " + expectedShort));
-        }
-
-        [TestMethod]
-        public void Renamer_Empty_RoundBrackets()
+    [TestMethod]
+    public void Renamer_Empty_RoundBrackets()
+    {
+        var ext = new FileInfo(TempFile).Extension;
+        var args = new FileFlows.Plugin.NodeParameters(TempFile, Logger, false, string.Empty, new LocalFileService());
+        args.Variables = new Dictionary<string, object>
         {
-            var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger, false, string.Empty);
-            args.Variables = new Dictionary<string, object>
-            {
-                { "movie.Title", "Ghostbusters" },
-                { "viResolution", "1080p" }
-            };
-            args.SetWorkingFile($@"c:\temp\{Guid.NewGuid()}.mkv", dontDelete: true);
+            { "movie.Title", "Ghostbusters" },
+            { "viResolution", "1080p" }
+        };
+        args.InitFile(TempFile);
 
+        Renamer node = new Renamer();
+        node.Pattern = @"{movie.Title} ({movie.Year})\{movie.Title} ({movie.Year}) {viResolution!}.{ext}";
+        node.LogOnly = true;
 
-            Renamer node = new Renamer();
-            node.Pattern = @"{movie.Title} ({movie.Year})\{movie.Title} ({movie.Year}) {viResolution!}.{ext}";
-            node.LogOnly = true;
+        var result = node.Execute(args);
+        Assert.AreEqual(1, result);
 
-            var result = node.Execute(args);
-            Assert.AreEqual(1, result);
-
-            string expectedShort = $@"c:\temp\Ghostbusters{Path.DirectorySeparatorChar}Ghostbusters 1080P.mkv";
-            Assert.IsTrue(logger.Contains($"Renaming file to: " + expectedShort));
-        }
-        [TestMethod]
-        public void Renamer_Empty_SquareBrackets_Extension()
+        string expectedShort = $"{TempPath}/Ghostbusters{Path.DirectorySeparatorChar}Ghostbusters 1080P{ext}";
+        Assert.IsTrue(Logger.Contains($"Renaming file to: " + expectedShort));
+    }
+    
+    [TestMethod]
+    public void Renamer_Empty_SquareBrackets_Extension()
+    {
+        var ext = new FileInfo(TempFile).Extension;
+        var args = new FileFlows.Plugin.NodeParameters(TempFile, Logger, false, string.Empty, new LocalFileService());
+        args.Variables = new Dictionary<string, object>
         {
-            var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger, false, string.Empty);
-            args.Variables = new Dictionary<string, object>
-            {
-                { "movie.Title", "Ghostbusters" },
-                { "movie.Year", 1984 }
-            };
-            args.SetWorkingFile($@"c:\temp\{Guid.NewGuid()}.mkv", dontDelete: true);
+            { "movie.Title", "Ghostbusters" },
+            { "movie.Year", 1984 }
+        };
+        args.InitFile(TempFile);
+
+        Renamer node = new Renamer();
+        node.Pattern = @"{movie.Title} ({movie.Year})\{movie.Title} [{viResolution}].{ext}";
+        node.LogOnly = true;
+
+        var result = node.Execute(args);
+        Assert.AreEqual(1, result);
+
+        string expectedShort = $"{TempPath}/Ghostbusters (1984){Path.DirectorySeparatorChar}Ghostbusters{ext}";
+        Assert.IsTrue(Logger.Contains($"Renaming file to: " + expectedShort));
+    }
 
 
-            Renamer node = new Renamer();
-            node.Pattern = @"{movie.Title} ({movie.Year})\{movie.Title} [{viResolution}].{ext}";
-            node.LogOnly = true;
-
-            var result = node.Execute(args);
-            Assert.AreEqual(1, result);
-
-            string expectedShort = $@"c:\temp\Ghostbusters (1984){Path.DirectorySeparatorChar}Ghostbusters.mkv";
-            Assert.IsTrue(logger.Contains($"Renaming file to: " + expectedShort));
-        }
-
-
-        [TestMethod]
-        public void Renamer_Colon()
+    [TestMethod]
+    public void Renamer_Colon()
+    {
+        var ext = new FileInfo(TempFile).Extension;
+        var args = new FileFlows.Plugin.NodeParameters(TempFile, Logger, false, string.Empty, new LocalFileService());
+        args.Variables = new Dictionary<string, object>
         {
-            var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", logger, false, string.Empty);
-            args.Variables = new Dictionary<string, object>
-            {
-                { "movie.Title", "Batman Unlimited: Mech vs Mutants" },
-                { "movie.Year", 2016 }
-            };
-            args.SetWorkingFile($@"c:\temp\{Guid.NewGuid()}.mkv", dontDelete: true);
+            { "movie.Title", "Batman Unlimited: Mech vs Mutants" },
+            { "movie.Year", 2016 },
+            { "ext", "mkv" }
+        };
+        args.InitFile(TempFile);
 
+        Renamer node = new Renamer();
+        node.Pattern = @"{movie.Title} ({movie.Year})\{movie.Title}.{ext}";
+        node.LogOnly = true;
 
-            Renamer node = new Renamer();
-            node.Pattern = @"{movie.Title} ({movie.Year})\{movie.Title}.{ext}";
-            node.LogOnly = true;
+        var result = node.Execute(args);
+        Assert.AreEqual(1, result);
 
-            var result = node.Execute(args);
-            Assert.AreEqual(1, result);
-
-            string expectedShort = $@"c:\temp\Batman Unlimited - Mech vs Mutants (2016){Path.DirectorySeparatorChar}Batman Unlimited - Mech vs Mutants.mkv";
-            Assert.IsTrue(logger.Contains($"Renaming file to: " + expectedShort));
-        }
+        string expectedShort = $"{TempPath}/Batman Unlimited - Mech vs Mutants (2016){Path.DirectorySeparatorChar}Batman Unlimited - Mech vs Mutants{ext}";
+        Assert.IsTrue(Logger.Contains($"Renaming file to: " + expectedShort));
     }
 }
+
 
 #endif

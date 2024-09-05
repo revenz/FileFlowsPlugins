@@ -1,21 +1,31 @@
-﻿using SixLabors.ImageSharp.Formats;
-using SixLabors.ImageSharp.Processing;
+﻿namespace FileFlows.ImageNodes.Images;
 
-namespace FileFlows.ImageNodes.Images;
-
+/// <summary>
+/// Flow element that rotates an image
+/// </summary>
 public class ImageRotate: ImageNode
 {
+    /// <inheritdoc />
     public override int Inputs => 1;
+    /// <inheritdoc />
     public override int Outputs => 1;
-    public override FlowElementType Type => FlowElementType.Process; 
+    /// <inheritdoc />
+    public override FlowElementType Type => FlowElementType.Process;
+    /// <inheritdoc /> 
     public override string Icon => "fas fa-undo";
+    /// <inheritdoc />
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/image-nodes/image-rotate";
 
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/image-nodes/image-rotate";
-
+    /// <summary>
+    /// Gets or sets angle to rotate the image
+    /// </summary>
     [Select(nameof(AngleOptions), 2)]
     public int Angle { get; set; }
 
-    private static List<ListOption> _AngleOptions;
+    private static List<ListOption>? _AngleOptions;
+    /// <summary>
+    /// Gest the Angle Options
+    /// </summary>
     public static List<ListOption> AngleOptions
     {
         get
@@ -24,22 +34,16 @@ public class ImageRotate: ImageNode
             {
                 _AngleOptions = new List<ListOption>
                 {
-                    new ListOption { Value = 90, Label = "90"},
-                    new ListOption { Value = 180, Label = "180"},
-                    new ListOption { Value = 270, Label = "270"}
+                    new () { Value = 90, Label = "90"},
+                    new () { Value = 180, Label = "180"},
+                    new () { Value = 270, Label = "270"}
                 };
             }
             return _AngleOptions;
         }
     }
 
-    public override int Execute(NodeParameters args)
-    {
-        using var image = Image.Load(args.WorkingFile, out IImageFormat format);
-        image.Mutate(c => c.Rotate(Angle));
-        var formatOpts = GetFormat(args);
-        SaveImage(args, image, formatOpts.file, formatOpts.format ?? format);
-        
-        return 1;
-    }
+    /// <inheritdoc />
+    protected override Result<bool> PerformAction(NodeParameters args, string localFile, string destination)
+        => args.ImageHelper.Rotate(localFile, destination, Angle, GetImageTypeFromFormat(), Quality);
 }

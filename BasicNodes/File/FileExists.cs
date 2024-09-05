@@ -1,47 +1,60 @@
-namespace FileFlows.BasicNodes.File
+using FileFlows.Plugin;
+using FileFlows.Plugin.Attributes;
+
+namespace FileFlows.BasicNodes.File;
+
+/// <summary>
+/// Checks if a file exists
+/// </summary>
+public class FileExists: Node
 {
-    using FileFlows.Plugin;
-    using FileFlows.Plugin.Attributes;
+    /// <inheritdoc />
+    public override int Inputs => 1;
+    /// <inheritdoc />
+    public override int Outputs => 2;
+    /// <inheritdoc />
+    public override FlowElementType Type => FlowElementType.Logic;
+    /// <inheritdoc />
+    public override string Icon => "fas fa-question";
+    /// <inheritdoc />
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/file-exists";
+    /// <inheritdoc />
+    public override bool NoEditorOnAdd => true;
 
-    public class FileExists: Node
+
+    /// <summary>
+    /// Gets or sets the name of the file to check
+    /// Leave blank to test the working file
+    /// </summary>
+    [TextVariable(1)]
+    public string FileName { get; set; }
+
+    /// <inheritdoc />
+    public override int Execute(NodeParameters args)
     {
-        public override int Inputs => 1;
-        public override int Outputs => 2;
-
-        public override FlowElementType Type => FlowElementType.Logic;
-        public override string Icon => "fas fa-question-circle";
-
-        public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/file-exists";
-
-
-        [TextVariable(1)]
-        public string FileName { get; set; }
-
-        public override int Execute(NodeParameters args)
+        string file = args.ReplaceVariables(FileName ?? string.Empty, true)?.EmptyAsNull() ?? args.WorkingFile;
+        if(string.IsNullOrWhiteSpace(file))
         {
-            string file = args.ReplaceVariables(FileName ?? string.Empty, true);
-            if(string.IsNullOrWhiteSpace(file))
+            args.FailureReason = "FileName not set";
+            args.Logger?.ELog(args.FailureReason);
+            return -1;
+        }
+        try
+        {
+            var result = args.FileService.FileExists(file);
+            if (result.Is(true))
             {
-                args.Logger?.ELog("FileName not set");
-                return -1;
+                args.Logger?.ILog("File does exist: " + file);
+                return 1;
             }
-            try
-            {
-                file = args.MapPath(file);
-                var fileInfo = new FileInfo(file);
-                if (fileInfo.Exists)
-                {
-                    args.Logger?.ILog("File does exist: " + file);
-                    return 1;
-                }
-                args.Logger?.ILog("File does NOT exist: " + file);
-                return 2;
-            }
-            catch (Exception ex)
-            {
-                args.Logger?.ELog($"Failed testing if file '{file}' exists: " + ex.Message);
-                return -1;
-            }
+            args.Logger?.ILog("File does NOT exist: " + file);
+            return 2;
+        }
+        catch (Exception ex)
+        {
+            args.FailureReason = $"Failed testing if file '{file}' exists: " + ex.Message;
+            args.Logger?.ELog(args.FailureReason);
+            return -1;
         }
     }
 }

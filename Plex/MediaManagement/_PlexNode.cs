@@ -1,27 +1,29 @@
 ﻿using FileFlows.Plex.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace FileFlows.Plex.MediaManagement;
 
+/// <summary>
+/// Plex flow element
+/// </summary>
 public abstract class PlexNode:Node
 {
+    /// <inheritdoc />
     public override int Inputs => 1;
+    /// <inheritdoc />
     public override int Outputs => 2;
+    /// <inheritdoc />
     public override FlowElementType Type => FlowElementType.Process;
+    /// <inheritdoc />
     public override bool NoEditorOnAdd => true;
-    [Text(1)]
-    public string ServerUrl { get; set; }
+    /// <inheritdoc />
+    public override string Icon => "svg:plex";
 
-    [Text(2)]
-    public string AccessToken { get; set; }
+    [Text(1)] public string ServerUrl { get; set; } = string.Empty;
 
-    [KeyValue(3)]
-    public List<KeyValuePair<string, string>> Mapping { get; set; }
+    [Text(2)] public string AccessToken { get; set; } = string.Empty;
+
+    [KeyValue(3, null)]
+    public List<KeyValuePair<string, string>>? Mapping { get; set; }
 
     public override int Execute(NodeParameters args)
     {
@@ -50,7 +52,7 @@ public abstract class PlexNode:Node
         {
             // juse use /
             path = path.Replace("\\", "/");
-            path = path.Substring(0, path.LastIndexOf("/"));
+            path = path[..path.LastIndexOf("/", StringComparison.Ordinal)];
         }
 
         if (serverUrl.EndsWith("/") == false)
@@ -72,7 +74,7 @@ public abstract class PlexNode:Node
         {
             var options = new System.Text.Json.JsonSerializerOptions();
             options.PropertyNameCaseInsensitive = true;
-            sections = System.Text.Json.JsonSerializer.Deserialize<PlexSections>(sectionsResponse.body, options);
+            sections = System.Text.Json.JsonSerializer.Deserialize<PlexSections>(sectionsResponse.body, options)!;
         }
         catch (Exception ex)
         {
@@ -88,7 +90,7 @@ public abstract class PlexNode:Node
         }
         args.Logger?.ILog("Path after plex mapping: " + path);
 
-        string pathLower = path.Replace("\\", "/").ToLower();
+        string pathLower = path.Replace("\\", "/").ToLowerInvariant();
         if (pathLower.EndsWith("/"))
             pathLower = pathLower[..^1];
         args.Logger?.ILog("Testing Plex Path: " + pathLower);
@@ -100,7 +102,7 @@ public abstract class PlexNode:Node
                 if (loc.Path == null)
                     continue;
                 args.Logger?.ILog("Plex section path: " + loc.Path);
-                if (pathLower.StartsWith(loc.Path.Replace("\\", "/").ToLower()))
+                if (pathLower.StartsWith(loc.Path.Replace("\\", "/").ToLowerInvariant()))
                     return true;
             }
             return false;
@@ -110,13 +112,14 @@ public abstract class PlexNode:Node
             args.Logger?.WLog("Failed to find Plex section for path: " + path);
             return 2;
         }
+        args.Logger?.ILog("Found section: " + (section.Key ?? "no-key"));
         return ExecuteActual(args, section, serverUrl, path, accessToken);
     }
 
     protected abstract int ExecuteActual(NodeParameters args, PlexDirectory directory, string url, string mappedPath, string accessToken);
 
 
-    private Func<HttpClient, string, (bool success, string body)> _GetWebRequest;
+    private Func<HttpClient, string, (bool success, string body)>? _GetWebRequest;
     internal Func<HttpClient, string, (bool success, string body)> GetWebRequest
     {
         get
@@ -140,8 +143,11 @@ public abstract class PlexNode:Node
             }
             return _GetWebRequest;
         }
+        #if(DEBUG)
+        set => _GetWebRequest = value;
+        #endif
     }
-    private Func<HttpClient, string, (bool success, string body)> _PutWebRequest;
+    private Func<HttpClient, string, (bool success, string body)>? _PutWebRequest;
     internal Func<HttpClient, string, (bool success, string body)> PutWebRequest
     {
         get
@@ -165,5 +171,8 @@ public abstract class PlexNode:Node
             }
             return _PutWebRequest;
         }
+#if(DEBUG)
+        set => _PutWebRequest = value;
+#endif
     }
 }

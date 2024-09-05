@@ -1,193 +1,168 @@
 ﻿#if(DEBUG)
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
+namespace FileFlows.AudioNodes.Tests;
 
-namespace FileFlows.AudioNodes.Tests
+[TestClass]
+public class ConvertTests : AudioTestBase
 {
-    using FileFlows.AudioNodes;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
-    [TestClass]
-    public class ConvertTests
+    [TestMethod]
+    public void Convert_FlacToAac()
     {
-        [TestMethod]
-        public void Convert_FlacToAac()
+        foreach (var codec in new[] { "MP3", "aac"} )
         {
+            foreach (int quality in new[] { 0, 10 })
+            {
+                ConvertAudio node = new();
+                node.Codec = codec;
+                node.Bitrate = quality + 10;
+                node.HighEfficiency = true;
+                var args = GetAudioNodeParameters(AudioFlac);
+                var af = new AudioFile();
+                Assert.IsTrue(af.PreExecute(args));
+                af.Execute(args); // need to read the Audio info and set it
+                Assert.IsTrue(node.PreExecute(args));
+                int output = node.Execute(args);
 
-            const string file = @"D:\music\unprocessed\01-billy_joel-you_may_be_right.flac";
-
-            ConvertToAAC node = new ();
-            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
-            args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
-            args.TempPath = @"D:\music\temp";
-            new AudioFile().Execute(args); // need to read the Audio info and set it
-            int output = node.Execute(args);
-
-            Assert.AreEqual(1, output);
+                Assert.AreEqual(1, output);
+                var fi = new FileInfo(args.WorkingFile);
+                File.Move(args.WorkingFile, Path.Combine(fi.DirectoryName, quality + fi.Extension), true);
+            }
         }
+    }
 
-        [TestMethod]
-        public void Convert_FlacToMp3()
-        {
+    [TestMethod]
+    public void Convert_FlacToMp3()
+    {
+        var args = GetAudioNodeParameters(AudioFlac);
+        var af = new AudioFile();
+        af.PreExecute(args);
+        af.Execute(args); // need to read the Audio info and set it
+        
+        ConvertToMP3 node = new();
+        node.PreExecute(args);
+        int output = node.Execute(args);
 
-            const string file = @"D:\music\unprocessed\01-billy_joel-you_may_be_right.flac";
+        Assert.AreEqual(1, output);
+    }
+    
+    [TestMethod]
+    public void Convert_Mp3ToWAV()
+    {
+        var args = GetAudioNodeParameters();
+        var af = new AudioFile();
+        af.PreExecute(args);
+        af.Execute(args); // need to read the Audio info and set it
+        
+        ConvertToWAV node = new();
+        node.PreExecute(args);
+        int output = node.Execute(args);
 
-            ConvertToMP3 node = new();
-            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
-            args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
-            args.TempPath = @"D:\music\temp";
-            new AudioFile().Execute(args); // need to read the Audio info and set it
-            int output = node.Execute(args);
+        Assert.AreEqual(1, output);
+    }
 
-            Assert.AreEqual(1, output);
-        }
-        [TestMethod]
-        public void Convert_Mp3ToWAV()
-        {
+    [TestMethod]
+    public void Convert_Mp3ToOgg()
+    {
+        var args = GetAudioNodeParameters();
+        var af = new AudioFile();
+        af.PreExecute(args);
+        af.Execute(args); // need to read the Audio info and set it
 
-            const string file = @"D:\music\unprocessed\04-billy_joel-scenes_from_an_italian_restaurant-b2125758.mp3";
+        var ele = new ConvertAudio();
+        ele.Codec = "ogg";
+        ele.Bitrate = 320;
+        ele.PreExecute(args);
+        int output = ele.Execute(args);
 
-            ConvertToWAV node = new();
-            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
-            args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
-            args.TempPath = @"D:\music\temp";
-            new AudioFile().Execute(args); // need to read the Audio info and set it
-            int output = node.Execute(args);
-
-            Assert.AreEqual(1, output);
-        }
-
-        [TestMethod]
-        public void Convert_Mp3ToOgg()
-        {
-
-            const string file = @"D:\music\unprocessed\04-billy_joel-scenes_from_an_italian_restaurant-b2125758.mp3";
-
-            ConvertToOGG node = new();
-            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
-            args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
-            args.TempPath = @"D:\music\temp";
-            new AudioFile().Execute(args); // need to read the Audio info and set it
-            int output = node.Execute(args);
-
-            Assert.AreEqual(1, output);
-        }
-
-
-        [TestMethod]
-        public void Convert_AacToMp3()
-        {
-
-            const string file = @"D:\music\temp\37f315a0-4afc-4a72-a0b4-eb7eb681b9b3.aac";
-
-            ConvertToMP3 node = new();
-            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
-            args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
-            args.TempPath = @"D:\music\temp";
-            new AudioFile().Execute(args); // need to read the Audio info and set it
-            int output = node.Execute(args);
-
-            Assert.AreEqual(1, output);
-        }
-
-        [TestMethod]
-        public void Convert_Mp3_AlreadyMp3()
-        {
-
-            const string file = @"D:\videos\Audio\13-the_cranberries-why.mp3";
-
-            ConvertAudio node = new();
-            node.SkipIfCodecMatches = true;
-            node.Codec = "mp3";
-
-            node.Bitrate = 192;
-            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
-            args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
-            args.TempPath = @"D:\music\temp";
-            new AudioFile().Execute(args); // need to read the Audio info and set it
-            int output = node.Execute(args);
-
-            Assert.AreEqual(2, output);
-        }
-
-        [TestMethod]
-        public void Convert_VideoToMp3()
-        {
-
-            const string file = @"D:\videos\testfiles\basic.mkv";
-
-            ConvertToMP3 node = new();
-            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
-            args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
-            args.TempPath = @"D:\music\temp";
-            //new AudioFile().Execute(args); // need to read the Audio info and set it
-            node.PreExecute(args);
-            int output = node.Execute(args);
-
-            Assert.AreEqual(1, output);
-        }
-
-        [TestMethod]
-        public void Convert_VideoToAac()
-        {
-
-            const string file = @"D:\videos\testfiles\basic.mkv";
-
-            ConvertToAAC node = new();
-            var args = new FileFlows.Plugin.NodeParameters(file, new TestLogger(), false, string.Empty);
-            args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
-            args.TempPath = @"D:\music\temp";
-            //new AudioFile().Execute(args); // need to read the Audio info and set it
-            node.PreExecute(args);
-            int output = node.Execute(args);
-
-            Assert.AreEqual(1, output);
-        }
+        Assert.AreEqual(1, output);
+    }
 
 
-        [TestMethod]
-        public void Convert_TwoPass()
-        {
+    [TestMethod]
+    public void Convert_AacHighEfficient()
+    {
+        var args = GetAudioNodeParameters();
+        var af = new AudioFile();
+        af.PreExecute(args);
+        af.Execute(args); // need to read the Audio info and set it
+        
+        ConvertToAAC ele = new();
+        ele.HighEfficiency = true;
+        ele.Bitrate = 192;
+        ele.PreExecute(args);
+        int output = ele.Execute(args);
 
-            const string file = @"D:\music\flacs\01-billy_joel-you_may_be_right.flac";
+        Assert.AreEqual(1, output);
+    }
+    
+    [TestMethod]
+    public void Convert_Mp3ToMp3_Bitrate()
+    {
+        var args = GetAudioNodeParameters();
+        var af = new AudioFile();
+        af.PreExecute(args);
+        af.Execute(args); // need to read the Audio info and set it
+        
+        ConvertToMP3 ele = new();
+        ele.PreExecute(args);
+        ele.Bitrate = 64; 
+        int output = ele.Execute(args);
+        TestContext.WriteLine(Logger.ToString());
 
-            ConvertToAAC node = new();
-            var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty);
-            args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
-            args.TempPath = @"D:\music\temp";
-            new AudioFile().Execute(args); // need to read the Audio info and set it
-            node.Normalize = true;
-            int output = node.Execute(args);
+        Assert.AreEqual(1, output);
+    }
+    
+    [TestMethod]
+    public void Convert_Mp3ToMp3_Bitrate_Variable()
+    {
+        var args = GetAudioNodeParameters();
+        var af = new AudioFile();
+        af.PreExecute(args);
+        af.Execute(args); // need to read the Audio info and set it
+        
+        ConvertToMP3 ele = new();
+        ele.PreExecute(args);
+        ele.Bitrate = 3; 
+        int output = ele.Execute(args);
+        TestContext.WriteLine(Logger.ToString());
 
-            string log = logger.ToString();
+        Assert.AreEqual(1, output);
+    }
 
-            Assert.AreEqual(1, output);
-        }
+    [TestMethod]
+    public void Convert_Mp3_AlreadyMp3()
+    {
+        var args = GetAudioNodeParameters();
+        var af = new AudioFile();
+        af.PreExecute(args);
+        af.Execute(args); // need to read the Audio info and set it
+        
+        ConvertAudio node = new();
+        node.SkipIfCodecMatches = true;
+        node.Codec = "mp3";
 
-        [TestMethod]
-        public void Convert_TwoPass_VideoFile()
-        {
+        node.Bitrate = 192;
+        int output = node.Execute(args);
 
-            const string file = @"D:\videos\testfiles\basic.mkv";
+        Assert.AreEqual(2, output);
+    }
 
-            ConvertToAAC node = new();
-            var logger = new TestLogger();
-            var args = new FileFlows.Plugin.NodeParameters(file, logger, false, string.Empty);
-            args.GetToolPathActual = (string tool) => @"C:\utils\ffmpeg\ffmpeg.exe";
-            args.TempPath = @"D:\music\temp";
-            new AudioFile().Execute(args); // need to read the Audio info and set it
-            node.Normalize = true;
-            int output = node.Execute(args);
+    [TestMethod]
+    public void Convert_TwoPass()
+    {
+        var args = GetAudioNodeParameters();
+        var af = new AudioFile();
+        af.PreExecute(args);
+        af.Execute(args); // need to read the Audio info and set it
+        
+        ConvertToAAC node = new();
+        node.Normalize = true;
+        node.PreExecute(args);
+        int output = node.Execute(args);
 
-            string log = logger.ToString();
-
-            Assert.AreEqual(1, output);
-        }
+        Assert.AreEqual(1, output);
     }
 }
 

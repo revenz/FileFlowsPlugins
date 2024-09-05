@@ -4,7 +4,7 @@
     {
         public override int Outputs => 2;
 
-        public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/video-codec";
+        public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/video-codec";
 
         [DefaultValue("hevc")]
         [TextVariable(1)]
@@ -24,7 +24,7 @@
         public override int Execute(NodeParameters args)
         {
             string codec = args.ReplaceVariables(VideoCodec ?? string.Empty);
-            string parameters = args.ReplaceVariables(VideoCodecParameters ?? codec);
+            string parameters = args.ReplaceVariables(VideoCodecParameters?.EmptyAsNull() ?? codec);
             
             if (string.IsNullOrWhiteSpace(parameters))
                 return 1; // nothing to do

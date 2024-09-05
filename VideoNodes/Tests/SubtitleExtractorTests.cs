@@ -1,69 +1,87 @@
 ﻿#if(DEBUG)
 
-namespace VideoNodes.Tests
+using FileFlows.VideoNodes;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
+using VideoFile = FileFlows.VideoNodes.VideoFile;
+
+namespace VideoNodes.Tests;
+
+[TestClass]
+public class SubtitleExtractorTests: VideoTestBase
 {
-    using FileFlows.VideoNodes;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
-    [TestClass]
-    public class SubtitleExtractorTests: TestBase
+    [TestMethod]
+    public void SubtitleExtractor_Extension_Test()
     {
-        [TestMethod]
-        public void SubtitleExtractor_Extension_Test()
+        var args = GetVideoNodeParameters(VideoMkv);
+        var vf = new VideoFile();
+        vf.PreExecute(args);
+        Assert.AreEqual(1, vf.Execute(args));
+        
+        foreach (string ext in new[] { string.Empty, ".srt", ".sup" })
         {
-            string file = TestFile_BasicMkv;
-            var vi = new VideoInfoHelper(FfmpegPath, new TestLogger());
-            var vii = vi.Read(file);
+            Logger.ILog("Extracting Extension: " + ext);
+            SubtitleExtractor element = new();
+            element.OutputFile = Path.Combine(TempPath, "subtitle.en" + ext);
+            element.Language = "eng";
 
-            foreach (string ext in new[] { String.Empty, ".srt", ".sup" })
-            {
-                SubtitleExtractor node = new();
-                node.OutputFile = Path.Combine(TempPath, "subtitle.en" + ext);
-                node.Language = "eng";
+            element.PreExecute(args);
+            int output = element.Execute(args);
 
-                var args = new NodeParameters(file, new TestLogger(), false, string.Empty);
-                args.GetToolPathActual = (string tool) => FfmpegPath;
-                args.TempPath = TempPath;
-
-                Assert.AreEqual(1, new VideoFile().Execute(args));
-
-                int output = node.Execute(args);
-
-                Assert.AreEqual(1, output);
-            }
-        }
-
-        [TestMethod]
-        public void SubtitleExtractor_Pgs_Test()
-        {
-            string file = TestFile_Pgs;
-            var vi = new VideoInfoHelper(FfmpegPath, new TestLogger());
-            var vii = vi.Read(file);
-
-            foreach (string ext in new[] { String.Empty, ".srt", ".sup" })
-            {
-                SubtitleExtractor node = new();
-                node.OutputFile = Path.Combine(TempPath, "subtitle.en" + ext);
-                node.Language = "eng";
-
-                var args = new NodeParameters(file, new TestLogger(), false, string.Empty);
-                args.GetToolPathActual = (string tool) => FfmpegPath;
-                args.TempPath = TempPath;
-
-                Assert.AreEqual(1, new VideoFile().Execute(args));
-
-                int output = node.Execute(args);
-
-                Assert.AreEqual(1, output);
-            }
+            Assert.AreEqual(1, output);
         }
     }
+    
+    
+    [TestMethod]
+    public void French_Not_Canda()
+    {
+        var args = GetVideoNodeParameters(VideoSubtitles);
+        var vf = new VideoFile();
+        vf.PreExecute(args);
+        Assert.AreEqual(1, vf.Execute(args));
+        
+        SubtitleExtractor element = new();
+        element.Title = "^(?!.*canad).*$";
+        element.OutputFile = Path.Combine(TempPath, "subtitle");
+        element.Language = "fre";
+        element.ExtractAll = true;
+
+        element.PreExecute(args);
+        int output = element.Execute(args);
+        Assert.AreEqual(1, output);
+        
+        string log = Logger.ToString();
+        bool onlyOne = log.Contains("Extracted 1 subtitle");
+        Assert.IsTrue(onlyOne);
+        Assert.IsTrue(log.Contains("Title 'French (France)' does match"));
+    }
+    
+    [TestMethod]
+    public void French_Not_France()
+    {
+        var args = GetVideoNodeParameters(VideoSubtitles);
+        var vf = new VideoFile();
+        vf.PreExecute(args);
+        Assert.AreEqual(1, vf.Execute(args));
+        
+        SubtitleExtractor element = new();
+        element.Title = "^(?!.*france).*$";
+        element.OutputFile = Path.Combine(TempPath, "subtitle");
+        element.Language = "fre";
+        element.ExtractAll = true;
+
+        element.PreExecute(args);
+        int output = element.Execute(args);
+        Assert.AreEqual(1, output);
+        
+        string log = Logger.ToString();
+        bool onlyOne = log.Contains("Extracted 1 subtitle");
+        Assert.IsTrue(onlyOne);
+        Assert.IsTrue(log.Contains("Title 'French (Canada)' does match"));
+    }
 }
+
 
 
 #endif

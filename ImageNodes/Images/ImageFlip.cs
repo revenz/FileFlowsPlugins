@@ -1,27 +1,34 @@
-﻿using SixLabors.ImageSharp.Formats;
-using SixLabors.ImageSharp.Processing;
+﻿namespace FileFlows.ImageNodes.Images;
 
-namespace FileFlows.ImageNodes.Images;
-
-public class ImageFlip: ImageNode
+/// <summary>
+/// Flow element to flip an image
+/// </summary>
+public class ImageFlip : ImageNode
 {
+    /// <inheritdoc />
     public override int Inputs => 1;
+
+    /// <inheritdoc />
     public override int Outputs => 1;
+
+    /// <inheritdoc />
     public override FlowElementType Type => FlowElementType.Process;
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/image-nodes/image-flip";
+
+    /// <inheritdoc />
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/image-nodes/image-flip";
+
+    /// <inheritdoc />
     public override string Icon => "fas fa-sync-alt";
 
+    /// <summary>
+    /// Gets or sets if the image should be flipped vertically, otherwise its flipped horizontally
+    /// </summary>
     [Boolean(2)]
     public bool Vertical { get; set; }
 
-
-    public override int Execute(NodeParameters args)
-    {
-        using var image = Image.Load(args.WorkingFile, out IImageFormat format);
-        image.Mutate(c => c.Flip(Vertical ? FlipMode.Vertical : FlipMode.Horizontal));
-        var formatOpts = GetFormat(args);
-        SaveImage(args, image, formatOpts.file, formatOpts.format ?? format);
-        
-        return 1;
-    }
+    /// <inheritdoc />
+    protected override Result<bool> PerformAction(NodeParameters args, string localFile, string destination)
+        => Vertical
+            ? args.ImageHelper.FlipVertically(localFile, destination, GetImageTypeFromFormat(), Quality)
+            : args.ImageHelper.FlipHorizontally(localFile, destination, GetImageTypeFromFormat(), Quality);
 }

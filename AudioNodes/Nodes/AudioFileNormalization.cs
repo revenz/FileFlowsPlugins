@@ -9,7 +9,7 @@ public class AudioFileNormalization : AudioNode
     public override int Inputs => 1;
     public override int Outputs => 1;
     public override FlowElementType Type => FlowElementType.Process;
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/audio-nodes/audio-file-normalization";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/audio-nodes/audio-file-normalization";
 
     public override string Icon => "fas fa-volume-up";
 
@@ -20,27 +20,42 @@ public class AudioFileNormalization : AudioNode
     {
         try
         {
-            string ffmpegExe = GetFFMpegExe(args);
-            if (string.IsNullOrEmpty(ffmpegExe))
+            var ffmpegExeResult = GetFFmpeg(args);
+            if (ffmpegExeResult.Failed(out string ffmpegError))
+            {
+                args.FailureReason = ffmpegError;
+                args.Logger?.ELog(ffmpegError);
                 return -1;
+            }
+            string ffmpegExe = ffmpegExeResult.Value;
 
-            AudioInfo AudioInfo = GetAudioInfo(args);
-            if (AudioInfo == null)
+            var audioInfoResult = GetAudioInfo(args);
+            if (audioInfoResult.Failed(out string error))
+            {
+                args.Logger?.ELog(error);
+                args.FailureReason = error;
                 return -1;
+            }
+
+            AudioInfo AudioInfo = audioInfoResult.Value;
 
             List<string> ffArgs = new List<string>();
 
 
             long sampleRate = AudioInfo.Frequency > 0 ? AudioInfo.Frequency : 48_000;
             
-            string twoPass = DoTwoPass(args, ffmpegExe);
-            ffArgs.AddRange(new[] { "-i", args.WorkingFile, "-c:a", AudioInfo.Codec, "-ar", sampleRate.ToString(), "-af", twoPass });
+            var twoPass = DoTwoPass(args, ffmpegExe, LocalWorkingFile);
+            if (twoPass.Success == false)
+            {
+                args.Logger?.WLog("Failed to normalize audio, skipping");
+                return 1;
+            }
+            
+            ffArgs.AddRange(new[] { "-i", args.WorkingFile, "-c:a", AudioInfo.Codec, "-ar", sampleRate.ToString(), "-af", twoPass.Normalization });
 
-            string extension = new FileInfo(args.WorkingFile).Extension;
-            if (extension.StartsWith("."))
-                extension = extension.Substring(1);
+            string extension = FileHelper.GetExtension(args.WorkingFile);
 
-            string outputFile = Path.Combine(args.TempPath, Guid.NewGuid().ToString() + "." + extension);
+            string outputFile = FileHelper.Combine(args.TempPath, Guid.NewGuid() + extension);
             ffArgs.Add(outputFile);
 
             var result = args.Execute(new ExecuteArgs
@@ -59,7 +74,7 @@ public class AudioFileNormalization : AudioNode
     }
 
     [UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "<Pending>")]
-    public static string DoTwoPass(NodeParameters args, string ffmpegExe)
+    public static (bool Success, string Normalization) DoTwoPass(NodeParameters args, string ffmpegExe, string localFile)
     {
         //-af loudnorm=I=-24:LRA=7:TP=-2.0"
         var result = args.Execute(new ExecuteArgs
@@ -68,27 +83,39 @@ public class AudioFileNormalization : AudioNode
             ArgumentList = new[]
             {
                 "-hide_banner",
-                "-i", args.WorkingFile,
+                "-i", localFile,
                 "-af", "loudnorm=" + LOUDNORM_TARGET + ":print_format=json",
                 "-f", "null",
                 "-"
             }
         });
-        if(result.ExitCode != 0)
-            throw new Exception("Failed to prcoess audio track");
+        if (result.ExitCode != 0)
+        {
+            args.Logger?.WLog("Failed to process audio track");
+            return (false, string.Empty);
+        }
 
         string output = result.StandardOutput;
 
         int index = output.LastIndexOf("{");
         if (index == -1)
-            throw new Exception("Failed to detected json in output");
+        {
+            args.Logger?.WLog("Failed to detected json in output");
+            return (false, string.Empty);
+        }
+
         string json = output.Substring(index);
         json = json.Substring(0, json.IndexOf("}") + 1);
         if (string.IsNullOrEmpty(json))
-            throw new Exception("Failed to parse TwoPass json");
-        LoudNormStats stats = JsonSerializer.Deserialize<LoudNormStats>(json);
+        {
+            args.Logger?.WLog("Failed to parse TwoPass json\"");
+            return (false, string.Empty);
+        }
+        var stats = JsonSerializer.Deserialize<LoudNormStats>(json);
+        if (stats == null)
+            return (false, string.Empty);
         string ar = $"loudnorm=print_format=summary:linear=true:{LOUDNORM_TARGET}:measured_I={stats.input_i}:measured_LRA={stats.input_lra}:measured_tp={stats.input_tp}:measured_thresh={stats.input_thresh}:offset={stats.target_offset}";
-        return ar;
+        return (true, ar);
     }
 
     private class LoudNormStats

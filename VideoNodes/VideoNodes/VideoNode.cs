@@ -30,33 +30,51 @@ namespace FileFlows.VideoNodes
         public override string Icon => "fas fa-video";
 
         /// <summary>
-        /// Executed before execute, sets ffmpegexe etc
+        /// Executed before execute, sets ffmpeg executable etc
         /// </summary>
-        /// <param name="args">the node parametes</param>
+        /// <param name="args">the node parameters</param>
         /// <returns>true if successfully</returns>
         public override bool PreExecute(NodeParameters args)
         {
             this.Args = args;
-            this.FFMPEG = GetFFMpegExe();
+            this.FFMPEG = GetFFmpegExecutable();
             return string.IsNullOrEmpty(this.FFMPEG) == false;
         }
 
-        private string GetFFMpegExe()
+        private string GetFFmpegExecutable()
         {
-            string ffmpeg = Args.GetToolPath("FFMpeg");
+            string ffmpeg = Args.GetToolPath("FFmpeg")?.Trim() ?? string.Empty;
             if (string.IsNullOrEmpty(ffmpeg))
             {
-                Args.Logger.ELog("FFMpeg tool not found.");
-                return "";
+                Args.Logger.ELog("FFmpeg variable not found.");
+                return string.Empty;
             }
-            var fileInfo = new FileInfo(ffmpeg);
+            var fileInfo = new System.IO.FileInfo(ffmpeg);
             if (fileInfo.Exists == false)
             {
-                Args.Logger.ELog("FFMpeg tool configured by ffmpeg.exe file does not exist.");
-                return "";
+                Args.Logger.ELog("FFmpeg does not exist: " + ffmpeg);
+                return string.Empty;
             }
             return fileInfo.FullName;
         }
+
+        /// <summary>
+        /// Gets the FFprobe location
+        /// </summary>
+        /// <param name="args">the node parameters</param>
+        /// <returns>the FFprobe location</returns>
+        protected Result<string> GetFFprobe(NodeParameters args)
+        {
+            string ffmpeg = args.GetToolPath("FFprobe");
+            if (string.IsNullOrEmpty(ffmpeg))
+                return Result<string>.Fail("FFprobe tool not found.");
+            
+            var fileInfo = new System.IO.FileInfo(ffmpeg);
+            if (fileInfo.Exists == false)
+                return Result<string>.Fail("FFprobe tool configured by ffmpeg file does not exist.");
+            return fileInfo.FullName;
+        }
+        
         // protected string GetFFMpegPath(NodeParameters args)
         // {
         //     string ffmpeg = args.GetToolPath("FFMpeg");
@@ -74,43 +92,43 @@ namespace FileFlows.VideoNodes
         //     return fileInfo.DirectoryName;
         // }
 
-        private const string VIDEO_INFO = "VideoInfo";
+        internal const string VIDEO_INFO = "VideoInfo";
         protected void SetVideoInfo(NodeParameters args, VideoInfo videoInfo, Dictionary<string, object> variables)
         {
             if (videoInfo.VideoStreams?.Any() == false)
                 return;
 
-            if (args.Parameters.ContainsKey(VIDEO_INFO))
-                args.Parameters[VIDEO_INFO] = videoInfo;
-            else
-                args.Parameters.Add(VIDEO_INFO, videoInfo);
+            args.Parameters[VIDEO_INFO] = videoInfo;
 
-            variables.AddOrUpdate("vi.VideoInfo", videoInfo);
-            variables.AddOrUpdate("vi.Width", videoInfo.VideoStreams[0].Width);
-            variables.AddOrUpdate("vi.Height", videoInfo.VideoStreams[0].Height);
-            variables.AddOrUpdate("vi.Duration", videoInfo.VideoStreams[0].Duration.TotalSeconds);
-            variables.AddOrUpdate("vi.Video.Codec", videoInfo.VideoStreams[0].Codec);
+            if (args.Variables.ContainsKey("vi.OriginalDuration") == false) // we only want to store this for the absolute original duration in the flow
+                args.Variables["vi.OriginalDuration"] = videoInfo.VideoStreams[0].Duration;
+
+            variables["vi.VideoInfo"] = videoInfo;
+            variables["vi.Width"] = videoInfo.VideoStreams[0].Width;
+            variables["vi.Height"] = videoInfo.VideoStreams[0].Height;
+            variables["vi.Duration"] = videoInfo.VideoStreams[0].Duration.TotalSeconds;
+            variables["vi.Video.Codec"] = videoInfo.VideoStreams[0].Codec;
             if (videoInfo.AudioStreams?.Any() == true)
             {
-                variables.AddOrUpdate("vi.Audio.Codec", videoInfo.AudioStreams[0].Codec?.EmptyAsNull());
-                variables.AddOrUpdate("vi.Audio.Channels", videoInfo.AudioStreams[0].Channels > 0 ? (object)videoInfo.AudioStreams[0].Channels : null);
-                variables.AddOrUpdate("vi.Audio.Language", videoInfo.AudioStreams[0].Language?.EmptyAsNull());
-                variables.AddOrUpdate("vi.Audio.Codecs", string.Join(", ", videoInfo.AudioStreams.Select(x => x.Codec).Where(x => string.IsNullOrEmpty(x) == false)));
-                variables.AddOrUpdate("vi.Audio.Languages", string.Join(", ", videoInfo.AudioStreams.Select(x => x.Language).Where(x => string.IsNullOrEmpty(x) == false)));
+                variables["vi.Audio.Codec"] = videoInfo.AudioStreams[0].Codec?.EmptyAsNull();
+                variables["vi.Audio.Channels"] = videoInfo.AudioStreams[0].Channels > 0 ? (object)videoInfo.AudioStreams[0].Channels : null;
+                variables["vi.Audio.Language"] = videoInfo.AudioStreams[0].Language?.EmptyAsNull();
+                variables["vi.Audio.Codecs"] = string.Join(", ", videoInfo.AudioStreams.Select(x => x.Codec).Where(x => string.IsNullOrEmpty(x) == false));
+                variables["vi.Audio.Languages"] = string.Join(", ", videoInfo.AudioStreams.Select(x => x.Language).Where(x => string.IsNullOrEmpty(x) == false));
             }
             var resolution = ResolutionHelper.GetResolution(videoInfo.VideoStreams[0].Width, videoInfo.VideoStreams[0].Height);
             if(resolution == ResolutionHelper.Resolution.r1080p)
-                variables.AddOrUpdate("vi.Resolution", "1080p");
+                variables["vi.Resolution"] = "1080p";
             else if (resolution == ResolutionHelper.Resolution.r4k)
-                variables.AddOrUpdate("vi.Resolution", "4K");
+                variables["vi.Resolution"] = "4K";
             else if (resolution == ResolutionHelper.Resolution.r720p)
-                variables.AddOrUpdate("vi.Resolution", "720p");
+                variables["vi.Resolution"] = "720p";
             else if (resolution == ResolutionHelper.Resolution.r480p)
-                variables.AddOrUpdate("vi.Resolution", "480p");
+                variables["vi.Resolution"] = "480p";
             else if (videoInfo.VideoStreams[0].Width < 900 && videoInfo.VideoStreams[0].Height < 800)
-                variables.AddOrUpdate("vi.Resolution", "SD");
+                variables["vi.Resolution"] = "SD";
             else
-                variables.AddOrUpdate("vi.Resolution", videoInfo.VideoStreams[0].Width + "x" + videoInfo.VideoStreams[0].Height);
+                variables["vi.Resolution"] = videoInfo.VideoStreams[0].Width + "x" + videoInfo.VideoStreams[0].Height;
 
             args.UpdateVariables(variables);
 
@@ -121,8 +139,22 @@ namespace FileFlows.VideoNodes
                 string prefix = "Video" + (i == 0 ? "" : " " + (i + 1)) + " ";
                 metadata.Add(prefix + "Codec", stream.Codec);
                 metadata.Add(prefix + "Resolution", stream.Width + "x" + stream.Height + (stream.HDR ? " (HDR)" : string.Empty));
+                if(string.IsNullOrWhiteSpace(stream.PixelFormat) == false)
+                    metadata.Add(prefix + "PixelFormat", stream.PixelFormat);
+                if(stream.FramesPerSecond > 0)
+                    metadata.Add(prefix + "FramesPerSecond", stream.FramesPerSecond);
                 if(stream.Bitrate > 0)
                     metadata.Add(prefix + "Bitrate", stream.Bitrate);
+                if(stream.HDR)
+                    metadata.Add(prefix + "HDR", true);
+                if(stream.DolbyVision)
+                    metadata.Add(prefix + "DolbyVision", true);
+                if(stream.Bits == 8)
+                    metadata.Add(prefix + "Bits", "8 Bit");
+                else if(stream.Bits == 10)
+                    metadata.Add(prefix + "Bits", "10 Bit");
+                else if(stream.Bits == 12)
+                    metadata.Add(prefix + "Bits", "12 Bit");
             }
             foreach (var (stream, i) in videoInfo.AudioStreams.Select((value, i) => (value, i)))
             {
@@ -133,19 +165,79 @@ namespace FileFlows.VideoNodes
                     metadata.Add(prefix + "Title", stream.Title);
                 if(string.IsNullOrEmpty(stream.Language) == false)
                     metadata.Add(prefix + "Language", stream.Language);
+                if(stream.Default)
+                    metadata.Add(prefix + "Default", true);
                 if (stream.Bitrate > 0)
                     metadata.Add(prefix + "Bitrate", stream.Bitrate);
             }
-            foreach (var (strream, i) in videoInfo.SubtitleStreams.Select((value, i) => (value, i)))
+            foreach (var (stream, i) in videoInfo.SubtitleStreams.Select((value, i) => (value, i)))
             {
                 string prefix = "Subtitle" + (i == 0 ? "" : " " + (i + 1)) + " ";
-                metadata.Add(prefix + "Codec", strream.Codec);
-                if (string.IsNullOrEmpty(strream.Title) == false)
-                    metadata.Add(prefix + "Title", strream.Title);
-                if (string.IsNullOrEmpty(strream.Language) == false)
-                    metadata.Add(prefix + "Language", strream.Language);
+                metadata.Add(prefix + "Codec", stream.Codec);
+                if (string.IsNullOrEmpty(stream.Title) == false)
+                    metadata.Add(prefix + "Title", stream.Title);
+                if (string.IsNullOrEmpty(stream.Language) == false)
+                    metadata.Add(prefix + "Language", stream.Language);
+                if(stream.Default)
+                    metadata.Add(prefix + "Default", true);
+                if(stream.Forced)
+                    metadata.Add(prefix + "Forced", true);
             }
             args.SetMetadata(metadata);
+        }
+
+        private int Test(ILogger Logger)
+        {
+            
+            var MAX_BITRATE = 3_000_000; // bitrate is 3,000 KBps
+
+            if(Variables.TryGetValue("vi.VideoInfo", out var oVideoInfo) == false || oVideoInfo is FileFlows.VideoNodes.VideoInfo videoInfo == false)
+            {
+                Logger.ILog("Failed to locate VideoInformation in variables");
+                return -1;
+            }
+            Logger.ILog("Got video information.");
+
+            var video = videoInfo.VideoStreams.FirstOrDefault();
+            if(video == null)
+            {
+                Logger.ILog("No video streams detected.");
+                return -1;
+            }
+
+// get the video stream
+            var bitrate = video.Bitrate;
+
+            if(bitrate < 1)
+            {
+                // video stream doesn't have bitrate information
+                // need to use the overall bitrate
+                var overall = videoInfo.Bitrate;
+                if(overall < 1)
+                    return 0; // couldn't get overall bitrate either
+
+                // overall bitrate includes all audio streams, so we try and subtract those
+                var calculated = overall;
+                if(videoInfo.AudioStreams.Count > 0) // check there are audio streams
+                {
+                    foreach(var audio in videoInfo.AudioStreams)
+                    {
+                        if(audio.Bitrate > 0)
+                            calculated -= audio.Bitrate;
+                        else{
+                            // audio doesn't have bitrate either, so we just subtract 5% of the original bitrate
+                            // this is a guess, but it should get us close
+                            calculated -= (overall * 0.05f);
+                        }
+                    }
+                }
+                bitrate = calculated;
+            }
+
+// check if the bitrate is over the maximum bitrate
+            if(bitrate > MAX_BITRATE)
+                return 1; // it is, so call output 1
+            return 2; // it isn't so call output 2
         }
 
         protected VideoInfo GetVideoInfo(NodeParameters args, bool refreshIfFileChanged = true)
@@ -156,7 +248,21 @@ namespace FileFlows.VideoNodes
             if (refreshIfFileChanged == false || vi.FileName == args.FileName)
                 return vi;
 
-            vi = new VideoInfoHelper(FFMPEG, args.Logger).Read(args.WorkingFile);
+            var local = args.FileService.GetLocalPath(args.WorkingFile);
+            if (local.IsFailed)
+            {
+                args.Logger?.ELog("Failed to get local file: " + local.Error);
+                return null;
+            }
+
+            var viResult = new VideoInfoHelper(FFMPEG, args.Logger).Read(local);
+            if (viResult.Failed(out string error))
+            {
+                args.Logger?.ELog(error);
+                return null;
+            }
+
+            vi = viResult.Value;
             SetVideoInfo(args, vi, Variables);
             return vi;
         }
@@ -165,7 +271,7 @@ namespace FileFlows.VideoNodes
         {
             if (args.Parameters.ContainsKey(VIDEO_INFO) == false)
             {
-                args.Logger.WLog("No codec information loaded, use a 'VideoFile' node first");
+                args.Logger.WLog("No codec information loaded, use a 'VideoFile' flow element first");
                 return null;
             }
 

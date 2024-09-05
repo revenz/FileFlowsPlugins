@@ -1,30 +1,49 @@
-﻿using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
-using System.Diagnostics.CodeAnalysis;
-using System.Text.Json;
+﻿using System.Text.Json;
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 
+/// <summary>
+/// Flow element that normalizes the audio
+/// </summary>
 public class FfmpegBuilderAudioNormalization : FfmpegBuilderNode
 {
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/ffmpeg-builder/audio-normalization";
+    /// <inheritdoc />
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/audio-normalization";
+    /// <inheritdoc />
     public override string Icon => "fas fa-volume-up";
+    /// <inheritdoc />
     public override int Outputs => 2;
-
+    
+    /// <summary>
+    /// Gets or sets if all audio should be normalised
+    /// </summary>
     [Boolean(1)]
     public bool AllAudio { get; set; }
 
+    /// <summary>
+    /// Gets or sets if the audio should be normalised using two passes or if false, a single pass
+    /// </summary>
     [Boolean(2)]
     public bool TwoPass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the pattern to match against the audio file
+    /// </summary>
     [TextVariable(3)]
     public string Pattern { get; set; }
 
+    /// <summary>
+    /// Gets or sets if the match should be inversed
+    /// </summary>
     [Boolean(4)]
     public bool NotMatching { get; set; }
 
+    /// <summary>
+    /// The loud norm target
+    /// </summary>
     internal const string LOUDNORM_TARGET = "I=-24:LRA=7:TP=-2.0";
 
-    [RequiresUnreferencedCode("")]
+    /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
         if (Model.AudioStreams?.Any() != true)
@@ -33,7 +52,14 @@ public class FfmpegBuilderAudioNormalization : FfmpegBuilderNode
             return 2;
         }
 
-        // store them incase we are creating duplicate tracks from same source, we dont need 
+        var localFile = args.FileService.GetLocalPath(args.WorkingFile);
+        if (localFile.IsFailed)
+        {
+            args.Logger?.WLog("Failed to get local file: " + localFile.Error);
+            return 2;
+        }
+
+        // store them in case we are creating duplicate tracks from same source, we dont need 
         // to calculate the normalization each time
         Dictionary<int, string> normalizedTracks = new Dictionary<int, string>();
         bool normalizing = false;
@@ -53,11 +79,19 @@ public class FfmpegBuilderAudioNormalization : FfmpegBuilderNode
 
             if (TwoPass)
             {
-                if (normalizedTracks.ContainsKey(audio.TypeIndex))
-                    item.stream.Filter.Add(normalizedTracks[audio.TypeIndex]);
+                if (normalizedTracks.TryGetValue(audio.TypeIndex, out var track))
+                    item.stream.Filter.Add(track);
                 else
                 {
-                    string twoPass = DoTwoPass(this, args, FFMPEG, audio.TypeIndex);
+                    var twoPassResult = DoTwoPass(this, args, FFMPEG, audio.TypeIndex, localFile);
+                    if (twoPassResult.Failed(out var error))
+                    {
+                        args.Logger?.ELog(error);
+                        args.FailureReason = error;
+                        return -1;
+                    }
+
+                    var twoPass = twoPassResult.Value;
                     item.stream.Filter.Add(twoPass);
                     normalizedTracks.Add(audio.TypeIndex, twoPass); 
                 }
@@ -71,41 +105,48 @@ public class FfmpegBuilderAudioNormalization : FfmpegBuilderNode
 
         return normalizing ? 1 : 2;
     }
-
-
-
-    [RequiresUnreferencedCode("Calls System.Text.Json.JsonSerializer.Deserialize<FileFlows.VideoNodes.AudioNormalization.LoudNormStats>(string, System.Text.Json.JsonSerializerOptions?)")]
-    public static string DoTwoPass(EncodingNode node, NodeParameters args, string ffmpegExe, int audioIndex)
+    
+    /// <summary>
+    /// Do a two pass normalization against a file
+    /// </summary>
+    /// <param name="node">the encoding node</param>
+    /// <param name="args">the node parameters</param>
+    /// <param name="ffmpegExe">the FFmpeg executable</param>
+    /// <param name="audioIndex">the audio index in the file</param>
+    /// <param name="localFile">the local filename of the file</param>
+    /// <returns>the result of the normalization</returns>
+    public static Result<string> DoTwoPass(EncodingNode node, NodeParameters args, string ffmpegExe, int audioIndex, string localFile)
     {
         //-af loudnorm=I=-24:LRA=7:TP=-2.0"
-        string output;
-        var result = node.Encode(args, ffmpegExe, new List<string>
-        {
+        var result = node.Encode(args, ffmpegExe, [
             "-hide_banner",
-            "-i", args.WorkingFile,
-            "-strict", "-2",  // allow experimental stuff
+            "-i", localFile,
+            "-strict", "-2", // allow experimental stuff
             "-map", "0:a:" + audioIndex,
             "-af", "loudnorm=" + LOUDNORM_TARGET + ":print_format=json",
             "-f", "null",
             "-"
-        }, out output, updateWorkingFile: false, dontAddInputFile: true);
+        ], out var output, updateWorkingFile: false, dontAddInputFile: true);
 
         if (result == false)
-            throw new Exception("Failed to prcoess audio track");
+            return Result<string>.Fail("Failed to process audio track");
 
-        int index = output.LastIndexOf("{");
-        if (index == -1)
-            throw new Exception("Failed to detected json in output");
+        var loudNorm = ExtractParsedLoudnormJson(args.Logger, output);
 
-        string json = output.Substring(index);
-        json = json.Substring(0, json.IndexOf("}") + 1);
-        if (string.IsNullOrEmpty(json))
-            throw new Exception("Failed to parse TwoPass json");
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-        LoudNormStats stats = JsonSerializer.Deserialize<LoudNormStats>(json);
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+        if (loudNorm.Count == 0)
+        {
+            args.Logger?.WLog("No LoudNormStats found in:\n" + output);
+            return Result<string>.Fail("Failed to detected json in output");
+        }
 
-        if (stats.input_i == "-inf" || stats.input_lra == "-inf" || stats.input_tp == "-inf" || stats.input_thresh == "-inf" || stats.target_offset == "-inf")
+        LoudNormStats? stats = loudNorm.FirstOrDefault(x =>
+        {
+            if (x.input_i == "-inf" || x.input_lra == "-inf" || x.input_tp == "-inf" || x.input_thresh == "-inf" ||
+                x.target_offset == "-inf")
+                return false;
+            return true;
+        });
+        if (stats == null)
         {
             args.Logger?.WLog("-inf detected in loud norm two pass, falling back to single pass loud norm");
             return $"loudnorm={LOUDNORM_TARGET}";
@@ -115,6 +156,41 @@ public class FfmpegBuilderAudioNormalization : FfmpegBuilderNode
         return ar;
     }
 
+    /// <summary>
+    /// Extracts Loud Norm Ststs object following the [Parsed_loudnorm log entries from the provided log data.
+    /// </summary>
+    /// <param name="logger">The logger to use</param>
+    /// <param name="log">The log as a string.</param>
+    /// <returns>A list of Loud Norm Stats objects.</returns>
+    static List<LoudNormStats> ExtractParsedLoudnormJson(ILogger logger, string log)
+    {
+        List<LoudNormStats> results = new ();
+        Regex regex = new Regex(@"\[Parsed_loudnorm.*?\]\s*{(.*?)}", RegexOptions.Singleline);
+        MatchCollection matches = regex.Matches(log);
+
+        foreach (Match match in matches)
+        {
+            string json = "{" + match.Groups[1].Value + "}";
+            try
+            {
+                var ln = JsonSerializer.Deserialize<LoudNormStats>(json);
+                if (ln != null)
+                    results.Add(ln);
+            }
+            catch (Exception ex)
+            {
+                // Ignored
+                logger?.ELog("Failed to parse JSON: " + ex.Message);
+                logger?.ELog("JSON:" + json);
+            }
+        }
+
+        return results;
+    }
+    
+    /// <summary>
+    /// Represents the loudness normalization statistics.
+    /// </summary>
     private class LoudNormStats
     {
         /* 
@@ -131,11 +207,31 @@ public class FfmpegBuilderAudioNormalization : FfmpegBuilderNode
 	"target_offset" : "0.25"
 }
        */
-        public string input_i { get; set; }
-        public string input_tp { get; set; }
-        public string input_lra { get; set; }
-        public string input_thresh { get; set; }
-        public string target_offset { get; set; }
+        
+        /// <summary>
+        /// Integrated loudness of the input in LUFS.
+        /// </summary>
+        public string input_i { get; init; }
+
+        /// <summary>
+        /// True peak of the input in dBTP.
+        /// </summary>
+        public string input_tp { get; init; }
+
+        /// <summary>
+        /// Loudness range of the input in LU.
+        /// </summary>
+        public string input_lra { get; init; }
+
+        /// <summary>
+        /// Threshold of the input in LUFS.
+        /// </summary>
+        public string input_thresh { get; init; }
+
+        /// <summary>
+        /// Target offset for normalization in LU.
+        /// </summary>
+        public string target_offset { get; init; }
     }
 
 }

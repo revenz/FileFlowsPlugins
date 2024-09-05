@@ -4,6 +4,13 @@
     {
         public AudioStream Stream { get; set; }
         public override bool HasChange => EncodingParameters.Any() || Filter.Any();
+        
+        /// <summary>
+        /// Gets or sets the channels for this stream
+        /// Note: changing this will not magically change the channels for processing, you must change manually
+        /// down-mix or up-mix then update this channel count, this is intended for sorting only
+        /// </summary>
+        public float Channels { get; set; }
 
         private List<string> _EncodingParameters = new List<string>();
         public List<string> EncodingParameters
@@ -83,6 +90,28 @@
             }
 
             return results.ToArray();
+        }
+
+        /// <summary>
+        /// Converts the object to a string
+        /// </summary>
+        /// <returns>the string representation of stream</returns>
+        public override string ToString()
+        {
+            // if (Stream != null)
+            //     return Stream.ToString() + (Deleted ? " / Deleted" : "");
+            // can be null in unit tests
+            return string.Join(" / ", new string[]
+            {
+                Index.ToString(),
+                Language,
+                Codec,
+                Title,
+                Channels > 0 ? Channels.ToString("0.0") : null,
+                IsDefault ? "Default" : null,
+                Deleted ? "Deleted" : null,
+                HasChange ? "Changed" : null
+            }.Where(x => string.IsNullOrWhiteSpace(x) == false));
         }
     }
 }

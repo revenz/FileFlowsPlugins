@@ -10,7 +10,7 @@ public class CanUseHardwareEncoding:Node
     public override int Inputs => 1;
     public override int Outputs => 2;
 
-    public override string HelpUrl => "https://docs.fileflows.com/plugins/video-nodes/logical-nodes/can-use-hardware-encoding";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/logical-nodes/can-use-hardware-encoding";
 
     public override string Icon => "fas fa-eye";
 
@@ -31,6 +31,7 @@ public class CanUseHardwareEncoding:Node
                     new ListOption { Label = "NVIDIA", Value = "###GROUP###" },
                     new ListOption { Label = "NVIDIA H.264", Value = HardwareEncoder.Nvidia_H264 },
                     new ListOption { Label = "NVIDIA H.265", Value = HardwareEncoder.Nvidia_Hevc },
+                    new ListOption { Label = "NVIDIA AV1", Value = HardwareEncoder.Nvidia_Hevc },
 
                     new ListOption { Label = "AMD", Value = "###GROUP###" },
                     new ListOption { Label = "AMD H.264", Value = HardwareEncoder.Amd_H264 },
@@ -66,6 +67,10 @@ public class CanUseHardwareEncoding:Node
         Qsv_Hevc = 13,
         Vaapi_Hevc = 14,
         VideoToolbox_Hevc = 15,
+        
+        Nvidia_AV1 = 21,
+        Amd_AV1 = 22,
+        Qsv_AV1 = 23,
     }
 
     public override int Execute(NodeParameters args)
@@ -76,9 +81,11 @@ public class CanUseHardwareEncoding:Node
         {
             case HardwareEncoder.Nvidia_H264: canProcess = CanProcess_Nvidia_H264(args); break;
             case HardwareEncoder.Nvidia_Hevc: canProcess = CanProcess_Nvidia_Hevc(args); break;
+            case HardwareEncoder.Nvidia_AV1: canProcess = CanProcess_Nvidia_AV1(args); break;
 
             case HardwareEncoder.Amd_H264: canProcess = CanProcess_Amd_H264(args); break;
             case HardwareEncoder.Amd_Hevc: canProcess = CanProcess_Amd_Hevc(args); break;
+            case HardwareEncoder.Amd_AV1: canProcess = CanProcess_Amd_AV1(args); break;
 
             case HardwareEncoder.Qsv_H264: canProcess = CanProcess_Qsv_H264(args); break;
             case HardwareEncoder.Qsv_Hevc: canProcess = CanProcess_Qsv_Hevc(args); break;
@@ -99,6 +106,20 @@ public class CanUseHardwareEncoding:Node
     /// <param name="args">the node parameters</param>
     /// <returns>true if can use it, otherwise false</returns>
     internal static bool CanProcess_Nvidia_Hevc(NodeParameters args) => CanProcess(args, "hevc_nvenc");
+    
+    /// <summary>
+    /// Checks if this flow runner can use NVIDIA AV1 encoder
+    /// </summary>
+    /// <param name="args">the node parameters</param>
+    /// <returns>true if can use it, otherwise false</returns>
+    internal static bool CanProcess_Nvidia_AV1(NodeParameters args) => CanProcess(args, "av1_nvenc");
+    
+    /// <summary>
+    /// Checks if this flow runner can use QSV AV1 encoder
+    /// </summary>
+    /// <param name="args">the node parameters</param>
+    /// <returns>true if can use it, otherwise false</returns>
+    internal static bool CanProcess_Qsv_AV1(NodeParameters args) => CanProcess(args, "av1_qsv");
 
     /// <summary>
     /// Checks if this flow runner can use NVIDIA H.264 encoder
@@ -120,6 +141,13 @@ public class CanUseHardwareEncoding:Node
     /// <param name="args">the node parameters</param>
     /// <returns>true if can use it, otherwise false</returns>
     internal static bool CanProcess_VideoToolbox_H264(NodeParameters args) => CanProcess(args, "h264_videotoolbox");
+    
+    /// <summary>
+    /// Checks if this flow runner can use AND AV1 encoder
+    /// </summary>
+    /// <param name="args">the node parameters</param>
+    /// <returns>true if can use it, otherwise false</returns>
+    internal static bool CanProcess_Amd_AV1(NodeParameters args) => CanProcess(args, "hevc_av1");
 
     /// <summary>
     /// Checks if this flow runner can use AND HEVC encoder
@@ -173,34 +201,29 @@ public class CanUseHardwareEncoding:Node
     /// <returns>if a encoder/decoder has been disabled by a variable</returns>
     internal static bool DisabledByVariables(NodeParameters args, string[] parameters)
     {
-
         if (parameters.Any(x => x.ToLower().Contains("nvenc")))
         {
-            if (args.GetVariable("NoNvidia") as bool? == true)
-                return true;
-            if (args.GetVariable("NoNVIDIA") as bool? == true)
+            if (args.Variables.FirstOrDefault(x => x.Key.ToLowerInvariant() == "nonvidia").Value as bool? == true)
                 return true;
         }
         else if (parameters.Any(x => x.ToLower().Contains("qsv")))
         {
-            if (args.GetVariable("NoQSV") as bool? == true)
+            if (args.Variables.FirstOrDefault(x => x.Key.ToLowerInvariant() == "noqsv").Value as bool? == true)
                 return true;
         }
         else if (parameters.Any(x => x.ToLower().Contains("vaapi")))
         {
-            if (args.GetVariable("NoVAAPI") as bool? == true)
+            if (args.Variables.FirstOrDefault(x => x.Key.ToLowerInvariant() == "novaapi").Value as bool? == true)
                 return true;
         }
         else if (parameters.Any(x => x.ToLower().Contains("amf")))
         {
-            if (args.GetVariable("NoAMF") as bool? == true)
-                return true;
-            if (args.GetVariable("NoAMD") as bool? == true)
+            if (args.Variables.FirstOrDefault(x => x.Key.ToLowerInvariant() == "noamf" || x.Key.ToLowerInvariant() == "noamd").Value as bool? == true)
                 return true;
         }
         else if (parameters.Any(x => x.ToLower().Contains("videotoolbox")))
         {
-            if (args.GetVariable("NoVideoToolbox") as bool? == true)
+            if (args.Variables.FirstOrDefault(x => x.Key.ToLowerInvariant() == "novideotoolbox").Value as bool? == true)
                 return true;
         }
         return false;
@@ -208,13 +231,16 @@ public class CanUseHardwareEncoding:Node
 
     private static bool CanProcess(NodeParameters args, params string[] encodingParams)
     {
+        if (encodingParams.Any(x => x.Contains("vaapi") && OperatingSystem.IsWindows()))
+            return false; // dont bother checking vaapi on windows, unlikely the user has added support for it
+        
         if (DisabledByVariables(args, encodingParams))
             return false;
 
-        string ffmpeg = args.GetToolPath("FFMpeg");
+        string ffmpeg = args.GetToolPath("FFmpeg");
         if (string.IsNullOrEmpty(ffmpeg))
         {
-            args.Logger.ELog("FFMpeg tool not found.");
+            args.Logger.ELog("FFmpeg tool not found.");
             return false;
         }
 
@@ -230,64 +256,65 @@ public class CanUseHardwareEncoding:Node
     /// <returns>true if can be processed</returns>
     internal static bool CanProcess(NodeParameters args, string ffmpeg, string[] encodingParams)
     {
-        bool can = CanExecute();
+        bool can = CanExecute(args, ffmpeg, encodingParams);
         if (can == false && encodingParams?.Contains("amf") == true)
         {
             // AMD/AMF has a issue where it reports false at first but then passes
             // https://github.com/revenz/FileFlows/issues/106
             Thread.Sleep(2000);
-            can = CanExecute();
+            can = CanExecute(args, ffmpeg, encodingParams);
         }
         return can;
-
-        bool CanExecute()
+    }
+    
+    private static bool CanExecute(NodeParameters args, string ffmpeg, string[] encodingParams)
+    {
+        bool vaapi = encodingParams.Any(x => x.Contains("vaapi")) && VaapiHelper.VaapiLinux;
+        List<string> arguments = encodingParams.ToList();
+        if (vaapi)
+            arguments.AddRange(new [] { "-vf", "format=nv12,hwupload", "-strict", "-2"});
+        arguments.InsertRange(0, new []
         {
-            bool vaapi = encodingParams.Any(x => x.Contains("vaapi")) && VaapiHelper.VaapiLinux;
-            List<string> arguments = encodingParams.ToList();
-            if (vaapi)
-                arguments.AddRange(new [] { "-vf", "'format=nv12,hwupload'", "-strict", "-2"});
-            arguments.InsertRange(0, new []
-            {
-                "-loglevel",
-                "error",
-                "-f",
-                "lavfi",
-                "-i",
-                "color=black:s=1080x1080",
-                "-vframes",
-                "1",
-                "-an",
-                "-c:v"
-            });
-            if (vaapi)
-            {
-                arguments.InsertRange(0,
-                    new[] { "-fflags", "+genpts", "-vaapi_device", VaapiHelper.VaapiRenderDevice });
-                arguments.Add(Path.Combine(args.TempPath, Guid.NewGuid() + ".mkv"));
-            }
-            else
-            {
-                
-                arguments.AddRange(new []
-                {
-                    "-f",
-                    "null",
-                    "-"
-                });
-            }
-            var cmd = args.Process.ExecuteShellCommand(new ExecuteArgs
-            {
-                Command = ffmpeg,
-                ArgumentList = arguments.ToArray(),
-                Silent = true
-            }).Result;
-            if (cmd.ExitCode != 0 || string.IsNullOrWhiteSpace(cmd.Output) == false)
-            {
-                string asStr = string.Join(" ", arguments.Select(x => x.Contains(" ") ? "\"" + x + "\"" : x));
-                args.Logger?.WLog($"Cant process '{ffmpeg} {asStr}': {cmd.Output ?? ""}");
-                return false;
-            }
-            return true;
+            "-loglevel",
+            "error",
+            "-f",
+            "lavfi",
+            "-i",
+            "color=black:s=1080x1080",
+            "-vframes",
+            "1",
+            "-an",
+            "-c:v"
+        });
+        if (vaapi)
+        {
+            arguments.InsertRange(0,
+                new[] { "-fflags", "+genpts", "-vaapi_device", VaapiHelper.VaapiRenderDevice });
+            arguments.Add(FileHelper.Combine(args.TempPath, Guid.NewGuid() + ".mkv"));
         }
+        else
+        {
+                
+            arguments.AddRange(new []
+            {
+                "-f",
+                "null",
+                "-"
+            });
+        }
+        var cmd = args.Process.ExecuteShellCommand(new ExecuteArgs
+        {
+            Command = ffmpeg,
+            ArgumentList = arguments.ToArray(),
+            Silent = true
+        }).Result;
+        string? output = cmd.Output?.Contains("va_openDriver() returns 0") == true ? null : cmd.Output;
+        if (cmd.ExitCode != 0 || string.IsNullOrWhiteSpace(output) == false)
+        {
+            string asStr = string.Join(" ", arguments.Select(x => x.Contains(" ") ? "\"" + x + "\"" : x));
+            args.Logger?.WLog($"Cant process '{ffmpeg} {asStr}': {cmd.Output ?? ""}");
+            return false;
+        }
+        return true;
     }
 }

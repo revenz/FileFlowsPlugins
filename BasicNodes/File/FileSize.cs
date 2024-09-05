@@ -1,42 +1,56 @@
-namespace FileFlows.BasicNodes.File
+using FileFlows.Plugin;
+using FileFlows.Plugin.Attributes;
+using FileFlows.Plugin.Types;
+
+namespace FileFlows.BasicNodes.File;
+
+/// <summary>
+/// Flow element that compares a file size
+/// </summary>
+public class FileSize : Node
 {
-    using System.ComponentModel;
-    using FileFlows.Plugin;
-    using FileFlows.Plugin.Attributes;
+    /// <inheritdoc />
+    public override int Inputs => 1;
+    /// <inheritdoc />
+    public override int Outputs => 2;
+    /// <inheritdoc />
+    public override FlowElementType Type => FlowElementType.Logic;
+    /// <inheritdoc />
+    public override string Icon => "fas fa-balance-scale-right";
+    /// <inheritdoc />
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/file-size";
 
-    public class FileSize : Node
+    /// <summary>
+    /// Gets or sets the lower value
+    /// </summary>
+    [NumberInt(1)]
+    public int Lower { get; set; }
+    
+    /// <summary>
+    /// Gets or sets the upper value
+    /// </summary>
+    [NumberInt(2)]
+    public int Upper { get; set; }
+
+    /// <inheritdoc />
+    public override int Execute(NodeParameters args)
     {
-        public override int Inputs => 1;
-        public override int Outputs => 2;
-        public override FlowElementType Type => FlowElementType.Logic;
-        public override string Icon => "fas fa-balance-scale-right";
-        public override string HelpUrl => "https://docs.fileflows.com/plugins/basic-nodes/file-size";
-
-
-        [NumberInt(1)]
-        public int Lower { get; set; }
-
-        [NumberInt(2)]
-        public int Upper { get; set; }
-
-        public override int Execute(NodeParameters args)
+        var result = args.IsDirectory ? args.FileService.DirectorySize(args.WorkingFile) : args.FileService.FileSize(args.WorkingFile);
+        if(result.Failed(out string error))
         {
-            var fi = new FileInfo(args.WorkingFile);
-            if (fi.Exists == false) {
-                args.Logger.ELog("File Does not exist: " + args.WorkingFile);
-                return -1;
-            }
-
-            return TestSize(args, fi.Length);
+            args.Logger.ELog("Error getting size: " + error);
+            return -1;
         }
 
-        public int TestSize(NodeParameters args, long size)
-        {
-            if (size < (((long)Lower) * 1024 * 1024))
-                return 2;
-            if (Upper > 0 && size > (((long)Upper) * 1024 * 1024))
-                return 2;
-            return 1;
-        }
+        return TestSize(args, result.ValueOrDefault);
+    }
+
+    public int TestSize(NodeParameters args, long size)
+    {
+        if (size < (((long)Lower) * 1024 * 1024))
+            return 2;
+        if (Upper > 0 && size > (((long)Upper) * 1024 * 1024))
+            return 2;
+        return 1;
     }
 }
