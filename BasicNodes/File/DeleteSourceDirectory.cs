@@ -59,12 +59,18 @@ public class DeleteSourceDirectory : Node
     /// </summary>
     /// <param name="args">the node parameters</param>
     /// <returns>the output to call next, -1 to abort flow, 0 to end flow</returns>
-    private int DeleteTopMostOnly(NodeParameters args)
+    public int DeleteTopMostOnly(NodeParameters args)
     {
         string libraryPath = args.LibraryFileName[..^args.RelativeFile.Length]
             .TrimEnd('/')
             .TrimEnd('\\');
         string dir = args.OriginalIsDirectory ? args.LibraryFileName : FileHelper.GetDirectory(args.LibraryFileName);
+        if (string.Equals(dir, libraryPath, StringComparison.InvariantCultureIgnoreCase))
+        {
+            args.Logger?.WLog("Cannot delete library root: " + dir);
+            return 2;
+        }
+
         args.Logger?.ILog("Deleting top level directory only: " + dir);
         var existsResult = args.FileService.DirectoryExists(dir);
         if (existsResult.Failed(out var error))
