@@ -2,6 +2,8 @@
 
 using FileFlows.ComicNodes.Comics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting.Logging;
+using PluginTestLibrary;
 
 namespace FileFlows.Comic.Tests;
 
@@ -14,8 +16,6 @@ public class ComicInfoTests : TestBase
         var result = CreateComicInfo.GetInfo(Logger,
             "/home/john/Comics/DC/Batman (1939)/Batman - #42 - Batman vs. Joker [old] [great] [amazing].cbr", 
             "/home/john/Comics",true);
-
-        TestContext.WriteLine(Logger.ToString());
 
         Assert.IsFalse(result.IsFailed);
         var info = result.Value;
@@ -46,8 +46,6 @@ public class ComicInfoTests : TestBase
             "/home/john/Comics/actual",
             true);
 
-        TestContext.WriteLine(Logger.ToString());
-
         Assert.IsFalse(result.IsFailed);
         var info = result.Value;
         Assert.IsNotNull(info);
@@ -73,8 +71,6 @@ public class ComicInfoTests : TestBase
             "/home/john/Comics",
             true);
 
-        TestContext.WriteLine(Logger.ToString());
-
         Assert.IsFalse(result.IsFailed);
         var info = result.Value;
         Assert.IsNotNull(info);
@@ -99,8 +95,6 @@ public class ComicInfoTests : TestBase
             "/home/john/Comics/Marvel/X-Men/X-Men The Complete Age of Apocalypse Epic/X-Men The Complete Age of Apocalypse Epic - Vol 3.cbz", 
             "/home/john/Comics",
             true);
-
-        TestContext.WriteLine(Logger.ToString());
 
         Assert.IsFalse(result.IsFailed);
         var info = result.Value;
@@ -128,8 +122,6 @@ public class ComicInfoTests : TestBase
             "/home/john/Comics",
             true);
 
-        TestContext.WriteLine(Logger.ToString());
-
         Assert.IsFalse(result.IsFailed);
         var info = result.Value;
         Assert.IsNotNull(info);
@@ -153,8 +145,6 @@ public class ComicInfoTests : TestBase
             "/home/john/Comics/Marvel/X-Men/Cable (1993)/Cable (-1) (1997) (Digital) (Dark-Star).cbz", 
             "/home/john/Comics",
             true);
-
-        TestContext.WriteLine(Logger.ToString());
 
         Assert.IsFalse(result.IsFailed);
         var info = result.Value;
@@ -181,8 +171,6 @@ public class ComicInfoTests : TestBase
             "/home/john/Comics",
             true);
 
-        TestContext.WriteLine(Logger.ToString());
-
         Assert.IsFalse(result.IsFailed);
         var info = result.Value;
         Assert.IsNotNull(info);
@@ -207,8 +195,6 @@ public class ComicInfoTests : TestBase
             "/home/john/Comics/Other/Something Random 12 - Random title.cbz", 
             "/home/john/Comics",
             true);
-
-        TestContext.WriteLine(Logger.ToString());
 
         Assert.IsFalse(result.IsFailed);
         var info = result.Value;
@@ -235,8 +221,6 @@ public class ComicInfoTests : TestBase
             "/home/john/Comics",
             true);
 
-        TestContext.WriteLine(Logger.ToString());
-
         Assert.IsFalse(result.IsFailed);
         var info = result.Value;
         Assert.IsNotNull(info);
@@ -261,8 +245,6 @@ public class ComicInfoTests : TestBase
             "/home/john/Comics/Marvel/X-Men/X-Man/X-Man 005 (1995) (digital) (Sierra-HD).cbz", 
             "/home/john/Comics",
             true);
-
-        TestContext.WriteLine(Logger.ToString());
 
         Assert.IsFalse(result.IsFailed);
         var info = result.Value;
@@ -289,8 +271,6 @@ public class ComicInfoTests : TestBase
             "/home/john/Comics",
             true);
 
-        TestContext.WriteLine(Logger.ToString());
-
         Assert.IsFalse(result.IsFailed);
         var info = result.Value;
         Assert.IsNotNull(info);
@@ -315,8 +295,6 @@ public class ComicInfoTests : TestBase
             "/home/john/Comics/Marvel/X-Men/X-Man/X-Man Annual '04.cbz", 
             "/home/john/Comics",
             true);
-
-        TestContext.WriteLine(Logger.ToString());
 
         Assert.IsFalse(result.IsFailed);
         var info = result.Value;
@@ -344,8 +322,6 @@ public class ComicInfoTests : TestBase
             "/home/john/Comics",
             true);
 
-        TestContext.WriteLine(Logger.ToString());
-
         Assert.IsFalse(result.IsFailed);
         var info = result.Value;
         Assert.IsNotNull(info);
@@ -371,8 +347,6 @@ public class ComicInfoTests : TestBase
             "/home/john/Comics",
             true);
 
-        TestContext.WriteLine(Logger.ToString());
-
         Assert.IsFalse(result.IsFailed);
         var info = result.Value;
         Assert.IsNotNull(info);
@@ -396,8 +370,6 @@ public class ComicInfoTests : TestBase
             "/home/john/Comics/Marvel/X-Men/X-Man/Annuals/X-Man Annual 2004.cbz", 
             "/home/john/Comics",
             true);
-
-        TestContext.WriteLine(Logger.ToString());
 
         Assert.IsFalse(result.IsFailed);
         var info = result.Value;
@@ -423,9 +395,7 @@ public class ComicInfoTests : TestBase
             "/home/john/Comics/Marvel/X-Men/X-Man/Specials/X-Man Annual 2004.cbz", 
             "/home/john/Comics",
             true);
-
-        TestContext.WriteLine(Logger.ToString());
-
+        
         Assert.IsFalse(result.IsFailed);
         var info = result.Value;
         Assert.IsNotNull(info);
@@ -442,6 +412,7 @@ public class ComicInfoTests : TestBase
         var name = CreateComicInfo.GetNewName(info, "cbz", 3);
         Assert.AreEqual("X-Man - Annual 2004.cbz", name.Value);
     }
+    
     [TestMethod]
     public void AnnualNoAnnual2()
     {
@@ -449,8 +420,6 @@ public class ComicInfoTests : TestBase
             "/home/john/Comics/Zenoscope/Grimm Fairy Tales Specials/Grimm Fairy Tales 2016 Special (2016) (Digital).cbz", 
             "/home/john/Comics",
             true);
-
-        TestContext.WriteLine(Logger.ToString());
 
         Assert.IsFalse(result.IsFailed);
         var info = result.Value;
@@ -467,18 +436,14 @@ public class ComicInfoTests : TestBase
         var name = CreateComicInfo.GetNewName(info, "cbz", 3);
         Assert.AreEqual("Grimm Fairy Tales Specials - Annual 2016.cbz", name.Value);
     }
+    
     // [TestMethod]
     public void PhysicalFileTest()
     {
         const string FILE =
             "/home/john/Comics/DC/Batman (1939)/Batman - #1 - Batman vs. Joker [old] [great] [amazing].cbz";
-        var logger = new TestLogger();
-        var args = new NodeParameters(FILE, logger, false, string.Empty, new LocalFileService())
-        {
-            LibraryFileName = FILE,
-            LibraryPath = "/home/john/Comics"
-        };
-        args.TempPath = TempPath;
+        var args = GetNodeParameters(FILE);
+        args.LibraryPath = "/home/john/Comics";
 
         var ele = new CreateComicInfo();
         var result = ele.Execute(args);

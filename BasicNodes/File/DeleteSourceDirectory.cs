@@ -40,6 +40,11 @@ public class DeleteSourceDirectory : Node
     /// eg if [mkv, mp4, mov, etc] is the list, if any video file is found the directory will not be deleted.
     /// </summary>
     [StringArray(2)] public string[] IncludePatterns { get; set; }
+    
+    /// <summary>
+    /// Gets or sets if only the top most directory should be deleted, and all parent directories should be left alone
+    /// </summary>
+    [Boolean(3)] public bool TopMostOnly { get; set; }
 
     /// <summary>
     /// Executes the flow element
@@ -47,8 +52,71 @@ public class DeleteSourceDirectory : Node
     /// <param name="args">the node parameters</param>
     /// <returns>the output to call next, -1 to abort flow, 0 to end flow</returns>
     public override int Execute(NodeParameters args)
+        => TopMostOnly ? DeleteTopMostOnly(args) : DeleteFull(args);
+
+    /// <summary>
+    /// Deletes only the top most directory in the library
+    /// </summary>
+    /// <param name="args">the node parameters</param>
+    /// <returns>the output to call next, -1 to abort flow, 0 to end flow</returns>
+    private int DeleteTopMostOnly(NodeParameters args)
     {
-        string libraryPath = args.LibraryFileName.Substring(0, args.LibraryFileName.Length - args.RelativeFile.Length)
+        string libraryPath = args.LibraryFileName[..^args.RelativeFile.Length]
+            .TrimEnd('/')
+            .TrimEnd('\\');
+        string dir = args.OriginalIsDirectory ? args.LibraryFileName : FileHelper.GetDirectory(args.LibraryFileName);
+        args.Logger?.ILog("Deleting top level directory only: " + dir);
+        var existsResult = args.FileService.DirectoryExists(dir);
+        if (existsResult.Failed(out var error))
+        {
+            args.Logger?.WLog("Failed determining if directory exists: " + error);
+            return 2;
+        }
+
+        if (existsResult.Value == false)
+        {
+            args.Logger?.ILog($"Directory '{dir}' no longer exists.");
+            return 2;
+        }
+
+        if (IfEmpty)
+        {
+            args.Logger?.ILog($"Checking if directory is empty: {dir}");
+            var emptyResult = args.FileService.DirectoryEmpty(dir, IncludePatterns);
+            if (emptyResult.Failed(out error))
+            {
+                args.Logger?.WLog(error);
+                return 2;
+            }
+
+            if (emptyResult.Value == false)
+            {
+                args.Logger?.ILog("Directory is not empty");
+                return 2;
+            }
+            args.Logger?.ILog("Directory is considered empty");
+        }
+
+        args.Logger?.ILog("About to delete directory: " + dir);
+        var deleteResult = args.FileService.DirectoryDelete(dir, true);
+        if (deleteResult.Failed(out error))
+        {
+            args.Logger?.WLog("Failed to deleted directory: " + error);
+            return 2;
+        }
+
+        args.Logger?.ILog("Directory deleted: " + dir);
+        return 1;
+    }
+
+    /// <summary>
+    /// Deletes the full library folder
+    /// </summary>
+    /// <param name="args">the node parameters</param>
+    /// <returns>the output to call next, -1 to abort flow, 0 to end flow</returns>
+    private int DeleteFull(NodeParameters args)
+    {
+        string libraryPath = args.LibraryFileName[..^args.RelativeFile.Length]
             .TrimEnd('/')
             .TrimEnd('\\');
 

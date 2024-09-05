@@ -82,6 +82,67 @@ public class LocalFileService : IFileService
         }
     }
 
+    /// <inheritdoc />
+    public Result<bool> DirectoryEmpty(string path, string[]? includePatterns = null)
+    {
+        if (IsProtectedPath(ref path))
+            return Result<bool>.Fail("Cannot access protected path: " + path);
+
+        try
+        {
+            if (!Directory.Exists(path))
+                return Result<bool>.Success(true); // Path doesn't exist, considered empty
+
+            // Get all files in the directory
+            var files = Directory.GetFiles(path);
+
+            // If there are patterns, only count matching files
+            if (includePatterns != null && includePatterns.Length > 0)
+            {
+                foreach (var file in files)
+                {
+                    foreach (var pattern in includePatterns)
+                    {
+                        try
+                        {
+                            if (System.Text.RegularExpressions.Regex.IsMatch(file, pattern.Trim(),
+                                    System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+                                return Result<bool>.Success(false); // File matches, directory is not empty
+                        }
+                        catch (Exception)
+                        {
+                            // Handle regex exceptions silently, as per your example
+                        }
+                    }
+                }
+            }
+            else if (files.Length > 0)
+            {
+                // No patterns provided, directory is not empty if any file exists
+                return Result<bool>.Success(false);
+            }
+
+            // Check for directories (subdirectories are not affected by includePatterns)
+            var dirs = Directory.GetDirectories(path);
+            if (dirs.Length > 0)
+                return Result<bool>.Success(false); // Directory contains subdirectories, not empty
+
+            return Result<bool>.Success(true); // Directory is empty
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Result<bool>.Fail("Unauthorized access to path: " + path + " - " + ex.Message);
+        }
+        catch (IOException ex)
+        {
+            return Result<bool>.Fail("IO error while accessing path: " + path + " - " + ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return Result<bool>.Fail("Error while accessing path: " + path + " - " + ex.Message);
+        }
+    }
+
     public Result<bool> DirectoryDelete(string path, bool recursive = false)
     {
         if (IsProtectedPath(ref path))
