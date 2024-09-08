@@ -198,6 +198,22 @@ public class TVShowLookup : Node
         // Replace "s01.02" or "s01.e02" with "s01e02"
         text = Regex.Replace(text, @"(?<season>s\d+)\.(e)?(?<episode>\d+)", "${season}e${episode}", RegexOptions.IgnoreCase);
 
+        // this removes any {tvdb-123456} etc
+        string variableMatch = @"\{[a-zA-Z]+-[0-9]+\}";
+        // Replace the matched pattern with an empty string while ensuring that spaces around it are collapsed
+        text = Regex.Replace(text, variableMatch, m =>
+        {
+            // If there are spaces before and after, replace with a single space
+            if (Regex.IsMatch(m.Value, @"^\s*\{\w+-\d+\}\s*$"))
+                return " ";
+            // Otherwise, collapse completely without adding spaces
+            return "";
+        });
+        // Trim any leading or trailing spaces
+        text = text.Trim();
+        
+        
+        
         // string year = null;
         // var reYear = Regex.Match(text, @"\((19|20)[\d]{2}\)", RegexOptions.CultureInvariant);
         // if (reYear.Success)

@@ -191,6 +191,53 @@ public class TVShowLookupTests : TestBase
         (string lookupName, string year) = TVShowLookup.GetLookupName(filename, true);
         Assert.AreEqual("Orange is the New Black", lookupName);
     }
+    
+    
+    [TestMethod]
+    public void TvdbId_FolderName_False()
+    {
+        var args = GetNodeParameters("/anime/Reincarnated as a Sword (2022) {tvdb-410378}/Season 01/Reincarnated as a Sword (2022) - S01E05 - 005 - [Bluray-1080p][10bit][x265][FLAC 2.0][EN+JA]-YURASUKA.mkv");
+
+        var element = new TVShowLookup();
+        element.UseFolderName = false;
+
+        var result = element.Execute(args);
+        Assert.AreEqual(1, result);
+        Assert.IsTrue(args.Parameters.ContainsKey(Globals.TV_SHOW_INFO));
+
+        var info = args.Parameters[Globals.TV_SHOW_INFO] as TVShowInfo;
+        Assert.IsNotNull(info);
+
+        Assert.AreEqual("Reincarnated as a Sword", info.Name);
+        Assert.AreEqual(2022, info.FirstAirDate.Year);
+        Assert.AreEqual("ja", info.OriginalLanguage);
+        Assert.AreEqual("Reincarnated as a Sword", args.Variables["tvshow.Title"]);
+        Assert.AreEqual(2022, args.Variables["tvshow.Year"]);
+    }
+    
+    
+    
+    [TestMethod]
+    public void TvdbId_FolderName_True()
+    {
+        var args = GetNodeParameters("/anime/Reincarnated as a Sword (2022) {tvdb-410378}/Season 01/Reincarnated as a Sword (2022) - S01E05 - 005 - [Bluray-1080p][10bit][x265][FLAC 2.0][EN+JA]-YURASUKA.mkv");
+
+        var element = new TVShowLookup();
+        element.UseFolderName = true;
+
+        var result = element.Execute(args);
+        Assert.AreEqual(1, result);
+        Assert.IsTrue(args.Parameters.ContainsKey(Globals.TV_SHOW_INFO));
+
+        var info = args.Parameters[Globals.TV_SHOW_INFO] as TVShowInfo;
+        Assert.IsNotNull(info);
+
+        Assert.AreEqual("Reincarnated as a Sword", info.Name);
+        Assert.AreEqual(2022, info.FirstAirDate.Year);
+        Assert.AreEqual("ja", info.OriginalLanguage);
+        Assert.AreEqual("Reincarnated as a Sword", args.Variables["tvshow.Title"]);
+        Assert.AreEqual(2022, args.Variables["tvshow.Year"]);
+    }
 }
 
 
