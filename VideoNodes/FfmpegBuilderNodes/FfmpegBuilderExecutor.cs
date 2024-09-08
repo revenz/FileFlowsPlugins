@@ -81,13 +81,6 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             return _StrictOptions;
         }
     }
-    
-    /// <summary>
-    /// Gets or sets the probe size in bytes
-    /// </summary>
-    [FormInput(FormInputType.FileSize, 3)]
-    [DefaultValue(5_000_000)]
-    public long ProbeSize { get; set; }
 
     /// <inheritdoc />
     public override int Execute(NodeParameters args)
@@ -199,13 +192,11 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         // this is used by the qsv filter for hw decoding
         List<string> afterStartArguments = new();
 
-        if (ProbeSize >= 32)
+        startArgs.AddRange(new[]
         {
-            startArgs.AddRange(new[]
-            {
-                "-probesize", ProbeSize.ToString()
-            });
-        }
+            "-probesize", VideoInfoHelper.ProbeSize + "M",
+            "-analyzeduration", VideoInfoHelper.AnalyzeDuration.ToString()
+        });
 
         bool isEncodingVideo =
             model.VideoStreams.Any(x => x.Deleted == false && x.EncodingParameters?.Any() == true || x.Filter?.Any() == true);

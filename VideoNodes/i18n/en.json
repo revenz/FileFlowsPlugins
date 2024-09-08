@@ -84,7 +84,10 @@
         "Fields": {
           "ProbeSize": "Probe Size",
           "ProbeSize-Suffix": "MB",
-          "ProbeSize-Help": "The probe size to use in FFMPEG when executing."
+          "ProbeSize-Help": "The probe size to use in FFMPEG when executing.",
+          "AnalyzeDuration": "Analyze Duration",
+          "AnalyzeDuration-Help": "Specify how many microseconds are analyzed to probe the input",
+          "AnalyzeDuration-Suffix": "seconds"
         }
       },
       "VideoDuration": {

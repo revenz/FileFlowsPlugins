@@ -11,10 +11,21 @@ public class VideoFile : VideoNode
 
     public override bool NoEditorOnAdd => true;
 
+    /// <summary>
+    /// Gets or sets the probe size
+    /// </summary>
     [DefaultValue(25)]
     [NumberInt(1)]
-    [Range(5, 1000)]
+    [Range(5, 5000)]
     public int ProbeSize { get; set; }
+
+    /// <summary>
+    /// Gets or sets how many microseconds are analyzed to probe the input
+    /// </summary>
+    [DefaultValue(5)]
+    [NumberInt(1)]
+    [Range(1, 600)]
+    public int AnalyzeDuration { get; set; }
 
     private Dictionary<string, object> _Variables;
     public override Dictionary<string, object> Variables => _Variables;
@@ -46,13 +57,16 @@ public class VideoFile : VideoNode
             },
             { "vi.Width", 1920 },
             { "vi.Height", 1080 },
+            { nameof(ProbeSize), 5_000_000 },
+            { nameof(AnalyzeDuration), 25}
         };
     }
 
     public override int Execute(NodeParameters args)
     {
         PrintFFmpegVersion(args);
-        VideoInfoHelper.ProbeSize = this.ProbeSize;
+        VideoInfoHelper.ProbeSize = this.ProbeSize * 1_000_000;
+        VideoInfoHelper.AnalyzeDuration = this.AnalyzeDuration;
 
         try
         {
