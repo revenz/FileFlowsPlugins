@@ -66,7 +66,7 @@ public class VideoFile : VideoNode
     {
         PrintFFmpegVersion(args);
         VideoInfoHelper.ProbeSize = this.ProbeSize;
-        VideoInfoHelper.AnalyzeDuration = this.AnalyzeDuration * 1_000_000;
+        VideoInfoHelper.AnalyzeDuration = (this.AnalyzeDuration > 1 ? AnalyzeDuration : 5) * 1_000_000;
 
         try
         {
