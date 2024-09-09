@@ -12,7 +12,7 @@ public class VideoFile : VideoNode
     public override bool NoEditorOnAdd => true;
 
     /// <summary>
-    /// Gets or sets the probe size
+    /// Gets or sets the probe size in MegaBytes
     /// </summary>
     [DefaultValue(25)]
     [NumberInt(1)]
@@ -20,7 +20,7 @@ public class VideoFile : VideoNode
     public int ProbeSize { get; set; }
 
     /// <summary>
-    /// Gets or sets how many microseconds are analyzed to probe the input
+    /// Gets or sets how many seconds are analyzed to probe the input
     /// </summary>
     [DefaultValue(5)]
     [NumberInt(1)]
@@ -65,8 +65,8 @@ public class VideoFile : VideoNode
     public override int Execute(NodeParameters args)
     {
         PrintFFmpegVersion(args);
-        VideoInfoHelper.ProbeSize = this.ProbeSize * 1_000_000;
-        VideoInfoHelper.AnalyzeDuration = this.AnalyzeDuration;
+        VideoInfoHelper.ProbeSize = this.ProbeSize;
+        VideoInfoHelper.AnalyzeDuration = this.AnalyzeDuration * 1_000_000;
 
         try
         {
