@@ -27,21 +27,39 @@ public class VariableMatch : Node
     /// <inheritdoc />
     public override bool FailureNode => true;
 
-    [Required]
-    [Select("VARIABLE_LIST", 1)]
+    /// <summary>
+    /// Gets or sets the variable to match
+    /// </summary>
     public ObjectReference Variable { get; set; }
+    
+    /// <summary>
+    /// Gets or sets the variable to match
+    /// </summary>
+    [Required]
+    [Combobox("VARIABLE_LIST", 1)]
+    public string VariableName { get; set; }
 
+    /// <summary>
+    /// Gets or sets the value to match
+    /// </summary>
     [Required]
     [TextVariable(2)]
     public string Input { get; set; }
 
 
-
     /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
-        string test= args.ReplaceVariables(Input, stripMissing: true);
-        bool matches = args.MatchesVariable(Variable.Name, test);
+        string variableName = VariableName?.EmptyAsNull() ?? Variable?.Name?.EmptyAsNull() ?? string.Empty;
+        if (string.IsNullOrWhiteSpace(variableName))
+        {
+            args.FailureReason = "No varaible defined to match against";
+            args.Logger?.ELog(args.FailureReason);
+            return -1;
+        }
+
+        string test=  args.ReplaceVariables(Input, stripMissing: true);
+        bool matches = args.MatchesVariable(variableName, test);
         return matches ? 1 : 2;
     }
 }

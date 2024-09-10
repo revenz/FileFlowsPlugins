@@ -579,6 +579,8 @@
         "Fields": {
           "Variable": "Variable",
           "Variable-Help": "The variable to match against",
+          "VariableName": "Variable",
+          "VariableName-Help": "The variable to match against",
           "Input": "Input",
           "Input-Help": "The input to match the variable against."
         },

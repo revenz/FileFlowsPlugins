@@ -55,6 +55,46 @@ public class VariableMatchTests
         var result = vm.Execute(Args);
         Assert.AreEqual(2, result);
     }
+    
+    
+    
+    
+    
+    
+    
+
+    [TestMethod]
+    public void VariableMatch_Match_New()
+    {
+        VariableMatch vm = new VariableMatch();
+        vm.VariableName = "test";
+        vm.Input = "bobby drake";
+        vm.PreExecute(Args);
+        var result = vm.Execute(Args);
+        Assert.AreEqual(1, result);
+    }
+
+    [TestMethod]
+    public void VariableMatch_Match2_New()
+    {
+        VariableMatch vm = new VariableMatch();
+        vm.VariableName = "test";
+        vm.Input = "BOBBY Two";
+        vm.PreExecute(Args);
+        var result = vm.Execute(Args);
+        Assert.AreEqual(1, result);
+    }
+
+    [TestMethod]
+    public void VariableMatch_NoMatch_New()
+    {
+        VariableMatch vm = new VariableMatch();
+        vm.VariableName = "test";
+        vm.Input = "Robert Drake";
+        vm.PreExecute(Args);
+        var result = vm.Execute(Args);
+        Assert.AreEqual(2, result);
+    }
 }
 
 
