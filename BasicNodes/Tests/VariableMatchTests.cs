@@ -6,7 +6,7 @@ using FileFlows.BasicNodes.Functions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 [TestClass]
-public class VariableMatchTests
+public class VariableMatchTests : TestBase
 {
     FileFlows.Plugin.NodeParameters Args;
 
@@ -15,11 +15,11 @@ public class VariableMatchTests
 /Bobby Drake/
 ";
 
-    [TestInitialize]
-    public void TestStarting()
+    protected override void TestStarting()
     {
-        Args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", new TestLogger(), false, string.Empty, null);;
+        Args = new FileFlows.Plugin.NodeParameters(@"c:\test\testfile.mkv", Logger, false, string.Empty, null);;
         Args.GetToolPathActual = (arg) => TestVariable;
+        Args.Variables["test"] = TestVariable;
 
     }
 
@@ -28,7 +28,7 @@ public class VariableMatchTests
     {
         VariableMatch vm = new VariableMatch();
         vm.Variable = new FileFlows.Plugin.ObjectReference() { Name = "test" };
-        vm.Input = "bobby drake";
+        vm.Input = "*bobby drake*";
         vm.PreExecute(Args);
         var result = vm.Execute(Args);
         Assert.AreEqual(1, result);
@@ -39,10 +39,10 @@ public class VariableMatchTests
     {
         VariableMatch vm = new VariableMatch();
         vm.Variable = new FileFlows.Plugin.ObjectReference() { Name = "test" };
-        vm.Input = "BOBBY Two";
+        vm.Input = "*BOBBY Two*";
         vm.PreExecute(Args);
         var result = vm.Execute(Args);
-        Assert.AreEqual(1, result);
+        Assert.AreEqual(2, result);
     }
 
     [TestMethod]
@@ -50,25 +50,18 @@ public class VariableMatchTests
     {
         VariableMatch vm = new VariableMatch();
         vm.Variable = new FileFlows.Plugin.ObjectReference() { Name = "test" };
-        vm.Input = "Robert Drake";
+        vm.Input = "*Robert Drake*";
         vm.PreExecute(Args);
         var result = vm.Execute(Args);
         Assert.AreEqual(2, result);
     }
-    
-    
-    
-    
-    
-    
-    
 
     [TestMethod]
     public void VariableMatch_Match_New()
     {
         VariableMatch vm = new VariableMatch();
         vm.VariableName = "test";
-        vm.Input = "bobby drake";
+        vm.Input = "*bobby drake*";
         vm.PreExecute(Args);
         var result = vm.Execute(Args);
         Assert.AreEqual(1, result);
@@ -79,10 +72,10 @@ public class VariableMatchTests
     {
         VariableMatch vm = new VariableMatch();
         vm.VariableName = "test";
-        vm.Input = "BOBBY Two";
+        vm.Input = "*BOBBY Two*";
         vm.PreExecute(Args);
         var result = vm.Execute(Args);
-        Assert.AreEqual(1, result);
+        Assert.AreEqual(2, result);
     }
 
     [TestMethod]
@@ -90,7 +83,7 @@ public class VariableMatchTests
     {
         VariableMatch vm = new VariableMatch();
         vm.VariableName = "test";
-        vm.Input = "Robert Drake";
+        vm.Input = "*Robert Drake*";
         vm.PreExecute(Args);
         var result = vm.Execute(Args);
         Assert.AreEqual(2, result);

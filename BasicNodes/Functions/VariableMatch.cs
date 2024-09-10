@@ -69,6 +69,7 @@ public class VariableMatch : Node
         }
         
         var variableString = variable?.ToString();
+        args.Logger.ILog($"Variables[{variableName}]: " + variableString);
 
         if (string.IsNullOrWhiteSpace(variableString))
         {
