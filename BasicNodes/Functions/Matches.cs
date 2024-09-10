@@ -56,15 +56,6 @@ public class Matches : Node
                 
                 args.Logger?.ILog("Testing match value: " + strValue);
                 
-                if (GeneralHelper.IsRegex(match.Value))
-                {
-                    if (Regex.IsMatch(strValue, match.Value, RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
-                    {
-                        args.Logger?.ILog($"Match found '{match.Value}' = {strValue}");
-                        return output;
-                    }
-                }
-
                 if (Regex.IsMatch(match.Value ??string.Empty, "^(true|1)$", RegexOptions.IgnoreCase) &&
                     Regex.IsMatch(strValue, "^(true|1)$", RegexOptions.IgnoreCase))
                 {
@@ -78,8 +69,6 @@ public class Matches : Node
                     return output;
                 }
 
-                if (args.StringHelper.Matches(strValue, match.Value))
-                    return output;
                 
                 if (args.MathHelper.IsMathOperation(match.Value))
                 {
@@ -89,6 +78,9 @@ public class Matches : Node
                         return output;
                     }
                 }
+                
+                if (args.StringHelper.Matches(match.Value, strValue))
+                    return output;
             }
             catch (Exception)
             {
