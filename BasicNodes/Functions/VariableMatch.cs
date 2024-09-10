@@ -53,13 +53,38 @@ public class VariableMatch : Node
         string variableName = VariableName?.EmptyAsNull() ?? Variable?.Name?.EmptyAsNull() ?? string.Empty;
         if (string.IsNullOrWhiteSpace(variableName))
         {
-            args.FailureReason = "No varaible defined to match against";
+            args.FailureReason = "No variable defined to match against";
             args.Logger?.ELog(args.FailureReason);
             return -1;
         }
+        string test = args.ReplaceVariables(Input, stripMissing: true);
 
-        string test=  args.ReplaceVariables(Input, stripMissing: true);
-        bool matches = args.MatchesVariable(variableName, test);
+        args.Logger.ILog("Variable: " + variableName);
+        args.Logger.ILog("Test Value: " + test);
+
+        if (args.Variables.TryGetValue(variableName, out object variable) == false)
+        {
+            args.Logger?.ILog("Variable not found");
+            return 2;
+        }
+        
+        var variableString = variable?.ToString();
+
+        if (string.IsNullOrWhiteSpace(variableString))
+        {
+            args.Logger?.ILog("Variable had no appropriate string value");
+            return 2;
+        }
+        
+        if (args.MathHelper.IsMathOperation(test) && double.TryParse(variableString, out var dbl))
+        {
+            args.Logger?.ILog("Testing math operation: " + test);
+            
+            bool mathMatches = args.MathHelper.IsTrue(test, dbl);
+            return mathMatches ? 1 : 2;
+        }
+        
+        bool matches = args.StringHelper.Matches(test, variableString);
         return matches ? 1 : 2;
     }
 }
