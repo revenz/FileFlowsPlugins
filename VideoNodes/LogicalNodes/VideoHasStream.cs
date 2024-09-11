@@ -253,9 +253,11 @@ public class VideoHasStream : VideoNode
                 if (string.IsNullOrEmpty(lang) == false && LanguageMatches(args, lang, x.Language) == false)
                     return false;
 
-                if (string.IsNullOrWhiteSpace(Channels) == false && args.MathHelper.IsFalse(Channels, x.Channels))
+                double xChannels = Math.Round(x.Channels, 1);
+
+                if (string.IsNullOrWhiteSpace(Channels) == false && args.MathHelper.IsFalse(Channels, xChannels))
                 {
-                    args.Logger.ILog("Channels does not match: " + x.Channels + " vs " + Channels);
+                    args.Logger.ILog("Channels does not match: " + xChannels + " vs " + Channels);
                     return false;
                 }
 
