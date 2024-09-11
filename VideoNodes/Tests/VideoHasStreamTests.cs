@@ -279,6 +279,60 @@ public class VideoHasStreamTests : VideoTestBase
         Assert.AreEqual(1, output);
     }
 
+
+    [TestMethod]
+    public void VideoHasStream_Audio_Lang_Regex()
+    {
+        var args = GetVideoNodeParameters();
+
+        var vf = new VideoFile();
+        vf.PreExecute(args);
+        Assert.AreEqual(1, vf.Execute(args));
+
+        VideoHasStream element = new();
+        element.Language = "/en|de|fr/";
+        element.Stream = "Audio";
+        element.PreExecute(args);
+        int output = element.Execute(args);
+
+        Assert.AreEqual(1, output);
+    }
+    [TestMethod]
+    public void VideoHasStream_Audio_Lang_Regex_Invert()
+    {
+        var args = GetVideoNodeParameters();
+
+        var vf = new VideoFile();
+        vf.PreExecute(args);
+        Assert.AreEqual(1, vf.Execute(args));
+
+        VideoHasStream element = new();
+        element.Language = "!/de|fr/";
+        element.Stream = "Audio";
+        element.PreExecute(args);
+        int output = element.Execute(args);
+
+        Assert.AreEqual(1, output);
+    }
+    
+    [TestMethod]
+    public void VideoHasStream_Audio_Lang_English()
+    {
+        var args = GetVideoNodeParameters();
+
+        var vf = new VideoFile();
+        vf.PreExecute(args);
+        Assert.AreEqual(1, vf.Execute(args));
+
+        VideoHasStream element = new();
+        element.Language = "English";
+        element.Stream = "Audio";
+        element.PreExecute(args);
+        int output = element.Execute(args);
+
+        Assert.AreEqual(1, output);
+    }
+    
     [TestMethod]
     public void VideoHasStream_Audio_Lang_Fail()
     {
