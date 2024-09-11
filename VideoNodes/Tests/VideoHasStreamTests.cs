@@ -334,6 +334,24 @@ public class VideoHasStreamTests : VideoTestBase
     }
     
     [TestMethod]
+    public void VideoHasStream_Audio_Lang_StartsWith()
+    {
+        var args = GetVideoNodeParameters();
+
+        var vf = new VideoFile();
+        vf.PreExecute(args);
+        Assert.AreEqual(1, vf.Execute(args));
+
+        VideoHasStream element = new();
+        element.Language = "Eng*";
+        element.Stream = "Audio";
+        element.PreExecute(args);
+        int output = element.Execute(args);
+
+        Assert.AreEqual(1, output);
+    }
+    
+    [TestMethod]
     public void VideoHasStream_Audio_Lang_Fail()
     {
         var args = GetVideoNodeParameters();
