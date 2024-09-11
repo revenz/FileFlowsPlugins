@@ -337,13 +337,22 @@ public class VideoHasStream : VideoNode
     /// <returns>the match result</returns>
     private bool LanguageMatches(NodeParameters args, string lang, string streamLanguage)
     {
+        lang = args.ReplaceVariables(lang.Replace("{orig}", "{OriginalLanguage}"), stripMissing: false);
+        if (args.Variables.TryGetValue("OriginalLanguage", out var oOrigLanguage) && oOrigLanguage is string origLanguage &&
+            string.IsNullOrWhiteSpace(origLanguage) == false)
+        {
+            lang = lang.Replace("OriginalLanguage", origLanguage, StringComparison.InvariantCultureIgnoreCase);
+            lang = lang.Replace("original", origLanguage);
+            lang = lang.Replace("orig", origLanguage);
+        }
+        
         string iso1 = LanguageHelper.GetIso1Code(streamLanguage);
         string iso2 = LanguageHelper.GetIso2Code(streamLanguage);
         string english = LanguageHelper.GetEnglishFor(streamLanguage);
         var iso1Matches = ValueMatch(lang, iso1) == MatchResult.Matched;
         var iso2Matches = ValueMatch(lang, iso2) == MatchResult.Matched;
         var engMatches = ValueMatch(lang, english) == MatchResult.Matched;
-
+        
         bool anyMatches = iso1Matches || iso2Matches || engMatches;
         if(anyMatches == false)
         {

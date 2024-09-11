@@ -373,6 +373,29 @@ public class VideoHasStreamTests : VideoTestBase
     }
     
     [TestMethod]
+    public void VideoHasStream_Audio_Lang_Variable()
+    {
+        var args = GetVideoNodeParameters();
+
+        var vf = new VideoFile();
+        vf.PreExecute(args);
+        Assert.AreEqual(1, vf.Execute(args));
+
+        VideoHasStream element = new();
+        element.Stream = "Audio";
+        element.PreExecute(args);
+
+        foreach (var lang in new[] {  "orig", "original", "OriginalLanguage", "{OriginalLanguage}", "{orig}", })
+        {
+            Logger.ILog("###### Testing: " + lang);
+            args.Variables["OriginalLanguage"] = "eng";
+            element.Language = lang;
+            int output = element.Execute(args);
+            Assert.AreEqual(1, output);
+        }
+    }
+    
+    [TestMethod]
     public void VideoHasStream_Audio_Lang_Fail()
     {
         var args = GetVideoNodeParameters();
