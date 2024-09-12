@@ -254,7 +254,7 @@ public class FfmpegBuilder_TrackSorterTests : VideoTestBase
         // Mock sorters by different properties
         trackSorter.Sorters = new List<KeyValuePair<string, string>>
         {
-            new ("Codec", "^ac3$"),
+            new ("Codec", "/^ac3$/"),
         };
 
         // Act
@@ -271,6 +271,38 @@ public class FfmpegBuilder_TrackSorterTests : VideoTestBase
         Assert.AreEqual("2 / fr / eac3 / 5.1", streams[2].ToString());
     }
     
+    [TestMethod]
+    public void ProcessStreams_SortsStreamsBasedOnAc3()
+    {
+        // Arrange
+        var trackSorter = new FfmpegBuilderTrackSorter();
+        List<FfmpegAudioStream> streams = new List<FfmpegAudioStream>
+        {
+            new() { Index = 1, Channels = 2, Language = "en", Codec = "ac3" },
+            new() { Index = 2, Channels = 5.1f, Language = "fr", Codec = "eac3" },
+            new() { Index = 3, Channels = 7.1f, Language = "en", Codec = "ac3" },
+        };
+
+        // Mock sorters by different properties
+        trackSorter.Sorters = new List<KeyValuePair<string, string>>
+        {
+            new ("Codec", "ac3"),
+        };
+
+        // Act
+        var result = trackSorter.ProcessStreams(args, streams);
+
+        // Assert
+        Assert.AreEqual(1, streams[0].Index);
+        Assert.AreEqual(3, streams[1].Index);
+        Assert.AreEqual(2, streams[2].Index);
+
+        // Additional assertions for logging
+        Assert.AreEqual("1 / en / ac3 / 2.0", streams[0].ToString());
+        Assert.AreEqual("3 / en / ac3 / 7.1", streams[1].ToString());
+        Assert.AreEqual("2 / fr / eac3 / 5.1", streams[2].ToString());
+    }
+
     [TestMethod]
     public void ProcessStreams_SortsStreamsBasedOnMultipleSorters()
     {
@@ -593,6 +625,54 @@ public class FfmpegBuilder_TrackSorterTests : VideoTestBase
     }
     
     
+    [TestMethod]
+    public void ProcessStreams_SortsStreamsBasedOnLanguage_EndsWith()
+    {
+        // Arrange
+        var trackSorter = new FfmpegBuilderTrackSorter();
+        List<FfmpegAudioStream> streams = new List<FfmpegAudioStream>
+        {
+            new() { Index = 1, Channels = 2, Language = "eng", Codec = "aac" },
+            new() { Index = 2, Channels = 2, Language = "fr", Codec = "aac" },
+            new() { Index = 3, Channels = 5.1f, Language = "en", Codec = "eac3" },
+            new() { Index = 4, Channels = 5.1f, Language = "ger", Codec = "ac3" },
+            new() { Index = 5, Channels = 5.1f, Language = "German", Codec = "dts" },
+            new() { Index = 6, Channels = 5.1f, Language = "English", Codec = "aac" },
+            new() { Index = 7, Channels = 5.1f, Language = "eng", Codec = "ac3" },
+        };
+
+        // Mock sorters by different properties
+        trackSorter.Sorters = new List<KeyValuePair<string, string>>
+        {
+            new("Language", "*lish")
+        };
+
+        // Act
+        var sorted = trackSorter.SortStreams(args, streams);
+
+        // Assert
+        Assert.AreEqual(1, sorted[0].Index);
+        Assert.AreEqual(3, sorted[1].Index);
+        Assert.AreEqual(6, sorted[2].Index);
+        Assert.AreEqual(7, sorted[3].Index);
+        
+        // non english
+        Assert.AreEqual(2, sorted[4].Index);
+        Assert.AreEqual(4, sorted[5].Index);
+        Assert.AreEqual(5, sorted[6].Index);
+
+        // Additional assertions for logging
+        Assert.AreEqual("eng", sorted[0].Language);
+        Assert.AreEqual("en", sorted[1].Language);
+        Assert.AreEqual("English", sorted[2].Language);
+        Assert.AreEqual("eng", sorted[3].Language);
+        
+        Assert.AreEqual("fr", sorted[4].Language);
+        Assert.AreEqual("ger", sorted[5].Language);
+        Assert.AreEqual("German", sorted[6].Language);
+    }
+
+
     
     [TestMethod]
     public void ProcessStreams_SortsStreamsBasedOnLanguageRegex()
@@ -613,7 +693,7 @@ public class FfmpegBuilder_TrackSorterTests : VideoTestBase
         // Mock sorters by different properties
         trackSorter.Sorters = new List<KeyValuePair<string, string>>
         {
-            new("Language", "en|deu")
+            new("Language", "/en|deu/")
         };
 
         // Act
@@ -663,7 +743,7 @@ public class FfmpegBuilder_TrackSorterTests : VideoTestBase
         // Mock sorters by different properties
         trackSorter.Sorters = new List<KeyValuePair<string, string>>
         {
-            new("Language", "orig|deu")
+            new("Language", "/orig|deu/")
         };
 
         // Act
@@ -795,7 +875,7 @@ public class FfmpegBuilder_TrackSorterTests : VideoTestBase
         // Mock sorters by different properties
         trackSorter.Sorters = new List<KeyValuePair<string, string>>
         {
-            new("TitleDesc", "Commentary"),
+            new("TitleDesc", "*Commentary*"),
             new("Language", "English")
         };
         trackSorter.StreamType = "Audio";

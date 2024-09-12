@@ -213,7 +213,9 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
                     sorterLength = 2;
             }
 
-            var sortValue = Math.Round(SortValue(args, stream, Sorters[i], sorterLength)).ToString(CultureInfo.InvariantCulture);
+            var sortValue = Math.Round(SortValue(args, stream, Sorters[i], sorterLength))
+                .ToString(CultureInfo.InvariantCulture);
+            
             // Trim the sort value to sorter Length characters
             string trimmedValue = sortValue[..Math.Min(sortValue.Length, sorterLength)];
 
@@ -226,30 +228,6 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
 
         return sortKey.TrimEnd('|');
     }
-
-    /// <summary>
-    /// Tests if two lists are the same
-    /// </summary>
-    /// <param name="original">the original list</param>
-    /// <param name="reordered">the reordered list</param>
-    /// <typeparam name="T">the type of items</typeparam>
-    /// <returns>true if the lists are the same, otherwise false</returns>
-    public bool AreSame<T>(List<T> original, List<T> reordered) where T : FfmpegStream
-    {
-        for (int i = 0; i < reordered.Count; i++)
-        {
-            if (reordered[i] != original[i])
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-    
-    
-    
-    
     
     /// <summary>
     /// Calculates the sort value for a stream property based on the specified sorter.
@@ -284,17 +262,10 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
 
         if (property == nameof(stream.Language))
         {
-            object? oOriginalLanguage = null;
-            args?.Variables?.TryGetValue("OriginalLanguage", out oOriginalLanguage);
-            var originalLanguage = LanguageHelper.GetIso2Code(oOriginalLanguage?.ToString() ?? string.Empty);
-            comparison = string.Join("|",
-                comparison.Split('|', StringSplitOptions.RemoveEmptyEntries)
-                    .Select(x =>
-                    {
-                        if (x?.ToLowerInvariant()?.StartsWith("orig") == true)
-                            return originalLanguage;
-                        return LanguageHelper.GetIso2Code(x);
-                    }).Where(x => string.IsNullOrWhiteSpace(x) == false).ToArray());
+            bool matches = LanguageHelper.Matches(args, comparison, stream.Language);
+            if (invert)
+                return matches ? 1 : 0;
+            return matches ? 0 : 1;
         }
 
         var value = property switch
@@ -320,127 +291,14 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
                 result = dblValue;
             }
         }
-        else if (IsMathOperation(comparison))
-            result = ApplyMathOperation(value.ToString(), comparison) ? 0 : 1;
-        else if (GeneralHelper.IsRegex(comparison))
-            result = Regex.IsMatch(value.ToString(), comparison, RegexOptions.IgnoreCase) ? 0 : 1;
+        else if (args.MathHelper.IsMathOperation(comparison))
+            result = args.MathHelper.IsTrue(comparison, value.ToString()) ? 0 : 1;
         else if (value != null && double.TryParse(value.ToString(), out double dbl))
             result = dbl;
-        else if (property == nameof(FfmpegStream.Title) && string.IsNullOrWhiteSpace(comparison) == false && string.IsNullOrWhiteSpace(value?.ToString()) == false)
-            result = value?.ToString()?.ToLowerInvariant()?.Contains(comparison.ToLowerInvariant()) == true ? 0 : 1;
         else
-            result = string.Equals(value?.ToString() ?? string.Empty, comparison ?? string.Empty, StringComparison.OrdinalIgnoreCase) ? 0 : 1;
+            result = args.StringHelper.Matches(comparison, value) ? 0 : 1;
 
         return invert ? InvertBits(result, sorterLength) : result;
-    }
-
-    /// <summary>
-    /// Adjusts the comparison string by handling common mistakes in units and converting them into full numbers.
-    /// </summary>
-    /// <param name="comparisonValue">The original comparison string to be adjusted.</param>
-    /// <returns>The adjusted comparison string with corrected units or the original comparison if no adjustments are made.</returns>
-    private static string AdjustComparisonValue(string comparisonValue)
-    {
-        if (string.IsNullOrWhiteSpace(comparisonValue))
-            return string.Empty;
-        
-        string adjustedComparison = comparisonValue.ToLower().Trim();
-
-        // Handle common mistakes in units
-        if (adjustedComparison.EndsWith("mbps"))
-        {
-            // Make an educated guess for Mbps to kbps conversion
-            return adjustedComparison[..^4] switch
-            {
-                { } value when double.TryParse(value, out var numericValue) => (numericValue * 1_000_000)
-                    .ToString(CultureInfo.InvariantCulture),
-                _ => comparisonValue
-            };
-        }
-        if (adjustedComparison.EndsWith("kbps"))
-        {
-            // Make an educated guess for kbps to bps conversion
-            return adjustedComparison[..^4] switch
-            {
-                { } value when double.TryParse(value, out var numericValue) => (numericValue * 1_000)
-                    .ToString(CultureInfo.InvariantCulture),
-                _ => comparisonValue
-            };
-        }
-        if (adjustedComparison.EndsWith("kb"))
-        {
-            return adjustedComparison[..^2] switch
-            {
-                { } value when double.TryParse(value, out var numericValue) => (numericValue * 1_000 )
-                    .ToString(CultureInfo.InvariantCulture),
-                _ => comparisonValue
-            };
-        }
-        if (adjustedComparison.EndsWith("mb"))
-        {
-            return adjustedComparison[..^2] switch
-            {
-                { } value when double.TryParse(value, out var numericValue) => (numericValue * 1_000_000 )
-                    .ToString(CultureInfo.InvariantCulture),
-                _ => comparisonValue
-            };
-        }
-        if (adjustedComparison.EndsWith("gb"))
-        {
-            return adjustedComparison[..^2] switch
-            {
-                { } value when double.TryParse(value, out var numericValue) => (numericValue * 1_000_000_000 )
-                    .ToString(CultureInfo.InvariantCulture),
-                _ => comparisonValue
-            };
-        }
-        if (adjustedComparison.EndsWith("tb"))
-        {
-            return adjustedComparison[..^2] switch
-            {
-                { } value when double.TryParse(value, out var numericValue) => (numericValue * 1_000_000_000_000)
-                    .ToString(CultureInfo.InvariantCulture),
-                _ => comparisonValue
-            };
-        }
-
-        if (adjustedComparison.EndsWith("kib"))
-        {
-            return adjustedComparison[..^3] switch
-            {
-                { } value when double.TryParse(value, out var numericValue) => (numericValue * 1_024 )
-                    .ToString(CultureInfo.InvariantCulture),
-                _ => comparisonValue
-            };
-        }
-        if (adjustedComparison.EndsWith("mib"))
-        {
-            return adjustedComparison[..^3] switch
-            {
-                { } value when double.TryParse(value, out var numericValue) => (numericValue * 1_048_576 )
-                    .ToString(CultureInfo.InvariantCulture),
-                _ => comparisonValue
-            };
-        }
-        if (adjustedComparison.EndsWith("gib"))
-        {
-            return adjustedComparison[..^3] switch
-            {
-                { } value when double.TryParse(value, out var numericValue) => (numericValue * 1_099_511_627_776 )
-                    .ToString(CultureInfo.InvariantCulture),
-                _ => comparisonValue
-            };
-        }
-        if (adjustedComparison.EndsWith("tib"))
-        {
-            return adjustedComparison[..^3] switch
-            {
-                { } value when double.TryParse(value, out var numericValue) => (numericValue * 1_000_000_000_000)
-                    .ToString(CultureInfo.InvariantCulture),
-                _ => comparisonValue
-            };
-        }
-        return comparisonValue;
     }
 
     /// <summary>
@@ -474,49 +332,4 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
         }
     }
     
-    /// <summary>
-    /// Checks if the comparison string represents a mathematical operation.
-    /// </summary>
-    /// <param name="comparison">The comparison string to check.</param>
-    /// <returns>True if the comparison is a mathematical operation, otherwise false.</returns>
-    private static bool IsMathOperation(string comparison)
-    {
-        // Check if the comparison string starts with <=, <, >, >=, ==, or =
-        return new[] { "<=", "<", ">", ">=", "==", "=" }.Any(comparison.StartsWith);
-    }
-
-    /// <summary>
-    /// Applies a mathematical operation to the value based on the specified operation string.
-    /// </summary>
-    /// <param name="value">The value to apply the operation to.</param>
-    /// <param name="operation">The operation string representing the mathematical operation.</param>
-    /// <returns>True if the mathematical operation is successful, otherwise false.</returns>
-    private static bool ApplyMathOperation(string value, string operation)
-    {
-        // This is a basic example; you may need to handle different operators
-        switch (operation.Substring(0, 2))
-        {
-            case "<=":
-                return Convert.ToDouble(value) <= Convert.ToDouble(AdjustComparisonValue(operation[2..].Trim()));
-            case ">=":
-                return Convert.ToDouble(value) >= Convert.ToDouble(AdjustComparisonValue(operation[2..].Trim()));
-            case "==":
-                return Math.Abs(Convert.ToDouble(value) - Convert.ToDouble(AdjustComparisonValue(operation[2..].Trim()))) < 0.05f;
-            case "!=":
-            case "<>":
-                return Math.Abs(Convert.ToDouble(value) - Convert.ToDouble(AdjustComparisonValue(operation[2..].Trim()))) > 0.05f;
-        }
-
-        switch (operation.Substring(0, 1))
-        {
-            case "<":
-                return Convert.ToDouble(value) < Convert.ToDouble(AdjustComparisonValue(operation[1..].Trim()));
-            case ">":
-                return Convert.ToDouble(value) > Convert.ToDouble(AdjustComparisonValue(operation[1..].Trim()));
-            case "=":
-                return Math.Abs(Convert.ToDouble(value) - Convert.ToDouble(AdjustComparisonValue(operation[1..].Trim()))) < 0.05f;
-        }
-
-        return false;
-    }
 }
