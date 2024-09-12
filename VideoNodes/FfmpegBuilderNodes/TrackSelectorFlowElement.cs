@@ -145,7 +145,7 @@ public abstract class TrackSelectorFlowElement<T> : FfmpegBuilderNode where T : 
             switch (key)
             {
                 case "language":
-                    if (LanguageMatches(stream, kvValue))
+                    if (LanguageHelper.Matches(Args, kvValue, stream.Language))
                         Args?.Logger?.ILog($"Language Matches '{stream}' = {kvValue}");
                     else
                     {
@@ -197,11 +197,11 @@ public abstract class TrackSelectorFlowElement<T> : FfmpegBuilderNode where T : 
     /// <returns>true if channels matches, otherwise false</returns>
     private bool ChannelsMatches(IVideoStream stream, string value)
     {
-        float? channels = null;
+        double? channels = null;
         if (stream is AudioStream audio)
-            channels = audio.Channels;
+            channels = Math.Round(audio.Channels, 1);
         else if(stream is FfmpegAudioStream ffAudio)
-            channels = ffAudio.Channels;
+            channels = Math.Round(ffAudio.Channels, 1);
         else
         {
             Args?.Logger?.WLog("Not an audio stream, cannot test Channels");
@@ -220,18 +220,5 @@ public abstract class TrackSelectorFlowElement<T> : FfmpegBuilderNode where T : 
         }
 
         return Math.Abs(channels.Value - dblValue) < 0.05f;
-    }
-
-    /// <summary>
-    /// Checks if the language matches
-    /// </summary>
-    /// <param name="stream">the stream to check</param>
-    /// <param name="value">the value to check</param>
-    /// <returns>true if language matches, otherwise false</returns>
-    private bool LanguageMatches(IVideoStream stream, string value)
-    {
-        if (value.StartsWith('='))
-            value = value[1..];
-        return LanguageHelper.AreSame(stream.Language, value);
     }
 }
