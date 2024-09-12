@@ -581,8 +581,8 @@
           "Variable-Help": "The variable to match against",
           "VariableName": "Variable",
           "VariableName-Help": "The variable to match against",
-          "Input": "Input",
-          "Input-Help": "The input to match the variable against."
+          "Input": "Value",
+          "Input-Help": "The value to match the variable against."
         },
         "Outputs": {
           "1": "Input matched variable",
