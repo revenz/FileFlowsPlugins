@@ -197,6 +197,29 @@ public class TVEpisodeLookupTests : TestBase
     }
 
     private record TVLookupTestData(string Show, string Path);
+    
+    
+
+    
+    [TestMethod]
+    public void Apostrophe()
+    {
+        var args = GetNodeParameters("data/media/tv/JoJo's Bizarre Adventure (2012)/Season 2/JoJo's Bizarre Adventure (2012) - S02E38 - The Gatekeeper of Hell, Pet Shop, Part 1.mkv");
+
+        var element = new TVEpisodeLookup();
+        element.UseFolderName = false;
+
+        var result = element.Execute(args);
+        Assert.AreEqual(1, result);
+        Assert.IsTrue(args.Parameters.ContainsKey(Globals.TV_SHOW_INFO));
+
+        var info = args.Parameters[Globals.TV_SHOW_INFO] as TVShowInfo;
+        Assert.IsNotNull(info);
+
+        Assert.AreEqual("JoJo's Bizarre Adventure", info.Name);
+        Assert.AreEqual(2012, info.FirstAirDate.Year);
+        Assert.AreEqual("ja", info.OriginalLanguage);
+    }
 }
 
 #endif

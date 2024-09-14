@@ -261,7 +261,6 @@ public class TVShowLookupTests : TestBase
         Assert.AreEqual("Missions", args.Variables["tvshow.Title"]);
         Assert.AreEqual(2017, args.Variables["tvshow.Year"]);
     }
-
 }
 
 

@@ -224,13 +224,13 @@ public class TVShowLookup : Node
         (text, var year) = ExtractYearAndCleanText(text);
         
         
-        string pattern = @"^(?<showName>[\w\s.-]+)[. _-]?(?:(s|S)(?<season>\d+)(e|E)(?<episode>\d+)(?:-(?<lastEpisode>\d+))?)";
+        string pattern = @"^(?<showName>[\w\s',&$.-]+)[. _-]?(?:(s|S)(?<season>\d+)(e|E)(?<episode>\d+)(?:-(?<lastEpisode>\d+))?)";
 
         Match match = Regex.Match(text, pattern);
 
         if (match.Success == false)
         {
-            Match seasonMatch = Regex.Match(text, @"\.s[\d]{1,2}\.", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+            Match seasonMatch = Regex.Match(text, @"[\s\.][s][\d]{1,2}[\.ex]", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
             if (seasonMatch.Success)
             {
                 text = text[..seasonMatch.Index];  // Get the text before the match
