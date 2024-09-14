@@ -216,6 +216,26 @@ public class MovieLookupTests : TestBase
         string nfo = (string)args.Variables["NFO"];
         Assert.IsFalse(string.IsNullOrWhiteSpace(nfo));
     }
+    
+    
+    [TestMethod]
+    public void MovieLookupTests_AdamsApples()
+    {
+        var args = GetNodeParameters("/storage/cache/sabnzbd/completed/movies/Adams.Aepfel.2005.German.DL.DTSHD.1080p.BDRip.x265-sikamikanico/Adams.Aepfel.2005.German.DL.DTSHD.1080p.BDRip.x265-sikamikanico.mkv");
+
+        MovieLookup ml = new MovieLookup();
+        ml.UseFolderName = false;
+
+        var result = ml.Execute(args);
+        Assert.AreEqual(1, result);
+        Assert.IsTrue(args.Parameters.ContainsKey(Globals.MOVIE_INFO));
+
+        var mi = args.Parameters[Globals.MOVIE_INFO] as MovieInfo;
+        Assert.IsNotNull(mi);
+
+        Assert.AreEqual("Adam's Apples", mi.Title);
+        Assert.AreEqual(2005, mi.ReleaseDate.Year);
+    }
 }
 
 #endif

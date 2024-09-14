@@ -64,7 +64,10 @@ public class MovieLookup : Node
     /// <returns>the output to call next</returns>
     public override int Execute(NodeParameters args)
     {
-        string lookupName = UseFolderName ? FileHelper.GetDirectoryName(args.LibraryFileName) : FileHelper.GetShortFileNameWithoutExtension(args.LibraryFileName);
+        var originalName = UseFolderName
+            ? FileHelper.GetDirectoryName(args.LibraryFileName)
+            : FileHelper.GetShortFileNameWithoutExtension(args.LibraryFileName);
+        string lookupName = originalName;
         lookupName = lookupName.Replace(".", " ").Replace("_", " ");
 
         // look for year
@@ -90,6 +93,12 @@ public class MovieLookup : Node
         var movieApi = MovieDbFactory.Create<IApiMovieRequest>().Value;
 
         var response = movieApi.SearchByTitleAsync(lookupName).Result;
+        
+        if(response.Results.Count == 0 && originalName.Contains("german", StringComparison.CurrentCultureIgnoreCase) && lookupName.Contains("Ae", StringComparison.InvariantCultureIgnoreCase))
+        {
+            lookupName = lookupName.Replace("Ae", "Ä", StringComparison.InvariantCultureIgnoreCase);
+            response = movieApi.SearchByTitleAsync(lookupName).Result;
+        }
         
 
         // try find an exact match
