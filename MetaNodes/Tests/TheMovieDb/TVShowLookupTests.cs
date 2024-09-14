@@ -238,6 +238,30 @@ public class TVShowLookupTests : TestBase
         Assert.AreEqual("Reincarnated as a Sword", args.Variables["tvshow.Title"]);
         Assert.AreEqual(2022, args.Variables["tvshow.Year"]);
     }
+    
+    
+    [TestMethod]
+    public void SeasonFolder()
+    {
+        var args = GetNodeParameters("/mnt/tv/Missions.S01.German.AC3.DL.1080p.BluRay.x265-FuN/agffdgfdgfdg.mkv");
+
+        var element = new TVShowLookup();
+        element.UseFolderName = true;
+
+        var result = element.Execute(args);
+        Assert.AreEqual(1, result);
+        Assert.IsTrue(args.Parameters.ContainsKey(Globals.TV_SHOW_INFO));
+
+        var info = args.Parameters[Globals.TV_SHOW_INFO] as TVShowInfo;
+        Assert.IsNotNull(info);
+
+        Assert.AreEqual("Missions", info.Name);
+        Assert.AreEqual(2017, info.FirstAirDate.Year);
+        Assert.AreEqual("fr", info.OriginalLanguage);
+        Assert.AreEqual("Missions", args.Variables["tvshow.Title"]);
+        Assert.AreEqual(2017, args.Variables["tvshow.Year"]);
+    }
+
 }
 
 

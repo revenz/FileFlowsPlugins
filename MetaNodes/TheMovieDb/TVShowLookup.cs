@@ -213,7 +213,6 @@ public class TVShowLookup : Node
         text = text.Trim();
         
         
-        
         // string year = null;
         // var reYear = Regex.Match(text, @"\((19|20)[\d]{2}\)", RegexOptions.CultureInvariant);
         // if (reYear.Success)
@@ -231,6 +230,12 @@ public class TVShowLookup : Node
 
         if (match.Success == false)
         {
+            Match seasonMatch = Regex.Match(text, @"\.s[\d]{1,2}\.", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+            if (seasonMatch.Success)
+            {
+                text = text[..seasonMatch.Index];  // Get the text before the match
+            }
+            
             text = Regex.Replace(text, @"\[[^\]]+\]", string.Empty);
             text = text.TrimExtra("-");
             return (text, null, null, null, year);
