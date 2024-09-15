@@ -63,128 +63,8 @@ public class AudioInfoHelper
 
             if (output.IndexOf("Input #0", StringComparison.Ordinal) < 0)
                 return Result<AudioInfo>.Fail("Failed to read audio information for file");
-
-            if (output.ToLower().Contains("mp3"))
-                mi.Codec = "mp3";
-            else if (output.ToLower().Contains("ogg"))
-                mi.Codec = "ogg";
-            else if (output.ToLower().Contains("flac"))
-                mi.Codec = "flac";
-            else if (output.ToLower().Contains("wav"))
-                mi.Codec = "wav";
-            else if (filename.ToLower().EndsWith(".mp3"))
-                mi.Codec = "mp3";
-            else if (filename.ToLower().EndsWith(".ogg"))
-                mi.Codec = "ogg";
-            else if (filename.ToLower().EndsWith(".flac"))
-                mi.Codec = "flac";
-            else if (filename.ToLower().EndsWith(".wav"))
-                mi.Codec = "wav";
-
-            foreach (string line in output.Split('\n'))
-            {
-                int colonIndex = line.IndexOf(":", StringComparison.Ordinal);
-                if (colonIndex < 1)
-                    continue;
-
-                string lowLine = line.ToLower().Trim();
-
-                if (lowLine.StartsWith("language"))
-                    mi.Language = line[(colonIndex + 1)..].Trim();
-                else if (lowLine.StartsWith("track") && lowLine.Contains("total") == false)
-                {
-                    if (mi.Track < 1)
-                    {
-                        var trackMatch = Regex.Match(line.Substring(colonIndex + 1).Trim(), @"^[\d]+");
-                        if (trackMatch.Success && int.TryParse(trackMatch.Value, out int value))
-                            mi.Track = value;
-                    }
-                }
-                else if (lowLine.StartsWith("artist") || lowLine.StartsWith("album_artist"))
-                {
-                    if (string.IsNullOrWhiteSpace(mi.Artist))
-                        mi.Artist = line[(colonIndex + 1)..].Trim();
-                }
-                else if (lowLine.StartsWith("title") && lowLine.Contains(".jpg") == false)
-                {
-                    if (string.IsNullOrWhiteSpace(mi.Title))
-                        mi.Title = line[(colonIndex + 1)..].Trim();
-                }
-                else if (lowLine.StartsWith("album"))
-                {
-                    if (string.IsNullOrWhiteSpace(mi.Album))
-                        mi.Album = line[(colonIndex + 1)..].Trim();
-                }
-                else if (lowLine.StartsWith("disc"))
-                {
-                    if (int.TryParse(line[(colonIndex + 1)..].Trim(), out int value))
-                        mi.Disc = value;
-                }
-                else if (lowLine.StartsWith("disctotal") || lowLine.StartsWith("totaldiscs"))
-                {
-                    if (int.TryParse(line[(colonIndex + 1)..].Trim(), out int value))
-                        mi.TotalDiscs = value;
-                }
-                else if (lowLine.StartsWith("date") || lowLine.StartsWith("retail date") ||
-                         lowLine.StartsWith("retaildate") || lowLine.StartsWith("originaldate") ||
-                         lowLine.StartsWith("original date"))
-                {
-                    if (int.TryParse(line[(colonIndex + 1)..].Trim(), out int value))
-                    {
-                        if (mi.Date < new DateTime(1900, 1, 1))
-                            mi.Date = new DateTime(value, 1, 1);
-                    }
-                    else if (DateTime.TryParse(line[(colonIndex + 1)..].Trim(), out DateTime dtValue) &&
-                             dtValue.Year > 1900)
-                        mi.Date = dtValue;
-                }
-                else if (lowLine.StartsWith("genre"))
-                {
-                    if (mi.Genres?.Any() != true)
-                        mi.Genres = line[(colonIndex + 1)..].Trim().Split(' ');
-                }
-                else if (lowLine.StartsWith("encoder"))
-                    mi.Encoder = line[(colonIndex + 1)..].Trim();
-                else if (lowLine.StartsWith("duration"))
-                {
-                    if (mi.Duration < 1)
-                    {
-                        string temp = line[(colonIndex + 1)..].Trim();
-                        if (temp.IndexOf(",", StringComparison.Ordinal) > 0)
-                        {
-                            temp = temp.Substring(0, temp.IndexOf(","));
-                            if (TimeSpan.TryParse(temp, out TimeSpan value))
-                                mi.Duration = (long)value.TotalSeconds;
-                        }
-                    }
-                }
-
-
-                if (line.ToLower().IndexOf("bitrate:", StringComparison.Ordinal) > 0)
-                {
-                    string br = line
-                        .Substring(line.ToLower().IndexOf("bitrate:", StringComparison.Ordinal) + "bitrate:".Length)
-                        .Trim();
-                    if (br.IndexOf(" ", StringComparison.Ordinal) > 0)
-                    {
-                        int multiplier = br.ToLower().IndexOf("kb/s", StringComparison.Ordinal) > 0 ? 1024 :
-                            br.ToLower().IndexOf("mb/s", StringComparison.Ordinal) > 0 ? 1024 * 1024 :
-                            1;
-                        br = br.Substring(0, br.IndexOf(" "));
-                        if (long.TryParse(br, out long value))
-                            mi.Bitrate = value * multiplier;
-                    }
-                }
-
-                var match = Regex.Match(line, @"([\d]+) Hz");
-                if (match.Success)
-                {
-                    mi.Frequency = int.Parse(match.Groups[1].Value);
-                }
-
-                if (line.IndexOf(" stereo,", StringComparison.Ordinal) > 0)
-                    mi.Channels = 2;
-            }
+            
+            ParseFFmpegOutput(mi, output, filename);
         }
         catch (Exception ex)
         {
@@ -199,6 +79,145 @@ public class AudioInfoHelper
         }
 
         return mi;
+    }
+
+    /// <summary>
+    /// Parses the FFmpeg output
+    /// </summary>
+    /// <param name="mi">the media information to parse into</param>
+    /// <param name="output">the output from ffmpeg</param>
+    /// <param name="filename">the filename</param>
+    public void ParseFFmpegOutput(AudioInfo mi, string output, string filename)
+    {
+
+        if (output.ToLower().Contains("mp3"))
+            mi.Codec = "mp3";
+        else if (output.ToLower().Contains("ogg"))
+            mi.Codec = "ogg";
+        else if (output.ToLower().Contains("flac"))
+            mi.Codec = "flac";
+        else if (output.ToLower().Contains("wav"))
+            mi.Codec = "wav";
+        else if (filename.ToLower().EndsWith(".mp3"))
+            mi.Codec = "mp3";
+        else if (filename.ToLower().EndsWith(".ogg"))
+            mi.Codec = "ogg";
+        else if (filename.ToLower().EndsWith(".flac"))
+            mi.Codec = "flac";
+        else if (filename.ToLower().EndsWith(".wav"))
+            mi.Codec = "wav";
+
+        foreach (string line in output.Split('\n'))
+        {
+            int colonIndex = line.IndexOf(":", StringComparison.Ordinal);
+            if (colonIndex < 1)
+                continue;
+
+            string lowLine = line.ToLower().Trim();
+
+            if (lowLine.StartsWith("language"))
+                mi.Language = line[(colonIndex + 1)..].Trim();
+            else if (lowLine.StartsWith("track") && lowLine.Contains("total") == false)
+            {
+                if (mi.Track < 1)
+                {
+                    var trackMatch = Regex.Match(line.Substring(colonIndex + 1).Trim(), @"^[\d]+");
+                    if (trackMatch.Success && int.TryParse(trackMatch.Value, out int value))
+                        mi.Track = value;
+                }
+            }
+            else if (lowLine.StartsWith("artist") || lowLine.StartsWith("album_artist"))
+            {
+                if (string.IsNullOrWhiteSpace(mi.Artist))
+                    mi.Artist = line[(colonIndex + 1)..].Trim();
+            }
+            else if (lowLine.StartsWith("title") && lowLine.Contains(".jpg") == false)
+            {
+                if (string.IsNullOrWhiteSpace(mi.Title))
+                    mi.Title = line[(colonIndex + 1)..].Trim();
+            }
+            else if (lowLine.StartsWith("album"))
+            {
+                if (string.IsNullOrWhiteSpace(mi.Album))
+                    mi.Album = line[(colonIndex + 1)..].Trim();
+            }
+            else if (lowLine.StartsWith("disc"))
+            {
+                if (int.TryParse(line[(colonIndex + 1)..].Trim(), out int value))
+                    mi.Disc = value;
+            }
+            else if (lowLine.StartsWith("disctotal") || lowLine.StartsWith("totaldiscs"))
+            {
+                if (int.TryParse(line[(colonIndex + 1)..].Trim(), out int value))
+                    mi.TotalDiscs = value;
+            }
+            else if (lowLine.StartsWith("date") || lowLine.StartsWith("retail date") ||
+                     lowLine.StartsWith("retaildate") || lowLine.StartsWith("originaldate") ||
+                     lowLine.StartsWith("original date"))
+            {
+                var trimmed = line[(colonIndex + 1)..].Trim();
+                if (int.TryParse(trimmed, out int value) && value < DateTime.Now.Year + 5 && value > 1900)
+                {
+                    if (mi.Date < new DateTime(1900, 1, 1))
+                        mi.Date = new DateTime(value, 1, 1);
+                }
+                else if (DateTime.TryParse(trimmed, out DateTime dtValue) &&
+                         dtValue.Year > 1900)
+                    mi.Date = dtValue;
+                // Check if the trimmed string is in "yyyyMMdd" format and valid
+                else if (trimmed.Length == 8 && 
+                         DateTime.TryParseExact(trimmed, "yyyyMMdd", null, System.Globalization.DateTimeStyles.None, out DateTime exactDate))
+                {
+                    mi.Date = exactDate;
+                }
+            }
+            else if (lowLine.StartsWith("genre"))
+            {
+                if (mi.Genres?.Any() != true)
+                    mi.Genres = line[(colonIndex + 1)..].Trim().Split(' ');
+            }
+            else if (lowLine.StartsWith("encoder"))
+                mi.Encoder = line[(colonIndex + 1)..].Trim();
+            else if (lowLine.StartsWith("duration"))
+            {
+                if (mi.Duration < 1)
+                {
+                    string temp = line[(colonIndex + 1)..].Trim();
+                    if (temp.IndexOf(",", StringComparison.Ordinal) > 0)
+                    {
+                        temp = temp.Substring(0, temp.IndexOf(","));
+                        if (TimeSpan.TryParse(temp, out TimeSpan value))
+                            mi.Duration = (long)value.TotalSeconds;
+                    }
+                }
+            }
+
+
+            if (line.ToLower().IndexOf("bitrate:", StringComparison.Ordinal) > 0)
+            {
+                string br = line
+                    .Substring(line.ToLower().IndexOf("bitrate:", StringComparison.Ordinal) + "bitrate:".Length)
+                    .Trim();
+                if (br.IndexOf(" ", StringComparison.Ordinal) > 0)
+                {
+                    int multiplier = br.ToLower().IndexOf("kb/s", StringComparison.Ordinal) > 0 ? 1024 :
+                        br.ToLower().IndexOf("mb/s", StringComparison.Ordinal) > 0 ? 1024 * 1024 :
+                        1;
+                    br = br.Substring(0, br.IndexOf(" "));
+                    if (long.TryParse(br, out long value))
+                        mi.Bitrate = value * multiplier;
+                }
+            }
+
+            var match = Regex.Match(line, @"([\d]+) Hz");
+            if (match.Success)
+            {
+                mi.Frequency = int.Parse(match.Groups[1].Value);
+            }
+
+            if (line.IndexOf(" stereo,", StringComparison.Ordinal) > 0)
+                mi.Channels = 2;
+        }
     }
 
     [UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "<Pending>")]
