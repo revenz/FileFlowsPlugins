@@ -54,8 +54,13 @@ public class ReplaceOriginal : Node
         if (args.FileName.ToLower().EndsWith(wfExtension.ToLower()))
         {
             // easy replace
-            bool moved = args.MoveFile(args.FileName);
-            if(moved == false)
+            var moveResult = args.MoveFile(args.FileName);
+            if (moveResult.Failed(out var error))
+            {
+                args.Logger?.ELog("Failed to move file to: " + args.FileName + " => " + error);
+                return -1;
+            }
+            if(moveResult.Value == false)
             {
                 args.Logger?.ELog("Failed to move file to: "+ args.FileName);
                 return -1;
