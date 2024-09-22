@@ -31,6 +31,7 @@ public class FfmpegBuilderAspectRatio : FfmpegBuilderNode
     /// </summary>
     [Range(1, int.MaxValue)]
     [NumberInt(3)]
+    [DefaultValue(16)]
     [ConditionEquals(nameof(AspectRatio), "Custom")]
     public int CustomWidth { get; set; }
 
@@ -40,6 +41,7 @@ public class FfmpegBuilderAspectRatio : FfmpegBuilderNode
     /// </summary>
     [Range(1, int.MaxValue)]
     [NumberInt(4)]
+    [DefaultValue(9)]
     [ConditionEquals(nameof(AspectRatio), "Custom")]
     public int CustomHeight { get; set; }
 
