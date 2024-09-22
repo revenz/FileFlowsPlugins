@@ -422,11 +422,12 @@ public class FFmpegBuilder_SetTrackTitlesTests : VideoTestBase
         Assert.AreEqual("Track: English / HEVC / 720P / HDR", result);
         
         // Act
+        formatter = "Track: lang / codec / fps / resolution / dimensions / pixelformat / !dynamicrange";
         result = FfmpegBuilderSetTrackTitles.FormatTitle(formatter, separator, language, codec, 
             resolution: resolution, dynamicRange: "SDR");
 
         // Assert
-        Assert.AreEqual("Track: English / HEVC / 720P / SDR", result);
+        Assert.AreEqual("Track: English / HEVC / 720P / sdr", result);
     }
     
     [TestMethod]
