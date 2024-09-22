@@ -402,6 +402,33 @@ public class FFmpegBuilder_SetTrackTitlesTests : VideoTestBase
         Assert.AreEqual("Track: English / HEVC / 720p", result);
     }
     
+    
+    [TestMethod]
+    public void FormatTitle_Video_HDR()
+    {
+        // Arrange
+        string formatter = "Track: lang / codec / fps / resolution / dimensions / pixelformat / dynamicrange";
+        string separator = " / ";
+        string language = "English";
+        string codec = "HEVC";
+
+        ResolutionHelper.Resolution resolution = ResolutionHelper.Resolution.r720p;
+
+        // Act
+        string result = FfmpegBuilderSetTrackTitles.FormatTitle(formatter, separator, language, codec, 
+            resolution: resolution, dynamicRange: "HDR");
+
+        // Assert
+        Assert.AreEqual("Track: English / HEVC / 720P / HDR", result);
+        
+        // Act
+        result = FfmpegBuilderSetTrackTitles.FormatTitle(formatter, separator, language, codec, 
+            resolution: resolution, dynamicRange: "SDR");
+
+        // Assert
+        Assert.AreEqual("Track: English / HEVC / 720P / SDR", result);
+    }
+    
     [TestMethod]
     public void FormatTitle_Video_PixelFormat()
     {
