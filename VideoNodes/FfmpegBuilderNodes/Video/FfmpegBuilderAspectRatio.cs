@@ -11,7 +11,7 @@ public class FfmpegBuilderAspectRatio : FfmpegBuilderNode
     /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/aspect-ratio";
     /// <inheritdoc />
-    public override string Icon => "far fa-percent";
+    public override string Icon => "fas fa-percent";
 
     /// <summary>
     /// The desired aspect ratio for the video. Supports standard options like 16:9, 4:3, 21:9, or custom dimensions.
