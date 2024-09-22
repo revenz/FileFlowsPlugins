@@ -30,6 +30,7 @@ public class FfmpegBuilderAspectRatio : FfmpegBuilderNode
     /// Used if <see cref="AspectRatio"/> is set to "Custom".
     /// </summary>
     [Range(1, int.MaxValue)]
+    [NumberInt(3)]
     [ConditionEquals(nameof(AspectRatio), "Custom")]
     public int CustomWidth { get; set; }
 
@@ -38,6 +39,7 @@ public class FfmpegBuilderAspectRatio : FfmpegBuilderNode
     /// Used if <see cref="AspectRatio"/> is set to "Custom".
     /// </summary>
     [Range(1, int.MaxValue)]
+    [NumberInt(4)]
     [ConditionEquals(nameof(AspectRatio), "Custom")]
     public int CustomHeight { get; set; }
 
