@@ -300,6 +300,7 @@ public class FfmpegBuilderSetTrackTitles: FfmpegBuilderNode
         formatter = Replace(formatter, "hi", hi ? "HI" : string.Empty);
         formatter = Replace(formatter, "hearingimpared", hi ? "Hearing Impared" : string.Empty);
         formatter = Replace(formatter, "sdh", sdh ? "SDH" : string.Empty);
+        formatter = Replace(formatter, "numchannels", channels.ToString("N1"));
         formatter = Replace(formatter, "channels", Math.Abs(channels - 1) < 0.05f ? "Mono" :
             Math.Abs(channels - 2) < 0.05f ? "Stereo" :
             channels > 0 ? channels.ToString("0.0") : null);
