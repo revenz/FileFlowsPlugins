@@ -157,6 +157,23 @@
           "UseSourceDirectory-Help": "If checked the original source directory will be searched, otherwise the working directory will be used."
         }
       },
+      "FfmpegBuilderAspectRatio": {
+        "Label": "FFMPEG Builder: Aspect Ratio",
+        "Outputs": {
+          "1": "Aspect ratio was changed successfully",
+          "2": "Video was already in the desired aspect ratio"
+        },
+        "Fields": {
+          "AspectRatio": "Aspect Ratio",
+          "AspectRatio-Help": "Select the desired aspect ratio for the video. Available options include standard aspect ratios (16:9, 4:3, 21:9) or a custom ratio.",
+          "CustomWidth": "Custom Width",
+          "CustomWidth-Help": "Specify the width to use when selecting the custom aspect ratio option.",
+          "CustomHeight": "Custom Height",
+          "CustomHeight-Help": "Specify the height to use when selecting the custom aspect ratio option.",
+          "AdjustmentMode": "Adjustment Mode",
+          "AdjustmentMode-Help": "Choose how the aspect ratio should be enforced. Options include stretching the video, adding black bars (letterbox), or cropping the video to fit the aspect ratio."
+        }
+      },
       "FfmpegBuilderAudioAddTrack": {
         "Label": "FFMPEG Builder: Audio Add Track",
         "Outputs": {

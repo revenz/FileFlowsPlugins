@@ -118,6 +118,23 @@
           "Strictness-Help": "Ermöglicht es Ihnen, die Strenge von FFmpeg einzustellen.  Für die meisten Benutzer sollte diese Einstellung auf 'Experimentell' belassen werden."
         }
       },
+      "FfmpegBuilderAspectRatio": {
+        "Label": "FFMPEG Builder: Seitenverhältnis",
+        "Outputs": {
+          "1": "Seitenverhältnis wurde erfolgreich geändert",
+          "2": "Video war bereits im gewünschten Seitenverhältnis"
+        },
+        "Fields": {
+          "AspectRatio": "Seitenverhältnis",
+          "AspectRatio-Help": "Wählen Sie das gewünschte Seitenverhältnis für das Video aus. Verfügbare Optionen sind Standard-Seitenverhältnisse (16:9, 4:3, 21:9) oder ein benutzerdefiniertes Verhältnis.",
+          "CustomWidth": "Benutzerdefinierte Breite",
+          "CustomWidth-Help": "Geben Sie die Breite an, die verwendet werden soll, wenn die Option für ein benutzerdefiniertes Seitenverhältnis ausgewählt ist.",
+          "CustomHeight": "Benutzerdefinierte Höhe",
+          "CustomHeight-Help": "Geben Sie die Höhe an, die verwendet werden soll, wenn die Option für ein benutzerdefiniertes Seitenverhältnis ausgewählt ist.",
+          "AdjustmentMode": "Anpassungsmodus",
+          "AdjustmentMode-Help": "Wählen Sie, wie das Seitenverhältnis erzwungen werden soll. Optionen umfassen das Strecken des Videos, das Hinzufügen von schwarzen Balken (Letterbox) oder das Zuschneiden des Videos, um das Seitenverhältnis anzupassen."
+        }
+      },
       "FfmpegBuilderAddInputFile": {
         "Label": "FFMPEG-Builder: Eingabedatei hinzufügen",
         "Outputs": {

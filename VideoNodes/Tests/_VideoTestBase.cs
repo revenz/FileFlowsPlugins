@@ -32,6 +32,16 @@ public abstract class VideoTestBase : TestBase
     protected static readonly string VideoMkvHevc = ResourcesTestFilesDir + "/hevc.mkv";
 
     /// <summary>
+    /// Video 4:7 MKV file
+    /// </summary>
+    protected static readonly string Video4by7 = ResourcesTestFilesDir + "/video4by7.mkv";
+
+    /// <summary>
+    /// Video 4:3 mp4 file
+    /// </summary>
+    protected static readonly string Video4by3 = ResourcesTestFilesDir + "/video4by3.mp4";
+    
+    /// <summary>
     /// Video Corrupt file
     /// </summary>
     protected static readonly string VideoCorrupt = ResourcesTestFilesDir + "/corrupt.mkv";
