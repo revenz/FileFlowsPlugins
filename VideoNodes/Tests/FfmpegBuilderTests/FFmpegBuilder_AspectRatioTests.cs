@@ -1,3 +1,5 @@
+#if(DEBUG)
+
 using FileFlows.VideoNodes.FfmpegBuilderNodes;
 using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -144,3 +146,5 @@ public class FFmpegBuilder_AspectRatioTests : VideoTestBase
         ExecuteAspectRatioTest("Custom", "Crop", 4, 5);
     }
 }
+
+#endif
