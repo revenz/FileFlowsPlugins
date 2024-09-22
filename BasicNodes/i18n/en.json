@@ -410,6 +410,19 @@
           "MatchConditions-Help": "The matches to test which output should be called."
         }
       },
+      "MatchesAll": {
+        "Description": "Compares a set of values and checks if all conditions match.",
+        "Fields": {
+          "MatchConditions": "",
+          "MatchConditionsKey": "Value",
+          "MatchConditionsValue": "Expression",
+          "MatchConditionsHelp": "The conditions to test, determining which output should be called."
+        },
+        "Outputs": {
+          "1": "All conditions match",
+          "2": "Not all conditions match"
+        }
+      },
       "MoveFolder": {
         "Description": "Moves a folder",
         "Outputs": {

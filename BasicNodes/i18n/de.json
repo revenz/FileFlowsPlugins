@@ -395,6 +395,28 @@
           "CompressionMethod-Help": "Als Komprimierungsmethode wird LZMA2 empfohlen."
         }
       },
+      "Matches": {
+        "Description": "Vergleicht eine Menge von Werten und prüft die Bedingungen, um zu sehen, welche Ausgabe aufgerufen werden soll.",
+        "Fields": {
+          "MatchConditions": "",
+          "MatchConditionsKey": "Wert",
+          "MatchConditionsValue": "Ausdruck",
+          "MatchConditionsHelp": "Die Bedingungen, die getestet werden, um zu bestimmen, welche Ausgabe aufgerufen werden soll."
+        }
+      },
+      "MatchesAll": {
+        "Description": "Vergleicht eine Menge von Werten und prüft, ob alle Bedingungen übereinstimmen.",
+        "Fields": {
+          "MatchConditions": "",
+          "MatchConditionsKey": "Wert",
+          "MatchConditionsValue": "Ausdruck",
+          "MatchConditionsHelp": "Die Bedingungen, die geprüft werden, um festzustellen, welche Ausgabe aufgerufen werden soll."
+        },
+        "Outputs": {
+          "1": "Alle Bedingungen stimmen überein",
+          "2": "Nicht alle Bedingungen stimmen überein"
+        }
+      },
       "IfBoolean": {
         "Description": "Testet, ob eine Variable wahr oder falsch ist",
         "Outputs": {
