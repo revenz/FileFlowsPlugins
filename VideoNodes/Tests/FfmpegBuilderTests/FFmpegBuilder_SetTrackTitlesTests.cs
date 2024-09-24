@@ -7,7 +7,7 @@ using VideoNodes.Tests;
 namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests;
 
 /// <summary>
-/// Tests the set track titltes
+/// Tests the set track titles
 /// </summary>
 [TestClass]
 public class FFmpegBuilder_SetTrackTitlesTests : VideoTestBase

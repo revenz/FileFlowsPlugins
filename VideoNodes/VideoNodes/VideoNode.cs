@@ -104,33 +104,44 @@ namespace FileFlows.VideoNodes
                 args.Variables["vi.OriginalDuration"] = videoInfo.VideoStreams[0].Duration;
 
             variables["vi.VideoInfo"] = videoInfo;
-            variables["vi.Width"] = videoInfo.VideoStreams[0].Width;
-            variables["vi.Height"] = videoInfo.VideoStreams[0].Height;
-            variables["vi.Duration"] = videoInfo.VideoStreams[0].Duration.TotalSeconds;
-            variables["vi.Video.Codec"] = videoInfo.VideoStreams[0].Codec;
+            var videoVariables = new Dictionary<string, object>();
+            videoVariables["vi.Width"] = videoInfo.VideoStreams[0].Width;
+            videoVariables["vi.Height"] = videoInfo.VideoStreams[0].Height;
+            videoVariables["vi.Duration"] = videoInfo.VideoStreams[0].Duration.TotalSeconds;
+            videoVariables["vi.Video.Codec"] = videoInfo.VideoStreams[0].Codec;
+            videoVariables["vi.Codec"] = videoInfo.VideoStreams[0].Codec; // assume they want the Videos codec here
             if (videoInfo.AudioStreams?.Any() == true)
             {
-                variables["vi.Audio.Codec"] = videoInfo.AudioStreams[0].Codec?.EmptyAsNull();
-                variables["vi.Audio.Channels"] = videoInfo.AudioStreams[0].Channels > 0 ? (object)videoInfo.AudioStreams[0].Channels : null;
-                variables["vi.Audio.Language"] = videoInfo.AudioStreams[0].Language?.EmptyAsNull();
-                variables["vi.Audio.Codecs"] = string.Join(", ", videoInfo.AudioStreams.Select(x => x.Codec).Where(x => string.IsNullOrEmpty(x) == false));
-                variables["vi.Audio.Languages"] = string.Join(", ", videoInfo.AudioStreams.Select(x => x.Language).Where(x => string.IsNullOrEmpty(x) == false));
+                videoVariables["vi.Audio.Codec"] = videoInfo.AudioStreams[0].Codec?.EmptyAsNull();
+                videoVariables["vi.Audio.Channels"] = videoInfo.AudioStreams[0].Channels > 0 ? (object)videoInfo.AudioStreams[0].Channels : null;
+                videoVariables["vi.Audio.Language"] = videoInfo.AudioStreams[0].Language?.EmptyAsNull();
+                videoVariables["vi.Audio.Codecs"] = string.Join(", ", videoInfo.AudioStreams.Select(x => x.Codec).Where(x => string.IsNullOrEmpty(x) == false));
+                videoVariables["vi.Audio.Languages"] = string.Join(", ", videoInfo.AudioStreams.Select(x => x.Language).Where(x => string.IsNullOrEmpty(x) == false));
             }
             var resolution = ResolutionHelper.GetResolution(videoInfo.VideoStreams[0].Width, videoInfo.VideoStreams[0].Height);
             if(resolution == ResolutionHelper.Resolution.r1080p)
-                variables["vi.Resolution"] = "1080p";
+                videoVariables["vi.Resolution"] = "1080p";
             else if (resolution == ResolutionHelper.Resolution.r4k)
-                variables["vi.Resolution"] = "4K";
+                videoVariables["vi.Resolution"] = "4K";
             else if (resolution == ResolutionHelper.Resolution.r720p)
-                variables["vi.Resolution"] = "720p";
+                videoVariables["vi.Resolution"] = "720p";
             else if (resolution == ResolutionHelper.Resolution.r480p)
-                variables["vi.Resolution"] = "480p";
+                videoVariables["vi.Resolution"] = "480p";
             else if (videoInfo.VideoStreams[0].Width < 900 && videoInfo.VideoStreams[0].Height < 800)
-                variables["vi.Resolution"] = "SD";
+                videoVariables["vi.Resolution"] = "SD";
             else
-                variables["vi.Resolution"] = videoInfo.VideoStreams[0].Width + "x" + videoInfo.VideoStreams[0].Height;
+                videoVariables["vi.Resolution"] = videoInfo.VideoStreams[0].Width + "x" + videoInfo.VideoStreams[0].Height;
+            videoVariables["vi.FramesPerSecond"] = videoInfo.VideoStreams[0].FramesPerSecond;
+            videoVariables["vi.FPS"] = videoInfo.VideoStreams[0].FramesPerSecond;
+            videoVariables["vi.HDR"] = videoInfo.VideoStreams[0].HDR;
 
-            args.UpdateVariables(variables);
+            foreach (var vv in videoVariables)
+            {
+                args.Variables[vv.Key] = vv.Value;
+                // so the same variable is added as "video."
+                args.Variables["video." + vv.Key[3..]] = vv.Value;
+            }
+            
 
             var metadata = new Dictionary<string, object>();
             metadata.Add("Duration", videoInfo.VideoStreams[0].Duration);
