@@ -33,14 +33,14 @@ public class VideoFile : VideoNode
     {
         _Variables = new Dictionary<string, object>()
         {
-            { "vi.Video.Codec", "hevc" },
-            { "vi.Audio.Codec", "ac3" },
-            { "vi.Audio.Codecs", "ac3,aac"},
-            { "vi.Audio.Language", "eng" },
-            { "vi.Audio.Languages", "eng, mao" },
-            { "vi.Resolution", "1080p" },
-            { "vi.Duration", 1800 },
-            { "vi.VideoInfo", new VideoInfo() 
+            { "video.Codec", "hevc" },
+            { "video.Audio.Codec", "ac3" },
+            { "video.Audio.Codecs", "ac3,aac"},
+            { "video.Audio.Language", "eng" },
+            { "video.Audio.Languages", "eng, mao" },
+            { "video.Resolution", "1080p" },
+            { "video.Duration", 1800 },
+            { "video.VideoInfo", new VideoInfo() 
                 {
                     Bitrate = 10_000_000,
                     VideoStreams = new List<VideoStream> {
@@ -55,8 +55,10 @@ public class VideoFile : VideoNode
                     }
                 } 
             },
-            { "vi.Width", 1920 },
-            { "vi.Height", 1080 },
+            { "video.Width", 1920 },
+            { "video.Height", 1080 },
+            { "video.FPS", 29.97f },
+            { "video.HDR", true },
             { nameof(ProbeSize), 5_000_000 },
             { nameof(AnalyzeDuration), 25}
         };
