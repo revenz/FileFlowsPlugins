@@ -34,37 +34,40 @@ public class FFmpegHelper(string ffmpeg, string ffprobe) : IFFmpegHelper
     {
         try
         {
-            using (var process = new Process())
+            using var process = new Process();
+            process.StartInfo = new ProcessStartInfo
             {
-                process.StartInfo = new ProcessStartInfo
-                {
-                    FileName = ffmpeg,
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    CreateNoWindow = true,
-                    ArgumentList = {
-                        "-hide_banner", 
-                        "-i",
-                        file
-                    }
-                };
-                process.Start();
-
-                bool exited = process.WaitForExit(60000);
-                if (exited == false)
-                {
-                    process.Kill();
-                    string pkOutput = process.StandardError.ReadToEnd()?.EmptyAsNull() ?? process.StandardOutput.ReadToEnd();
-                    return Result<string>.Fail("Process timed out." + Environment.NewLine + pkOutput);
+                FileName = ffmpeg,
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                CreateNoWindow = true,
+                ArgumentList = {
+                    "-hide_banner", 
+                    "-i",
+                    file
                 }
+            };
 
-                // we use error here, since we're not specify an output file, FFmpeg will report it as an error, but we don't care
-                string output = process.StandardOutput.ReadToEnd();
-                string error = process.StandardError.ReadToEnd();
+            process.Start();
 
-                return output?.EmptyAsNull() ?? error;
+            // Read asynchronously from both output and error streams
+            var outputTask = process.StandardOutput.ReadToEndAsync();
+            var errorTask = process.StandardError.ReadToEndAsync();
+
+            bool exited = process.WaitForExit(60000);
+            if (!exited)
+            {
+                process.Kill();
+                string pkOutput = errorTask.Result.EmptyAsNull() ?? outputTask.Result;
+                return Result<string>.Fail("Process timed out." + Environment.NewLine + pkOutput);
             }
+
+            // Await both the output and error tasks
+            string output = outputTask.Result;
+            string error = errorTask.Result;
+
+            return output?.EmptyAsNull() ?? error;
         }
         catch (Exception ex)
         {
@@ -93,18 +96,24 @@ public class FFmpegHelper(string ffmpeg, string ffprobe) : IFFmpegHelper
                     file
                 }
             };
+
             process.Start();
 
+            // Read asynchronously from both output and error streams
+            var outputTask = process.StandardOutput.ReadToEndAsync();
+            var errorTask = process.StandardError.ReadToEndAsync();
+
             bool exited = process.WaitForExit(60000);
-            if (exited == false)
+            if (!exited)
             {
                 process.Kill();
-                string pkOutput = process.StandardError.ReadToEnd()?.EmptyAsNull() ?? process.StandardOutput.ReadToEnd();
+                string pkOutput = errorTask.Result.EmptyAsNull() ?? outputTask.Result;
                 return Result<string>.Fail("Process timed out." + Environment.NewLine + pkOutput);
             }
 
-            string output = process.StandardOutput.ReadToEnd();
-            string error = process.StandardError.ReadToEnd();
+            // Await both the output and error tasks
+            string output = outputTask.Result;
+            string error = errorTask.Result;
 
             if (string.IsNullOrEmpty(error) == false)
                 return Result<string>.Fail($"Failed reading ffmpeg info: {error}");
@@ -116,4 +125,5 @@ public class FFmpegHelper(string ffmpeg, string ffprobe) : IFFmpegHelper
             return Result<string>.Fail($"An error occurred: {ex.Message}");
         }
     }
+
 } 
