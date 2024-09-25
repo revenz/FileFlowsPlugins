@@ -103,7 +103,7 @@ namespace FileFlows.VideoNodes
             if (args.Variables.ContainsKey("vi.OriginalDuration") == false) // we only want to store this for the absolute original duration in the flow
                 args.Variables["vi.OriginalDuration"] = videoInfo.VideoStreams[0].Duration;
 
-            variables["vi.VideoInfo"] = videoInfo;
+            args.Variables["vi.VideoInfo"] = videoInfo;
             var videoVariables = new Dictionary<string, object>();
             videoVariables["vi.Width"] = videoInfo.VideoStreams[0].Width;
             videoVariables["vi.Height"] = videoInfo.VideoStreams[0].Height;
