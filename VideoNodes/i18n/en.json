@@ -297,7 +297,7 @@
         }
       },
       "FfmpegBuilderAudioTrackRemover": {
-        "Label": "FFMPEG Builder: Track Remover",
+        "Label": "FFMPEG Builder: Track Remover (Obsolete)",
         "Outputs": {
           "1": "Tracks set to remove",
           "2": "Tracks NOT set to removed"
@@ -318,6 +318,22 @@
           "RemoveIndex-Help": "The start index where to remove the tracks from.  This allows you to remove all, or all matching, tracks after the starting index.\nSet to zero to remove all matching the parameters.\nSet to 1 to keep the first track and remove any after the first matching the parameters",
           "MatchType": "Matches",
           "MatchType-Help": "The value to match against."
+        }
+      },
+      "FfmpegBuilderTrackRemover": {
+        "Label": "FFMPEG Builder: Track Remover",
+        "Outputs": {
+          "1": "Tracks set to remove",
+          "2": "Tracks NOT set to removed"
+        },
+        "Description": "Allows you to remove tracks based on specified conditions.",
+        "Fields": {
+          "StreamType": "Type",
+          "StreamType-Help": "The type of tracks to reorder in the FFMPEG Builder",
+          "CustomTrackSelection": "Remove",
+          "TrackSelectionOptions": "Matching",
+          "TrackSelectionOptionsKey": "Property",
+          "TrackSelectionOptionsValue": "Value"
         }
       },
       "FfmpegBuilderAudioTrackReorder": {

@@ -134,8 +134,9 @@ public abstract class TrackSelectorFlowElement<T> : FfmpegBuilderNode where T : 
     /// Tests if a stream matches the specified conditions
     /// </summary>
     /// <param name="stream">the stream to check</param>
+    /// <param name="index">the index of the stream in the model</param>
     /// <returns>true if matches, otherwise false</returns>
-    protected bool StreamMatches(IVideoStream stream)
+    protected bool StreamMatches(IVideoStream stream, int? index = null)
     {
         foreach (var kv in TrackSelectionOptions)
         {
@@ -182,8 +183,24 @@ public abstract class TrackSelectorFlowElement<T> : FfmpegBuilderNode where T : 
                         Args?.Logger?.ILog($"Channels does not match '{stream}' = {kvValue}");
                         return false;
                     }
-
                     break;
+                case "index":
+                {
+                    if (index == null)
+                    {
+                        Args?.Logger?.ILog($"No index given for stream '{stream}'");
+                        return false;
+                    }
+
+                    if (Args.MathHelper.IsTrue(kvValue, index.Value))
+                        Args?.Logger?.ILog($"Index Matches '{stream}[{index.Value}]' = {kvValue}");
+                    else
+                    {
+                        Args?.Logger?.ILog($"Index does not match '{stream}[{index.Value}]' = {kvValue}");
+                        return false;
+                    }
+                    break;
+                }
             }
         }
 
