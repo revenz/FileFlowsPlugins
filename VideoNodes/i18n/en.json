@@ -331,7 +331,7 @@
           "StreamType": "Type",
           "StreamType-Help": "The type of tracks to reorder in the FFMPEG Builder",
           "CustomTrackSelection": "Remove",
-          "TrackSelectionOptions": "Matching",
+          "TrackSelectionOptions": ,
           "TrackSelectionOptionsKey": "Property",
           "TrackSelectionOptionsValue": "Value"
         }
