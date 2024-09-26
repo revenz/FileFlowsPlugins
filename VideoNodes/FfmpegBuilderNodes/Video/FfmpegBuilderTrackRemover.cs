@@ -20,6 +20,8 @@ public class FfmpegBuilderTrackRemover:  TrackSelectorFlowElement<FfmpegBuilderT
     protected override string AutomaticLabel => "All";
     /// <inheritdoc />
     protected override string CustomLabel => "Matching";
+    /// <inheritdoc />
+    protected override bool AllowIndex => true;
 
     /// <summary>
     /// Gets or sets the stream types to remove

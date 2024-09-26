@@ -45,6 +45,11 @@ public abstract class TrackSelectorFlowElement<T> : FfmpegBuilderNode where T : 
     /// Gets the label for the custom selection
     /// </summary>
     protected virtual string CustomLabel => "Custom";
+    /// <summary>
+    /// Gets if this allows filtering by the index
+    /// </summary>
+    protected virtual bool AllowIndex => false;
+    
 
     /// <summary>
     /// Gets or sets the track selection options
@@ -65,6 +70,7 @@ public abstract class TrackSelectorFlowElement<T> : FfmpegBuilderNode where T : 
         {
             if (_TrackSelectionOptionsOptions == null)
             {
+                var instance = (T)Activator.CreateInstance(typeof(T))!;
                 _TrackSelectionOptionsOptions = new List<ListOption>
                 {
                     new() { Label = "Channels", Value = "Channels" },
@@ -72,6 +78,8 @@ public abstract class TrackSelectorFlowElement<T> : FfmpegBuilderNode where T : 
                     new() { Label = "Language", Value = "Language" },
                     new() { Label = "Title", Value = "Title" }
                 };
+                if(instance.AllowIndex)
+                    _TrackSelectionOptionsOptions.Add(new () { Label = "Index", Value = "Index"});
             }
 
             return _TrackSelectionOptionsOptions;
