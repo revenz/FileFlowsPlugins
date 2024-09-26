@@ -149,8 +149,8 @@ public abstract class TrackSelectorFlowElement<T> : FfmpegBuilderNode where T : 
         foreach (var kv in TrackSelectionOptions)
         {
             var key = kv.Key?.ToLowerInvariant() ?? string.Empty;
-            var kvValue = Args.ReplaceVariables(kv.Value?.Replace("{orig}", "{OriginalLanguage}") ?? string.Empty,
-                stripMissing: true);
+            string kvValue = kv.Value?.Replace("{orig}", "{OriginalLanguage}") ?? string.Empty;
+            kvValue = Args.ReplaceVariables(kvValue, stripMissing: true);
             switch (key)
             {
                 case "language":
