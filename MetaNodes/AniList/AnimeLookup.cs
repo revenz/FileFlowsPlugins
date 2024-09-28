@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
@@ -119,9 +121,54 @@ namespace MetaNodes.AniList
 
         private (string, string) GetLookupName(string libraryFileName, bool useFolderName)
         {
-            // Your logic to extract show name and year from the file name
-            // Replace with actual implementation or leave as is
-            return ("Naruto", "2002");
+            string lookupName;
+            string year = null;
+
+            if (useFolderName)
+            {
+                // Get folder name if using folder name
+                var folderName = Path.GetDirectoryName(libraryFileName);
+                lookupName = ExtractShowNameFromPath(folderName);
+                year = ExtractYearFromPath(folderName);
+            }
+            else
+            {
+                // Extract from file name
+                var fileName = Path.GetFileNameWithoutExtension(libraryFileName);
+                lookupName = ExtractShowNameFromPath(fileName);
+                year = ExtractYearFromPath(fileName);
+            }
+
+            return (lookupName, year);
+        }
+
+        private string ExtractShowNameFromPath(string path)
+        {
+            // Regex pattern to extract show name from file or folder
+            var showNamePattern = @"^(?<name>[\w\s\.\-\(\)]+?)(\s?[\(\.\-\_]\d{4}[\)\.\-\_])?";  // Matches "ShowName" or "ShowName (2004)"
+
+            var match = Regex.Match(path, showNamePattern);
+            if (match.Success)
+            {
+                return match.Groups["name"].Value.Trim(new[] { '.', ' ', '-', '_', '(', ')' });
+            }
+
+            // If no match, fallback to entire path as name (unlikely)
+            return path;
+        }
+
+        private string ExtractYearFromPath(string path)
+        {
+            // Regex to extract year in formats like "(2004)", ".2004.", "-2004-", " 2004 "
+            var yearPattern = @"(?:[\(\.\-\_\s])(?<year>(19|20)\d{2})(?:[\)\.\-\_\s])";
+
+            var match = Regex.Match(path, yearPattern);
+            if (match.Success)
+            {
+                return match.Groups["year"].Value;
+            }
+
+            return null; // If no year found
         }
 
         private class ShowInfo
@@ -161,4 +208,3 @@ namespace MetaNodes.AniList
         }
     }
 }
-
