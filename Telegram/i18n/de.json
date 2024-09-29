@@ -1,0 +1,28 @@
+{
+  "Plugins": {
+    "Telegram": {
+      "Description": "Ein Plugin, das es Ihnen ermöglicht, Telegram-Nachrichten zu senden.",
+      "Fields": {
+        "BotToken": "Bot-Token",
+        "BotToken-Help": "Ihr Telegram-Bot-Token.",
+        "ChatId": "Chat-ID",
+        "ChatId-Help": "Die ID des Chats, an den Nachrichten gesendet werden sollen."
+      }
+    }
+  },
+  "Flow": {
+    "Parts": {
+      "Telegram": {
+        "Outputs": {
+          "1": "Telegram-Nachricht gesendet",
+          "2": "Telegram-Nachricht konnte nicht gesendet werden"
+        },
+        "Description": "Sendet eine Telegram-Nachricht.",
+        "Fields": {
+          "Message": "Nachricht",
+          "Message-Help": "Die zu sendende Nachricht."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "Flow": {
+    "Parts": {
+      "MD5Checksum": {
+        "Description": "Calcule une somme de contrôle MD5 du fichier de travail et la stocke dans la variable \"MD5\" et dans \"Checksum\".",
+        "Outputs": {
+          "1": "Somme de contrôle stockée dans les variables \"MD5\" et \"Checksum\""
+        }
+      },
+      "SHA1Checksum": {
+        "Description": "Calcule une somme de contrôle SHA1 du fichier de travail et la stocke dans la variable \"SHA1\" et dans \"Checksum\".",
+        "Outputs": {
+          "1": "Somme de contrôle stockée dans les variables \"SHA1\" et \"Checksum\""
+        }
+      },
+      "SHA256Checksum": {
+        "Description": "Calcule une somme de contrôle SHA256 du fichier de travail et la stocke dans la variable \"SHA256\" et dans \"Checksum\".",
+        "Outputs": {
+          "1": "Somme de contrôle stockée dans les variables \"SHA256\" et \"Checksum\""
+        }
+      },
+      "SHA512Checksum": {
+        "Description": "Calcule une somme de contrôle SHA512 du fichier de travail et la stocke dans la variable \"SHA512\" et dans \"Checksum\".",
+        "Outputs": {
+          "1": "Somme de contrôle stockée dans les variables \"SHA512\" et \"Checksum\""
+        }
+      }
+    }
+  }
+}

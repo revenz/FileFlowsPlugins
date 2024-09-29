@@ -1,0 +1,36 @@
+{
+  "Plugins": {
+    "Pushover": {
+      "Description": "Um plugin que permite enviar mensagens para um servidor Pushover.",
+      "Fields": {
+        "UserKey": "Chave do usuário",
+        "UserKey-Help": "Sua chave de usuário pessoal para receber notificações.",
+        "ApiToken": "Token da API",
+        "ApiToken-Help": "O token da API da aplicação usado para enviar notificações."
+      }
+    }
+  },
+  "Flow": {
+    "Parts": {
+      "Pushover": {
+        "Outputs": {
+          "1": "Mensagem Pushover enviada",
+          "2": "Falha ao enviar a mensagem Pushover"
+        },
+        "Description": "Envia uma mensagem via Pushover.",
+        "Fields": {
+          "Message": "Mensagem",
+          "Message-Help": "A mensagem a ser enviada ao servidor Pushover",
+          "Expire": "Expirar",
+          "Expire-Suffix": "segundos",
+          "Expire-Help": "Defina a duração, em segundos, antes que esta mensagem de emergência expire e pare de tentar a entrega.",
+          "Retry": "Repetir",
+          "Retry-Suffix": "segundos",
+          "Retry-Help": "Especifique o intervalo, em segundos, entre as tentativas de reenvio desta mensagem de emergência em caso de falha na entrega.",
+          "Priority": "Prioridade",
+          "Priority-Help": "A prioridade da mensagem sendo enviada"
+        }
+      }
+    }
+  }
+}

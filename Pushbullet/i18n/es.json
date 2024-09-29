@@ -1,0 +1,31 @@
+{
+  "Plugins": {
+    "Pushbullet": {
+      "Description": "Un plugin que te permite enviar mensajes a un servidor Pushbullet.",
+      "Fields": {
+        "UserKey": "Clave de usuario",
+        "UserKey-Help": "Tu clave de usuario personal para recibir notificaciones.",
+        "ApiToken": "Token de API",
+        "ApiToken-Help": "El token de API de la aplicación utilizado para enviar notificaciones."
+      }
+    }
+  },
+  "Flow": {
+    "Parts": {
+      "Pushbullet": {
+        "Outputs": {
+          "1": "Mensaje de Pushbullet enviado",
+          "2": "Error al enviar el mensaje de Pushbullet"
+        },
+        "Description": "Envía un mensaje a través de Pushbullet.",
+        "Fields": {
+          "Title": "Título",
+          "Message": "Mensaje",
+          "Message-Help": "El mensaje a enviar al servidor Pushbullet",
+          "Priority": "Prioridad",
+          "Priority-Help": "La prioridad del mensaje que se está enviando"
+        }
+      }
+    }
+  }
+}

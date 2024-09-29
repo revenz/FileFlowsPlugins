@@ -1,0 +1,28 @@
+{
+  "Plugins": {
+    "Telegram": {
+      "Description": "Un plugin que te permite enviar mensajes de Telegram.",
+      "Fields": {
+        "BotToken": "Token del bot",
+        "BotToken-Help": "Tu token de bot de Telegram.",
+        "ChatId": "ID del chat",
+        "ChatId-Help": "La ID del chat al que enviar mensajes."
+      }
+    }
+  },
+  "Flow": {
+    "Parts": {
+      "Telegram": {
+        "Outputs": {
+          "1": "Mensaje de Telegram enviado",
+          "2": "Error al enviar el mensaje de Telegram"
+        },
+        "Description": "Envía un mensaje de Telegram.",
+        "Fields": {
+          "Message": "Mensaje",
+          "Message-Help": "El mensaje a enviar."
+        }
+      }
+    }
+  }
+}

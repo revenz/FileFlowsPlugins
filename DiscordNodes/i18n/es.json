@@ -1,0 +1,30 @@
+{
+  "Plugins": {
+    "DiscordNodes": {
+      "Description": "Un plugin que te permite enviar mensajes a un servidor de Discord.\n\nEl ID del Webhook y el token se pueden obtener de la URL del webhook\n https://discord.com/api/webhooks/[webhookid]/[webhooktoken]",
+      "Fields": {
+        "WebhookId": "ID del Webhook",
+        "WebhookToken": "Token del Webhook"
+      }
+    }
+  },
+  "Flow": {
+    "Parts": {
+      "Discord": {
+        "Outputs": {
+          "1": "Mensaje de Discord enviado",
+          "2": "Error al enviar el mensaje de Discord"
+        },
+        "Description": "Envía un mensaje a un servidor de Discord.",
+        "Fields": {
+          "Message": "Mensaje",
+          "Message-Help": "El mensaje a enviar al servidor de Discord",
+          "Title": "Título",
+          "Title-Help": "Un título opcional para enviar; si no se establece, el tipo de mensaje será el título.",
+          "MessageType": "Tipo",
+          "MessageType-Help": "El tipo de mensaje a enviar. El tipo básico será solo el mensaje sin título y sin color."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "Flow": {
+    "Parts": {
+      "AutoCropImage": {
+        "Outputs": {
+          "1": "Bild zugeschnitten, in neue temporäre Datei gespeichert",
+          "2": "Bild wurde nicht zugeschnitten"
+        },
+        "Description": "Schneidet ein Bild automatisch zu",
+        "Fields": {
+          "Format": "Format",
+          "Format-Help": "Das Bildformat, in das konvertiert werden soll",
+          "Threshold": "Schwelle",
+          "Threshold-Help": "Schwelle für die entropische Dichte, Standardwert ist 50. Muss zwischen 0 und 100 liegen."
+        }
+      },
+      "ImageFlip": {
+        "Outputs": {
+          "1": "Bild umgedreht, in neue temporäre Datei gespeichert"
+        },
+        "Description": "Dreht ein Bild",
+        "Fields": {
+          "Format": "Format",
+          "Format-Help": "Das Bildformat, in das konvertiert werden soll",
+          "Vertical": "Vertikal",
+          "Vertical-Help": "Wenn aktiviert, wird das Bild vertikal gedreht, andernfalls horizontal"
+        }
+      },
+      "ImageFile": {
+        "Outputs": {
+          "1": "Bilddatei"
+        },
+        "Description": "Eine Bilddatei"
+      },
+      "ImageFormat": {
+        "Outputs": {
+          "1": "Bild konvertiert, in neue temporäre Datei gespeichert",
+          "2": "Bild bereits im Zielformat"
+        },
+        "Description": "Konvertiert ein Bild in das angegebene Format",
+        "Fields": {
+          "Format": "Format",
+          "Format-Help": "Das Bildformat, in das konvertiert werden soll"
+        }
+      },
+      "ImageIsLandscape": {
+        "Outputs": {
+          "1": "Bild ist im Querformat",
+          "2": "Bild ist nicht im Querformat"
+        },
+        "Description": "Testet, ob ein Bild im Querformat ist"
+      },
+      "ImageIsPortrait": {
+        "Outputs": {
+          "1": "Bild ist im Hochformat",
+          "2": "Bild ist nicht im Hochformat"
+        },
+        "Description": "Testet, ob ein Bild im Hochformat ist"
+      },
+      "ImageResizer": {
+        "Outputs": {
+          "1": "Bild skaliert, in neue temporäre Datei gespeichert"
+        },
+        "Description": "Ändert die Größe eines Bildes",
+        "Fields": {
+          "Format": "Format",
+          "Format-Help": "Das Bildformat, in das konvertiert werden soll",
+          "Width": "Breite",
+          "Height": "Höhe",
+          "Mode": "Modus",
+          "Mode-Help": "Der Modus, der beim Ändern der Größe des Bildes verwendet wird"
+        }
+      },
+      "ImageRotate": {
+        "Outputs": {
+          "1": "Bild rotiert, in neue temporäre Datei gespeichert"
+        },
+        "Description": "Rotiert ein Bild",
+        "Fields": {
+          "Format": "Format",
+          "Format-Help": "Das Bildformat, in das konvertiert werden soll",
+          "Angle": "Winkel",
+          "Angle-Help": "Der Rotationswinkel"
+        }
+      },
+      "IsImage": {
+        "Description": "Überprüft, ob eine Datei eine Bilddatei ist.",
+        "Outputs": {
+          "1": "Datei ist eine erkannte Bilddatei",
+          "2": "Datei ist keine erkannte Bilddatei"
+        },
+        "Fields": {
+          "File": "Datei",
+          "File-Placeholder": "Wenn leer, aktuelle Arbeitsdatei",
+          "File-Help": "Optionaler Pfad zur zu überprüfenden Datei; wenn leer gelassen, wird die aktuelle Arbeitsdatei überprüft."
+        }
+      },
+      "PixelCheck": {
+        "Description": "Dieses Flusselement überprüft, ob die Gesamtpixelanzahl eines Bildes die angegebene Schwelle überschreitet.",
+        "Outputs": {
+          "1": "Bild hat gleich oder mehr Pixel als angegeben",
+          "2": "Bild hat weniger Pixel als die erforderliche Anzahl"
+        },
+        "Fields": {
+          "Pixels": "Pixel",
+          "Pixels-Help": "Die Anzahl der Pixel, die ein Bild enthalten sollte. Dies wird berechnet, indem die Breite des Bildes mit seiner Höhe multipliziert wird."
+        }
+      }
+    }
+  }
+}

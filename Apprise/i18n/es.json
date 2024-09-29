@@ -1,0 +1,34 @@
+{
+  "Plugins": {
+    "Apprise": {
+      "Description": "Un plugin que te permite enviar mensajes a un servidor Apprise.",
+      "Fields": {
+        "ServerUrl": "Servidor",
+        "ServerUrl-Placeholder": "http://apprise.lan",
+        "ServerUrl-Help": "La URL del servidor Apprise",
+        "Endpoint": "Punto de acceso",
+        "Endpoint-Placeholder": "notify/apprise",
+        "Endpoint-Help": "El punto de acceso en el servidor Apprise, por ejemplo notify/apprise"
+      }
+    }
+  },
+  "Flow": {
+    "Parts": {
+      "Apprise": {
+        "Outputs": {
+          "1": "Mensaje Apprise enviado",
+          "2": "Fallo al enviar el mensaje Apprise"
+        },
+        "Description": "Envía un mensaje a un servidor Apprise.",
+        "Fields": {
+          "Message": "Mensaje",
+          "Message-Help": "El mensaje que se enviará al servidor Apprise",
+          "Tag": "Etiqueta",
+          "Tag-Help": "Una lista de etiquetas para enviar este mensaje. Si está vacío, se etiquetará con ''todos''.",
+          "MessageType": "Tipo",
+          "MessageType-Help": "El tipo de mensaje que se enviará"
+        }
+      }
+    }
+  }
+}

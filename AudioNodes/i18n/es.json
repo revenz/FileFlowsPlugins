@@ -1,0 +1,143 @@
+{
+  "Flow": {
+    "Parts": {
+      "AudioFile": {
+        "Description": "Un archivo de audio de entrada que ha tenido su información de audio leída y puede ser procesado",
+        "Outputs": {
+          "1": "Archivo de audio de la biblioteca"
+        }
+      },
+      "AudioBitrateMatches": {
+        "Label": "Coincidencia de Bitrate de Audio",
+        "Description": "Verifica si un bitrate de audio coincide con las restricciones.",
+        "Fields": {
+          "Match": "Coincidencia",
+          "BitrateKilobytes": "Bitrate",
+          "BitrateKilobytes-Suffix": "Kilobytes",
+          "BitrateKilobytes-Help": "El bitrate en kilobytes para verificar la coincidencia."
+        },
+        "Outputs": {
+          "1": "Coincide",
+          "2": "No coincide"
+        }
+      },
+      "AudioFileNormalization": {
+        "Description": "Normaliza un archivo de audio usando dos pasadas del filtro loudnorm de FFMPEG",
+        "Outputs": {
+          "1": "Archivo de audio normalizado y guardado en un archivo temporal"
+        }
+      },
+      "ConvertAudio": {
+        "Description": "Convierte un archivo de audio al códec de audio especificado",
+        "Outputs": {
+          "1": "Audio convertido y guardado en un archivo temporal",
+          "2": "Audio ya en el códec, no se realizó conversión"
+        },
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "El bitrate para el nuevo archivo, cuanto mayor sea el bitrate, mejor será la calidad, pero más grande será el archivo.",
+          "Codec": "Códec",
+          "Codec-Help": "El códec de audio al que se convertirá el archivo.",
+          "SampleRate": "Frecuencia de Muestreo",
+          "SampleRate-Help": "La frecuencia de muestreo a usar",
+          "Channels": "Canales",
+          "Channels-Help": "El número de canales que tendrá el archivo convertido.\nSi especificas más canales que la fuente, FFmpeg hará una mezcla ascendente automáticamente.\nSi especificas menos canales que la fuente, FFmpeg hará una mezcla descendente automáticamente.",
+          "CustomExtension": "Extensión",
+          "CustomExtension-Help": "Permite establecer una extensión de archivo personalizada en lugar de la automática determinada por el códec.",
+          "Normalize": "Normalizar",
+          "Normalize-Help": "Si el audio debe ser normalizado con una normalización de dos pasadas",
+          "SkipIfCodecMatches": "Omitir si el códec coincide",
+          "SkipIfCodecMatches-Help": "Si el códec de audio existente coincide, este archivo no será procesado, independientemente del bitrate. Si está desactivado, el bitrate debe ser igual o menor para que se omita.",
+          "HighEfficiency": "Alta Eficiencia",
+          "HighEfficiency-Help": "Usará el modo de alta eficiencia, esto cambiará la extensión a m4a y reducirá los dispositivos de reproducción compatibles, pero puede reducir el tamaño del archivo."
+        }
+      },
+      "ConvertToAAC": {
+        "Description": "Convierte un archivo de audio a AAC",
+        "Outputs": {
+          "1": "Audio convertido y guardado en un archivo temporal",
+          "2": "Audio ya en el códec, no se realizó conversión"
+        },
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "El bitrate para el nuevo archivo AAC, cuanto mayor sea el bitrate, mejor será la calidad, pero más grande será el archivo. 192 Kbps es la tasa recomendada.",
+          "Normalize": "Normalizar",
+          "Normalize-Help": "Si el audio debe ser normalizado con una normalización de dos pasadas",
+          "SampleRate": "Frecuencia de Muestreo",
+          "SampleRate-Help": "La frecuencia de muestreo a usar",
+          "Channels": "Canales",
+          "Channels-Help": "El número de canales que tendrá el archivo convertido.\nSi especificas más canales que la fuente, FFmpeg hará una mezcla ascendente automáticamente.\nSi especificas menos canales que la fuente, FFmpeg hará una mezcla descendente automáticamente.",
+          "CustomExtension": "Extensión",
+          "CustomExtension-Help": "Permite establecer una extensión de archivo personalizada en lugar de la automática determinada por el códec.",
+          "SkipIfCodecMatches": "Omitir si el códec coincide",
+          "SkipIfCodecMatches-Help": "Si el códec de audio existente coincide, este archivo no será procesado, independientemente del bitrate. Si está desactivado, el bitrate debe ser igual o menor para que se omita.",
+          "HighEfficiency": "Alta Eficiencia",
+          "HighEfficiency-Help": "Usará el modo de alta eficiencia, esto cambiará la extensión a m4a y reducirá los dispositivos de reproducción compatibles, pero puede reducir el tamaño del archivo."
+        }
+      },
+      "ConvertToFLAC": {
+        "Description": "Convierte un archivo de audio a FLAC",
+        "Outputs": {
+          "1": "Audio convertido y guardado en un archivo temporal",
+          "2": "Audio ya en el códec, no se realizó conversión"
+        },
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "El bitrate para el nuevo archivo FLAC, cuanto mayor sea el bitrate, mejor será la calidad, pero más grande será el archivo. Se recomienda 128 Kbps.",
+          "SampleRate": "Frecuencia de Muestreo",
+          "SampleRate-Help": "La frecuencia de muestreo a usar",
+          "Channels": "Canales",
+          "Channels-Help": "El número de canales que tendrá el archivo convertido.\nSi especificas más canales que la fuente, FFmpeg hará una mezcla ascendente automáticamente.\nSi especificas menos canales que la fuente, FFmpeg hará una mezcla descendente automáticamente.",
+          "CustomExtension": "Extensión",
+          "CustomExtension-Help": "Permite establecer una extensión de archivo personalizada en lugar de la automática determinada por el códec.",
+          "Normalize": "Normalizar",
+          "Normalize-Help": "Si el audio debe ser normalizado con una normalización de dos pasadas",
+          "SkipIfCodecMatches": "Omitir si el códec coincide",
+          "SkipIfCodecMatches-Help": "Si el códec de audio existente coincide, este archivo no será procesado, independientemente del bitrate. Si está desactivado, el bitrate debe ser igual o menor para que se omita."
+        }
+      },
+      "ConvertToMP3": {
+        "Description": "Convierte un archivo de audio a MP3",
+        "Outputs": {
+          "1": "Audio convertido y guardado en un archivo temporal",
+          "2": "Audio ya en el códec, no se realizó conversión"
+        },
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "El bitrate para el nuevo archivo MP3, cuanto mayor sea el bitrate, mejor será la calidad, pero más grande será el archivo. 192 Kbps es la tasa recomendada.",
+          "SampleRate": "Frecuencia de Muestreo",
+          "SampleRate-Help": "La frecuencia de muestreo a usar",
+          "Channels": "Canales",
+          "Channels-Help": "El número de canales que tendrá el archivo convertido.\nSi especificas más canales que la fuente, FFmpeg hará una mezcla ascendente automáticamente.\nSi especificas menos canales que la fuente, FFmpeg hará una mezcla descendente automáticamente.",
+          "CustomExtension": "Extensión",
+          "CustomExtension-Help": "Permite establecer una extensión de archivo personalizada en lugar de la automática determinada por el códec.",
+          "Normalize": "Normalizar",
+          "Normalize-Help": "Si el audio debe ser normalizado con una normalización de dos pasadas",
+          "SkipIfCodecMatches": "Omitir si el códec coincide",
+          "SkipIfCodecMatches-Help": "Si el códec de audio existente coincide, este archivo no será procesado, independientemente del bitrate. Si está desactivado, el bitrate debe ser igual o menor para que se omita."
+        }
+      },
+      "ConvertToOGG": {
+        "Description": "Convierte un archivo de audio a OGG",
+        "Outputs": {
+          "1": "Audio convertido y guardado en un archivo temporal",
+          "2": "Audio ya en el códec, no se realizó conversión"
+        },
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "El bitrate para el nuevo archivo OGG, cuanto mayor sea el bitrate, mejor será la calidad, pero más grande será el archivo. Se recomienda 128 Kbps.",
+          "SampleRate": "Frecuencia de Muestreo",
+          "SampleRate-Help": "La frecuencia de muestreo a usar",
+          "Channels": "Canales",
+          "Channels-Help": "El número de canales que tendrá el archivo convertido.\nSi especificas más canales que la fuente, FFmpeg hará una mezcla ascendente automáticamente.\nSi especificas menos canales que la fuente, FFmpeg hará una mezcla descendente automáticamente.",
+          "CustomExtension": "Extensión",
+          "CustomExtension-Help": "Permite establecer una extensión de archivo personalizada en lugar de la automática determinada por el códec.",
+          "Normalize": "Normalizar",
+          "Normalize-Help": "Si el audio debe ser normalizado con una normalización de dos pasadas",
+          "SkipIfCodecMatches": "Omitir si el códec coincide",
+          "SkipIfCodecMatches-Help": "Si el códec de audio existente coincide, este archivo no será procesado, independientemente del bitrate. Si está desactivado, el bitrate debe ser igual o menor para que se omita."
+        }
+      }
+    }
+  }
+}

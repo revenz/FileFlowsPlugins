@@ -1,0 +1,54 @@
+{
+  "Flow": {
+    "Parts": {
+      "ComicConverter": {
+        "Outputs": {
+          "1": "El cómic fue convertido y guardado como archivo temporal",
+          "2": "El cómic ya estaba en el formato deseado"
+        },
+        "Description": "Convierte un cómic a un formato diferente de cómic.\n\nSoporta la conversión de CBZ, CBR, CB7, PDF, GZ, BZ2",
+        "Fields": {
+          "Format": "Formato",
+          "Format-Help": "El formato al que convertir el cómic",
+          "EnsureTopDirectory": "Asegurar directorio superior",
+          "EnsureTopDirectory-Help": "Asegura que todos los archivos estén ubicados directamente dentro del directorio superior del archivo del cómic, sin subdirectorios presentes.",
+          "DeleteNonPageImages": "Eliminar imágenes no de página",
+          "DeleteNonPageImages-Help": "Elimina imágenes que no siguen una estructura de nombrado para las páginas. Es decir, no terminan con un número.",
+          "Codec": "Códec",
+          "Codec-Help": "El códec para guardar las imágenes como",
+          "Quality": "Calidad",
+          "Quality-Help": "Calidad de las páginas del cómic, 0 para la mayor compresión / peor calidad, 100 para la mejor calidad",
+          "MaxWidth": "Ancho máximo",
+          "MaxWidth-Help": "El ancho máximo para las páginas, usar 0 para no hacer ajustes o para mantener la calidad con la altura",
+          "MaxHeight": "Altura máxima",
+          "MaxHeight-Help": "La altura máxima para las páginas, usar 0 para no hacer ajustes o para mantener la calidad con el ancho"
+        }
+      },
+      "ComicExtractor": {
+        "Outputs": {
+          "1": "El cómic fue extraído"
+        },
+        "Description": "Extrae todos los archivos de un formato de cómic y los guarda en una carpeta específica.\n\nSoporta la extracción de CBZ, CBR, CB7, PDF, GZ, BZ2",
+        "Fields": {
+          "DestinationPath": "Ruta de destino",
+          "DestinationPath-Help": "La carpeta donde se guardarán los archivos extraídos del cómic"
+        }
+      },
+      "CreateComicInfo": {
+        "Description": "Analiza la ruta de un cómic y crea un archivo comicinfo.xml dentro del archivo del cómic.",
+        "Fields": {
+          "Publisher": "Editor",
+          "Publisher-Help": "Si el cómic está en un directorio de editor, consulte la ayuda para obtener más información.",
+          "RenameFile": "Renombrar archivo",
+          "RenameFile-Help": "Si el archivo debe ser renombrado a `Serie - Número - Título.extensión`",
+          "IssueDigits": "Dígitos de la edición",
+          "IssueDigits-Help": "Se rellenará el número de la edición con ceros a la izquierda hasta esta cantidad.\nPor ejemplo, para la edición 1 si el relleno es 3, entonces la edición aparecerá como #001"
+        },
+        "Outputs": {
+          "1": "ComicInfo agregado al archivo del cómic",
+          "2": "ComicInfo ya está en el archivo"
+        }
+      }
+    }
+  }
+}

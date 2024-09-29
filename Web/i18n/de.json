@@ -1,0 +1,69 @@
+{
+  "Flow": {
+    "Parts": {
+      "Downloader": {
+        "Outputs": {
+          "1": "URL wurde erfolgreich heruntergeladen",
+          "2": "URL konnte nicht heruntergeladen werden"
+        },
+        "Description": "Lädt die angegebene URL herunter",
+        "Fields": {
+          "Url": "URL",
+          "Url-Help": "Die herunterzuladende URL, leer lassen, um die aktuelle Arbeitsdatei zu verwenden. Wenn die aktuelle Arbeitsdatei keine URL ist, schlägt dies fehl."
+        }
+      },
+      "HtmlImageParser": {
+        "Label": "HTML-Bildparser",
+        "Outputs": {
+          "1": "Bilder gefunden und in der Variable ImageUrls gespeichert",
+          "2": "Keine Bilder gefunden"
+        },
+        "Fields": {
+          "Path": "Datei",
+          "Path-Description": "Eine optionale Datei oder Variable, die nach Bildern durchsucht werden soll. Wenn nicht angegeben, wird die Arbeitsdatei durchsucht.",
+          "Pattern": "Muster",
+          "Pattern-Placeholder": "Optional",
+          "Pattern-Help": "Ein optionaler, fallunempfindlicher regulärer Ausdruck, mit dem die Ergebnisse abgeglichen werden. Nur Ergebnisse, die diesem Muster entsprechen, werden akzeptiert."
+        }
+      },
+      "HtmlLinkParser": {
+        "Label": "HTML-Linkparser",
+        "Outputs": {
+          "1": "Link gefunden und in der Variable Links gespeichert",
+          "2": "Keine Links gefunden"
+        },
+        "Fields": {
+          "Path": "Datei",
+          "Path-Description": "Eine optionale Datei oder Variable, die nach Links durchsucht werden soll. Wenn nicht angegeben, wird die Arbeitsdatei durchsucht.",
+          "Pattern": "Muster",
+          "Pattern-Placeholder": "Optional",
+          "Pattern-Help": "Ein optionaler, fallunempfindlicher regulärer Ausdruck, mit dem die Ergebnisse abgeglichen werden. Nur Ergebnisse, die diesem Muster entsprechen, werden akzeptiert."
+        }
+      },
+      "InputUrl": {
+        "Label": "Eingabe-URL"
+      },
+      "WebRequest": {
+        "Description": "Ermöglicht das Senden einer Webanfrage",
+        "Outputs": {
+          "1": "Erfolgreich gesendet",
+          "2": "Anfrage gab einen nicht erfolgreichen Statuscode zurück"
+        },
+        "Fields": {
+          "Url": "URL",
+          "Url-Help": "Die URL der Anfrage",
+          "Method": "Methode",
+          "Method-Help": "Die Webmethode, die beim Senden dieser Anfrage verwendet werden soll",
+          "ContentType": "Inhaltstyp",
+          "ContentType-Help": "Der Content-Type der zu sendenden Nachricht",
+          "Headers": "Header",
+          "Headers-Help": "Optionale Header, die mit der Anfrage gesendet werden",
+          "HeadersKey": "Schlüssel",
+          "HeadersValue": "Wert",
+          "Body": "Body",
+          "Body-Help": "Der Body der gesendeten Anfrage. Variablen können in diesem Feld verwendet werden."
+        }
+      }
+    }
+  }
+}

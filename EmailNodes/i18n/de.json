@@ -1,0 +1,37 @@
+{
+  "Plugins": {
+    "EmailNodes": {
+      "Fields": {
+        "SmtpServer": "SMTP-Server",
+        "SmtpServer-Help": "Die Adresse des SMTP-Servers, der zum Senden von E-Mails verwendet wird",
+        "SmtpPort": "SMTP-Port",
+        "SmtpPort-Help": "Der Port des SMTP-Servers, der zum Senden von E-Mails verwendet wird, Standard 25",
+        "SmtpUsername": "SMTP-Benutzername",
+        "SmtpUsername-Help": "Der Benutzername, der zur Authentifizierung am SMTP-Server verwendet wird",
+        "SmtpPassword": "SMTP-Passwort",
+        "SmtpPassword-Help": "Das Passwort, das zur Authentifizierung am SMTP-Server verwendet wird",
+        "Sender": "Absender",
+        "Sender-Help": "Die E-Mail-Adresse, von der E-Mails gesendet werden"
+      }
+    }
+  },
+  "Flow": {
+    "Parts": {
+      "SendEmail": {
+        "Outputs": {
+          "1": "E-Mail ''{Subject}'' wurde gesendet",
+          "2": "E-Mail konnte nicht gesendet werden"
+        },
+        "Description": "Sendet eine E-Mail über den konfigurierten SMTP-Server",
+        "Fields": {
+          "Recipients": "Empfänger",
+          "Recipients-Help": "Eine Liste von E-Mail-Adressen, an die die Nachricht gesendet werden soll",
+          "Subject": "Betreff",
+          "Subject-Help": "Der Betreff der zu sendenden E-Mail",
+          "Body": "Inhalt",
+          "Body-Help": "Der Inhalt der gesendeten E-Mail-Nachricht. Verwendet die [scriban](https://github.com/scriban/scriban) Template-Sprache"
+        }
+      }
+    }
+  }
+}

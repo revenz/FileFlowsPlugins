@@ -1,0 +1,78 @@
+{
+  "Flow": {
+    "Parts": {
+      "GenreMatches": {
+        "Description": "Vergleicht die Genre-Metadaten mit dem angegebenen Genre(s).",
+        "Outputs": {
+          "1": "Genre stimmt überein",
+          "2": "Genre stimmt nicht überein"
+        },
+        "Fields": {
+          "Genres": "Genres",
+          "MatchAll": "Alle übereinstimmen",
+          "MatchAll-Help": "Wenn alle ausgewählten Genres in den Metadaten erscheinen müssen, andernfalls muss mindestens eines erscheinen"
+        }
+      },
+      "MovieLookup": {
+        "Description": "Durchführt eine Suche auf TheMovieDB.org nach einem Film.\nSpeichert die Metadaten in der Variablen 'MovieInfo'.",
+        "Outputs": {
+          "1": "Film gefunden",
+          "2": "Film NICHT gefunden"
+        },
+        "Fields": {
+          "UseFolderName": "Ordnernamen verwenden",
+          "UseFolderName-Help": "Ob der Ordnername anstelle des Dateinamens verwendet werden soll."
+        }
+      },
+      "MovieRenamer": {
+        "Description": "Bennant die Arbeitsdatei mithilfe der in 'MovieInfo' gespeicherten Metadaten um.\nHinweis: MovieLookup sollte vor diesem Flusselement im Fluss ausgeführt werden, damit es funktioniert.\n\nAusgabe 1: Datei wurde umbenannt\nAusgabe 2: Datei konnte nicht umbenannt werden",
+        "Fields": {
+          "Pattern": "Muster",
+          "Pattern-Help": "Das Muster, das zum Umbenennen des Ordners verwendet werden soll. '{Title}', '{Year}', '{Extension}'.",
+          "DestinationPath": "Zielpfad",
+          "DestinationPath-Help": "Ob die Datei in ein anderes Verzeichnis verschoben werden soll.",
+          "LogOnly": "Nur protokollieren",
+          "LogOnly-Help": "Aktivieren, wenn Sie dieses Flusselement nur testen möchten, ohne dass die Datei tatsächlich umbenannt wird"
+        }
+      },
+      "MusicMeta": {
+        "Description": "Lädt die Metadaten einer Musikdatei in die Flussvariablen."
+      },
+      "NfoFileCreator": {
+        "Description": "Erstellt eine Kodi NFO-Datei aus zuvor geladenen Metadaten.",
+        "Fields": {
+          "DestinationPath": "Zielordner",
+          "DestinationPath-Help": "Der Ordner, in dem die NFO-Datei erstellt wird.\nWenn leer, wird sie im gleichen Verzeichnis wie die Originaldatei erstellt.",
+          "DestinationFile": "Ziel-Datei",
+          "DestinationFile-Help": "Der Dateiname der neuen NFO-Datei. Wenn leer, wird der ursprüngliche Dateiname mit der Erweiterung auf `.nfo` geändert"
+        },
+        "Outputs": {
+          "1": "NFO-Datei erstellt",
+          "2": "NFO konnte nicht erstellt werden"
+        }
+      },
+      "TVShowLookup": {
+        "Description": "Durchführt eine Suche auf TheMovieDB.org nach einer TV-Show.\nSpeichert die Metadaten in der Variablen 'TVShowInfo'.",
+        "Outputs": {
+          "1": "TV-Show gefunden",
+          "2": "TV-Show NICHT gefunden"
+        },
+        "Fields": {
+          "UseFolderName": "Ordnernamen verwenden",
+          "UseFolderName-Help": "Ob der Ordnername anstelle des Dateinamens verwendet werden soll.\n\nHinweis: Wenn der Ordner mit Staffel oder Specials beginnt, wird der übergeordnete Ordner verwendet."
+        }
+      },
+      "TVEpisodeLookup": {
+        "Description": "Durchführt eine Suche auf TheMovieDB.org nach einer TV-Episode.",
+        "Outputs": {
+          "1": "TV-Episode gefunden",
+          "2": "TV-Episode NICHT gefunden"
+        },
+        "Fields": {
+          "UseFolderName": "Ordnernamen verwenden",
+          "UseFolderName-Help": "Ob der Ordnername anstelle des Dateinamens verwendet werden soll.\n\nHinweis: Wenn der Ordner mit Staffel oder Specials beginnt, wird der übergeordnete Ordner verwendet."
+        }
+      }
+    }
+  }
+}
