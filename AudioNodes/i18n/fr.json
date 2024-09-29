@@ -137,6 +137,49 @@
           "1": "Audio converti, enregistré dans un fichier temporaire",
           "2": "L'audio est déjà dans le codec, aucune conversion effectuée"
         }
+      },
+      "ConvertToWAV": {
+        "Description": "Convertir un fichier audio en WAV",
+        "Fields": {
+          "Bitrate": "Débit binaire",
+          "Bitrate-Help": "Le débit binaire pour le nouveau fichier WAV, plus le débit binaire est élevé, meilleure est la qualité, mais plus le fichier est volumineux. 128 Kbps est le débit recommandé.",
+          "Channels": "Canaux",
+          "Channels-Help": "Le nombre de canaux que le fichier converti aura.\nSi vous spécifiez plus de canaux que la source, FFmpeg effectuera automatiquement un surmixage.\nSi vous spécifiez moins de canaux que la source, FFmpeg effectuera automatiquement un sous-mixage.",
+          "CustomExtension": "Extension",
+          "CustomExtension-Help": "Permet de définir une extension de fichier personnalisée à utiliser au lieu de celle automatiquement déterminée par le codec.",
+          "Normalize": "Normaliser",
+          "Normalize-Help": "Si l'audio doit être normalisé avec une normalisation audio à deux passes",
+          "SampleRate": "Taux d'échantillonnage",
+          "SampleRate-Help": "Le taux d'échantillonnage à utiliser",
+          "SkipIfCodecMatches": "Ignorer si le codec correspond",
+          "SkipIfCodecMatches-Help": "Si le codec audio existant correspond, ce fichier ne sera pas traité, quel que soit le débit binaire. Sinon, si désactivé, le débit binaire doit être inférieur ou égal pour être ignoré."
+        },
+        "Outputs": {
+          "1": "Audio converti et enregistré dans un fichier temporaire",
+          "2": "Audio déjà dans le codec, aucune conversion effectuée"
+        }
+      },
+      "CreateAudioBook": {
+        "Description": "Crée un livre audio à partir de fichiers audio trouvés dans le répertoire d'entrée",
+        "Fields": {
+          "DeleteSourceFiles": "Supprimer les fichiers sources",
+          "DeleteSourceFiles-Help": "Lorsque cette option est activée, les fichiers sources qui composent le nouveau fichier m4b seront supprimés, sinon ils resteront intacts.",
+          "DestinationPath": "Chemin de destination",
+          "DestinationPath-Help": "Le chemin où enregistrer le nouveau fichier créé. S'il est laissé vide, le fichier sera créé dans le répertoire temporaire et sera supprimé s'il n'est pas déplacé par la suite.",
+          "UpdateWorkingFile": "Mettre à jour le fichier de travail",
+          "UpdateWorkingFile-Help": "Lorsque cette option est activée, le fichier de travail sera mis à jour vers le nouveau fichier créé."
+        },
+        "Outputs": {
+          "1": "Livre audio créé",
+          "2": "Livre audio non créé"
+        }
+      },
+      "EmbedArtwork": {
+        "Description": "Incorpore une œuvre d'art dans un fichier audio",
+        "Outputs": {
+          "1": "Œuvre d'art trouvée et incorporée dans le fichier audio",
+          "2": "Aucune œuvre d'art trouvée à incorporer"
+        }
       }
     }
   }

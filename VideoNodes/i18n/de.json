@@ -128,7 +128,7 @@
           "RemoveTitle": "Titel entfernen",
           "RemoveTitle-Help": "Wenn der Titel der Quelle entfernt werden soll und der Track keinen Titel haben soll.",
           "SampleRate": "Musterrate",
-          "SampleRate-Help": "Die Abtastrate, die für die neue Audiospur verwendet werden soll."
+          "SampleRate-Help": "Die Abtastrate, die für die neue Audiospur verwendet werden soll.",
           "TrackSelectionOptions": "Spurauswahl",
           "TrackSelectionOptionsKey": "Eigenschaft",
           "TrackSelectionOptionsValue": "Wert"

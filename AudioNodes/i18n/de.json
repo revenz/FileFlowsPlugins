@@ -137,6 +137,49 @@
           "1": "Konvertiertes Audio, gespeichert in einer temporären Datei",
           "2": "Audio ist bereits im Codec, keine Konvertierung durchgeführt"
         }
+      },
+      "ConvertToWAV": {
+        "Description": "Konvertiere eine Audiodatei in WAV",
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "Die Bitrate für die neue WAV-Datei. Je höher die Bitrate, desto besser die Qualität, aber auch größer die Datei. 128 Kbps ist die empfohlene Rate.",
+          "Channels": "Kanäle",
+          "Channels-Help": "Die Anzahl der Kanäle, die die konvertierte Datei haben wird.\nWenn Sie mehr Kanäle angeben als die Quelle, wird FFmpeg automatisch hochgemischt.\nWenn Sie weniger Kanäle als die Quelle angeben, wird FFmpeg automatisch heruntergemischt.",
+          "CustomExtension": "Erweiterung",
+          "CustomExtension-Help": "Ermöglicht das Festlegen einer benutzerdefinierten Dateierweiterung, die anstelle der automatisch vom Codec bestimmten verwendet wird.",
+          "Normalize": "Normalisieren",
+          "Normalize-Help": "Wenn die Audiodatei mit einer zweifachen Audi Normalisierung normalisiert werden soll",
+          "SampleRate": "Abtastrate",
+          "SampleRate-Help": "Die zu verwendende Abtastrate",
+          "SkipIfCodecMatches": "Überspringen, wenn Codec übereinstimmt",
+          "SkipIfCodecMatches-Help": "Wenn der vorhandene Audio-Codec übereinstimmt, wird diese Datei unabhängig von der Bitrate nicht verarbeitet. Andernfalls muss die Bitrate kleiner oder gleich sein, damit sie übersprungen wird."
+        },
+        "Outputs": {
+          "1": "Audio konvertiert und in temporäre Datei gespeichert",
+          "2": "Audio bereits im Codec, keine Konvertierung durchgeführt"
+        }
+      },
+      "CreateAudioBook": {
+        "Description": "Erstellt ein Hörbuch aus Audiodateien im Eingangsverzeichnis",
+        "Fields": {
+          "DeleteSourceFiles": "Quelldateien löschen",
+          "DeleteSourceFiles-Help": "Wenn aktiviert, werden die Quelldateien, die die neu erstellte m4b-Datei ausmachen, gelöscht, andernfalls bleiben sie unberührt.",
+          "DestinationPath": "Zielpfad",
+          "DestinationPath-Help": "Der Zielort, an dem die neu erstellte Datei gespeichert werden soll. Wenn leer gelassen, wird die Datei im temporären Verzeichnis erstellt und gelöscht, wenn sie danach nicht verschoben wird.",
+          "UpdateWorkingFile": "Arbeitsdatei aktualisieren",
+          "UpdateWorkingFile-Help": "Wenn aktiviert, wird die Arbeitsdatei auf die neu erstellte Datei aktualisiert."
+        },
+        "Outputs": {
+          "1": "Hörbuch erstellt",
+          "2": "Hörbuch nicht erstellt"
+        }
+      },
+      "EmbedArtwork": {
+        "Description": "Bettet das Artwork in eine Audiodatei ein",
+        "Outputs": {
+          "1": "Artwork gefunden und in die Audiodatei eingebettet",
+          "2": "Kein Artwork zum Einbetten gefunden"
+        }
       }
     }
   }

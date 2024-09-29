@@ -137,6 +137,49 @@
           "1": "Audio convertido y guardado en un archivo temporal",
           "2": "Audio ya en el códec, no se realizó conversión"
         }
+      },
+      "ConvertToWAV": {
+        "Description": "Convertir un archivo de audio a WAV",
+        "Fields": {
+          "Bitrate": "Tasa de bits",
+          "Bitrate-Help": "La tasa de bits para el nuevo archivo WAV; cuanto mayor sea la tasa de bits, mejor será la calidad, pero más grande será el archivo. Se recomienda 128 Kbps.",
+          "Channels": "Canales",
+          "Channels-Help": "El número de canales que tendrá el archivo convertido.\nSi especificas más canales que los de la fuente, FFmpeg hará un aumento automático de canales.\nSi especificas menos canales que los de la fuente, FFmpeg hará una reducción automática de canales.",
+          "CustomExtension": "Extensión",
+          "CustomExtension-Help": "Permite establecer una extensión de archivo personalizada en lugar de la que determina automáticamente el códec.",
+          "Normalize": "Normalizar",
+          "Normalize-Help": "Si el audio debe ser normalizado con normalización de audio de dos pasadas",
+          "SampleRate": "Frecuencia de muestreo",
+          "SampleRate-Help": "La frecuencia de muestreo a utilizar",
+          "SkipIfCodecMatches": "Saltar si el códec coincide",
+          "SkipIfCodecMatches-Help": "Si el códec de audio existente coincide, este archivo no se procesará independientemente de la tasa de bits. De lo contrario, si está desactivado, la tasa de bits debe ser menor o igual para omitirlo."
+        },
+        "Outputs": {
+          "1": "Audio convertido y guardado en un archivo temporal",
+          "2": "Audio ya en códec, no se realizó ninguna conversión"
+        }
+      },
+      "CreateAudioBook": {
+        "Description": "Crea un libro de audio a partir de archivos de audio encontrados en el directorio de entrada",
+        "Fields": {
+          "DeleteSourceFiles": "Eliminar archivos fuente",
+          "DeleteSourceFiles-Help": "Cuando está habilitado, se eliminarán los archivos fuente que componen el nuevo archivo m4b; de lo contrario, se dejarán sin cambios.",
+          "DestinationPath": "Ruta de destino",
+          "DestinationPath-Help": "La ruta donde guardar el nuevo archivo creado. Si se deja vacío, el archivo se creará en el directorio temporal y se eliminará si no se mueve posteriormente.",
+          "UpdateWorkingFile": "Actualizar archivo de trabajo",
+          "UpdateWorkingFile-Help": "Cuando está habilitado, el archivo de trabajo se actualizará al nuevo archivo creado."
+        },
+        "Outputs": {
+          "1": "Libro de audio creado",
+          "2": "Libro de audio no creado"
+        }
+      },
+      "EmbedArtwork": {
+        "Description": "Incorpora una obra de arte en un archivo de audio",
+        "Outputs": {
+          "1": "Obra de arte encontrada e incorporada en el archivo de audio",
+          "2": "No se encontró ninguna obra de arte para incorporar"
+        }
       }
     }
   }

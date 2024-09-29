@@ -1,14 +1,6 @@
 {
   "Flow": {
     "Parts": {
-      "AddSilence": {
-        "Help": "Adiciona um período de silêncio ao arquivo de áudio.",
-        "Label": "Adicionar silêncio",
-        "Fields": {
-          "Duration": "Duração do silêncio",
-          "Duration-Help": "A duração do silêncio a ser adicionada em segundos."
-        }
-      },
       "AudioBitrateMatches": {
         "Description": "Verifica se um bitrate de áudio corresponde às restrições.",
         "Label": "Correspondência de bitrate de áudio",
@@ -167,61 +159,26 @@
           "2": "O áudio já está no codec, nenhuma conversão realizada"
         }
       },
-      "Fade": {
-        "Help": "Adiciona um efeito de desvanecimento ao início e ao fim do arquivo de áudio.",
-        "Label": "Desvanecer",
+      "CreateAudioBook": {
+        "Description": "Cria um audiolivro a partir de arquivos de áudio encontrados no diretório de entrada",
         "Fields": {
-          "InDuration": "Duração do desvanecimento de entrada",
-          "InDuration-Help": "A duração do desvanecimento de entrada em segundos.",
-          "OutDuration": "Duração do desvanecimento de saída",
-          "OutDuration-Help": "A duração do desvanecimento de saída em segundos."
+          "DeleteSourceFiles": "Excluir arquivos de origem",
+          "DeleteSourceFiles-Help": "Quando ativado, os arquivos de origem que compõem o novo arquivo m4b serão excluídos; caso contrário, eles permanecerão intactos.",
+          "DestinationPath": "Caminho de destino",
+          "DestinationPath-Help": "O destino onde o novo arquivo criado será salvo. Se deixado em branco, o arquivo será criado no diretório temporário e será excluído se não for movido posteriormente.",
+          "UpdateWorkingFile": "Atualizar arquivo de trabalho",
+          "UpdateWorkingFile-Help": "Quando ativado, o arquivo de trabalho será atualizado para o novo arquivo criado."
+        },
+        "Outputs": {
+          "1": "Audiolivro criado",
+          "2": "Audiolivro não criado"
         }
       },
-      "Gain": {
-        "Help": "Ajusta o ganho do arquivo de áudio.",
-        "Label": "Ganho",
-        "Fields": {
-          "GainDB": "Ganho (dB)",
-          "GainDB-Help": "O valor de ganho em decibéis. Valores positivos aumentam o volume, enquanto valores negativos diminuem."
-        }
-      },
-      "Output": {
-        "FileName": "Nome do arquivo",
-        "FileName-Help": "O nome do arquivo de saída a ser gerado. O caminho do arquivo será definido automaticamente.",
-        "Format": "Formato",
-        "Format-Help": "O formato do arquivo de saída. Se não especificado, o formato será determinado automaticamente com base na extensão do arquivo de saída."
-      },
-      "PrependText": {
-        "Help": "Texto que deve ser acrescentado ao início do arquivo de áudio.",
-        "Label": "Texto a ser acrescentado",
-        "Field": {
-          "Text": "Texto"
-        }
-      },
-      "ReplaceAudio": {
-        "Help": "Substitui a faixa de áudio de um arquivo com outra faixa de áudio.",
-        "Label": "Substituir áudio",
-        "Fields": {
-          "AudioFile": "Arquivo de áudio",
-          "AudioFile-Help": "O arquivo de áudio que deve ser usado para substituir a faixa existente."
-        }
-      },
-      "SampleRateConversion": {
-        "Help": "Converte a taxa de amostragem do arquivo de áudio.",
-        "Label": "Conversão de taxa de amostragem",
-        "Fields": {
-          "NewSampleRate": "Nova taxa de amostragem",
-          "NewSampleRate-Help": "A nova taxa de amostragem a ser aplicada ao arquivo de áudio."
-        }
-      },
-      "Trim": {
-        "Help": "Recorta o arquivo de áudio de acordo com os pontos de início e fim especificados.",
-        "Label": "Recortar",
-        "Fields": {
-          "End": "Fim",
-          "End-Help": "O ponto de fim em segundos.",
-          "Start": "Início",
-          "Start-Help": "O ponto de início em segundos."
+      "EmbedArtwork": {
+        "Description": "Incorpora arte em um arquivo de áudio",
+        "Outputs": {
+          "1": "Arte encontrada e incorporada no arquivo de áudio",
+          "2": "Nenhuma arte encontrada para incorporar"
         }
       }
     }
