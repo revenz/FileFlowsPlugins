@@ -118,6 +118,7 @@
           "Channels-Help": "Die Anzahl der Kanäle dieser neuen Audiospur.\nWenn Sie mehr Kanäle als die Quelle angeben, wird FFMPEG sie automatisch hochmischen.\nWenn Sie weniger Kanäle als die Quelle angeben, wird FFMPEG sie automatisch heruntermischen.",
           "Codec": "Codec",
           "Codec-Help": "Der Codec, der für die Audiokodierung verwendet wird.",
+          "CustomTrackSelection": "Quellspur-Auswahl",
           "Index": "Index",
           "Index-Help": "Der Index, an dem die neue Tonspur eingefügt werden soll.  Um die neue Audiospur als erste Spur einzufügen, setzen Sie diesen Wert auf 0.",
           "Language": "Sprache",
@@ -128,9 +129,13 @@
           "RemoveTitle-Help": "Wenn der Titel der Quelle entfernt werden soll und der Track keinen Titel haben soll.",
           "SampleRate": "Musterrate",
           "SampleRate-Help": "Die Abtastrate, die für die neue Audiospur verwendet werden soll."
+          "TrackSelectionOptions": "Spurauswahl",
+          "TrackSelectionOptionsKey": "Eigenschaft",
+          "TrackSelectionOptionsValue": "Wert"
         },
         "Outputs": {
-          "1": "Audiospur zum FFMPEG Builder hinzugefügt"
+          "1": "Audiospur zum FFMPEG Builder hinzugefügt",
+          "2": "Keine geeignete Quell-Audiospur gefunden, um eine neue Audiospur zu erstellen"
         }
       },
       "FfmpegBuilderAudioAdjustVolume": {
@@ -151,6 +156,30 @@
         "Outputs": {
           "1": "Lautstärkefilter für Audiospuren zu FFMPEG Builder hinzugefügt.",
           "2": "Audiospuren wurden nicht angepasst"
+        }
+      },
+      "FfmpegBuilderAudioConvert": {
+        "Description": "Erlaubt es Ihnen, alle Spuren, die den Parametern entsprechen, zu konvertieren.",
+        "Label": "FFMPEG Builder: Audio Konvertieren",
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "Bitrate der Audiospur",
+          "BitratePerChannel": "Bitrate pro Kanal",
+          "BitratePerChannel-Help": "Ob die angegebene Bitrate pro Kanal sein sollte",
+          "Channels": "Kanäle",
+          "Channels-Help": "Die Anzahl der Kanäle, die diese neue Audiospur haben wird.\nWenn Sie mehr Kanäle als die Quelle angeben, wird FFMPEG automatisch hochgemischt.\nWenn Sie weniger Kanäle als die Quelle angeben, wird FFMPEG automatisch heruntergemischt.",
+          "Codec": "Codec",
+          "Codec-Help": "Der Codec, der zum Codieren des Audios verwendet werden soll",
+          "CustomTrackSelection": "Konvertieren",
+          "PcmFormat": "Format",
+          "PcmFormat-Help": "Das PCM-Format, das für die Kodierung von PCM-Audio verwendet werden soll.",
+          "TrackSelectionOptions": "Übereinstimmung",
+          "TrackSelectionOptionsKey": "Eigenschaft",
+          "TrackSelectionOptionsValue": "Wert"
+        },
+        "Outputs": {
+          "1": "Zu konvertierende Spuren",
+          "2": "Keine Spuren zum Konvertieren"
         }
       },
       "FfmpegBuilderAudioConverter": {
@@ -330,6 +359,20 @@
           "1": "Deinterlace-Filter zum Videostrom hinzugefügt"
         }
       },
+      "FFmpegBuilderDurationStart": {
+        "Descriptions": "Dieses Fluss-Element ermöglicht es Benutzern, den Startpunkt und die Dauer für das Extrahieren eines Segments aus einem Video zu definieren.",
+        "Label": "FFMPEG Builder: Dauer/Start",
+        "Fields": {
+          "Duration": "Dauer",
+          "Duration-Help": "Die Dauer der Videodatei; wenn 0, wird die Dauer nicht angepasst.",
+          "Start": "Start",
+          "Start-Help": "Der Start der Videodatei; wenn 0, wird der Start nicht angepasst."
+        },
+        "Outputs": {
+          "1": "Dauer/Start konfiguriert",
+          "2": "Fehler beim Setzen von Dauer/Start"
+        }
+      },
       "FfmpegBuilderExecutor": {
         "Description": "Führt einen FFMPEG-Builder-Befehl aus, der von anderen FFMPEG-Builder-Knoten erstellt wurde.",
         "Label": "FFMPEG Builder: Executor",
@@ -497,6 +540,17 @@
           "2": "Spur konnte nicht als Standard festgelegt werden"
         }
       },
+      "FfmpegBuilderSetDevice": {
+        "Description": "Legt das Gerät fest, das für die Hardware-Codierung/Dekodierung verwendet werden soll, wenn der Encoder/Dekoder dies unterstützt.",
+        "Label": "FFMPEG Builder: Gerät festlegen",
+        "Fields": {
+          "Device": "Gerät",
+          "Device-Help": "Der Pfad zum Gerät, oder leer lassen, wenn kein Gerät angegeben werden soll."
+        },
+        "Outputs": {
+          "1": "Gerät festgelegt"
+        }
+      },
       "FfmpegBuilderSetFps": {
         "Description": "Stellen Sie die Bilder pro Sekunde (FPS) im FFmpeg Builder ein.",
         "Label": "FFMPEG-Builder: FPS einstellen",
@@ -566,14 +620,24 @@
       "FfmpegBuilderSubtitleTrackMerge": {
         "Label": "FFMPEG Builder: Untertitelspur zusammenführen",
         "Fields": {
-          "DeleteAfterwards": "Nach Zusammenführung löschen",
-          "DeleteAfterwards-Help": "Wenn die Untertiteldatei nach dem Zusammenführen gelöscht werden soll",
-          "MatchFilename": "Dateiname anpassen",
-          "MatchFilename-Help": "Wenn diese Option aktiviert ist, werden nur Untertitel mit dem gleichen Dateinamen wie die Eingabedatei oder die Arbeitsdatei zusammengeführt.",
+          "Default": "Standard",
+          "Default-Help": "Ob der Untertitel der Standarduntertitel sein soll",
+          "DeleteAfterwards": "Nach dem Zusammenführen löschen",
+          "DeleteAfterwards-Help": "Ob die Untertiteldatei nach dem Zusammenführen gelöscht werden soll",
+          "Forced": "Erzwingend",
+          "Forced-Help": "Ob der Untertitel erzwungen werden soll",
+          "Language": "Sprache",
+          "Language-Help": "Optionaler [ISO 639-2](https://de.wikipedia.org/wiki/Liste_der_ISO_639-2-Codes) Sprachcode für den hinzugefügten Untertitel.",
+          "MatchFilename": "Dateiname abgleichen",
+          "MatchFilename-Help": "Wenn aktiviert, werden nur Untertitel mit demselben Dateinamen wie die Eingabedatei oder die Arbeitsdatei zusammengeführt",
+          "Pattern": "Muster",
+          "Pattern-Help": "Optionale reguläre Ausdruck zum Abgleichen von Dateien.",
           "Subtitles": "Untertitel",
-          "Subtitles-Help": "Wählen Sie aus, nach welchen Untertiteln Sie suchen möchten, um sie hinzuzufügen",
-          "UseSourceDirectory": "Quellenverzeichnis verwenden",
-          "UseSourceDirectory-Help": "Wenn diese Option aktiviert ist, wird das ursprüngliche Quellverzeichnis durchsucht, andernfalls wird das Arbeitsverzeichnis verwendet."
+          "Subtitles-Help": "Wählen Sie aus, welche Untertitel hinzugefügt werden sollen",
+          "Title": "Titel",
+          "Title-Help": "Der Titel des Untertitels, wenn nicht festgelegt, wird die Sprache als Titel verwendet, wenn vorhanden.",
+          "UseSourceDirectory": "Quellverzeichnis verwenden",
+          "UseSourceDirectory-Help": "Wenn aktiviert, wird das ursprüngliche Quellverzeichnis durchsucht, andernfalls wird das Arbeitsverzeichnis verwendet."
         },
         "Outputs": {
           "1": "Untertitel gefunden und hinzugefügt",
@@ -594,6 +658,22 @@
         "Outputs": {
           "1": "In FFMPEG Builder zum Entfernen markierte Untertitel",
           "2": "Keine Untertitel zum Entfernen"
+        }
+      },
+      "FfmpegBuilderTrackRemover": {
+        "Description": "Ermöglicht das Entfernen von Spuren basierend auf angegebenen Bedingungen.",
+        "Label": "FFMPEG Builder: Spur Entferner",
+        "Fields": {
+          "CustomTrackSelection": "Entfernen",
+          "StreamType": "Typ",
+          "StreamType-Help": "Der Typ der Spuren, die im FFMPEG Builder neu angeordnet werden sollen",
+          "TrackSelectionOptions": "",
+          "TrackSelectionOptionsKey": "Eigenschaft",
+          "TrackSelectionOptionsValue": "Wert"
+        },
+        "Outputs": {
+          "1": "Zu entfernende Spuren festgelegt",
+          "2": "Spuren NICHT zum Entfernen festgelegt"
         }
       },
       "FfmpegBuilderTrackSorter": {
@@ -631,6 +711,22 @@
         },
         "Outputs": {
           "1": "FFMPEG Builder Videostreams aktualisiert"
+        }
+      },
+      "FfmpegBuilderVideoBitrateEncode": {
+        "Description": "Stellt den FFMPEG Builder so ein, dass das Video mit einfach zu verwendenden Voreinstellungen basierend auf der Bitrate kodiert wird.",
+        "Label": "FFMPEG Builder: Bitrate Kodierung",
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Suffix": "Kbps",
+          "Codec": "Codec",
+          "Encoder": "Encoder",
+          "Encoder-Help": "Der Encoder, der verwendet werden soll. Wenn Sie einen nicht verfügbaren Hardware-Encoder angeben, schlägt die Kodierung fehl.",
+          "HardwareEncoding": "Hardware-Kodierung",
+          "HardwareEncoding-Help": "Wenn aktiviert, wird geprüft, ob Hardware-Encoder auf dem Verarbeitungs-Knoten vorhanden sind. Wenn vorhanden, wird die Hardware-Kodierung verwendet, andernfalls wird auf CPU-Kodierung zurückgegriffen."
+        },
+        "Outputs": {
+          "1": "FFMPEG Builder Video-Streams zum Kodieren festgelegt"
         }
       },
       "FfmpegBuilderVideoCodec": {
@@ -743,6 +839,24 @@
           "2": "Keine Untertitel extrahiert"
         }
       },
+      "VideoAlreadyProcessed": {
+        "Description": "Überprüft, ob eine Videodatei bereits von FileFlows verarbeitet wurde.",
+        "Label": "Video Bereits Verarbeitet",
+        "Outputs": {
+          "1": "Video wurde bereits verarbeitet",
+          "2": "Video wurde nicht verarbeitet"
+        }
+      },
+      "VideoBitCheck": {
+        "Description": "Überprüft, ob ein Video 8-Bit, 10-Bit, 12-Bit oder unbekannt ist.",
+        "Label": "Video Bit Überprüfung",
+        "Outputs": {
+          "1": "Video ist 8-Bit",
+          "2": "Video ist 10-Bit",
+          "3": "Video ist 12-Bit",
+          "4": "Unbekannt"
+        }
+      },
       "VideoBitrateGreaterThan": {
         "Description": "Testet, ob die Bitrate eines Videos größer als eine bestimmte Bitrate ist.",
         "Label": "Videobitrate größer als",
@@ -753,6 +867,29 @@
         "Outputs": {
           "1": "Bitrate ist größer als",
           "2": "Bitrate ist nicht größer als"
+        }
+      },
+      "VideoDuration": {
+        "Description": "Überprüft, ob die Dauer des Videos den angegebenen Parametern entspricht.",
+        "Fields": {
+          "Match": "Übereinstimmung",
+          "ValueHigh": " ",
+          "ValueLow": "Dauer"
+        },
+        "Outputs": {
+          "1": "Videodauer stimmt überein",
+          "2": "Videodauer stimmt nicht überein"
+        }
+      },
+      "VideoDurationCompare": {
+        "Description": "Vergleicht die ursprüngliche Dauer eines Videos mit seiner finalen Dauer.",
+        "Fields": {
+          "AllowedDifference": "Erlaubte Differenz",
+          "AllowedDifference-Help": "Die erlaubte Zeitdifferenz zwischen der ursprünglichen Dauer des Videos und der finalen Dauer."
+        },
+        "Outputs": {
+          "1": "Video liegt innerhalb der erlaubten Dauerdifferenz",
+          "2": "Video liegt nicht innerhalb der erlaubten Dauerdifferenz"
         }
       },
       "VideoExtractAudio": {
@@ -786,6 +923,9 @@
       "VideoFile": {
         "Description": "Eine Eingangsvideodatei, deren Videoinformationen gelesen wurden und die verarbeitet werden kann.",
         "Fields": {
+          "AnalyzeDuration": "Dauer analysieren",
+          "AnalyzeDuration-Help": "Geben Sie an, wie viele Sekunden analysiert werden, um die Eingabe zu prüfen",
+          "AnalyzeDuration-Suffix": "Sekunden",
           "ProbeSize": "Testgröße",
           "ProbeSize-Help": "Die Testgröße, die bei der Ausführung von FFMPEG verwendet werden soll.",
           "ProbeSize-Suffix": "MB"
@@ -816,6 +956,10 @@
           "CheckDeleted-Help": "Auch gelöschte Spuren sollten überprüft werden.",
           "Codec": "Codec",
           "Codec-Help": "Ein regulärer Ausdruck, der zum Testen des Stream Codec verwendet wird.",
+          "Default": "Standard",
+          "Default-Help": "Ob dieser Stream ein Standardstream sein soll oder nicht.",
+          "Forced": "Erzwingend",
+          "Forced-Help": "Ob dieser Stream ein erzwungener Stream sein soll oder nicht.",
           "Invert": "Invertieren",
           "Invert-Help": "Kehrt das Ergebnis um, sodass es effektiv zu „Video verfügt nicht über Stream“ wird",
           "Language": "Sprache",
@@ -828,6 +972,30 @@
         "Outputs": {
           "1": "Enthält den passenden Stream",
           "2": "Enthält nicht den passenden Stream"
+        }
+      },
+      "VideoIs10Bit": {
+        "Description": "Überprüft, ob eine Videodatei 10-Bit ist",
+        "Label": "Video ist 10-Bit",
+        "Outputs": {
+          "1": "Video ist 10-Bit",
+          "2": "Video ist nicht 10-Bit"
+        }
+      },
+      "VideoIs12Bit": {
+        "Description": "Überprüft, ob eine Videodatei 12-Bit ist",
+        "Label": "Video ist 12-Bit",
+        "Outputs": {
+          "1": "Video ist 12-Bit",
+          "2": "Video ist nicht 12-Bit"
+        }
+      },
+      "VideoIs8Bit": {
+        "Description": "Überprüft, ob eine Videodatei 8-Bit ist",
+        "Label": "Video ist 8-Bit",
+        "Outputs": {
+          "1": "Video ist 8-Bit",
+          "2": "Video ist nicht 8-Bit"
         }
       },
       "VideoIsInterlaced": {
