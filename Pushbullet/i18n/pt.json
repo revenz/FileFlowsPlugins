@@ -1,30 +1,30 @@
 {
+  "Flow": {
+    "Parts": {
+      "Pushbullet": {
+        "Description": "Envia uma mensagem via Pushbullet.",
+        "Fields": {
+          "Message": "Mensagem",
+          "Message-Help": "A mensagem a ser enviada ao servidor Pushbullet",
+          "Priority": "Prioridade",
+          "Priority-Help": "A prioridade da mensagem sendo enviada",
+          "Title": "Título"
+        },
+        "Outputs": {
+          "1": "Mensagem Pushbullet enviada",
+          "2": "Falha ao enviar a mensagem Pushbullet"
+        }
+      }
+    }
+  },
   "Plugins": {
     "Pushbullet": {
       "Description": "Um plugin que permite enviar mensagens para um servidor Pushbullet.",
       "Fields": {
-        "UserKey": "Chave do usuário",
-        "UserKey-Help": "Sua chave de usuário pessoal para receber notificações.",
         "ApiToken": "Token da API",
-        "ApiToken-Help": "O token da API da aplicação usado para enviar notificações."
-      }
-    }
-  },
-  "Flow": {
-    "Parts": {
-      "Pushbullet": {
-        "Outputs": {
-          "1": "Mensagem Pushbullet enviada",
-          "2": "Falha ao enviar a mensagem Pushbullet"
-        },
-        "Description": "Envia uma mensagem via Pushbullet.",
-        "Fields": {
-          "Title": "Título",
-          "Message": "Mensagem",
-          "Message-Help": "A mensagem a ser enviada ao servidor Pushbullet",
-          "Priority": "Prioridade",
-          "Priority-Help": "A prioridade da mensagem sendo enviada"
-        }
+        "ApiToken-Help": "O token da API da aplicação usado para enviar notificações.",
+        "UserKey": "Chave do usuário",
+        "UserKey-Help": "Sua chave de usuário pessoal para receber notificações."
       }
     }
   }

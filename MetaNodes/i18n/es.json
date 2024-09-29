@@ -3,36 +3,36 @@
     "Parts": {
       "GenreMatches": {
         "Description": "Coincide con los metadatos de género contra el o los géneros especificados.",
-        "Outputs": {
-          "1": "Coincidencia de género",
-          "2": "El género no coincide"
-        },
         "Fields": {
           "Genres": "Géneros",
           "MatchAll": "Coincidir Todos",
           "MatchAll-Help": "Si todos los géneros seleccionados deben aparecer en los metadatos, de lo contrario, cualquiera debe aparecer"
+        },
+        "Outputs": {
+          "1": "Coincidencia de género",
+          "2": "El género no coincide"
         }
       },
       "MovieLookup": {
         "Description": "Realiza una búsqueda en TheMovieDB.org para una película.\nAlmacena los metadatos en la variable 'MovieInfo'.",
-        "Outputs": {
-          "1": "Película encontrada",
-          "2": "Película NO encontrada"
-        },
         "Fields": {
           "UseFolderName": "Usar Nombre de Carpeta",
           "UseFolderName-Help": "Si se debe usar el nombre de la carpeta en lugar del nombre del archivo."
+        },
+        "Outputs": {
+          "1": "Película encontrada",
+          "2": "Película NO encontrada"
         }
       },
       "MovieRenamer": {
         "Description": "Renombra el archivo de trabajo usando los metadatos almacenados en 'MovieInfo'.\nNota: MovieLookup debe ejecutarse en el flujo antes de este elemento de flujo para que funcione.\n\nSalida 1: Archivo fue renombrado\nSalida 2: No se pudo renombrar el archivo",
         "Fields": {
-          "Pattern": "Patrón",
-          "Pattern-Help": "El patrón a usar para renombrar la carpeta. '{Title}', '{Year}', '{Extension}'.",
           "DestinationPath": "Ruta de Destino",
           "DestinationPath-Help": "Si el archivo debe moverse a un directorio diferente.",
           "LogOnly": "Solo Registrar",
-          "LogOnly-Help": "Actívelo si solo desea probar este elemento de flujo sin que realmente renombre el archivo"
+          "LogOnly-Help": "Actívelo si solo desea probar este elemento de flujo sin que realmente renombre el archivo",
+          "Pattern": "Patrón",
+          "Pattern-Help": "El patrón a usar para renombrar la carpeta. '{Title}', '{Year}', '{Extension}'."
         }
       },
       "MusicMeta": {
@@ -41,36 +41,36 @@
       "NfoFileCreator": {
         "Description": "Crea un archivo NFO de Kodi a partir de metadatos previamente cargados.",
         "Fields": {
-          "DestinationPath": "Carpeta de Destino",
-          "DestinationPath-Help": "La carpeta donde se creará el archivo NFO.\nSi está vacío, se creará en el mismo directorio que el archivo original.",
           "DestinationFile": "Archivo de Destino",
-          "DestinationFile-Help": "El nombre del nuevo archivo NFO. Si está vacío, se usará el nombre del archivo original con la extensión cambiada a `.nfo`"
+          "DestinationFile-Help": "El nombre del nuevo archivo NFO. Si está vacío, se usará el nombre del archivo original con la extensión cambiada a `.nfo`",
+          "DestinationPath": "Carpeta de Destino",
+          "DestinationPath-Help": "La carpeta donde se creará el archivo NFO.\nSi está vacío, se creará en el mismo directorio que el archivo original."
         },
         "Outputs": {
           "1": "Archivo NFO creado",
           "2": "No se pudo crear el NFO"
         }
       },
-      "TVShowLookup": {
-        "Description": "Realiza una búsqueda en TheMovieDB.org para un programa de TV.\nAlmacena los metadatos en la variable 'TVShowInfo'.",
-        "Outputs": {
-          "1": "Programa de TV encontrado",
-          "2": "Programa de TV NO encontrado"
-        },
+      "TVEpisodeLookup": {
+        "Description": "Realiza una búsqueda en TheMovieDB.org para un episodio de TV.",
         "Fields": {
           "UseFolderName": "Usar Nombre de Carpeta",
           "UseFolderName-Help": "Si se debe usar el nombre de la carpeta en lugar del nombre del archivo.\n\nNota: si la carpeta comienza con Temporada o Especiales, se utilizará la carpeta principal."
-        }
-      },
-      "TVEpisodeLookup": {
-        "Description": "Realiza una búsqueda en TheMovieDB.org para un episodio de TV.",
+        },
         "Outputs": {
           "1": "Episodio de TV encontrado",
           "2": "Episodio de TV NO encontrado"
-        },
+        }
+      },
+      "TVShowLookup": {
+        "Description": "Realiza una búsqueda en TheMovieDB.org para un programa de TV.\nAlmacena los metadatos en la variable 'TVShowInfo'.",
         "Fields": {
           "UseFolderName": "Usar Nombre de Carpeta",
           "UseFolderName-Help": "Si se debe usar el nombre de la carpeta en lugar del nombre del archivo.\n\nNota: si la carpeta comienza con Temporada o Especiales, se utilizará la carpeta principal."
+        },
+        "Outputs": {
+          "1": "Programa de TV encontrado",
+          "2": "Programa de TV NO encontrado"
         }
       }
     }

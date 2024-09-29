@@ -1,31 +1,31 @@
 {
+  "Flow": {
+    "Parts": {
+      "UploadToNextcloud": {
+        "Description": "Lädt eine Datei nach Nextcloud hoch",
+        "Fields": {
+          "DestinationPath": "Ziel",
+          "DestinationPath-Help": "Der Speicherort und der Dateiname, d.h. der vollständige Pfad, der Datei in Nextcloud.",
+          "File": "Datei",
+          "File-Help": "Die Datei, die hochgeladen werden soll. Leer lassen, um die aktuelle Arbeitsdatei zu verwenden."
+        },
+        "Outputs": {
+          "1": "Wurde erfolgreich nach Nextcloud hochgeladen",
+          "2": "Fehler beim Hochladen zu Nextcloud"
+        }
+      }
+    }
+  },
   "Plugins": {
     "Nextcloud": {
       "Description": "Ein Plugin, das es Ihnen ermöglicht, Dateien zu Nextcloud hochzuladen.",
       "Fields": {
+        "Password": "Passwort",
+        "Password-Help": "Das anwendungsspezifische Passwort, das Sie für FileFlows für diesen Nextcloud-Benutzer erstellt haben.",
         "Url": "URL",
         "Url-Help": "Die URL des Nextcloud-Servers",
         "Username": "Benutzername",
-        "Username-Help": "Der Benutzername des Benutzers, zu dem hochgeladen werden soll.",
-        "Password": "Passwort",
-        "Password-Help": "Das anwendungsspezifische Passwort, das Sie für FileFlows für diesen Nextcloud-Benutzer erstellt haben."
-      }
-    }
-  },
-  "Flow": {
-    "Parts": {
-      "UploadToNextcloud": {
-        "Outputs": {
-          "1": "Wurde erfolgreich nach Nextcloud hochgeladen",
-          "2": "Fehler beim Hochladen zu Nextcloud"
-        },
-        "Description": "Lädt eine Datei nach Nextcloud hoch",
-        "Fields": {
-          "File": "Datei",
-          "File-Help": "Die Datei, die hochgeladen werden soll. Leer lassen, um die aktuelle Arbeitsdatei zu verwenden.",
-          "DestinationPath": "Ziel",
-          "DestinationPath-Help": "Der Speicherort und der Dateiname, d.h. der vollständige Pfad, der Datei in Nextcloud."
-        }
+        "Username-Help": "Der Benutzername des Benutzers, zu dem hochgeladen werden soll."
       }
     }
   }

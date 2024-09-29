@@ -1,32 +1,32 @@
 {
-  "Plugins": {
-    "Gotify": {
-      "Description": "Ein Plugin, das es Ihnen ermöglicht, Nachrichten an einen Gotify-Server zu senden.",
-      "Fields": {
-        "ServerUrl": "Server",
-        "ServerUrl-Placeholder": "http://gotify.lan",
-        "ServerUrl-Help": "Die URL des Gotify-Servers",
-        "AccessToken": "Zugriffstoken",
-        "AccessToken-Help": "Das Zugriffstoken, das verwendet wird, um mit dem Gotify-Server zu kommunizieren."
-      }
-    }
-  },
   "Flow": {
     "Parts": {
       "Gotify": {
-        "Outputs": {
-          "1": "Gotify-Nachricht gesendet",
-          "2": "Gotify-Nachricht konnte nicht gesendet werden"
-        },
         "Description": "Sendet eine Nachricht an einen Gotify-Server.",
         "Fields": {
           "Message": "Nachricht",
           "Message-Help": "Die Nachricht, die an den Gotify-Server gesendet werden soll",
-          "Title": "Titel",
-          "Title-Help": "Ein optionaler Titel zum Senden.",
           "Priority": "Priorität",
-          "Priority-Help": "Die Priorität der gesendeten Nachricht"
+          "Priority-Help": "Die Priorität der gesendeten Nachricht",
+          "Title": "Titel",
+          "Title-Help": "Ein optionaler Titel zum Senden."
+        },
+        "Outputs": {
+          "1": "Gotify-Nachricht gesendet",
+          "2": "Gotify-Nachricht konnte nicht gesendet werden"
         }
+      }
+    }
+  },
+  "Plugins": {
+    "Gotify": {
+      "Description": "Ein Plugin, das es Ihnen ermöglicht, Nachrichten an einen Gotify-Server zu senden.",
+      "Fields": {
+        "AccessToken": "Zugriffstoken",
+        "AccessToken-Help": "Das Zugriffstoken, das verwendet wird, um mit dem Gotify-Server zu kommunizieren.",
+        "ServerUrl": "Server",
+        "ServerUrl-Help": "Die URL des Gotify-Servers",
+        "ServerUrl-Placeholder": "http://gotify.lan"
       }
     }
   }

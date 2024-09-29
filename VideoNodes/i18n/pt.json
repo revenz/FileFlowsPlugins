@@ -1,8 +1,4 @@
 {
-  "H": {
-    "264": "H.264",
-    "265": "H.265"
-  },
   "5": {
     "1": "5.1"
   },
@@ -11,55 +7,27 @@
   },
   "Enums": {
     "WatermarkPosition": {
+      "BottomLeft": "Canto Inferior Esquerdo",
+      "BottomRight": "Canto Inferior Direito",
       "Center": "Centro",
       "TopLeft": "Canto Superior Esquerdo",
-      "TopRight": "Canto Superior Direito",
-      "BottomRight": "Canto Inferior Direito",
-      "BottomLeft": "Canto Inferior Esquerdo"
+      "TopRight": "Canto Superior Direito"
     }
   },
   "Flow": {
     "Parts": {
-      "DisableAmd": {
-        "Label": "Desativar AMD",
-        "Description": "Desativa o codificador de hardware AMD AMF",
-        "Outputs": {
-          "1": "Desativado"
-        }
-      },
-      "DisableIntelQsv": {
-        "Label": "Desativar Intel QSV",
-        "Description": "Desativa o codificador de hardware Intel QSV",
-        "Outputs": {
-          "1": "Desativado"
-        }
-      },
-      "DisableNvidia": {
-        "Label": "Desativar NVIDIA",
-        "Description": "Desativa o codificador de hardware NVIDIA",
-        "Outputs": {
-          "1": "Desativado"
-        }
-      },
-      "DisableVaapi": {
-        "Label": "Desativar VAAPI",
-        "Description": "Desativa o codificador de hardware VAAPI",
-        "Outputs": {
-          "1": "Desativado"
-        }
-      },
       "AudioToVideo": {
         "Description": "Converte um arquivo de áudio em um arquivo de vídeo e gera um vídeo baseado no áudio",
         "Fields": {
-          "Visualization": "Visualização",
-          "Visualization-Help": "A visualização a ser usada no vídeo gerado. Veja Ajuda para exemplos",
-          "Container": "Contêiner",
-          "Resolution": "Resolução",
           "Codec": "Codec",
+          "Color": "Cor",
+          "Color-Help": "Código de cor opcional #RRGGBB a ser usado para as ondas sonoras, deve estar no formato #RRGGBB, por exemplo #FF0090",
+          "Container": "Contêiner",
           "HardwareEncoding": "Codificação de hardware",
           "HardwareEncoding-Help": "Quando selecionado, testará se codificadores de hardware estão disponíveis no nó de processamento e, se encontrados, utilizará a codificação de hardware; caso contrário, reverterá para a codificação de CPU.",
-          "Color": "Cor",
-          "Color-Help": "Código de cor opcional #RRGGBB a ser usado para as ondas sonoras, deve estar no formato #RRGGBB, por exemplo #FF0090"
+          "Resolution": "Resolução",
+          "Visualization": "Visualização",
+          "Visualization-Help": "A visualização a ser usada no vídeo gerado. Veja Ajuda para exemplos"
         }
       },
       "CanUseHardwareEncoding": {
@@ -71,448 +39,562 @@
       },
       "ComskipRemoveAds": {
         "Description": "Usa um arquivo EDL comskip e removerá os comerciais usando esse arquivo.",
-        "Outputs": {
-          "1": "Comerciais removidos, salvos em um arquivo temporário",
-          "2": "Nenhum comercial detectado"
-        },
         "Fields": {
           "RunComskipIfNoEdl": "Executar Comskip",
           "RunComskipIfNoEdl-Help": "Executar comskip contra o arquivo se nenhum arquivo comskip (EDL) for encontrado."
+        },
+        "Outputs": {
+          "1": "Comerciais removidos, salvos em um arquivo temporário",
+          "2": "Nenhum comercial detectado"
         }
       },
-      "VideoFile": {
-        "Description": "Um arquivo de vídeo de entrada que teve suas informações de vídeo lidas e pode ser processado",
+      "DisableAmd": {
+        "Description": "Desativa o codificador de hardware AMD AMF",
+        "Label": "Desativar AMD",
         "Outputs": {
-          "1": "Arquivo de vídeo da biblioteca"
-        },
-        "Fields": {
-          "ProbeSize": "Tamanho da amostra",
-          "ProbeSize-Suffix": "MB",
-          "ProbeSize-Help": "O tamanho da amostra a ser utilizado no FFMPEG ao executar.",
-          "AnalyzeDuration": "Duração da análise",
-          "AnalyzeDuration-Help": "Especifique quantos segundos são analisados para sondar a entrada",
-          "AnalyzeDuration-Suffix": "segundos"
+          "1": "Desativado"
         }
       },
-      "VideoDuration": {
-        "Description": "Verifica se a duração do vídeo corresponde aos parâmetros dados.",
+      "DisableIntelQsv": {
+        "Description": "Desativa o codificador de hardware Intel QSV",
+        "Label": "Desativar Intel QSV",
         "Outputs": {
-          "1": "A duração do vídeo corresponde",
-          "2": "A duração do vídeo não corresponde"
-        },
-        "Fields": {
-          "Match": "Correspondência",
-          "ValueLow": "Duração",
-          "ValueHigh": " "
+          "1": "Desativado"
         }
       },
-      "VideoDurationCompare": {
-        "Description": "Compara a duração original de um vídeo com sua duração final.",
+      "DisableNvidia": {
+        "Description": "Desativa o codificador de hardware NVIDIA",
+        "Label": "Desativar NVIDIA",
         "Outputs": {
-          "1": "O vídeo está dentro da diferença de duração permitida",
-          "2": "O vídeo não está dentro da diferença de duração permitida"
-        },
-        "Fields": {
-          "AllowedDifference": "Diferença Permitida",
-          "AllowedDifference-Help": "A diferença de tempo permitida entre a duração original do vídeo e a duração final."
+          "1": "Desativado"
         }
       },
-      "FfmpegBuilderStart": {
-        "Label": "Construtor FFMPEG: Iniciar",
+      "DisableVaapi": {
+        "Description": "Desativa o codificador de hardware VAAPI",
+        "Label": "Desativar VAAPI",
         "Outputs": {
-          "1": "Construtor FFMPEG criado e pronto para adicionar elementos de fluxo do construtor FFMPEG"
-        },
-        "Description": "Cria uma instância do construtor FFMPEG que pode construir um argumento FFMPEG para depois ser executado com o executor FFMPEG."
-      },
-      "FfmpegBuilderDeinterlace": {
-        "Label": "Construtor FFMPEG: Desentrelaçar",
-        "Outputs": {
-          "1": "Filtro de desentrelaçamento adicionado ao fluxo de vídeo"
-        },
-        "Fields": {
-          "Mode": "Modo",
-          "Mode-Help": "O método de desentrelaçamento a ser utilizado. Consulte a ajuda para mais informações."
-        }
-      },
-      "FfmpegBuilderExecutor": {
-        "Label": "Construtor FFMPEG: Executar",
-        "Outputs": {
-          "1": "Construtor FFMPEG executado com sucesso e criou um novo arquivo temporário",
-          "2": "Nenhuma alteração detectada no construtor FFMPEG, arquivo não criado"
-        },
-        "Description": "Executa um comando do construtor FFMPEG criado por outros elementos de fluxo do construtor FFMPEG.",
-        "Fields": {
-          "HardwareDecoding": "Decodificação de Hardware",
-          "HardwareDecoding-Help": "Se o executor deve tentar usar a decodificação por hardware. Se não estiver disponível, a execução continuará sem a decodificação por hardware ativada.",
-          "Strictness": "Rigor",
-          "Strictness-Help": "Permite personalizar o rigor do FFmpeg. Isso deve ser deixado em 'Experimental' para a maioria dos usuários."
+          "1": "Desativado"
         }
       },
       "FfmpegBuilderAddInputFile": {
         "Label": "Construtor FFMPEG: Adicionar Arquivo de Entrada",
-        "Outputs": {
-          "1": "Arquivo encontrado e adicionado",
-          "2": "Arquivo não encontrado"
-        },
         "Fields": {
           "Pattern": "Padrão",
           "Pattern-Help": "Uma expressão regular utilizada para procurar arquivos de entrada",
           "UseSourceDirectory": "Usar Diretório de Origem",
           "UseSourceDirectory-Help": "Se marcado, procurará no diretório de origem original; caso contrário, usará o diretório de trabalho."
+        },
+        "Outputs": {
+          "1": "Arquivo encontrado e adicionado",
+          "2": "Arquivo não encontrado"
         }
       },
       "FfmpegBuilderAspectRatio": {
         "Label": "Construtor FFMPEG: Proporção",
+        "Fields": {
+          "AdjustmentMode": "Modo de Ajuste",
+          "AdjustmentMode-Help": "Escolha como a proporção deve ser respeitada. As opções incluem esticar o vídeo, adicionar barras pretas (letterbox) ou recortar o vídeo para se ajustar à proporção.",
+          "AspectRatio": "Proporção",
+          "AspectRatio-Help": "Selecione a proporção desejada para o vídeo. As opções disponíveis incluem proporções padrão (16:9, 4:3, 21:9) ou uma proporção personalizada.",
+          "CustomHeight": "Altura Personalizada",
+          "CustomHeight-Help": "Especifique a altura a ser utilizada ao selecionar a opção de proporção personalizada.",
+          "CustomWidth": "Largura Personalizada",
+          "CustomWidth-Help": "Especifique a largura a ser utilizada ao selecionar a opção de proporção personalizada."
+        },
         "Outputs": {
           "1": "A proporção foi alterada com sucesso",
           "2": "O vídeo já estava na proporção desejada"
-        },
-        "Fields": {
-          "AspectRatio": "Proporção",
-          "AspectRatio-Help": "Selecione a proporção desejada para o vídeo. As opções disponíveis incluem proporções padrão (16:9, 4:3, 21:9) ou uma proporção personalizada.",
-          "CustomWidth": "Largura Personalizada",
-          "CustomWidth-Help": "Especifique a largura a ser utilizada ao selecionar a opção de proporção personalizada.",
-          "CustomHeight": "Altura Personalizada",
-          "CustomHeight-Help": "Especifique a altura a ser utilizada ao selecionar a opção de proporção personalizada.",
-          "AdjustmentMode": "Modo de Ajuste",
-          "AdjustmentMode-Help": "Escolha como a proporção deve ser respeitada. As opções incluem esticar o vídeo, adicionar barras pretas (letterbox) ou recortar o vídeo para se ajustar à proporção."
         }
       },
       "FfmpegBuilderAudioAddTrack": {
-        "Label": "Construtor FFMPEG: Adicionar Faixa de Áudio",
-        "Outputs": {
-          "1": "Faixa de áudio adicionada ao construtor FFMPEG",
-          "2": "Nenhuma faixa de áudio de origem apropriada encontrada para criar uma nova faixa de áudio"
-        },
         "Description": "Adiciona uma nova faixa de áudio ao construtor FFMPEG que será adicionada uma vez que o construtor for executado.",
+        "Label": "Construtor FFMPEG: Adicionar Faixa de Áudio",
         "Fields": {
-          "CustomTrackSelection": "Seleção de Faixa de Origem",
-          "TrackSelectionOptions": "Seleção de Faixa",
-          "TrackSelectionOptionsKey": "Propriedade",
-          "TrackSelectionOptionsValue": "Valor",
-          "Index": "Índice",
-          "Index-Help": "O índice onde inserir a nova faixa de áudio. Baseado em 0, portanto, para inserir a nova faixa de áudio como a primeira faixa, defina isso como 0.",
-          "Channels": "Canais",
-          "Channels-Help": "O número de canais que esta nova faixa de áudio terá.\nSe você especificar mais canais do que o original, o FFmpeg irá misturá-los automaticamente.\nSe você especificar menos canais do que o original, o FFmpeg irá misturá-los automaticamente.",
           "Bitrate": "Taxa de Bits",
           "Bitrate-Help": "Taxa de bits da nova faixa de áudio",
+          "BitratePerChannel": "Taxa de Bits Por Canal",
+          "BitratePerChannel-Help": "Se a taxa de bits especificada deve ser por canal",
+          "Channels": "Canais",
+          "Channels-Help": "O número de canais que esta nova faixa de áudio terá.\nSe você especificar mais canais do que o original, o FFmpeg irá misturá-los automaticamente.\nSe você especificar menos canais do que o original, o FFmpeg irá misturá-los automaticamente.",
           "Codec": "Codec",
           "Codec-Help": "O codec a ser utilizado para codificar o áudio",
-          "SampleRate": "Taxa de Amostragem",
-          "SampleRate-Help": "A taxa de amostragem a ser utilizada para a nova faixa de áudio",
+          "CustomTrackSelection": "Seleção de Faixa de Origem",
+          "Index": "Índice",
+          "Index-Help": "O índice onde inserir a nova faixa de áudio. Baseado em 0, portanto, para inserir a nova faixa de áudio como a primeira faixa, defina isso como 0.",
           "Language": "Idioma",
           "Language-Help": "Código de idioma opcional [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) a ser utilizado. Tentará encontrar uma faixa de áudio com esse código de idioma; caso contrário, a melhor faixa de áudio será utilizada.",
           "NewTitle": "Novo Título",
           "NewTitle-Help": "Título opcional para a nova faixa de áudio. Se deixado em branco, o título original será utilizado.",
           "RemoveTitle": "Remover Título",
           "RemoveTitle-Help": "Se o título original deve ser removido e a faixa não deve ter título",
-          "BitratePerChannel": "Taxa de Bits Por Canal",
-          "BitratePerChannel-Help": "Se a taxa de bits especificada deve ser por canal"
+          "SampleRate": "Taxa de Amostragem",
+          "SampleRate-Help": "A taxa de amostragem a ser utilizada para a nova faixa de áudio",
+          "TrackSelectionOptions": "Seleção de Faixa",
+          "TrackSelectionOptionsKey": "Propriedade",
+          "TrackSelectionOptionsValue": "Valor"
+        },
+        "Outputs": {
+          "1": "Faixa de áudio adicionada ao construtor FFMPEG",
+          "2": "Nenhuma faixa de áudio de origem apropriada encontrada para criar uma nova faixa de áudio"
         }
       },
       "FfmpegBuilderAudioAdjustVolume": {
-        "Label": "FFMPEG Builder: Ajustar Volume de Áudio",
-        "Outputs": {
-          "1": "Filtro de volume das faixas de áudio adicionado ao FFMPEG Builder",
-          "2": "As faixas de áudio não foram ajustadas"
-        },
         "Description": "Ajusta o volume das faixas de áudio em um arquivo de vídeo usando FFMPEG",
+        "Label": "FFMPEG Builder: Ajustar Volume de Áudio",
         "Fields": {
           "AllAudio": "Todas as Faixas de Áudio",
           "AllAudio-Help": "Se todas as faixas de áudio devem ser normalizadas ou se apenas a primeira faixa deve ser",
-          "VolumePercent": "Porcentagem de Volume",
-          "VolumePercent-Help": "A porcentagem do volume ajustado.\n100 significa sem ajuste\n50 significa volume médio\n0 significa mudo",
-          "Pattern": "Padrão",
-          "Pattern-Help": "Uma expressão regular para corresponder, por exemplo \"comentários\" para remover faixas de comentários",
           "NotMatching": "Não Correspondente",
           "NotMatching-Help": "Se as faixas de áudio que NÃO correspondem ao padrão devem ser removidas",
+          "Pattern": "Padrão",
+          "Pattern-Help": "Uma expressão regular para corresponder, por exemplo \"comentários\" para remover faixas de comentários",
           "UseLanguageCode": "Usar Código de Idioma",
-          "UseLanguageCode-Help": "Se o código de idioma da faixa de áudio deve ser usado em vez do título"
+          "UseLanguageCode-Help": "Se o código de idioma da faixa de áudio deve ser usado em vez do título",
+          "VolumePercent": "Porcentagem de Volume",
+          "VolumePercent-Help": "A porcentagem do volume ajustado.\n100 significa sem ajuste\n50 significa volume médio\n0 significa mudo"
+        },
+        "Outputs": {
+          "1": "Filtro de volume das faixas de áudio adicionado ao FFMPEG Builder",
+          "2": "As faixas de áudio não foram ajustadas"
         }
       },
       "FfmpegBuilderAudioConvert": {
+        "Description": "Permite converter todas as faixas que correspondem aos parâmetros para conversão.",
         "Label": "FFMPEG Builder: Converter Áudio",
+        "Fields": {
+          "Bitrate": "Taxa de Bits",
+          "Bitrate-Help": "Taxa de bits da faixa de áudio",
+          "BitratePerChannel": "Taxa de Bits Por Canal",
+          "BitratePerChannel-Help": "Se a taxa de bits especificada deve ser por canal",
+          "Channels": "Canais",
+          "Channels-Help": "O número de canais que esta nova faixa de áudio terá.\nSe você especificar mais canais do que a fonte, o FFMPEG mixará automaticamente.\nSe você especificar menos canais do que a fonte, o FFMPEG mixará automaticamente.",
+          "Codec": "Codec",
+          "Codec-Help": "O codec a ser usado para codificar o áudio",
+          "CustomTrackSelection": "Converter",
+          "PcmFormat": "Formato",
+          "PcmFormat-Help": "O formato PCM a ser usado para codificar o áudio PCM.",
+          "TrackSelectionOptions": "Correspondência",
+          "TrackSelectionOptionsKey": "Propriedade",
+          "TrackSelectionOptionsValue": "Valor"
+        },
         "Outputs": {
           "1": "Faixas a serem convertidas",
           "2": "Nenhuma faixa a ser convertida"
-        },
-        "Description": "Permite converter todas as faixas que correspondem aos parâmetros para conversão.",
-        "Fields": {
-          "CustomTrackSelection": "Converter",
-          "TrackSelectionOptions": "Correspondência",
-          "TrackSelectionOptionsKey": "Propriedade",
-          "TrackSelectionOptionsValue": "Valor",
-          "Channels": "Canais",
-          "Channels-Help": "O número de canais que esta nova faixa de áudio terá.\nSe você especificar mais canais do que a fonte, o FFMPEG mixará automaticamente.\nSe você especificar menos canais do que a fonte, o FFMPEG mixará automaticamente.",
-          "PcmFormat": "Formato",
-          "PcmFormat-Help": "O formato PCM a ser usado para codificar o áudio PCM.",
-          "Bitrate": "Taxa de Bits",
-          "Bitrate-Help": "Taxa de bits da faixa de áudio",
-          "Codec": "Codec",
-          "Codec-Help": "O codec a ser usado para codificar o áudio",
-          "BitratePerChannel": "Taxa de Bits Por Canal",
-          "BitratePerChannel-Help": "Se a taxa de bits especificada deve ser por canal"
         }
       },
       "FfmpegBuilderAudioConverter": {
-        "Label": "FFMPEG Builder: Conversor de Áudio",
-        "Outputs": {
-          "1": "Faixas a serem convertidas",
-          "2": "Nenhuma faixa a ser convertida"
-        },
         "Description": "Permite converter todas as faixas que correspondem aos parâmetros para conversão.",
+        "Label": "FFMPEG Builder: Conversor de Áudio",
         "Fields": {
-          "Channels": "Canais",
-          "Channels-Help": "O número de canais que esta nova faixa de áudio terá.\nSe você especificar mais canais do que a fonte, o FFMPEG mixará automaticamente.\nSe você especificar menos canais do que a fonte, o FFMPEG mixará automaticamente.",
-          "PcmFormat": "Formato",
-          "PcmFormat-Help": "O formato PCM a ser usado para codificar o áudio PCM.",
           "Bitrate": "Taxa de Bits",
           "Bitrate-Help": "Taxa de bits da faixa de áudio",
+          "BitratePerChannel": "Taxa de Bits Por Canal",
+          "BitratePerChannel-Help": "Se a taxa de bits especificada deve ser por canal",
+          "Channels": "Canais",
+          "Channels-Help": "O número de canais que esta nova faixa de áudio terá.\nSe você especificar mais canais do que a fonte, o FFMPEG mixará automaticamente.\nSe você especificar menos canais do que a fonte, o FFMPEG mixará automaticamente.",
           "Codec": "Codec",
           "Codec-Help": "O codec a ser usado para codificar o áudio",
           "Field": "Campo",
           "Field-Help": "O campo a corresponder com o padrão. Deixe o padrão em branco para corresponder a qualquer coisa sem valor definido.",
-          "Pattern": "Padrão",
-          "Pattern-Help": "Uma string ou expressão regular para corresponder, por exemplo \"comentários\" para corresponder exatamente comentários ou \".*comentários.*\" para corresponder comentários em qualquer lugar na string",
           "NotMatching": "Não Correspondente",
           "NotMatching-Help": "Se as faixas de áudio que NÃO correspondem ao padrão devem ser convertidas",
-          "BitratePerChannel": "Taxa de Bits Por Canal",
-          "BitratePerChannel-Help": "Se a taxa de bits especificada deve ser por canal"
+          "Pattern": "Padrão",
+          "Pattern-Help": "Uma string ou expressão regular para corresponder, por exemplo \"comentários\" para corresponder exatamente comentários ou \".*comentários.*\" para corresponder comentários em qualquer lugar na string",
+          "PcmFormat": "Formato",
+          "PcmFormat-Help": "O formato PCM a ser usado para codificar o áudio PCM."
+        },
+        "Outputs": {
+          "1": "Faixas a serem convertidas",
+          "2": "Nenhuma faixa a ser convertida"
         }
       },
       "FfmpegBuilderAudioNormalization": {
+        "Description": "Normaliza todas as faixas de áudio de um arquivo de vídeo usando o filtro loudnorm do FFMPEG",
         "Label": "FFMPEG Builder: Normalização de Áudio",
+        "Fields": {
+          "AllAudio": "Todas as Faixas de Áudio",
+          "AllAudio-Help": "Se todas as faixas de áudio devem ser normalizadas ou se apenas a primeira faixa deve ser",
+          "NotMatching": "Não Correspondente",
+          "NotMatching-Help": "Se as faixas de áudio que NÃO correspondem ao padrão devem ser removidas",
+          "Pattern": "Padrão",
+          "Pattern-Help": "Uma expressão regular para corresponder, por exemplo \"comentários\" para remover faixas de comentários",
+          "TwoPass": "Dupla Passagem",
+          "TwoPass-Help": "Se as faixas de áudio devem usar a normalização de duas passagens. Isso melhora a normalização, mas aumenta o tempo de processamento.",
+          "UseLanguageCode": "Usar Código de Idioma",
+          "UseLanguageCode-Help": "Se o código de idioma da faixa de áudio deve ser usado em vez do título"
+        },
         "Outputs": {
           "1": "As faixas de áudio foram normalizadas e adicionadas ao FFMPEG Builder",
           "2": "Nenhuma faixa de áudio encontrada para normalizar"
-        },
-        "Description": "Normaliza todas as faixas de áudio de um arquivo de vídeo usando o filtro loudnorm do FFMPEG",
-        "Fields": {
-          "TwoPass": "Dupla Passagem",
-          "TwoPass-Help": "Se as faixas de áudio devem usar a normalização de duas passagens. Isso melhora a normalização, mas aumenta o tempo de processamento.",
-          "AllAudio": "Todas as Faixas de Áudio",
-          "AllAudio-Help": "Se todas as faixas de áudio devem ser normalizadas ou se apenas a primeira faixa deve ser",
-          "Pattern": "Padrão",
-          "Pattern-Help": "Uma expressão regular para corresponder, por exemplo \"comentários\" para remover faixas de comentários",
-          "NotMatching": "Não Correspondente",
-          "NotMatching-Help": "Se as faixas de áudio que NÃO correspondem ao padrão devem ser removidas",
-          "UseLanguageCode": "Usar Código de Idioma",
-          "UseLanguageCode-Help": "Se o código de idioma da faixa de áudio deve ser usado em vez do título"
-        }
-      },
-      "FfmpegBuilderAudioTrackRemover": {
-        "Label": "FFMPEG Builder: Remover Faixas (Obsoleto)",
-        "Outputs": {
-          "1": "Faixas estabelecidas para serem removidas",
-          "2": "Faixas NÃO estabelecidas para serem removidas"
-        },
-        "Description": "Permite remover faixas baseadas em seu título ou código de idioma.\n\nQualquer título (ou código de idioma se definido como \"Usar Código de Idioma\") que estiver vazio NÃO será removido, independentemente do padrão.",
-        "Fields": {
-          "StreamType": "Tipo",
-          "StreamType-Help": "O tipo de faixas a reorganizar no FFMPEG Builder",
-          "RemoveAll": "Remover Todos",
-          "RemoveAll-Help": "Remove todas as faixas atuais do arquivo de saída. Você pode usar Adicionar Faixa depois para adicionar faixas de codecs específicos",
-          "Pattern": "Padrão",
-          "Pattern-Help": "Uma expressão regular para corresponder, por exemplo \"comentários\" para remover faixas de comentários",
-          "NotMatching": "Não Correspondente",
-          "NotMatching-Help": "Se as faixas de áudio que NÃO correspondem ao padrão devem ser removidas",
-          "UseLanguageCode": "Usar Código de Idioma",
-          "UseLanguageCode-Help": "Se o código de idioma da faixa deve ser usado em vez do título",
-          "RemoveIndex": "Remover Índice",
-          "RemoveIndex-Help": "O índice inicial a partir do qual remover as faixas. Isso permite remover todas as faixas que correspondem após o índice inicial.\nDefina como zero para remover todas que correspondem aos parâmetros.\nDefina como 1 para manter a primeira faixa e remover qualquer outra após a primeira que corresponda aos parâmetros",
-          "MatchType": "Correspondências",
-          "MatchType-Help": "O valor a corresponder."
-        }
-      },
-      "FfmpegBuilderTrackRemover": {
-        "Label": "FFMPEG Builder: Remover Faixas",
-        "Outputs": {
-          "1": "Faixas estabelecidas para serem removidas",
-          "2": "Faixas NÃO estabelecidas para serem removidas"
-        },
-        "Description": "Permite remover faixas baseadas em condições especificadas.",
-        "Fields": {
-          "StreamType": "Tipo",
-          "StreamType-Help": "O tipo de faixas a reorganizar no FFMPEG Builder",
-          "CustomTrackSelection": "Remover",
-          "TrackSelectionOptions": "",
-          "TrackSelectionOptionsKey": "Propriedade",
-          "TrackSelectionOptionsValue": "Valor"
-        }
-      },
-      "FfmpegBuilderAudioTrackReorder": {
-        "Label": "Construtor FFMPEG: Reordenar Faixas",
-        "Outputs": {
-          "1": "Faixas reordenadas no Construtor FFMPEG",
-          "2": "Faixas NÃO reordenadas"
-        },
-        "Description": "Permite que você reordene faixas na ordem preferida.\n\nDigite os idiomas/códigos de áudio/canais na ordem desejada. Qualquer um que não estiver listado será ordenado após os que foram inseridos em sua ordem original.\nSe houver várias faixas com o mesmo idioma/código/canais, elas serão ordenadas primeiro pela ordem em que foram inseridas, depois em sua ordem original.\n\nObserve que a primeira faixa após a reordenação será definida como a faixa padrão..\n\nSaída 1: As faixas foram reordenadas\nSaída 2: As faixas não precisaram ser reordenadas",
-        "Fields": {
-          "StreamType": "Tipo",
-          "StreamType-Help": "O tipo de faixas a serem reordenadas no Construtor FFMPEG",
-          "OrderedTracks": "Códigos Ordenados",
-          "OrderedTracks-Help": "A ordem dos códigos para as faixas. Isso é feito após os idiomas (se houver)",
-          "Languages": "Idiomas",
-          "Languages-Help": "A ordem dos idiomas para classificar as faixas. Essa ordenação é feita antes do código.",
-          "Channels": "Canais",
-          "Channels-Help": "A ordem dos canais de áudio para classificar as faixas de áudio. Essa ordenação é feita antes dos idiomas.\nPor exemplo, \"5.1\",\"7.1\",\"6.2\",\"2\""
         }
       },
       "FfmpegBuilderAudioSetLanguage": {
+        "Description": "Permite que você defina o idioma para quaisquer faixas que não tenham idioma definido. Se a faixa já tiver um idioma definido, será ignorada.\n\nSaída 1: As faixas foram atualizadas\nSaída 2: Nenhuma faixa precisou ser atualizada",
         "Label": "Construtor FFMPEG: Definir Idioma",
+        "Fields": {
+          "Language": "Idioma",
+          "Language-Help": "O código de idioma [ISO 639-2](https://pt.wikipedia.org/wiki/Lista_de_c%C3%B3digos_ISO_639-2) a ser usado.",
+          "StreamType": "Tipo",
+          "StreamType-Help": "O tipo de faixa para definir o idioma"
+        },
         "Outputs": {
           "1": "Faixas atualizadas no Construtor FFMPEG",
           "2": "Faixas NÃO atualizadas"
-        },
-        "Description": "Permite que você defina o idioma para quaisquer faixas que não tenham idioma definido. Se a faixa já tiver um idioma definido, será ignorada.\n\nSaída 1: As faixas foram atualizadas\nSaída 2: Nenhuma faixa precisou ser atualizada",
+        }
+      },
+      "FfmpegBuilderAudioTrackRemover": {
+        "Description": "Permite remover faixas baseadas em seu título ou código de idioma.\n\nQualquer título (ou código de idioma se definido como \"Usar Código de Idioma\") que estiver vazio NÃO será removido, independentemente do padrão.",
+        "Label": "FFMPEG Builder: Remover Faixas (Obsoleto)",
         "Fields": {
+          "MatchType": "Correspondências",
+          "MatchType-Help": "O valor a corresponder.",
+          "NotMatching": "Não Correspondente",
+          "NotMatching-Help": "Se as faixas de áudio que NÃO correspondem ao padrão devem ser removidas",
+          "Pattern": "Padrão",
+          "Pattern-Help": "Uma expressão regular para corresponder, por exemplo \"comentários\" para remover faixas de comentários",
+          "RemoveAll": "Remover Todos",
+          "RemoveAll-Help": "Remove todas as faixas atuais do arquivo de saída. Você pode usar Adicionar Faixa depois para adicionar faixas de codecs específicos",
+          "RemoveIndex": "Remover Índice",
+          "RemoveIndex-Help": "O índice inicial a partir do qual remover as faixas. Isso permite remover todas as faixas que correspondem após o índice inicial.\nDefina como zero para remover todas que correspondem aos parâmetros.\nDefina como 1 para manter a primeira faixa e remover qualquer outra após a primeira que corresponda aos parâmetros",
           "StreamType": "Tipo",
-          "StreamType-Help": "O tipo de faixa para definir o idioma",
-          "Language": "Idioma",
-          "Language-Help": "O código de idioma [ISO 639-2](https://pt.wikipedia.org/wiki/Lista_de_c%C3%B3digos_ISO_639-2) a ser usado."
+          "StreamType-Help": "O tipo de faixas a reorganizar no FFMPEG Builder",
+          "UseLanguageCode": "Usar Código de Idioma",
+          "UseLanguageCode-Help": "Se o código de idioma da faixa deve ser usado em vez do título"
+        },
+        "Outputs": {
+          "1": "Faixas estabelecidas para serem removidas",
+          "2": "Faixas NÃO estabelecidas para serem removidas"
+        }
+      },
+      "FfmpegBuilderAudioTrackReorder": {
+        "Description": "Permite que você reordene faixas na ordem preferida.\n\nDigite os idiomas/códigos de áudio/canais na ordem desejada. Qualquer um que não estiver listado será ordenado após os que foram inseridos em sua ordem original.\nSe houver várias faixas com o mesmo idioma/código/canais, elas serão ordenadas primeiro pela ordem em que foram inseridas, depois em sua ordem original.\n\nObserve que a primeira faixa após a reordenação será definida como a faixa padrão..\n\nSaída 1: As faixas foram reordenadas\nSaída 2: As faixas não precisaram ser reordenadas",
+        "Label": "Construtor FFMPEG: Reordenar Faixas",
+        "Fields": {
+          "Channels": "Canais",
+          "Channels-Help": "A ordem dos canais de áudio para classificar as faixas de áudio. Essa ordenação é feita antes dos idiomas.\nPor exemplo, \"5.1\",\"7.1\",\"6.2\",\"2\"",
+          "Languages": "Idiomas",
+          "Languages-Help": "A ordem dos idiomas para classificar as faixas. Essa ordenação é feita antes do código.",
+          "OrderedTracks": "Códigos Ordenados",
+          "OrderedTracks-Help": "A ordem dos códigos para as faixas. Isso é feito após os idiomas (se houver)",
+          "StreamType": "Tipo",
+          "StreamType-Help": "O tipo de faixas a serem reordenadas no Construtor FFMPEG"
+        },
+        "Outputs": {
+          "1": "Faixas reordenadas no Construtor FFMPEG",
+          "2": "Faixas NÃO reordenadas"
         }
       },
       "FfmpegBuilderAutoChapters": {
-        "Label": "Construtor FFMPEG: Capítulos Automáticos",
         "Description": "Detecta automaticamente mudanças de cena no vídeo para gerar capítulos.",
+        "Label": "Construtor FFMPEG: Capítulos Automáticos",
+        "Fields": {
+          "MinimumLength": "Duração Mínima",
+          "MinimumLength-Help": "A duração mínima de um capítulo em segundos",
+          "MinimumLength-Suffix": "segundos",
+          "Percent": "Porcentagem",
+          "Percent-Help": "O valor percentual de limite a ser usado para a detecção de mudanças de cena. Um bom valor é 45%",
+          "Percent-Suffix": "%"
+        },
         "Outputs": {
           "1": "Capítulos gerados e adicionados ao Construtor FFMPEG",
           "2": "Nenhum capítulo detectado ou o vídeo já tinha capítulos"
-        },
-        "Fields": {
-          "MinimumLength": "Duração Mínima",
-          "MinimumLength-Suffix": "segundos",
-          "MinimumLength-Help": "A duração mínima de um capítulo em segundos",
-          "Percent": "Porcentagem",
-          "Percent-Suffix": "%",
-          "Percent-Help": "O valor percentual de limite a ser usado para a detecção de mudanças de cena. Um bom valor é 45%"
         }
       },
       "FfmpegBuilderComskipChapters": {
-        "Label": "Construtor FFMPEG: Capítulos Comskip",
         "Description": "Usa um arquivo EDL do comskip e criará capítulos dados esse arquivo EDL do comskip.",
-        "Outputs": {
-          "1": "Capítulos comerciais criados, adicionados ao Construtor FFMPEG",
-          "2": "Nenhum comercial detectado"
-        },
+        "Label": "Construtor FFMPEG: Capítulos Comskip",
         "Fields": {
           "RunComskipIfNoEdl": "Executar Comskip",
           "RunComskipIfNoEdl-Help": "Executar o comskip no arquivo se nenhum arquivo comskip (EDL) for encontrado."
+        },
+        "Outputs": {
+          "1": "Capítulos comerciais criados, adicionados ao Construtor FFMPEG",
+          "2": "Nenhum comercial detectado"
+        }
+      },
+      "FfmpegBuilderCropBlackBars": {
+        "Description": "FFMPEG Builder atualizado para cortar barras pretas se detectadas.",
+        "Label": "FFMPEG Builder: Cortar Barras Pretas",
+        "Fields": {
+          "CroppingThreshold": "Limite",
+          "CroppingThreshold-Help": "A quantidade de pixels que deve ser maior para cortar. Por exemplo, se apenas 5 pixels forem detectados como espaço preto, você pode considerar isso pequeno demais para cortar."
+        },
+        "Outputs": {
+          "1": "FFMPEG Builder atualizado para cortar barras pretas",
+          "2": "Nenhuma barra preta detectada, não cortando"
         }
       },
       "FfmpegBuilderCustomParameters": {
-        "Label": "Construtor FFMPEG: Parâmetros Personalizados",
         "Description": "Permite que você adicione parâmetros personalizados ao Construtor FFMPEG para execução",
+        "Label": "Construtor FFMPEG: Parâmetros Personalizados",
+        "Fields": {
+          "ForceEncode": "Forçar Codificação",
+          "ForceEncode-Help": "Se isso deve forçar o Executor do Construtor FFMPEG a sempre executar, mesmo que nenhuma alteração seja detectada que normalmente exigiria a execução do executor.",
+          "Parameters": "Parâmetros",
+          "Parameters-Help": "Os parâmetros a serem adicionados ao Construtor FFMPEG para execução"
+        },
         "Outputs": {
           "1": "Parâmetros adicionados"
-        },
+        }
+      },
+      "FfmpegBuilderDefaultOriginalLanguage": {
+        "Description": "Este elemento de fluxo tentará definir as faixas de idioma original como padrão. Tentará encontrar a primeira faixa que corresponda ao idioma original e, em seguida, defini-la como padrão.\n\nSe nenhuma faixa for encontrada com o idioma original, nenhuma alteração será feita.",
+        "Label": "Construtor FFMPEG: Idioma Original Padrão",
         "Fields": {
-          "Parameters": "Parâmetros",
-          "Parameters-Help": "Os parâmetros a serem adicionados ao Construtor FFMPEG para execução",
-          "ForceEncode": "Forçar Codificação",
-          "ForceEncode-Help": "Se isso deve forçar o Executor do Construtor FFMPEG a sempre executar, mesmo que nenhuma alteração seja detectada que normalmente exigiria a execução do executor."
+          "MakeFirst": "Tornar Primeiro",
+          "MakeFirst-Help": "Se a faixa de idioma original também deve se tornar a primeira faixa.",
+          "StreamType": "Tipo",
+          "StreamType-Help": "O tipo de faixas que devem ser atualizadas"
+        },
+        "Outputs": {
+          "1": "As faixas foram modificadas",
+          "2": "Nenhuma faixa foi alterada"
+        }
+      },
+      "FfmpegBuilderDeinterlace": {
+        "Label": "Construtor FFMPEG: Desentrelaçar",
+        "Fields": {
+          "Mode": "Modo",
+          "Mode-Help": "O método de desentrelaçamento a ser utilizado. Consulte a ajuda para mais informações."
+        },
+        "Outputs": {
+          "1": "Filtro de desentrelaçamento adicionado ao fluxo de vídeo"
         }
       },
       "FFmpegBuilderDurationStart": {
-        "Label": "Construtor FFMPEG: Duração/Início",
         "Descriptions": "Este elemento do fluxo permite que os usuários definam o ponto de partida e a duração para extrair um segmento de um vídeo.",
-        "Outputs": {
-          "1": "Duração/Início configurados",
-          "2": "Falha ao definir duração/início"
-        },
+        "Label": "Construtor FFMPEG: Duração/Início",
         "Fields": {
           "Duration": "Duração",
           "Duration-Help": "A duração do arquivo de vídeo, se 0, não ajustará a duração.",
           "Start": "Início",
           "Start-Help": "O início do arquivo de vídeo, se 0, não ajustará o início."
+        },
+        "Outputs": {
+          "1": "Duração/Início configurados",
+          "2": "Falha ao definir duração/início"
+        }
+      },
+      "FfmpegBuilderExecutor": {
+        "Description": "Executa um comando do construtor FFMPEG criado por outros elementos de fluxo do construtor FFMPEG.",
+        "Label": "Construtor FFMPEG: Executar",
+        "Fields": {
+          "HardwareDecoding": "Decodificação de Hardware",
+          "HardwareDecoding-Help": "Se o executor deve tentar usar a decodificação por hardware. Se não estiver disponível, a execução continuará sem a decodificação por hardware ativada.",
+          "Strictness": "Rigor",
+          "Strictness-Help": "Permite personalizar o rigor do FFmpeg. Isso deve ser deixado em 'Experimental' para a maioria dos usuários."
+        },
+        "Outputs": {
+          "1": "Construtor FFMPEG executado com sucesso e criou um novo arquivo temporário",
+          "2": "Nenhuma alteração detectada no construtor FFMPEG, arquivo não criado"
         }
       },
       "FfmpegBuilderHdrToSdr": {
-        "Label": "Construtor FFMPEG: HDR para SDR",
         "Description": "Verifica se um fluxo de vídeo é HDR e, se for, atualiza o Construtor FFMPEG para convertê-lo para SDR",
+        "Label": "Construtor FFMPEG: HDR para SDR",
         "Outputs": {
           "1": "Fluxo HDR detectado e Construtor FFMPEG atualizado para converter",
           "2": "Nenhum fluxo HDR encontrado"
         }
       },
       "FfmpegBuilderKeepOriginalLanguage": {
+        "Description": "Este elemento do fluxo manterá apenas o idioma original e quaisquer idiomas adicionais definidos pelo usuário.\n\nTodos os outros fluxos de idioma serão removidos/marcados para exclusão.",
         "Label": "Construtor FFMPEG: Manter Idioma Original",
+        "Fields": {
+          "AdditionalLanguages": "Idiomas Adicionais",
+          "AdditionalLanguages-Help": "Uma lista opcional de códigos de idioma adicionais a serem mantidos.\n\nÉ recomendável que um [código de idioma ISO 639-2](https://pt.wikipedia.org/wiki/Lista_de_c%C3%B3digos_ISO_639-2) seja usado.",
+          "FirstIfNone": "Primeiro se Nenhum",
+          "FirstIfNone-Help": "Quando ativado, isso garante que pelo menos uma faixa seja mantida. Se nenhuma faixa correspondente ao idioma original e nenhuma faixa correspondente aos idiomas adicionais for encontrada, a primeira faixa será mantida independentemente.\n\nIsso evita problemas de falta de áudio no vídeo.",
+          "KeepOnlyFirst": "Manter Apenas o Primeiro",
+          "KeepOnlyFirst-Help": "Quando ativado, apenas a primeira faixa de cada idioma será mantida.\n\nPor exemplo, se houver 2 faixas em inglês, 3 em espanhol e 1 em alemão. O idioma original era espanhol, e os idiomas adicionais foram definidos como `eng`, então o resultado seria 1 faixa em inglês e 1 faixa em espanhol, o restante seria removido.",
+          "StreamType": "Tipo",
+          "StreamType-Help": "O tipo de faixas que devem ser atualizadas",
+          "TreatEmptyAsOriginal": "Tratar Vazio como Original",
+          "TreatEmptyAsOriginal-Help": "Quando ativado, qualquer faixa que não tenha idioma definido será tratada como se fosse o idioma original.\n\nPor exemplo, se o idioma original for Maori e uma faixa não tiver idioma definido, será tratada como Maori."
+        },
         "Outputs": {
           "1": "Faixas foram modificadas",
           "2": "Nenhuma faixa foi alterada"
-        },
-        "Description": "Este elemento do fluxo manterá apenas o idioma original e quaisquer idiomas adicionais definidos pelo usuário.\n\nTodos os outros fluxos de idioma serão removidos/marcados para exclusão.",
-        "Fields": {
-          "StreamType": "Tipo",
-          "StreamType-Help": "O tipo de faixas que devem ser atualizadas",
-          "AdditionalLanguages": "Idiomas Adicionais",
-          "AdditionalLanguages-Help": "Uma lista opcional de códigos de idioma adicionais a serem mantidos.\n\nÉ recomendável que um [código de idioma ISO 639-2](https://pt.wikipedia.org/wiki/Lista_de_c%C3%B3digos_ISO_639-2) seja usado.",
-          "KeepOnlyFirst": "Manter Apenas o Primeiro",
-          "KeepOnlyFirst-Help": "Quando ativado, apenas a primeira faixa de cada idioma será mantida.\n\nPor exemplo, se houver 2 faixas em inglês, 3 em espanhol e 1 em alemão. O idioma original era espanhol, e os idiomas adicionais foram definidos como `eng`, então o resultado seria 1 faixa em inglês e 1 faixa em espanhol, o restante seria removido.",
-          "FirstIfNone": "Primeiro se Nenhum",
-          "FirstIfNone-Help": "Quando ativado, isso garante que pelo menos uma faixa seja mantida. Se nenhuma faixa correspondente ao idioma original e nenhuma faixa correspondente aos idiomas adicionais for encontrada, a primeira faixa será mantida independentemente.\n\nIsso evita problemas de falta de áudio no vídeo.",
-          "TreatEmptyAsOriginal": "Tratar Vazio como Original",
-          "TreatEmptyAsOriginal-Help": "Quando ativado, qualquer faixa que não tenha idioma definido será tratada como se fosse o idioma original.\n\nPor exemplo, se o idioma original for Maori e uma faixa não tiver idioma definido, será tratada como Maori."
         }
       },
       "FfmpegBuilderMetadataRemover": {
-        "Label": "Construtor FFMPEG: Removedor de Metadados",
         "Description": "Remove metadados do Construtor FFMPEG para que, quando o arquivo for processado, os metadados selecionados sejam removidos.\n\nNota: Apenas os metadados quando este elemento do fluxo é afetado; se metadados forem adicionados após a execução deste nó, isso não será afetado.",
-        "Outputs": {
-          "1": "Metadados removidos do Construtor FFMPEG"
-        },
+        "Label": "Construtor FFMPEG: Removedor de Metadados",
         "Fields": {
-          "Video": "Vídeo",
-          "Video-Help": "Se as faixas de vídeo devem ter esses metadados removidos",
           "Audio": "Áudio",
           "Audio-Help": "Se as faixas de áudio devem ter esses metadados removidos",
-          "Subtitle": "Legenda",
-          "Subtitle-Help": "Se as faixas de legendas devem ter esses metadados removidos",
+          "RemoveAdditionalMetadata": "Remover Metadados Adicionais",
+          "RemoveAdditionalMetadata-Help": "Se metadados adicionais devem ser removidos. Metadados adicionais são metadados não padronizados que podem ter sido adicionados a um arquivo de vídeo, por exemplo, pelo iTunes.",
           "RemoveImages": "Remover Imagens",
           "RemoveImages-Help": "Se todas as imagens encontradas nos metadados devem ser removidas",
-          "RemoveTitle": "Remover Título",
-          "RemoveTitle-Help": "Se o título deve ser removido das faixas",
           "RemoveLanguage": "Remover Idioma",
           "RemoveLanguage-Help": "Se o idioma deve ser removido das faixas",
-          "RemoveAdditionalMetadata": "Remover Metadados Adicionais",
-          "RemoveAdditionalMetadata-Help": "Se metadados adicionais devem ser removidos. Metadados adicionais são metadados não padronizados que podem ter sido adicionados a um arquivo de vídeo, por exemplo, pelo iTunes."
+          "RemoveTitle": "Remover Título",
+          "RemoveTitle-Help": "Se o título deve ser removido das faixas",
+          "Subtitle": "Legenda",
+          "Subtitle-Help": "Se as faixas de legendas devem ter esses metadados removidos",
+          "Video": "Vídeo",
+          "Video-Help": "Se as faixas de vídeo devem ter esses metadados removidos"
+        },
+        "Outputs": {
+          "1": "Metadados removidos do Construtor FFMPEG"
         }
       },
-      "FfmpegBuilderDefaultOriginalLanguage": {
-        "Label": "Construtor FFMPEG: Idioma Original Padrão",
-        "Outputs": {
-          "1": "As faixas foram modificadas",
-          "2": "Nenhuma faixa foi alterada"
-        },
-        "Description": "Este elemento de fluxo tentará definir as faixas de idioma original como padrão. Tentará encontrar a primeira faixa que corresponda ao idioma original e, em seguida, defini-la como padrão.\n\nSe nenhuma faixa for encontrada com o idioma original, nenhuma alteração será feita.",
+      "FfmpegBuilderPreExecute": {
+        "Description": "Este elemento permite que você execute código personalizado logo antes de o [Executor do Construtor FFMPEG](https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder) executar o FFmpeg.\n\nIsso permite que você altere os argumentos passados para o FFmpeg.",
+        "Label": "Construtor FFMPEG: Pré-Executar",
         "Fields": {
-          "StreamType": "Tipo",
-          "StreamType-Help": "O tipo de faixas que devem ser atualizadas",
-          "MakeFirst": "Tornar Primeiro",
-          "MakeFirst-Help": "Se a faixa de idioma original também deve se tornar a primeira faixa."
+          "Code": "Código"
+        },
+        "Outputs": {
+          "1": "Pré-Execução definida"
         }
       },
-      "FfmpegBuilderTrackSorter": {
-        "Label": "Construtor FFMPEG: Classificador de Faixas",
-        "Outputs": {
-          "1": "As faixas foram modificadas",
-          "2": "Nenhuma faixa foi alterada"
-        },
-        "Description": "Este elemento de fluxo classifica as faixas com base nas opções de classificação definidas pelo usuário.",
+      "FfmpegBuilderProres": {
+        "Description": "Codifica o vídeo no formato prores.",
+        "Label": "Construtor FFMPEG: Prores",
         "Fields": {
+          "Encoder": "Codificador",
+          "Encoder-Help": "Qual codificador prores do FFmpeg usar.",
+          "PixelFormat": "Formato de Pixel",
+          "Profile": "Perfil",
+          "Quality": "Qualidade",
+          "Quality-Help": "0 para qualidade máxima, 32 para qualidade mínima. 9 a 13 são bons valores a serem usados."
+        },
+        "Outputs": {
+          "1": "Vídeo configurado para usar prores"
+        }
+      },
+      "FfmpegBuilderRemoveAttachments": {
+        "Description": "Remove quaisquer anexos do vídeo, se houver.",
+        "Label": "Construtor FFMPEG: Remover Anexos",
+        "Outputs": {
+          "1": "Construtor FFMPEG configurado para remover anexos."
+        }
+      },
+      "FfmpegBuilderRemuxToMkv": {
+        "Description": "Remuxa um arquivo de vídeo para um contêiner MKV.",
+        "Label": "Construtor FFMPEG: Remux para MKV",
+        "Outputs": {
+          "1": "Construtor FFMPEG configurado para remuxar para MKV"
+        }
+      },
+      "FfmpegBuilderRemuxToMov": {
+        "Description": "Remuxa um arquivo de vídeo para um contêiner MOV.",
+        "Label": "Construtor FFMPEG: Remux para MOV",
+        "Outputs": {
+          "1": "Construtor FFMPEG configurado para remuxar para MOV"
+        }
+      },
+      "FfmpegBuilderRemuxToMP4": {
+        "Description": "Remuxa um arquivo de vídeo para um contêiner MP4.",
+        "Label": "Construtor FFMPEG: Remux para MP4",
+        "Fields": {
+          "UseHvc1": "Usar HVC1",
+          "UseHvc1-Help": "Se HVC1 deve ser usado em vez do padrão HEV1"
+        },
+        "Outputs": {
+          "1": "Construtor FFMPEG configurado para remuxar para MP4"
+        }
+      },
+      "FfmpegBuilderRemuxToMxf": {
+        "Description": "Remuxa um arquivo de vídeo para um contêiner MXF.",
+        "Label": "Construtor FFMPEG: Remux para MXF",
+        "Outputs": {
+          "1": "Construtor FFMPEG configurado para remuxar para MXF"
+        }
+      },
+      "FfmpegBuilderRemuxToWebm": {
+        "Description": "Remuxa um arquivo de vídeo para um contêiner WEBM.",
+        "Label": "Construtor FFMPEG: Remux para WEBM",
+        "Outputs": {
+          "1": "Construtor FFMPEG configurado para remuxar para WEBM"
+        }
+      },
+      "FfmpegBuilderScaler": {
+        "Description": "Isso permite que você escale um vídeo para as dimensões especificadas. Ele manterá a proporção do vídeo, então, se o vídeo for 1920x1000, ele será escalado para 1280x668 se você selecionar 720P.",
+        "Label": "Construtor FFMPEG: Escalador de Vídeo",
+        "Fields": {
+          "Force": "Forçar",
+          "Force-Help": "Quando marcado, o vídeo será forçado a escalar mesmo se o arquivo de trabalho já estiver nesta resolução (ou perto desta resolução).",
+          "OnlyIfLarger": "Somente se Maior",
+          "OnlyIfLarger-Help": "O vídeo só será escalado para esta resolução se o vídeo for atualmente maior que esta resolução",
+          "Resolution": "Resolução"
+        },
+        "Outputs": {
+          "1": "Filtro de escala do Construtor FFMPEG adicionado",
+          "2": "Vídeo já estava na/nas proximidades da resolução escalada"
+        }
+      },
+      "FfmpegBuilderSetDefaultTrack": {
+        "Description": "Defina uma pista como padrão no construtor FFMPEG.",
+        "Label": "Construtor FFMPEG: Definir Pista Padrão",
+        "Fields": {
+          "Index": "Índice",
+          "Index-Help": "O índice da pista a ser definida como padrão, usado apenas se o idioma não for especificado.",
+          "Language": "Idioma",
+          "Language-Help": "Código de idioma [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) opcional a ser utilizado.",
           "StreamType": "Tipo",
-          "StreamType-Help": "O tipo de faixas que devem ser atualizadas",
-          "Sorters": "Classificadores",
-          "Sorters-Help": "Adicione uma ou mais opções de classificação para ordenar as faixas.",
-          "SortersKey": "Campo",
-          "SortersValue": "Valor",
-          "SetFirstDefault": "Definir Padrão",
-          "SetFirstDefault-Help": "Se a primeira faixa deve ser definida como padrão após a classificação."
+          "StreamType-Help": "O tipo de pista a ser definido como padrão no Construtor FFMPEG"
+        },
+        "Outputs": {
+          "1": "Pista definida como padrão",
+          "2": "Falha ao definir a pista como padrão"
+        }
+      },
+      "FfmpegBuilderSetDevice": {
+        "Description": "Define o dispositivo a ser usado para codificação/decodificação de hardware, se o codificador/decodificador suportar.",
+        "Label": "FFMPEG Builder: Definir Dispositivo",
+        "Fields": {
+          "Device": "Dispositivo",
+          "Device-Help": "O caminho para o dispositivo ou deixar em branco se nenhum dispositivo deve ser especificado."
+        },
+        "Outputs": {
+          "1": "Dispositivo definido"
+        }
+      },
+      "FfmpegBuilderSetFps": {
+        "Description": "Define os quadros por segundo (FPS) no FFmpeg Builder",
+        "Label": "FFMPEG Builder: Definir FPS",
+        "Fields": {
+          "Fps": "FPS",
+          "Fps-Help": "O FPS desejado, se o FPS de entrada e o FPS desejado não coincidirem, o FFMPEG irá convertê-lo, por exemplo (23.976, 24, 30, 60).",
+          "OnlyIfHigher": "Somente se Maior",
+          "OnlyIfHigher-Help": "Se o FPS deve ser ajustado apenas se o FPS atual for maior que o atual."
+        },
+        "Outputs": {
+          "1": "FPS atualizado",
+          "2": "Nenhuma alteração foi necessária"
+        }
+      },
+      "FfmpegBuilderSetTrackTitles": {
+        "Description": "Define os títulos das faixas com base em um formatador no FFmpeg Builder.",
+        "Label": "FFMPEG Builder: Definir Títulos das Faixas",
+        "Fields": {
+          "CommentaryFormat": "Comentário",
+          "CommentaryFormat-Help": "Como as faixas de comentários devem ser tratadas, você pode usar o mesmo formatador que outras faixas ou usar um método diferente.",
+          "Format": "Formato",
+          "Format-Help": "O formatador a ser usado, consulte _Ajuda_ para mais informações.",
+          "Separator": "Separador",
+          "Separator-Help": "O separador de string usado entre os valores do formato, isso é necessário para garantir que nenhum valor vazio seja mantido.",
+          "StreamType": "Tipo",
+          "StreamType-Help": "O tipo de faixa a ser definida como padrão no FFMPEG Builder"
+        },
+        "Outputs": {
+          "1": "Títulos das faixas atualizados",
+          "2": "Nenhum título de faixa foi afetado"
+        }
+      },
+      "FfmpegBuilderStart": {
+        "Description": "Cria uma instância do construtor FFMPEG que pode construir um argumento FFMPEG para depois ser executado com o executor FFMPEG.",
+        "Label": "Construtor FFMPEG: Iniciar",
+        "Outputs": {
+          "1": "Construtor FFMPEG criado e pronto para adicionar elementos de fluxo do construtor FFMPEG"
         }
       },
       "FfmpegBuilderSubtitleClearDefault": {
-        "Label": "Construtor FFMPEG: Limpar Padrão de Legendas",
         "Description": "Este elemento de fluxo limpará a bandeira padrão das legendas.",
+        "Label": "Construtor FFMPEG: Limpar Padrão de Legendas",
         "Fields": {
           "LeaveForced": "Deixar Forçado",
           "LeaveForced-Help": "Quando marcado, todas as legendas forçadas não serão tocadas, mantendo sua configuração original. Isso é executado antes de 'Definir Padrão Forçado', portanto, tem precedência.",
@@ -525,335 +607,212 @@
         }
       },
       "FfmpegBuilderSubtitleFormatRemover": {
-        "Label": "FFMPEG Builder: Remover Formato de Legendas",
         "Description": "Remove legendas de um arquivo de vídeo se encontradas.",
-        "Outputs": {
-          "1": "Legendas marcadas para remoção no FFMPEG Builder",
-          "2": "Nenhuma legenda para remover"
-        },
+        "Label": "FFMPEG Builder: Remover Formato de Legendas",
         "Fields": {
-          "SubtitlesToRemove": "Legendas a Remover",
           "RemoveAll": "Remover Todas",
-          "RemoveAll-Help": "Quando marcado, todas as legendas serão removidas do arquivo, caso contrário, apenas as selecionadas abaixo serão."
-        }
-      },
-      "FfmpegBuilderSubtitleTrackRemover": {
-        "Label": "FFMPEG Builder: Remover Faixa de Legendas",
+          "RemoveAll-Help": "Quando marcado, todas as legendas serão removidas do arquivo, caso contrário, apenas as selecionadas abaixo serão.",
+          "SubtitlesToRemove": "Legendas a Remover"
+        },
         "Outputs": {
           "1": "Legendas marcadas para remoção no FFMPEG Builder",
           "2": "Nenhuma legenda para remover"
-        },
-        "Description": "Permite remover legendas com base em seu título ou códigos de idioma.\n\nQualquer idioma (ou título se definido como 'Usar Título') que estiver em branco NÃO será removido, independentemente do padrão.",
-        "Fields": {
-          "Pattern": "Padrão",
-          "Pattern-Help": "Uma expressão regular para corresponder, por exemplo, \"eng\" para remover faixas em inglês",
-          "NotMatching": "Não Correspondente",
-          "NotMatching-Help": "Se as legendas que NÃO corresponderem ao padrão devem ser removidas",
-          "UseLanguageCode": "Usar Código de Idioma",
-          "UseLanguageCode-Help": "Se o código de idioma da faixa de áudio deve ser usado em vez do título"
         }
       },
       "FfmpegBuilderSubtitleTrackMerge": {
         "Label": "FFMPEG Builder: Mesclar Faixa de Legendas",
-        "Outputs": {
-          "1": "Legendas encontradas e adicionadas",
-          "2": "Nenhuma legenda encontrada"
-        },
         "Fields": {
-          "Subtitles": "Legendas",
-          "Subtitles-Help": "Selecione quais legendas buscar para adicionar",
-          "UseSourceDirectory": "Usar Diretório de Origem",
-          "UseSourceDirectory-Help": "Se marcado, será feita uma busca no diretório original de origem, caso contrário, será utilizado o diretório de trabalho.",
+          "Default": "Padrão",
+          "Default-Help": "Se a legenda deve ser a legenda padrão",
+          "DeleteAfterwards": "Excluir Após Mesclagem",
+          "DeleteAfterwards-Help": "Se o arquivo de legenda deve ser excluído após ser mesclado",
+          "Forced": "Forçado",
+          "Forced-Help": "Se a legenda deve ser forçada",
+          "Language": "Idioma",
+          "Language-Help": "Código de idioma opcional [ISO 639-2](https://pt.wikipedia.org/wiki/ISO_639-2) para a legenda adicionada.",
           "MatchFilename": "Correspondência de Nome de Arquivo",
           "MatchFilename-Help": "Quando marcado, somente legendas com o mesmo nome de arquivo que o arquivo de entrada ou o arquivo de trabalho serão mescladas.",
           "Pattern": "Padrão",
           "Pattern-Help": "Expressão regular opcional para corresponder aos arquivos.",
+          "Subtitles": "Legendas",
+          "Subtitles-Help": "Selecione quais legendas buscar para adicionar",
           "Title": "Título",
           "Title-Help": "O título da legenda, se não definido, o idioma será usado como título se encontrado.",
-          "Language": "Idioma",
-          "Language-Help": "Código de idioma opcional [ISO 639-2](https://pt.wikipedia.org/wiki/ISO_639-2) para a legenda adicionada.",
-          "Forced": "Forçado",
-          "Forced-Help": "Se a legenda deve ser forçada",
-          "Default": "Padrão",
-          "Default-Help": "Se a legenda deve ser a legenda padrão",
-          "DeleteAfterwards": "Excluir Após Mesclagem",
-          "DeleteAfterwards-Help": "Se o arquivo de legenda deve ser excluído após ser mesclado"
-        }
-      },
-      "FfmpegBuilderCropBlackBars": {
-        "Label": "FFMPEG Builder: Cortar Barras Pretas",
-        "Description": "FFMPEG Builder atualizado para cortar barras pretas se detectadas.",
-        "Outputs": {
-          "1": "FFMPEG Builder atualizado para cortar barras pretas",
-          "2": "Nenhuma barra preta detectada, não cortando"
+          "UseSourceDirectory": "Usar Diretório de Origem",
+          "UseSourceDirectory-Help": "Se marcado, será feita uma busca no diretório original de origem, caso contrário, será utilizado o diretório de trabalho."
         },
-        "Fields": {
-          "CroppingThreshold": "Limite",
-          "CroppingThreshold-Help": "A quantidade de pixels que deve ser maior para cortar. Por exemplo, se apenas 5 pixels forem detectados como espaço preto, você pode considerar isso pequeno demais para cortar."
+        "Outputs": {
+          "1": "Legendas encontradas e adicionadas",
+          "2": "Nenhuma legenda encontrada"
         }
       },
-      "FfmpegBuilderPreExecute": {
-        "Label": "Construtor FFMPEG: Pré-Executar",
-        "Description": "Este elemento permite que você execute código personalizado logo antes de o [Executor do Construtor FFMPEG](https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder) executar o FFmpeg.\n\nIsso permite que você altere os argumentos passados para o FFmpeg.",
-        "Outputs": {
-          "1": "Pré-Execução definida"
+      "FfmpegBuilderSubtitleTrackRemover": {
+        "Description": "Permite remover legendas com base em seu título ou códigos de idioma.\n\nQualquer idioma (ou título se definido como 'Usar Título') que estiver em branco NÃO será removido, independentemente do padrão.",
+        "Label": "FFMPEG Builder: Remover Faixa de Legendas",
+        "Fields": {
+          "NotMatching": "Não Correspondente",
+          "NotMatching-Help": "Se as legendas que NÃO corresponderem ao padrão devem ser removidas",
+          "Pattern": "Padrão",
+          "Pattern-Help": "Uma expressão regular para corresponder, por exemplo, \"eng\" para remover faixas em inglês",
+          "UseLanguageCode": "Usar Código de Idioma",
+          "UseLanguageCode-Help": "Se o código de idioma da faixa de áudio deve ser usado em vez do título"
         },
+        "Outputs": {
+          "1": "Legendas marcadas para remoção no FFMPEG Builder",
+          "2": "Nenhuma legenda para remover"
+        }
+      },
+      "FfmpegBuilderTrackRemover": {
+        "Description": "Permite remover faixas baseadas em condições especificadas.",
+        "Label": "FFMPEG Builder: Remover Faixas",
         "Fields": {
-          "Code": "Código"
-        }
-      },
-      "FfmpegBuilderProres": {
-        "Label": "Construtor FFMPEG: Prores",
-        "Description": "Codifica o vídeo no formato prores.",
-        "Outputs": {
-          "1": "Vídeo configurado para usar prores"
-        },
-        "Fields": {
-          "Encoder": "Codificador",
-          "Encoder-Help": "Qual codificador prores do FFmpeg usar.",
-          "Quality": "Qualidade",
-          "Quality-Help": "0 para qualidade máxima, 32 para qualidade mínima. 9 a 13 são bons valores a serem usados.",
-          "Profile": "Perfil",
-          "PixelFormat": "Formato de Pixel"
-        }
-      },
-      "FfmpegBuilderRemoveAttachments": {
-        "Label": "Construtor FFMPEG: Remover Anexos",
-        "Description": "Remove quaisquer anexos do vídeo, se houver.",
-        "Outputs": {
-          "1": "Construtor FFMPEG configurado para remover anexos."
-        }
-      },
-      "FfmpegBuilderRemuxToMkv": {
-        "Label": "Construtor FFMPEG: Remux para MKV",
-        "Description": "Remuxa um arquivo de vídeo para um contêiner MKV.",
-        "Outputs": {
-          "1": "Construtor FFMPEG configurado para remuxar para MKV"
-        }
-      },
-      "FfmpegBuilderRemuxToMxf": {
-        "Label": "Construtor FFMPEG: Remux para MXF",
-        "Description": "Remuxa um arquivo de vídeo para um contêiner MXF.",
-        "Outputs": {
-          "1": "Construtor FFMPEG configurado para remuxar para MXF"
-        }
-      },
-      "FfmpegBuilderRemuxToMP4": {
-        "Label": "Construtor FFMPEG: Remux para MP4",
-        "Description": "Remuxa um arquivo de vídeo para um contêiner MP4.",
-        "Outputs": {
-          "1": "Construtor FFMPEG configurado para remuxar para MP4"
-        },
-        "Fields": {
-          "UseHvc1": "Usar HVC1",
-          "UseHvc1-Help": "Se HVC1 deve ser usado em vez do padrão HEV1"
-        }
-      },
-      "FfmpegBuilderRemuxToMov": {
-        "Label": "Construtor FFMPEG: Remux para MOV",
-        "Description": "Remuxa um arquivo de vídeo para um contêiner MOV.",
-        "Outputs": {
-          "1": "Construtor FFMPEG configurado para remuxar para MOV"
-        }
-      },
-      "FfmpegBuilderRemuxToWebm": {
-        "Label": "Construtor FFMPEG: Remux para WEBM",
-        "Description": "Remuxa um arquivo de vídeo para um contêiner WEBM.",
-        "Outputs": {
-          "1": "Construtor FFMPEG configurado para remuxar para WEBM"
-        }
-      },
-      "FfmpegBuilderScaler": {
-        "Label": "Construtor FFMPEG: Escalador de Vídeo",
-        "Description": "Isso permite que você escale um vídeo para as dimensões especificadas. Ele manterá a proporção do vídeo, então, se o vídeo for 1920x1000, ele será escalado para 1280x668 se você selecionar 720P.",
-        "Outputs": {
-          "1": "Filtro de escala do Construtor FFMPEG adicionado",
-          "2": "Vídeo já estava na/nas proximidades da resolução escalada"
-        },
-        "Fields": {
-          "Force": "Forçar",
-          "Force-Help": "Quando marcado, o vídeo será forçado a escalar mesmo se o arquivo de trabalho já estiver nesta resolução (ou perto desta resolução).",
-          "OnlyIfLarger": "Somente se Maior",
-          "OnlyIfLarger-Help": "O vídeo só será escalado para esta resolução se o vídeo for atualmente maior que esta resolução",
-          "Resolution": "Resolução"
-        }
-      },
-      "FfmpegBuilderSetDefaultTrack": {
-        "Label": "Construtor FFMPEG: Definir Pista Padrão",
-        "Description": "Defina uma pista como padrão no construtor FFMPEG.",
-        "Outputs": {
-          "1": "Pista definida como padrão",
-          "2": "Falha ao definir a pista como padrão"
-        },
-        "Fields": {
+          "CustomTrackSelection": "Remover",
           "StreamType": "Tipo",
-          "StreamType-Help": "O tipo de pista a ser definido como padrão no Construtor FFMPEG",
-          "Language": "Idioma",
-          "Language-Help": "Código de idioma [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) opcional a ser utilizado.",
-          "Index": "Índice",
-          "Index-Help": "O índice da pista a ser definida como padrão, usado apenas se o idioma não for especificado."
+          "StreamType-Help": "O tipo de faixas a reorganizar no FFMPEG Builder",
+          "TrackSelectionOptions": "",
+          "TrackSelectionOptionsKey": "Propriedade",
+          "TrackSelectionOptionsValue": "Valor"
+        },
+        "Outputs": {
+          "1": "Faixas estabelecidas para serem removidas",
+          "2": "Faixas NÃO estabelecidas para serem removidas"
         }
       },
-      "FfmpegBuilderSetDevice": {
-        "Label": "FFMPEG Builder: Definir Dispositivo",
-        "Description": "Define o dispositivo a ser usado para codificação/decodificação de hardware, se o codificador/decodificador suportar.",
-        "Outputs": {
-          "1": "Dispositivo definido"
-        },
+      "FfmpegBuilderTrackSorter": {
+        "Description": "Este elemento de fluxo classifica as faixas com base nas opções de classificação definidas pelo usuário.",
+        "Label": "Construtor FFMPEG: Classificador de Faixas",
         "Fields": {
-          "Device": "Dispositivo",
-          "Device-Help": "O caminho para o dispositivo ou deixar em branco se nenhum dispositivo deve ser especificado."
-        }
-      },
-      "FfmpegBuilderSetFps": {
-        "Label": "FFMPEG Builder: Definir FPS",
-        "Description": "Define os quadros por segundo (FPS) no FFmpeg Builder",
-        "Outputs": {
-          "1": "FPS atualizado",
-          "2": "Nenhuma alteração foi necessária"
-        },
-        "Fields": {
-          "Fps": "FPS",
-          "Fps-Help": "O FPS desejado, se o FPS de entrada e o FPS desejado não coincidirem, o FFMPEG irá convertê-lo, por exemplo (23.976, 24, 30, 60).",
-          "OnlyIfHigher": "Somente se Maior",
-          "OnlyIfHigher-Help": "Se o FPS deve ser ajustado apenas se o FPS atual for maior que o atual."
-        }
-      },
-      "FfmpegBuilderSetTrackTitles": {
-        "Label": "FFMPEG Builder: Definir Títulos das Faixas",
-        "Description": "Define os títulos das faixas com base em um formatador no FFmpeg Builder.",
-        "Outputs": {
-          "1": "Títulos das faixas atualizados",
-          "2": "Nenhum título de faixa foi afetado"
-        },
-        "Fields": {
+          "SetFirstDefault": "Definir Padrão",
+          "SetFirstDefault-Help": "Se a primeira faixa deve ser definida como padrão após a classificação.",
+          "Sorters": "Classificadores",
+          "Sorters-Help": "Adicione uma ou mais opções de classificação para ordenar as faixas.",
+          "SortersKey": "Campo",
+          "SortersValue": "Valor",
           "StreamType": "Tipo",
-          "StreamType-Help": "O tipo de faixa a ser definida como padrão no FFMPEG Builder",
-          "Format": "Formato",
-          "Format-Help": "O formatador a ser usado, consulte _Ajuda_ para mais informações.",
-          "Separator": "Separador",
-          "Separator-Help": "O separador de string usado entre os valores do formato, isso é necessário para garantir que nenhum valor vazio seja mantido.",
-          "CommentaryFormat": "Comentário",
-          "CommentaryFormat-Help": "Como as faixas de comentários devem ser tratadas, você pode usar o mesmo formatador que outras faixas ou usar um método diferente."
+          "StreamType-Help": "O tipo de faixas que devem ser atualizadas"
+        },
+        "Outputs": {
+          "1": "As faixas foram modificadas",
+          "2": "Nenhuma faixa foi alterada"
         }
       },
       "FfmpegBuilderVideo10Bit": {
-        "Label": "FFMPEG Builder: Vídeo 10 Bits",
         "Description": "Define o FFMPEG Builder para codificar os fluxos de vídeo em 10 Bits",
+        "Label": "FFMPEG Builder: Vídeo 10 Bits",
         "Outputs": {
           "1": "Fluxos de vídeo do FFMPEG Builder definidos para codificar em 10 Bits"
         }
       },
       "FfmpegBuilderVideoBitrate": {
-        "Label": "FFMPEG Builder: Taxa de Bits de Vídeo",
         "Description": "Configura o FFMPEG Builder para codificar o vídeo dado a taxa de bits",
-        "Outputs": {
-          "1": "Fluxos de vídeo do FFMPEG Builder atualizados"
-        },
+        "Label": "FFMPEG Builder: Taxa de Bits de Vídeo",
         "Fields": {
           "Bitrate": "Taxa de Bits",
-          "Bitrate-Suffix": "KB / %",
           "Bitrate-Help": "A taxa de bits alvo do vídeo em kilobytes",
+          "Bitrate-Suffix": "KB / %",
           "Percent": "Porcentagem",
           "Percent-Help": "Quando selecionado, a taxa de bits será calculada como uma porcentagem da taxa de bits atual."
-        }
-      },
-      "FfmpegBuilderVideoMaxBitrate": {
-        "Label": "FFMPEG Builder: Taxa de Bits Máxima de Vídeo",
-        "Description": "Configura o FFMPEG Builder para limitar a taxa de bits do vídeo",
+        },
         "Outputs": {
           "1": "Fluxos de vídeo do FFMPEG Builder atualizados"
-        },
+        }
+      },
+      "FfmpegBuilderVideoBitrateEncode": {
+        "Description": "Configura o FFMPEG Builder para codificar o vídeo com predefinições fáceis de usar baseadas na Taxa de Bits",
+        "Label": "FFMPEG Builder: Codificação de Taxa de Bits",
         "Fields": {
-          "Bitrate": "Taxa de Bits Máxima",
-          "Bitrate-Suffix": "KB",
-          "Bitrate-Help": "A taxa de bits máxima do vídeo em kilobytes"
+          "Bitrate": "Taxa de Bits",
+          "Bitrate-Suffix": "Kbps",
+          "Codec": "Codec",
+          "Encoder": "Codificador",
+          "Encoder-Help": "O codificador que será forçado a usar. Se você especificar um codificador de hardware que não está disponível, a codificação falhará.",
+          "HardwareEncoding": "Codificação por Hardware",
+          "HardwareEncoding-Help": "Quando marcado, testará se codificadores de hardware são encontrados no Nó de Processamento, e se forem encontrados, usará a codificação por hardware, caso contrário, voltará para a codificação por CPU."
+        },
+        "Outputs": {
+          "1": "Fluxos de vídeo do FFMPEG Builder configurados para codificar"
         }
       },
       "FfmpegBuilderVideoCodec": {
-        "Label": "FFMPEG Builder: Codec de Vídeo",
         "Description": "Configura o FFMPEG Builder para codificar os fluxos de vídeo no codec especificado",
-        "Outputs": {
-          "1": "Fluxos de vídeo do FFMPEG Builder configurados para codificar",
-          "2": "Vídeo já no codec alvo, não será recodificado"
-        },
+        "Label": "FFMPEG Builder: Codec de Vídeo",
         "Fields": {
+          "DisableOtherVideoStreams": "Somente o Primeiro",
+          "DisableOtherVideoStreams-Help": "Quando marcado, se houver múltiplos fluxos de vídeo no arquivo, isso removerá todos, exceto o primeiro fluxo de vídeo do arquivo uma vez executado.",
+          "Force": "Forçar Codificação",
+          "Force-Help": "Forçará a codificação do vídeo mesmo que já esteja no codec de vídeo alvo",
           "VideoCodec": "Codec de Vídeo",
           "VideoCodec-Help": "O codec de vídeo em que o vídeo deve estar, por exemplo hevc, h264.\nSe deixado em branco, todas as faixas de vídeo originais serão copiadas.",
           "VideoCodecParameters": "Parâmetros do Codec de Vídeo",
-          "VideoCodecParameters-Help": "Os parâmetros a serem usados para codificar o vídeo, por exemplo, \"hevc_nvenc -preset hq -crf 23\" para codificar em hevc usando o preset HQ com um fator de taxa constante de 23 e usando a aceleração de hardware NVIDIA.",
-          "Force": "Forçar Codificação",
-          "Force-Help": "Forçará a codificação do vídeo mesmo que já esteja no codec de vídeo alvo",
-          "DisableOtherVideoStreams": "Somente o Primeiro",
-          "DisableOtherVideoStreams-Help": "Quando marcado, se houver múltiplos fluxos de vídeo no arquivo, isso removerá todos, exceto o primeiro fluxo de vídeo do arquivo uma vez executado."
+          "VideoCodecParameters-Help": "Os parâmetros a serem usados para codificar o vídeo, por exemplo, \"hevc_nvenc -preset hq -crf 23\" para codificar em hevc usando o preset HQ com um fator de taxa constante de 23 e usando a aceleração de hardware NVIDIA."
+        },
+        "Outputs": {
+          "1": "Fluxos de vídeo do FFMPEG Builder configurados para codificar",
+          "2": "Vídeo já no codec alvo, não será recodificado"
         }
       },
       "FfmpegBuilderVideoEncode": {
-        "Label": "FFMPEG Builder: Codificação de Vídeo",
         "Description": "Configura o FFMPEG Builder para codificar o vídeo com predefinições fáceis de usar",
-        "Outputs": {
-          "1": "Fluxos de vídeo do FFMPEG Builder configurados para codificar"
-        },
+        "Label": "FFMPEG Builder: Codificação de Vídeo",
         "Fields": {
           "Codec": "Codec",
-          "Speed": "Velocidade",
           "Encoder": "Codificador",
           "Encoder-Help": "O codificador que será forçado a usar. Se você especificar um codificador de hardware que não está disponível, a codificação falhará.",
           "HardwareEncoding": "Codificação por Hardware",
           "HardwareEncoding-Help": "Quando marcado, testará se codificadores de hardware são encontrados no Nó de Processamento, e se forem encontrados, usará a codificação por hardware, caso contrário, voltará para a codificação por CPU.",
           "Quality": "Qualidade",
           "Quality-Help": "Uma escala de qualidade logarítmica, de modo que pequenas mudanças neste controle deslizante causam grandes mudanças no tamanho/ qualidade do arquivo.\nQuanto menor o número, maior a qualidade.\nConsulte a Ajuda para mais informações",
-          "Quality-Suffix": "(Maior Qualidade, arquivo maior)"
-        }
-      },
-      "FfmpegBuilderVideoBitrateEncode": {
-        "Label": "FFMPEG Builder: Codificação de Taxa de Bits",
-        "Description": "Configura o FFMPEG Builder para codificar o vídeo com predefinições fáceis de usar baseadas na Taxa de Bits",
+          "Quality-Suffix": "(Maior Qualidade, arquivo maior)",
+          "Speed": "Velocidade"
+        },
         "Outputs": {
           "1": "Fluxos de vídeo do FFMPEG Builder configurados para codificar"
-        },
+        }
+      },
+      "FfmpegBuilderVideoMaxBitrate": {
+        "Description": "Configura o FFMPEG Builder para limitar a taxa de bits do vídeo",
+        "Label": "FFMPEG Builder: Taxa de Bits Máxima de Vídeo",
         "Fields": {
-          "Codec": "Codec",
-          "Bitrate": "Taxa de Bits",
-          "Bitrate-Suffix": "Kbps",
-          "Encoder": "Codificador",
-          "Encoder-Help": "O codificador que será forçado a usar. Se você especificar um codificador de hardware que não está disponível, a codificação falhará.",
-          "HardwareEncoding": "Codificação por Hardware",
-          "HardwareEncoding-Help": "Quando marcado, testará se codificadores de hardware são encontrados no Nó de Processamento, e se forem encontrados, usará a codificação por hardware, caso contrário, voltará para a codificação por CPU."
+          "Bitrate": "Taxa de Bits Máxima",
+          "Bitrate-Help": "A taxa de bits máxima do vídeo em kilobytes",
+          "Bitrate-Suffix": "KB"
+        },
+        "Outputs": {
+          "1": "Fluxos de vídeo do FFMPEG Builder atualizados"
         }
       },
       "FfmpegBuilderVideoTag": {
-        "Label": "FFMPEG Builder: Tag de Vídeo",
         "Description": "Define uma tag de vídeo no arquivo",
-        "Outputs": {
-          "1": "Tag FFMPEG Builder adicionada"
-        },
+        "Label": "FFMPEG Builder: Tag de Vídeo",
         "Fields": {
           "Tag": "Tag",
           "Tag-Help": "A tag a ser adicionada ao arquivo de vídeo"
+        },
+        "Outputs": {
+          "1": "Tag FFMPEG Builder adicionada"
         }
       },
       "FFmpegBuilderWatermark": {
-        "Label": "FFMPEG Builder: Marca d'Água",
         "Description": "Adiciona uma marca d'água a um arquivo de vídeo.",
-        "Outputs": {
-          "1": "Marca d'água adicionada"
-        },
+        "Label": "FFMPEG Builder: Marca d'Água",
         "Fields": {
+          "Height": "Altura",
+          "Height-Help": "Defina uma altura personalizada da imagem, ou defina como 0 para a altura original ou escalada se a largura for definida.",
           "Image": "Imagem",
           "Image-Help": "O arquivo de imagem para a marca d'água, para melhores resultados use um arquivo PNG.",
-          "Position": "Posição",
-          "Position-Help": "Onde colocar a marca d'água",
           "Opacity": "Opacidade",
           "Opacity-Help": "Ajusta o nível de transparência da imagem sobreposta, variando de 0 (totalmente transparente) a 100 (totalmente opaco).",
+          "Position": "Posição",
+          "Position-Help": "Onde colocar a marca d'água",
+          "Width": "Largura",
+          "Width-Help": "Defina uma largura personalizada da imagem, ou defina como 0 para a largura original ou escalada se a altura for definida.",
           "XPos": "Posição X",
           "XPos-Help": "A posição da marca d'água no eixo x",
           "YPos": "Posição Y",
-          "YPos-Help": "A posição da marca d'água no eixo y",
-          "Width": "Largura",
-          "Width-Help": "Defina uma largura personalizada da imagem, ou defina como 0 para a largura original ou escalada se a altura for definida.",
-          "Height": "Altura",
-          "Height-Help": "Defina uma altura personalizada da imagem, ou defina como 0 para a altura original ou escalada se a largura for definida."
+          "YPos-Help": "A posição da marca d'água no eixo y"
+        },
+        "Outputs": {
+          "1": "Marca d'água adicionada"
         }
       },
       "ReadVideoInfo": {
@@ -865,30 +824,38 @@
       },
       "SubtitleExtractor": {
         "Description": "Extrai uma única faixa de legendas e a salva no destino. Pode extrair formatos srt, ass e ssa.\nIsto NÃO atualizará o arquivo de trabalho e manterá o arquivo de trabalho igual ao arquivo de entrada.\n\nSaída 1: Legendas foram extraídas\nSaída 2: Nenhuma legenda encontrada para extrair",
-        "Outputs": {
-          "1": "Legendas extraídas",
-          "2": "Nenhuma legenda extraída"
-        },
         "Fields": {
+          "ExtractAll": "Extrair Todos",
+          "ExtractAll-Help": "Se todos os subtítulos correspondentes devem ser extraídos.",
+          "ForcedOnly": "Apenas Forçados",
+          "ForcedOnly-Help": "Se apenas os subtítulos forçados devem ser extraídos.",
           "Language": "Idioma",
           "Language-Help": "O código de idioma [ISO 639-2](https://pt.wikipedia.org/wiki/ISO_639-2) a ser utilizado.",
-          "Title": "Título",
-          "Title-Help": "Opcionalmente, insira um título. Isso pode ser uma expressão regular ou uma string que deve aparecer no título para ser correspondente.",
+          "OnlyTextSubtitles": "Apenas Legendas de Texto",
+          "OnlyTextSubtitles-Help": "Se apenas legendas de texto devem ser extraídas, todas as legendas baseadas em imagem serão ignoradas.",
           "OutputFile": "Arquivo de Saída",
           "OutputFile-Help": "Onde salvar o arquivo de saída, por exemplo, \"'{folder.Orig.FullName}\\{file.Orig.FileName}.srt'\" para salvá-lo com o arquivo original como saída srt.\nSe deixado em branco, será criado um subtítulo srt na mesma pasta que o arquivo de entrada original.",
           "SetWorkingFile": "Definir como Arquivo de Trabalho",
           "SetWorkingFile-Help": "Quando isso está marcado, se um subtítulo for extraído, o arquivo de trabalho será alterado para esse subtítulo extraído. O arquivo de trabalho original NÃO será excluído.",
-          "ForcedOnly": "Apenas Forçados",
-          "ForcedOnly-Help": "Se apenas os subtítulos forçados devem ser extraídos.",
-          "OnlyTextSubtitles": "Apenas Legendas de Texto",
-          "OnlyTextSubtitles-Help": "Se apenas legendas de texto devem ser extraídas, todas as legendas baseadas em imagem serão ignoradas.",
-          "ExtractAll": "Extrair Todos",
-          "ExtractAll-Help": "Se todos os subtítulos correspondentes devem ser extraídos."
+          "Title": "Título",
+          "Title-Help": "Opcionalmente, insira um título. Isso pode ser uma expressão regular ou uma string que deve aparecer no título para ser correspondente."
+        },
+        "Outputs": {
+          "1": "Legendas extraídas",
+          "2": "Nenhuma legenda extraída"
+        }
+      },
+      "VideoAlreadyProcessed": {
+        "Description": "Testa se um arquivo de vídeo já foi processado pelo FileFlows",
+        "Label": "Vídeo Já Processado",
+        "Outputs": {
+          "1": "O vídeo já foi processado",
+          "2": "O vídeo não foi processado"
         }
       },
       "VideoBitCheck": {
-        "Label": "Verificação de Bits de Vídeo",
         "Description": "Verifica se um vídeo é de 8-Bit, 10-Bit, 12-Bit ou desconhecido.",
+        "Label": "Verificação de Bits de Vídeo",
         "Outputs": {
           "1": "O vídeo é de 8-Bit",
           "2": "O vídeo é de 10-Bit",
@@ -896,133 +863,162 @@
           "4": "Desconhecido"
         }
       },
-      "VideoIs8Bit": {
-        "Label": "O Vídeo É de 8-Bit",
-        "Description": "Testa se um arquivo de vídeo é de 8-Bit",
+      "VideoBitrateGreaterThan": {
+        "Description": "Testa se a taxa de bits de um vídeo é maior que uma taxa de bits dada.",
+        "Label": "Taxa de Bits de Vídeo Maior Que",
+        "Fields": {
+          "Bitrate": "Taxa de Bits",
+          "Bitrate-Suffix": "KBps"
+        },
         "Outputs": {
-          "1": "O vídeo é de 8-Bit",
-          "2": "O vídeo não é de 8-Bit"
+          "1": "A taxa de bits é maior que",
+          "2": "A taxa de bits não é maior que"
+        }
+      },
+      "VideoDuration": {
+        "Description": "Verifica se a duração do vídeo corresponde aos parâmetros dados.",
+        "Fields": {
+          "Match": "Correspondência",
+          "ValueHigh": " ",
+          "ValueLow": "Duração"
+        },
+        "Outputs": {
+          "1": "A duração do vídeo corresponde",
+          "2": "A duração do vídeo não corresponde"
+        }
+      },
+      "VideoDurationCompare": {
+        "Description": "Compara a duração original de um vídeo com sua duração final.",
+        "Fields": {
+          "AllowedDifference": "Diferença Permitida",
+          "AllowedDifference-Help": "A diferença de tempo permitida entre a duração original do vídeo e a duração final."
+        },
+        "Outputs": {
+          "1": "O vídeo está dentro da diferença de duração permitida",
+          "2": "O vídeo não está dentro da diferença de duração permitida"
+        }
+      },
+      "VideoExtractAudio": {
+        "Description": "Extrai áudio de um arquivo de vídeo e o salva em um arquivo",
+        "Label": "Extrair Áudio do Vídeo",
+        "Fields": {
+          "Channels": "Canais",
+          "Channels-Help": "O número de canais que a faixa de origem deve ter para coincidir. Defina como 0 para ignorar a correspondência de canais.",
+          "Codec": "Codec",
+          "Codec-Help": "Uma expressão regular usada para testar o codec da faixa",
+          "Language": "Idioma",
+          "Language-Help": "Uma expressão regular usada para testar o idioma da faixa",
+          "NotMatching": "Não Correspondente",
+          "NotMatching-Help": "Se uma faixa de áudio que NÃO corresponda ao padrão deve ser extraída",
+          "OutputBitrate": "Taxa de Bits de Saída",
+          "OutputBitrate-Help": "A taxa de bits da faixa de áudio extraída",
+          "OutputCodec": "Codec de Saída",
+          "OutputCodec-Help": "O codec para salvar o áudio extraído",
+          "OutputFile": "Arquivo de Saída",
+          "OutputFile-Help": "Onde salvar o arquivo de saída, por exemplo, \"'{folder.Orig.FullName}\\{file.Orig.FileName}.mp3'\" para salvá-lo com o arquivo original como saída mp3.\nSe nenhuma extensão for definida, o codec de saída será usado para determinar a extensão.",
+          "SetWorkingFile": "Definir como Arquivo de Trabalho",
+          "SetWorkingFile-Help": "Quando isso está marcado, se um subtítulo for extraído, o arquivo de trabalho será alterado para este subtítulo extraído. O arquivo de trabalho original NÃO será excluído.",
+          "Title": "Título",
+          "Title-Help": "Uma expressão regular usada para testar o título da faixa"
+        },
+        "Outputs": {
+          "1": "Áudio extraído e salvo em um arquivo",
+          "2": "Não foi possível encontrar uma faixa para extrair"
+        }
+      },
+      "VideoFile": {
+        "Description": "Um arquivo de vídeo de entrada que teve suas informações de vídeo lidas e pode ser processado",
+        "Fields": {
+          "AnalyzeDuration": "Duração da análise",
+          "AnalyzeDuration-Help": "Especifique quantos segundos são analisados para sondar a entrada",
+          "AnalyzeDuration-Suffix": "segundos",
+          "ProbeSize": "Tamanho da amostra",
+          "ProbeSize-Help": "O tamanho da amostra a ser utilizado no FFMPEG ao executar.",
+          "ProbeSize-Suffix": "MB"
+        },
+        "Outputs": {
+          "1": "Arquivo de vídeo da biblioteca"
+        }
+      },
+      "VideoHasErrors": {
+        "Description": "Testa se um arquivo de vídeo contém erros",
+        "Label": "O vídeo tem erros",
+        "Fields": {
+          "HardwareDecoding": "Decodificação de Hardware",
+          "HardwareDecoding-Help": "Se uma tentativa de usar a decodificação de hardware deve ser feita. Se não estiver disponível, a execução continuará sem a decodificação de hardware habilitada."
+        },
+        "Outputs": {
+          "1": "Contém um erro",
+          "2": "Não foram detectados erros"
+        }
+      },
+      "VideoHasStream": {
+        "Description": "Testa se um arquivo de vídeo contém uma faixa",
+        "Label": "O vídeo tem fluxo",
+        "Fields": {
+          "Channels": "Canais",
+          "Channels-Help": "O número de canais a serem testados. Deixe em branco para ignorar esta verificação",
+          "CheckDeleted": "Verificar excluídos",
+          "CheckDeleted-Help": "Se as faixas excluídas também devem ser verificadas",
+          "Codec": "Codec",
+          "Codec-Help": "Uma expressão regular usada para testar o codec do fluxo",
+          "Default": "Padrão",
+          "Default-Help": "Se este fluxo deve ser um fluxo padrão ou não.",
+          "Forced": "Forçado",
+          "Forced-Help": "Se este fluxo deve ser um fluxo forçado ou não.",
+          "Invert": "Inverter",
+          "Invert-Help": "Inverte o resultado, tornando-se efetivamente `O vídeo não tem fluxo`",
+          "Language": "Idioma",
+          "Language-Help": "Uma expressão regular usada para testar o idioma do fluxo",
+          "Stream": "Tipo",
+          "Stream-Help": "O tipo de fluxo a ser procurado",
+          "Title": "Título",
+          "Title-Help": "Uma expressão regular usada para testar o título do fluxo"
+        },
+        "Outputs": {
+          "1": "Contém a faixa correspondente",
+          "2": "Não contém a faixa correspondente"
         }
       },
       "VideoIs10Bit": {
-        "Label": "O Vídeo É de 10-Bit",
         "Description": "Testa se um arquivo de vídeo é de 10-Bit",
+        "Label": "O Vídeo É de 10-Bit",
         "Outputs": {
           "1": "O vídeo é de 10-Bit",
           "2": "O vídeo não é de 10-Bit"
         }
       },
       "VideoIs12Bit": {
-        "Label": "O Vídeo É de 12-Bit",
         "Description": "Testa se um arquivo de vídeo é de 12-Bit",
+        "Label": "O Vídeo É de 12-Bit",
         "Outputs": {
           "1": "O vídeo é de 12-Bit",
           "2": "O vídeo não é de 12-Bit"
         }
       },
-      "VideoAlreadyProcessed": {
-        "Label": "Vídeo Já Processado",
-        "Description": "Testa se um arquivo de vídeo já foi processado pelo FileFlows",
+      "VideoIs8Bit": {
+        "Description": "Testa se um arquivo de vídeo é de 8-Bit",
+        "Label": "O Vídeo É de 8-Bit",
         "Outputs": {
-          "1": "O vídeo já foi processado",
-          "2": "O vídeo não foi processado"
+          "1": "O vídeo é de 8-Bit",
+          "2": "O vídeo não é de 8-Bit"
         }
       },
       "VideoIsInterlaced": {
-        "Label": "O vídeo é entrelaçado",
         "Description": "Testa se um arquivo de vídeo é entrelaçado",
-        "Outputs": {
-          "1": "O vídeo é entrelaçado",
-          "2": "O vídeo não é entrelaçado"
-        },
+        "Label": "O vídeo é entrelaçado",
         "Fields": {
           "Threshold": "Limite",
           "Threshold-Help": "A porcentagem de quadros detectados como entrelaçados que o vídeo deve ter para ser considerado entrelaçado"
-        }
-      },
-      "VideoHasErrors": {
-        "Label": "O vídeo tem erros",
-        "Description": "Testa se um arquivo de vídeo contém erros",
-        "Outputs": {
-          "1": "Contém um erro",
-          "2": "Não foram detectados erros"
         },
-        "Fields": {
-          "HardwareDecoding": "Decodificação de Hardware",
-          "HardwareDecoding-Help": "Se uma tentativa de usar a decodificação de hardware deve ser feita. Se não estiver disponível, a execução continuará sem a decodificação de hardware habilitada."
-        }
-      },
-      "VideoHasStream": {
-        "Label": "O vídeo tem fluxo",
-        "Description": "Testa se um arquivo de vídeo contém uma faixa",
         "Outputs": {
-          "1": "Contém a faixa correspondente",
-          "2": "Não contém a faixa correspondente"
-        },
-        "Fields": {
-          "Stream": "Tipo",
-          "Stream-Help": "O tipo de fluxo a ser procurado",
-          "Title": "Título",
-          "Title-Help": "Uma expressão regular usada para testar o título do fluxo",
-          "Codec": "Codec",
-          "Codec-Help": "Uma expressão regular usada para testar o codec do fluxo",
-          "Language": "Idioma",
-          "Language-Help": "Uma expressão regular usada para testar o idioma do fluxo",
-          "Channels": "Canais",
-          "Channels-Help": "O número de canais a serem testados. Deixe em branco para ignorar esta verificação",
-          "CheckDeleted": "Verificar excluídos",
-          "CheckDeleted-Help": "Se as faixas excluídas também devem ser verificadas",
-          "Invert": "Inverter",
-          "Invert-Help": "Inverte o resultado, tornando-se efetivamente `O vídeo não tem fluxo`",
-          "Forced": "Forçado",
-          "Forced-Help": "Se este fluxo deve ser um fluxo forçado ou não.",
-          "Default": "Padrão",
-          "Default-Help": "Se este fluxo deve ser um fluxo padrão ou não."
-        }
-      },
-      "VideoBitrateGreaterThan": {
-        "Label": "Taxa de Bits de Vídeo Maior Que",
-        "Description": "Testa se a taxa de bits de um vídeo é maior que uma taxa de bits dada.",
-        "Outputs": {
-          "1": "A taxa de bits é maior que",
-          "2": "A taxa de bits não é maior que"
-        },
-        "Fields": {
-          "Bitrate": "Taxa de Bits",
-          "Bitrate-Suffix": "KBps"
-        }
-      },
-      "VideoExtractAudio": {
-        "Label": "Extrair Áudio do Vídeo",
-        "Description": "Extrai áudio de um arquivo de vídeo e o salva em um arquivo",
-        "Outputs": {
-          "1": "Áudio extraído e salvo em um arquivo",
-          "2": "Não foi possível encontrar uma faixa para extrair"
-        },
-        "Fields": {
-          "Title": "Título",
-          "Title-Help": "Uma expressão regular usada para testar o título da faixa",
-          "Codec": "Codec",
-          "Codec-Help": "Uma expressão regular usada para testar o codec da faixa",
-          "Language": "Idioma",
-          "Language-Help": "Uma expressão regular usada para testar o idioma da faixa",
-          "Channels": "Canais",
-          "Channels-Help": "O número de canais que a faixa de origem deve ter para coincidir. Defina como 0 para ignorar a correspondência de canais.",
-          "OutputFile": "Arquivo de Saída",
-          "OutputFile-Help": "Onde salvar o arquivo de saída, por exemplo, \"'{folder.Orig.FullName}\\{file.Orig.FileName}.mp3'\" para salvá-lo com o arquivo original como saída mp3.\nSe nenhuma extensão for definida, o codec de saída será usado para determinar a extensão.",
-          "SetWorkingFile": "Definir como Arquivo de Trabalho",
-          "SetWorkingFile-Help": "Quando isso está marcado, se um subtítulo for extraído, o arquivo de trabalho será alterado para este subtítulo extraído. O arquivo de trabalho original NÃO será excluído.",
-          "OutputCodec": "Codec de Saída",
-          "OutputCodec-Help": "O codec para salvar o áudio extraído",
-          "OutputBitrate": "Taxa de Bits de Saída",
-          "OutputBitrate-Help": "A taxa de bits da faixa de áudio extraída",
-          "NotMatching": "Não Correspondente",
-          "NotMatching-Help": "Se uma faixa de áudio que NÃO corresponda ao padrão deve ser extraída"
+          "1": "O vídeo é entrelaçado",
+          "2": "O vídeo não é entrelaçado"
         }
       },
       "VideoResolution": {
-        "Label": "Resolução de Vídeo",
         "Description": "Determina a resolução de um vídeo e produz a saída de acordo.",
+        "Label": "Resolução de Vídeo",
         "Outputs": {
           "1": "O vídeo é 4K",
           "2": "O vídeo é 1080p",
@@ -1031,5 +1027,9 @@
         }
       }
     }
+  },
+  "H": {
+    "264": "H.264",
+    "265": "H.265"
   }
 }

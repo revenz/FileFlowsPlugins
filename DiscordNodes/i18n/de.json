@@ -1,29 +1,29 @@
 {
+  "Flow": {
+    "Parts": {
+      "Discord": {
+        "Description": "Sendet eine Nachricht an einen Discord-Server.",
+        "Fields": {
+          "Message": "Nachricht",
+          "Message-Help": "Die Nachricht, die an den Discord-Server gesendet werden soll.",
+          "MessageType": "Typ",
+          "MessageType-Help": "Die Art der zu sendenden Nachricht. Der Grundtyp ist nur die Nachricht ohne Titel und ohne Farbgebung.",
+          "Title": "Titel",
+          "Title-Help": "Hier kann ein optionaler Titel festgelegt werden."
+        },
+        "Outputs": {
+          "1": "Discord-Nachricht gesendet!",
+          "2": "Die Discord-Nachricht konnte nicht gesendet werden!"
+        }
+      }
+    }
+  },
   "Plugins": {
     "DiscordNodes": {
       "Description": "Mit diesem Plugin können Sie Nachrichten an Discord senden.\n\nDie Webhook Id und der  Token kann aus der URL entnommen werden.\n https://discord.com/api/webhooks/[webhookid]/[webhooktoken]",
       "Fields": {
         "WebhookId": "Webhook-ID",
         "WebhookToken": "Webhook-Token"
-      }
-    }
-  },
-  "Flow": {
-    "Parts": {
-      "Discord": {
-        "Outputs": {
-          "1": "Discord-Nachricht gesendet!",
-          "2": "Die Discord-Nachricht konnte nicht gesendet werden!"
-        },
-        "Description": "Sendet eine Nachricht an einen Discord-Server.",
-        "Fields": {
-          "Message": "Nachricht",
-          "Message-Help": "Die Nachricht, die an den Discord-Server gesendet werden soll.",
-          "Title": "Titel",
-          "Title-Help": "Hier kann ein optionaler Titel festgelegt werden.",
-          "MessageType": "Typ",
-          "MessageType-Help": "Die Art der zu sendenden Nachricht. Der Grundtyp ist nur die Nachricht ohne Titel und ohne Farbgebung."
-        }
       }
     }
   }

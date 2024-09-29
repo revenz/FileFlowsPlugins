@@ -2,47 +2,47 @@
   "Flow": {
     "Parts": {
       "ComicConverter": {
+        "Description": "Converte um comic para um formato diferente de quadrinhos.\n\nSuporta conversão de CBZ, CBR, CB7, PDF, GZ, BZ2",
+        "Fields": {
+          "Codec": "Codec",
+          "Codec-Help": "O codec para salvar as imagens como",
+          "DeleteNonPageImages": "Excluir Imagens Não de Página",
+          "DeleteNonPageImages-Help": "Excluir imagens que não seguem uma estrutura de nomeação para páginas. Ou seja, não terminam com um número.",
+          "EnsureTopDirectory": "Garantir Diretório Principal",
+          "EnsureTopDirectory-Help": "Garante que todos os arquivos estejam localizados diretamente dentro do diretório principal do arquivo de quadrinhos, sem subdiretórios presentes.",
+          "Format": "Formato",
+          "Format-Help": "O formato para o qual converter o comic",
+          "MaxHeight": "Altura Máxima",
+          "MaxHeight-Help": "A altura máxima para as páginas, use 0 para nenhuma alteração ou para manter a qualidade com a largura",
+          "MaxWidth": "Largura Máxima",
+          "MaxWidth-Help": "A largura máxima para as páginas, use 0 para nenhuma alteração ou para manter a qualidade com a altura",
+          "Quality": "Qualidade",
+          "Quality-Help": "Qualidade das páginas do quadrinho, 0 para a maior compressão/pior qualidade, 100 para a melhor qualidade"
+        },
         "Outputs": {
           "1": "O comic foi convertido e salvo como um arquivo temporário",
           "2": "O comic já estava no formato desejado"
-        },
-        "Description": "Converte um comic para um formato diferente de quadrinhos.\n\nSuporta conversão de CBZ, CBR, CB7, PDF, GZ, BZ2",
-        "Fields": {
-          "Format": "Formato",
-          "Format-Help": "O formato para o qual converter o comic",
-          "EnsureTopDirectory": "Garantir Diretório Principal",
-          "EnsureTopDirectory-Help": "Garante que todos os arquivos estejam localizados diretamente dentro do diretório principal do arquivo de quadrinhos, sem subdiretórios presentes.",
-          "DeleteNonPageImages": "Excluir Imagens Não de Página",
-          "DeleteNonPageImages-Help": "Excluir imagens que não seguem uma estrutura de nomeação para páginas. Ou seja, não terminam com um número.",
-          "Codec": "Codec",
-          "Codec-Help": "O codec para salvar as imagens como",
-          "Quality": "Qualidade",
-          "Quality-Help": "Qualidade das páginas do quadrinho, 0 para a maior compressão/pior qualidade, 100 para a melhor qualidade",
-          "MaxWidth": "Largura Máxima",
-          "MaxWidth-Help": "A largura máxima para as páginas, use 0 para nenhuma alteração ou para manter a qualidade com a altura",
-          "MaxHeight": "Altura Máxima",
-          "MaxHeight-Help": "A altura máxima para as páginas, use 0 para nenhuma alteração ou para manter a qualidade com a largura"
         }
       },
       "ComicExtractor": {
-        "Outputs": {
-          "1": "O comic foi extraído"
-        },
         "Description": "Extrai todos os arquivos de um formato de quadrinhos e os salva em uma pasta específica.\n\nSuporta extração de CBZ, CBR, CB7, PDF, GZ, BZ2",
         "Fields": {
           "DestinationPath": "Caminho de Destino",
           "DestinationPath-Help": "A pasta onde os arquivos de comic extraídos serão salvos"
+        },
+        "Outputs": {
+          "1": "O comic foi extraído"
         }
       },
       "CreateComicInfo": {
         "Description": "Analisa o caminho de um comic e cria um arquivo comicinfo.xml dentro do arquivo de quadrinhos.",
         "Fields": {
+          "IssueDigits": "Dígitos da Edição",
+          "IssueDigits-Help": "Preencherá o número da edição com zeros à frente até esse valor.\nPor exemplo, para a edição 1, se o preenchimento for 3, então a edição aparecerá como #001",
           "Publisher": "Editor",
           "Publisher-Help": "Se o comic estiver em um diretório de editor, consulte a ajuda para mais informações.",
           "RenameFile": "Renomear Arquivo",
-          "RenameFile-Help": "Se o arquivo deve ser renomeado para `Série - Edição - Título.extensão`",
-          "IssueDigits": "Dígitos da Edição",
-          "IssueDigits-Help": "Preencherá o número da edição com zeros à frente até esse valor.\nPor exemplo, para a edição 1, se o preenchimento for 3, então a edição aparecerá como #001"
+          "RenameFile-Help": "Se o arquivo deve ser renomeado para `Série - Edição - Título.extensão`"
         },
         "Outputs": {
           "1": "ComicInfo adicionado ao arquivo de quadrinhos",

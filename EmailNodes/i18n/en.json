@@ -1,36 +1,36 @@
 {
-  "Plugins": {
-    "EmailNodes": {
-      "Fields": {
-        "SmtpServer": "SMTP Server",
-        "SmtpServer-Help": "The address of the SMTP Server used to send emails",
-        "SmtpPort": "SMTP Port",
-        "SmtpPort-Help": "The port of the SMTP Server used to send emails, default 25",
-        "SmtpUsername": "SMTP Username",
-        "SmtpUsername-Help": "The username used to authenticate against the SMTP Server",
-        "SmtpPassword": "SMTP Password",
-        "SmtpPassword-Help": "The password used to authenticate against the SMTP Server",
-        "Sender": "Sender",
-        "Sender-Help": "The email address who emails will be sent from"
-      }
-    }
-  },
   "Flow": {
     "Parts": {
       "SendEmail": {
-        "Outputs": {
-          "1": "Email ''{Subject}'' was sent",
-          "2": "Email failed to send"
-        },
         "Description": "Sends an email using the configured SMTP Server",
         "Fields": {
+          "Body": "Body",
+          "Body-Help": "The content of the email message being sent. Uses the [scriban](https://github.com/scriban/scriban) templating language",
           "Recipients": "Recipients",
           "Recipients-Help": "A list of email addresses to send the message to",
           "Subject": "Subject",
-          "Subject-Help": "The subject of the email being set",
-          "Body": "Body",
-          "Body-Help": "The content of the email message being sent. Uses the [scriban](https://github.com/scriban/scriban) templating language"
+          "Subject-Help": "The subject of the email being set"
+        },
+        "Outputs": {
+          "1": "Email ''{Subject}'' was sent",
+          "2": "Email failed to send"
         }
+      }
+    }
+  },
+  "Plugins": {
+    "EmailNodes": {
+      "Fields": {
+        "Sender": "Sender",
+        "Sender-Help": "The email address who emails will be sent from",
+        "SmtpPassword": "SMTP Password",
+        "SmtpPassword-Help": "The password used to authenticate against the SMTP Server",
+        "SmtpPort": "SMTP Port",
+        "SmtpPort-Help": "The port of the SMTP Server used to send emails, default 25",
+        "SmtpServer": "SMTP Server",
+        "SmtpServer-Help": "The address of the SMTP Server used to send emails",
+        "SmtpUsername": "SMTP Username",
+        "SmtpUsername-Help": "The username used to authenticate against the SMTP Server"
       }
     }
   }

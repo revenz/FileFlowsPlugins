@@ -1,31 +1,23 @@
 {
   "Enums": {
     "LogType": {
-      "Info": "Información",
       "Debug": "Depuración",
-      "Warning": "Advertencia",
-      "Error": "Error"
+      "Error": "Error",
+      "Info": "Información",
+      "Warning": "Advertencia"
     }
   },
   "Flow": {
     "Parts": {
-      "InputFile": {
-      "Description": "Un elemento de flujo de entrada para un archivo. Esto es obligatorio y es el punto de partida de un flujo. Se puede utilizar cualquier elemento de flujo de entrada, solo se requiere uno.",
-      "Outputs": {
-        "1": "Archivo de la biblioteca"
-      }
-    },
-      "InputFolder": {
-        "Description": "Un elemento de flujo de entrada para una carpeta. Esto solo funcionará si la biblioteca que utiliza este flujo está configurada para carpetas.",
-        "Outputs": {
-          "1": "Carpeta de la biblioteca"
-        }
-      },
       "BatchScript": {
-        "Label": "Script por lotes (.bat)",
         "Description": "Te permite ejecutar un script por lotes (.bat) en un entorno de Windows.",
+        "Label": "Script por lotes (.bat)",
+        "Fields": {
+          "Code": "Código"
+        },
         "Outputs": {
           "1": "devuelto 1",
+          "10": "devuelto 10",
           "2": "devuelto 2",
           "3": "devuelto 3",
           "4": "devuelto 4",
@@ -33,68 +25,7 @@
           "6": "devuelto 6",
           "7": "devuelto 7",
           "8": "devuelto 8",
-          "9": "devuelto 9",
-          "10": "devuelto 10"
-        },
-        "Fields": {
-          "Code": "Código"
-        }
-      },
-      "CSharpScript": {
-        "Label": "Función C#",
-        "Description": "Te permite ejecutar un código C# dentro del flujo.",
-        "Outputs": {
-          "1": "devuelto 1",
-          "2": "devuelto 2",
-          "3": "devuelto 3",
-          "4": "devuelto 4",
-          "5": "devuelto 5",
-          "6": "devuelto 6",
-          "7": "devuelto 7",
-          "8": "devuelto 8",
-          "9": "devuelto 9",
-          "10": "devuelto 10"
-        },
-        "Fields": {
-          "Code": "Código"
-        }
-      },
-      "ShellScript": {
-        "Label": "Script de shell (.sh)",
-        "Description": "Te permite ejecutar un script de shell (.sh) en un entorno similar a Unix.",
-        "Outputs": {
-          "1": "devuelto 1",
-          "2": "devuelto 2",
-          "3": "devuelto 3",
-          "4": "devuelto 4",
-          "5": "devuelto 5",
-          "6": "devuelto 6",
-          "7": "devuelto 7",
-          "8": "devuelto 8",
-          "9": "devuelto 9",
-          "10": "devuelto 10"
-        },
-        "Fields": {
-          "Code": "Código"
-        }
-      },
-      "PowerShellScript": {
-        "Label": "Script de PowerShell (.ps1)",
-        "Description": "Te permite ejecutar un script de PowerShell (.ps1) en un entorno de Windows.",
-        "Outputs": {
-          "1": "devuelto 1",
-          "2": "devuelto 2",
-          "3": "devuelto 3",
-          "4": "devuelto 4",
-          "5": "devuelto 5",
-          "6": "devuelto 6",
-          "7": "devuelto 7",
-          "8": "devuelto 8",
-          "9": "devuelto 9",
-          "10": "devuelto 10"
-        },
-        "Fields": {
-          "Code": "Código"
+          "9": "devuelto 9"
         }
       },
       "CompleteFlow": {
@@ -102,34 +33,59 @@
       },
       "CopyFile": {
         "Description": "Copia un archivo en la carpeta de destino",
-        "Outputs": {
-          "1": "Archivo copiado"
-        },
         "Fields": {
-          "InputFile": "Archivo a copiar",
-          "InputFile-Help": "El archivo a copiar. Si se deja vacío, se copiará el archivo de trabajo.",
-          "InputFile-Placeholder": "Archivo de trabajo",
-          "DestinationPath": "Carpeta de destino",
-          "DestinationPath-Help": "La carpeta donde se copiará el archivo.",
-          "DestinationFile": "Archivo de destino",
-          "DestinationFile-Help": "El nombre del archivo al que se copiará. Si está vacío, se usará el nombre original del archivo.",
-          "CopyFolder": "Copiar carpeta",
-          "CopyFolder-Help": "Si también se debe copiar la estructura de carpetas relativa de la biblioteca.",
           "AdditionalFiles": "Archivos adicionales",
           "AdditionalFiles-Help": "Archivos adicionales para copiar del directorio al nuevo directorio.\nCada valor puede contener una combinación de rutas literales válidas y caracteres comodín (* y ?), pero no admite expresiones regulares.",
           "AdditionalFilesFromOriginal": "Directorio original",
           "AdditionalFilesFromOriginal-Help": "Si los archivos adicionales deben copiarse del directorio de trabajo o del directorio original. Actívelo para el directorio original.",
+          "CopyFolder": "Copiar carpeta",
+          "CopyFolder-Help": "Si también se debe copiar la estructura de carpetas relativa de la biblioteca.",
+          "DestinationFile": "Archivo de destino",
+          "DestinationFile-Help": "El nombre del archivo al que se copiará. Si está vacío, se usará el nombre original del archivo.",
+          "DestinationPath": "Carpeta de destino",
+          "DestinationPath-Help": "La carpeta donde se copiará el archivo.",
+          "InputFile": "Archivo a copiar",
+          "InputFile-Help": "El archivo a copiar. Si se deja vacío, se copiará el archivo de trabajo.",
+          "InputFile-Placeholder": "Archivo de trabajo",
           "PreserverOriginalDates": "Preservar fechas",
           "PreserverOriginalDates-Help": "Si se debe preservar la hora de creación y la hora de última escritura del archivo de entrada original."
+        },
+        "Outputs": {
+          "1": "Archivo copiado"
+        }
+      },
+      "CSharpScript": {
+        "Description": "Te permite ejecutar un código C# dentro del flujo.",
+        "Label": "Función C#",
+        "Fields": {
+          "Code": "Código"
+        },
+        "Outputs": {
+          "1": "devuelto 1",
+          "10": "devuelto 10",
+          "2": "devuelto 2",
+          "3": "devuelto 3",
+          "4": "devuelto 4",
+          "5": "devuelto 5",
+          "6": "devuelto 6",
+          "7": "devuelto 7",
+          "8": "devuelto 8",
+          "9": "devuelto 9"
+        }
+      },
+      "Delete": {
+        "Description": "Elimina un archivo o carpeta",
+        "Fields": {
+          "FileName": "Ruta",
+          "FileName-Help": "Una ruta a un archivo o carpeta a eliminar.\n\nSi se deja en blanco, se eliminará el archivo de trabajo actual."
+        },
+        "Outputs": {
+          "1": "Archivo eliminado"
         }
       },
       "DeleteSourceDirectory": {
-        "Label": "Eliminar carpeta fuente",
-        "Outputs": {
-          "1": "Carpeta fuente eliminada",
-          "2": "La carpeta NO fue eliminada"
-        },
         "Description": "Elimina la carpeta fuente del archivo de biblioteca original",
+        "Label": "Eliminar carpeta fuente",
         "Fields": {
           "IfEmpty": "Si está vacía",
           "IfEmpty-Help": "Eliminar la carpeta fuente solo si está vacía",
@@ -137,130 +93,34 @@
           "IncludePatterns-Help": "Opcional, si se establece, solo se contarán los archivos que coincidan con estos patrones para ver si la carpeta está vacía. Cualquiera de estos patrones puede coincidir.",
           "TopMostOnly": "Solo el más alto",
           "TopMostOnly-Help": "Cuando está habilitado, solo se eliminará la carpeta que contiene directamente el archivo, dejando intactas las carpetas de nivel superior."
+        },
+        "Outputs": {
+          "1": "Carpeta fuente eliminada",
+          "2": "La carpeta NO fue eliminada"
         }
       },
       "Executor": {
         "Description": "Ejecuta el siguiente proceso contra el archivo.\nSalida 1: El proceso devolvió el código de salida de éxito\nSalida 2: El proceso devolvió un código de salida no exitoso.",
-        "Outputs": {
-          "1": "El proceso devolvió éxito",
-          "2": "El proceso devolvió un fallo"
-        },
         "Fields": {
-          "FileName": "Nombre de archivo",
-          "FileName-Help": "El nombre del archivo a ejecutar",
           "Arguments": "Argumentos",
           "Arguments-Help": "Los argumentos que se pasarán al proceso a ejecutar",
-          "WorkingDirectory": "Carpeta de trabajo",
-          "WorkingDirectory-Help": "La carpeta desde la que se ejecutará el proceso",
+          "FileName": "Nombre de archivo",
+          "FileName-Help": "El nombre del archivo a ejecutar",
+          "OutputErrorVariable": "Variable de salida de error",
+          "OutputErrorVariable-Help": "Un nombre de variable opcional para almacenar la salida de error del proceso",
+          "OutputVariable": "Variable de salida",
+          "OutputVariable-Help": "Un nombre de variable opcional para almacenar la salida del proceso",
           "SuccessCode": "Código de éxito",
           "SuccessCode-Help": "El código de salida del proceso que indica que el proceso fue exitoso. Normalmente esto debería ser 0.",
           "Timeout": "Tiempo de espera",
           "Timeout-Help": "Cuánto tiempo puede ejecutarse el proceso antes de ser terminado. Use 0 para no tener tiempo de espera.",
           "Timeout-Suffix": "segundos",
-          "OutputVariable": "Variable de salida",
-          "OutputVariable-Help": "Un nombre de variable opcional para almacenar la salida del proceso",
-          "OutputErrorVariable": "Variable de salida de error",
-          "OutputErrorVariable-Help": "Un nombre de variable opcional para almacenar la salida de error del proceso"
-        }
-      },
-      "FolderDateCompare": {
-        "Label": "Comparación de fecha de carpeta",
-        "Description": "Verifica si la creación o la hora de última escritura de la carpeta coincide con la restricción de fecha especificada.",
-        "Outputs": {
-          "1": "Coincide con la restricción de fecha.",
-          "2": "No coincide con la restricción de fecha."
+          "WorkingDirectory": "Carpeta de trabajo",
+          "WorkingDirectory-Help": "La carpeta desde la que se ejecutará el proceso"
         },
-        "Fields": {
-          "Path": "Ruta",
-          "Path-Help": "La ruta a la carpeta a verificar. Deje vacío para verificar el archivo de trabajo actual.\nSi se especifica un archivo, se verificará la carpeta que contiene el archivo.",
-          "Date": "Fecha",
-          "DateComparision": "Comparación"
-        }
-      },
-      "FileDateCompare": {
-        "Description": "Verifica si la creación o la hora de última escritura del archivo coincide con la restricción de fecha especificada.",
         "Outputs": {
-          "1": "Coincide con la restricción de fecha.",
-          "2": "No coincide con la restricción de fecha."
-        },
-        "Fields": {
-          "FileName": "Nombre de archivo",
-          "FileName-Help": "El archivo a verificar. Deje vacío para verificar el archivo de trabajo actual.",
-          "Date": "Fecha",
-          "DateComparision": "Comparación"
-        }
-      },
-      "FileExtension": {
-        "Description": "Verifica si el archivo tiene una de las extensiones configuradas.\n\nSalida 1: Coincide\nSalida 2: No coincide",
-        "Outputs": {
-          "1": "Coincidencia de extensión",
-          "2": "La extensión no coincide"
-        },
-        "Fields": {
-          "Extensions": "Extensiones",
-          "Extensions-Help": "Una lista de extensiones de archivo insensibles a mayúsculas y minúsculas que se compararán.\nSalida 1: Coincide\nSalida 2: No coincide"
-        }
-      },
-      "FileExists": {
-        "Description": "Verifica si un archivo existe\n\nSalida 1: El archivo existe\nSalida 2: El archivo no existe",
-        "Outputs": {
-          "1": "El archivo existe",
-          "2": "El archivo no existe"
-        },
-        "Fields": {
-          "FileName": "Nombre de archivo",
-          "FileName-Help": "El archivo a verificar. Deje vacío para verificar el archivo de trabajo actual."
-        }
-      },
-      "HasHardLinks": {
-        "Description": "Verifica si un archivo tiene enlaces duros o no",
-        "Outputs": {
-          "1": "Enlaces duros detectados",
-          "2": "No se detectaron enlaces duros"
-        },
-        "Fields": {
-          "FileName": "Nombre del archivo",
-          "FileName-Help": "El archivo a verificar. Dejar en blanco para verificar el archivo de trabajo actual.",
-          "Count": "Contar",
-          "Count-Help": "El número de enlaces duros necesarios para llamar a la salida 1."
-        }
-      },
-      "Delete": {
-        "Description": "Elimina un archivo o carpeta",
-        "Outputs": {
-          "1": "Archivo eliminado"
-        },
-        "Fields": {
-          "FileName": "Ruta",
-          "FileName-Help": "Una ruta a un archivo o carpeta a eliminar.\n\nSi se deja en blanco, se eliminará el archivo de trabajo actual."
-        }
-      },
-      "FolderIterator": {
-        "Description": "Itera todos los archivos en una carpeta dada y ejecuta esos archivos contra un subflujo.",
-        "Outputs": {
-          "1": "Archivos de la carpeta iterados"
-        },
-        "Fields": {
-          "Flow": "Flujo",
-          "Flow-Help": "El subflujo para ejecutar los archivos.",
-          "Folder": "Carpeta",
-          "Folder-Help": "La carpeta cuyos archivos serán iterados.",
-          "Pattern": "Patrón",
-          "Pattern-Help": "Cualquier patrón opcional para limitar los archivos a iterar, puede ser un patrón comodín que comience con un `*` o una expresión regular.",
-          "Recursive": "Recursivo",
-          "Recursive-Help": "Si se deben iterar los archivos en todas las subcarpetas o si solo se deben iterar los archivos de nivel superior."
-        }
-      },
-      "ListIterator": {
-        "Description": "Itera todas las cadenas en una lista dada y ejecuta esas cadenas contra un subflujo.",
-        "Outputs": {
-          "1": "Lista iterada"
-        },
-        "Fields": {
-          "Flow": "Flujo",
-          "Flow-Help": "El subflujo para ejecutar las cadenas.",
-          "List": "Lista",
-          "List-Help": "Un nombre de variable que contiene la lista a iterar."
+          "1": "El proceso devolvió éxito",
+          "2": "El proceso devolvió un fallo"
         }
       },
       "FailFlow": {
@@ -270,20 +130,55 @@
           "Reason-Help": "Una razón opcional para registrar por qué falló el flujo."
         }
       },
+      "FileDateCompare": {
+        "Description": "Verifica si la creación o la hora de última escritura del archivo coincide con la restricción de fecha especificada.",
+        "Fields": {
+          "Date": "Fecha",
+          "DateComparision": "Comparación",
+          "FileName": "Nombre de archivo",
+          "FileName-Help": "El archivo a verificar. Deje vacío para verificar el archivo de trabajo actual."
+        },
+        "Outputs": {
+          "1": "Coincide con la restricción de fecha.",
+          "2": "No coincide con la restricción de fecha."
+        }
+      },
+      "FileExists": {
+        "Description": "Verifica si un archivo existe\n\nSalida 1: El archivo existe\nSalida 2: El archivo no existe",
+        "Fields": {
+          "FileName": "Nombre de archivo",
+          "FileName-Help": "El archivo a verificar. Deje vacío para verificar el archivo de trabajo actual."
+        },
+        "Outputs": {
+          "1": "El archivo existe",
+          "2": "El archivo no existe"
+        }
+      },
+      "FileExtension": {
+        "Description": "Verifica si el archivo tiene una de las extensiones configuradas.\n\nSalida 1: Coincide\nSalida 2: No coincide",
+        "Fields": {
+          "Extensions": "Extensiones",
+          "Extensions-Help": "Una lista de extensiones de archivo insensibles a mayúsculas y minúsculas que se compararán.\nSalida 1: Coincide\nSalida 2: No coincide"
+        },
+        "Outputs": {
+          "1": "Coincidencia de extensión",
+          "2": "La extensión no coincide"
+        }
+      },
       "FileSize": {
         "Description": "Verifica si el tamaño del archivo coincide con los parámetros configurados. Los valores están en megabytes.\n\nSalida 1: Coincide\nSalida 2: No coincide",
-        "Outputs": {
-          "1": "Tamaño de archivo dentro del rango",
-          "2": "Tamaño de archivo fuera del rango"
-        },
         "Fields": {
           "Comparison": "Comparación",
           "Lower": "Mayor que",
-          "Lower-Suffix": "MB",
           "Lower-Help": "El valor debe ser mayor que este número de megabytes",
+          "Lower-Suffix": "MB",
           "Upper": "Menor que",
-          "Upper-Suffix": "MB",
-          "Upper-Help": "El valor debe ser menor que este número de megabytes. Deja como 0 para no probar el límite superior."
+          "Upper-Help": "El valor debe ser menor que este número de megabytes. Deja como 0 para no probar el límite superior.",
+          "Upper-Suffix": "MB"
+        },
+        "Outputs": {
+          "1": "Tamaño de archivo dentro del rango",
+          "2": "Tamaño de archivo fuera del rango"
         }
       },
       "FileSizeCompare": {
@@ -303,10 +198,48 @@
           "2": "El tamaño del archivo no está dentro del rango permitido"
         }
       },
+      "FolderDateCompare": {
+        "Description": "Verifica si la creación o la hora de última escritura de la carpeta coincide con la restricción de fecha especificada.",
+        "Label": "Comparación de fecha de carpeta",
+        "Fields": {
+          "Date": "Fecha",
+          "DateComparision": "Comparación",
+          "Path": "Ruta",
+          "Path-Help": "La ruta a la carpeta a verificar. Deje vacío para verificar el archivo de trabajo actual.\nSi se especifica un archivo, se verificará la carpeta que contiene el archivo."
+        },
+        "Outputs": {
+          "1": "Coincide con la restricción de fecha.",
+          "2": "No coincide con la restricción de fecha."
+        }
+      },
+      "FolderIterator": {
+        "Description": "Itera todos los archivos en una carpeta dada y ejecuta esos archivos contra un subflujo.",
+        "Fields": {
+          "Flow": "Flujo",
+          "Flow-Help": "El subflujo para ejecutar los archivos.",
+          "Folder": "Carpeta",
+          "Folder-Help": "La carpeta cuyos archivos serán iterados.",
+          "Pattern": "Patrón",
+          "Pattern-Help": "Cualquier patrón opcional para limitar los archivos a iterar, puede ser un patrón comodín que comience con un `*` o una expresión regular.",
+          "Recursive": "Recursivo",
+          "Recursive-Help": "Si se deben iterar los archivos en todas las subcarpetas o si solo se deben iterar los archivos de nivel superior."
+        },
+        "Outputs": {
+          "1": "Archivos de la carpeta iterados"
+        }
+      },
       "Function": {
         "Label": "Función",
+        "Fields": {
+          "Code": "Código",
+          "Code-Help": "devuelve -1 para error y detener el flujo. devuelve 0 para completar el flujo. devuelve 1 o más para que se llame a la salida deseada.",
+          "Outputs": "Salidas",
+          "Template": "Plantilla",
+          "Template-Help": "ADVERTENCIA: Esto reemplazará cualquier cosa en el bloque de código con la plantilla que selecciones."
+        },
         "Outputs": {
           "1": "devuelto 1",
+          "10": "devuelto 10",
           "2": "devuelto 2",
           "3": "devuelto 3",
           "4": "devuelto 4",
@@ -314,15 +247,7 @@
           "6": "devuelto 6",
           "7": "devuelto 7",
           "8": "devuelto 8",
-          "9": "devuelto 9",
-          "10": "devuelto 10"
-        },
-        "Fields": {
-          "Outputs": "Salidas",
-          "Template": "Plantilla",
-          "Template-Help": "ADVERTENCIA: Esto reemplazará cualquier cosa en el bloque de código con la plantilla que selecciones.",
-          "Code": "Código",
-          "Code-Help": "devuelve -1 para error y detener el flujo. devuelve 0 para completar el flujo. devuelve 1 o más para que se llame a la salida deseada."
+          "9": "devuelto 9"
         }
       },
       "GotoFlow": {
@@ -333,11 +258,70 @@
           "UpdateFlowUsed-Help": "Si el `Flujo` de los archivos debe actualizarse para hacer referencia a este nuevo flujo o dejarlo como el flujo original."
         }
       },
-      "Reprocess": {
-        "Description": "El elemento de flujo te permite reprocesar el archivo original de la biblioteca con un nodo de procesamiento diferente.\n\n Si se selecciona el mismo nodo de procesamiento que el que actualmente procesa el archivo, el flujo fallará.",
+      "HasHardLinks": {
+        "Description": "Verifica si un archivo tiene enlaces duros o no",
         "Fields": {
-          "Node": "Nodo",
-          "Node-Help": "El nodo de procesamiento para procesar este archivo."
+          "Count": "Contar",
+          "Count-Help": "El número de enlaces duros necesarios para llamar a la salida 1.",
+          "FileName": "Nombre del archivo",
+          "FileName-Help": "El archivo a verificar. Dejar en blanco para verificar el archivo de trabajo actual."
+        },
+        "Outputs": {
+          "1": "Enlaces duros detectados",
+          "2": "No se detectaron enlaces duros"
+        }
+      },
+      "IfBoolean": {
+        "Description": "Prueba si una variable es verdadera o falsa",
+        "Fields": {
+          "Variable": "Variable",
+          "Variable-Help": "El nombre de la variable a comprobar"
+        },
+        "Outputs": {
+          "1": "Verdadero",
+          "2": "Falso"
+        }
+      },
+      "IfString": {
+        "Description": "Prueba si una variable coincide con una cadena",
+        "Fields": {
+          "Options": "Opciones",
+          "Options-Help": "La cadena contra la que coincidir.",
+          "Outputs": "Salidas",
+          "Outputs-Help": "Esto debe coincidir con el número de opciones disponibles",
+          "Variable": "Variable",
+          "Variable-Help": "El nombre de la variable a comprobar"
+        },
+        "Outputs": {
+          "1": "Cadena coincidente 1",
+          "10": "Cadena coincidente 10",
+          "2": "Cadena coincidente 2",
+          "3": "Cadena coincidente 3",
+          "4": "Cadena coincidente 4",
+          "5": "Cadena coincidente 5",
+          "6": "Cadena coincidente 6",
+          "7": "Cadena coincidente 7",
+          "8": "Cadena coincidente 8",
+          "9": "Cadena coincidente 9"
+        }
+      },
+      "InputFile": {
+        "Description": "Un elemento de flujo de entrada para un archivo. Esto es obligatorio y es el punto de partida de un flujo. Se puede utilizar cualquier elemento de flujo de entrada, solo se requiere uno.",
+        "Outputs": {
+          "1": "Archivo de la biblioteca"
+        }
+      },
+      "InputFolder": {
+        "Description": "Un elemento de flujo de entrada para una carpeta. Esto solo funcionará si la biblioteca que utiliza este flujo está configurada para carpetas.",
+        "Outputs": {
+          "1": "Carpeta de la biblioteca"
+        }
+      },
+      "IsDocker": {
+        "Description": "Determina si este flujo se está ejecutando en Docker",
+        "Outputs": {
+          "1": "Se está ejecutando en Docker",
+          "2": "No se está ejecutando en Docker"
         }
       },
       "IsFromLibrary": {
@@ -351,6 +335,21 @@
           "2": "El archivo no es de la biblioteca especificada."
         }
       },
+      "IsLinux": {
+        "Description": "Determina si este flujo se está ejecutando en Linux",
+        "Outputs": {
+          "1": "Se está ejecutando en Linux",
+          "2": "No se está ejecutando en Linux"
+        }
+      },
+      "IsMacOS": {
+        "Description": "Determina si este flujo se está ejecutando en MacOS",
+        "Label": "Es MacOS",
+        "Outputs": {
+          "1": "Se está ejecutando en MacOS",
+          "2": "No se está ejecutando en MacOS"
+        }
+      },
       "IsProcessingOnNode": {
         "Description": "Verifica si el flujo se está procesando actualmente en un nodo de procesamiento específico.",
         "Fields": {
@@ -362,28 +361,6 @@
           "2": "No se está procesando en el nodo"
         }
       },
-      "IsDocker": {
-        "Description": "Determina si este flujo se está ejecutando en Docker",
-        "Outputs": {
-          "1": "Se está ejecutando en Docker",
-          "2": "No se está ejecutando en Docker"
-        }
-      },
-      "IsLinux": {
-        "Description": "Determina si este flujo se está ejecutando en Linux",
-        "Outputs": {
-          "1": "Se está ejecutando en Linux",
-          "2": "No se está ejecutando en Linux"
-        }
-      },
-      "IsMacOS": {
-        "Label": "Es MacOS",
-        "Description": "Determina si este flujo se está ejecutando en MacOS",
-        "Outputs": {
-          "1": "Se está ejecutando en MacOS",
-          "2": "No se está ejecutando en MacOS"
-        }
-      },
       "IsWindows": {
         "Description": "Determina si este flujo se está ejecutando en Windows",
         "Outputs": {
@@ -391,88 +368,100 @@
           "2": "No se está ejecutando en Windows"
         }
       },
+      "ListIterator": {
+        "Description": "Itera todas las cadenas en una lista dada y ejecuta esas cadenas contra un subflujo.",
+        "Fields": {
+          "Flow": "Flujo",
+          "Flow-Help": "El subflujo para ejecutar las cadenas.",
+          "List": "Lista",
+          "List-Help": "Un nombre de variable que contiene la lista a iterar."
+        },
+        "Outputs": {
+          "1": "Lista iterada"
+        }
+      },
       "Log": {
         "Description": "Registra un mensaje en el registro del flujo",
-        "Outputs": {
-          "1": "Mensaje registrado"
-        },
         "Fields": {
           "LogType": "Tipo",
           "Message": "Mensaje"
+        },
+        "Outputs": {
+          "1": "Mensaje registrado"
         }
       },
       "Matches": {
         "Description": "Compara un conjunto de valores y condiciones de coincidencia para ver qué salida debe ser llamada",
         "Fields": {
           "MatchConditions": "",
+          "MatchConditions-Help": "Las coincidencias para probar qué salida debe ser llamada.",
           "MatchConditionsKey": "Valor",
-          "MatchConditionsValue": "Expresión",
-          "MatchConditions-Help": "Las coincidencias para probar qué salida debe ser llamada."
+          "MatchConditionsValue": "Expresión"
         }
       },
       "MatchesAll": {
         "Description": "Compara un conjunto de valores y verifica si todas las condiciones coinciden.",
         "Fields": {
           "MatchConditions": "",
+          "MatchConditionsHelp": "Las condiciones a probar, determinando qué salida debe ser llamada.",
           "MatchConditionsKey": "Valor",
-          "MatchConditionsValue": "Expresión",
-          "MatchConditionsHelp": "Las condiciones a probar, determinando qué salida debe ser llamada."
+          "MatchConditionsValue": "Expresión"
         },
         "Outputs": {
           "1": "Todas las condiciones coinciden",
           "2": "No todas las condiciones coinciden"
         }
       },
-      "MoveFolder": {
-        "Description": "Mueve una carpeta",
-        "Outputs": {
-          "1": "Carpeta movida"
-        },
-        "Fields": {
-          "SourcePath": "Origen",
-          "SourcePath-Help": "La carpeta a mover; si se deja en blanco, se usará el Archivo de Trabajo. Si no es una carpeta, el elemento de flujo fallará.",
-          "DestinationPath": "Destino",
-          "DestinationPath-Help": "La carpeta de destino a la que se moverá la carpeta de origen.",
-          "CreateSubfolder": "Crear Subcarpeta",
-          "CreateSubfolder-Help": "Si se debe crear una subcarpeta con el nombre de la carpeta de origen en la carpeta de destino."
-        }
-      },
       "MoveFile": {
         "Description": "Mueve un archivo a la carpeta de destino",
-        "Outputs": {
-          "1": "Archivo movido",
-          "2": "Archivo movido, sin embargo, el archivo original no pudo ser eliminado"
-        },
         "Fields": {
-          "InputFile": "Archivo a Mover",
-          "InputFile-Help": "El archivo a mover; si se deja vacío, se moverá el archivo de trabajo.",
-          "InputFile-Placeholder": "Archivo de Trabajo",
-          "DestinationPath": "Carpeta de Destino",
-          "DestinationPath-Help": "La carpeta a la que se moverá el archivo",
-          "DestinationFile": "Archivo de Destino",
-          "DestinationFile-Help": "El nombre del archivo al que se moverá. Si está vacío, se usará el nombre del archivo original.",
-          "MoveFolder": "Copiar Carpeta",
-          "MoveFolder-Help": "Si también se debe copiar la estructura de carpeta relativa de la biblioteca.",
-          "DeleteOriginal": "Eliminar Original",
-          "DeleteOriginal-Help": "Si el archivo original debe ser eliminado; esto solo ocurrirá si el archivo de trabajo es diferente del archivo original.",
           "AdditionalFiles": "Archivos Adicionales",
           "AdditionalFiles-Help": "Archivos adicionales a mover del directorio al nuevo directorio.\nCada valor puede contener una combinación de ruta literal válida y caracteres comodín (* y ?) pero no admite expresiones regulares.",
           "AdditionalFilesFromOriginal": "Directorio Original",
           "AdditionalFilesFromOriginal-Help": "Si los archivos adicionales deben moverse desde el directorio de trabajo o desde el directorio original. Activar para el directorio original.",
+          "DeleteOriginal": "Eliminar Original",
+          "DeleteOriginal-Help": "Si el archivo original debe ser eliminado; esto solo ocurrirá si el archivo de trabajo es diferente del archivo original.",
+          "DestinationFile": "Archivo de Destino",
+          "DestinationFile-Help": "El nombre del archivo al que se moverá. Si está vacío, se usará el nombre del archivo original.",
+          "DestinationPath": "Carpeta de Destino",
+          "DestinationPath-Help": "La carpeta a la que se moverá el archivo",
+          "InputFile": "Archivo a Mover",
+          "InputFile-Help": "El archivo a mover; si se deja vacío, se moverá el archivo de trabajo.",
+          "InputFile-Placeholder": "Archivo de Trabajo",
+          "MoveFolder": "Copiar Carpeta",
+          "MoveFolder-Help": "Si también se debe copiar la estructura de carpeta relativa de la biblioteca.",
           "PreserverOriginalDates": "Preservar Fechas",
           "PreserverOriginalDates-Help": "Si se deben preservar la hora de creación original y la última hora de modificación del archivo de entrada original."
+        },
+        "Outputs": {
+          "1": "Archivo movido",
+          "2": "Archivo movido, sin embargo, el archivo original no pudo ser eliminado"
+        }
+      },
+      "MoveFolder": {
+        "Description": "Mueve una carpeta",
+        "Fields": {
+          "CreateSubfolder": "Crear Subcarpeta",
+          "CreateSubfolder-Help": "Si se debe crear una subcarpeta con el nombre de la carpeta de origen en la carpeta de destino.",
+          "DestinationPath": "Destino",
+          "DestinationPath-Help": "La carpeta de destino a la que se moverá la carpeta de origen.",
+          "SourcePath": "Origen",
+          "SourcePath-Help": "La carpeta a mover; si se deja en blanco, se usará el Archivo de Trabajo. Si no es una carpeta, el elemento de flujo fallará."
+        },
+        "Outputs": {
+          "1": "Carpeta movida"
         }
       },
       "OlderThan": {
         "Description": "Verifica si una carpeta es más antigua que el rango especificado",
+        "Fields": {
+          "Date": "Fecha",
+          "Number": "Número",
+          "Unit": "Unidad"
+        },
         "Outputs": {
           "1": "El archivo es más antiguo",
           "2": "El archivo no es más antiguo"
-        },
-        "Fields": {
-          "Number": "Número",
-          "Unit": "Unidad",
-          "Date": "Fecha"
         }
       },
       "OriginalFile": {
@@ -483,119 +472,193 @@
       },
       "PatternMatch": {
         "Description": "Prueba el archivo de trabajo y el archivo original contra una expresión regular.\n\nSalida 1: Coincide con la expresión\nSalida 2: No coincide",
-        "Outputs": {
-          "1": "Coincide con la expresión",
-          "2": "NO coincide"
-        },
         "Fields": {
           "Pattern": "Patrón",
           "Pattern-Help": "Una expresión regular, utilizando la especificación de C# para expresiones regulares."
+        },
+        "Outputs": {
+          "1": "Coincide con la expresión",
+          "2": "NO coincide"
         }
       },
       "PatternReplacer": {
-        "Label": "Reemplazador de Patrón de Nombre de Archivo",
         "Description": "Te permite hacer reemplazos en el nombre del archivo. Puede usar expresiones regulares para reemplazos o reemplazos de cadenas simples.\n\nSalida 1: Reemplazo realizado\nSalida 2: No se realizó ningún reemplazo",
-        "Outputs": {
-          "1": "Reemplazo realizado",
-          "2": "No se realizó ningún reemplazo"
-        },
+        "Label": "Reemplazador de Patrón de Nombre de Archivo",
         "Fields": {
           "Replacements": "Reemplazos",
           "ReplacementsKey": "Patrón",
           "ReplacementsValue": "Valor",
           "UseWorkingFileName": "Usar Nombre de Archivo de Trabajo",
           "UseWorkingFileName-Help": "Si se debe usar el nombre de archivo de trabajo actual, o si es falso, se usará el nombre original del archivo entrante."
+        },
+        "Outputs": {
+          "1": "Reemplazo realizado",
+          "2": "No se realizó ningún reemplazo"
+        }
+      },
+      "PowerShellScript": {
+        "Description": "Te permite ejecutar un script de PowerShell (.ps1) en un entorno de Windows.",
+        "Label": "Script de PowerShell (.ps1)",
+        "Fields": {
+          "Code": "Código"
+        },
+        "Outputs": {
+          "1": "devuelto 1",
+          "10": "devuelto 10",
+          "2": "devuelto 2",
+          "3": "devuelto 3",
+          "4": "devuelto 4",
+          "5": "devuelto 5",
+          "6": "devuelto 6",
+          "7": "devuelto 7",
+          "8": "devuelto 8",
+          "9": "devuelto 9"
         }
       },
       "Random": {
-        "Label": "Aleatorio",
         "Description": "Elige una salida aleatoria",
+        "Label": "Aleatorio",
         "Fields": {
           "Outputs": "Salidas",
           "Outputs-Help": "El número de salidas que podrían ser llamadas."
         }
       },
-      "ReplaceOriginal": {
-        "Description": "Reemplaza el archivo original con el archivo de trabajo.\n\nSi la extensión es diferente en el archivo de trabajo, el archivo original será eliminado y el archivo de trabajo será movido al original con la nueva extensión.\nEj. de File.avi a File.mkv",
-        "Outputs": {
-          "1": "Archivo original reemplazado"
-        },
-        "Fields": {
-          "PreserverOriginalDates": "Preservar Fechas",
-          "PreserverOriginalDates-Help": "Si se deben preservar el tiempo de creación original y el tiempo de última escritura del archivo de entrada original."
-        }
-      },
       "Renamer": {
         "Description": "Renombra el archivo de trabajo.\nSe pueden usar variables ingresando la clave '{' dentro del campo Patrón.",
-        "Outputs": {
-          "1": "Archivo renombrado"
-        },
         "Fields": {
-          "Pattern": "Nuevo Nombre",
-          "Pattern-Help": "El nuevo nombre del archivo. Puede usar variables. Cualquier vacío () y '{}' será eliminado.",
+          "CsvFile": "Archivo CSV",
+          "CsvFile-Help": "Se agregará a este archivo el nombre original y el archivo renombrado. Útil al usar 'Solo Registrar' para probar el renombrador antes de cambiar archivos.",
           "DestinationPath": "Carpeta de Destino",
           "DestinationPath-Help": "Si el archivo debe ser movido a una carpeta diferente.",
           "LogOnly": "Solo Registrar",
           "LogOnly-Help": "Activa si solo deseas probar este elemento de flujo sin que realmente renombre el archivo.",
-          "CsvFile": "Archivo CSV",
-          "CsvFile-Help": "Se agregará a este archivo el nombre original y el archivo renombrado. Útil al usar 'Solo Registrar' para probar el renombrador antes de cambiar archivos."
+          "Pattern": "Nuevo Nombre",
+          "Pattern-Help": "El nuevo nombre del archivo. Puede usar variables. Cualquier vacío () y '{}' será eliminado."
+        },
+        "Outputs": {
+          "1": "Archivo renombrado"
+        }
+      },
+      "ReplaceOriginal": {
+        "Description": "Reemplaza el archivo original con el archivo de trabajo.\n\nSi la extensión es diferente en el archivo de trabajo, el archivo original será eliminado y el archivo de trabajo será movido al original con la nueva extensión.\nEj. de File.avi a File.mkv",
+        "Fields": {
+          "PreserverOriginalDates": "Preservar Fechas",
+          "PreserverOriginalDates-Help": "Si se deben preservar el tiempo de creación original y el tiempo de última escritura del archivo de entrada original."
+        },
+        "Outputs": {
+          "1": "Archivo original reemplazado"
+        }
+      },
+      "Reprocess": {
+        "Description": "El elemento de flujo te permite reprocesar el archivo original de la biblioteca con un nodo de procesamiento diferente.\n\n Si se selecciona el mismo nodo de procesamiento que el que actualmente procesa el archivo, el flujo fallará.",
+        "Fields": {
+          "Node": "Nodo",
+          "Node-Help": "El nodo de procesamiento para procesar este archivo."
         }
       },
       "SetVariable": {
-        "Label": "Establecer Variable",
         "Description": "Establece una variable en el flujo.",
+        "Label": "Establecer Variable",
+        "Fields": {
+          "Value": "Valor",
+          "Value-Help": "El valor de la variable a establecer.",
+          "Variable": "Variable",
+          "Variable-Help": "El nombre de la variable a establecer"
+        },
         "Outputs": {
           "1": "Variable establecida"
-        },
-        "Fields": {
-          "Variable": "Variable",
-          "Variable-Help": "El nombre de la variable a establecer",
-          "Value": "Valor",
-          "Value-Help": "El valor de la variable a establecer."
         }
       },
       "SetWorkingFile": {
-        "Label": "Establecer Archivo de Trabajo",
         "Description": "Actualiza el archivo de trabajo actual al especificado.",
+        "Label": "Establecer Archivo de Trabajo",
+        "Fields": {
+          "DontDeletePrevious": "No Eliminar Anterior",
+          "DontDeletePrevious-Help": "Si el archivo de trabajo anterior *temporal* no debe *ser eliminado*.\nSolo se eliminarán archivos temporales, archivos que han sido creados por FileFlows en el directorio temporal de los ejecutores.",
+          "File": "Archivo",
+          "File-Description": "La ruta al nuevo archivo o carpeta de trabajo."
+        },
         "Outputs": {
           "1": "Archivo de Trabajo Establecido"
-        },
+        }
+      },
+      "SevenZip": {
+        "Description": "Permite comprimir la entrada en 7zip",
+        "Label": "7-Zip",
         "Fields": {
-          "File": "Archivo",
-          "File-Description": "La ruta al nuevo archivo o carpeta de trabajo.",
-          "DontDeletePrevious": "No Eliminar Anterior",
-          "DontDeletePrevious-Help": "Si el archivo de trabajo anterior *temporal* no debe *ser eliminado*.\nSolo se eliminarán archivos temporales, archivos que han sido creados por FileFlows en el directorio temporal de los ejecutores."
+          "CompressionLevel": "Nivel de Compresión",
+          "CompressionLevel-Help": "El nivel de compresión a utilizar al comprimir.",
+          "CompressionMethod": "Método de Compresión",
+          "CompressionMethod-Help": "El método de compresión utilizado para la compresión, se recomienda LZMA2.",
+          "DestinationFile": "Archivo de Destino",
+          "DestinationFile-Help": "El nombre del archivo del nuevo 7zip creado. Si se deja en blanco, se usará el nombre del elemento como archivo 7zip.",
+          "DestinationPath": "Carpeta de Destino",
+          "DestinationPath-Help": "La carpeta de destino donde colocar el archivo 7zip. Si se deja en blanco, el 7zip se colocará en la raíz de la biblioteca."
+        },
+        "Outputs": {
+          "1": "7zip creado"
+        }
+      },
+      "ShellScript": {
+        "Description": "Te permite ejecutar un script de shell (.sh) en un entorno similar a Unix.",
+        "Label": "Script de shell (.sh)",
+        "Fields": {
+          "Code": "Código"
+        },
+        "Outputs": {
+          "1": "devuelto 1",
+          "10": "devuelto 10",
+          "2": "devuelto 2",
+          "3": "devuelto 3",
+          "4": "devuelto 4",
+          "5": "devuelto 5",
+          "6": "devuelto 6",
+          "7": "devuelto 7",
+          "8": "devuelto 8",
+          "9": "devuelto 9"
         }
       },
       "Sleep": {
         "Description": "Pausa el flujo",
-        "Outputs": {
-          "1": "Flujo reanudado"
-        },
         "Fields": {
           "Milliseconds": "Milisegundos",
           "Milliseconds-Help": "Cuánto tiempo pausar el flujo. Debe estar entre 1 milisegundo y 1 hora."
+        },
+        "Outputs": {
+          "1": "Flujo reanudado"
         }
       },
       "Touch": {
         "Description": "Toca un archivo o directorio y establece la última hora de escritura a ahora.",
-        "Outputs": {
-          "1": "Elemento tocado con éxito"
-        },
         "Fields": {
           "FileName": "Nombre de Archivo",
           "FileName-Help": "Nombre completo del archivo o carpeta a tocar.\nSi se deja en blanco, se usará el archivo de trabajo."
+        },
+        "Outputs": {
+          "1": "Elemento tocado con éxito"
+        }
+      },
+      "Unpack": {
+        "Description": "Permite descomprimir un archivo (zip, rar, tar, etc.)",
+        "Fields": {
+          "DestinationPath": "Carpeta de Destino",
+          "DestinationPath-Help": "La carpeta de destino donde descomprimir el archivo.",
+          "File": "Archivo",
+          "File-Help": "El nombre del archivo a descomprimir. Se puede dejar en blanco y, si es así, se usará el archivo de trabajo actual."
+        },
+        "Outputs": {
+          "1": "Archivo descomprimido"
         }
       },
       "VariableMatch": {
         "Description": "Prueba si una entrada coincide con una Variable almacenada",
         "Fields": {
+          "Input": "Valor",
+          "Input-Help": "El valor para comparar con la variable.",
           "Variable": "Variable",
           "Variable-Help": "La variable con la que comparar",
           "VariableName": "Variable",
-          "VariableName-Help": "La variable con la que comparar",
-          "Input": "Valor",
-          "Input-Help": "El valor para comparar con la variable."
+          "VariableName-Help": "La variable con la que comparar"
         },
         "Outputs": {
           "1": "Entrada coincide con variable",
@@ -604,114 +667,51 @@
       },
       "WebRequest": {
         "Description": "Te permite enviar una solicitud web",
-        "Outputs": {
-          "1": "Enviado con éxito",
-          "2": "La solicitud devolvió un código de estado no exitoso"
-        },
         "Fields": {
-          "Url": "URL",
-          "Url-Help": "La URL de la solicitud",
-          "Method": "Método",
-          "Method-Help": "El método web a usar al enviar esta solicitud",
+          "Body": "Cuerpo",
+          "Body-Help": "El cuerpo de la solicitud que se envía. Se pueden usar variables en este campo.",
           "ContentType": "Tipo de Contenido",
           "ContentType-Help": "El Content-Type del mensaje a enviar",
           "Headers": "Encabezados",
           "Headers-Help": "Encabezados opcionales a enviar con la solicitud",
           "HeadersKey": "Clave",
           "HeadersValue": "Valor",
-          "Body": "Cuerpo",
-          "Body-Help": "El cuerpo de la solicitud que se envía. Se pueden usar variables en este campo."
-        }
-      },
-      "Unpack": {
-        "Description": "Permite descomprimir un archivo (zip, rar, tar, etc.)",
-        "Outputs": {
-          "1": "Archivo descomprimido"
+          "Method": "Método",
+          "Method-Help": "El método web a usar al enviar esta solicitud",
+          "Url": "URL",
+          "Url-Help": "La URL de la solicitud"
         },
-        "Fields": {
-          "DestinationPath": "Carpeta de Destino",
-          "DestinationPath-Help": "La carpeta de destino donde descomprimir el archivo.",
-          "File": "Archivo",
-          "File-Help": "El nombre del archivo a descomprimir. Se puede dejar en blanco y, si es así, se usará el archivo de trabajo actual."
-        }
-      },
-      "Zip": {
-        "Description": "Permite comprimir la entrada",
         "Outputs": {
-          "1": "Zip creado"
-        },
-        "Fields": {
-          "DestinationPath": "Carpeta de Destino",
-          "DestinationPath-Help": "La carpeta de destino donde colocar el archivo zip. Si se deja en blanco, el zip se colocará en la raíz de la biblioteca.",
-          "DestinationFile": "Archivo de Destino",
-          "DestinationFile-Help": "El nombre del archivo del nuevo zip creado. Si se deja en blanco, se usará el nombre del elemento como archivo zip.",
-          "Path": "Ruta",
-          "Path-Help": "La ruta al archivo o carpeta a comprimir. Si se deja en blanco, se comprimirá el archivo de trabajo.",
-          "SetWorkingFile": "Establecer Archivo de Trabajo",
-          "SetWorkingFile-Help": "Si el nuevo zip creado debe convertirse en el nuevo archivo de trabajo."
-        }
-      },
-      "SevenZip": {
-        "Label": "7-Zip",
-        "Description": "Permite comprimir la entrada en 7zip",
-        "Outputs": {
-          "1": "7zip creado"
-        },
-        "Fields": {
-          "DestinationPath": "Carpeta de Destino",
-          "DestinationPath-Help": "La carpeta de destino donde colocar el archivo 7zip. Si se deja en blanco, el 7zip se colocará en la raíz de la biblioteca.",
-          "DestinationFile": "Archivo de Destino",
-          "DestinationFile-Help": "El nombre del archivo del nuevo 7zip creado. Si se deja en blanco, se usará el nombre del elemento como archivo 7zip.",
-          "CompressionLevel": "Nivel de Compresión",
-          "CompressionLevel-Help": "El nivel de compresión a utilizar al comprimir.",
-          "CompressionMethod": "Método de Compresión",
-          "CompressionMethod-Help": "El método de compresión utilizado para la compresión, se recomienda LZMA2."
-        }
-      },
-      "IfBoolean": {
-        "Description": "Prueba si una variable es verdadera o falsa",
-        "Outputs": {
-          "1": "Verdadero",
-          "2": "Falso"
-        },
-        "Fields": {
-          "Variable": "Variable",
-          "Variable-Help": "El nombre de la variable a comprobar"
-        }
-      },
-      "IfString": {
-        "Description": "Prueba si una variable coincide con una cadena",
-        "Outputs": {
-          "1": "Cadena coincidente 1",
-          "2": "Cadena coincidente 2",
-          "3": "Cadena coincidente 3",
-          "4": "Cadena coincidente 4",
-          "5": "Cadena coincidente 5",
-          "6": "Cadena coincidente 6",
-          "7": "Cadena coincidente 7",
-          "8": "Cadena coincidente 8",
-          "9": "Cadena coincidente 9",
-          "10": "Cadena coincidente 10"
-        },
-        "Fields": {
-          "Variable": "Variable",
-          "Variable-Help": "El nombre de la variable a comprobar",
-          "Outputs": "Salidas",
-          "Outputs-Help": "Esto debe coincidir con el número de opciones disponibles",
-          "Options": "Opciones",
-          "Options-Help": "La cadena contra la que coincidir."
+          "1": "Enviado con éxito",
+          "2": "La solicitud devolvió un código de estado no exitoso"
         }
       },
       "WriteText": {
         "Description": "Escribe texto en un archivo",
-        "Outputs": {
-          "1": "Texto escrito en el archivo"
-        },
         "Fields": {
           "File": "Archivo",
           "File-Help": "El archivo donde se escribirá el texto.",
           "Text": "Texto",
           "Text-Help": "El texto a escribir en el archivo. Si se deja en blanco, se escribirá la ruta completa del archivo de trabajo actual."
+        },
+        "Outputs": {
+          "1": "Texto escrito en el archivo"
+        }
+      },
+      "Zip": {
+        "Description": "Permite comprimir la entrada",
+        "Fields": {
+          "DestinationFile": "Archivo de Destino",
+          "DestinationFile-Help": "El nombre del archivo del nuevo zip creado. Si se deja en blanco, se usará el nombre del elemento como archivo zip.",
+          "DestinationPath": "Carpeta de Destino",
+          "DestinationPath-Help": "La carpeta de destino donde colocar el archivo zip. Si se deja en blanco, el zip se colocará en la raíz de la biblioteca.",
+          "Path": "Ruta",
+          "Path-Help": "La ruta al archivo o carpeta a comprimir. Si se deja en blanco, se comprimirá el archivo de trabajo.",
+          "SetWorkingFile": "Establecer Archivo de Trabajo",
+          "SetWorkingFile-Help": "Si el nuevo zip creado debe convertirse en el nuevo archivo de trabajo."
+        },
+        "Outputs": {
+          "1": "Zip creado"
         }
       }
     }

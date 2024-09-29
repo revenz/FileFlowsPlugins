@@ -2,42 +2,42 @@
   "Flow": {
     "Parts": {
       "Downloader": {
-        "Outputs": {
-          "1": "URL baixada com sucesso",
-          "2": "Falha ao baixar a URL"
-        },
         "Description": "Baixa a URL especificada",
         "Fields": {
           "Url": "URL",
           "Url-Help": "A URL a ser baixada, deixe em branco para usar o arquivo de trabalho atual. Se o arquivo de trabalho atual não for uma URL, isso falhará."
+        },
+        "Outputs": {
+          "1": "URL baixada com sucesso",
+          "2": "Falha ao baixar a URL"
         }
       },
       "HtmlImageParser": {
         "Label": "Parser de Imagens HTML",
-        "Outputs": {
-          "1": "Imagens encontradas e armazenadas na variável ImageUrls",
-          "2": "Nenhuma imagem encontrada"
-        },
         "Fields": {
           "Path": "Arquivo",
           "Path-Description": "Um arquivo ou variável opcional a ser analisado para imagens. Se não fornecido, o arquivo de trabalho será analisado.",
           "Pattern": "Padrão",
-          "Pattern-Placeholder": "Opcional",
-          "Pattern-Help": "Uma expressão regular opcional, sem diferenciação entre maiúsculas e minúsculas, para comparar os resultados. Apenas resultados que correspondam a isso serão aceitos."
+          "Pattern-Help": "Uma expressão regular opcional, sem diferenciação entre maiúsculas e minúsculas, para comparar os resultados. Apenas resultados que correspondam a isso serão aceitos.",
+          "Pattern-Placeholder": "Opcional"
+        },
+        "Outputs": {
+          "1": "Imagens encontradas e armazenadas na variável ImageUrls",
+          "2": "Nenhuma imagem encontrada"
         }
       },
       "HtmlLinkParser": {
         "Label": "Parser de Links HTML",
-        "Outputs": {
-          "1": "Link encontrado e armazenado na variável Links",
-          "2": "Nenhum link encontrado"
-        },
         "Fields": {
           "Path": "Arquivo",
           "Path-Description": "Um arquivo ou variável opcional a ser analisado para links. Se não fornecido, o arquivo de trabalho será analisado.",
           "Pattern": "Padrão",
-          "Pattern-Placeholder": "Opcional",
-          "Pattern-Help": "Uma expressão regular opcional, sem diferenciação entre maiúsculas e minúsculas, para comparar os resultados. Apenas resultados que correspondam a isso serão aceitos."
+          "Pattern-Help": "Uma expressão regular opcional, sem diferenciação entre maiúsculas e minúsculas, para comparar os resultados. Apenas resultados que correspondam a isso serão aceitos.",
+          "Pattern-Placeholder": "Opcional"
+        },
+        "Outputs": {
+          "1": "Link encontrado e armazenado na variável Links",
+          "2": "Nenhum link encontrado"
         }
       },
       "InputUrl": {
@@ -45,23 +45,23 @@
       },
       "WebRequest": {
         "Description": "Permite que você envie uma solicitação web",
-        "Outputs": {
-          "1": "Enviado com sucesso",
-          "2": "A solicitação retornou um código de status não bem-sucedido"
-        },
         "Fields": {
-          "Url": "URL",
-          "Url-Help": "A URL da solicitação",
-          "Method": "Método",
-          "Method-Help": "O método web a ser usado ao enviar esta solicitação",
+          "Body": "Corpo",
+          "Body-Help": "O corpo da solicitação sendo enviada. Variáveis podem ser usadas neste campo.",
           "ContentType": "Tipo de Conteúdo",
           "ContentType-Help": "O Content-Type da mensagem a ser enviada",
           "Headers": "Cabeçalhos",
           "Headers-Help": "Cabeçalhos opcionais para enviar com a solicitação",
           "HeadersKey": "Chave",
           "HeadersValue": "Valor",
-          "Body": "Corpo",
-          "Body-Help": "O corpo da solicitação sendo enviada. Variáveis podem ser usadas neste campo."
+          "Method": "Método",
+          "Method-Help": "O método web a ser usado ao enviar esta solicitação",
+          "Url": "URL",
+          "Url-Help": "A URL da solicitação"
+        },
+        "Outputs": {
+          "1": "Enviado com sucesso",
+          "2": "A solicitação retornou um código de status não bem-sucedido"
         }
       }
     }

@@ -2,42 +2,42 @@
   "Flow": {
     "Parts": {
       "Downloader": {
-        "Outputs": {
-          "1": "URL téléchargée avec succès",
-          "2": "Échec du téléchargement de l'URL"
-        },
         "Description": "Télécharge l'URL spécifiée",
         "Fields": {
           "Url": "URL",
           "Url-Help": "L'URL à télécharger, laisser vide pour utiliser le fichier de travail actuel. Si le fichier de travail actuel n'est pas une URL, cela échouera."
+        },
+        "Outputs": {
+          "1": "URL téléchargée avec succès",
+          "2": "Échec du téléchargement de l'URL"
         }
       },
       "HtmlImageParser": {
         "Label": "Analyseur d'images HTML",
-        "Outputs": {
-          "1": "Images trouvées et stockées dans la variable ImageUrls",
-          "2": "Aucune image trouvée"
-        },
         "Fields": {
           "Path": "Fichier",
           "Path-Description": "Un fichier ou une variable optionnelle à analyser pour les images. Si non donné, le fichier de travail sera analysé.",
           "Pattern": "Modèle",
-          "Pattern-Placeholder": "Optionnel",
-          "Pattern-Help": "Une expression régulière optionnelle, sans distinction entre majuscules et minuscules, pour comparer avec les résultats. Seuls les résultats correspondant à cela seront acceptés."
+          "Pattern-Help": "Une expression régulière optionnelle, sans distinction entre majuscules et minuscules, pour comparer avec les résultats. Seuls les résultats correspondant à cela seront acceptés.",
+          "Pattern-Placeholder": "Optionnel"
+        },
+        "Outputs": {
+          "1": "Images trouvées et stockées dans la variable ImageUrls",
+          "2": "Aucune image trouvée"
         }
       },
       "HtmlLinkParser": {
         "Label": "Analyseur de liens HTML",
-        "Outputs": {
-          "1": "Lien trouvé et stocké dans la variable Links",
-          "2": "Aucun lien trouvé"
-        },
         "Fields": {
           "Path": "Fichier",
           "Path-Description": "Un fichier ou une variable optionnelle à analyser pour les liens. Si non donné, le fichier de travail sera analysé.",
           "Pattern": "Modèle",
-          "Pattern-Placeholder": "Optionnel",
-          "Pattern-Help": "Une expression régulière optionnelle, sans distinction entre majuscules et minuscules, pour comparer avec les résultats. Seuls les résultats correspondant à cela seront acceptés."
+          "Pattern-Help": "Une expression régulière optionnelle, sans distinction entre majuscules et minuscules, pour comparer avec les résultats. Seuls les résultats correspondant à cela seront acceptés.",
+          "Pattern-Placeholder": "Optionnel"
+        },
+        "Outputs": {
+          "1": "Lien trouvé et stocké dans la variable Links",
+          "2": "Aucun lien trouvé"
         }
       },
       "InputUrl": {
@@ -45,23 +45,23 @@
       },
       "WebRequest": {
         "Description": "Vous permet d'envoyer une requête web",
-        "Outputs": {
-          "1": "Envoyé avec succès",
-          "2": "La requête a renvoyé un code de statut non réussi"
-        },
         "Fields": {
-          "Url": "URL",
-          "Url-Help": "L'URL de la requête",
-          "Method": "Méthode",
-          "Method-Help": "La méthode web à utiliser lors de l'envoi de cette requête",
+          "Body": "Corps",
+          "Body-Help": "Le corps de la requête envoyée. Des variables peuvent être utilisées dans ce champ.",
           "ContentType": "Type de contenu",
           "ContentType-Help": "Le Content-Type du message à envoyer",
           "Headers": "En-têtes",
           "Headers-Help": "En-têtes optionnels à envoyer avec la requête",
           "HeadersKey": "Clé",
           "HeadersValue": "Valeur",
-          "Body": "Corps",
-          "Body-Help": "Le corps de la requête envoyée. Des variables peuvent être utilisées dans ce champ."
+          "Method": "Méthode",
+          "Method-Help": "La méthode web à utiliser lors de l'envoi de cette requête",
+          "Url": "URL",
+          "Url-Help": "L'URL de la requête"
+        },
+        "Outputs": {
+          "1": "Envoyé avec succès",
+          "2": "La requête a renvoyé un code de statut non réussi"
         }
       }
     }

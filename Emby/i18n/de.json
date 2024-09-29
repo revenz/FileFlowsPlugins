@@ -1,39 +1,39 @@
 {
-  "Plugins": {
-    "Emby": {
-      "Description": "Ein Plugin, das es Ihnen ermöglicht, mit Emby zu kommunizieren.",
-      "Fields": {
-        "ServerUrl": "Server",
-        "ServerUrl-Placeholder": "http://localhost:8096/",
-        "ServerUrl-Help": "Die URL des Emby-Servers",
-        "AccessToken": "Zugriffstoken",
-        "AccessToken-Help": "Ein Emby API-Zugriffstoken",
-        "Mapping": "Mapping",
-        "Mapping-Help": "Eine Liste von Mapping-Ersatz, die zu Pfaden in FileFlows mit den Pfaden verwendet wird, die in Emby verwendet werden.",
-        "MappingKey": "FileFlows",
-        "MappingValue": "Emby"
-      }
-    }
-  },
   "Flow": {
     "Parts": {
       "EmbyUpdater": {
-        "Outputs": {
-          "1": "Emby-Update-Anfrage gesendet",
-          "2": "Emby-Update-Anfrage konnte nicht gesendet werden"
-        },
         "Description": "Sendet eine Nachricht an einen Emby-Server, um die Bibliothek zu aktualisieren.",
         "Fields": {
-          "ServerUrl": "Server",
-          "ServerUrl-Placeholder": "http://localhost:8096/",
-          "ServerUrl-Help": "Die URL des Emby-Servers.\nHinweis: Setzen Sie dies nur, wenn Sie die Server-URL der Plugin-Einstellungen überschreiben möchten.",
           "AccessToken": "Zugriffstoken",
           "AccessToken-Help": "Ein Emby API-Zugriffstoken.\nHinweis: Setzen Sie dies nur, wenn Sie das Zugriffstoken der Plugin-Einstellungen überschreiben möchten.",
           "Mapping": "Mapping",
           "Mapping-Help": "Eine Liste von Mapping-Ersatz, die zu Pfaden in FileFlows mit den Pfaden verwendet wird, die in Emby verwendet werden.\nHinweis: Dies wird nicht verwendet, es sei denn, die Server-URL wird hier ebenfalls gesetzt, andernfalls werden die Mappings der Plugin-Einstellungen verwendet.",
           "MappingKey": "FileFlows",
-          "MappingValue": "Emby"
+          "MappingValue": "Emby",
+          "ServerUrl": "Server",
+          "ServerUrl-Help": "Die URL des Emby-Servers.\nHinweis: Setzen Sie dies nur, wenn Sie die Server-URL der Plugin-Einstellungen überschreiben möchten.",
+          "ServerUrl-Placeholder": "http://localhost:8096/"
+        },
+        "Outputs": {
+          "1": "Emby-Update-Anfrage gesendet",
+          "2": "Emby-Update-Anfrage konnte nicht gesendet werden"
         }
+      }
+    }
+  },
+  "Plugins": {
+    "Emby": {
+      "Description": "Ein Plugin, das es Ihnen ermöglicht, mit Emby zu kommunizieren.",
+      "Fields": {
+        "AccessToken": "Zugriffstoken",
+        "AccessToken-Help": "Ein Emby API-Zugriffstoken",
+        "Mapping": "Mapping",
+        "Mapping-Help": "Eine Liste von Mapping-Ersatz, die zu Pfaden in FileFlows mit den Pfaden verwendet wird, die in Emby verwendet werden.",
+        "MappingKey": "FileFlows",
+        "MappingValue": "Emby",
+        "ServerUrl": "Server",
+        "ServerUrl-Help": "Die URL des Emby-Servers",
+        "ServerUrl-Placeholder": "http://localhost:8096/"
       }
     }
   }

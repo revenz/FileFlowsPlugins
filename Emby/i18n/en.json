@@ -1,39 +1,39 @@
 {
-  "Plugins": {
-    "Emby": {
-      "Description": "A plugin that allows you to communicate with Emby.",
-      "Fields": {
-        "ServerUrl": "Server",
-        "ServerUrl-Placeholder": "http://localhost:8096/",
-        "ServerUrl-Help": "The URL of the Emby server",
-        "AccessToken": "Access Token",
-        "AccessToken-Help": "An Emby API access token",
-        "Mapping": "Mapping",
-        "Mapping-Help": "A list of mapping replacement used to paths in FileFlows with the paths that are used in Emby.",
-        "MappingKey": "FileFlows",
-        "MappingValue": "Emby"
-      }
-    }
-  },
   "Flow": {
     "Parts": {
       "EmbyUpdater": {
-        "Outputs": {
-          "1": "Emby update request sent",
-          "2": "Emby update request failed to send"
-        },
         "Description": "Sends a message to a Emby server to update the library.",
         "Fields": {
-          "ServerUrl": "Server",
-          "ServerUrl-Placeholder": "http://localhost:8096/",
-          "ServerUrl-Help": "The URL of the Emby server.\nNote: Only set this if you want to override the plugin settings Server URL.",
           "AccessToken": "Access Token",
           "AccessToken-Help": "An Emby API access token.\nNote: Only set this if you want to override the plugin settings access token.",
           "Mapping": "Mapping",
           "Mapping-Help": "A list of mapping replacement used to paths in FileFlows with the paths that are used in Emby.\nNote: This will not be used unless the Server URL is also set here, otherwise the plugin settings mappings will be used.",
           "MappingKey": "FileFlows",
-          "MappingValue": "Emby"
+          "MappingValue": "Emby",
+          "ServerUrl": "Server",
+          "ServerUrl-Help": "The URL of the Emby server.\nNote: Only set this if you want to override the plugin settings Server URL.",
+          "ServerUrl-Placeholder": "http://localhost:8096/"
+        },
+        "Outputs": {
+          "1": "Emby update request sent",
+          "2": "Emby update request failed to send"
         }
+      }
+    }
+  },
+  "Plugins": {
+    "Emby": {
+      "Description": "A plugin that allows you to communicate with Emby.",
+      "Fields": {
+        "AccessToken": "Access Token",
+        "AccessToken-Help": "An Emby API access token",
+        "Mapping": "Mapping",
+        "Mapping-Help": "A list of mapping replacement used to paths in FileFlows with the paths that are used in Emby.",
+        "MappingKey": "FileFlows",
+        "MappingValue": "Emby",
+        "ServerUrl": "Server",
+        "ServerUrl-Help": "The URL of the Emby server",
+        "ServerUrl-Placeholder": "http://localhost:8096/"
       }
     }
   }

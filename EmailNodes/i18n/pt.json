@@ -1,36 +1,36 @@
 {
-  "Plugins": {
-    "EmailNodes": {
-      "Fields": {
-        "SmtpServer": "Servidor SMTP",
-        "SmtpServer-Help": "O endereço do servidor SMTP usado para enviar e-mails",
-        "SmtpPort": "Porta SMTP",
-        "SmtpPort-Help": "A porta do servidor SMTP usada para enviar e-mails, padrão 25",
-        "SmtpUsername": "Nome de usuário SMTP",
-        "SmtpUsername-Help": "O nome de usuário usado para autenticar no servidor SMTP",
-        "SmtpPassword": "Senha SMTP",
-        "SmtpPassword-Help": "A senha usada para autenticar no servidor SMTP",
-        "Sender": "Remetente",
-        "Sender-Help": "O endereço de e-mail de onde os e-mails serão enviados"
-      }
-    }
-  },
   "Flow": {
     "Parts": {
       "SendEmail": {
-        "Outputs": {
-          "1": "E-mail ''{Subject}'' foi enviado",
-          "2": "Falha ao enviar o e-mail"
-        },
         "Description": "Envia um e-mail usando o servidor SMTP configurado",
         "Fields": {
+          "Body": "Corpo",
+          "Body-Help": "O conteúdo da mensagem de e-mail que está sendo enviada. Usa a linguagem de template [scriban](https://github.com/scriban/scriban)",
           "Recipients": "Destinatários",
           "Recipients-Help": "Uma lista de endereços de e-mail para enviar a mensagem",
           "Subject": "Assunto",
-          "Subject-Help": "O assunto do e-mail que está sendo definido",
-          "Body": "Corpo",
-          "Body-Help": "O conteúdo da mensagem de e-mail que está sendo enviada. Usa a linguagem de template [scriban](https://github.com/scriban/scriban)"
+          "Subject-Help": "O assunto do e-mail que está sendo definido"
+        },
+        "Outputs": {
+          "1": "E-mail ''{Subject}'' foi enviado",
+          "2": "Falha ao enviar o e-mail"
         }
+      }
+    }
+  },
+  "Plugins": {
+    "EmailNodes": {
+      "Fields": {
+        "Sender": "Remetente",
+        "Sender-Help": "O endereço de e-mail de onde os e-mails serão enviados",
+        "SmtpPassword": "Senha SMTP",
+        "SmtpPassword-Help": "A senha usada para autenticar no servidor SMTP",
+        "SmtpPort": "Porta SMTP",
+        "SmtpPort-Help": "A porta do servidor SMTP usada para enviar e-mails, padrão 25",
+        "SmtpServer": "Servidor SMTP",
+        "SmtpServer-Help": "O endereço do servidor SMTP usado para enviar e-mails",
+        "SmtpUsername": "Nome de usuário SMTP",
+        "SmtpUsername-Help": "O nome de usuário usado para autenticar no servidor SMTP"
       }
     }
   }

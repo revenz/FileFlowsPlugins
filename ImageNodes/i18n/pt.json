@@ -2,108 +2,108 @@
   "Flow": {
     "Parts": {
       "AutoCropImage": {
-        "Outputs": {
-          "1": "Imagem recortada, salva em um novo arquivo temporário",
-          "2": "A imagem não foi recortada"
-        },
         "Description": "Recorta uma imagem automaticamente",
         "Fields": {
           "Format": "Formato",
           "Format-Help": "O formato da imagem para o qual converter",
           "Threshold": "Limite",
           "Threshold-Help": "Limite para a densidade entrópica, o valor padrão é 50. Deve estar entre 0 e 100."
+        },
+        "Outputs": {
+          "1": "Imagem recortada, salva em um novo arquivo temporário",
+          "2": "A imagem não foi recortada"
+        }
+      },
+      "ImageFile": {
+        "Description": "Um arquivo de imagem",
+        "Outputs": {
+          "1": "Arquivo de imagem"
         }
       },
       "ImageFlip": {
-        "Outputs": {
-          "1": "Imagem virada, salva em um novo arquivo temporário"
-        },
         "Description": "Vira uma imagem",
         "Fields": {
           "Format": "Formato",
           "Format-Help": "O formato da imagem para o qual converter",
           "Vertical": "Vertical",
           "Vertical-Help": "Se ativado, a imagem será virada verticalmente, caso contrário horizontalmente"
+        },
+        "Outputs": {
+          "1": "Imagem virada, salva em um novo arquivo temporário"
         }
       },
-      "ImageFile": {
-        "Outputs": {
-          "1": "Arquivo de imagem"
-        },
-        "Description": "Um arquivo de imagem"
-      },
       "ImageFormat": {
-        "Outputs": {
-          "1": "Imagem convertida, salva em um novo arquivo temporário",
-          "2": "A imagem já está no formato de destino"
-        },
         "Description": "Converte uma imagem para o formato especificado",
         "Fields": {
           "Format": "Formato",
           "Format-Help": "O formato da imagem para o qual converter"
+        },
+        "Outputs": {
+          "1": "Imagem convertida, salva em um novo arquivo temporário",
+          "2": "A imagem já está no formato de destino"
         }
       },
       "ImageIsLandscape": {
+        "Description": "Verifica se uma imagem está em paisagem",
         "Outputs": {
           "1": "A imagem está em paisagem",
           "2": "A imagem não está em paisagem"
-        },
-        "Description": "Verifica se uma imagem está em paisagem"
+        }
       },
       "ImageIsPortrait": {
+        "Description": "Verifica se uma imagem está em retrato",
         "Outputs": {
           "1": "A imagem está em retrato",
           "2": "A imagem não está em retrato"
-        },
-        "Description": "Verifica se uma imagem está em retrato"
+        }
       },
       "ImageResizer": {
-        "Outputs": {
-          "1": "Imagem redimensionada, salva em um novo arquivo temporário"
-        },
         "Description": "Redimensiona uma imagem",
         "Fields": {
           "Format": "Formato",
           "Format-Help": "O formato da imagem para o qual converter",
-          "Width": "Largura",
           "Height": "Altura",
           "Mode": "Modo",
-          "Mode-Help": "O modo a ser usado ao redimensionar a imagem"
+          "Mode-Help": "O modo a ser usado ao redimensionar a imagem",
+          "Width": "Largura"
+        },
+        "Outputs": {
+          "1": "Imagem redimensionada, salva em um novo arquivo temporário"
         }
       },
       "ImageRotate": {
-        "Outputs": {
-          "1": "Imagem rotacionada, salva em um novo arquivo temporário"
-        },
         "Description": "Rotaciona uma imagem",
         "Fields": {
-          "Format": "Formato",
-          "Format-Help": "O formato da imagem para o qual converter",
           "Angle": "Ângulo",
-          "Angle-Help": "O ângulo de rotação"
+          "Angle-Help": "O ângulo de rotação",
+          "Format": "Formato",
+          "Format-Help": "O formato da imagem para o qual converter"
+        },
+        "Outputs": {
+          "1": "Imagem rotacionada, salva em um novo arquivo temporário"
         }
       },
       "IsImage": {
         "Description": "Verifica se um arquivo é um arquivo de imagem.",
+        "Fields": {
+          "File": "Arquivo",
+          "File-Help": "Caminho opcional para o arquivo a ser verificado; se deixado em branco, o arquivo de trabalho atual será verificado.",
+          "File-Placeholder": "Se em branco, arquivo de trabalho atual"
+        },
         "Outputs": {
           "1": "O arquivo é um arquivo de imagem reconhecido",
           "2": "O arquivo não é um arquivo de imagem reconhecido"
-        },
-        "Fields": {
-          "File": "Arquivo",
-          "File-Placeholder": "Se em branco, arquivo de trabalho atual",
-          "File-Help": "Caminho opcional para o arquivo a ser verificado; se deixado em branco, o arquivo de trabalho atual será verificado."
         }
       },
       "PixelCheck": {
         "Description": "Este elemento de fluxo verifica se a contagem total de pixels de uma imagem excede o limite especificado.",
-        "Outputs": {
-          "1": "A imagem tem igual ou mais pixels do que o especificado",
-          "2": "A imagem tem menos pixels do que o necessário"
-        },
         "Fields": {
           "Pixels": "Pixels",
           "Pixels-Help": "O número de pixels que uma imagem deve conter. Isso é calculado multiplicando a largura da imagem pela altura."
+        },
+        "Outputs": {
+          "1": "A imagem tem igual ou mais pixels do que o especificado",
+          "2": "A imagem tem menos pixels do que o necessário"
         }
       }
     }

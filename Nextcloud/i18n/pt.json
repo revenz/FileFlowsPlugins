@@ -1,31 +1,31 @@
 {
+  "Flow": {
+    "Parts": {
+      "UploadToNextcloud": {
+        "Description": "Envia um arquivo para o Nextcloud",
+        "Fields": {
+          "DestinationPath": "Destino",
+          "DestinationPath-Help": "A localização e o nome do arquivo, ou seja, o caminho completo do arquivo no Nextcloud.",
+          "File": "Arquivo",
+          "File-Help": "O arquivo a ser enviado, deixe em branco para usar o arquivo de trabalho atual."
+        },
+        "Outputs": {
+          "1": "Foi enviado com sucesso para o Nextcloud",
+          "2": "Falha ao enviar para o Nextcloud"
+        }
+      }
+    }
+  },
   "Plugins": {
     "Nextcloud": {
       "Description": "Um plugin que permite enviar arquivos para o Nextcloud.",
       "Fields": {
+        "Password": "Senha",
+        "Password-Help": "A senha específica do aplicativo que você criou para o FileFlows para este usuário do Nextcloud.",
         "Url": "URL",
         "Url-Help": "A URL do servidor Nextcloud",
         "Username": "Nome de usuário",
-        "Username-Help": "O nome de usuário do usuário para o qual será feito o upload.",
-        "Password": "Senha",
-        "Password-Help": "A senha específica do aplicativo que você criou para o FileFlows para este usuário do Nextcloud."
-      }
-    }
-  },
-  "Flow": {
-    "Parts": {
-      "UploadToNextcloud": {
-        "Outputs": {
-          "1": "Foi enviado com sucesso para o Nextcloud",
-          "2": "Falha ao enviar para o Nextcloud"
-        },
-        "Description": "Envia um arquivo para o Nextcloud",
-        "Fields": {
-          "File": "Arquivo",
-          "File-Help": "O arquivo a ser enviado, deixe em branco para usar o arquivo de trabalho atual.",
-          "DestinationPath": "Destino",
-          "DestinationPath-Help": "A localização e o nome do arquivo, ou seja, o caminho completo do arquivo no Nextcloud."
-        }
+        "Username-Help": "O nome de usuário do usuário para o qual será feito o upload."
       }
     }
   }
