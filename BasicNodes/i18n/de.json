@@ -432,17 +432,17 @@
         }
       },
       "MoveFolder": {
-        "Description": "",
+        "Description": "Verschiebt einen Ordner",
         "Fields": {
-          "CreateSubfolder": "",
-          "CreateSubfolder-Help": "",
-          "DestinationPath": "",
-          "DestinationPath-Help": "",
-          "SourcePath": "",
-          "SourcePath-Help": ""
+          "CreateSubfolder": "Unterordner erstellen",
+          "CreateSubfolder-Help": "Ob ein Unterordner mit dem Namen des Quellordners im Zielordner erstellt werden soll.",
+          "DestinationPath": "Ziel",
+          "DestinationPath-Help": "Der Zielordner, in den der Quellordner verschoben werden soll.",
+          "SourcePath": "Quelle",
+          "SourcePath-Help": "Der zu verschiebende Ordner. Wenn leer gelassen, wird die Arbeitsdatei verwendet. Wenn dies kein Ordner ist, schlägt das Flusselement fehl."
         },
         "Outputs": {
-          "1": ""
+          "1": "Ordner verschoben"
         }
       },
       "OlderThan": {
@@ -490,22 +490,22 @@
         }
       },
       "PowerShellScript": {
-        "Description": "",
-        "Label": "",
+        "Description": "Erlaubt die Ausführung eines PowerShell (.ps1) Skripts in einer Windows-Umgebung.",
+        "Label": "PowerShell-Skript (.ps1)",
         "Fields": {
-          "Code": ""
+          "Code": "Code"
         },
         "Outputs": {
-          "1": "",
-          "10": "",
-          "2": "",
-          "3": "",
-          "4": "",
-          "5": "",
-          "6": "",
-          "7": "",
-          "8": "",
-          "9": ""
+          "1": "gab 1 zurück",
+          "10": "gab 10 zurück",
+          "2": "gab 2 zurück",
+          "3": "gab 3 zurück",
+          "4": "gab 4 zurück",
+          "5": "gab 5 zurück",
+          "6": "gab 6 zurück",
+          "7": "gab 7 zurück",
+          "8": "gab 8 zurück",
+          "9": "gab 9 zurück"
         }
       },
       "Random": {
@@ -543,10 +543,10 @@
         }
       },
       "Reprocess": {
-        "Description": "",
+        "Description": "Das Fluss-Element ermöglicht es Ihnen, die ursprüngliche Bibliotheksdatei mit einem anderen Verarbeitungsnode erneut zu verarbeiten.\n\n Wenn derselbe Verarbeitungsnode ausgewählt wird, der derzeit die Datei verarbeitet, schlägt der Fluss fehl.",
         "Fields": {
-          "Node": "",
-          "Node-Help": ""
+          "Node": "Node",
+          "Node-Help": "Der Verarbeitungsnode, um diese Datei zu verarbeiten."
         }
       },
       "SetVariable": {
@@ -563,16 +563,16 @@
         }
       },
       "SetWorkingFile": {
-        "Description": "",
-        "Label": "",
+        "Description": "Aktualisiert die aktuelle Arbeitsdatei auf die angegebene.",
+        "Label": "Arbeitsdatei festlegen",
         "Fields": {
-          "DontDeletePrevious": "",
-          "DontDeletePrevious-Help": "",
-          "File": "",
-          "File-Description": ""
+          "DontDeletePrevious": "Vorherige nicht löschen",
+          "DontDeletePrevious-Help": "Ob die vorherige *temporäre* Arbeitsdatei *nicht* gelöscht werden soll.\nNur temporäre Dateien werden gelöscht, Dateien, die von FileFlows im temporären Verzeichnis der Runner erstellt wurden.",
+          "File": "Datei",
+          "File-Description": "Der Pfad zur neuen Arbeitsdatei oder zum neuen Ordner."
         },
         "Outputs": {
-          "1": ""
+          "1": "Arbeitsdatei festgelegt"
         }
       },
       "SevenZip": {
@@ -593,22 +593,22 @@
         }
       },
       "ShellScript": {
-        "Description": "",
-        "Label": "",
+        "Description": "Erlaubt das Ausführen eines Shell-Skripts (.sh) in einer Unix-ähnlichen Umgebung.",
+        "Label": "Shell-Skript (.sh)",
         "Fields": {
-          "Code": ""
+          "Code": "Code"
         },
         "Outputs": {
-          "1": "",
-          "10": "",
-          "2": "",
-          "3": "",
-          "4": "",
-          "5": "",
-          "6": "",
-          "7": "",
-          "8": "",
-          "9": ""
+          "1": "gab 1 zurück",
+          "10": "gab 10 zurück",
+          "2": "gab 2 zurück",
+          "3": "gab 3 zurück",
+          "4": "gab 4 zurück",
+          "5": "gab 5 zurück",
+          "6": "gab 6 zurück",
+          "7": "gab 7 zurück",
+          "8": "gab 8 zurück",
+          "9": "gab 9 zurück"
         }
       },
       "Sleep": {
@@ -650,8 +650,8 @@
           "Input-Help": "Die Eingabe, mit der die Variable abgeglichen werden soll.",
           "Variable": "Variable",
           "Variable-Help": "Die Variable, mit der abgeglichen werden soll",
-          "VariableName": "",
-          "VariableName-Help": ""
+          "VariableName": "Variable",
+          "VariableName-Help": "Die Variable, mit der verglichen werden soll."
         },
         "Outputs": {
           "1": "Übereinstimmende Eingabevariable",
@@ -680,15 +680,15 @@
         }
       },
       "WriteText": {
-        "Description": "",
+        "Description": "Schreibt Text in eine Datei",
         "Fields": {
-          "File": "",
-          "File-Help": "",
-          "Text": "",
-          "Text-Help": ""
+          "File": "Datei",
+          "File-Help": "Die Datei, in die der Text geschrieben werden soll.",
+          "Text": "Text",
+          "Text-Help": "Der Text, der in die Datei geschrieben werden soll. Wenn leer gelassen, wird der vollständige Pfad der aktuellen Arbeitsdatei geschrieben."
         },
         "Outputs": {
-          "1": ""
+          "1": "Text in die Datei geschrieben"
         }
       },
       "Zip": {
@@ -698,10 +698,10 @@
           "DestinationFile-Help": "Der Dateiname der neu erstellten ZIP-Datei. Wenn es leer ist, wird der Name des Elements als ZIP-Datei verwendet.",
           "DestinationPath": "Zielordner",
           "DestinationPath-Help": "Der Zielordner, in dem die ZIP-Datei abgelegt werden soll. Wenn leer, wird die ZIP-Datei im Stammverzeichnis der Bibliothek abgelegt.",
-          "Path": "",
-          "Path-Help": "",
-          "SetWorkingFile": "",
-          "SetWorkingFile-Help": ""
+          "Path": "Pfad",
+          "Path-Help": "Der Pfad zur Datei oder zum Ordner, der gezippt werden soll. Wenn leer gelassen, wird die Arbeitsdatei gezippt.",
+          "SetWorkingFile": "Arbeitsdatei festlegen",
+          "SetWorkingFile-Help": "Wenn das neu erstellte Zip die neue Arbeitsdatei werden soll."
         },
         "Outputs": {
           "1": "Zip-Datei erstellt"
