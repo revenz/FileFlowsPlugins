@@ -25,12 +25,12 @@
         }
       },
       "MovieRenamer": {
-        "Description": "Bennant die Arbeitsdatei mithilfe der in 'MovieInfo' gespeicherten Metadaten um.\nHinweis: MovieLookup sollte vor diesem Flusselement im Fluss ausgeführt werden, damit es funktioniert.\n\nAusgabe 1: Datei wurde umbenannt\nAusgabe 2: Datei konnte nicht umbenannt werden",
+        "Description": "Bennant die Arbeitsdatei mithilfe der in 'MovieInfo' gespeicherten Metadaten um.\nHinweis: MovieLookup sollte vor diesemflow element im Flow ausgeführt werden, damit es funktioniert.\n\nAusgabe 1: Datei wurde umbenannt\nAusgabe 2: Datei konnte nicht umbenannt werden",
         "Fields": {
           "DestinationPath": "Zielpfad",
           "DestinationPath-Help": "Ob die Datei in ein anderes Verzeichnis verschoben werden soll.",
           "LogOnly": "Nur protokollieren",
-          "LogOnly-Help": "Aktivieren, wenn Sie dieses Flusselement nur testen möchten, ohne dass die Datei tatsächlich umbenannt wird",
+          "LogOnly-Help": "Aktivieren, wenn Sie diesesflow element nur testen möchten, ohne dass die Datei tatsächlich umbenannt wird",
           "Pattern": "Muster",
           "Pattern-Help": "Das Muster, das zum Umbenennen des Ordners verwendet werden soll. '{Title}', '{Year}', '{Extension}'."
         }

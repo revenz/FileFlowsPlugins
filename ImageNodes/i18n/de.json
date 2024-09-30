@@ -96,7 +96,7 @@
         }
       },
       "PixelCheck": {
-        "Description": "Dieses Flusselement überprüft, ob die Gesamtpixelanzahl eines Bildes die angegebene Schwelle überschreitet.",
+        "Description": "Diesesflow element überprüft, ob die Gesamtpixelanzahl eines Bildes die angegebene Schwelle überschreitet.",
         "Fields": {
           "Pixels": "Pixel",
           "Pixels-Help": "Die Anzahl der Pixel, die ein Bild enthalten sollte. Dies wird berechnet, indem die Breite des Bildes mit seiner Höhe multipliziert wird."

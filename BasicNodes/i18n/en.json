@@ -439,17 +439,17 @@
         }
       },
       "MoveFolder": {
-        "Description": "Moves a folder",
+        "Description": "Verschiebt einen Ordner",
         "Fields": {
-          "CreateSubfolder": "Create Subfolder",
-          "CreateSubfolder-Help": "If a subfolder with the name of the source folder will be created in the destination folder.",
-          "DestinationPath": "Destination",
-          "DestinationPath-Help": "The destination folder to move the source folder to.",
-          "SourcePath": "Source",
-          "SourcePath-Help": "The folder to move, if left blank the Working File will be used, if this is not a folder, then the flow element will fail."
+          "CreateSubfolder": "Unterordner erstellen",
+          "CreateSubfolder-Help": "Ob ein Unterordner mit dem Namen des Quellordners im Zielordner erstellt werden soll.",
+          "DestinationPath": "Ziel",
+          "DestinationPath-Help": "Der Zielordner, in den der Quellordner verschoben werden soll.",
+          "SourcePath": "Quelle",
+          "SourcePath-Help": "Der zu verschiebende Ordner. Wenn leer gelassen, wird die Arbeitsdatei verwendet. Wenn dies kein Ordner ist, schlägt das Flusselement fehl."
         },
         "Outputs": {
-          "1": "Folder moved"
+          "1": "Ordner verschoben"
         }
       },
       "OlderThan": {

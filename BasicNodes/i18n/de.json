@@ -9,6 +9,28 @@
   },
   "Flow": {
     "Parts": {
+      "BatchScript": {
+        "Description": "Ermöglicht das Ausführen eines Batch (.bat) Skripts in einer Windows-Umgebung.",
+        "Label": "Batch-Skript (.bat)",
+        "Fields": {
+          "Code": "Code"
+        },
+        "Outputs": {
+          "1": "gab 1 zurück",
+          "10": "gab 10 zurück",
+          "2": "gab 2 zurück",
+          "3": "gab 3 zurück",
+          "4": "gab 4 zurück",
+          "5": "gab 5 zurück",
+          "6": "gab 6 zurück",
+          "7": "gab 7 zurück",
+          "8": "gab 8 zurück",
+          "9": "gab 9 zurück"
+        }
+      },
+      "CompleteFlow": {
+        "Description": "Beendet den Ablauf erfolgreich"
+      },
       "CopyFile": {
         "Description": "Kopiert die Datei zum Zielverzeichnis",
         "Fields": {
@@ -32,6 +54,25 @@
           "1": "Datei kopiert"
         }
       },
+      "CSharpScript": {
+        "Description": "Ermöglicht das Ausführen von C#-Code innerhalb des Flows.",
+        "Label": "C#-Funktion",
+        "Fields": {
+          "Code": "Code"
+        },
+        "Outputs": {
+          "1": "gab 1 zurück",
+          "10": "gab 10 zurück",
+          "2": "gab 2 zurück",
+          "3": "gab 3 zurück",
+          "4": "gab 4 zurück",
+          "5": "gab 5 zurück",
+          "6": "gab 6 zurück",
+          "7": "gab 7 zurück",
+          "8": "gab 8 zurück",
+          "9": "gab 9 zurück"
+        }
+      },
       "Delete": {
         "Description": "Löscht eine Datei oder einen Ordner",
         "Fields": {
@@ -49,7 +90,9 @@
           "IfEmpty": "Leer",
           "IfEmpty-Help": "Löscht den Ausgangsordner nur, wenn er leer ist.",
           "IncludePatterns": "Muster prüfen",
-          "IncludePatterns-Help": "Optional, wenn diese Option aktiv ist, werden nur Dateien gewertet, die diesen Mustern entsprechen. Jedes dieser Muster kann übereinstimmen."
+          "IncludePatterns-Help": "Optional, wenn diese Option aktiv ist, werden nur Dateien gewertet, die diesen Mustern entsprechen. Jedes dieser Muster kann übereinstimmen.",
+          "TopMostOnly": "Nur oberstes Element",
+          "TopMostOnly-Help": "Wenn aktiviert, wird nur der Ordner, der die Datei direkt enthält, gelöscht, während übergeordnete Ordner intakt bleiben."
         },
         "Outputs": {
           "1": "Ausgangsordner gelöscht",
@@ -85,6 +128,19 @@
         "Fields": {
           "Reason": "Grund",
           "Reason-Help": "Ein optionaler Grund zum Protokollieren, warum dieser Flow fehlschlägt."
+        }
+      },
+      "FileDateCompare": {
+        "Description": "Überprüft, ob das Erstellungsdatum oder das letzte Änderungsdatum der Datei dem angegebenen Datumsbereich entspricht.",
+        "Fields": {
+          "Date": "Datum",
+          "DateComparision": "Vergleich",
+          "FileName": "Dateiname",
+          "FileName-Help": "Die zu überprüfende Datei. Lassen Sie das Feld leer, um die aktuelle Arbeitsdatei zu überprüfen."
+        },
+        "Outputs": {
+          "1": "Entspricht dem Datumsbereich.",
+          "2": "Entspricht nicht dem Datumsbereich."
         }
       },
       "FileExists": {
@@ -133,31 +189,86 @@
           "3": "Größer als Originaldatei"
         }
       },
-      "Function": {
+      "FileSizeWithin": {
+        "Description": "Überprüft, ob die neue Dateigröße innerhalb des zulässigen Bereichs der ursprünglichen Dateigröße liegt.",
+        "Value": "Wert",
+        "Value-Help": "Der zulässige Unterschied für die Dateigröße, dieser Wert kann entweder plus oder minus diesen Unterschied sein.",
+        "Outputs": {
+          "1": "Die Dateigröße liegt im zulässigen Bereich",
+          "2": "Die Dateigröße liegt nicht im zulässigen Bereich"
+        }
+      },
+      "FolderDateCompare": {
+        "Description": "Überprüft, ob das Erstellungsdatum oder das letzte Änderungsdatum des Ordners dem angegebenen Datumsbereich entspricht.",
+        "Label": "Ordnerdatum vergleichen",
         "Fields": {
-          "Code": "Code",
-          "Code-Help": "return -1 for error and flow to stop.  return 0 for flow to complete.  return 1 or more for the desired output to be called",
-          "Outputs": "Ausgänge",
-          "Template": "Template",
-          "Template-Help": "WARNUNG: Dadurch wird alles, was sich im Codeblock befindet, durch die von Ihnen ausgewählte Vorlage ersetzt."
+          "Date": "Datum",
+          "DateComparision": "Vergleich",
+          "Path": "Pfad",
+          "Path-Help": "Der Pfad zum zu überprüfenden Ordner. Lassen Sie das Feld leer, um die aktuelle Arbeitsdatei zu überprüfen.\nWenn eine Datei angegeben wird, wird der Ordner, der die Datei enthält, überprüft."
         },
         "Outputs": {
-          "1": "returned 1",
-          "10": "returned 10",
-          "2": "returned 2",
-          "3": "returned 3",
-          "4": "returned 4",
-          "5": "returned 5",
-          "6": "returned 6",
-          "7": "returned 7",
-          "8": "returned 8",
-          "9": "returned 9"
+          "1": "Entspricht dem Datumsbereich.",
+          "2": "Entspricht nicht dem Datumsbereich."
+        }
+      },
+      "FolderIterator": {
+        "Description": "Durchläuft alle Dateien in einem bestimmten Ordner und führt diese Dateien in einem Unterfluss aus.",
+        "Fields": {
+          "Flow": "Flow",
+          "Flow-Help": "Der Unterfluss, gegen den die Dateien ausgeführt werden sollen.",
+          "Folder": "Ordner",
+          "Folder-Help": "Der Ordner, dessen Dateien durchlaufen werden.",
+          "Pattern": "Muster",
+          "Pattern-Help": "Ein optionales Muster zur Einschränkung der Dateien für die Iteration, dies kann ein Platzhaltermuster sein, das mit einem `*` beginnt, oder ein regulärer Ausdruck.",
+          "Recursive": "Rekursiv",
+          "Recursive-Help": "Ob auch Dateien in allen Unterordnern durchlaufen werden sollen, oder ob nur die obersten Dateien durchlaufen werden sollen."
+        },
+        "Outputs": {
+          "1": "Ordnerdateien durchlaufen"
+        }
+      },
+      "Function": {
+        "Label": "Funktion",
+        "Fields": {
+          "Code": "Code",
+          "Code-Help": "Geben Sie -1 für einen Fehler zurück und der Flow stoppt. Geben Sie 0 zurück, damit der Flow abgeschlossen wird. Geben Sie 1 oder mehr zurück, um die gewünschte Ausgabe aufzurufen.",
+          "Outputs": "Ausgaben",
+          "Template": "Vorlage",
+          "Template-Help": "WARNUNG: Dies ersetzt alles im Codeblock mit der ausgewählten Vorlage."
+        },
+        "Outputs": {
+          "1": "gab 1 zurück",
+          "10": "gab 10 zurück",
+          "2": "gab 2 zurück",
+          "3": "gab 3 zurück",
+          "4": "gab 4 zurück",
+          "5": "gab 5 zurück",
+          "6": "gab 6 zurück",
+          "7": "gab 7 zurück",
+          "8": "gab 8 zurück",
+          "9": "gab 9 zurück"
         }
       },
       "GotoFlow": {
         "Description": "Dadurch können Sie zur Verarbeitung zu einem anderen Flow wechseln. Dieser Flow wird beendet und die Parameter und das Workingfile werden an den neuen Flow übergeben.",
         "Fields": {
-          "Flow": "Flow"
+          "Flow": "Flow",
+          "UpdateFlowUsed": "Flow aktualisieren",
+          "UpdateFlowUsed-Help": "Ob die Datei `Flow` aktualisiert werden soll, um auf diesen neuen Flow zu verweisen, oder ob sie als ursprünglicher Flow belassen werden soll."
+        }
+      },
+      "HasHardLinks": {
+        "Description": "Überprüft, ob eine Datei harte Links hat oder nicht.",
+        "Fields": {
+          "Count": "Anzahl",
+          "Count-Help": "Die Anzahl der harten Links, die erforderlich sind, um Ausgabe 1 zu aktivieren.",
+          "FileName": "Dateiname",
+          "FileName-Help": "Die zu überprüfende Datei. Lassen Sie das Feld leer, um die aktuelle Arbeitsdatei zu überprüfen."
+        },
+        "Outputs": {
+          "1": "Harte Links erkannt",
+          "2": "Keine harten Links erkannt"
         }
       },
       "IfBoolean": {
@@ -206,6 +317,62 @@
           "1": "Ordner einfügen"
         }
       },
+      "IsFromLibrary": {
+        "Description": "Überprüft, ob die verarbeitete Datei aus der angegebenen Bibliothek stammt.",
+        "Fields": {
+          "Library": "Bibliothek",
+          "Library-Help": "Die zu überprüfende Bibliothek."
+        },
+        "Outputs": {
+          "1": "Datei stammt aus der angegebenen Bibliothek.",
+          "2": "Datei stammt nicht aus der angegebenen Bibliothek."
+        }
+      },
+      "IsLinux": {
+        "Description": "Bestimmt, ob dieser Flow unter Linux läuft.",
+        "Outputs": {
+          "1": "Läuft unter Linux",
+          "2": "Läuft nicht unter Linux"
+        }
+      },
+      "IsMacOS": {
+        "Description": "Bestimmt, ob dieser Flow unter MacOS läuft.",
+        "Label": "Ist MacOS",
+        "Outputs": {
+          "1": "Läuft unter MacOS",
+          "2": "Läuft nicht unter MacOS"
+        }
+      },
+      "IsProcessingOnNode": {
+        "Description": "Überprüft, ob der Flow derzeit auf einem bestimmten Verarbeitungs-Knoten verarbeitet wird.",
+        "Fields": {
+          "Node": "Knoten",
+          "Node-Help": "Der zu überprüfende Verarbeitungs-Knoten."
+        },
+        "Outputs": {
+          "1": "Verarbeitet auf Knoten",
+          "2": "Wird nicht auf Knoten verarbeitet"
+        }
+      },
+      "IsWindows": {
+        "Description": "Bestimmt, ob dieser Flow unter Windows läuft.",
+        "Outputs": {
+          "1": "Läuft unter Windows",
+          "2": "Läuft nicht unter Windows"
+        }
+      },
+      "ListIterator": {
+        "Description": "Durchläuft alle Strings in einer gegebenen Liste und führt diese Strings gegen einen Unterfluss aus.",
+        "Fields": {
+          "Flow": "Flow",
+          "Flow-Help": "Der Unterfluss, gegen den die Strings ausgeführt werden sollen.",
+          "List": "Liste",
+          "List-Help": "Ein Name einer Variablen, die die zu durchlaufende Liste enthält."
+        },
+        "Outputs": {
+          "1": "Liste durchlaufen"
+        }
+      },
       "Log": {
         "Description": "Protokolliert eine Nachricht im Flowlog",
         "Fields": {
@@ -220,7 +387,7 @@
         "Description": "Vergleicht eine Menge von Werten und prüft die Bedingungen, um zu sehen, welche Ausgabe aufgerufen werden soll.",
         "Fields": {
           "MatchConditions": "",
-          "MatchConditionsHelp": "Die Bedingungen, die getestet werden, um zu bestimmen, welche Ausgabe aufgerufen werden soll.",
+          "MatchConditions-Help": "Die Übereinstimmungen, die getestet werden, um zu bestimmen, welcher Ausgang aufgerufen werden soll.",
           "MatchConditionsKey": "Wert",
           "MatchConditionsValue": "Ausdruck"
         }
@@ -262,6 +429,20 @@
         "Outputs": {
           "1": "Datei verschoben",
           "2": "Die Datei wurde verschoben, die Originaldatei konnte jedoch nicht gelöscht werden"
+        }
+      },
+      "MoveFolder": {
+        "Description": "",
+        "Fields": {
+          "CreateSubfolder": "",
+          "CreateSubfolder-Help": "",
+          "DestinationPath": "",
+          "DestinationPath-Help": "",
+          "SourcePath": "",
+          "SourcePath-Help": ""
+        },
+        "Outputs": {
+          "1": ""
         }
       },
       "OlderThan": {
@@ -308,6 +489,25 @@
           "2": "Nicht ausgetauscht"
         }
       },
+      "PowerShellScript": {
+        "Description": "",
+        "Label": "",
+        "Fields": {
+          "Code": ""
+        },
+        "Outputs": {
+          "1": "",
+          "10": "",
+          "2": "",
+          "3": "",
+          "4": "",
+          "5": "",
+          "6": "",
+          "7": "",
+          "8": "",
+          "9": ""
+        }
+      },
       "Random": {
         "Description": "Wählt eine zufällige Ausgabe",
         "Label": "Zufall",
@@ -342,6 +542,13 @@
           "1": "Original file replaced"
         }
       },
+      "Reprocess": {
+        "Description": "",
+        "Fields": {
+          "Node": "",
+          "Node-Help": ""
+        }
+      },
       "SetVariable": {
         "Description": "Setzt eine Variable im Flow.",
         "Label": "Variable setzen",
@@ -353,6 +560,19 @@
         },
         "Outputs": {
           "1": "Variable gesetzt"
+        }
+      },
+      "SetWorkingFile": {
+        "Description": "",
+        "Label": "",
+        "Fields": {
+          "DontDeletePrevious": "",
+          "DontDeletePrevious-Help": "",
+          "File": "",
+          "File-Description": ""
+        },
+        "Outputs": {
+          "1": ""
         }
       },
       "SevenZip": {
@@ -370,6 +590,25 @@
         },
         "Outputs": {
           "1": "7zip erstellt"
+        }
+      },
+      "ShellScript": {
+        "Description": "",
+        "Label": "",
+        "Fields": {
+          "Code": ""
+        },
+        "Outputs": {
+          "1": "",
+          "10": "",
+          "2": "",
+          "3": "",
+          "4": "",
+          "5": "",
+          "6": "",
+          "7": "",
+          "8": "",
+          "9": ""
         }
       },
       "Sleep": {
@@ -410,7 +649,9 @@
           "Input": "Eingang",
           "Input-Help": "Die Eingabe, mit der die Variable abgeglichen werden soll.",
           "Variable": "Variable",
-          "Variable-Help": "Die Variable, mit der abgeglichen werden soll"
+          "Variable-Help": "Die Variable, mit der abgeglichen werden soll",
+          "VariableName": "",
+          "VariableName-Help": ""
         },
         "Outputs": {
           "1": "Übereinstimmende Eingabevariable",
@@ -438,13 +679,29 @@
           "2": "Die Anfrage hat einen nicht erfolgreichen Statuscode zurückgegeben"
         }
       },
+      "WriteText": {
+        "Description": "",
+        "Fields": {
+          "File": "",
+          "File-Help": "",
+          "Text": "",
+          "Text-Help": ""
+        },
+        "Outputs": {
+          "1": ""
+        }
+      },
       "Zip": {
         "Description": "Ermöglicht Ihnen, die Datei zu komprimieren",
         "Fields": {
           "DestinationFile": "Zieldatei",
           "DestinationFile-Help": "Der Dateiname der neu erstellten ZIP-Datei. Wenn es leer ist, wird der Name des Elements als ZIP-Datei verwendet.",
           "DestinationPath": "Zielordner",
-          "DestinationPath-Help": "Der Zielordner, in dem die ZIP-Datei abgelegt werden soll. Wenn leer, wird die ZIP-Datei im Stammverzeichnis der Bibliothek abgelegt."
+          "DestinationPath-Help": "Der Zielordner, in dem die ZIP-Datei abgelegt werden soll. Wenn leer, wird die ZIP-Datei im Stammverzeichnis der Bibliothek abgelegt.",
+          "Path": "",
+          "Path-Help": "",
+          "SetWorkingFile": "",
+          "SetWorkingFile-Help": ""
         },
         "Outputs": {
           "1": "Zip-Datei erstellt"

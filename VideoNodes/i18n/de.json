@@ -360,7 +360,7 @@
         }
       },
       "FFmpegBuilderDurationStart": {
-        "Descriptions": "Dieses Fluss-Element ermöglicht es Benutzern, den Startpunkt und die Dauer für das Extrahieren eines Segments aus einem Video zu definieren.",
+        "Descriptions": "Dieses Flow-Element ermöglicht es Benutzern, den Startpunkt und die Dauer für das Extrahieren eines Segments aus einem Video zu definieren.",
         "Label": "FFMPEG Builder: Dauer/Start",
         "Fields": {
           "Duration": "Dauer",
