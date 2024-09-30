@@ -188,6 +188,8 @@
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "Bitrate der Tonspur",
+          "BitratePerChannel": "Bitrate pro Kanal",
+          "BitratePerChannel-Help": "Ob die angegebene Bitrate pro Kanal gelten soll",
           "Channels": "Kanäle",
           "Channels-Help": "Die Anzahl der Kanäle dieser neuen Audiospur.\nWenn Sie mehr Kanäle als die Quelle angeben, wird FFMPEG sie automatisch hochmischen.\nWenn Sie weniger Kanäle als die Quelle angeben, wird FFMPEG sie automatisch heruntermischen.",
           "Codec": "Codec",
@@ -680,6 +682,8 @@
         "Description": "Dieses Flow-Element sortiert Tracks auf der Grundlage der vom Benutzer festgelegten Sortieroptionen.",
         "Label": "FFMPEG-Builder: Track-Sortierer",
         "Fields": {
+          "SetFirstDefault": "Als Standard festlegen",
+          "SetFirstDefault-Help": "Ob der erste Track nach dem Sortieren als Standard festgelegt werden soll.",
           "Sorters": "Sortierer",
           "Sorters-Help": "Fügen Sie eine oder mehrere Sortieroptionen hinzu, nach denen die Tracks sortiert werden sollen.",
           "SortersKey": "Feld",
@@ -832,7 +836,9 @@
           "OutputFile": "Ausgabe-Datei",
           "OutputFile-Help": "Wo soll die Ausgabedatei gespeichert werden? z. B. \"'{folder.Orig.FullName}\\{file.Orig.FileName}.srt'\" um sie zusammen mit der Originaldatei als srt-Ausgabe zu speichern.\nWenn diese Option leer gelassen wird, wird ein srt-Untertitel im selben Ordner wie die ursprüngliche Eingabedatei erstellt.",
           "SetWorkingFile": "Als Arbeitsdatei festlegen",
-          "SetWorkingFile-Help": "Wenn diese Option aktiviert ist, wird beim Extrahieren eines Untertitels die Arbeitsdatei auf diesen extrahierten Untertitel geändert.  Die ursprüngliche Arbeitsdatei wird NICHT gelöscht."
+          "SetWorkingFile-Help": "Wenn diese Option aktiviert ist, wird beim Extrahieren eines Untertitels die Arbeitsdatei auf diesen extrahierten Untertitel geändert.  Die ursprüngliche Arbeitsdatei wird NICHT gelöscht.",
+          "Title": "Titel",
+          "Title-Help": "Optional einen Titel eingeben. Dies kann entweder ein regulärer Ausdruck oder eine Zeichenfolge sein, die im Titel erscheinen muss, um eine Übereinstimmung zu erzielen."
         },
         "Outputs": {
           "1": "Untertitel extrahiert",
