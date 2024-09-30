@@ -16,6 +16,1016 @@
   },
   "Flow": {
     "Parts": {
+      "AudioToVideo": {
+        "Description": "Konverterar en ljudfil till en videofil och genererar en video baserad på ljudet.",
+        "Fields": {
+          "Codec": "Codec",
+          "Color": "Färg",
+          "Color-Help": "Valfri färgkod i formatet #RRGGBB att använda för ljudvågorna, måste vara i formatet #RRGGBB, till exempel #FF0090",
+          "Container": "Behållare",
+          "HardwareEncoding": "Hårdvaruavkodning",
+          "HardwareEncoding-Help": "Om den här kryssrutan är markerad kommer den att testa om hårdvaruavkodare finns på bearbetningsnoden, och om de finns, kommer hårdvaruavkodning att användas; annars faller den tillbaka till CPU-avkodning.",
+          "Resolution": "Upplösning",
+          "Visualization": "Visualisering",
+          "Visualization-Help": "Den visualisering som ska användas i den genererade videon. Se hjälp för exempel"
+        }
+      },
+      "CanUseHardwareEncoding": {
+        "Description": "Kontrollerar om den angivna hårdvaruavkodaren för närvarande är tillgänglig för flödet.",
+        "Fields": {
+          "Encoder": "Avkodare",
+          "Encoder-Help": "Den hårdvaruavkodare som ska kontrolleras"
+        }
+      },
+      "ComskipRemoveAds": {
+        "Description": "Använder en comskip EDL-fil och tar bort reklam med hjälp av den filen.",
+        "Fields": {
+          "RunComskipIfNoEdl": "Kör Comskip",
+          "RunComskipIfNoEdl-Help": "Kör comskip mot filen om ingen comskip (EDL) fil hittas."
+        },
+        "Outputs": {
+          "1": "Reklam borttagen, sparad till temporär fil",
+          "2": "Ingen reklam upptäckt"
+        }
+      },
+      "DisableAmd": {
+        "Description": "Inaktiverar AMD AMF hårdvaruavkodare",
+        "Label": "Inaktivera AMD",
+        "Outputs": {
+          "1": "Inaktiverad"
+        }
+      },
+      "DisableIntelQsv": {
+        "Description": "Inaktiverar Intel QSV hårdvaruavkodare",
+        "Label": "Inaktivera Intel QSV",
+        "Outputs": {
+          "1": "Inaktiverad"
+        }
+      },
+      "DisableNvidia": {
+        "Description": "Inaktiverar NVIDIA hårdvaruavkodare",
+        "Label": "Inaktivera NVIDIA",
+        "Outputs": {
+          "1": "Inaktiverad"
+        }
+      },
+      "DisableVaapi": {
+        "Description": "Inaktiverar VAAPI hårdvaruavkodare",
+        "Label": "Inaktivera VAAPI",
+        "Outputs": {
+          "1": "Inaktiverad"
+        }
+      },
+      "FfmpegBuilderAddInputFile": {
+        "Label": "FFMPEG Builder: Lägg till indatafil",
+        "Fields": {
+          "Pattern": "Mönster",
+          "Pattern-Help": "Ett reguljärt uttryck som används för att söka efter indatafiler",
+          "UseSourceDirectory": "Använd källkatalog",
+          "UseSourceDirectory-Help": "Om markerad kommer den ursprungliga källkatalogen att sökas, annars kommer arbetskatalogen att användas."
+        },
+        "Outputs": {
+          "1": "Fil hittad och tillagd",
+          "2": "Ingen fil hittad"
+        }
+      },
+      "FfmpegBuilderAspectRatio": {
+        "Label": "FFMPEG Builder: Bildförhållande",
+        "Fields": {
+          "AdjustmentMode": "Justeringstyp",
+          "AdjustmentMode-Help": "Välj hur bildförhållandet ska upprätthållas. Alternativen inkluderar att sträcka videon, lägga till svarta kanter (letterbox) eller beskära videon för att passa bildförhållandet.",
+          "AspectRatio": "Bildförhållande",
+          "AspectRatio-Help": "Välj önskat bildförhållande för videon. Tillgängliga alternativ inkluderar standard bildförhållanden (16:9, 4:3, 21:9) eller ett anpassat förhållande.",
+          "CustomHeight": "Anpassad höjd",
+          "CustomHeight-Help": "Ange höjd att använda när alternativet för anpassat bildförhållande väljs.",
+          "CustomWidth": "Anpassad bredd",
+          "CustomWidth-Help": "Ange bredd att använda när alternativet för anpassat bildförhållande väljs."
+        },
+        "Outputs": {
+          "1": "Bildförhållandet ändrades framgångsrikt",
+          "2": "Videon var redan i önskat bildförhållande"
+        }
+      },
+      "FfmpegBuilderAudioAddTrack": {
+        "Description": "Lägger till en ny ljudspår till FFMPEG Builder som kommer att läggas till när byggaren körs.",
+        "Label": "FFMPEG Builder: Ljud Lägg till spår",
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "Bitrate för det nya ljudspåret",
+          "BitratePerChannel": "Bitrate per kanal",
+          "BitratePerChannel-Help": "Om den angivna bitrate ska vara per kanal",
+          "Channels": "Kanaler",
+          "Channels-Help": "Antalet kanaler som detta nya ljudspår kommer att ha.\nOm du anger fler kanaler än källan kommer FFMPEG automatiskt att uppblanda det.\nOm du anger färre kanaler än källan kommer FFMPEG automatiskt att nedblanda det.",
+          "Codec": "Codec",
+          "Codec-Help": "Den codec som ska användas för att koda ljudet",
+          "CustomTrackSelection": "Källspårval",
+          "Index": "Index",
+          "Index-Help": "Index där det nya ljudspåret ska infogas.  0-baserat, så för att infoga det nya ljudspåret som det första spåret, sätt detta till 0.",
+          "Language": "Språk",
+          "Language-Help": "Valfri [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) språkkod att använda. Kommer att försöka hitta ett ljudspår med denna språkkod; om inte kommer det bästa ljudspåret att användas.",
+          "NewTitle": "Ny titel",
+          "NewTitle-Help": "Valfri titel för det ny skapade ljudspåret. Om den lämnas tom kommer källans titel att användas.",
+          "RemoveTitle": "Ta bort titel",
+          "RemoveTitle-Help": "Om källans titel ska tas bort och spåret inte ska ha någon titel.",
+          "SampleRate": "Samplingsfrekvens",
+          "SampleRate-Help": "Den samplingsfrekvens som ska användas för det nya ljudspåret",
+          "TrackSelectionOptions": "Spårval",
+          "TrackSelectionOptionsKey": "Egenskap",
+          "TrackSelectionOptionsValue": "Värde"
+        },
+        "Outputs": {
+          "1": "Lagt till ljudspår till FFMPEG Builder",
+          "2": "Inget lämpligt källljudspår hittades för att skapa nytt ljudspår"
+        }
+      },
+      "FfmpegBuilderAudioAdjustVolume": {
+        "Description": "Justera ljudspårens volym i en videofil med FFMPEG",
+        "Label": "FFMPEG Builder: Justera ljudvolym",
+        "Fields": {
+          "AllAudio": "Alla ljudspår",
+          "AllAudio-Help": "Om alla ljudspår ska normaliseras eller om bara det första spåret ska göras",
+          "NotMatching": "Ej matchande",
+          "NotMatching-Help": "Om ljudspår som INTE matchar mönstret ska tas bort",
+          "Pattern": "Mönster",
+          "Pattern-Help": "Ett reguljärt uttryck att matcha mot, t.ex. \"kommentar\" för att ta bort kommentarspår",
+          "UseLanguageCode": "Använd språk kod",
+          "UseLanguageCode-Help": "Om språk koden för ljudspåret ska användas istället för titeln",
+          "VolumePercent": "Volym procent",
+          "VolumePercent-Help": "Procent av den justerade volymen.\n100 betyder ingen justering\n50 betyder halv volym\n0 betyder tyst"
+        },
+        "Outputs": {
+          "1": "Volymfilter för ljudspår har lagts till i FFMPEG Builder",
+          "2": "Inga ljudspår har justerats"
+        }
+      },
+      "FfmpegBuilderAudioConvert": {
+        "Description": "Tillåter dig att konvertera alla spår som matchar parametrarna.",
+        "Label": "FFMPEG Builder: Ljudkonvertering",
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "Bitrate för ljudspåret",
+          "BitratePerChannel": "Bitrate per kanal",
+          "BitratePerChannel-Help": "Om den angivna bitraten ska vara per kanal",
+          "Channels": "Kanaler",
+          "Channels-Help": "Antal kanaler detta nya ljudspår kommer att ha.\nOm du anger fler kanaler än källan, kommer FFMPEG automatiskt att uppblanda den.\nOm du anger färre kanaler än källan, kommer FFMPEG automatiskt att nedblanda den.",
+          "Codec": "Codec",
+          "Codec-Help": "Codec att använda för att koda ljudet",
+          "CustomTrackSelection": "Konvertera",
+          "PcmFormat": "Format",
+          "PcmFormat-Help": "PCM-formatet att använda för att koda PCM-ljud.",
+          "TrackSelectionOptions": "Matchande",
+          "TrackSelectionOptionsKey": "Egenskap",
+          "TrackSelectionOptionsValue": "Värde"
+        },
+        "Outputs": {
+          "1": "Spår som ska konverteras",
+          "2": "Inga spår att konvertera"
+        }
+      },
+      "FfmpegBuilderAudioConverter": {
+        "Description": "Tillåter dig att konvertera alla spår som matchar parametrarna.",
+        "Label": "FFMPEG Builder: Ljudkonverterare",
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "Bitrate för ljudspåret",
+          "BitratePerChannel": "Bitrate per kanal",
+          "BitratePerChannel-Help": "Om den angivna bitraten ska vara per kanal",
+          "Channels": "Kanaler",
+          "Channels-Help": "Antal kanaler detta nya ljudspår kommer att ha.\nOm du anger fler kanaler än källan, kommer FFMPEG automatiskt att uppblanda den.\nOm du anger färre kanaler än källan, kommer FFMPEG automatiskt att nedblanda den.",
+          "Codec": "Codec",
+          "Codec-Help": "Codec att använda för att koda ljudet",
+          "Field": "Fält",
+          "Field-Help": "Fältet att matcha mönstret mot. Lämna mönstret tomt för att matcha allt utan något värde.",
+          "NotMatching": "Ej matchande",
+          "NotMatching-Help": "Om ljudspår som INTE matchar mönstret ska konverteras",
+          "Pattern": "Mönster",
+          "Pattern-Help": "En sträng eller reguljärt uttryck att matcha mot, t.ex. \"kommentar\" för att matcha kommentar exakt eller \".*kommentar.*\" för att matcha kommentar var som helst i strängen",
+          "PcmFormat": "Format",
+          "PcmFormat-Help": "PCM-formatet att använda för att koda PCM-ljud."
+        },
+        "Outputs": {
+          "1": "Spår som ska konverteras",
+          "2": "Inga spår att konvertera"
+        }
+      },
+      "FfmpegBuilderAudioNormalization": {
+        "Description": "Normaliserar alla ljudspår i en videofil med FFMPEG:s loudnorm-filter",
+        "Label": "FFMPEG Builder: Ljudnormalisering",
+        "Fields": {
+          "AllAudio": "Alla ljudspår",
+          "AllAudio-Help": "Om alla ljudspår ska normaliseras eller om bara det första spåret ska göras",
+          "NotMatching": "Ej matchande",
+          "NotMatching-Help": "Om ljudspår som INTE matchar mönstret ska tas bort",
+          "Pattern": "Mönster",
+          "Pattern-Help": "Ett reguljärt uttryck att matcha mot, t.ex. \"kommentar\" för att ta bort kommentarspår",
+          "TwoPass": "Två pass",
+          "TwoPass-Help": "Om ljudspåren ska använda två pass normalisering. Detta förbättrar normaliseringen men ökar bearbetningstiden.",
+          "UseLanguageCode": "Använd språk kod",
+          "UseLanguageCode-Help": "Om språk koden för ljudspåret ska användas istället för titeln"
+        },
+        "Outputs": {
+          "1": "Ljudspåren normaliserades och lades till i FFMPEG Builder",
+          "2": "Inga ljudspår hittades för normalisering"
+        }
+      },
+      "FfmpegBuilderAudioSetLanguage": {
+        "Description": "Tillåter dig att ställa in språket för eventuella spår som inte har något språk inställt. Om spåret har ett språk inställt, kommer det att hoppas över.\n\nUtdata 1: Spår har uppdaterats\nUtdata 2: Inga spår behövde uppdateras",
+        "Label": "FFMPEG Builder: Ställ in språk",
+        "Fields": {
+          "Language": "Språk",
+          "Language-Help": "Den [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) språk koden som ska användas.",
+          "StreamType": "Typ",
+          "StreamType-Help": "Typen av spår att ställa in språket för"
+        },
+        "Outputs": {
+          "1": "Spår uppdaterade i FFMPEG Builder",
+          "2": "Spår INTE uppdaterade"
+        }
+      },
+      "FfmpegBuilderAudioTrackRemover": {
+        "Description": "Tillåter dig att ta bort spår baserat på antingen deras titel eller deras språkkoder.\n\nEventuell titel (eller språkkod om inställt på \"Använd språkkod\") som är tom kommer INTE att tas bort oavsett mönster.",
+        "Label": "FFMPEG Builder: Spårborttagare (Obsolet)",
+        "Fields": {
+          "MatchType": "Matchar",
+          "MatchType-Help": "Värdet som ska matchas mot.",
+          "NotMatching": "Inte matchande",
+          "NotMatching-Help": "Om ljudspår SOM INTE matchar mönstret ska tas bort",
+          "Pattern": "Mönster",
+          "Pattern-Help": "Ett reguljärt uttryck att matcha mot, t.ex. \"kommentar\" för att ta bort kommentarspår",
+          "RemoveAll": "Ta bort alla",
+          "RemoveAll-Help": "Ta bort alla aktuella spår från utdatafilen. Du kan använda Lägg till spår efteråt för att lägga till spår av specifika codecs.",
+          "RemoveIndex": "Ta bort index",
+          "RemoveIndex-Help": "Startindex för att ta bort spåren från. Detta gör att du kan ta bort alla, eller alla matchande, spår efter startindexet.\nSätt till noll för att ta bort alla som matchar parametrarna.\nSätt till 1 för att behålla det första spåret och ta bort eventuella efterföljande som matchar parametrarna.",
+          "StreamType": "Typ",
+          "StreamType-Help": "Typen av spår som ska omordnas i FFMPEG Builder",
+          "UseLanguageCode": "Använd språkkod",
+          "UseLanguageCode-Help": "Om språkkoden för spåret ska användas istället för titeln"
+        },
+        "Outputs": {
+          "1": "Spår som ska tas bort",
+          "2": "Spår som INTE ska tas bort"
+        }
+      },
+      "FfmpegBuilderAudioTrackReorder": {
+        "Description": "Tillåter dig att omordna spår i den föredragna ordningen.\n\nAnge språken/ljudcodecs/kanalerna i den ordning du vill. Eventuella som inte listas kommer att ordnas efter de som anges i sin ursprungliga ordning.\nOm det finns flera spår med samma språk/codec/kanaler, kommer de att ordnas först efter den ordning du angav, sedan i sin ursprungliga ordning.\n\nObservera att det första spåret efter omordningen kommer att ställas in som standardspår..\n\nUtdata 1: Spår omordnades\nUtdata 2: Spår behövde inte omordnas",
+        "Label": "FFMPEG Builder: Spår omordna",
+        "Fields": {
+          "Channels": "Kanaler",
+          "Channels-Help": "Ordningen för ljudkanaler att sortera ljudspåren efter. Denna sortering görs före språken.\nTill exempel \"5.1\",\"7.1\",\"6.2\",\"2\"",
+          "Languages": "Språk",
+          "Languages-Help": "Ordningen för språk att sortera spåren efter. Denna sortering görs före codec.",
+          "OrderedTracks": "Ordnade Codecs",
+          "OrderedTracks-Help": "Ordningen för codecs till spåren. Detta görs efter språken (om några)",
+          "StreamType": "Typ",
+          "StreamType-Help": "Typen av spår som ska omordnas i FFMPEG Builder"
+        },
+        "Outputs": {
+          "1": "Spår omordnades i FFMPEG Builder",
+          "2": "Spår INTE omordnades"
+        }
+      },
+      "FfmpegBuilderAutoChapters": {
+        "Description": "Automatiskt upptäcka scenförändringar i videon för att generera kapitel.",
+        "Label": "FFMPEG Builder: Automatiska kapitel",
+        "Fields": {
+          "MinimumLength": "Minimi längd",
+          "MinimumLength-Help": "Den minimi längden av ett kapitel i sekunder",
+          "MinimumLength-Suffix": "sekunder",
+          "Percent": "Procent",
+          "Percent-Help": "Tröskelvärdet i procent som ska användas för scenupptäcktsförändringar. Ett bra värde är 45%",
+          "Percent-Suffix": "%"
+        },
+        "Outputs": {
+          "1": "Kapitel genererade och tillagda till FFMPEG Builder",
+          "2": "Inga kapitel upptäcktes eller videon hade redan kapitel"
+        }
+      },
+      "FfmpegBuilderComskipChapters": {
+        "Description": "Använder en comskip EDL-fil och kommer att skapa kapitel givet den EDL comskip-filen.",
+        "Label": "FFMPEG Builder: Comskip Kapitel",
+        "Fields": {
+          "RunComskipIfNoEdl": "Kör Comskip",
+          "RunComskipIfNoEdl-Help": "Kör comskip mot filen om ingen comskip (EDL) fil hittas."
+        },
+        "Outputs": {
+          "1": "Reklamkapitel skapade, tillagda till FFMPEG Builder",
+          "2": "Inga reklamfilmer upptäcktes"
+        }
+      },
+      "FfmpegBuilderCropBlackBars": {
+        "Description": "Uppdaterad FFMPEG Builder för att beskära svarta kanter om de upptäcks",
+        "Label": "FFMPEG Builder: Beskär svarta kanter",
+        "Fields": {
+          "CroppingThreshold": "Tröskel",
+          "CroppingThreshold-Help": "Antalet pixlar som måste vara större än för att beskäras. T.ex. om det endast finns 5 pixlar som upptäckts som svart område, kan du anse att detta är för litet för att beskära."
+        },
+        "Outputs": {
+          "1": "FFMPEG Builder uppdaterad för att beskära svarta kanter",
+          "2": "Inga svarta kanter upptäcktes, inga beskärningar"
+        }
+      },
+      "FfmpegBuilderCustomParameters": {
+        "Description": "Låter dig lägga till anpassade parametrar till FFMPEG Builder för exekvering",
+        "Label": "FFMPEG Builder: Anpassade parametrar",
+        "Fields": {
+          "ForceEncode": "Tvinga kodning",
+          "ForceEncode-Help": "Om detta ska tvinga FFMPEG Builder Executor att alltid exekvera även om inga ändringar upptäckts som vanligtvis skulle kräva att exekveraren körs.",
+          "Parameters": "Parametrar",
+          "Parameters-Help": "Parametrarna att lägga till till FFMPEG Builder för exekvering"
+        },
+        "Outputs": {
+          "1": "Parametrar tillagda"
+        }
+      },
+      "FfmpegBuilderDefaultOriginalLanguage": {
+        "Description": "Detta flödeselement kommer att försöka ställa in de ursprungliga språkspåren som standard. Det kommer att försöka hitta det första spåret som matchar det ursprungliga språket, och sedan ställa in det som standard.\n\nOm inga spår hittas med det ursprungliga språket görs inga ändringar.",
+        "Label": "FFMPEG Builder: Standardursprungsspråk",
+        "Fields": {
+          "MakeFirst": "Gör först",
+          "MakeFirst-Help": "Om det ursprungliga språkspåret också ska bli det första spåret.",
+          "StreamType": "Typ",
+          "StreamType-Help": "Typen av spår som ska uppdateras"
+        },
+        "Outputs": {
+          "1": "Spår har modifierats",
+          "2": "Inga spår har ändrats"
+        }
+      },
+      "FfmpegBuilderDeinterlace": {
+        "Label": "FFMPEG Builder: Deinterlace",
+        "Fields": {
+          "Mode": "Läge",
+          "Mode-Help": "Metoden för deinterlacing som ska användas. Se hjälp för mer information."
+        },
+        "Outputs": {
+          "1": "Tillagd deinterlace-filter till videoström"
+        }
+      },
+      "FFmpegBuilderDurationStart": {
+        "Descriptions": "Detta flödeselement gör det möjligt för användare att definiera startpunkten och varaktigheten för att extrahera ett segment från en video.",
+        "Label": "FFMPEG Builder: Varaktighet/Start",
+        "Fields": {
+          "Duration": "Varaktighet",
+          "Duration-Help": "Varaktigheten för videofilen, om 0, justeras inte varaktigheten.",
+          "Start": "Start",
+          "Start-Help": "Starten av videofilen, om 0, justeras inte starten."
+        },
+        "Outputs": {
+          "1": "Varaktighet/Start konfigurerad",
+          "2": "Misslyckades med att ställa in varaktighet/start"
+        }
+      },
+      "FfmpegBuilderExecutor": {
+        "Description": "Utför ett FFMPEG Builder-kommando som skapats av andra FFMPEG Builder-flödeselement.",
+        "Label": "FFMPEG Builder: Exekutor",
+        "Fields": {
+          "HardwareDecoding": "Hårdvaruavkodning",
+          "HardwareDecoding-Help": "Om exekutorn ska försöka använda hårdvaruavkodning. Om inte tillgängligt kommer exekveringen att fortsätta utan att hårdvaruavkodning är aktiverad.",
+          "Strictness": "Strikthet",
+          "Strictness-Help": "Ger dig möjlighet att anpassa strängheten hos FFmpeg. Detta bör lämnas på 'Experimentell' för de flesta användare."
+        },
+        "Outputs": {
+          "1": "FFMPEG Builder kördes framgångsrikt och skapade en ny temporär fil",
+          "2": "Inga förändringar upptäcktes i FFMPEG Builder, filen skapades inte"
+        }
+      },
+      "FfmpegBuilderHdrToSdr": {
+        "Description": "Kontrollerar om en videoström är HDR och om den är det, uppdaterar FFMPEG Builder för att konvertera den till SDR.",
+        "Label": "FFMPEG Builder: HDR till SDR",
+        "Outputs": {
+          "1": "HDR-ström upptäcktes och FFMPEG Builder uppdaterades för att konvertera",
+          "2": "Ingen HDR-ström hittades"
+        }
+      },
+      "FfmpegBuilderKeepOriginalLanguage": {
+        "Description": "Detta flödeselement kommer att behålla endast det ursprungliga språket och eventuella ytterligare språk som användaren definierar.\n\nAlla andra språkströmmar kommer att tas bort/märkas för borttagning.",
+        "Label": "FFMPEG Builder: Behåll Originalspråk",
+        "Fields": {
+          "AdditionalLanguages": "Ytterligare Språk",
+          "AdditionalLanguages-Help": "En valfri lista över ytterligare språkkoder att behålla.\n\nDet rekommenderas att använda en [ISO 639-2 språkkod](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes).",
+          "FirstIfNone": "Första Om Ingen",
+          "FirstIfNone-Help": "När aktiverat, säkerställer detta att minst en spår behålls. Om inga spår som matchar det ursprungliga språket och inga spår som matchar de ytterligare språken hittas, kommer det första spåret att behållas oavsett.\n\nDetta undviker eventuella problem med att ingen ljud finns kvar på videon.",
+          "KeepOnlyFirst": "Behåll Endast Första",
+          "KeepOnlyFirst-Help": "När aktiverat kommer endast det första spåret av varje språk att behållas.\n\nTill exempel, om det fanns 2 engelska spår, 3 spanska spår och 1 tyskt spår. Det ursprungliga språket var spanska, ytterligare språk var inställt på `eng`, då skulle resultatet vara 1 engelskt spår och 1 spanskt spår, resten skulle tas bort.",
+          "StreamType": "Typ",
+          "StreamType-Help": "Typen av spår som ska uppdateras",
+          "TreatEmptyAsOriginal": "Behandla Tomt Som Original",
+          "TreatEmptyAsOriginal-Help": "När aktiverat kommer varje spår som inte har något språk inställt att behandlas som om det vore det ursprungliga språket.\n\nTill exempel, om det ursprungliga språket är maori, och ett spår inte har något språk inställt på det, kommer det att behandlas som maori."
+        },
+        "Outputs": {
+          "1": "Spår har modifierats",
+          "2": "Inga spår har ändrats"
+        }
+      },
+      "FfmpegBuilderMetadataRemover": {
+        "Description": "Tar bort metadata från FFMPEG Builder så att när filen behandlas kommer den valda metadatan att tas bort.\n\nObs: Endast metadatan när detta flödeselement är påverkat, om metadata läggs till efter att denna nod har kört, kommer den inte att påverkas.",
+        "Label": "FFMPEG Builder: Metadata Borttagare",
+        "Fields": {
+          "Audio": "Ljud",
+          "Audio-Help": "Om ljudspår ska ha denna metadata borttagen",
+          "RemoveAdditionalMetadata": "Ta Bort Ytterligare Metadata",
+          "RemoveAdditionalMetadata-Help": "Om ytterligare metadata ska tas bort. Ytterligare metadata är icke-standardiserad metadata som kan ha lagts till en videofil, t.ex. av iTunes.",
+          "RemoveImages": "Ta Bort Bilder",
+          "RemoveImages-Help": "Om några bilder som hittas i metadatan ska tas bort",
+          "RemoveLanguage": "Ta Bort Språk",
+          "RemoveLanguage-Help": "Om språket ska tas bort från spåren",
+          "RemoveTitle": "Ta Bort Titel",
+          "RemoveTitle-Help": "Om titeln ska tas bort från spåren",
+          "Subtitle": "Undertext",
+          "Subtitle-Help": "Om undertextspår ska ha denna metadata borttagen",
+          "Video": "Video",
+          "Video-Help": "Om videospår ska ha denna metadata borttagen"
+        },
+        "Outputs": {
+          "1": "Metadata borttagen från FFMPEG Builder"
+        }
+      },
+      "FfmpegBuilderPreExecute": {
+        "Description": "Detta element låter dig köra anpassad kod precis innan [FFMPEG Builder: Exekutor](https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder) kör FFmpeg.\n\nDetta gör att du kan ändra de argument som skickas till FFmpeg.",
+        "Label": "FFMPEG Builder: Pre-Exekvera",
+        "Fields": {
+          "Code": "Kod"
+        },
+        "Outputs": {
+          "1": "Pre-Exekvering inställd"
+        }
+      },
+      "FfmpegBuilderProres": {
+        "Description": "Kodifierar videon till prores-formatet.",
+        "Label": "FFMPEG Builder: Prores",
+        "Fields": {
+          "Encoder": "Kodare",
+          "Encoder-Help": "Vilken FFmpeg prores-kodare som ska användas.",
+          "PixelFormat": "Pixel Format",
+          "Profile": "Profil",
+          "Quality": "Kvalitet",
+          "Quality-Help": "0 för maximal kvalitet, 32 för minimal kvalitet. 9 till 13 är bra värden att använda."
+        },
+        "Outputs": {
+          "1": "Video inställd att använda prores"
+        }
+      },
+      "FfmpegBuilderRemoveAttachments": {
+        "Description": "Tar bort alla bilagor från videon, om det finns några.",
+        "Label": "FFMPEG Builder: Ta bort bilagor",
+        "Outputs": {
+          "1": "FFMPEG Builder inställd för att ta bort bilagor."
+        }
+      },
+      "FfmpegBuilderRemuxToMkv": {
+        "Description": "Remuxar en videofil till en MKV-behållare.",
+        "Label": "FFMPEG Builder: Remuxa till MKV",
+        "Outputs": {
+          "1": "FFMPEG Builder inställd för att remuxa till MKV"
+        }
+      },
+      "FfmpegBuilderRemuxToMov": {
+        "Description": "Remuxar en videofil till en MOV-behållare.",
+        "Label": "FFMPEG Builder: Remuxa till MOV",
+        "Outputs": {
+          "1": "FFMPEG Builder inställd för att remuxa till MOV"
+        }
+      },
+      "FfmpegBuilderRemuxToMP4": {
+        "Description": "Remuxar en videofil till en MP4-behållare.",
+        "Label": "FFMPEG Builder: Remuxa till MP4",
+        "Fields": {
+          "UseHvc1": "Använd HVC1",
+          "UseHvc1-Help": "Om HVC1 ska användas istället för standard HEV1"
+        },
+        "Outputs": {
+          "1": "FFMPEG Builder inställd för att remuxa till MP4"
+        }
+      },
+      "FfmpegBuilderRemuxToMxf": {
+        "Description": "Remuxar en videofil till en MXF-behållare.",
+        "Label": "FFMPEG Builder: Remuxa till MXF",
+        "Outputs": {
+          "1": "FFMPEG Builder inställd för att remuxa till MXF"
+        }
+      },
+      "FfmpegBuilderRemuxToWebm": {
+        "Description": "Remuxar en videofil till en WEBM-behållare.",
+        "Label": "FFMPEG Builder: Remuxa till WEBM",
+        "Outputs": {
+          "1": "FFMPEG Builder inställd för att remuxa till WEBM"
+        }
+      },
+      "FfmpegBuilderScaler": {
+        "Description": "Detta låter dig skala en video till angivna dimensioner. Det kommer att behålla bildförhållandet för videon, så om videon var 1920x1000 skulle den skalas till 1280x668 om du väljer 720P.",
+        "Label": "FFMPEG Builder: Video Skalar",
+        "Fields": {
+          "Force": "Tvinga",
+          "Force-Help": "När det är markerat kommer videon att tvingas skalas även om arbetsfilen redan är i denna upplösning (eller nära denna upplösning).",
+          "OnlyIfLarger": "Endast om större",
+          "OnlyIfLarger-Help": "Videon kommer endast att skalas till denna upplösning om videon för närvarande är större än denna upplösning",
+          "Resolution": "Upplösning"
+        },
+        "Outputs": {
+          "1": "FFMPEG Builder skalfilter tillagt",
+          "2": "Videon var redan i/nära den skala upplösningen"
+        }
+      },
+      "FfmpegBuilderSetDefaultTrack": {
+        "Description": "Ställer in en spår som standard i FFmpeg-byggaren.",
+        "Label": "FFMPEG Builder: Ställ in standardspår",
+        "Fields": {
+          "Index": "Index",
+          "Index-Help": "Indexet för det spår som ska ställas in som standard, används endast om språk inte anges.",
+          "Language": "Språk",
+          "Language-Help": "Valfritt [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) språkkod som ska användas.",
+          "StreamType": "Typ",
+          "StreamType-Help": "Typen av spår som ska ställas in som standard i FFMPEG Builder"
+        },
+        "Outputs": {
+          "1": "Spåret inställt som standard",
+          "2": "Misslyckades med att ställa in spår som standard"
+        }
+      },
+      "FfmpegBuilderSetDevice": {
+        "Description": "Ställer in enheten som ska användas för hårdvarukodning/-avkodning om kodaren/avkodaren stöder det.",
+        "Label": "FFMPEG Builder: Ställ in enhet",
+        "Fields": {
+          "Device": "Enhet",
+          "Device-Help": "Sökvägen till enheten, eller lämna blank om ingen enhet ska anges."
+        },
+        "Outputs": {
+          "1": "Enhet inställd"
+        }
+      },
+      "FfmpegBuilderSetFps": {
+        "Description": "Ställ in bildrutor per sekund (FPS) i FFmpeg Builder",
+        "Label": "FFMPEG Builder: Ställ in FPS",
+        "Fields": {
+          "Fps": "FPS",
+          "Fps-Help": "Det önskade FPS, om inmatnings-FPS och det önskade FPS inte matchar, kommer FFMPEG att konvertera det, t.ex. (23.976, 24, 30, 60).",
+          "OnlyIfHigher": "Endast om högre",
+          "OnlyIfHigher-Help": "Om FPS ska justeras endast om det nuvarande FPS är mer än det aktuella."
+        },
+        "Outputs": {
+          "1": "FPS uppdaterad",
+          "2": "Inga förändringar var nödvändiga"
+        }
+      },
+      "FfmpegBuilderSetTrackTitles": {
+        "Description": "Ställ in spårtitlar baserat på en formatterare i FFmpeg builder.",
+        "Label": "FFMPEG Builder: Ställ in spårtitlar",
+        "Fields": {
+          "CommentaryFormat": "Kommentarsformat",
+          "CommentaryFormat-Help": "Hur kommentarspår ska behandlas, du kan använda samma formatterare som andra spår eller använda en annan metod.",
+          "Format": "Format",
+          "Format-Help": "Formatteraren som ska användas, se _Hjälp_ för mer information.",
+          "Separator": "Separator",
+          "Separator-Help": "Strängseparator som används mellan formatvärden, detta behövs för att säkerställa att inga tomma värden behålls.",
+          "StreamType": "Typ",
+          "StreamType-Help": "Typen av spår som ska ställas in som standard i FFMPEG Builder"
+        },
+        "Outputs": {
+          "1": "Spårtitlar uppdaterade",
+          "2": "Inga spårtitlar påverkades"
+        }
+      },
+      "FfmpegBuilderStart": {
+        "Description": "Skapar en instans av FFMPEG Builder som kan bygga ett FFMPEG-argument för att sedan exekvera med FFMPEG Executor.",
+        "Label": "FFMPEG Builder: Starta",
+        "Outputs": {
+          "1": "FFMPEG Builder skapad och redo att lägga till FFMPEG Builder-flödeselement"
+        }
+      },
+      "FfmpegBuilderSubtitleClearDefault": {
+        "Description": "Detta flödeselement kommer att rensa standardflaggan från undertexter.",
+        "Label": "FFMPEG Builder: Rensa standardundertext",
+        "Fields": {
+          "LeaveForced": "Lämna tvingade",
+          "LeaveForced-Help": "När den är markerad kommer alla tvingade undertexter inte att röras, de kommer att behålla sin ursprungliga inställning. Detta utförs före 'Ställ in tvingad standard', så det tar prioritet.",
+          "SetForcedDefault": "Ställ in tvingad standard",
+          "SetForcedDefault-Help": "När den är markerad kommer den första undertexten som hittas med Tvingad-fältet inställt, att ställas in som standard, alla andra kommer att få sin standardflagga rensad."
+        },
+        "Outputs": {
+          "1": "Undertexternas standardflaggor har ändrats",
+          "2": "Inga förändringar gjordes i undertexterna"
+        }
+      },
+      "FfmpegBuilderSubtitleFormatRemover": {
+        "Description": "Tar bort undertexter från en videofil om de finns.",
+        "Label": "FFMPEG Builder: Ta bort undertextformat",
+        "Fields": {
+          "RemoveAll": "Ta bort alla",
+          "RemoveAll-Help": "När den är markerad kommer alla undertexter att tas bort från filen, annars kommer endast de som valts nedan att tas bort.",
+          "SubtitlesToRemove": "Undertexter att ta bort"
+        },
+        "Outputs": {
+          "1": "Undertexter markerade för borttagning i FFMPEG Builder",
+          "2": "Inga undertexter att ta bort"
+        }
+      },
+      "FfmpegBuilderSubtitleTrackMerge": {
+        "Label": "FFMPEG Builder: Sammanfoga undertextspår",
+        "Fields": {
+          "Default": "Standard",
+          "Default-Help": "Om undertexten ska vara standardundertext",
+          "DeleteAfterwards": "Ta bort efter sammanslagning",
+          "DeleteAfterwards-Help": "Om undertextfilen ska tas bort efter att ha slagits samman",
+          "Forced": "Tvingad",
+          "Forced-Help": "Om undertexten ska vara tvingad",
+          "Language": "Språk",
+          "Language-Help": "Valfri [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) språk kod för den tillagda undertexten.",
+          "MatchFilename": "Matcha filnamn",
+          "MatchFilename-Help": "När den är markerad kommer endast undertexter med samma filnamn som inmatningsfilen eller arbetsfilen att slås samman",
+          "Pattern": "Mönster",
+          "Pattern-Help": "Valfritt reguljärt uttryck för att matcha filer.",
+          "Subtitles": "Undertexter",
+          "Subtitles-Help": "Välj vilka undertexter som ska sökas efter för att lägga till",
+          "Title": "Titel",
+          "Title-Help": "Titeln på undertexten, om den inte anges kommer språket att användas som titel om det hittas.",
+          "UseSourceDirectory": "Använd källkatalog",
+          "UseSourceDirectory-Help": "Om den är markerad kommer den ursprungliga källkatalogen att sökas, annars kommer arbetskatalogen att användas."
+        },
+        "Outputs": {
+          "1": "Undertexter hittade och tillagda",
+          "2": "Inga undertexter hittades"
+        }
+      },
+      "FfmpegBuilderSubtitleTrackRemover": {
+        "Description": "Ger dig möjlighet att ta bort undertexter baserat på antingen deras titel eller deras språk koder.\n\nAlla språk (eller titel om inställd på \"Använd titel\") som är tomma kommer INTE att tas bort oavsett mönster.",
+        "Label": "FFMPEG Builder: Ta bort undertextspår",
+        "Fields": {
+          "NotMatching": "Inte matchande",
+          "NotMatching-Help": "Om undertexter SOM INTE matchar mönstret ska tas bort",
+          "Pattern": "Mönster",
+          "Pattern-Help": "Ett reguljärt uttryck att matcha mot, t.ex. \"eng\" för att ta bort engelska spår",
+          "UseLanguageCode": "Använd språk kod",
+          "UseLanguageCode-Help": "Om språk koden för ljudspåret ska användas istället för titeln"
+        },
+        "Outputs": {
+          "1": "Undertexter markerade för borttagning i FFMPEG Builder",
+          "2": "Inga undertexter att ta bort"
+        }
+      },
+      "FfmpegBuilderTrackRemover": {
+        "Description": "Ger dig möjlighet att ta bort spår baserat på angivna villkor.",
+        "Label": "FFMPEG Builder: Ta bort spår",
+        "Fields": {
+          "CustomTrackSelection": "Ta bort",
+          "StreamType": "Typ",
+          "StreamType-Help": "Typen av spår som ska omordnas i FFMPEG Builder",
+          "TrackSelectionOptions": "",
+          "TrackSelectionOptionsKey": "Egenskap",
+          "TrackSelectionOptionsValue": "Värde"
+        },
+        "Outputs": {
+          "1": "Spår inställda för borttagning",
+          "2": "Spår INTE inställda för borttagning"
+        }
+      },
+      "FfmpegBuilderTrackSorter": {
+        "Description": "Detta flödeselement sorterar spår baserat på sorteringsalternativ som anges av användaren.",
+        "Label": "FFMPEG Builder: Spårsorterare",
+        "Fields": {
+          "SetFirstDefault": "Ställ in standard",
+          "SetFirstDefault-Help": "Om det första spåret ska ställas in som standard efter sorteringen.",
+          "Sorters": "Sorteringsalternativ",
+          "Sorters-Help": "Lägg till ett eller flera sorteringsalternativ för att sortera spåren efter.",
+          "SortersKey": "Fält",
+          "SortersValue": "Värde",
+          "StreamType": "Typ",
+          "StreamType-Help": "Den typ av spår som ska uppdateras"
+        },
+        "Outputs": {
+          "1": "Spåren har modifierats",
+          "2": "Inga spår har ändrats"
+        }
+      },
+      "FfmpegBuilderVideo10Bit": {
+        "Description": "Ställer in FFMPEG Builder för att koda videoströmmar i 10 Bit",
+        "Label": "FFMPEG Builder: Video 10 Bit",
+        "Outputs": {
+          "1": "FFMPEG Builder videoströmmar inställda på att koda i 10 Bit"
+        }
+      },
+      "FfmpegBuilderVideoBitrate": {
+        "Description": "Ställer in FFMPEG Builder för att koda videon givet bitrate",
+        "Label": "FFMPEG Builder: Videobitrate",
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "Måltalet för videon i kilobyte",
+          "Bitrate-Suffix": "KB / %",
+          "Percent": "Procent",
+          "Percent-Help": "När den är vald kommer bitrate att beräknas som en procentandel av den aktuella bitrate."
+        },
+        "Outputs": {
+          "1": "FFMPEG Builder videoströmmar uppdaterade"
+        }
+      },
+      "FfmpegBuilderVideoBitrateEncode": {
+        "Description": "Ställer in FFMPEG Builder för att koda videon med enkla förinställningar baserat på Bitrate",
+        "Label": "FFMPEG Builder: Bitrate Koda",
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Suffix": "Kbps",
+          "Codec": "Codec",
+          "Encoder": "Encoder",
+          "Encoder-Help": "Den encoder som ska tvingas använda. Om du anger en hårdvaruencoder som inte är tillgänglig, kommer kodningen att misslyckas.",
+          "HardwareEncoding": "Hårdvaruencode",
+          "HardwareEncoding-Help": "När den är markerad, kommer den att testa om hårdvaruencoders finns på bearbetningsnoden, och om de finns, kommer den att använda hårdvarukodning, annars kommer den att falla tillbaka på CPU-kodning."
+        },
+        "Outputs": {
+          "1": "FFMPEG Builder videoströmmar inställda på att koda"
+        }
+      },
+      "FfmpegBuilderVideoCodec": {
+        "Description": "Ställer in FFMPEG Builder för att koda videoströmmarna i den angivna codec",
+        "Label": "FFMPEG Builder: Videocodec",
+        "Fields": {
+          "DisableOtherVideoStreams": "Endast första",
+          "DisableOtherVideoStreams-Help": "När den är markerad, om det finns flera videoströmmar i filen, kommer detta att ta bort alla utom den första videoströmmen från filen när den körs.",
+          "Force": "Tvinga kodning",
+          "Force-Help": "Kommer att tvinga en kodning av videon även om den redan är i den målinställda videocodecen",
+          "VideoCodec": "Videocodec",
+          "VideoCodec-Help": "Den videocodec videon ska vara i, till exempel hevc, h264. Om den lämnas tom kommer alla originalvideotracks att kopieras.",
+          "VideoCodecParameters": "Videocodec-parametrar",
+          "VideoCodecParameters-Help": "De parametrar som ska användas för att koda videon, t.ex. \"hevc_nvenc -preset hq -crf 23\" för att koda till hevc med HQ-förinställningen, en konstant bitrate-faktor på 23 och använda NVIDIA-hårdvaruaccelerering."
+        },
+        "Outputs": {
+          "1": "FFMPEG Builder videoströmmar inställda på att koda",
+          "2": "Video redan i målcodex, kommer inte att kodas om"
+        }
+      },
+      "FfmpegBuilderVideoEncode": {
+        "Description": "Ställer in FFMPEG Builder för att koda videon med enkla förinställningar",
+        "Label": "FFMPEG Builder: Video Koda",
+        "Fields": {
+          "Codec": "Codec",
+          "Encoder": "Encoder",
+          "Encoder-Help": "Den encoder som ska tvingas använda. Om du anger en hårdvaruencoder som inte är tillgänglig, kommer kodningen att misslyckas.",
+          "HardwareEncoding": "Hårdvaruencode",
+          "HardwareEncoding-Help": "När den är markerad, kommer den att testa om hårdvaruencoders finns på bearbetningsnoden, och om de finns, kommer den att använda hårdvarukodning, annars kommer den att falla tillbaka på CPU-kodning.",
+          "Quality": "Kvalitet",
+          "Quality-Help": "En logaritmisk kvalitetsnivå, så små ändringar i denna reglage orsakar stora förändringar i filstorlek/kvalitet. Ju lägre nummer desto högre kvalitet. Se hjälp för mer information.",
+          "Quality-Suffix": "(Högre kvalitet, större fil)",
+          "Speed": "Hastighet"
+        },
+        "Outputs": {
+          "1": "FFMPEG Builder videoströmmar inställda på att koda"
+        }
+      },
+      "FfmpegBuilderVideoMaxBitrate": {
+        "Description": "Ställer in FFMPEG Builder för att begränsa bitrate för video",
+        "Label": "FFMPEG Builder: Video Max Bitrate",
+        "Fields": {
+          "Bitrate": "Maximal bitrate",
+          "Bitrate-Help": "Den maximala bitrate för videon i kilobyte",
+          "Bitrate-Suffix": "KB"
+        },
+        "Outputs": {
+          "1": "FFMPEG Builder videoströmmar uppdaterade"
+        }
+      },
+      "FfmpegBuilderVideoTag": {
+        "Description": "Sätter en videotagg på filen",
+        "Label": "FFMPEG Builder: Videotagg",
+        "Fields": {
+          "Tag": "Tagg",
+          "Tag-Help": "Taggen som ska läggas till videofilen"
+        },
+        "Outputs": {
+          "1": "FFMPEG Builder-tagg tillagd"
+        }
+      },
+      "FFmpegBuilderWatermark": {
+        "Description": "Lägger till en vattenstämpel på en videofil.",
+        "Label": "FFMPEG Builder: Vattenstämpel",
+        "Fields": {
+          "Height": "Höjd",
+          "Height-Help": "Sätt en anpassad höjd för bilden, eller sätt till 0 för källhöjd eller skalad om bredden är inställd.",
+          "Image": "Bild",
+          "Image-Help": "Bildfilen för vattenstämpeln, för bästa resultat använd en PNG-fil.",
+          "Opacity": "Opacitet",
+          "Opacity-Help": "Justera transparensnivån för överlagringsbilden, som sträcker sig från 0 (helt genomskinlig) till 100 (helt ogenomskinlig).",
+          "Position": "Position",
+          "Position-Help": "Var vattenstämpeln ska placeras",
+          "Width": "Bredd",
+          "Width-Help": "Sätt en anpassad bredd för bilden, eller sätt till 0 för källbredd eller skalad om höjden är inställd.",
+          "XPos": "X-Pos",
+          "XPos-Help": "Vattenstämpelns position på x-axeln",
+          "YPos": "Y-Pos",
+          "YPos-Help": "Vattenstämpelns position på y-axeln"
+        },
+        "Outputs": {
+          "1": "Vattenstämpel tillagd"
+        }
+      },
+      "ReadVideoInfo": {
+        "Description": "Läser videoinformation från den aktuella arbetsfilen och uppdaterar vi-variablerna.",
+        "Outputs": {
+          "1": "Fil var en videofil och information lästes in i flödet",
+          "2": "Fil var inte en videofil eller kunde inte läsas"
+        }
+      },
+      "SubtitleExtractor": {
+        "Description": "Extraherar en enda undertextspår och sparar den till destinationen. Kan extrahera srt, ass och ssa-format.\nDetta kommer INTE att uppdatera arbetsfilen och kommer att hålla arbetsfilen densamma som ingångsfilen.\n\nUtdata 1: Undertexter extraherade\nUtdata 2: Inga undertexter hittades för att extrahera",
+        "Fields": {
+          "ExtractAll": "Extrahera alla",
+          "ExtractAll-Help": "Om alla matchande undertexter ska extraheras.",
+          "ForcedOnly": "Endast tvångsundertexter",
+          "ForcedOnly-Help": "Om endast tvångsundertexter ska extraheras.",
+          "Language": "Språk",
+          "Language-Help": "Språkets [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) kod att använda.",
+          "OnlyTextSubtitles": "Endast textundertexter",
+          "OnlyTextSubtitles-Help": "Om endast textundertexter ska extraheras, kommer alla bildbaserade undertexter att hoppas över.",
+          "OutputFile": "Utdatafil",
+          "OutputFile-Help": "Var du vill spara utdatafilen, t.ex. \"'{folder.Orig.FullName}\\{file.Orig.FileName}.srt'\" för att spara den med originalfilen som en srt-utdata.\nOm tomt, kommer en srt-undertext att skapas i samma mapp som den ursprungliga ingångsfilen.",
+          "SetWorkingFile": "Sätt som arbetsfil",
+          "SetWorkingFile-Help": "När detta är markerat, om en undertext extraheras, kommer arbetsfilen att ändras till denna extraherade undertext. Den ursprungliga arbetsfilen kommer INTE att raderas.",
+          "Title": "Titel",
+          "Title-Help": "Valfritt, ange en titel. Detta kan vara antingen ett reguljärt uttryck eller en sträng som måste förekomma i titeln för att matchas."
+        },
+        "Outputs": {
+          "1": "Undertexter extraherade",
+          "2": "Inga undertexter extraherade"
+        }
+      },
+      "VideoAlreadyProcessed": {
+        "Description": "Testar om en videofil redan har bearbetats av FileFlows",
+        "Label": "Video redan bearbetad",
+        "Outputs": {
+          "1": "Video har redan bearbetats",
+          "2": "Video har inte bearbetats"
+        }
+      },
+      "VideoBitCheck": {
+        "Description": "Kontrollerar om en video är 8-Bit, 10-Bit, 12-Bit eller okänd.",
+        "Label": "Videobitkontroll",
+        "Outputs": {
+          "1": "Video är 8-Bit",
+          "2": "Video är 10-Bit",
+          "3": "Video är 12-Bit",
+          "4": "Okänd"
+        }
+      },
+      "VideoBitrateGreaterThan": {
+        "Description": "Testar om en videos bitrate är större än en given bitrate.",
+        "Label": "Videobitrate större än",
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Suffix": "KBps"
+        },
+        "Outputs": {
+          "1": "Bitrate är större än",
+          "2": "Bitrate är inte större än"
+        }
+      },
+      "VideoDuration": {
+        "Description": "Testar om varaktigheten av videon matchar de angivna parametrarna.",
+        "Fields": {
+          "Match": "Matcha",
+          "ValueHigh": " ",
+          "ValueLow": "Varaktighet"
+        },
+        "Outputs": {
+          "1": "Videons varaktighet matchar",
+          "2": "Videons varaktighet matchar inte"
+        }
+      },
+      "VideoDurationCompare": {
+        "Description": "Jämför den ursprungliga varaktigheten av en video med dess slutliga varaktighet.",
+        "Fields": {
+          "AllowedDifference": "Tillåten skillnad",
+          "AllowedDifference-Help": "Den tillåtna tidskillnaden mellan videons ursprungliga varaktighet och den slutliga varaktigheten."
+        },
+        "Outputs": {
+          "1": "Videon är inom den tillåtna varaktighetsskillnaden",
+          "2": "Videon är inte inom den tillåtna varaktighetsskillnaden"
+        }
+      },
+      "VideoExtractAudio": {
+        "Description": "Extraherar ljud från en videofil och sparar det till en fil",
+        "Label": "Video Extrahera Ljud",
+        "Fields": {
+          "Channels": "Kanaler",
+          "Channels-Help": "Antalet kanaler som källspåret måste ha för att matcha. Ställ in på 0 för att hoppa över en kanalmatchning.",
+          "Codec": "Codec",
+          "Codec-Help": "Ett reguljärt uttryck som används för att testa strömmens codec",
+          "Language": "Språk",
+          "Language-Help": "Ett reguljärt uttryck som används för att testa strömmens språk",
+          "NotMatching": "Ej Matchande",
+          "NotMatching-Help": "Om ett ljudspår som INTE matchar mönstret ska extraheras",
+          "OutputBitrate": "Utdata Bitrate",
+          "OutputBitrate-Help": "Bitraten för det extraherade ljudspåret",
+          "OutputCodec": "Utdata Codec",
+          "OutputCodec-Help": "Codec för att spara det extraherade ljudet",
+          "OutputFile": "Utdatafil",
+          "OutputFile-Help": "Var du vill spara utdatafilen, t.ex. \"'{folder.Orig.FullName}\\{file.Orig.FileName}.mp3'\" för att spara den med den ursprungliga filen som en mp3-utdata.\nOm ingen filändelse anges kommer utdata- codec att användas för att bestämma filändelsen.",
+          "SetWorkingFile": "Ställ in som Arbetsfil",
+          "SetWorkingFile-Help": "När detta är markerat, om en undertext extraheras, kommer arbetsfilen att ändras till denna extraherade undertext. Den ursprungliga arbetsfilen kommer INTE att raderas.",
+          "Title": "Titel",
+          "Title-Help": "Ett reguljärt uttryck som används för att testa strömmens titel"
+        },
+        "Outputs": {
+          "1": "Ljud extraherat och sparat till en fil",
+          "2": "Kunde inte hitta ett spår att extrahera"
+        }
+      },
+      "VideoFile": {
+        "Description": "En inmatningsvideofil som har fått sin videoinformation läst och kan bearbetas",
+        "Fields": {
+          "AnalyzeDuration": "Analysera Varaktighet",
+          "AnalyzeDuration-Help": "Ange hur många sekunder som analyseras för att undersöka inmatningen",
+          "AnalyzeDuration-Suffix": "sekunder",
+          "ProbeSize": "Probstorlek",
+          "ProbeSize-Help": "Probstorleken som ska användas i FFMPEG vid körning.",
+          "ProbeSize-Suffix": "MB"
+        },
+        "Outputs": {
+          "1": "Videofil från biblioteket"
+        }
+      },
+      "VideoHasErrors": {
+        "Description": "Testar om en videofil innehåller några fel",
+        "Label": "Video Har Fel",
+        "Fields": {
+          "HardwareDecoding": "Hårdvaruavkodning",
+          "HardwareDecoding-Help": "Om ett försök att använda hårdvaruavkodning ska göras. Om den inte är tillgänglig kommer körningen att fortsätta utan att hårdvaruavkodning är aktiverad."
+        },
+        "Outputs": {
+          "1": "Innehåller ett fel",
+          "2": "Kunde inte upptäcka några fel"
+        }
+      },
+      "VideoHasStream": {
+        "Description": "Testar om en videofil innehåller ett spår",
+        "Label": "Video Har Ström",
+        "Fields": {
+          "Channels": "Kanaler",
+          "Channels-Help": "Antalet kanaler att testa för. Lämna tomt för att ignorera denna kontroll",
+          "CheckDeleted": "Kontrollera Raderade",
+          "CheckDeleted-Help": "Om raderade spår också ska kontrolleras",
+          "Codec": "Codec",
+          "Codec-Help": "Ett reguljärt uttryck som används för att testa strömmens codec",
+          "Default": "Standard",
+          "Default-Help": "Om denna ström ska vara en standardström eller inte.",
+          "Forced": "Tvingad",
+          "Forced-Help": "Om denna ström ska vara en tvingad ström eller inte.",
+          "Invert": "Invertera",
+          "Invert-Help": "Inverterar resultatet, så blir effektivt `Video Har Inte Ström`",
+          "Language": "Språk",
+          "Language-Help": "Ett reguljärt uttryck som används för att testa strömmens språk",
+          "Stream": "Typ",
+          "Stream-Help": "Typen av ström att leta efter",
+          "Title": "Titel",
+          "Title-Help": "Ett reguljärt uttryck som används för att testa strömmens titel"
+        },
+        "Outputs": {
+          "1": "Innehåller det matchande spåret",
+          "2": "Innehåller inte det matchande spåret"
+        }
+      },
+      "VideoIs10Bit": {
+        "Description": "Testar om en videofil är 10-Bit",
+        "Label": "Video Är 10-Bit",
+        "Outputs": {
+          "1": "Videon är 10-Bit",
+          "2": "Videon är inte 10-Bit"
+        }
+      },
+      "VideoIs12Bit": {
+        "Description": "Testar om en videofil är 12-Bit",
+        "Label": "Video Är 12-Bit",
+        "Outputs": {
+          "1": "Videon är 12-Bit",
+          "2": "Videon är inte 12-Bit"
+        }
+      },
+      "VideoIs8Bit": {
+        "Description": "Testar om en videofil är 8-Bit",
+        "Label": "Video Är 8-Bit",
+        "Outputs": {
+          "1": "Videon är 8-Bit",
+          "2": "Videon är inte 8-Bit"
+        }
+      },
+      "VideoIsInterlaced": {
+        "Description": "Testar om en videofil är mellanlagrad",
+        "Label": "Video Är Mellanlagrad",
+        "Fields": {
+          "Threshold": "Tröskel",
+          "Threshold-Help": "Den procentandel av ramar som detekteras som mellanlagrade som videon måste ha för att betraktas som mellanlagrad"
+        },
+        "Outputs": {
+          "1": "Videon är mellanlagrad",
+          "2": "Videon är inte mellanlagrad"
+        }
+      },
+      "VideoResolution": {
+        "Description": "Bestämmer en videos upplösning och ger utdata därefter.",
+        "Label": "Video Upplösning",
+        "Outputs": {
+          "1": "Videon Är 4K",
+          "2": "Videon är 1080p",
+          "3": "Videon är 720p",
+          "4": "Videon är SD"
+        }
+      }
     }
   },
   "H": {

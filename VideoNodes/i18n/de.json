@@ -77,7 +77,7 @@
         }
       },
       "FfmpegBuilderAddInputFile": {
-        "Label": "FFMPEG-Builder: Eingabedatei hinzufügen",
+        "Label": "FFMPEG Builder: Eingabedatei hinzufügen",
         "Fields": {
           "Pattern": "Muster",
           "Pattern-Help": "Ein regulärer Ausdruck für die Suche nach Eingabedateien",
@@ -210,7 +210,7 @@
       },
       "FfmpegBuilderAudioNormalization": {
         "Description": "Normalisiert alle Audiospuren in einer Videodatei mit FFMPEGs loudnorm-Filter.",
-        "Label": "FFMPEG-Builder: Audio-Normalisierung",
+        "Label": "FFMPEG Builder: Audio-Normalisierung",
         "Fields": {
           "AllAudio": "Alle Audiospuren",
           "AllAudio-Help": "Ob alle Audiospuren normalisiert werden sollen oder nur die erste Spur.",
@@ -268,7 +268,7 @@
       },
       "FfmpegBuilderAudioTrackReorder": {
         "Description": "Ermöglicht es Ihnen, die Spuren in der gewünschten Reihenfolge neu anzuordnen.\n\nGeben Sie die Sprachen/Audiocodecs/Kanäle in der von Ihnen gewünschten Reihenfolge ein.  Nicht aufgeführte Sprachen werden nach den in der ursprünglichen Reihenfolge eingegebenen Sprachen angeordnet.\nWenn es mehrere Titel mit der gleichen Sprache/dem gleichen Codec/den gleichen Kanälen gibt, werden sie zuerst in der von Ihnen eingegebenen Reihenfolge und dann in ihrer ursprünglichen Reihenfolge angeordnet.\n\nBeachten Sie, dass der erste Titel nach der Neuordnung als Standardtitel festgelegt wird.\n\nAusgabe 1: Spuren wurden neu geordnet\nAusgabe 2: Spuren mussten nicht neu geordnet werden",
-        "Label": "FFMPEG-Builder: Spur neu ordnen",
+        "Label": "FFMPEG Builder: Spur neu ordnen",
         "Fields": {
           "Channels": "Kanäle",
           "Channels-Help": "Die Reihenfolge der Audiokanäle, nach der die Audiospuren sortiert werden sollen. Diese Sortierung wird vor den Sprachen vorgenommen.\nZum Beispiel: \"5.1\",\"7.1\",\"6.2\",\"2\"",
@@ -302,7 +302,7 @@
       },
       "FfmpegBuilderComskipChapters": {
         "Description": "Verwendet eine Comskip-EDL-Datei und erstellt Kapitel anhand dieser EDL-Comskip-Datei.",
-        "Label": "FFMPEG-Builder: Comskip-Kapitel",
+        "Label": "FFMPEG Builder: Comskip-Kapitel",
         "Fields": {
           "RunComskipIfNoEdl": "Comskip ausführen",
           "RunComskipIfNoEdl-Help": "Führen Sie comskip gegen die Datei aus, wenn keine comskip (EDL)-Datei gefunden wird."
@@ -314,7 +314,7 @@
       },
       "FfmpegBuilderCropBlackBars": {
         "Description": "FFMPEG Builder wurde aktualisiert, um schwarze Balken zu schneiden, wenn sie erkannt werden",
-        "Label": "FFMPEG-Builder: Schwarze Balken schneiden",
+        "Label": "FFMPEG Builder: Schwarze Balken schneiden",
         "Fields": {
           "CroppingThreshold": "Schwellenwert",
           "CroppingThreshold-Help": "Die Anzahl der Pixel, die zum Zuschneiden größer sein muss als diese. Wenn z. B. nur 5 Pixel als schwarzer Bereich erkannt werden, können Sie dies als zu klein zum Zuschneiden betrachten."
@@ -326,7 +326,7 @@
       },
       "FfmpegBuilderCustomParameters": {
         "Description": "Ermöglicht es Ihnen, dem FFMPEG Builder benutzerdefinierte Parameter zur Ausführung hinzuzufügen",
-        "Label": "FFMPEG-Builder: Benutzerdefinierte Parameter",
+        "Label": "FFMPEG Builder: Benutzerdefinierte Parameter",
         "Fields": {
           "ForceEncode": "Encode erzwingen",
           "ForceEncode-Help": "Wenn dies den FFMPEG Builder Executor zwingen soll, immer auszuführen, auch wenn keine Änderungen festgestellt werden, die normalerweise die Ausführung des Executors erfordern würden.",
@@ -376,7 +376,7 @@
         }
       },
       "FfmpegBuilderExecutor": {
-        "Description": "Führt einen FFMPEG-Builder-Befehl aus, der von anderen FFMPEG-Builder-Knoten erstellt wurde.",
+        "Description": "Führt einen FFMPEG Builder-Befehl aus, der von anderen FFMPEG Builder-Knoten erstellt wurde.",
         "Label": "FFMPEG Builder: Executor",
         "Fields": {
           "HardwareDecoding": "Hardware Decoding",
@@ -391,7 +391,7 @@
       },
       "FfmpegBuilderHdrToSdr": {
         "Description": "Prüft, ob ein Videostream HDR ist, und wenn ja, aktualisiert er den FFMPEG Builder, um ihn in SDR zu konvertieren.",
-        "Label": "FFMPEG-Builder: HDR zu SDR",
+        "Label": "FFMPEG Builder: HDR zu SDR",
         "Outputs": {
           "1": "HDR-Stream erkannt und FFMPEG Builder zur Konvertierung aktualisiert",
           "2": "Kein HDR-Stream gefunden"
@@ -399,7 +399,7 @@
       },
       "FfmpegBuilderKeepOriginalLanguage": {
         "Description": "Dieses Flow-Element behält nur die ursprüngliche Sprache und alle zusätzlichen Sprachen, die der Benutzer definiert.\n\nAlle anderen Sprachströme werden entfernt/zur Löschung markiert.",
-        "Label": "FFMPEG-Builder: Originalsprache beibehalten",
+        "Label": "FFMPEG Builder: Originalsprache beibehalten",
         "Fields": {
           "AdditionalLanguages": "Weitere Sprachen",
           "AdditionalLanguages-Help": "Eine optionale Liste zusätzlicher Sprachcodes, die auf den Spuren mit fehlenden Sprachen einzustellen sind.\n\nEs wird empfohlen, einen [ISO 639-2 Sprachcode] (https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) zu verwenden.",
@@ -441,7 +441,7 @@
         }
       },
       "FfmpegBuilderPreExecute": {
-        "Description": "Mit diesem Element können Sie benutzerdefinierten Code unmittelbar vor der [FFmpeg Builder: Executor](https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder) FFmpeg-Ausführung einfügen.\n\nDamit können Sie die an FFmpeg übergebenen Argumente ändern.",
+        "Description": "Mit diesem Element können Sie benutzerdefinierten Code unmittelbar vor der [FFmpeg Builder: Executor](https://fileflows.com/docs/plugins/video-nodes/FFMPEG Builder) FFmpeg-Ausführung einfügen.\n\nDamit können Sie die an FFmpeg übergebenen Argumente ändern.",
         "Label": "FFMPEG Buidler: Pre-Execute",
         "Fields": {
           "Code": "Code"
@@ -527,8 +527,8 @@
         }
       },
       "FfmpegBuilderSetDefaultTrack": {
-        "Description": "Legen Sie eine Spur als Standard im FFmpeg-Builder fest.",
-        "Label": "FFMPEG-Builder: Standardspur festlegen",
+        "Description": "Legen Sie eine Spur als Standard im FFMPEG Builder fest.",
+        "Label": "FFMPEG Builder: Standardspur festlegen",
         "Fields": {
           "Index": "Index",
           "Index-Help": "Der Index des Titels, der als Standard festgelegt werden soll, wird nur verwendet, wenn keine Sprache angegeben ist.",
@@ -555,7 +555,7 @@
       },
       "FfmpegBuilderSetFps": {
         "Description": "Stellen Sie die Bilder pro Sekunde (FPS) im FFmpeg Builder ein.",
-        "Label": "FFMPEG-Builder: FPS einstellen",
+        "Label": "FFMPEG Builder: FPS einstellen",
         "Fields": {
           "Fps": "FPS",
           "Fps-Help": "Die gewünschten FPS, wenn die Eingangs-FPS und die gewünschten FPS nicht übereinstimmen, konvertiert FFMPEG sie, z. B. (23.976, 24, 30, 60).",
@@ -568,8 +568,8 @@
         }
       },
       "FfmpegBuilderSetTrackTitles": {
-        "Description": "Setzen von Titeln auf der Grundlage eines Formatierers im FFmpeg-Builder.",
-        "Label": "FFMPEG-Builder: Track-Titel festlegen",
+        "Description": "Setzen von Titeln auf der Grundlage eines Formatierers im FFMPEG Builder.",
+        "Label": "FFMPEG Builder: Track-Titel festlegen",
         "Fields": {
           "CommentaryFormat": "Kommentar",
           "CommentaryFormat-Help": "Wie Kommentarspuren behandelt werden sollen, können Sie mit dem gleichen Format wie andere Spuren oder mit einer anderen Methode festlegen.",
@@ -680,7 +680,7 @@
       },
       "FfmpegBuilderTrackSorter": {
         "Description": "Dieses Flow-Element sortiert Tracks auf der Grundlage der vom Benutzer festgelegten Sortieroptionen.",
-        "Label": "FFMPEG-Builder: Track-Sortierer",
+        "Label": "FFMPEG Builder: Track-Sortierer",
         "Fields": {
           "SetFirstDefault": "Als Standard festlegen",
           "SetFirstDefault-Help": "Ob der erste Track nach dem Sortieren als Standard festgelegt werden soll.",
@@ -705,7 +705,7 @@
       },
       "FfmpegBuilderVideoBitrate": {
         "Description": "Legt den FFMPEG Builder auf die Kodierung des Videos mit der angegebenen Bitrate fest.",
-        "Label": "FFMPEG-Builder: Video-Bitrate",
+        "Label": "FFMPEG Builder: Video-Bitrate",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "Die Ziel-Bitrate des Videos in Kilobytes",
@@ -771,7 +771,7 @@
       },
       "FfmpegBuilderVideoMaxBitrate": {
         "Description": "Legt fest, dass der FFMPEG Builder die Bitrate des Videos begrenzt",
-        "Label": "FFMPEG-Builder: Video Max Bitrate",
+        "Label": "FFMPEG Builder: Video Max Bitrate",
         "Fields": {
           "Bitrate": "Maximale Bitrate",
           "Bitrate-Help": "Die maximale Bitrate des Videos in Kilobytes",

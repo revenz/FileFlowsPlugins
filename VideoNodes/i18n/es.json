@@ -77,7 +77,7 @@
         }
       },
       "FfmpegBuilderAddInputFile": {
-        "Label": "Constructor FFMPEG: Agregar Archivo de Entrada",
+        "Label": "FFMPEG Builder: Agregar Archivo de Entrada",
         "Fields": {
           "Pattern": "Patrón",
           "Pattern-Help": "Una expresión regular utilizada para buscar archivos de entrada",
@@ -90,7 +90,7 @@
         }
       },
       "FfmpegBuilderAspectRatio": {
-        "Label": "Constructor FFMPEG: Relación de Aspecto",
+        "Label": "FFMPEG Builder: Relación de Aspecto",
         "Fields": {
           "AdjustmentMode": "Modo de Ajuste",
           "AdjustmentMode-Help": "Elija cómo se debe hacer cumplir la relación de aspecto. Las opciones incluyen estirar el video, agregar barras negras (letterbox) o recortar el video para que se ajuste a la relación de aspecto.",
@@ -107,8 +107,8 @@
         }
       },
       "FfmpegBuilderAudioAddTrack": {
-        "Description": "Agrega una nueva pista de audio al Constructor FFMPEG que se agregará una vez que se ejecute el constructor.",
-        "Label": "Constructor FFMPEG: Agregar Pista de Audio",
+        "Description": "Agrega una nueva pista de audio al FFMPEG Builder que se agregará una vez que se ejecute el constructor.",
+        "Label": "FFMPEG Builder: Agregar Pista de Audio",
         "Fields": {
           "Bitrate": "Tasa de Bits",
           "Bitrate-Help": "Tasa de bits de la nueva pista de audio",
@@ -134,7 +134,7 @@
           "TrackSelectionOptionsValue": "Valor"
         },
         "Outputs": {
-          "1": "Pista de audio agregada al Constructor FFMPEG",
+          "1": "Pista de audio agregada al FFMPEG Builder",
           "2": "No se encontró una pista de audio de origen adecuada para crear una nueva pista de audio"
         }
       },
@@ -230,7 +230,7 @@
       },
       "FfmpegBuilderAudioSetLanguage": {
         "Description": "Permite establecer el idioma para cualquier pista que no tenga idioma establecido. Si la pista ya tiene un idioma establecido, se omitirá.\n\nSalida 1: Las pistas fueron actualizadas\nSalida 2: No hubo pistas que necesitaran ser actualizadas",
-        "Label": "Constructor FFMPEG: Establecer Idioma",
+        "Label": "FFMPEG Builder: Establecer Idioma",
         "Fields": {
           "Language": "Idioma",
           "Language-Help": "El código de idioma [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) a utilizar.",
@@ -238,7 +238,7 @@
           "StreamType-Help": "El tipo de pista para establecer el idioma"
         },
         "Outputs": {
-          "1": "Pistas actualizadas en el Constructor FFMPEG",
+          "1": "Pistas actualizadas en el FFMPEG Builder",
           "2": "Pistas NO actualizadas"
         }
       },
@@ -268,7 +268,7 @@
       },
       "FfmpegBuilderAudioTrackReorder": {
         "Description": "Permite reordenar las pistas en el orden preferido.\n\nIntroduce los idiomas/códecs de audio/canales en el orden que desees. Cualquier pista no listada se ordenará después de las ingresadas en su orden original.\nSi hay múltiples pistas con el mismo idioma/códec/canales, se ordenarán primero por el orden en que ingresaste, luego en su orden original.\n\nNota: la primera pista después de reordenar se establecerá como la pista predeterminada..\n\nSalida 1: Las pistas fueron reordenadas\nSalida 2: Las pistas no necesitaban ser reordenadas",
-        "Label": "Constructor FFMPEG: Reordenar Pistas",
+        "Label": "FFMPEG Builder: Reordenar Pistas",
         "Fields": {
           "Channels": "Canales",
           "Channels-Help": "El orden de los canales de audio por el que ordenar las pistas de audio. Este ordenamiento se realiza antes de los idiomas.\nPor ejemplo \"5.1\",\"7.1\",\"6.2\",\"2\"",
@@ -277,16 +277,16 @@
           "OrderedTracks": "Códecs Ordenados",
           "OrderedTracks-Help": "El orden de los códecs para las pistas. Esto se hace después de los idiomas (si los hay)",
           "StreamType": "Tipo",
-          "StreamType-Help": "El tipo de pistas a reordenar en el Constructor FFMPEG"
+          "StreamType-Help": "El tipo de pistas a reordenar en el FFMPEG Builder"
         },
         "Outputs": {
-          "1": "Pistas reordenadas en el Constructor FFMPEG",
+          "1": "Pistas reordenadas en el FFMPEG Builder",
           "2": "Pistas NO reordenadas"
         }
       },
       "FfmpegBuilderAutoChapters": {
         "Description": "Detecta automáticamente cambios de escena en el video para generar capítulos.",
-        "Label": "Constructor FFMPEG: Capítulos Automáticos",
+        "Label": "FFMPEG Builder: Capítulos Automáticos",
         "Fields": {
           "MinimumLength": "Longitud Mínima",
           "MinimumLength-Help": "La longitud mínima de un capítulo en segundos",
@@ -296,19 +296,19 @@
           "Percent-Suffix": "%"
         },
         "Outputs": {
-          "1": "Capítulos generados y añadidos al Constructor FFMPEG",
+          "1": "Capítulos generados y añadidos al FFMPEG Builder",
           "2": "No se detectaron capítulos o el video ya tenía capítulos"
         }
       },
       "FfmpegBuilderComskipChapters": {
         "Description": "Utiliza un archivo EDL de comskip y creará capítulos dados ese archivo EDL de comskip.",
-        "Label": "Constructor FFMPEG: Capítulos Comskip",
+        "Label": "FFMPEG Builder: Capítulos Comskip",
         "Fields": {
           "RunComskipIfNoEdl": "Ejecutar Comskip",
           "RunComskipIfNoEdl-Help": "Ejecutar comskip contra el archivo si no se encuentra un archivo comskip (EDL)."
         },
         "Outputs": {
-          "1": "Capítulos comerciales creados, añadidos al Constructor FFMPEG",
+          "1": "Capítulos comerciales creados, añadidos al FFMPEG Builder",
           "2": "No se detectaron comerciales"
         }
       },
@@ -325,13 +325,13 @@
         }
       },
       "FfmpegBuilderCustomParameters": {
-        "Description": "Te permite agregar parámetros personalizados al Constructor FFMPEG para su ejecución",
-        "Label": "Constructor FFMPEG: Parámetros Personalizados",
+        "Description": "Te permite agregar parámetros personalizados al FFMPEG Builder para su ejecución",
+        "Label": "FFMPEG Builder: Parámetros Personalizados",
         "Fields": {
           "ForceEncode": "Forzar Codificación",
-          "ForceEncode-Help": "Si esto debería forzar al Ejecutador del Constructor FFMPEG a ejecutar siempre, incluso si no se detectan cambios que normalmente requerirían que el ejecutor se ejecute.",
+          "ForceEncode-Help": "Si esto debería forzar al Ejecutador del FFMPEG Builder a ejecutar siempre, incluso si no se detectan cambios que normalmente requerirían que el ejecutor se ejecute.",
           "Parameters": "Parámetros",
-          "Parameters-Help": "Los parámetros a agregar al Constructor FFMPEG para su ejecución"
+          "Parameters-Help": "Los parámetros a agregar al FFMPEG Builder para su ejecución"
         },
         "Outputs": {
           "1": "Parámetros añadidos"
@@ -339,7 +339,7 @@
       },
       "FfmpegBuilderDefaultOriginalLanguage": {
         "Description": "Este elemento de flujo intentará establecer las pistas de idioma original como predeterminadas. Intentará encontrar la primera pista que coincida con el idioma original y luego establecerla como predeterminada.\n\nSi no se encuentran pistas con el idioma original, no se realizan cambios.",
-        "Label": "Constructor FFMPEG: Idioma Original Predeterminado",
+        "Label": "FFMPEG Builder: Idioma Original Predeterminado",
         "Fields": {
           "MakeFirst": "Hacer Primero",
           "MakeFirst-Help": "Si la pista de idioma original también debería convertirse en la primera pista.",
@@ -352,7 +352,7 @@
         }
       },
       "FfmpegBuilderDeinterlace": {
-        "Label": "Constructor FFMPEG: Desentrelazar",
+        "Label": "FFMPEG Builder: Desentrelazar",
         "Fields": {
           "Mode": "Modo",
           "Mode-Help": "El método de desentrelazado a utilizar. Consulte la ayuda para más información."
@@ -363,7 +363,7 @@
       },
       "FFmpegBuilderDurationStart": {
         "Descriptions": "Este elemento de flujo permite a los usuarios definir el punto de inicio y la duración para extraer un segmento de un video.",
-        "Label": "Constructor FFMPEG: Duración/Inicio",
+        "Label": "FFMPEG Builder: Duración/Inicio",
         "Fields": {
           "Duration": "Duración",
           "Duration-Help": "La duración del archivo de video, si es 0, no ajustará la duración.",
@@ -376,8 +376,8 @@
         }
       },
       "FfmpegBuilderExecutor": {
-        "Description": "Ejecuta un comando de Constructor FFMPEG creado por otros elementos de flujo de Constructor FFMPEG.",
-        "Label": "Constructor FFMPEG: Ejecutar",
+        "Description": "Ejecuta un comando de FFMPEG Builder creado por otros elementos de flujo de FFMPEG Builder.",
+        "Label": "FFMPEG Builder: Ejecutar",
         "Fields": {
           "HardwareDecoding": "Decodificación por Hardware",
           "HardwareDecoding-Help": "Si el ejecutor debe intentar usar la decodificación por hardware. Si no está disponible, la ejecución procederá sin la decodificación por hardware habilitada.",
@@ -385,21 +385,21 @@
           "Strictness-Help": "Le permite personalizar la estrictidad de FFmpeg. Esto debe dejarse en 'Experimental' para la mayoría de los usuarios."
         },
         "Outputs": {
-          "1": "Constructor FFMPEG se ejecutó con éxito y creó un nuevo archivo temporal",
-          "2": "No se detectaron cambios en el Constructor FFMPEG, archivo no creado"
+          "1": "FFMPEG Builder se ejecutó con éxito y creó un nuevo archivo temporal",
+          "2": "No se detectaron cambios en el FFMPEG Builder, archivo no creado"
         }
       },
       "FfmpegBuilderHdrToSdr": {
-        "Description": "Verifica si un flujo de video es HDR y si lo es, actualiza el Constructor FFMPEG para convertirlo a SDR.",
-        "Label": "Constructor FFMPEG: HDR a SDR",
+        "Description": "Verifica si un flujo de video es HDR y si lo es, actualiza el FFMPEG Builder para convertirlo a SDR.",
+        "Label": "FFMPEG Builder: HDR a SDR",
         "Outputs": {
-          "1": "Flujo HDR detectado y actualizado el Constructor FFMPEG para convertir",
+          "1": "Flujo HDR detectado y actualizado el FFMPEG Builder para convertir",
           "2": "No se encontró flujo HDR"
         }
       },
       "FfmpegBuilderKeepOriginalLanguage": {
         "Description": "Este elemento de flujo mantendrá solo el idioma original y cualquier idioma adicional que el usuario defina.\n\nTodas las demás pistas de idioma se eliminarán/marcarán para eliminación.",
-        "Label": "Constructor FFMPEG: Mantener Idioma Original",
+        "Label": "FFMPEG Builder: Mantener Idioma Original",
         "Fields": {
           "AdditionalLanguages": "Idiomas Adicionales",
           "AdditionalLanguages-Help": "Una lista opcional de códigos de idioma adicionales para mantener.\n\nSe recomienda utilizar un [código de idioma ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes).",
@@ -418,8 +418,8 @@
         }
       },
       "FfmpegBuilderMetadataRemover": {
-        "Description": "Elimina metadatos del Constructor FFMPEG para que, cuando se procese el archivo, se eliminen los metadatos seleccionados.\n\nNota: Solo los metadatos cuando este elemento del flujo se vea afectado; si se añaden metadatos después de que se ejecute este nodo, eso no se verá afectado.",
-        "Label": "Constructor FFMPEG: Eliminador de Metadatos",
+        "Description": "Elimina metadatos del FFMPEG Builder para que, cuando se procese el archivo, se eliminen los metadatos seleccionados.\n\nNota: Solo los metadatos cuando este elemento del flujo se vea afectado; si se añaden metadatos después de que se ejecute este nodo, eso no se verá afectado.",
+        "Label": "FFMPEG Builder: Eliminador de Metadatos",
         "Fields": {
           "Audio": "Audio",
           "Audio-Help": "Si las pistas de audio deben tener estos metadatos eliminados",
@@ -437,7 +437,7 @@
           "Video-Help": "Si las pistas de vídeo deben tener estos metadatos eliminados"
         },
         "Outputs": {
-          "1": "Metadatos eliminados del Constructor FFMPEG"
+          "1": "Metadatos eliminados del FFMPEG Builder"
         }
       },
       "FfmpegBuilderPreExecute": {
@@ -528,14 +528,14 @@
       },
       "FfmpegBuilderSetDefaultTrack": {
         "Description": "Establecer una pista como predeterminada en el constructor de FFMPEG.",
-        "Label": "Constructor FFMPEG: Establecer Pista Predeterminada",
+        "Label": "FFMPEG Builder: Establecer Pista Predeterminada",
         "Fields": {
           "Index": "Índice",
           "Index-Help": "El índice de la pista a establecer como predeterminada, solo se usa si no se especifica el idioma.",
           "Language": "Idioma",
           "Language-Help": "Código de idioma [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) opcional a utilizar.",
           "StreamType": "Tipo",
-          "StreamType-Help": "El tipo de pista para establecer como predeterminada en el Constructor FFMPEG"
+          "StreamType-Help": "El tipo de pista para establecer como predeterminada en el FFMPEG Builder"
         },
         "Outputs": {
           "1": "Pista establecida como predeterminada",
@@ -544,7 +544,7 @@
       },
       "FfmpegBuilderSetDevice": {
         "Description": "Establece el dispositivo a utilizar para la codificación/decodificación por hardware si el codificador/decodificador lo admite.",
-        "Label": "Constructor FFMPEG: Establecer Dispositivo",
+        "Label": "FFMPEG Builder: Establecer Dispositivo",
         "Fields": {
           "Device": "Dispositivo",
           "Device-Help": "La ruta al dispositivo, o dejar en blanco si no se debe especificar ningún dispositivo."
@@ -554,8 +554,8 @@
         }
       },
       "FfmpegBuilderSetFps": {
-        "Description": "Establecer los fotogramas por segundo (FPS) en el Constructor FFMPEG",
-        "Label": "Constructor FFMPEG: Establecer FPS",
+        "Description": "Establecer los fotogramas por segundo (FPS) en el FFMPEG Builder",
+        "Label": "FFMPEG Builder: Establecer FPS",
         "Fields": {
           "Fps": "FPS",
           "Fps-Help": "El FPS deseado; si el FPS de entrada y el FPS deseado no coinciden, FFMPEG lo convertirá, por ejemplo (23.976, 24, 30, 60).",
@@ -569,7 +569,7 @@
       },
       "FfmpegBuilderSetTrackTitles": {
         "Description": "Establecer títulos de pista basados en un formateador en el constructor de FFMPEG.",
-        "Label": "Constructor FFMPEG: Establecer Títulos de Pista",
+        "Label": "FFMPEG Builder: Establecer Títulos de Pista",
         "Fields": {
           "CommentaryFormat": "Comentario",
           "CommentaryFormat-Help": "Cómo deben tratarse las pistas de comentario; puede usar el mismo formateador que otras pistas o utilizar un método diferente.",
@@ -578,7 +578,7 @@
           "Separator": "Separador",
           "Separator-Help": "El separador de cadena utilizado entre los valores de formato, esto es necesario para asegurar que no se mantengan valores vacíos.",
           "StreamType": "Tipo",
-          "StreamType-Help": "El tipo de pista para establecer como predeterminada en el Constructor FFMPEG"
+          "StreamType-Help": "El tipo de pista para establecer como predeterminada en el FFMPEG Builder"
         },
         "Outputs": {
           "1": "Títulos de pista actualizados",
@@ -586,15 +586,15 @@
         }
       },
       "FfmpegBuilderStart": {
-        "Description": "Crea una instancia del Constructor FFMPEG que puede construir un argumento de FFMPEG para luego ejecutarse con el Ejecutador FFMPEG.",
-        "Label": "Constructor FFMPEG: Iniciar",
+        "Description": "Crea una instancia del FFMPEG Builder que puede construir un argumento de FFMPEG para luego ejecutarse con el Ejecutador FFMPEG.",
+        "Label": "FFMPEG Builder: Iniciar",
         "Outputs": {
-          "1": "Constructor FFMPEG creado y listo para agregar elementos de flujo de Constructor FFMPEG"
+          "1": "FFMPEG Builder creado y listo para agregar elementos de flujo de FFMPEG Builder"
         }
       },
       "FfmpegBuilderSubtitleClearDefault": {
         "Description": "Este elemento de flujo eliminará la bandera predeterminada de los subtítulos.",
-        "Label": "Constructor FFMPEG: Limpiar Predeterminado de Subtítulos",
+        "Label": "FFMPEG Builder: Limpiar Predeterminado de Subtítulos",
         "Fields": {
           "LeaveForced": "Dejar Forzado",
           "LeaveForced-Help": "Cuando está marcado, todos los subtítulos forzados no se tocarán, mantendrán su configuración original. Esto se ejecuta antes de 'Establecer Predeterminado Forzado', por lo que tiene prioridad.",
@@ -680,7 +680,7 @@
       },
       "FfmpegBuilderTrackSorter": {
         "Description": "Este elemento de flujo ordena las pistas según las opciones de ordenamiento establecidas por el usuario.",
-        "Label": "Constructor FFMPEG: Ordenador de Pistas",
+        "Label": "FFMPEG Builder: Ordenador de Pistas",
         "Fields": {
           "SetFirstDefault": "Establecer Predeterminado",
           "SetFirstDefault-Help": "Si la primera pista debe establecerse como predeterminada después de la ordenación.",
@@ -697,10 +697,10 @@
         }
       },
       "FfmpegBuilderVideo10Bit": {
-        "Description": "Establece el Constructor FFMPEG para codificar los flujos de video en 10 Bit",
-        "Label": "Constructor FFMPEG: Video 10 Bit",
+        "Description": "Establece el FFMPEG Builder para codificar los flujos de video en 10 Bit",
+        "Label": "FFMPEG Builder: Video 10 Bit",
         "Outputs": {
-          "1": "Flujos de video del Constructor FFMPEG establecidos para codificar en 10 Bit"
+          "1": "Flujos de video del FFMPEG Builder establecidos para codificar en 10 Bit"
         }
       },
       "FfmpegBuilderVideoBitrate": {
