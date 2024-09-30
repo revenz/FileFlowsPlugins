@@ -1,2 +1,32 @@
 {
+  "Flow": {
+    "Parts": {
+      "UploadToNextcloud": {
+        "Description": "Uploadt een bestand naar Nextcloud",
+        "Fields": {
+          "DestinationPath": "Bestemming",
+          "DestinationPath-Help": "De locatie en bestandsnaam, d.w.z. het volledige pad, van het bestand in Nextcloud.",
+          "File": "Bestand",
+          "File-Help": "Het bestand dat geüpload moet worden, laat leeg om het huidige werkbestand te gebruiken."
+        },
+        "Outputs": {
+          "1": "Met succes geüpload naar Nextcloud",
+          "2": "Uploaden naar Nextcloud is mislukt"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Nextcloud": {
+      "Description": "Een plugin waarmee je bestanden naar Nextcloud kunt uploaden.",
+      "Fields": {
+        "Password": "Wachtwoord",
+        "Password-Help": "Het applicatie-specifieke wachtwoord dat je hebt aangemaakt voor FileFlows voor deze Nextcloud-gebruiker.",
+        "Url": "URL",
+        "Url-Help": "De URL van de Nextcloud-server",
+        "Username": "Gebruikersnaam",
+        "Username-Help": "De gebruikersnaam van de gebruiker naar wie geüpload moet worden."
+      }
+    }
+  }
 }

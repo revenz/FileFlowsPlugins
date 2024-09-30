@@ -1,2 +1,36 @@
 {
+  "Flow": {
+    "Parts": {
+      "Pushover": {
+        "Description": "Invia un messaggio tramite Pushover.",
+        "Fields": {
+          "Expire": "Scadenza",
+          "Expire-Help": "Imposta la durata, in secondi, prima che questo messaggio di emergenza scada e smetta di riprovare la consegna.",
+          "Expire-Suffix": "secondi",
+          "Message": "Messaggio",
+          "Message-Help": "Il messaggio da inviare al server Pushover",
+          "Priority": "Priorità",
+          "Priority-Help": "La priorità del messaggio in fase di invio",
+          "Retry": "Ripeti",
+          "Retry-Help": "Specifica l'intervallo, in secondi, tra i tentativi di ripetizione per questo messaggio di emergenza in caso di fallimento della consegna.",
+          "Retry-Suffix": "secondi"
+        },
+        "Outputs": {
+          "1": "Messaggio Pushover inviato",
+          "2": "Invio del messaggio Pushover fallito"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Pushover": {
+      "Description": "Un plugin che ti consente di inviare messaggi a un server Pushover.",
+      "Fields": {
+        "ApiToken": "Token API",
+        "ApiToken-Help": "Il token API dell'applicazione utilizzato per inviare notifiche.",
+        "UserKey": "Chiave Utente",
+        "UserKey-Help": "La tua chiave utente personale per ricevere notifiche."
+      }
+    }
+  }
 }

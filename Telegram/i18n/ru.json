@@ -1,2 +1,28 @@
 {
+  "Flow": {
+    "Parts": {
+      "Telegram": {
+        "Description": "Отправляет сообщение Telegram.",
+        "Fields": {
+          "Message": "Сообщение",
+          "Message-Help": "Сообщение для отправки."
+        },
+        "Outputs": {
+          "1": "Сообщение Telegram отправлено",
+          "2": "Не удалось отправить сообщение Telegram"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Telegram": {
+      "Description": "Плагин, который позволяет отправлять сообщения Telegram.",
+      "Fields": {
+        "BotToken": "Токен бота",
+        "BotToken-Help": "Ваш токен бота Telegram.",
+        "ChatId": "ID чата",
+        "ChatId-Help": "ID чата, в который нужно отправить сообщения."
+      }
+    }
+  }
 }

@@ -1,2 +1,33 @@
 {
+  "Flow": {
+    "Parts": {
+      "Gotify": {
+        "Description": "Stuurt een bericht naar een Gotify-server.",
+        "Fields": {
+          "Message": "Bericht",
+          "Message-Help": "Het bericht dat naar de Gotify-server moet worden gestuurd",
+          "Priority": "Prioriteit",
+          "Priority-Help": "De prioriteit van het te verzenden bericht",
+          "Title": "Titel",
+          "Title-Help": "Een optionele titel om te verzenden."
+        },
+        "Outputs": {
+          "1": "Gotify-bericht verzonden",
+          "2": "Verzenden van Gotify-bericht mislukt"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Gotify": {
+      "Description": "Een plugin waarmee je berichten naar een Gotify-server kunt sturen.",
+      "Fields": {
+        "AccessToken": "Toegangstoken",
+        "AccessToken-Help": "Het toegangstoken dat wordt gebruikt om te communiceren met de Gotify-server.",
+        "ServerUrl": "Server",
+        "ServerUrl-Help": "De URL van de Gotify-server",
+        "ServerUrl-Placeholder": "http://gotify.lan"
+      }
+    }
+  }
 }

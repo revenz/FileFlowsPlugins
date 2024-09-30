@@ -1,2 +1,28 @@
 {
+  "Flow": {
+    "Parts": {
+      "Telegram": {
+        "Description": "Skickar ett Telegram-meddelande.",
+        "Fields": {
+          "Message": "Meddelande",
+          "Message-Help": "Meddelandet som ska skickas."
+        },
+        "Outputs": {
+          "1": "Telegram-meddelandet skickat",
+          "2": "Misslyckades med att skicka Telegram-meddelandet"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Telegram": {
+      "Description": "Ett plugin som gör att du kan skicka Telegram-meddelanden.",
+      "Fields": {
+        "BotToken": "Bot-token",
+        "BotToken-Help": "Din Telegram-bot-token.",
+        "ChatId": "Chat-ID",
+        "ChatId-Help": "ID för chatten där meddelanden ska skickas."
+      }
+    }
+  }
 }

@@ -1,2 +1,78 @@
 {
+  "Flow": {
+    "Parts": {
+      "GenreMatches": {
+        "Description": "Jämför genremetadata med angivna genre(s).",
+        "Fields": {
+          "Genres": "Genrer",
+          "MatchAll": "Matcha alla",
+          "MatchAll-Help": "Om alla valda genrer måste förekomma i metadata, annars måste minst en förekomma"
+        },
+        "Outputs": {
+          "1": "Genre matchar",
+          "2": "Genre matchar inte"
+        }
+      },
+      "MovieLookup": {
+        "Description": "Genomför en sökning på TheMovieDB.org efter en film.\nLagrar metadata i variabeln 'MovieInfo'.",
+        "Fields": {
+          "UseFolderName": "Använd mappnamn",
+          "UseFolderName-Help": "Om mappnamnet ska användas istället för filnamnet."
+        },
+        "Outputs": {
+          "1": "Film hittad",
+          "2": "Film INTE hittad"
+        }
+      },
+      "MovieRenamer": {
+        "Description": "Ändrar namnet på arbetsfilen med hjälp av metadata som lagrats i 'MovieInfo'.\nObservera: MovieLookup ska utföras i flödet före detta flödelement för att fungera.\n\nUtdata 1: Filen har döpts om\nUtdata 2: Filen kunde inte döpas om",
+        "Fields": {
+          "DestinationPath": "Destination Väg",
+          "DestinationPath-Help": "Om filen ska flyttas till en annan katalog.",
+          "LogOnly": "Endast logg",
+          "LogOnly-Help": "Slå på om du bara vill testa detta flödelement utan att faktiskt döpa om filen",
+          "Pattern": "Mönster",
+          "Pattern-Help": "Mönstret som ska användas för att döpa om mappen. '{Title}', '{Year}', '{Extension}'."
+        }
+      },
+      "MusicMeta": {
+        "Description": "Laddar metadata för en musikfil i flödesvariabler."
+      },
+      "NfoFileCreator": {
+        "Description": "Skapar en Kodi NFO-fil från tidigare laddad metadata.",
+        "Fields": {
+          "DestinationFile": "Destination Fil",
+          "DestinationFile-Help": "Filnamnet för den nya NFO-filen. Om tomt kommer det ursprungliga filnamnet att användas med ändelsen ändrad till `.nfo`",
+          "DestinationPath": "Destination Mapp",
+          "DestinationPath-Help": "Mappen där NFO-filen kommer att skapas.\nOm tomt kommer den att skapas i samma katalog som den ursprungliga filen."
+        },
+        "Outputs": {
+          "1": "NFO-fil skapad",
+          "2": "NFO kunde inte skapas"
+        }
+      },
+      "TVEpisodeLookup": {
+        "Description": "Genomför en sökning på TheMovieDB.org efter ett TV-avsnitt.",
+        "Fields": {
+          "UseFolderName": "Använd mappnamn",
+          "UseFolderName-Help": "Om mappnamnet ska användas istället för filnamnet.\n\nObservera om mappen börjar med Säsong eller Staffel eller Saison eller Specials kommer den överordnade mappen att användas."
+        },
+        "Outputs": {
+          "1": "TV-avsnitt hittat",
+          "2": "TV-avsnitt INTE hittat"
+        }
+      },
+      "TVShowLookup": {
+        "Description": "Genomför en sökning på TheMovieDB.org efter en TV-show.\nLagrar metadata i variabeln 'TVShowInfo'.",
+        "Fields": {
+          "UseFolderName": "Använd mappnamn",
+          "UseFolderName-Help": "Om mappnamnet ska användas istället för filnamnet.\n\nObservera om mappen börjar med Säsong eller Staffel eller Saison eller Specials kommer den överordnade mappen att användas."
+        },
+        "Outputs": {
+          "1": "TV-show hittad",
+          "2": "TV-show INTE hittad"
+        }
+      }
+    }
+  }
 }

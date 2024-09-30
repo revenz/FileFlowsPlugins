@@ -1,2 +1,33 @@
 {
+  "Flow": {
+    "Parts": {
+      "Gotify": {
+        "Description": "Gotifyサーバーにメッセージを送信します。",
+        "Fields": {
+          "Message": "メッセージ",
+          "Message-Help": "Gotifyサーバーに送信するメッセージ",
+          "Priority": "優先度",
+          "Priority-Help": "送信されるメッセージの優先度",
+          "Title": "タイトル",
+          "Title-Help": "送信するオプションのタイトル。"
+        },
+        "Outputs": {
+          "1": "Gotifyメッセージが送信されました",
+          "2": "Gotifyメッセージの送信に失敗しました"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Gotify": {
+      "Description": "Gotifyサーバーにメッセージを送信するためのプラグイン。",
+      "Fields": {
+        "AccessToken": "アクセス・トークン",
+        "AccessToken-Help": "Gotifyサーバーとの通信に使用されるアクセス・トークン。",
+        "ServerUrl": "サーバー",
+        "ServerUrl-Help": "GotifyサーバーのURL",
+        "ServerUrl-Placeholder": "http://gotify.lan"
+      }
+    }
+  }
 }

@@ -1,2 +1,25 @@
 {
+  "5": {
+    "1": "5.1"
+  },
+  "7": {
+    "1": "7.1"
+  },
+  "Enums": {
+    "WatermarkPosition": {
+      "BottomLeft": "左下角",
+      "BottomRight": "右下角",
+      "Center": "中心",
+      "TopLeft": "左上角",
+      "TopRight": "右上角"
+    }
+  },
+  "Flow": {
+    "Parts": {
+    }
+  },
+  "H": {
+    "264": "H.264",
+    "265": "H.265"
+  }
 }

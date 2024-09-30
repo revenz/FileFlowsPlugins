@@ -1,2 +1,111 @@
 {
+  "Flow": {
+    "Parts": {
+      "AutoCropImage": {
+        "Description": "Automatiskt beskär ett bild",
+        "Fields": {
+          "Format": "Format",
+          "Format-Help": "Bildformatet att konvertera till",
+          "Threshold": "Tröskel",
+          "Threshold-Help": "Tröskel för entropisk täthet, standard är 50. Måste vara mellan 0 och 100."
+        },
+        "Outputs": {
+          "1": "Bild beskuren, sparad i ny tillfällig fil",
+          "2": "Bilden kunde inte beskäras"
+        }
+      },
+      "ImageFile": {
+        "Description": "En bildfil",
+        "Outputs": {
+          "1": "Bildfil"
+        }
+      },
+      "ImageFlip": {
+        "Description": "Vänder en bild",
+        "Fields": {
+          "Format": "Format",
+          "Format-Help": "Bildformatet att konvertera till",
+          "Vertical": "Vertikal",
+          "Vertical-Help": "Om inställt kommer bilden att vändas vertikalt, annars horisontellt"
+        },
+        "Outputs": {
+          "1": "Bild vänd, sparad i ny tillfällig fil"
+        }
+      },
+      "ImageFormat": {
+        "Description": "Konverterar en bild till det angivna formatet",
+        "Fields": {
+          "Format": "Format",
+          "Format-Help": "Bildformatet att konvertera till"
+        },
+        "Outputs": {
+          "1": "Bild konverterad, sparad i ny tillfällig fil",
+          "2": "Bilden är redan i målsättningsformat"
+        }
+      },
+      "ImageIsLandscape": {
+        "Description": "Testar om en bild är liggande",
+        "Outputs": {
+          "1": "Bilden är liggande",
+          "2": "Bilden är inte liggande"
+        }
+      },
+      "ImageIsPortrait": {
+        "Description": "Testar om en bild är porträtt",
+        "Outputs": {
+          "1": "Bilden är porträtt",
+          "2": "Bilden är inte porträtt"
+        }
+      },
+      "ImageResizer": {
+        "Description": "Ändrar storlek på en bild",
+        "Fields": {
+          "Format": "Format",
+          "Format-Help": "Bildformatet att konvertera till",
+          "Height": "Höjd",
+          "Mode": "Läge",
+          "Mode-Help": "Läget som ska användas vid ändring av bildstorlek",
+          "Width": "Bredd"
+        },
+        "Outputs": {
+          "1": "Bild storlek ändrad, sparad i ny tillfällig fil"
+        }
+      },
+      "ImageRotate": {
+        "Description": "Rotera en bild",
+        "Fields": {
+          "Angle": "Vinkel",
+          "Angle-Help": "Rotationsvinkeln",
+          "Format": "Format",
+          "Format-Help": "Bildformatet att konvertera till"
+        },
+        "Outputs": {
+          "1": "Bild roterad, sparad i ny tillfällig fil"
+        }
+      },
+      "IsImage": {
+        "Description": "Kontrollerar om en fil är en bildfil.",
+        "Fields": {
+          "File": "Fil",
+          "File-Help": "Valfri sökväg till filen som ska kontrolleras, om lämnas tomt kommer den aktuella arbetsfilen att kontrolleras.",
+          "File-Placeholder": "Om tomt, aktuella arbetsfil"
+        },
+        "Outputs": {
+          "1": "Filen är en erkänd bildfil",
+          "2": "Filen är inte en erkänd bildfil"
+        }
+      },
+      "PixelCheck": {
+        "Description": "Detta flödeselement verifierar om det totala antalet pixlar i en bild överstiger den angivna tröskeln.",
+        "Fields": {
+          "Pixels": "Pixlar",
+          "Pixels-Help": "Antalet pixlar en bild bör innehålla. Detta beräknas genom att multiplicera bildens bredd med dess höjd."
+        },
+        "Outputs": {
+          "1": "Bilden har lika med eller fler pixlar än det angivna antalet",
+          "2": "Bilden har färre pixlar än det angivna antalet"
+        }
+      }
+    }
+  }
 }

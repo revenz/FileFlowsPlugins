@@ -1,2 +1,28 @@
 {
+  "Flow": {
+    "Parts": {
+      "Telegram": {
+        "Description": "Invia un messaggio Telegram.",
+        "Fields": {
+          "Message": "Messaggio",
+          "Message-Help": "Il messaggio da inviare."
+        },
+        "Outputs": {
+          "1": "Messaggio Telegram inviato",
+          "2": "Invio del messaggio Telegram fallito"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Telegram": {
+      "Description": "Un plugin che ti consente di inviare messaggi Telegram.",
+      "Fields": {
+        "BotToken": "Token Bot",
+        "BotToken-Help": "Il tuo token bot di Telegram.",
+        "ChatId": "ID Chat",
+        "ChatId-Help": "L'ID della chat a cui inviare i messaggi."
+      }
+    }
+  }
 }

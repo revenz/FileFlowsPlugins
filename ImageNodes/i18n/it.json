@@ -1,2 +1,111 @@
 {
+  "Flow": {
+    "Parts": {
+      "AutoCropImage": {
+        "Description": "Ritaglia automaticamente un'immagine",
+        "Fields": {
+          "Format": "Formato",
+          "Format-Help": "Il formato dell'immagine in cui convertire",
+          "Threshold": "Soglia",
+          "Threshold-Help": "Soglia per la densità entropica, predefinita è 50. Deve essere compresa tra 0 e 100."
+        },
+        "Outputs": {
+          "1": "Immagine ritagliata, salvata in un nuovo file temporaneo",
+          "2": "Immagine non ritagliata"
+        }
+      },
+      "ImageFile": {
+        "Description": "Un file immagine",
+        "Outputs": {
+          "1": "File immagine"
+        }
+      },
+      "ImageFlip": {
+        "Description": "Ribalta un'immagine",
+        "Fields": {
+          "Format": "Formato",
+          "Format-Help": "Il formato dell'immagine in cui convertire",
+          "Vertical": "Verticale",
+          "Vertical-Help": "Se impostato, l'immagine verrà ribaltata verticalmente, altrimenti orizzontalmente"
+        },
+        "Outputs": {
+          "1": "Immagine ribaltata, salvata in un nuovo file temporaneo"
+        }
+      },
+      "ImageFormat": {
+        "Description": "Converte un'immagine nel formato specificato",
+        "Fields": {
+          "Format": "Formato",
+          "Format-Help": "Il formato dell'immagine in cui convertire"
+        },
+        "Outputs": {
+          "1": "Immagine convertita, salvata in un nuovo file temporaneo",
+          "2": "Immagine già nel formato target"
+        }
+      },
+      "ImageIsLandscape": {
+        "Description": "Verifica se un'immagine è in formato orizzontale",
+        "Outputs": {
+          "1": "L'immagine è in formato orizzontale",
+          "2": "L'immagine non è in formato orizzontale"
+        }
+      },
+      "ImageIsPortrait": {
+        "Description": "Verifica se un'immagine è in formato verticale",
+        "Outputs": {
+          "1": "L'immagine è in formato verticale",
+          "2": "L'immagine non è in formato verticale"
+        }
+      },
+      "ImageResizer": {
+        "Description": "Ridimensiona un'immagine",
+        "Fields": {
+          "Format": "Formato",
+          "Format-Help": "Il formato dell'immagine in cui convertire",
+          "Height": "Altezza",
+          "Mode": "Modalità",
+          "Mode-Help": "La modalità da utilizzare durante il ridimensionamento dell'immagine",
+          "Width": "Larghezza"
+        },
+        "Outputs": {
+          "1": "Immagine ridimensionata, salvata in un nuovo file temporaneo"
+        }
+      },
+      "ImageRotate": {
+        "Description": "Ruota un'immagine",
+        "Fields": {
+          "Angle": "Angolo",
+          "Angle-Help": "L'angolo di rotazione",
+          "Format": "Formato",
+          "Format-Help": "Il formato dell'immagine in cui convertire"
+        },
+        "Outputs": {
+          "1": "Immagine ruotata, salvata in un nuovo file temporaneo"
+        }
+      },
+      "IsImage": {
+        "Description": "Verifica se un file è un file immagine.",
+        "Fields": {
+          "File": "File",
+          "File-Help": "Percorso opzionale del file da controllare, se lasciato vuoto verrà controllato il file di lavoro corrente.",
+          "File-Placeholder": "Se vuoto, file di lavoro corrente"
+        },
+        "Outputs": {
+          "1": "Il file è un file immagine riconosciuto",
+          "2": "Il file non è un file immagine riconosciuto"
+        }
+      },
+      "PixelCheck": {
+        "Description": "Questo elemento di flusso verifica se il conteggio totale dei pixel di un'immagine supera la soglia specificata.",
+        "Fields": {
+          "Pixels": "Pixel",
+          "Pixels-Help": "Il numero di pixel che un'immagine dovrebbe contenere. Questo è calcolato dalla larghezza dell'immagine moltiplicata per la sua altezza."
+        },
+        "Outputs": {
+          "1": "L'immagine ha un numero di pixel maggiore o uguale a quello specificato",
+          "2": "L'immagine ha un numero di pixel inferiore a quello richiesto"
+        }
+      }
+    }
+  }
 }

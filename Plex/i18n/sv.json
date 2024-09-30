@@ -1,2 +1,58 @@
 {
+  "Flow": {
+    "Parts": {
+      "PlexAnalyze": {
+        "Description": "Skickar ett meddelande till en Plex-server för att analysera arbetsfilen. \nArbetsfilen måste redan vara känd av Plex för att detta ska fungera.",
+        "Fields": {
+          "AccessToken": "Åtkomsttoken",
+          "AccessToken-Help": "Den [åtkomsttoken](https://github.com/revenz/Fenrus/wiki/Plex-Token) som används för att kommunicera med Plex-servern.\nObservera: Ställ in detta endast om du vill överskrida plugininställningarnas åtkomsttoken.",
+          "Mapping": "Kartläggning",
+          "Mapping-Help": "En lista över ersättningar för kartläggning som används för vägar i FileFlows med de vägar som används i Plex.\nObservera: Detta kommer inte att användas om inte server-URL:en också anges här, annars kommer plugininställningarnas kartläggningar att användas.",
+          "MappingKey": "FileFlows",
+          "MappingValue": "Plex",
+          "ServerUrl": "Server",
+          "ServerUrl-Help": "URL:en till Plex-servern. Om tom kommer den att använda servern som definieras i plugininställningarna.\nObservera: Ställ in detta endast om du vill överskrida plugininställningarnas server-URL.",
+          "ServerUrl-Placeholder": "http://localhost:32400/"
+        },
+        "Outputs": {
+          "1": "Plex analysbegäran skickad",
+          "2": "Plex analysbegäran kunde inte skickas"
+        }
+      },
+      "PlexUpdater": {
+        "Description": "Skickar ett meddelande till en Plex-server för att uppdatera biblioteket.",
+        "Fields": {
+          "AccessToken": "Åtkomsttoken",
+          "AccessToken-Help": "Den [åtkomsttoken](https://github.com/revenz/Fenrus/wiki/Plex-Token) som används för att kommunicera med Plex-servern.\nObservera: Ställ in detta endast om du vill överskrida plugininställningarnas åtkomsttoken.",
+          "Mapping": "Kartläggning",
+          "Mapping-Help": "En lista över ersättningar för kartläggning som används för vägar i FileFlows med de vägar som används i Plex.\nObservera: Detta kommer inte att användas om inte server-URL:en också anges här, annars kommer plugininställningarnas kartläggningar att användas.",
+          "MappingKey": "FileFlows",
+          "MappingValue": "Plex",
+          "ServerUrl": "Server",
+          "ServerUrl-Help": "URL:en till Plex-servern. Om tom kommer den att använda servern som definieras i plugininställningarna.\nObservera: Ställ in detta endast om du vill överskrida plugininställningarnas server-URL.",
+          "ServerUrl-Placeholder": "http://localhost:32400/"
+        },
+        "Outputs": {
+          "1": "Plex uppdateringsbegäran skickad",
+          "2": "Plex uppdateringsbegäran kunde inte skickas"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Plex": {
+      "Description": "Ett plugin som gör att du kan kommunicera med Plex.",
+      "Fields": {
+        "AccessToken": "Åtkomsttoken",
+        "AccessToken-Help": "Den [åtkomsttoken](https://github.com/revenz/Fenrus/wiki/Plex-Token) som används för att kommunicera med Plex-servern.",
+        "Mapping": "Kartläggning",
+        "Mapping-Help": "En lista över ersättningar för kartläggning som används för vägar i FileFlows med de vägar som används i Plex.",
+        "MappingKey": "FileFlows",
+        "MappingValue": "Plex",
+        "ServerUrl": "Server",
+        "ServerUrl-Help": "URL:en till Plex-servern",
+        "ServerUrl-Placeholder": "http://localhost:32400/"
+      }
+    }
+  }
 }

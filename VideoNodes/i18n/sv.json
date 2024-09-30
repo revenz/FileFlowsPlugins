@@ -1,2 +1,26 @@
 {
+  "5": {
+    "1": "5.1"
+  },
+  "7": {
+    "1": "7.1"
+  },
+  "Enums": {
+    "WatermarkPosition": {
+      "BottomLeft": "Nederst till vänster",
+      "BottomRight": "Nederst till höger",
+      "Center": "Center",
+      "TopLeft": "Överst till vänster",
+      "TopRight": "Överst till höger"
+    }
+  },
+  "Flow": {
+    "Parts": {
+    }
+  },
+  "H": {
+    "264": "H.264",
+    "265": "H.265"
+  }
+
 }

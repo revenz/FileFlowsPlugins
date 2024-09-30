@@ -1,2 +1,111 @@
 {
+  "Flow": {
+    "Parts": {
+      "AutoCropImage": {
+        "Description": "自动裁剪图像",
+        "Fields": {
+          "Format": "格式",
+          "Format-Help": "要转换的图像格式",
+          "Threshold": "阈值",
+          "Threshold-Help": "熵密度的阈值，默认值为50。必须在0到100之间。"
+        },
+        "Outputs": {
+          "1": "图像已裁剪，保存到新的临时文件中",
+          "2": "图像未被裁剪"
+        }
+      },
+      "ImageFile": {
+        "Description": "图像文件",
+        "Outputs": {
+          "1": "图像文件"
+        }
+      },
+      "ImageFlip": {
+        "Description": "翻转图像",
+        "Fields": {
+          "Format": "格式",
+          "Format-Help": "要转换的图像格式",
+          "Vertical": "垂直",
+          "Vertical-Help": "如果设置，则图像将垂直翻转，否则水平翻转"
+        },
+        "Outputs": {
+          "1": "图像已翻转，保存到新的临时文件中"
+        }
+      },
+      "ImageFormat": {
+        "Description": "将图像转换为指定格式",
+        "Fields": {
+          "Format": "格式",
+          "Format-Help": "要转换的图像格式"
+        },
+        "Outputs": {
+          "1": "图像已转换，保存到新的临时文件中",
+          "2": "图像已处于目标格式"
+        }
+      },
+      "ImageIsLandscape": {
+        "Description": "测试图像是否为横向",
+        "Outputs": {
+          "1": "图像为横向",
+          "2": "图像不是横向"
+        }
+      },
+      "ImageIsPortrait": {
+        "Description": "测试图像是否为纵向",
+        "Outputs": {
+          "1": "图像为纵向",
+          "2": "图像不是纵向"
+        }
+      },
+      "ImageResizer": {
+        "Description": "调整图像大小",
+        "Fields": {
+          "Format": "格式",
+          "Format-Help": "要转换的图像格式",
+          "Height": "高度",
+          "Mode": "模式",
+          "Mode-Help": "调整图像大小时使用的模式",
+          "Width": "宽度"
+        },
+        "Outputs": {
+          "1": "图像大小已调整，保存到新的临时文件中"
+        }
+      },
+      "ImageRotate": {
+        "Description": "旋转图像",
+        "Fields": {
+          "Angle": "角度",
+          "Angle-Help": "旋转角度",
+          "Format": "格式",
+          "Format-Help": "要转换的图像格式"
+        },
+        "Outputs": {
+          "1": "图像已旋转，保存到新的临时文件中"
+        }
+      },
+      "IsImage": {
+        "Description": "测试文件是否为图像文件。",
+        "Fields": {
+          "File": "文件",
+          "File-Help": "可选的文件路径，如果留空，则将检查当前工作文件。",
+          "File-Placeholder": "如果留空则为当前工作文件"
+        },
+        "Outputs": {
+          "1": "文件是被认可的图像文件",
+          "2": "文件不是被认可的图像文件"
+        }
+      },
+      "PixelCheck": {
+        "Description": "此流元素验证图像的总像素数是否超过指定阈值。",
+        "Fields": {
+          "Pixels": "像素",
+          "Pixels-Help": "图像应包含的像素数。 这是通过图像的宽度乘以其高度计算得出的。"
+        },
+        "Outputs": {
+          "1": "图像的像素数大于或等于指定的像素数",
+          "2": "图像的像素数少于指定的像素数"
+        }
+      }
+    }
+  }
 }

@@ -1,2 +1,32 @@
 {
+  "Flow": {
+    "Parts": {
+      "UploadToNextcloud": {
+        "Description": "Laddar upp en fil till Nextcloud",
+        "Fields": {
+          "DestinationPath": "Mål",
+          "DestinationPath-Help": "Platsen och filnamnet, dvs. den fullständiga sökvägen, för filen i Nextcloud.",
+          "File": "Fil",
+          "File-Help": "Fil som ska laddas upp, lämna tomt för att använda den aktuella arbetsfilen."
+        },
+        "Outputs": {
+          "1": "Har framgångsrikt laddats upp till Nextcloud",
+          "2": "Misslyckades med att ladda upp till Nextcloud"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Nextcloud": {
+      "Description": "Ett plugin som låter dig ladda upp filer till Nextcloud.",
+      "Fields": {
+        "Password": "Lösenord",
+        "Password-Help": "Det applikationsspecifika lösenordet som du skapade för FileFlows för denna Nextcloud-användare.",
+        "Url": "URL",
+        "Url-Help": "URL-adressen till Nextcloud-servern",
+        "Username": "Användarnamn",
+        "Username-Help": "Användarnamnet för den användare som ska laddas upp."
+      }
+    }
+  }
 }

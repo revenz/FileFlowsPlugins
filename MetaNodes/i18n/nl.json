@@ -1,2 +1,78 @@
 {
+  "Flow": {
+    "Parts": {
+      "GenreMatches": {
+        "Description": "Vergelijkt de genre-metadata met de opgegeven genre(s).",
+        "Fields": {
+          "Genres": "Genres",
+          "MatchAll": "Match Alle",
+          "MatchAll-Help": "Als alle geselecteerde genres in de metadata moeten voorkomen, anders moet er minstens één voorkomen"
+        },
+        "Outputs": {
+          "1": "Genre komt overeen",
+          "2": "Genre komt niet overeen"
+        }
+      },
+      "MovieLookup": {
+        "Description": "Voert een zoekopdracht uit op TheMovieDB.org voor een film.\nSlaat de metadata op in de variabele 'MovieInfo'.",
+        "Fields": {
+          "UseFolderName": "Gebruik Mapnaam",
+          "UseFolderName-Help": "Als de mapnaam in plaats van de bestandsnaam moet worden gebruikt."
+        },
+        "Outputs": {
+          "1": "Film gevonden",
+          "2": "Film NIET gevonden"
+        }
+      },
+      "MovieRenamer": {
+        "Description": "Hernoemt het werkbestand met behulp van de metadata opgeslagen in 'MovieInfo'.\nLet op: MovieLookup moet in de flow worden uitgevoerd voordat dit flow-element werkt.\n\nOutput 1: Bestand is hernoemd\nOutput 2: Bestand kon niet worden hernoemd",
+        "Fields": {
+          "DestinationPath": "Bestemming Pad",
+          "DestinationPath-Help": "Als het bestand naar een andere map moet worden verplaatst.",
+          "LogOnly": "Alleen Loggen",
+          "LogOnly-Help": "Zet aan als je deze flow-element alleen wilt testen zonder het bestand daadwerkelijk te hernoemen",
+          "Pattern": "Patroon",
+          "Pattern-Help": "Het patroon dat gebruikt moet worden om de map te hernoemen. '{Title}', '{Year}', '{Extension}'."
+        }
+      },
+      "MusicMeta": {
+        "Description": "Laadt de metadata van een muziekbestand in de flow-variabelen."
+      },
+      "NfoFileCreator": {
+        "Description": "Creëert een Kodi NFO-bestand van eerder geladen metadata.",
+        "Fields": {
+          "DestinationFile": "Bestemming Bestand",
+          "DestinationFile-Help": "De bestandsnaam van het nieuwe NFO-bestand. Als leeg, wordt de oorspronkelijke bestandsnaam gebruikt met de extensie gewijzigd naar `.nfo`",
+          "DestinationPath": "Bestemming Map",
+          "DestinationPath-Help": "De map waar het NFO-bestand zal worden aangemaakt.\nAls leeg, wordt het aangemaakt in dezelfde map als het originele bestand."
+        },
+        "Outputs": {
+          "1": "NFO-bestand aangemaakt",
+          "2": "NFO kon niet worden aangemaakt"
+        }
+      },
+      "TVEpisodeLookup": {
+        "Description": "Voert een zoekopdracht uit op TheMovieDB.org voor een TV-aflevering.",
+        "Fields": {
+          "UseFolderName": "Gebruik Mapnaam",
+          "UseFolderName-Help": "Als de mapnaam in plaats van de bestandsnaam moet worden gebruikt.\n\nLet op, als de map begint met Seizoen of Staffel of Saison of Specials, wordt de bovenliggende map gebruikt."
+        },
+        "Outputs": {
+          "1": "TV-aflevering gevonden",
+          "2": "TV-aflevering NIET gevonden"
+        }
+      },
+      "TVShowLookup": {
+        "Description": "Voert een zoekopdracht uit op TheMovieDB.org voor een TV-show.\nSlaat de metadata op in de variabele 'TVShowInfo'.",
+        "Fields": {
+          "UseFolderName": "Gebruik Mapnaam",
+          "UseFolderName-Help": "Als de mapnaam in plaats van de bestandsnaam moet worden gebruikt.\n\nLet op, als de map begint met Seizoen of Staffel of Saison of Specials, wordt de bovenliggende map gebruikt."
+        },
+        "Outputs": {
+          "1": "TV-show gevonden",
+          "2": "TV-show NIET gevonden"
+        }
+      }
+    }
+  }
 }

@@ -1,2 +1,40 @@
 {
+  "Flow": {
+    "Parts": {
+      "EmbyUpdater": {
+        "Description": "Skickar ett meddelande till en Emby-server för att uppdatera biblioteket.",
+        "Fields": {
+          "AccessToken": "Åtkomsttoken",
+          "AccessToken-Help": "Ett Emby API-åtkomsttoken.\nObservera: Sätt endast detta om du vill åsidosätta plugin-inställningarnas åtkomsttoken.",
+          "Mapping": "Mapping",
+          "Mapping-Help": "En lista över mappingsersättningar som används för vägar i FileFlows med de vägar som används i Emby.\nObservera: Detta kommer inte att användas om inte server-URL:en också är inställd här, annars kommer plugin-inställningarnas mappingar att användas.",
+          "MappingKey": "FileFlows",
+          "MappingValue": "Emby",
+          "ServerUrl": "Server",
+          "ServerUrl-Help": "URL:en till Emby-servern.\nObservera: Sätt endast detta om du vill åsidosätta plugin-inställningarnas server-URL.",
+          "ServerUrl-Placeholder": "http://localhost:8096/"
+        },
+        "Outputs": {
+          "1": "Emby-uppdateringsbegäran skickad",
+          "2": "Misslyckades med att skicka Emby-uppdateringsbegäran"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Emby": {
+      "Description": "En plugin som låter dig kommunicera med Emby.",
+      "Fields": {
+        "AccessToken": "Åtkomsttoken",
+        "AccessToken-Help": "Ett Emby API-åtkomsttoken",
+        "Mapping": "Mapping",
+        "Mapping-Help": "En lista över mappingsersättningar som används för vägar i FileFlows med de vägar som används i Emby.",
+        "MappingKey": "FileFlows",
+        "MappingValue": "Emby",
+        "ServerUrl": "Server",
+        "ServerUrl-Help": "URL:en till Emby-servern",
+        "ServerUrl-Placeholder": "http://localhost:8096/"
+      }
+    }
+  }
 }

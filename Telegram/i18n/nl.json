@@ -1,2 +1,28 @@
 {
+  "Flow": {
+    "Parts": {
+      "Telegram": {
+        "Description": "Verzendt een Telegram-bericht.",
+        "Fields": {
+          "Message": "Bericht",
+          "Message-Help": "Het te verzenden bericht."
+        },
+        "Outputs": {
+          "1": "Telegram-bericht verzonden",
+          "2": "Verzending van Telegram-bericht mislukt"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Telegram": {
+      "Description": "Een plugin die je in staat stelt om Telegram-berichten te verzenden.",
+      "Fields": {
+        "BotToken": "Bot-token",
+        "BotToken-Help": "Je Telegram-bot-token.",
+        "ChatId": "Chat-ID",
+        "ChatId-Help": "De ID van de chat om berichten naar te verzenden."
+      }
+    }
+  }
 }
