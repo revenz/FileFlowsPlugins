@@ -1,0 +1,37 @@
+{
+  "Flow": {
+    "Parts": {
+      "SendEmail": {
+        "Description": "Invia un'email utilizzando il server SMTP configurato",
+        "Fields": {
+          "Body": "Corpo",
+          "Body-Help": "Il contenuto del messaggio email da inviare. Utilizza il linguaggio di templating [scriban](https://github.com/scriban/scriban)",
+          "Recipients": "Destinatari",
+          "Recipients-Help": "Un elenco di indirizzi email a cui inviare il messaggio",
+          "Subject": "Oggetto",
+          "Subject-Help": "L'oggetto dell'email in fase di impostazione"
+        },
+        "Outputs": {
+          "1": "Email ''{Subject}'' inviata",
+          "2": "Invio dell'email non riuscito"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "EmailNodes": {
+      "Fields": {
+        "Sender": "Mittente",
+        "Sender-Help": "L'indirizzo email da cui verranno inviate le email",
+        "SmtpPassword": "Password SMTP",
+        "SmtpPassword-Help": "La password utilizzata per autenticarsi con il server SMTP",
+        "SmtpPort": "Porta SMTP",
+        "SmtpPort-Help": "La porta del server SMTP utilizzata per inviare email, predefinita 25",
+        "SmtpServer": "Server SMTP",
+        "SmtpServer-Help": "L'indirizzo del server SMTP utilizzato per inviare email",
+        "SmtpUsername": "Nome utente SMTP",
+        "SmtpUsername-Help": "Il nome utente utilizzato per autenticarsi con il server SMTP"
+      }
+    }
+  }
+}

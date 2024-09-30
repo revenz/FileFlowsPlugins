@@ -1,0 +1,186 @@
+{
+  "Flow": {
+    "Parts": {
+      "AudioBitrateMatches": {
+        "Description": "Kontrollera om en ljudbitrate matchar begränsningarna.",
+        "Label": "Ljudbitrate Matchar",
+        "Fields": {
+          "BitrateKilobytes": "Bitrate",
+          "BitrateKilobytes-Help": "Bitrate i kilobyte för att köra matchningen mot.",
+          "BitrateKilobytes-Suffix": "Kilobyte",
+          "Match": "Match"
+        },
+        "Outputs": {
+          "1": "Matcher",
+          "2": "Matcher inte"
+        }
+      },
+      "AudioFile": {
+        "Description": "En inmatningsljudfil som har läst sin ljudinformation och kan bearbetas",
+        "Outputs": {
+          "1": "Ljudfil från bibliotek"
+        }
+      },
+      "AudioFileNormalization": {
+        "Description": "Normaliserar en ljudfil med hjälp av två pass av FFMPEG:s loudnorm-filter",
+        "Outputs": {
+          "1": "Ljudfil normaliserad och sparad i tillfällig fil"
+        }
+      },
+      "ConvertAudio": {
+        "Description": "Konvertera en ljudfil till den specificerade ljudkodningen",
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "Bitrate för den nya filen, ju högre bitrate desto bättre kvalitet men större fil.",
+          "Channels": "Kanaler",
+          "Channels-Help": "Antalet kanaler den konverterade filen kommer att ha.\nOm du specificerar fler kanaler än källan kommer FFmpeg automatiskt att uppblanda den.\nOm du specificerar färre kanaler än källan kommer FFmpeg automatiskt att nedblanda den.",
+          "Codec": "Codec",
+          "Codec-Help": "Den ljudkodning som filen ska konverteras till.",
+          "CustomExtension": "Tillägg",
+          "CustomExtension-Help": "Möjliggör att ange ett anpassat filnamnstillägg att använda istället för det automatiska som bestäms av kodningen.",
+          "HighEfficiency": "Hög effektivitet",
+          "HighEfficiency-Help": "Kommer att använda hög effektivitet, detta kommer att ändra tillägget till m4a och minska stödda uppspelningsenheter, men kan minska filens storlek.",
+          "Normalize": "Normalisera",
+          "Normalize-Help": "Om ljudet ska normaliseras med två pass ljudnormalisering",
+          "SampleRate": "Samplingsfrekvens",
+          "SampleRate-Help": "Samplingsfrekvensen som ska användas",
+          "SkipIfCodecMatches": "Hoppa över om Codec Matchar",
+          "SkipIfCodecMatches-Help": "Om den befintliga ljudkodningen matchar kommer denna fil inte att bearbetas oavsett bitrate. Annars, om avstängd, måste bitraten vara mindre än eller lika med för att hoppa över."
+        },
+        "Outputs": {
+          "1": "Ljud konverterat och sparat i tillfällig fil",
+          "2": "Ljud redan i codec, ingen konvertering gjord"
+        }
+      },
+      "ConvertToAAC": {
+        "Description": "Konvertera en ljudfil till AAC",
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "Bitrate för den nya AAC-filen, ju högre bitrate desto bättre kvalitet men större fil.  192 Kbps är den rekommenderade hastigheten.",
+          "Channels": "Kanaler",
+          "Channels-Help": "Antalet kanaler den konverterade filen kommer att ha.\nOm du specificerar fler kanaler än källan kommer FFmpeg automatiskt att uppblanda den.\nOm du specificerar färre kanaler än källan kommer FFmpeg automatiskt att nedblanda den.",
+          "CustomExtension": "Tillägg",
+          "CustomExtension-Help": "Möjliggör att ange ett anpassat filnamnstillägg att använda istället för det automatiska som bestäms av kodningen.",
+          "HighEfficiency": "Hög effektivitet",
+          "HighEfficiency-Help": "Kommer att använda hög effektivitet, detta kommer att ändra tillägget till m4a och minska stödda uppspelningsenheter, men kan minska filens storlek.",
+          "Normalize": "Normalisera",
+          "Normalize-Help": "Om ljudet ska normaliseras med två pass ljudnormalisering",
+          "SampleRate": "Samplingsfrekvens",
+          "SampleRate-Help": "Samplingsfrekvensen som ska användas",
+          "SkipIfCodecMatches": "Hoppa över om Codec Matchar",
+          "SkipIfCodecMatches-Help": "Om den befintliga ljudkodningen matchar kommer denna fil inte att bearbetas oavsett bitrate. Annars, om avstängd, måste bitraten vara mindre än eller lika med för att hoppa över."
+        },
+        "Outputs": {
+          "1": "Ljud konverterat och sparat i tillfällig fil",
+          "2": "Ljud redan i codec, ingen konvertering gjord"
+        }
+      },
+      "ConvertToFLAC": {
+        "Description": "Konvertera en ljudfil till FLAC",
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "Bitrate för den nya FLAC-filen, ju högre bitrate desto bättre kvalitet men större fil.  128 Kbps är den rekommenderade hastigheten.",
+          "Channels": "Kanaler",
+          "Channels-Help": "Antalet kanaler den konverterade filen kommer att ha.\nOm du specificerar fler kanaler än källan kommer FFmpeg automatiskt att uppblanda den.\nOm du specificerar färre kanaler än källan kommer FFmpeg automatiskt att nedblanda den.",
+          "CustomExtension": "Tillägg",
+          "CustomExtension-Help": "Möjliggör att ange ett anpassat filnamnstillägg att använda istället för det automatiska som bestäms av kodningen.",
+          "Normalize": "Normalisera",
+          "Normalize-Help": "Om ljudet ska normaliseras med två pass ljudnormalisering",
+          "SampleRate": "Samplingsfrekvens",
+          "SampleRate-Help": "Samplingsfrekvensen som ska användas",
+          "SkipIfCodecMatches": "Hoppa över om Codec Matchar",
+          "SkipIfCodecMatches-Help": "Om den befintliga ljudkodningen matchar kommer denna fil inte att bearbetas oavsett bitrate. Annars, om avstängd, måste bitraten vara mindre än eller lika med för att hoppa över."
+        },
+        "Outputs": {
+          "1": "Ljud konverterat och sparat i tillfällig fil",
+          "2": "Ljud redan i codec, ingen konvertering gjord"
+        }
+      },
+      "ConvertToMP3": {
+        "Description": "Konvertera en ljudfil till MP3",
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "Bitraten för den nya MP3-filen, ju högre bitrate desto bättre kvalitet men större fil. Rekommenderad hastighet är 192 Kbps.",
+          "Channels": "Kanaler",
+          "Channels-Help": "Antalet kanaler den konverterade filen kommer att ha.\nOm du specificerar fler kanaler än källan kommer FFmpeg automatiskt att uppblanda det.\nOm du specificerar färre kanaler än källan kommer FFmpeg automatiskt att nedblanda det.",
+          "CustomExtension": "Filändelse",
+          "CustomExtension-Help": "Tillåter dig att ange en anpassad filändelse som ska användas istället för den automatiska som bestäms av codec.",
+          "Normalize": "Normalisera",
+          "Normalize-Help": "Om ljudet ska normaliseras med tvåpasseringars ljudnormalisering.",
+          "SampleRate": "Samplingsfrekvens",
+          "SampleRate-Help": "Den samplingsfrekvens som ska användas",
+          "SkipIfCodecMatches": "Hoppa över om codec matchar",
+          "SkipIfCodecMatches-Help": "Om den befintliga ljudcodec matchar, kommer denna fil inte att behandlas oavsett bitrate. Annars, om avstängd, måste bitraten vara mindre än eller lika med för att hoppa över."
+        },
+        "Outputs": {
+          "1": "Ljud konverterat och sparat i tillfällig fil",
+          "2": "Ljud redan i codec, ingen konvertering gjord"
+        }
+      },
+      "ConvertToOGG": {
+        "Description": "Konvertera en ljudfil till OGG",
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "Bitraten för den nya OGG-filen, ju högre bitrate desto bättre kvalitet men större fil. Rekommenderad hastighet är 128 Kbps.",
+          "Channels": "Kanaler",
+          "Channels-Help": "Antalet kanaler den konverterade filen kommer att ha.\nOm du specificerar fler kanaler än källan kommer FFmpeg automatiskt att uppblanda det.\nOm du specificerar färre kanaler än källan kommer FFmpeg automatiskt att nedblanda det.",
+          "CustomExtension": "Filändelse",
+          "CustomExtension-Help": "Tillåter dig att ange en anpassad filändelse som ska användas istället för den automatiska som bestäms av codec.",
+          "Normalize": "Normalisera",
+          "Normalize-Help": "Om ljudet ska normaliseras med tvåpasseringars ljudnormalisering.",
+          "SampleRate": "Samplingsfrekvens",
+          "SampleRate-Help": "Den samplingsfrekvens som ska användas",
+          "SkipIfCodecMatches": "Hoppa över om codec matchar",
+          "SkipIfCodecMatches-Help": "Om den befintliga ljudcodec matchar, kommer denna fil inte att behandlas oavsett bitrate. Annars, om avstängd, måste bitraten vara mindre än eller lika med för att hoppa över."
+        },
+        "Outputs": {
+          "1": "Ljud konverterat och sparat i tillfällig fil",
+          "2": "Ljud redan i codec, ingen konvertering gjord"
+        }
+      },
+      "ConvertToWAV": {
+        "Description": "Konvertera en ljudfil till WAV",
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "Bitraten för den nya WAV-filen, ju högre bitrate desto bättre kvalitet men större fil. Rekommenderad hastighet är 128 Kbps.",
+          "Channels": "Kanaler",
+          "Channels-Help": "Antalet kanaler den konverterade filen kommer att ha.\nOm du specificerar fler kanaler än källan kommer FFmpeg automatiskt att uppblanda det.\nOm du specificerar färre kanaler än källan kommer FFmpeg automatiskt att nedblanda det.",
+          "CustomExtension": "Filändelse",
+          "CustomExtension-Help": "Tillåter dig att ange en anpassad filändelse som ska användas istället för den automatiska som bestäms av codec.",
+          "Normalize": "Normalisera",
+          "Normalize-Help": "Om ljudet ska normaliseras med tvåpasseringars ljudnormalisering.",
+          "SampleRate": "Samplingsfrekvens",
+          "SampleRate-Help": "Den samplingsfrekvens som ska användas",
+          "SkipIfCodecMatches": "Hoppa över om codec matchar",
+          "SkipIfCodecMatches-Help": "Om den befintliga ljudcodec matchar, kommer denna fil inte att behandlas oavsett bitrate. Annars, om avstängd, måste bitraten vara mindre än eller lika med för att hoppa över."
+        },
+        "Outputs": {
+          "1": "Ljud konverterat och sparat i tillfällig fil",
+          "2": "Ljud redan i codec, ingen konvertering gjord"
+        }
+      },
+      "CreateAudioBook": {
+        "Description": "Skapar en ljudbok från ljudfiler som finns i inmatningskatalogen",
+        "Fields": {
+          "DeleteSourceFiles": "Ta bort källfiler",
+          "DeleteSourceFiles-Help": "När detta är aktiverat kommer källfilerna som utgör den nyss skapade m4b-filen att tas bort, annars kommer de att lämnas orörda.",
+          "DestinationPath": "Målväg",
+          "DestinationPath-Help": "Vägen där den nyss skapade filen ska sparas. Om den lämnas tom kommer filen att skapas i den tillfälliga katalogen och tas bort om den inte flyttas efteråt.",
+          "UpdateWorkingFile": "Uppdatera arbetsfil",
+          "UpdateWorkingFile-Help": "När detta är aktiverat kommer arbetsfilen att uppdateras till den nyss skapade filen."
+        },
+        "Outputs": {
+          "1": "Ljudbok skapad",
+          "2": "Ljudbok skapades inte"
+        }
+      },
+      "EmbedArtwork": {
+        "Description": "Infogar omslagsbild i en ljudfil",
+        "Outputs": {
+          "1": "Omslagsbild hittad och infogad i ljudfilen",
+          "2": "Ingen omslagsbild hittades för att infoga"
+        }
+      }
+    }
+  }
+}

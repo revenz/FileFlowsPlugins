@@ -1,0 +1,54 @@
+{
+  "Flow": {
+    "Parts": {
+      "ComicConverter": {
+        "Description": "コミックを別のコミックブックフォーマットに変換します。\n\nCBZ、CBR、CB7、PDF、GZ、BZ2からの変換をサポートします",
+        "Fields": {
+          "Codec": "コーデック",
+          "Codec-Help": "画像を保存するためのコーデック",
+          "DeleteNonPageImages": "ページ以外の画像を削除",
+          "DeleteNonPageImages-Help": "ページ用の命名構造に従っていない画像を削除します。つまり、数字で終わらないもの。",
+          "EnsureTopDirectory": "トップディレクトリを確認",
+          "EnsureTopDirectory-Help": "すべてのファイルがコミックブックファイルのトップディレクトリ内に直接配置され、サブディレクトリがないことを確認します。",
+          "Format": "フォーマット",
+          "Format-Help": "コミックを変換するフォーマット",
+          "MaxHeight": "最大高さ",
+          "MaxHeight-Help": "ページの最大高さ、調整なしまたは幅に合わせて品質を維持するには0を使用",
+          "MaxWidth": "最大幅",
+          "MaxWidth-Help": "ページの最大幅、調整なしまたは高さに合わせて品質を維持するには0を使用",
+          "Quality": "品質",
+          "Quality-Help": "コミックブックページの品質。0は最も圧縮され、最悪の品質、100は最高の品質"
+        },
+        "Outputs": {
+          "1": "コミックが変換され、一時ファイルとして保存されました",
+          "2": "コミックはすでに希望のフォーマットでした"
+        }
+      },
+      "ComicExtractor": {
+        "Description": "コミックブックフォーマットからすべてのファイルを抽出し、特定のフォルダーに保存します。\n\nCBZ、CBR、CB7、PDF、GZ、BZ2の抽出をサポートします",
+        "Fields": {
+          "DestinationPath": "宛先パス",
+          "DestinationPath-Help": "抽出されたコミックブックファイルを保存するフォルダー"
+        },
+        "Outputs": {
+          "1": "コミックが抽出されました"
+        }
+      },
+      "CreateComicInfo": {
+        "Description": "コミックのパスを解析し、コミックブックアーカイブ内にcomicinfo.xmlファイルを作成します。",
+        "Fields": {
+          "IssueDigits": "号数の桁数",
+          "IssueDigits-Help": "この数値まで、号数を先頭にゼロでパディングします。\n例えば、号数が1でパディングが3の場合、号数は#001として表示されます",
+          "Publisher": "出版社",
+          "Publisher-Help": "コミックが出版社のディレクトリにある場合、詳細についてはヘルプを参照してください。",
+          "RenameFile": "ファイル名を変更",
+          "RenameFile-Help": "ファイルを `シリーズ - 号 - タイトル.extension` として変更する必要があるか"
+        },
+        "Outputs": {
+          "1": "ComicInfoがコミックアーカイブに追加されました",
+          "2": "ComicInfoはすでにアーカイブに存在します"
+        }
+      }
+    }
+  }
+}

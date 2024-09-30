@@ -1,0 +1,719 @@
+{
+  "Enums": {
+    "LogType": {
+      "Debug": "Debug",
+      "Error": "Fout",
+      "Info": "Informatie",
+      "Warning": "Waarschuwing"
+    }
+  },
+  "Flow": {
+    "Parts": {
+      "BatchScript": {
+        "Description": "Staat je toe om een batch (.bat) script uit te voeren in een Windows omgeving.",
+        "Label": "Batch Script (.bat)",
+        "Fields": {
+          "Code": "Code"
+        },
+        "Outputs": {
+          "1": "teruggegeven 1",
+          "10": "teruggegeven 10",
+          "2": "teruggegeven 2",
+          "3": "teruggegeven 3",
+          "4": "teruggegeven 4",
+          "5": "teruggegeven 5",
+          "6": "teruggegeven 6",
+          "7": "teruggegeven 7",
+          "8": "teruggegeven 8",
+          "9": "teruggegeven 9"
+        }
+      },
+      "CompleteFlow": {
+        "Description": "Voltooit/eindigt de flow als succesvol"
+      },
+      "CopyFile": {
+        "Description": "Kopieert een bestand naar de bestemmingsmap",
+        "Fields": {
+          "AdditionalFiles": "Extra Bestanden",
+          "AdditionalFiles-Help": "Extra bestanden om van de directory naar de nieuwe directory te kopiëren.\nElke waarde kan een combinatie van geldige letterlijke paden en jokertekens (* en ?) bevatten, maar ondersteunt geen reguliere expressies.",
+          "AdditionalFilesFromOriginal": "Originele Directory",
+          "AdditionalFilesFromOriginal-Help": "Als de extra bestanden vanuit de werkdirectory of de originele directory moeten worden gekopieerd. Zet aan voor de originele directory.",
+          "CopyFolder": "Kopieer Map",
+          "CopyFolder-Help": "Als de relatieve mappenstructuur ook gekopieerd moet worden",
+          "DestinationFile": "Bestand naar Bestemming",
+          "DestinationFile-Help": "De bestandsnaam om het bestand naartoe te kopiëren. Als leeg, wordt de originele bestandsnaam gebruikt.",
+          "DestinationPath": "Bestemmingsmap",
+          "DestinationPath-Help": "De map waar het bestand naartoe wordt gekopieerd",
+          "InputFile": "Te Kopiëren Bestand",
+          "InputFile-Help": "Het bestand dat gekopieerd moet worden; als leeg gelaten, wordt het werkbestand gekopieerd.",
+          "InputFile-Placeholder": "Werkbestand",
+          "PreserverOriginalDates": "Behouden Data",
+          "PreserverOriginalDates-Help": "Als de originele creatietijd en de laatste schrijftijd van het originele invoerbestand behouden moeten blijven."
+        },
+        "Outputs": {
+          "1": "Bestand gekopieerd"
+        }
+      },
+      "CSharpScript": {
+        "Description": "Stelt je in staat om C#-code binnen de Flow uit te voeren.",
+        "Label": "C# Functie",
+        "Fields": {
+          "Code": "Code"
+        },
+        "Outputs": {
+          "1": "teruggegeven 1",
+          "10": "teruggegeven 10",
+          "2": "teruggegeven 2",
+          "3": "teruggegeven 3",
+          "4": "teruggegeven 4",
+          "5": "teruggegeven 5",
+          "6": "teruggegeven 6",
+          "7": "teruggegeven 7",
+          "8": "teruggegeven 8",
+          "9": "teruggegeven 9"
+        }
+      },
+      "Delete": {
+        "Description": "Verwijdert een bestand of map",
+        "Fields": {
+          "FileName": "Pad",
+          "FileName-Help": "Een pad naar een bestand of map om te verwijderen.\n\nAls het leeg is, wordt het huidige werkbestand verwijderd."
+        },
+        "Outputs": {
+          "1": "Bestand verwijderd"
+        }
+      },
+      "DeleteSourceDirectory": {
+        "Description": "Verwijdert de bronmap van het originele bibliotheekbestand",
+        "Label": "Verwijder bronmap",
+        "Fields": {
+          "IfEmpty": "Als leeg",
+          "IfEmpty-Help": "Verwijder de bronmap alleen als deze leeg is",
+          "IncludePatterns": "Inbegrepen patronen",
+          "IncludePatterns-Help": "Optioneel, als ingesteld, worden alleen bestanden die overeenkomen met deze patronen geteld om te zien of de map leeg is. Elk van deze patronen kan overeenkomen.",
+          "TopMostOnly": "Alleen de bovenste",
+          "TopMostOnly-Help": "Wanneer ingeschakeld, wordt alleen de map die het bestand direct bevat, verwijderd, terwijl bovenliggende mappen intact blijven."
+        },
+        "Outputs": {
+          "1": "Bronmap verwijderd",
+          "2": "Map is NIET verwijderd"
+        }
+      },
+      "Executor": {
+        "Description": "Voert het volgende proces uit tegen het bestand.\nOutput 1: Het proces heeft de succesvolle exitcode geretourneerd\nOutput 2: Het proces heeft een niet-succesvolle exitcode geretourneerd.",
+        "Fields": {
+          "Arguments": "Argumenten",
+          "Arguments-Help": "De argumenten die aan het uit te voeren proces moeten worden doorgegeven",
+          "FileName": "Bestandsnaam",
+          "FileName-Help": "De naam van het uit te voeren bestand",
+          "OutputErrorVariable": "Outputfoutvariabele",
+          "OutputErrorVariable-Help": "Een optionele variabelenaam om de foutoutput van het proces op te slaan",
+          "OutputVariable": "Outputvariabele",
+          "OutputVariable-Help": "Een optionele variabelenaam om de output van het proces op te slaan",
+          "SuccessCode": "Succescode",
+          "SuccessCode-Help": "De exitcode van het proces die aangeeft dat het proces succesvol was. Dit moet meestal 0 zijn.",
+          "Timeout": "Time-out",
+          "Timeout-Help": "Hoe lang het proces kan draaien voordat het wordt beëindigd. Gebruik 0 voor geen time-out.",
+          "Timeout-Suffix": "seconden",
+          "WorkingDirectory": "Werkmap",
+          "WorkingDirectory-Help": "De map waarin het proces wordt uitgevoerd"
+        },
+        "Outputs": {
+          "1": "Proces retourneerde succes",
+          "2": "Proces retourneerde falen"
+        }
+      },
+      "FailFlow": {
+        "Description": "Laat een flow onmiddellijk falen, nuttig als je wilt dat een bepaald pad gewoon faalt.",
+        "Fields": {
+          "Reason": "Reden",
+          "Reason-Help": "Een optionele reden om te registreren waarom de flow is mislukt."
+        }
+      },
+      "FileDateCompare": {
+        "Description": "Controleert of de creatiedatum of de laatste schrijftijd van het bestand overeenkomt met de gespecificeerde datumrestrictie.",
+        "Fields": {
+          "Date": "Datum",
+          "DateComparision": "Vergelijking",
+          "FileName": "Bestandsnaam",
+          "FileName-Help": "Het bestand dat moet worden gecontroleerd. Laat leeg om het huidige werkbestand te controleren."
+        },
+        "Outputs": {
+          "1": "Komt overeen met de datumrestrictie.",
+          "2": "Komt niet overeen met de datumrestrictie."
+        }
+      },
+      "FileExists": {
+        "Description": "Controleert of een bestand bestaat\n\nOutput 1: Bestand bestaat\nOutput 2: Bestand bestaat niet",
+        "Fields": {
+          "FileName": "Bestandsnaam",
+          "FileName-Help": "Het bestand dat gecontroleerd moet worden. Laat leeg om het huidige werkbestand te controleren."
+        },
+        "Outputs": {
+          "1": "Bestand bestaat",
+          "2": "Bestand bestaat niet"
+        }
+      },
+      "FileExtension": {
+        "Description": "Controleert of het bestand een van de geconfigureerde extensies heeft.\n\nOutput 1: Komt overeen\nOutput 2: Komt niet overeen",
+        "Fields": {
+          "Extensions": "Extensies",
+          "Extensions-Help": "Een lijst van ongevoelige bestandsextensies die tegen elkaar worden vergeleken.\nOutput 1: Komt overeen\nOutput 2: Komt niet overeen"
+        },
+        "Outputs": {
+          "1": "Extensie komt overeen",
+          "2": "Extensie komt niet overeen"
+        }
+      },
+      "FileSize": {
+        "Description": "Controleert of de bestandsgrootte overeenkomt met de geconfigureerde parameters. De waarden zijn in megabytes.\n\nOutput 1: Komt overeen\nOutput 2: Komt niet overeen",
+        "Fields": {
+          "Comparison": "Vergelijking",
+          "Lower": "Groter dan",
+          "Lower-Help": "De waarde moet groter zijn dan dit aantal megabytes",
+          "Lower-Suffix": "MB",
+          "Upper": "Kleiner dan",
+          "Upper-Help": "De waarde moet kleiner zijn dan dit aantal megabytes. Laat 0 om de bovengrens niet te testen.",
+          "Upper-Suffix": "MB"
+        },
+        "Outputs": {
+          "1": "Bestandsgrootte binnen bereik",
+          "2": "Bestandsgrootte niet binnen bereik"
+        }
+      },
+      "FileSizeCompare": {
+        "Description": "Controleert of de bestandsgrootte is veranderd ten opzichte van het originele bestand.",
+        "Outputs": {
+          "1": "Kleiner dan origineel",
+          "2": "Zelfde grootte als origineel",
+          "3": "Groter dan origineel"
+        }
+      },
+      "FileSizeWithin": {
+        "Description": "Controleert of de nieuwe bestandsgrootte binnen het toegestane bereik van de originele bestandsgrootte valt.",
+        "Value": "Waarde",
+        "Value-Help": "Het toegestane verschil voor de bestandsgrootte; deze waarde kan zowel plus als min dit verschil zijn.",
+        "Outputs": {
+          "1": "Bestandsgrootte valt binnen het toegestane bereik",
+          "2": "Bestandsgrootte valt niet binnen het toegestane bereik"
+        }
+      },
+      "FolderDateCompare": {
+        "Description": "Controleert of de aanmaakdatum of de laatste schrijfdatum van de map overeenkomt met de gespecificeerde datumbeperkingen.",
+        "Label": "Mapdatumvergelijking",
+        "Fields": {
+          "Date": "Datum",
+          "DateComparision": "Vergelijking",
+          "Path": "Pad",
+          "Path-Help": "Het pad naar de map om te controleren. Laat leeg om het huidige werkbestand te controleren.\nAls een bestand is opgegeven, wordt de map die het bestand bevat gecontroleerd."
+        },
+        "Outputs": {
+          "1": "Komt overeen met de datumbeperkingen.",
+          "2": "Komt niet overeen met de datumbeperkingen."
+        }
+      },
+      "FolderIterator": {
+        "Description": "Itereert over alle bestanden in een opgegeven map en voert die bestanden uit tegen een subflow.",
+        "Fields": {
+          "Flow": "Flow",
+          "Flow-Help": "De subflow waarop de bestanden worden uitgevoerd.",
+          "Folder": "Map",
+          "Folder-Help": "De map waarvan de bestanden worden geïtereerd.",
+          "Pattern": "Patroon",
+          "Pattern-Help": "Een optioneel patroon om de bestanden voor iteratie te beperken; dit kan een wildcard-patroon zijn dat begint met `*` of een reguliere expressie.",
+          "Recursive": "Recursief",
+          "Recursive-Help": "Of bestanden in alle submappen ook moeten worden geïtereerd, of dat alleen de bovenste niveaubestanden moeten worden geïtereerd."
+        },
+        "Outputs": {
+          "1": "Bestanden van de map zijn geïtereerd"
+        }
+      },
+      "Function": {
+        "Label": "Functie",
+        "Fields": {
+          "Code": "Code",
+          "Code-Help": "geef -1 terug voor een fout en stop de flow. geef 0 terug om de flow te voltooien. geef 1 of meer terug om de gewenste uitvoer aan te roepen.",
+          "Outputs": "Uitvoeren",
+          "Template": "Sjabloon",
+          "Template-Help": "WAARSCHUWING: Dit vervangt alles in het codeblok door de sjabloon die je selecteert."
+        },
+        "Outputs": {
+          "1": "teruggegeven 1",
+          "10": "teruggegeven 10",
+          "2": "teruggegeven 2",
+          "3": "teruggegeven 3",
+          "4": "teruggegeven 4",
+          "5": "teruggegeven 5",
+          "6": "teruggegeven 6",
+          "7": "teruggegeven 7",
+          "8": "teruggegeven 8",
+          "9": "teruggegeven 9"
+        }
+      },
+      "GotoFlow": {
+        "Description": "Dit stelt je in staat om over te schakelen naar een andere flow om te verwerken. Deze flow zal afsluiten en de parameters en het werkbestand worden doorgegeven aan de nieuwe Flow.",
+        "Fields": {
+          "Flow": "Flow",
+          "UpdateFlowUsed": "Update Flow",
+          "UpdateFlowUsed-Help": "Als het bestand `Flow` moet worden bijgewerkt om naar deze nieuwe Flow te verwijzen of laat het als de oorspronkelijke Flow."
+        }
+      },
+      "HasHardLinks": {
+        "Description": "Controleert of een bestand harde koppelingen heeft of niet",
+        "Fields": {
+          "Count": "Aantal",
+          "Count-Help": "Het aantal harde koppelingen dat nodig is om output 1 aan te roepen.",
+          "FileName": "Bestandsnaam",
+          "FileName-Help": "Het bestand dat moet worden gecontroleerd. Laat het leeg om het huidige werkbestand te controleren."
+        },
+        "Outputs": {
+          "1": "Harde koppelingen gedetecteerd",
+          "2": "Geen harde koppelingen gedetecteerd"
+        }
+      },
+      "IfBoolean": {
+        "Description": "Test of een variabele waar of niet waar is",
+        "Fields": {
+          "Variable": "Variabele",
+          "Variable-Help": "De naam van de variabele om te controleren"
+        },
+        "Outputs": {
+          "1": "Waar",
+          "2": "Niet waar"
+        }
+      },
+      "IfString": {
+        "Description": "Test of een variabele overeenkomt met een string",
+        "Fields": {
+          "Options": "Opties",
+          "Options-Help": "De string om mee te vergelijken.",
+          "Outputs": "Uitgangen",
+          "Outputs-Help": "Dit moet overeenkomen met het aantal beschikbare opties",
+          "Variable": "Variabele",
+          "Variable-Help": "De naam van de te controleren variabele"
+        },
+        "Outputs": {
+          "1": "Overeenkomende string 1",
+          "10": "Overeenkomende string 10",
+          "2": "Overeenkomende string 2",
+          "3": "Overeenkomende string 3",
+          "4": "Overeenkomende string 4",
+          "5": "Overeenkomende string 5",
+          "6": "Overeenkomende string 6",
+          "7": "Overeenkomende string 7",
+          "8": "Overeenkomende string 8",
+          "9": "Overeenkomende string 9"
+        }
+      },
+      "InputFile": {
+        "Description": "Een invoerflow-element voor een bestand. Dit is verplicht en is het startpunt van een flow. Elk invoerflow-element kan worden gebruikt, maar er is er minstens één nodig.",
+        "Outputs": {
+          "1": "Bibliotheekbestand"
+        }
+      },
+      "InputFolder": {
+        "Description": "Een invoerflow-element voor een map. Dit werkt alleen als de bibliotheek die deze flow gebruikt, is geconfigureerd voor mappen.",
+        "Outputs": {
+          "1": "Bibliotheekmap"
+        }
+      },
+      "IsDocker": {
+        "Description": "Bepaalt of deze flow op Docker draait",
+        "Outputs": {
+          "1": "Draait op Docker",
+          "2": "Draait niet op Docker"
+        }
+      },
+      "IsFromLibrary": {
+        "Description": "Controleert of het bestand dat wordt verwerkt uit de opgegeven bibliotheek komt.",
+        "Fields": {
+          "Library": "Bibliotheek",
+          "Library-Help": "De bibliotheek die gecontroleerd moet worden."
+        },
+        "Outputs": {
+          "1": "Bestand komt uit de opgegeven bibliotheek.",
+          "2": "Bestand komt niet uit de opgegeven bibliotheek."
+        }
+      },
+      "IsLinux": {
+        "Description": "Bepaalt of deze flow op Linux draait",
+        "Outputs": {
+          "1": "Draait op Linux",
+          "2": "Draait niet op Linux"
+        }
+      },
+      "IsMacOS": {
+        "Description": "Bepaalt of deze flow op MacOS draait",
+        "Label": "Is MacOS",
+        "Outputs": {
+          "1": "Draait op MacOS",
+          "2": "Draait niet op MacOS"
+        }
+      },
+      "IsProcessingOnNode": {
+        "Description": "Controleert of de flow momenteel op een opgegeven verwerkingsnode aan het verwerken is.",
+        "Fields": {
+          "Node": "Node",
+          "Node-Help": "De verwerkingsnode om te controleren."
+        },
+        "Outputs": {
+          "1": "Is aan het verwerken op node",
+          "2": "Is niet aan het verwerken op node"
+        }
+      },
+      "IsWindows": {
+        "Description": "Bepaalt of deze flow op Windows draait",
+        "Outputs": {
+          "1": "Draait op Windows",
+          "2": "Draait niet op Windows"
+        }
+      },
+      "ListIterator": {
+        "Description": "Itereert door alle strings in een gegeven lijst en voert die strings uit tegen een subflow.",
+        "Fields": {
+          "Flow": "Flow",
+          "Flow-Help": "De subflow waartegen de strings moeten worden uitgevoerd.",
+          "List": "Lijst",
+          "List-Help": "Een naam van een variabele die de te itereren lijst bevat."
+        },
+        "Outputs": {
+          "1": "Lijst geüpdatet"
+        }
+      },
+      "Log": {
+        "Description": "Logt een bericht naar het flow-logboek",
+        "Fields": {
+          "LogType": "Type",
+          "Message": "Bericht"
+        },
+        "Outputs": {
+          "1": "Bericht gelogd"
+        }
+      },
+      "Matches": {
+        "Description": "Vergelijkt een set waarden en matcht voorwaarden om te zien welke output moet worden aangeroepen",
+        "Fields": {
+          "MatchConditions": "",
+          "MatchConditions-Help": "De overeenkomsten om te testen welke output moet worden aangeroepen.",
+          "MatchConditionsKey": "Waarde",
+          "MatchConditionsValue": "Expressie"
+        }
+      },
+      "MatchesAll": {
+        "Description": "Vergelijkt een set waarden en controleert of aan alle voorwaarden is voldaan.",
+        "Fields": {
+          "MatchConditions": "",
+          "MatchConditionsHelp": "De voorwaarden om te testen, waarmee wordt bepaald welke output moet worden aangeroepen.",
+          "MatchConditionsKey": "Waarde",
+          "MatchConditionsValue": "Expressie"
+        },
+        "Outputs": {
+          "1": "Alle voorwaarden komen overeen",
+          "2": "Niet alle voorwaarden komen overeen"
+        }
+      },
+      "MoveFile": {
+        "Description": "Verplaatst een bestand naar de bestemmingsmap",
+        "Fields": {
+          "AdditionalFiles": "Aanvullende Bestanden",
+          "AdditionalFiles-Help": "Aanvullende bestanden die van de directory naar de nieuwe directory moeten worden verplaatst.\nElk waarde kan een combinatie van een geldig letterlijk pad en wildcard (* en ?) bevatten, maar ondersteunt geen reguliere expressies.",
+          "AdditionalFilesFromOriginal": "Oorspronkelijke Directory",
+          "AdditionalFilesFromOriginal-Help": "Of de aanvullende bestanden vanuit de werkdirectory of de oorspronkelijke directory moeten worden verplaatst. Zet aan voor de oorspronkelijke directory.",
+          "DeleteOriginal": "Verwijder Origineel",
+          "DeleteOriginal-Help": "Als het oorspronkelijke bestand moet worden verwijderd, gebeurt dit alleen als het werkbestand anders is dan het oorspronkelijke bestand.",
+          "DestinationFile": "Bestemming Bestand",
+          "DestinationFile-Help": "De bestandsnaam waar het bestand naartoe moet worden verplaatst. Als leeg, wordt de originele bestandsnaam gebruikt.",
+          "DestinationPath": "Bestemmingsmap",
+          "DestinationPath-Help": "De map waar het bestand naartoe zal worden verplaatst.",
+          "InputFile": "Te Verplaatsen Bestand",
+          "InputFile-Help": "Het bestand dat verplaatst moet worden; als dit leeg is, wordt het werkbestand verplaatst.",
+          "InputFile-Placeholder": "Werkbestand",
+          "MoveFolder": "Kopieer Map",
+          "MoveFolder-Help": "Of de relatieve bibliotheekmapstructuur ook gekopieerd moet worden.",
+          "PreserverOriginalDates": "Bewaar Datums",
+          "PreserverOriginalDates-Help": "Of de oorspronkelijke aanmaaktijd en laatste schrijftijd van het originele invoerbestand moeten worden bewaard."
+        },
+        "Outputs": {
+          "1": "Bestand verplaatst",
+          "2": "Bestand verplaatst, maar het oorspronkelijke bestand kon niet worden verwijderd"
+        }
+      },
+      "MoveFolder": {
+        "Description": "Verplaatst een map",
+        "Fields": {
+          "CreateSubfolder": "Maak Submap",
+          "CreateSubfolder-Help": "Of er een submap met de naam van de bronmap in de bestemmingsmap moet worden gemaakt.",
+          "DestinationPath": "Bestemming",
+          "DestinationPath-Help": "De bestemmingsmap waar de bronmap naartoe moet worden verplaatst.",
+          "SourcePath": "Bron",
+          "SourcePath-Help": "De map die verplaatst moet worden; als leeg gelaten, wordt het werkbestand gebruikt. Als dit geen map is, zal het flow-element falen."
+        },
+        "Outputs": {
+          "1": "Map verplaatst"
+        }
+      },
+      "OlderThan": {
+        "Description": "Controleert of een map ouder is dan het opgegeven bereik",
+        "Fields": {
+          "Date": "Datum",
+          "Number": "Nummer",
+          "Unit": "Eenheid"
+        },
+        "Outputs": {
+          "1": "Bestand is ouder",
+          "2": "Bestand is niet ouder"
+        }
+      },
+      "OriginalFile": {
+        "Description": "Stelt het huidige werkbestand in de flow in op het oorspronkelijke bestand dat de flow heeft gestart",
+        "Outputs": {
+          "1": "Werkbestand ingesteld op origineel bestand"
+        }
+      },
+      "PatternMatch": {
+        "Description": "Test het werkbestand en het oorspronkelijke bestand tegen een reguliere expressie.\n\nOutput 1: Komt overeen met de expressie\nOutput 2: Komt niet overeen",
+        "Fields": {
+          "Pattern": "Patroon",
+          "Pattern-Help": "Een reguliere expressie, volgens de C# specificatie voor reguliere expressies."
+        },
+        "Outputs": {
+          "1": "Komt overeen met de expressie",
+          "2": "Komt NIET overeen"
+        }
+      },
+      "PatternReplacer": {
+        "Description": "Stelt je in staat om vervangingen in de bestandsnaam te maken. Kan reguliere expressies gebruiken voor vervangingen, of eenvoudige stringvervangingen.\n\nOutput 1: Vervangingen voltooid\nOutput 2: Geen vervangingen gedaan",
+        "Label": "Bestandsnaam Patroon Vervanger",
+        "Fields": {
+          "Replacements": "Vervangingen",
+          "ReplacementsKey": "Patroon",
+          "ReplacementsValue": "Waarde",
+          "UseWorkingFileName": "Gebruik Werkbestandsnaam",
+          "UseWorkingFileName-Help": "Of de huidige werkbestandsnaam moet worden gebruikt, of als dit onwaar is, de originele bestandsnaam van het binnenkomende bestand zal worden gebruikt."
+        },
+        "Outputs": {
+          "1": "Vervangingen voltooid",
+          "2": "Geen vervangingen gedaan"
+        }
+      },
+      "PowerShellScript": {
+        "Description": "Stelt je in staat om een PowerShell (.ps1) script uit te voeren in een Windows-omgeving.",
+        "Label": "PowerShell Script (.ps1)",
+        "Fields": {
+          "Code": "Code"
+        },
+        "Outputs": {
+          "1": "Teruggegeven 1",
+          "10": "Teruggegeven 10",
+          "2": "Teruggegeven 2",
+          "3": "Teruggegeven 3",
+          "4": "Teruggegeven 4",
+          "5": "Teruggegeven 5",
+          "6": "Teruggegeven 6",
+          "7": "Teruggegeven 7",
+          "8": "Teruggegeven 8",
+          "9": "Teruggegeven 9"
+        }
+      },
+      "Random": {
+        "Description": "Kies een willekeurige output",
+        "Label": "Willekeurig",
+        "Fields": {
+          "Outputs": "Outputs",
+          "Outputs-Help": "Het aantal outputs dat kan worden aangeroepen."
+        }
+      },
+      "Renamer": {
+        "Description": "Hernoemt het werkbestand.\nVariabelen kunnen worden gebruikt door '{' in het patroonveld in te voeren.",
+        "Fields": {
+          "CsvFile": "CSV-bestand",
+          "CsvFile-Help": "Voegt de originele naam en de hernoemde naam aan dit bestand toe. Handig als je 'Log Only' gebruikt om de hernoemer te testen voordat je de bestanden wijzigt.",
+          "DestinationPath": "Bestemmingmap",
+          "DestinationPath-Help": "Of het bestand naar een andere map moet worden verplaatst.",
+          "LogOnly": "Alleen Log",
+          "LogOnly-Help": "Zet aan als je alleen dit flow-element wilt testen zonder het bestand daadwerkelijk te hernoemen",
+          "Pattern": "Nieuwe Naam",
+          "Pattern-Help": "De nieuwe naam van het bestand. Kan variabelen gebruiken. Alle lege () en '{}' worden verwijderd."
+        },
+        "Outputs": {
+          "1": "Bestand hernoemd"
+        }
+      },
+      "ReplaceOriginal": {
+        "Description": "Vervangt het originele bestand met het werkbestand.\n\nAls de bestandsextensie van het werkbestand anders is, wordt het originele bestand verwijderd en wordt het werkbestand verplaatst naar het originele bestand met de nieuwe extensie.\nBijvoorbeeld, van File.avi naar File.mkv",
+        "Fields": {
+          "PreserverOriginalDates": "Bewaar Data",
+          "PreserverOriginalDates-Help": "Of de originele aanmaakdatum en de laatste wijzigingsdatum van het invoerbestand behouden moeten blijven."
+        },
+        "Outputs": {
+          "1": "Origineel bestand vervangen"
+        }
+      },
+      "Reprocess": {
+        "Description": "Dit stroomelement maakt het mogelijk om het originele bibliotheekbestand opnieuw te verwerken met een andere verwerkingsnode.\n\nAls dezelfde verwerkingsnode wordt geselecteerd als die momenteel in verwerking is, zal de stroom mislukken.",
+        "Fields": {
+          "Node": "Node",
+          "Node-Help": "De verwerkingsnode voor het verwerken van dit bestand."
+        }
+      },
+      "SetVariable": {
+        "Description": "Stelt een variabele in binnen de stroom.",
+        "Label": "Stel Variabele In",
+        "Fields": {
+          "Value": "Waarde",
+          "Value-Help": "De waarde van de in te stellen variabele.",
+          "Variable": "Variabele",
+          "Variable-Help": "De naam van de in te stellen variabele"
+        },
+        "Outputs": {
+          "1": "Variabele ingesteld"
+        }
+      },
+      "SetWorkingFile": {
+        "Description": "Werk het huidige werkbestand bij met het opgegeven bestand.",
+        "Label": "Stel Werkbestand In",
+        "Fields": {
+          "DontDeletePrevious": "Verwijder Vorige Niet",
+          "DontDeletePrevious-Help": "Als het vorige *tijdelijke* werkbestand *niet* verwijderd moet worden.\nAlleen tijdelijke bestanden zullen worden verwijderd, bestanden die door FileFlows zijn gemaakt in de tijdelijke map van de uitvoerders.",
+          "File": "Bestand",
+          "File-Description": "Het pad naar het nieuwe werkbestand of map."
+        },
+        "Outputs": {
+          "1": "Werkbestand ingesteld"
+        }
+      },
+      "SevenZip": {
+        "Description": "Maakt het mogelijk om de invoer te comprimeren in 7zip-indeling.",
+        "Label": "7-Zip",
+        "Fields": {
+          "CompressionLevel": "Compressieniveau",
+          "CompressionLevel-Help": "Het compressieniveau dat moet worden gebruikt tijdens het comprimeren.",
+          "CompressionMethod": "Compressiemethode",
+          "CompressionMethod-Help": "De gebruikte compressiemethode; LZMA2 wordt aanbevolen.",
+          "DestinationFile": "Bestemming Bestand",
+          "DestinationFile-Help": "De naam van het nieuwe 7zip-bestand. Als dit leeg wordt gelaten, wordt de naam van het element gebruikt als 7zip-bestand.",
+          "DestinationPath": "Bestemming Pad",
+          "DestinationPath-Help": "De bestemmingsmap waarin het 7zip-bestand moet worden geplaatst. Als dit leeg is, wordt de 7zip in de hoofdmap van de bibliotheek geplaatst."
+        },
+        "Outputs": {
+          "1": "7zip aangemaakt"
+        }
+      },
+      "ShellScript": {
+        "Description": "Staat je toe om een shell (.sh) script uit te voeren in een Unix-achtige omgeving.",
+        "Label": "Shell Script (.sh)",
+        "Fields": {
+          "Code": "Code"
+        },
+        "Outputs": {
+          "1": "teruggegeven 1",
+          "10": "teruggegeven 10",
+          "2": "teruggegeven 2",
+          "3": "teruggegeven 3",
+          "4": "teruggegeven 4",
+          "5": "teruggegeven 5",
+          "6": "teruggegeven 6",
+          "7": "teruggegeven 7",
+          "8": "teruggegeven 8",
+          "9": "teruggegeven 9"
+        }
+      },
+      "Sleep": {
+        "Description": "Pauzeert de stroom",
+        "Fields": {
+          "Milliseconds": "Milliseconden",
+          "Milliseconds-Help": "Hoe lang de stroom moet pauzeren. Moet tussen 1 milliseconde en 1 uur liggen."
+        },
+        "Outputs": {
+          "1": "Stroom hervat"
+        }
+      },
+      "Touch": {
+        "Description": "Raakt een bestand of map aan en stelt de laatste schrijftijd in op nu.",
+        "Fields": {
+          "FileName": "Bestandsnaam",
+          "FileName-Help": "Volledige bestandsnaam van het bestand of de map om aan te raken.\nAls leeg gelaten, wordt het werkbestand gebruikt."
+        },
+        "Outputs": {
+          "1": "Item met succes aangeraakt"
+        }
+      },
+      "Unpack": {
+        "Description": "Staat je toe om een archief (zip, rar, tar, enz.) uit te pakken.",
+        "Fields": {
+          "DestinationPath": "Bestemmingsmap",
+          "DestinationPath-Help": "De bestemmingsmap waar het bestand moet worden uitgepakt.",
+          "File": "Bestand",
+          "File-Help": "De naam van het bestand dat moet worden uitgepakt. Kan leeg gelaten worden en in dat geval wordt het huidige werkbestand gebruikt."
+        },
+        "Outputs": {
+          "1": "Bestand uitgepakt"
+        }
+      },
+      "VariableMatch": {
+        "Description": "Test of een invoer overeenkomt met een opgeslagen Variabele.",
+        "Fields": {
+          "Input": "Waarde",
+          "Input-Help": "De waarde waarmee de variabele moet worden vergeleken.",
+          "Variable": "Variabele",
+          "Variable-Help": "De variabele waarmee moet worden vergeleken",
+          "VariableName": "Variabele",
+          "VariableName-Help": "De variabele waarmee moet worden vergeleken"
+        },
+        "Outputs": {
+          "1": "Invoer komt overeen met variabele",
+          "2": "Invoer komt niet overeen met variabele"
+        }
+      },
+      "WebRequest": {
+        "Description": "Stelt je in staat om een webverzoek te verzenden",
+        "Fields": {
+          "Body": "Lichaam",
+          "Body-Help": "Het lichaam van het verzonden verzoek. Variabelen kunnen in dit veld worden gebruikt.",
+          "ContentType": "Inhoudstype",
+          "ContentType-Help": "Het Content-Type van het te verzenden bericht",
+          "Headers": "Koppen",
+          "Headers-Help": "Optionele koppen die met het verzoek worden verzonden",
+          "HeadersKey": "Sleutel",
+          "HeadersValue": "Waarde",
+          "Method": "Methode",
+          "Method-Help": "De webmethode die moet worden gebruikt bij het verzenden van dit verzoek",
+          "Url": "URL",
+          "Url-Help": "De URL van het verzoek"
+        },
+        "Outputs": {
+          "1": "Succesvol verzonden",
+          "2": "Verzoek gaf een onsuccesvolle statuscode terug"
+        }
+      },
+      "WriteText": {
+        "Description": "Schrijft tekst naar een bestand",
+        "Fields": {
+          "File": "Bestand",
+          "File-Help": "Het bestand waar de tekst naartoe moet worden geschreven.",
+          "Text": "Tekst",
+          "Text-Help": "De tekst die in het bestand moet worden geschreven. Als dit leeg wordt gelaten, wordt het volledige pad van het huidige werkbestand geschreven."
+        },
+        "Outputs": {
+          "1": "Tekst naar bestand geschreven"
+        }
+      },
+      "Zip": {
+        "Description": "Stelt je in staat om de invoer te zippen",
+        "Fields": {
+          "DestinationFile": "Bestand van bestemming",
+          "DestinationFile-Help": "De bestandsnaam van de nieuw aangemaakte zip. Als dit leeg is, wordt de naam van het item als zip-bestand gebruikt.",
+          "DestinationPath": "Bestemmingsmap",
+          "DestinationPath-Help": "De bestemmingsmap waar het zip-bestand moet worden geplaatst. Als dit leeg is, wordt de zip in de hoofdmap geplaatst.",
+          "Path": "Pad",
+          "Path-Help": "Het pad naar het bestand of de map om te zippen. Als dit leeg is, wordt het werkbestand gecomprimeerd.",
+          "SetWorkingFile": "Stel werkbestand in",
+          "SetWorkingFile-Help": "Of de nieuw aangemaakte zip het nieuwe werkbestand moet worden."
+        },
+        "Outputs": {
+          "1": "Zip aangemaakt"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "Flow": {
+    "Parts": {
+      "MD5Checksum": {
+        "Description": "Beräknar en MD5-kontrollsumma av arbetsfilen och lagrar den i variablerna \"MD5\" och \"Checksum\".",
+        "Outputs": {
+          "1": "Kontrollsumman har lagrats i variablerna \"MD5\" och \"Checksum\""
+        }
+      },
+      "SHA1Checksum": {
+        "Description": "Beräknar en SHA1-kontrollsumma av arbetsfilen och lagrar den i variablerna \"SHA1\" och \"Checksum\".",
+        "Outputs": {
+          "1": "Kontrollsumman har lagrats i variablerna \"SHA1\" och \"Checksum\""
+        }
+      },
+      "SHA256Checksum": {
+        "Description": "Beräknar en SHA256-kontrollsumma av arbetsfilen och lagrar den i variablerna \"SHA256\" och \"Checksum\".",
+        "Outputs": {
+          "1": "Kontrollsumman har lagrats i variablerna \"SHA256\" och \"Checksum\""
+        }
+      },
+      "SHA512Checksum": {
+        "Description": "Beräknar en SHA512-kontrollsumma av arbetsfilen och lagrar den i variablerna \"SHA512\" och \"Checksum\".",
+        "Outputs": {
+          "1": "Kontrollsumman har lagrats i variablerna \"SHA512\" och \"Checksum\""
+        }
+      }
+    }
+  }
+}

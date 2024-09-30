@@ -1,0 +1,719 @@
+{
+  "Enums": {
+    "LogType": {
+      "Debug": "调试",
+      "Error": "错误",
+      "Info": "信息",
+      "Warning": "警告"
+    }
+  },
+  "Flow": {
+    "Parts": {
+      "BatchScript": {
+        "Description": "允许您在 Windows 环境中执行批处理 (.bat) 脚本。",
+        "Label": "批处理脚本 (.bat)",
+        "Fields": {
+          "Code": "代码"
+        },
+        "Outputs": {
+          "1": "返回 1",
+          "10": "返回 10",
+          "2": "返回 2",
+          "3": "返回 3",
+          "4": "返回 4",
+          "5": "返回 5",
+          "6": "返回 6",
+          "7": "返回 7",
+          "8": "返回 8",
+          "9": "返回 9"
+        }
+      },
+      "CompleteFlow": {
+        "Description": "成功完成/结束流程"
+      },
+      "CopyFile": {
+        "Description": "将文件复制到目标文件夹",
+        "Fields": {
+          "AdditionalFiles": "附加文件",
+          "AdditionalFiles-Help": "从目录复制到新目录的附加文件。\n每个值可以包含有效的字面路径和通配符（* 和 ?）字符的组合，但不支持正则表达式。",
+          "AdditionalFilesFromOriginal": "原始目录",
+          "AdditionalFilesFromOriginal-Help": "附加文件是否应从工作目录或原始目录复制。启用以使用原始目录。",
+          "CopyFolder": "复制文件夹",
+          "CopyFolder-Help": "是否也应复制相对库文件夹结构",
+          "DestinationFile": "目标文件",
+          "DestinationFile-Help": "要将文件复制到的文件名。如果为空，将使用原始文件名",
+          "DestinationPath": "目标文件夹",
+          "DestinationPath-Help": "文件将被复制到的文件夹",
+          "InputFile": "要复制的文件",
+          "InputFile-Help": "要复制的文件，如果留空，则复制工作文件",
+          "InputFile-Placeholder": "工作文件",
+          "PreserverOriginalDates": "保留日期",
+          "PreserverOriginalDates-Help": "是否应保留原始输入文件的原始创建时间和最后写入时间。"
+        },
+        "Outputs": {
+          "1": "文件已复制"
+        }
+      },
+      "CSharpScript": {
+        "Description": "允许您在流程中执行 C# 代码。",
+        "Label": "C# 函数",
+        "Fields": {
+          "Code": "代码"
+        },
+        "Outputs": {
+          "1": "返回 1",
+          "10": "返回 10",
+          "2": "返回 2",
+          "3": "返回 3",
+          "4": "返回 4",
+          "5": "返回 5",
+          "6": "返回 6",
+          "7": "返回 7",
+          "8": "返回 8",
+          "9": "返回 9"
+        }
+      },
+      "Delete": {
+        "Description": "删除文件或文件夹",
+        "Fields": {
+          "FileName": "路径",
+          "FileName-Help": "要删除的文件或文件夹的路径。\n\n如果留空，将删除当前工作文件。"
+        },
+        "Outputs": {
+          "1": "文件已删除"
+        }
+      },
+      "DeleteSourceDirectory": {
+        "Description": "删除原始库文件的源文件夹",
+        "Label": "删除源文件夹",
+        "Fields": {
+          "IfEmpty": "如果为空",
+          "IfEmpty-Help": "仅在源文件夹为空时删除",
+          "IncludePatterns": "包含模式",
+          "IncludePatterns-Help": "可选，设置后仅匹配这些模式的文件将被计入以查看文件夹是否为空。任何这些模式都可以匹配。",
+          "TopMostOnly": "仅最上层",
+          "TopMostOnly-Help": "启用后，仅删除直接包含文件的文件夹，而上级文件夹保持不变。"
+        },
+        "Outputs": {
+          "1": "源文件夹已删除",
+          "2": "文件夹未删除"
+        }
+      },
+      "Executor": {
+        "Description": "对文件执行以下过程。\n输出 1: 进程返回成功退出代码\n输出 2: 进程返回非成功退出代码。",
+        "Fields": {
+          "Arguments": "参数",
+          "Arguments-Help": "要传递给要执行的进程的参数",
+          "FileName": "文件名",
+          "FileName-Help": "要执行的文件的名称",
+          "OutputErrorVariable": "输出错误变量",
+          "OutputErrorVariable-Help": "一个可选的变量名，用于存储进程错误输出",
+          "OutputVariable": "输出变量",
+          "OutputVariable-Help": "一个可选的变量名，用于存储进程输出",
+          "SuccessCode": "成功代码",
+          "SuccessCode-Help": "进程的退出代码，指示该进程成功。 通常应该为 0。",
+          "Timeout": "超时",
+          "Timeout-Help": "进程可以运行多久后被终止。 使用 0 表示没有超时。",
+          "Timeout-Suffix": "秒",
+          "WorkingDirectory": "工作文件夹",
+          "WorkingDirectory-Help": "将执行进程的文件夹"
+        },
+        "Outputs": {
+          "1": "进程返回成功",
+          "2": "进程返回失败"
+        }
+      },
+      "FailFlow": {
+        "Description": "立即使流失败，如果您希望某个特定路径只是失败，则很有用。",
+        "Fields": {
+          "Reason": "原因",
+          "Reason-Help": "一个可选的原因，用于记录流失败的原因。"
+        }
+      },
+      "FileDateCompare": {
+        "Description": "检查文件创建时间或最后写入时间是否符合指定的日期约束。",
+        "Fields": {
+          "Date": "日期",
+          "DateComparision": "比较",
+          "FileName": "文件名",
+          "FileName-Help": "要检查的文件。 留空以检查当前工作文件。"
+        },
+        "Outputs": {
+          "1": "与日期约束匹配。",
+          "2": "与日期约束不匹配。"
+        }
+      },
+      "FileExists": {
+        "Description": "检查文件是否存在\n\n输出 1: 文件存在\n输出 2: 文件不存在",
+        "Fields": {
+          "FileName": "文件名",
+          "FileName-Help": "要检查的文件。如果留空，则检查当前工作文件。"
+        },
+        "Outputs": {
+          "1": "文件存在",
+          "2": "文件不存在"
+        }
+      },
+      "FileExtension": {
+        "Description": "检查文件是否具有配置的扩展名之一。\n\n输出 1: 匹配\n输出 2: 不匹配",
+        "Fields": {
+          "Extensions": "扩展名",
+          "Extensions-Help": "一个不区分大小写的文件扩展名列表，将与之进行匹配。\n输出 1: 匹配\n输出 2: 不匹配"
+        },
+        "Outputs": {
+          "1": "扩展名匹配",
+          "2": "扩展名不匹配"
+        }
+      },
+      "FileSize": {
+        "Description": "检查文件大小是否与配置的参数匹配。值以兆字节为单位。\n\n输出 1: 匹配\n输出 2: 不匹配",
+        "Fields": {
+          "Comparison": "比较",
+          "Lower": "大于",
+          "Lower-Help": "值必须大于此兆字节数",
+          "Lower-Suffix": "MB",
+          "Upper": "小于",
+          "Upper-Help": "值必须小于此兆字节数。将其留为 0 以不测试上限。",
+          "Upper-Suffix": "MB"
+        },
+        "Outputs": {
+          "1": "文件大小在范围内",
+          "2": "文件大小不在范围内"
+        }
+      },
+      "FileSizeCompare": {
+        "Description": "检查文件大小是否与原始文件发生了变化。",
+        "Outputs": {
+          "1": "小于原始",
+          "2": "与原始相同",
+          "3": "大于原始"
+        }
+      },
+      "FileSizeWithin": {
+        "Description": "检查新的文件大小是否在原始文件大小的允许范围内。",
+        "Value": "值",
+        "Value-Help": "文件大小允许的差异，这个值可以是加上或减去这个差异。",
+        "Outputs": {
+          "1": "文件大小在允许范围内",
+          "2": "文件大小不在允许范围内"
+        }
+      },
+      "FolderDateCompare": {
+        "Description": "检查文件夹的创建时间或最后写入时间是否符合指定的日期限制。",
+        "Label": "文件夹日期比较",
+        "Fields": {
+          "Date": "日期",
+          "DateComparision": "比较",
+          "Path": "路径",
+          "Path-Help": "要检查的文件夹路径。留空以检查当前工作文件。\n如果指定了文件，将检查包含该文件的文件夹。"
+        },
+        "Outputs": {
+          "1": "符合日期限制。",
+          "2": "不符合日期限制。"
+        }
+      },
+      "FolderIterator": {
+        "Description": "迭代给定文件夹中的所有文件，并对这些文件执行子流程。",
+        "Fields": {
+          "Flow": "流程",
+          "Flow-Help": "要执行文件的子流程。",
+          "Folder": "文件夹",
+          "Folder-Help": "将要迭代的文件夹。",
+          "Pattern": "模式",
+          "Pattern-Help": "任何可选模式以限制迭代的文件，可以是以 `*` 开头的通配符模式或正则表达式。",
+          "Recursive": "递归",
+          "Recursive-Help": "是否也应迭代所有子文件夹中的文件，或者仅应迭代顶层文件。"
+        },
+        "Outputs": {
+          "1": "文件夹中的文件已被迭代"
+        }
+      },
+      "Function": {
+        "Label": "函数",
+        "Fields": {
+          "Code": "代码",
+          "Code-Help": "返回 -1 以表示错误并停止流程。返回 0 以完成流程。返回 1 或更多以调用所需的输出。",
+          "Outputs": "输出",
+          "Template": "模板",
+          "Template-Help": "警告：这将用选定的模板替换代码块中的所有内容。"
+        },
+        "Outputs": {
+          "1": "返回 1",
+          "10": "返回 10",
+          "2": "返回 2",
+          "3": "返回 3",
+          "4": "返回 4",
+          "5": "返回 5",
+          "6": "返回 6",
+          "7": "返回 7",
+          "8": "返回 8",
+          "9": "返回 9"
+        }
+      },
+      "GotoFlow": {
+        "Description": "这使您能够切换到另一个流程进行处理。此流程将结束，参数和工作文件将转移到新的流程中。",
+        "Fields": {
+          "Flow": "流程",
+          "UpdateFlowUsed": "更新流程",
+          "UpdateFlowUsed-Help": "如果文件 `流程` 需要更新以引用此新流程，或者保留为原始流程。"
+        }
+      },
+      "HasHardLinks": {
+        "Description": "检查文件是否有硬链接",
+        "Fields": {
+          "Count": "计数",
+          "Count-Help": "调用输出 1 所需的硬链接数量。",
+          "FileName": "文件名",
+          "FileName-Help": "要检查的文件。留空以检查当前工作文件。"
+        },
+        "Outputs": {
+          "1": "检测到硬链接",
+          "2": "未检测到硬链接"
+        }
+      },
+      "IfBoolean": {
+        "Description": "检查变量是否为真或假",
+        "Fields": {
+          "Variable": "变量",
+          "Variable-Help": "要检查的变量名称"
+        },
+        "Outputs": {
+          "1": "真",
+          "2": "假"
+        }
+      },
+      "IfString": {
+        "Description": "测试变量是否与字符串匹配",
+        "Fields": {
+          "Options": "选项",
+          "Options-Help": "要匹配的字符串。",
+          "Outputs": "输出",
+          "Outputs-Help": "这应该与可用选项的数量匹配",
+          "Variable": "变量",
+          "Variable-Help": "要检查的变量的名称"
+        },
+        "Outputs": {
+          "1": "匹配的字符串 1",
+          "10": "匹配的字符串 10",
+          "2": "匹配的字符串 2",
+          "3": "匹配的字符串 3",
+          "4": "匹配的字符串 4",
+          "5": "匹配的字符串 5",
+          "6": "匹配的字符串 6",
+          "7": "匹配的字符串 7",
+          "8": "匹配的字符串 8",
+          "9": "匹配的字符串 9"
+        }
+      },
+      "InputFile": {
+        "Description": "文件的输入流元素。 这是必需的，是流的起点。可以使用任何输入流元素，但至少需要一个。",
+        "Outputs": {
+          "1": "库文件"
+        }
+      },
+      "InputFolder": {
+        "Description": "文件夹的输入流元素。只有当使用此流的库配置为文件夹时，这才有效。",
+        "Outputs": {
+          "1": "库文件夹"
+        }
+      },
+      "IsDocker": {
+        "Description": "确定此流是否在 Docker 上运行",
+        "Outputs": {
+          "1": "在 Docker 上运行",
+          "2": "未在 Docker 上运行"
+        }
+      },
+      "IsFromLibrary": {
+        "Description": "检查正在处理的文件是否来自指定的库。",
+        "Fields": {
+          "Library": "库",
+          "Library-Help": "要检查的库。"
+        },
+        "Outputs": {
+          "1": "文件来自指定的库。",
+          "2": "文件不来自指定的库。"
+        }
+      },
+      "IsLinux": {
+        "Description": "确定此流是否在 Linux 上运行",
+        "Outputs": {
+          "1": "在 Linux 上运行",
+          "2": "未在 Linux 上运行"
+        }
+      },
+      "IsMacOS": {
+        "Description": "确定此流程是否在MacOS上运行",
+        "Label": "是MacOS",
+        "Outputs": {
+          "1": "正在MacOS上运行",
+          "2": "未在MacOS上运行"
+        }
+      },
+      "IsProcessingOnNode": {
+        "Description": "检查流程是否正在指定的处理节点上处理。",
+        "Fields": {
+          "Node": "节点",
+          "Node-Help": "要检查的处理节点。"
+        },
+        "Outputs": {
+          "1": "正在节点上处理",
+          "2": "未在节点上处理"
+        }
+      },
+      "IsWindows": {
+        "Description": "确定此流程是否在Windows上运行",
+        "Outputs": {
+          "1": "正在Windows上运行",
+          "2": "未在Windows上运行"
+        }
+      },
+      "ListIterator": {
+        "Description": "遍历给定列表中的所有字符串，并在子流程中执行这些字符串。",
+        "Fields": {
+          "Flow": "流程",
+          "Flow-Help": "将字符串执行的子流程。",
+          "List": "列表",
+          "List-Help": "包含要遍历的列表的变量名称。"
+        },
+        "Outputs": {
+          "1": "列表已遍历"
+        }
+      },
+      "Log": {
+        "Description": "将消息记录到流程日志",
+        "Fields": {
+          "LogType": "类型",
+          "Message": "消息"
+        },
+        "Outputs": {
+          "1": "消息已记录"
+        }
+      },
+      "Matches": {
+        "Description": "比较一组值并匹配条件，以查看应该调用哪个输出",
+        "Fields": {
+          "MatchConditions": "",
+          "MatchConditions-Help": "要测试的匹配项，以查看应该调用哪个输出。",
+          "MatchConditionsKey": "值",
+          "MatchConditionsValue": "表达式"
+        }
+      },
+      "MatchesAll": {
+        "Description": "比较一组值并检查所有条件是否匹配。",
+        "Fields": {
+          "MatchConditions": "",
+          "MatchConditionsHelp": "要测试的条件，确定应该调用哪个输出。",
+          "MatchConditionsKey": "值",
+          "MatchConditionsValue": "表达式"
+        },
+        "Outputs": {
+          "1": "所有条件匹配",
+          "2": "并非所有条件匹配"
+        }
+      },
+      "MoveFile": {
+        "Description": "将文件移动到目标文件夹",
+        "Fields": {
+          "AdditionalFiles": "附加文件",
+          "AdditionalFiles-Help": "要从目录移动到新目录的附加文件。\n每个值可以包含有效字面路径和通配符 (* 和 ?) 的组合，但不支持正则表达式。",
+          "AdditionalFilesFromOriginal": "原始目录",
+          "AdditionalFilesFromOriginal-Help": "附加文件是否应从工作目录或原始目录移动。打开以使用原始目录。",
+          "DeleteOriginal": "删除原件",
+          "DeleteOriginal-Help": "如果原始文件应该被删除，这将仅在工作文件与原始文件不同的情况下发生。",
+          "DestinationFile": "目标文件",
+          "DestinationFile-Help": "要将文件移动到的文件名。如果为空，将使用原始文件名。",
+          "DestinationPath": "目标文件夹",
+          "DestinationPath-Help": "文件将被移动到的文件夹。",
+          "InputFile": "要移动的文件",
+          "InputFile-Help": "要移动的文件，如果留空，则将移动工作文件。",
+          "InputFile-Placeholder": "工作文件",
+          "MoveFolder": "复制文件夹",
+          "MoveFolder-Help": "是否也应复制相对库文件夹结构。",
+          "PreserverOriginalDates": "保留日期",
+          "PreserverOriginalDates-Help": "是否应保留原始输入文件的原始创建时间和最后写入时间。"
+        },
+        "Outputs": {
+          "1": "文件已移动",
+          "2": "文件已移动，但无法删除原始文件"
+        }
+      },
+      "MoveFolder": {
+        "Description": "移动文件夹",
+        "Fields": {
+          "CreateSubfolder": "创建子文件夹",
+          "CreateSubfolder-Help": "是否在目标文件夹中创建一个以源文件夹名称命名的子文件夹。",
+          "DestinationPath": "目标",
+          "DestinationPath-Help": "将源文件夹移动到的目标文件夹。",
+          "SourcePath": "源",
+          "SourcePath-Help": "要移动的文件夹；如果留空，将使用工作文件。如果这不是文件夹，则流元素将失败。"
+        },
+        "Outputs": {
+          "1": "文件夹已移动"
+        }
+      },
+      "OlderThan": {
+        "Description": "检查文件夹是否比指定的范围更旧",
+        "Fields": {
+          "Date": "日期",
+          "Number": "数字",
+          "Unit": "单位"
+        },
+        "Outputs": {
+          "1": "文件较旧",
+          "2": "文件不较旧"
+        }
+      },
+      "OriginalFile": {
+        "Description": "将当前工作文件设置为启动流程的原始文件",
+        "Outputs": {
+          "1": "工作文件已设置为原始文件"
+        }
+      },
+      "PatternMatch": {
+        "Description": "测试工作文件和原始文件是否符合正则表达式。\n\n输出 1: 匹配表达式\n输出 2: 不匹配",
+        "Fields": {
+          "Pattern": "模式",
+          "Pattern-Help": "使用 C# 正则表达式规范的正则表达式。"
+        },
+        "Outputs": {
+          "1": "匹配表达式",
+          "2": "不匹配"
+        }
+      },
+      "PatternReplacer": {
+        "Description": "允许您在文件名中进行替换。可以使用正则表达式进行替换或简单的字符串替换。\n\n输出 1: 替换完成\n输出 2: 没有替换",
+        "Label": "文件名模式替换器",
+        "Fields": {
+          "Replacements": "替换",
+          "ReplacementsKey": "模式",
+          "ReplacementsValue": "值",
+          "UseWorkingFileName": "使用工作文件名",
+          "UseWorkingFileName-Help": "如果应使用当前工作文件名，或者如果为假，则将使用传入文件的原始文件名。"
+        },
+        "Outputs": {
+          "1": "替换完成",
+          "2": "没有替换"
+        }
+      },
+      "PowerShellScript": {
+        "Description": "允许在 Windows 环境中运行 PowerShell (.ps1) 脚本。",
+        "Label": "PowerShell 脚本 (.ps1)",
+        "Fields": {
+          "Code": "代码"
+        },
+        "Outputs": {
+          "1": "返回 1",
+          "10": "返回 10",
+          "2": "返回 2",
+          "3": "返回 3",
+          "4": "返回 4",
+          "5": "返回 5",
+          "6": "返回 6",
+          "7": "返回 7",
+          "8": "返回 8",
+          "9": "返回 9"
+        }
+      },
+      "Random": {
+        "Description": "选择一个随机输出",
+        "Label": "随机",
+        "Fields": {
+          "Outputs": "输出",
+          "Outputs-Help": "可以调用的输出数量。"
+        }
+      },
+      "Renamer": {
+        "Description": "重命名工作文件。\n可以通过在模式字段中输入 '{' 来使用变量。",
+        "Fields": {
+          "CsvFile": "CSV 文件",
+          "CsvFile-Help": "将原始名称和重命名的名称添加到此文件中。如果你使用 '仅日志' 来测试重命名器，这是很有用的。",
+          "DestinationPath": "目标文件夹",
+          "DestinationPath-Help": "文件是否应移动到另一个文件夹。",
+          "LogOnly": "仅日志",
+          "LogOnly-Help": "如果你只想测试此流元素而不实际重命名文件，请开启。",
+          "Pattern": "新名称",
+          "Pattern-Help": "文件的新名称。可以使用变量。所有空的 () 和 '{}' 将被删除。"
+        },
+        "Outputs": {
+          "1": "文件已重命名"
+        }
+      },
+      "ReplaceOriginal": {
+        "Description": "用工作文件替换原始文件。\n\n如果工作文件的扩展名不同，原始文件将被删除，工作文件将被移动到原始文件的新扩展名。\n例如，从 File.avi 到 File.mkv",
+        "Fields": {
+          "PreserverOriginalDates": "保留日期",
+          "PreserverOriginalDates-Help": "是否需要保留输入文件的原始创建时间和最后修改时间。"
+        },
+        "Outputs": {
+          "1": "原始文件已替换"
+        }
+      },
+      "Reprocess": {
+        "Description": "此流元素允许使用另一个处理节点重新处理原始库文件。\n\n如果选择与当前正在处理的节点相同的处理节点，流将失败。",
+        "Fields": {
+          "Node": "节点",
+          "Node-Help": "用于处理该文件的处理节点。"
+        }
+      },
+      "SetVariable": {
+        "Description": "在流中设置一个变量。",
+        "Label": "设置变量",
+        "Fields": {
+          "Value": "值",
+          "Value-Help": "要设置的变量的值。",
+          "Variable": "变量",
+          "Variable-Help": "要设置的变量的名称"
+        },
+        "Outputs": {
+          "1": "变量已设置"
+        }
+      },
+      "SetWorkingFile": {
+        "Description": "用指定的文件更新当前工作文件。",
+        "Label": "设置工作文件",
+        "Fields": {
+          "DontDeletePrevious": "不删除之前的",
+          "DontDeletePrevious-Help": "是否不删除之前的*临时*工作文件。\n只有 FileFlows 在执行者的临时文件夹中创建的临时文件将被删除。",
+          "File": "文件",
+          "File-Description": "新工作文件或文件夹的路径。"
+        },
+        "Outputs": {
+          "1": "工作文件已设置"
+        }
+      },
+      "SevenZip": {
+        "Description": "允许将输入压缩为 7zip 格式。",
+        "Label": "7-Zip",
+        "Fields": {
+          "CompressionLevel": "压缩级别",
+          "CompressionLevel-Help": "压缩时要使用的压缩级别。",
+          "CompressionMethod": "压缩方法",
+          "CompressionMethod-Help": "使用的压缩方法，推荐 LZMA2。",
+          "DestinationFile": "目标文件",
+          "DestinationFile-Help": "新 7zip 文件的名称。如果留空，则将使用元素的名称作为 7zip 文件。",
+          "DestinationPath": "目标路径",
+          "DestinationPath-Help": "放置 7zip 文件的目标文件夹。如果留空，则将 7zip 放置在库的根目录中。"
+        },
+        "Outputs": {
+          "1": "已创建 7zip"
+        }
+      },
+      "ShellScript": {
+        "Description": "允许您在类Unix环境中执行Shell (.sh) 脚本。",
+        "Label": "Shell 脚本 (.sh)",
+        "Fields": {
+          "Code": "代码"
+        },
+        "Outputs": {
+          "1": "返回 1",
+          "10": "返回 10",
+          "2": "返回 2",
+          "3": "返回 3",
+          "4": "返回 4",
+          "5": "返回 5",
+          "6": "返回 6",
+          "7": "返回 7",
+          "8": "返回 8",
+          "9": "返回 9"
+        }
+      },
+      "Sleep": {
+        "Description": "暂停流程",
+        "Fields": {
+          "Milliseconds": "毫秒",
+          "Milliseconds-Help": "暂停流程的时间。必须在 1 毫秒到 1 小时之间。"
+        },
+        "Outputs": {
+          "1": "流程恢复"
+        }
+      },
+      "Touch": {
+        "Description": "触碰一个文件或目录并将最后写入时间设置为现在。",
+        "Fields": {
+          "FileName": "文件名",
+          "FileName-Help": "要触碰的文件或文件夹的完整文件名。\n如果留空，则将使用工作文件。"
+        },
+        "Outputs": {
+          "1": "成功触碰项目"
+        }
+      },
+      "Unpack": {
+        "Description": "允许您解压缩一个档案（zip，rar，tar 等）",
+        "Fields": {
+          "DestinationPath": "目标文件夹",
+          "DestinationPath-Help": "解压缩文件的目标文件夹。",
+          "File": "文件",
+          "File-Help": "要解压缩的文件名。可以留空，如果这样的话，将使用当前工作文件。"
+        },
+        "Outputs": {
+          "1": "文件已解压缩"
+        }
+      },
+      "VariableMatch": {
+        "Description": "检查输入值是否与保存的变量匹配。",
+        "Fields": {
+          "Input": "值",
+          "Input-Help": "要与变量比较的值。",
+          "Variable": "变量",
+          "Variable-Help": "要比较的变量",
+          "VariableName": "变量",
+          "VariableName-Help": "要比较的变量"
+        },
+        "Outputs": {
+          "1": "输入与变量匹配",
+          "2": "输入不匹配变量"
+        }
+      },
+      "WebRequest": {
+        "Description": "允许发送网页请求",
+        "Fields": {
+          "Body": "主体",
+          "Body-Help": "发送请求的主体。可以在此字段中使用变量。",
+          "ContentType": "内容类型",
+          "ContentType-Help": "要发送的消息的内容类型",
+          "Headers": "头部",
+          "Headers-Help": "与请求一起发送的可选头部",
+          "HeadersKey": "键",
+          "HeadersValue": "值",
+          "Method": "方法",
+          "Method-Help": "在发送此请求时要使用的网页方法",
+          "Url": "网址",
+          "Url-Help": "请求的网址"
+        },
+        "Outputs": {
+          "1": "成功发送",
+          "2": "请求返回不成功的状态代码"
+        }
+      },
+      "WriteText": {
+        "Description": "将文本写入文件",
+        "Fields": {
+          "File": "文件",
+          "File-Help": "要写入文本的文件。",
+          "Text": "文本",
+          "Text-Help": "要写入文件的文本。如果留空，则将写入当前工作文件的完整路径。"
+        },
+        "Outputs": {
+          "1": "文本已写入文件"
+        }
+      },
+      "Zip": {
+        "Description": "允许压缩输入",
+        "Fields": {
+          "DestinationFile": "目标文件",
+          "DestinationFile-Help": "新创建的zip文件的文件名。如果留空，将使用项目的名称作为zip文件。",
+          "DestinationPath": "目标路径",
+          "DestinationPath-Help": "要放置zip文件的目标文件夹。如果留空，zip将放在根目录中。",
+          "Path": "路径",
+          "Path-Help": "要压缩的文件或文件夹的路径。如果留空，将压缩工作文件。",
+          "SetWorkingFile": "设置工作文件",
+          "SetWorkingFile-Help": "新创建的zip文件是否应成为新的工作文件。"
+        },
+        "Outputs": {
+          "1": "zip已创建"
+        }
+      }
+    }
+  }
+}

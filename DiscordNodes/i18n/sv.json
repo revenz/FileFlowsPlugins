@@ -1,0 +1,30 @@
+{
+  "Flow": {
+    "Parts": {
+      "Discord": {
+        "Description": "Skickar ett meddelande till en Discord-server.",
+        "Fields": {
+          "Message": "Meddelande",
+          "Message-Help": "Meddelandet som ska skickas till Discord-servern",
+          "MessageType": "Typ",
+          "MessageType-Help": "Typen av meddelande som ska skickas. Grundtypen är bara meddelandet utan en titel och utan färgning.",
+          "Title": "Titel",
+          "Title-Help": "En valfri titel att skicka; om den inte är inställd kommer meddelandetypen att vara titeln."
+        },
+        "Outputs": {
+          "1": "Discord-meddelandet skickades",
+          "2": "Misslyckades med att skicka Discord-meddelandet"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "DiscordNodes": {
+      "Description": "Ett plugin som gör att du kan skicka meddelanden till en Discord-server.\n\nWebhook-ID och token kan erhållas från webhook-URL\n https://discord.com/api/webhooks/[webhookid]/[webhooktoken]",
+      "Fields": {
+        "WebhookId": "Webhook-ID",
+        "WebhookToken": "Webhook-token"
+      }
+    }
+  }
+}

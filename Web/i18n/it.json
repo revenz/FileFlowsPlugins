@@ -1,0 +1,69 @@
+{
+  "Flow": {
+    "Parts": {
+      "Downloader": {
+        "Description": "Scarica l'URL specificato",
+        "Fields": {
+          "Url": "URL",
+          "Url-Help": "L'URL da scaricare, lasciare vuoto per usare il file corrente in lavorazione, se il file corrente non è un URL, il download fallirà."
+        },
+        "Outputs": {
+          "1": "URL scaricato con successo",
+          "2": "Il download dell'URL è fallito"
+        }
+      },
+      "HtmlImageParser": {
+        "Label": "Parser Immagini HTML",
+        "Fields": {
+          "Path": "File",
+          "Path-Description": "Un file o variabile opzionale da analizzare per immagini, se non specificato verrà analizzato il file corrente in lavorazione.",
+          "Pattern": "Modello",
+          "Pattern-Help": "Un'espressione regolare opzionale non sensibile al maiuscolo/minuscolo per confrontare i risultati, solo i risultati che corrispondono saranno accettati.",
+          "Pattern-Placeholder": "Opzionale"
+        },
+        "Outputs": {
+          "1": "Immagini trovate e memorizzate nella variabile ImageUrls",
+          "2": "Nessuna immagine trovata"
+        }
+      },
+      "HtmlLinkParser": {
+        "Label": "Parser Link HTML",
+        "Fields": {
+          "Path": "File",
+          "Path-Description": "Un file o variabile opzionale da analizzare per i link, se non specificato verrà analizzato il file corrente in lavorazione.",
+          "Pattern": "Modello",
+          "Pattern-Help": "Un'espressione regolare opzionale non sensibile al maiuscolo/minuscolo per confrontare i risultati, solo i risultati che corrispondono saranno accettati.",
+          "Pattern-Placeholder": "Opzionale"
+        },
+        "Outputs": {
+          "1": "Link trovato e memorizzato nella variabile Links",
+          "2": "Nessun link trovato"
+        }
+      },
+      "InputUrl": {
+        "Label": "Inserisci URL"
+      },
+      "WebRequest": {
+        "Description": "Consente di inviare una richiesta web",
+        "Fields": {
+          "Body": "Corpo",
+          "Body-Help": "Il corpo della richiesta inviata. È possibile usare variabili in questo campo.",
+          "ContentType": "Tipo di Contenuto",
+          "ContentType-Help": "Il tipo di contenuto del messaggio da inviare",
+          "Headers": "Intestazioni",
+          "Headers-Help": "Intestazioni opzionali da inviare con la richiesta",
+          "HeadersKey": "Chiave",
+          "HeadersValue": "Valore",
+          "Method": "Metodo",
+          "Method-Help": "Il metodo web da usare per inviare questa richiesta",
+          "Url": "URL",
+          "Url-Help": "L'URL della richiesta"
+        },
+        "Outputs": {
+          "1": "Inviato con successo",
+          "2": "La richiesta ha restituito un codice di stato non valido"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "Flow": {
+    "Parts": {
+      "ComicConverter": {
+        "Description": "Konverterar en serie till ett annat serietidningsformat.\n\nStöder konvertering från CBZ, CBR, CB7, PDF, GZ, BZ2",
+        "Fields": {
+          "Codec": "Codec",
+          "Codec-Help": "Den codec som bilderna ska sparas som",
+          "DeleteNonPageImages": "Ta bort icke-sidbilder",
+          "DeleteNonPageImages-Help": "Tar bort bilder som inte följer en namngivningsstruktur för sidor. Det vill säga, de slutar inte med ett nummer.",
+          "EnsureTopDirectory": "Säkerställ huvudmapp",
+          "EnsureTopDirectory-Help": "Säkerställer att alla filer ligger direkt i huvudmappen för serietidningen, utan underkataloger.",
+          "Format": "Format",
+          "Format-Help": "Formatet att konvertera serien till",
+          "MaxHeight": "Maxhöjd",
+          "MaxHeight-Help": "Den maximala höjden för sidorna, använd 0 för inga justeringar eller för att behålla kvaliteten med bredd",
+          "MaxWidth": "Maxbredd",
+          "MaxWidth-Help": "Den maximala bredden för sidorna, använd 0 för inga justeringar eller för att behålla kvaliteten med höjd",
+          "Quality": "Kvalitet",
+          "Quality-Help": "Kvalitet på sidorna i serietidningen, 0 för mest kompression/sämst kvalitet, 100 för bästa kvalitet"
+        },
+        "Outputs": {
+          "1": "Serien har konverterats och sparats som en tillfällig fil",
+          "2": "Serien var redan i önskat format"
+        }
+      },
+      "ComicExtractor": {
+        "Description": "Extraherar alla filer från ett serietidningsformat och sparar dem i en specifik mapp.\n\nStöder extrahering av CBZ, CBR, CB7, PDF, GZ, BZ2",
+        "Fields": {
+          "DestinationPath": "Destinationsväg",
+          "DestinationPath-Help": "Mappen för att spara de extraherade serietidningsfilerna"
+        },
+        "Outputs": {
+          "1": "Serien har extraherats"
+        }
+      },
+      "CreateComicInfo": {
+        "Description": "Parsar sökvägen till en serie och skapar en comicinfo.xml-fil inuti serietidningsarkivet.",
+        "Fields": {
+          "IssueDigits": "Utgåvanummer",
+          "IssueDigits-Help": "Kommer att fylla ut utgåvenumret med ledande nollor upp till detta antal.\nTill exempel, för utgåvan 1 om fyllningen är 3, kommer utgåvan att visas som #001",
+          "Publisher": "Utgivare",
+          "Publisher-Help": "Om serien ligger i en utgivar-katalog, se hjälp för mer information.",
+          "RenameFile": "Byt namn på fil",
+          "RenameFile-Help": "Om filen ska döpas om till `Serie - Utgåva - Titel.tillägg`"
+        },
+        "Outputs": {
+          "1": "ComicInfo tillagd i serietidningsarkivet",
+          "2": "ComicInfo redan i arkivet"
+        }
+      }
+    }
+  }
+}

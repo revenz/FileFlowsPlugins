@@ -1,0 +1,34 @@
+{
+  "Flow": {
+    "Parts": {
+      "Apprise": {
+        "Description": "Appriseサーバーにメッセージを送信します。",
+        "Fields": {
+          "Message": "メッセージ",
+          "Message-Help": "Appriseサーバーに送信するメッセージ",
+          "MessageType": "タイプ",
+          "MessageType-Help": "送信するメッセージのタイプ",
+          "Tag": "タグ",
+          "Tag-Help": "このメッセージに送信するタグのリスト、空白の場合は 'all' でタグ付けされます。"
+        },
+        "Outputs": {
+          "1": "Appriseメッセージが送信されました",
+          "2": "Appriseメッセージの送信に失敗しました"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Apprise": {
+      "Description": "Appriseサーバーにメッセージを送信できるプラグインです。",
+      "Fields": {
+        "Endpoint": "エンドポイント",
+        "Endpoint-Help": "Appriseサーバー上のエンドポイント、例: notify/apprise",
+        "Endpoint-Placeholder": "notify/apprise",
+        "ServerUrl": "サーバー",
+        "ServerUrl-Help": "AppriseサーバーのURL",
+        "ServerUrl-Placeholder": "http://apprise.lan"
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "Flow": {
+    "Parts": {
+      "SendEmail": {
+        "Description": "Verzendt een e-mail met behulp van de geconfigureerde SMTP-server",
+        "Fields": {
+          "Body": "Inhoud",
+          "Body-Help": "De inhoud van het te verzenden e-mailbericht. Gebruikt de [scriban](https://github.com/scriban/scriban) sjablonentaal",
+          "Recipients": "Ontvangers",
+          "Recipients-Help": "Een lijst van e-mailadressen om het bericht naar te verzenden",
+          "Subject": "Onderwerp",
+          "Subject-Help": "Het onderwerp van de in te stellen e-mail"
+        },
+        "Outputs": {
+          "1": "E-mail ''{Subject}'' verzonden",
+          "2": "Verzending van e-mail mislukt"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "EmailNodes": {
+      "Fields": {
+        "Sender": "Afzender",
+        "Sender-Help": "Het e-mailadres waaruit e-mails worden verzonden",
+        "SmtpPassword": "SMTP-wachtwoord",
+        "SmtpPassword-Help": "Het wachtwoord dat wordt gebruikt voor authenticatie bij de SMTP-server",
+        "SmtpPort": "SMTP-poort",
+        "SmtpPort-Help": "De poort van de SMTP-server die wordt gebruikt voor het verzenden van e-mails, standaard 25",
+        "SmtpServer": "SMTP-server",
+        "SmtpServer-Help": "Het adres van de SMTP-server die wordt gebruikt om e-mails te verzenden",
+        "SmtpUsername": "SMTP-gebruikersnaam",
+        "SmtpUsername-Help": "De gebruikersnaam die wordt gebruikt voor authenticatie bij de SMTP-server"
+      }
+    }
+  }
+}
