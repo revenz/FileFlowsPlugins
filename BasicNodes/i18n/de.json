@@ -317,6 +317,13 @@
           "1": "Ordner einfügen"
         }
       },
+      "IsDocker": {
+        "Description": "Bestimmt, ob dieser Flow auf Docker läuft",
+        "Outputs": {
+          "1": "Läuft auf Docker",
+          "2": "Läuft nicht auf Docker"
+        }
+      },
       "IsFromLibrary": {
         "Description": "Überprüft, ob die verarbeitete Datei aus der angegebenen Bibliothek stammt.",
         "Fields": {
