@@ -3,6 +3,7 @@
     "Parts": {
       "SendEmail": {
         "Description": "Sendet eine E-Mail über den konfigurierten SMTP-Server",
+        "Label": "E-Mail Senden",
         "Fields": {
           "Body": "Inhalt",
           "Body-Help": "Der Inhalt der gesendeten E-Mail-Nachricht. Verwendet die [scriban](https://github.com/scriban/scriban) Template-Sprache",
