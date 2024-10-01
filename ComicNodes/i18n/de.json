@@ -3,6 +3,7 @@
     "Parts": {
       "ComicConverter": {
         "Description": "Konvertiert ein Comic in ein anderes Comicbuchformat.\n\nUnterstützt die Konvertierung von CBZ, CBR, CB7, PDF, GZ, BZ2",
+        "Label": "Comic Konvertieren",
         "Fields": {
           "Codec": "Codec",
           "Codec-Help": "Der Codec, um die Bilder zu speichern",
@@ -26,6 +27,7 @@
       },
       "ComicExtractor": {
         "Description": "Extrahiert alle Dateien aus einem Comicbuchformat und speichert sie in einen bestimmten Ordner.\n\nUnterstützt das Extrahieren von CBZ, CBR, CB7, PDF, GZ, BZ2",
+        "Label": "Comic Extrahieren",
         "Fields": {
           "DestinationPath": "Zielpfad",
           "DestinationPath-Help": "Der Ordner, in dem die extrahierten Comicbuchdateien gespeichert werden sollen"
@@ -36,6 +38,7 @@
       },
       "CreateComicInfo": {
         "Description": "Analysiert den Pfad eines Comics und erstellt eine comicinfo.xml-Datei im Comicbucharchiv.",
+        "Label": "Comic-Informationen Erstellen",
         "Fields": {
           "IssueDigits": "Ausgabenziffern",
           "IssueDigits-Help": "Die Ausgabennummer wird mit führenden Nullen bis zu dieser Anzahl gepolstert.\nBeispiel: Für Ausgabe 1, wenn die Polsterung 3 ist, erscheint die Ausgabe als #001",
