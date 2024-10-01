@@ -185,7 +185,7 @@
       },
       "EmbedArtwork": {
         "Description": "Embeds artwork into an audio file",
-        "Label": "EmbedArtwork",
+        "Label": "Embed Artwork",
         "Outputs": {
           "1": "Artwork found and embedded into the audio file",
           "2": "No artwork found to embed"
