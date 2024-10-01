@@ -16,22 +16,22 @@
         }
       },
       "AudioFile": {
-        "Label": "Fichier audio",
         "Description": "Un fichier d'entrée pour l'audio dont les informations audio ont été lues et qui peut être traité",
+        "Label": "Fichier audio",
         "Outputs": {
           "1": "Fichier audio de la bibliothèque"
         }
       },
       "AudioFileNormalization": {
-        "Label": "Normalisation du fichier audio",
         "Description": "Normalise un fichier audio avec deux passes du filtre loudnorm de FFMPEG",
+        "Label": "Normalisation du fichier audio",
         "Outputs": {
           "1": "Fichier audio normalisé, enregistré dans un fichier temporaire"
         }
       },
       "ConvertAudio": {
-        "Label": "Convertir l'audio",
         "Description": "Convertit un fichier audio au format audio spécifié",
+        "Label": "Convertir l'audio",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "La bitrate pour le nouveau fichier, plus la bitrate est élevée, meilleure est la qualité, mais plus le fichier est gros.",
@@ -56,8 +56,8 @@
         }
       },
       "ConvertToAAC": {
-        "Label": "Convertir en AAC",
         "Description": "Convertit un fichier audio en AAC",
+        "Label": "Convertir en AAC",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "La bitrate pour le nouveau fichier AAC, plus la bitrate est élevée, meilleure est la qualité, mais plus le fichier est gros. 192 Kbps est recommandé.",
@@ -80,8 +80,8 @@
         }
       },
       "ConvertToFLAC": {
-        "Label": "Convertir en FLAC",
         "Description": "Convertit un fichier audio en FLAC",
+        "Label": "Convertir en FLAC",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "La bitrate pour le nouveau fichier FLAC, plus la bitrate est élevée, meilleure est la qualité, mais plus le fichier est gros. 128 Kbps est recommandé.",
@@ -102,8 +102,8 @@
         }
       },
       "ConvertToMP3": {
-        "Label": "Convertir en MP3",
         "Description": "Convertit un fichier audio en MP3",
+        "Label": "Convertir en MP3",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "La bitrate pour le nouveau fichier MP3, plus la bitrate est élevée, meilleure est la qualité, mais plus le fichier est gros. 192 Kbps est recommandé.",
@@ -124,8 +124,8 @@
         }
       },
       "ConvertToOGG": {
-        "Label": "Convertir en OGG",
         "Description": "Convertit un fichier audio en OGG",
+        "Label": "Convertir en OGG",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "La bitrate pour le nouveau fichier OGG, plus la bitrate est élevée, meilleure est la qualité, mais plus le fichier est gros. 192 Kbps est recommandé.",
@@ -146,8 +146,8 @@
         }
       },
       "ConvertToWAV": {
-        "Label": "Convertir en WAV",
         "Description": "Convertir un fichier audio en WAV",
+        "Label": "Convertir en WAV",
         "Fields": {
           "Bitrate": "Débit binaire",
           "Bitrate-Help": "Le débit binaire pour le nouveau fichier WAV, plus le débit binaire est élevé, meilleure est la qualité, mais plus le fichier est volumineux. 128 Kbps est le débit recommandé.",
@@ -168,8 +168,8 @@
         }
       },
       "CreateAudioBook": {
-        "Label": "Créer un livre audio",
         "Description": "Crée un livre audio à partir de fichiers audio trouvés dans le répertoire d'entrée",
+        "Label": "Créer un livre audio",
         "Fields": {
           "DeleteSourceFiles": "Supprimer les fichiers sources",
           "DeleteSourceFiles-Help": "Lorsque cette option est activée, les fichiers sources qui composent le nouveau fichier m4b seront supprimés, sinon ils resteront intacts.",
@@ -184,8 +184,8 @@
         }
       },
       "EmbedArtwork": {
-        "Label": "Incorporer une œuvre d'art",
         "Description": "Incorpore une œuvre d'art dans un fichier audio",
+        "Label": "Incorporer une œuvre d'art",
         "Outputs": {
           "1": "Œuvre d'art trouvée et incorporée dans le fichier audio",
           "2": "Aucune œuvre d'art trouvée à incorporer"

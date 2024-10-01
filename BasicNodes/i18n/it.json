@@ -29,12 +29,12 @@
         }
       },
       "CompleteFlow": {
-        "Label": "Completa Flow",
-        "Description": "Completa/termina il flusso come riuscito"
+        "Description": "Completa/termina il flusso come riuscito",
+        "Label": "Completa Flow"
       },
       "CopyFile": {
-        "Label": "Copia File",
         "Description": "Copia un file nella cartella di destinazione",
+        "Label": "Copia File",
         "Fields": {
           "AdditionalFiles": "File Aggiuntivi",
           "AdditionalFiles-Help": "File aggiuntivi da copiare dalla directory alla nuova directory.\nOgni valore può contenere una combinazione di percorso letterale valido e caratteri jolly (* e ?) ma non supporta le espressioni regolari.",
@@ -76,8 +76,8 @@
         }
       },
       "Delete": {
-        "Label": "Elimina",
         "Description": "Elimina un file o una cartella",
+        "Label": "Elimina",
         "Fields": {
           "FileName": "Percorso",
           "FileName-Help": "Un percorso verso un file o una cartella da eliminare.\n\nSe lasciato vuoto, verrà eliminato il file di lavoro corrente."
@@ -86,7 +86,7 @@
           "1": "File eliminato"
         }
       },
-      "DeleteSourceDirectory": {        
+      "DeleteSourceDirectory": {
         "Description": "Elimina la cartella sorgente del file della libreria originale",
         "Label": "Elimina la cartella sorgente",
         "Fields": {
@@ -103,8 +103,8 @@
         }
       },
       "Executor": {
-        "Label": "Esecutore",
         "Description": "Esegue il seguente processo sul file.\nOutput 1: Il processo ha restituito il codice di uscita di successo\nOutput 2: Il processo ha restituito un codice di uscita non riuscito.",
+        "Label": "Esecutore",
         "Fields": {
           "Arguments": "Argomenti",
           "Arguments-Help": "Gli argomenti da passare al processo da eseguire",
@@ -128,16 +128,16 @@
         }
       },
       "FailFlow": {
-        "Label": "Flow Fallito",
         "Description": "Fallisce un flusso immediatamente, utile se si desidera che un certo percorso fallisca.",
+        "Label": "Flow Fallito",
         "Fields": {
           "Reason": "Motivo",
           "Reason-Help": "Un motivo opzionale per registrare il motivo per cui il flusso è fallito."
         }
       },
       "FileDateCompare": {
-        "Label": "Confronto Data File",
         "Description": "Controlla se la data di creazione del file o l'ultima ora di scrittura corrispondono al vincolo di data specificato.",
+        "Label": "Confronto Data File",
         "Fields": {
           "Date": "Data",
           "DateComparision": "Confronto",
@@ -150,8 +150,8 @@
         }
       },
       "FileExists": {
-        "Label": "File Esiste",
         "Description": "Controlla se un file esiste\n\nOutput 1: Il file esiste\nOutput 2: Il file non esiste",
+        "Label": "File Esiste",
         "Fields": {
           "FileName": "Nome File",
           "FileName-Help": "Il file da controllare. Lascialo vuoto per controllare il file di lavoro attuale."
@@ -162,8 +162,8 @@
         }
       },
       "FileExtension": {
-        "Label": "Estensione File",
         "Description": "Controlla se il file ha una delle estensioni configurate.\n\nOutput 1: Corrisponde\nOutput 2: Non corrisponde",
+        "Label": "Estensione File",
         "Fields": {
           "Extensions": "Estensioni",
           "Extensions-Help": "Un elenco di estensioni di file senza distinzione tra maiuscole e minuscole con cui verrà effettuato il confronto.\nOutput 1: Corrisponde\nOutput 2: Non corrisponde"
@@ -174,8 +174,8 @@
         }
       },
       "FileSize": {
-        "Label": "Dimensione File",
         "Description": "Controlla se la dimensione del file corrisponde ai parametri configurati. I valori sono in megabyte.\n\nOutput 1: Corrisponde\nOutput 2: Non corrisponde",
+        "Label": "Dimensione File",
         "Fields": {
           "Comparison": "Confronto",
           "Lower": "Maggiore di",
@@ -191,8 +191,8 @@
         }
       },
       "FileSizeCompare": {
-        "Label": "Confronto Dimensione File",
         "Description": "Controlla se la dimensione del file è cambiata rispetto al file originale.",
+        "Label": "Confronto Dimensione File",
         "Outputs": {
           "1": "Più piccolo dell'originale",
           "2": "Stessa dimensione dell'originale",
@@ -200,8 +200,8 @@
         }
       },
       "FileSizeWithin": {
-        "Label": "Dimensione File Entro",
         "Description": "Controlla se la nuova dimensione del file è all'interno dell'intervallo consentito rispetto alla dimensione del file originale.",
+        "Label": "Dimensione File Entro",
         "Fields": {
           "Value": "Valore",
           "Value-Help": "La differenza consentita per la dimensione del file, questo valore può essere sia più che meno rispetto a questa differenza."
@@ -226,8 +226,8 @@
         }
       },
       "FolderIterator": {
-        "Label": "Iteratore Cartella",
         "Description": "Esegue l'iterazione di tutti i file in una cartella specificata ed esegue questi file contro un sottoflusso.",
+        "Label": "Iteratore Cartella",
         "Fields": {
           "Flow": "Flusso",
           "Flow-Help": "Il sottoflusso contro cui eseguire i file.",
@@ -265,8 +265,8 @@
         }
       },
       "GotoFlow": {
-        "Label": "Vai a Flow",
         "Description": "Questo ti consente di passare a un flusso diverso da elaborare. Questo flusso uscirà e i parametri e il file di lavoro verranno trasferiti nel nuovo Flusso",
+        "Label": "Vai a Flow",
         "Fields": {
           "Flow": "Flusso",
           "UpdateFlowUsed": "Aggiorna Flusso",
@@ -274,8 +274,8 @@
         }
       },
       "HasHardLinks": {
-        "Label": "Collegamenti Rigidi",
         "Description": "Controlla se un file ha collegamenti rigidi o meno",
+        "Label": "Collegamenti Rigidi",
         "Fields": {
           "Count": "Conteggio",
           "Count-Help": "Il numero di collegamenti rigidi richiesti per chiamare l'output 1.",
@@ -288,8 +288,8 @@
         }
       },
       "IfBoolean": {
-        "Label": "Se Booleano",
         "Description": "Verifica se una variabile è vera o falsa",
+        "Label": "Se Booleano",
         "Fields": {
           "Variable": "Variabile",
           "Variable-Help": "Il nome della variabile da controllare"
@@ -300,8 +300,8 @@
         }
       },
       "IfString": {
-        "Label": "Se Stringa",
         "Description": "Verifica se una variabile corrisponde a una stringa",
+        "Label": "Se Stringa",
         "Fields": {
           "Options": "Opzioni",
           "Options-Help": "La stringa da confrontare.",
@@ -324,30 +324,30 @@
         }
       },
       "InputFile": {
-        "Label": "File di Input",
         "Description": "Un elemento di flusso in ingresso per un file. Questo è obbligatorio ed è il punto di partenza di un flusso. Può essere utilizzato qualsiasi elemento di flusso in ingresso, ma ne è richiesto almeno uno.",
+        "Label": "File di Input",
         "Outputs": {
           "1": "File della libreria"
         }
       },
       "InputFolder": {
-        "Label": "Cartella di Input",
         "Description": "Un elemento di flusso in ingresso per una cartella. Questo funzionerà solo se la libreria che utilizza questo flusso è configurata per le cartelle.",
+        "Label": "Cartella di Input",
         "Outputs": {
           "1": "Cartella della libreria"
         }
       },
       "IsDocker": {
-        "Label": "È Docker",
         "Description": "Determina se questo flusso è in esecuzione su Docker",
+        "Label": "È Docker",
         "Outputs": {
           "1": "È in esecuzione su Docker",
           "2": "Non è in esecuzione su Docker"
         }
       },
       "IsFromLibrary": {
-        "Label": "È Dalla Libreria",
         "Description": "Controlla se il file in elaborazione proviene dalla libreria specificata.",
+        "Label": "È Dalla Libreria",
         "Fields": {
           "Library": "Libreria",
           "Library-Help": "La libreria da controllare."
@@ -358,15 +358,14 @@
         }
       },
       "IsLinux": {
-        "Label": "È Linux",
         "Description": "Determina se questo flusso è in esecuzione su Linux",
+        "Label": "È Linux",
         "Outputs": {
           "1": "È in esecuzione su Linux",
           "2": "Non è in esecuzione su Linux"
         }
       },
       "IsMacOS": {
-        "Label": "È MacOS",
         "Description": "Determina se questo flusso è in esecuzione su MacOS",
         "Label": "È MacOS",
         "Outputs": {
@@ -375,8 +374,8 @@
         }
       },
       "IsProcessingOnNode": {
-        "Label": "È in Elaborazione sul Nodo",
         "Description": "Controlla se il flusso sta attualmente elaborando su un nodo di elaborazione specificato.",
+        "Label": "È in Elaborazione sul Nodo",
         "Fields": {
           "Node": "Nodo",
           "Node-Help": "Il nodo di elaborazione da controllare."
@@ -387,16 +386,16 @@
         }
       },
       "IsWindows": {
-        "Label": "È Windows",
         "Description": "Determina se questo flusso è in esecuzione su Windows",
+        "Label": "È Windows",
         "Outputs": {
           "1": "È in esecuzione su Windows",
           "2": "Non è in esecuzione su Windows"
         }
       },
       "ListIterator": {
-        "Label": "Iteratore Elenco",
         "Description": "Itera tutte le stringhe in un elenco fornito ed esegue quelle stringhe contro un sottoflusso.",
+        "Label": "Iteratore Elenco",
         "Fields": {
           "Flow": "Flusso",
           "Flow-Help": "Il sottoflusso contro cui eseguire le stringhe.",
@@ -408,8 +407,8 @@
         }
       },
       "Log": {
-        "Label": "Log",
         "Description": "Registra un messaggio nel log del flusso",
+        "Label": "Log",
         "Fields": {
           "LogType": "Tipo",
           "Message": "Messaggio"
@@ -419,8 +418,8 @@
         }
       },
       "Matches": {
-        "Label": "Corrispondenze",
         "Description": "Confronta un insieme di valori e abbina le condizioni per vedere quale output dovrebbe essere chiamato",
+        "Label": "Corrispondenze",
         "Fields": {
           "MatchConditions": "",
           "MatchConditions-Help": "I confronti da testare per determinare quale output dovrebbe essere chiamato.",
@@ -429,8 +428,8 @@
         }
       },
       "MatchesAll": {
-        "Label": "Corrispondenze Tutte",
         "Description": "Confronta un insieme di valori e verifica se tutte le condizioni corrispondono.",
+        "Label": "Corrispondenze Tutte",
         "Fields": {
           "MatchConditions": "",
           "MatchConditionsHelp": "Le condizioni da testare, determinando quale output dovrebbe essere chiamato.",
@@ -443,8 +442,8 @@
         }
       },
       "MoveFile": {
-        "Label": "Sposta File",
         "Description": "Sposta un file nella cartella di destinazione",
+        "Label": "Sposta File",
         "Fields": {
           "AdditionalFiles": "File Aggiuntivi",
           "AdditionalFiles-Help": "File aggiuntivi da spostare dalla directory alla nuova directory.\nOgni valore può contenere una combinazione di percorso letterale valido e caratteri jolly (* e ?) ma non supporta le espressioni regolari.",
@@ -470,8 +469,8 @@
         }
       },
       "MoveFolder": {
-        "Label": "Sposta Cartella",
         "Description": "Sposta una cartella",
+        "Label": "Sposta Cartella",
         "Fields": {
           "CreateSubfolder": "Crea Sottocartella",
           "CreateSubfolder-Help": "Se verrà creata una sottocartella con il nome della cartella sorgente nella cartella di destinazione.",
@@ -485,8 +484,8 @@
         }
       },
       "OlderThan": {
-        "Label": "Più Vecchio di",
         "Description": "Controlla se una cartella è più vecchia rispetto all'intervallo specificato",
+        "Label": "Più Vecchio di",
         "Fields": {
           "Date": "Data",
           "Number": "Numero",
@@ -498,15 +497,15 @@
         }
       },
       "OriginalFile": {
-        "Label": "File Originale",
         "Description": "Imposta il file di lavoro corrente nel flusso sul file originale che ha avviato il flusso",
+        "Label": "File Originale",
         "Outputs": {
           "1": "File di lavoro impostato su file originale"
         }
       },
       "PatternMatch": {
-        "Label": "Corrispondenza Modello",
         "Description": "Testa il file di lavoro e il file originale rispetto a un'espressione regolare.\n\nOutput 1: Corrisponde all'espressione\nOutput 2: Non corrisponde",
+        "Label": "Corrispondenza Modello",
         "Fields": {
           "Pattern": "Modello",
           "Pattern-Help": "Un'espressione regolare, utilizzando la specifica C# per le espressioni regolari."
@@ -559,8 +558,8 @@
         }
       },
       "Renamer": {
-        "Label": "Rinominatore",
         "Description": "Rinomina il file di lavoro.\nLe variabili possono essere utilizzate inserendo la chiave '{' all'interno del campo Pattern.",
+        "Label": "Rinominatore",
         "Fields": {
           "CsvFile": "File CSV",
           "CsvFile-Help": "Aggiungerà a questo file il nome originale e il nome rinominato. Utile quando si utilizza ''Solo Log'' per testare il rinominatore prima di modificare i file.",
@@ -576,8 +575,8 @@
         }
       },
       "ReplaceOriginal": {
-        "Label": "Sostituisci Originale",
         "Description": "Sostituisce il file originale con il file di lavoro.\n\nSe l'estensione del file di lavoro è diversa, il file originale verrà eliminato e il file di lavoro verrà spostato al file originale con la nuova estensione.\nAd esempio, da File.avi a File.mkv",
+        "Label": "Sostituisci Originale",
         "Fields": {
           "PreserverOriginalDates": "Preserva Date",
           "PreserverOriginalDates-Help": "Se il tempo di creazione originale e il tempo di ultima scrittura del file di input originale devono essere preservati."
@@ -587,8 +586,8 @@
         }
       },
       "Reprocess": {
-        "Label": "Rielabora",
         "Description": "L'elemento del flusso consente di rielaborare il file della libreria originale con un nodo di elaborazione diverso.\n\n Se viene selezionato lo stesso nodo di elaborazione di quello attualmente in elaborazione, il flusso non avrà successo.",
+        "Label": "Rielabora",
         "Fields": {
           "Node": "Nodo",
           "Node-Help": "Il nodo di elaborazione per elaborare questo file."
@@ -657,8 +656,8 @@
         }
       },
       "Sleep": {
-        "Label": "Pausa",
         "Description": "Pausa il flusso",
+        "Label": "Pausa",
         "Fields": {
           "Milliseconds": "Millisecondi",
           "Milliseconds-Help": "Per quanto tempo sospendere il flusso. Deve essere compreso tra 1 millisecondo e 1 ora."
@@ -668,8 +667,8 @@
         }
       },
       "Touch": {
-        "Label": "Tocca",
         "Description": "Modifica un file o una directory e imposta l'ultima ora di scrittura su ora.",
+        "Label": "Tocca",
         "Fields": {
           "FileName": "Nome File",
           "FileName-Help": "Nome completo del file o della cartella da toccare.\nSe lasciato vuoto, verrà utilizzato il file di lavoro."
@@ -679,8 +678,8 @@
         }
       },
       "Unpack": {
-        "Label": "Estrai",
         "Description": "Consente di estrarre un archivio (zip, rar, tar, ecc.)",
+        "Label": "Estrai",
         "Fields": {
           "DestinationPath": "Cartella di Destinazione",
           "DestinationPath-Help": "La cartella di destinazione in cui estrarre il file.",
@@ -692,8 +691,8 @@
         }
       },
       "VariableMatch": {
-        "Label": "Corrispondenza Variabile",
         "Description": "Controlla se un input corrisponde a una Variabile memorizzata.",
+        "Label": "Corrispondenza Variabile",
         "Fields": {
           "Input": "Valore",
           "Input-Help": "Il valore da confrontare con la variabile.",
@@ -708,8 +707,8 @@
         }
       },
       "WebRequest": {
-        "Label": "Richiesta Web",
         "Description": "Ti consente di inviare una richiesta web",
+        "Label": "Richiesta Web",
         "Fields": {
           "Body": "Corpo",
           "Body-Help": "Il corpo della richiesta inviata. Le variabili possono essere utilizzate in questo campo.",
@@ -730,8 +729,8 @@
         }
       },
       "WriteText": {
-        "Label": "Scrivi Testo",
         "Description": "Scrive testo in un file",
+        "Label": "Scrivi Testo",
         "Fields": {
           "File": "File",
           "File-Help": "Il file in cui scrivere il testo.",
@@ -743,8 +742,8 @@
         }
       },
       "Zip": {
-        "Label": "Zip",
         "Description": "Ti consente di comprimere l'input",
+        "Label": "Zip",
         "Fields": {
           "DestinationFile": "File di Destinazione",
           "DestinationFile-Help": "Il nome del file zip appena creato. Se lasciato vuoto, verrà utilizzato il nome dell'elemento come file zip.",

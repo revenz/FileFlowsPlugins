@@ -16,22 +16,22 @@
         }
       },
       "AudioFile": {
-        "Label": "Ljudfil",
         "Description": "En inmatningsljudfil som har läst sin ljudinformation och kan bearbetas",
+        "Label": "Ljudfil",
         "Outputs": {
           "1": "Ljudfil från bibliotek"
         }
       },
       "AudioFileNormalization": {
-        "Label": "Ljudfil Normalisering",
         "Description": "Normaliserar en ljudfil med hjälp av två pass av FFMPEG:s loudnorm-filter",
+        "Label": "Ljudfil Normalisering",
         "Outputs": {
           "1": "Ljudfil normaliserad och sparad i tillfällig fil"
         }
       },
       "ConvertAudio": {
-        "Label": "Konvertera ljud",
         "Description": "Konvertera en ljudfil till den specificerade ljudkodningen",
+        "Label": "Konvertera ljud",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "Bitrate för den nya filen, ju högre bitrate desto bättre kvalitet men större fil.",
@@ -56,8 +56,8 @@
         }
       },
       "ConvertToAAC": {
-        "Label": "Konvertera till AAC",
         "Description": "Konvertera en ljudfil till AAC",
+        "Label": "Konvertera till AAC",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "Bitrate för den nya AAC-filen, ju högre bitrate desto bättre kvalitet men större fil.  192 Kbps är den rekommenderade hastigheten.",
@@ -80,8 +80,8 @@
         }
       },
       "ConvertToFLAC": {
-        "Label": "Konvertera till FLAC",
         "Description": "Konvertera en ljudfil till FLAC",
+        "Label": "Konvertera till FLAC",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "Bitrate för den nya FLAC-filen, ju högre bitrate desto bättre kvalitet men större fil.  128 Kbps är den rekommenderade hastigheten.",
@@ -102,8 +102,8 @@
         }
       },
       "ConvertToMP3": {
-        "Label": "Konvertera till MP3",
         "Description": "Konvertera en ljudfil till MP3",
+        "Label": "Konvertera till MP3",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "Bitraten för den nya MP3-filen, ju högre bitrate desto bättre kvalitet men större fil. Rekommenderad hastighet är 192 Kbps.",
@@ -124,8 +124,8 @@
         }
       },
       "ConvertToOGG": {
-        "Label": "Konvertera till OGG",
         "Description": "Konvertera en ljudfil till OGG",
+        "Label": "Konvertera till OGG",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "Bitraten för den nya OGG-filen, ju högre bitrate desto bättre kvalitet men större fil. Rekommenderad hastighet är 128 Kbps.",
@@ -146,8 +146,8 @@
         }
       },
       "ConvertToWAV": {
-        "Label": "Konvertera till WAV",
         "Description": "Konvertera en ljudfil till WAV",
+        "Label": "Konvertera till WAV",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "Bitraten för den nya WAV-filen, ju högre bitrate desto bättre kvalitet men större fil. Rekommenderad hastighet är 128 Kbps.",
@@ -168,8 +168,8 @@
         }
       },
       "CreateAudioBook": {
-        "Label": "Skapa ljudbok",
         "Description": "Skapar en ljudbok från ljudfiler som finns i inmatningskatalogen",
+        "Label": "Skapa ljudbok",
         "Fields": {
           "DeleteSourceFiles": "Ta bort källfiler",
           "DeleteSourceFiles-Help": "När detta är aktiverat kommer källfilerna som utgör den nyss skapade m4b-filen att tas bort, annars kommer de att lämnas orörda.",
@@ -184,8 +184,8 @@
         }
       },
       "EmbedArtwork": {
-        "Label": "Bädda in omslagsbild",
         "Description": "Infogar omslagsbild i en ljudfil",
+        "Label": "Bädda in omslagsbild",
         "Outputs": {
           "1": "Omslagsbild hittad och infogad i ljudfilen",
           "2": "Ingen omslagsbild hittades för att infoga"

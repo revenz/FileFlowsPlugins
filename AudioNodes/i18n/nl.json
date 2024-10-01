@@ -16,22 +16,22 @@
         }
       },
       "AudioFile": {
-        "Label": "Audiobestand",
         "Description": "Een invoer audiobestand waarvan de audio-informatie is gelezen en dat kan worden verwerkt.",
+        "Label": "Audiobestand",
         "Outputs": {
           "1": "Audiobestand uit bibliotheek"
         }
       },
       "AudioFileNormalization": {
-        "Label": "Audiobestand normaliseren",
         "Description": "Normaliseert een audiobestand met behulp van twee passes van de loudnorm-filter van FFMPEG.",
+        "Label": "Audiobestand normaliseren",
         "Outputs": {
           "1": "Audiobestand genormaliseerd en opgeslagen in tijdelijk bestand"
         }
       },
       "ConvertAudio": {
-        "Label": "Converteer audio",
         "Description": "Converteer een audiobestand naar de opgegeven audio-codec",
+        "Label": "Converteer audio",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "De bitrate voor het nieuwe bestand; hoe hoger de bitrate, hoe beter de kwaliteit, maar groter het bestand.",
@@ -56,8 +56,8 @@
         }
       },
       "ConvertToAAC": {
-        "Label": "Converteer naar AAC",
         "Description": "Converteer een audiobestand naar AAC",
+        "Label": "Converteer naar AAC",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "De bitrate voor het nieuwe AAC-bestand; hoe hoger de bitrate, hoe beter de kwaliteit, maar groter het bestand.  192 Kbps is de aanbevolen waarde.",
@@ -80,8 +80,8 @@
         }
       },
       "ConvertToFLAC": {
-        "Label": "Converteer naar FLAC",
         "Description": "Converteer een audiobestand naar FLAC",
+        "Label": "Converteer naar FLAC",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "De bitrate voor het nieuwe FLAC-bestand, hoe hoger de bitrate, hoe beter de kwaliteit maar ook groter het bestand. 128 Kbps is de aanbevolen waarde.",
@@ -102,8 +102,8 @@
         }
       },
       "ConvertToMP3": {
-        "Label": "Converteer naar MP3",
         "Description": "Converteer een audiobestand naar MP3",
+        "Label": "Converteer naar MP3",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "De bitrate voor het nieuwe MP3-bestand, hoe hoger de bitrate, hoe beter de kwaliteit maar ook groter het bestand. 192 Kbps is de aanbevolen waarde.",
@@ -124,8 +124,8 @@
         }
       },
       "ConvertToOGG": {
-        "Label": "Converteer naar OGG",
         "Description": "Converteer een audiobestand naar OGG",
+        "Label": "Converteer naar OGG",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "De bitrate voor het nieuwe OGG-bestand, hoe hoger de bitrate, hoe beter de kwaliteit maar ook groter het bestand. 128 Kbps is de aanbevolen waarde.",
@@ -146,8 +146,8 @@
         }
       },
       "ConvertToWAV": {
-        "Label": "Converteer naar WAV",
         "Description": "Converteer een audiobestand naar WAV",
+        "Label": "Converteer naar WAV",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "De bitrate voor het nieuwe WAV-bestand, hoe hoger de bitrate, hoe beter de kwaliteit maar ook groter het bestand. 128 Kbps is de aanbevolen waarde.",
@@ -168,8 +168,8 @@
         }
       },
       "CreateAudioBook": {
-        "Label": "Audioboek maken",
         "Description": "Maakt een audioboek van audiobestanden die in de invoermap zijn gevonden",
+        "Label": "Audioboek maken",
         "Fields": {
           "DeleteSourceFiles": "Bronbestanden Verwijderen",
           "DeleteSourceFiles-Help": "Wanneer ingeschakeld, worden de bronbestanden die het nieuw gemaakte m4b-bestand vormen, verwijderd; anders blijven ze intact.",
@@ -184,8 +184,8 @@
         }
       },
       "EmbedArtwork": {
-        "Label": "Artwork insluiten",
         "Description": "Voegt artwork toe aan een audiobestand",
+        "Label": "Artwork insluiten",
         "Outputs": {
           "1": "Artwork gevonden en toegevoegd aan het audiobestand",
           "2": "Geen artwork gevonden om toe te voegen"

@@ -16,22 +16,22 @@
         }
       },
       "AudioFile": {
-        "Label": "Audio File",
         "Description": "An input Audio file that has had its Audio Information read and can be processed",
+        "Label": "Audio File",
         "Outputs": {
           "1": "Audio file from library"
         }
       },
       "AudioFileNormalization": {
-        "Label": "Audio File Normalization",
         "Description": "Normalizes an audio file using two passes of FFMPEGs loudnorm filter",
+        "Label": "Audio File Normalization",
         "Outputs": {
           "1": "Audio file normalized and saved to temporary file"
         }
       },
       "ConvertAudio": {
-        "Label": "Convert Audio",
         "Description": "Convert a Audio file to the specified audio codec",
+        "Label": "Convert Audio",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "The bitrate for the new file, the higher the bitrate the better the quality but larger the file.",
@@ -56,8 +56,8 @@
         }
       },
       "ConvertToAAC": {
-        "Label": "Convert To AAC",
         "Description": "Convert a Audio file to AAC",
+        "Label": "Convert To AAC",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "The bitrate for the new AAC file, the higher the bitrate the better the quality but larger the file.  192 Kbps is the recommended rate.",
@@ -80,8 +80,8 @@
         }
       },
       "ConvertToFLAC": {
-        "Label": "Convert To FLAC",
         "Description": "Convert a Audio file to FLAC",
+        "Label": "Convert To FLAC",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "The bitrate for the new FLAC file, the higher the bitrate the better the quality but larger the file.  128 Kbps is the recommended rate.",
@@ -102,8 +102,8 @@
         }
       },
       "ConvertToMP3": {
-        "Label": "Convert To MP3",
         "Description": "Convert a Audio file to MP3",
+        "Label": "Convert To MP3",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "The bitrate for the new MP3 file, the higher the bitrate the better the quality but larger the file.  192 Kbps is the recommended rate.",
@@ -124,8 +124,8 @@
         }
       },
       "ConvertToOGG": {
-        "Label": "Convert To OGG",
         "Description": "Convert a Audio file to OGG",
+        "Label": "Convert To OGG",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "The bitrate for the new OGG file, the higher the bitrate the better the quality but larger the file.  128 Kbps is the recommended rate.",
@@ -146,8 +146,8 @@
         }
       },
       "ConvertToWAV": {
-        "Label": "Convert To WAV",
         "Description": "Convert a Audio file to WAV",
+        "Label": "Convert To WAV",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "The bitrate for the new WAV file, the higher the bitrate the better the quality but larger the file.  128 Kbps is the recommended rate.",
@@ -168,8 +168,8 @@
         }
       },
       "CreateAudioBook": {
-        "Label": "Create Audio Book",
         "Description": "Creates a audio book from audio files found in input directory",
+        "Label": "Create Audio Book",
         "Fields": {
           "DeleteSourceFiles": "Delete Source Files",
           "DeleteSourceFiles-Help": "When enabled the source files that make up the newly created m4b file will be deleted, otherwise they will be left alone.",
@@ -184,8 +184,8 @@
         }
       },
       "EmbedArtwork": {
-        "Label": "EmbedArtwork",
         "Description": "Embeds artwork into an audio file",
+        "Label": "EmbedArtwork",
         "Outputs": {
           "1": "Artwork found and embedded into the audio file",
           "2": "No artwork found to embed"

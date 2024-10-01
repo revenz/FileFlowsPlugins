@@ -29,12 +29,12 @@
         }
       },
       "CompleteFlow": {
-        "Label": "Complete Flow",
-        "Description": "Completes/ends the flow as successful"
+        "Description": "Completes/ends the flow as successful",
+        "Label": "Complete Flow"
       },
       "CopyFile": {
-        "Label": "Copy File",
         "Description": "Copies a file to the destination folder",
+        "Label": "Copy File",
         "Fields": {
           "AdditionalFiles": "Additional Files",
           "AdditionalFiles-Help": "Additional files to copy from the directory to the new directory.\nEach value can contain a combination of valid literal path and wildcard (* and ?) characters, but it doesn''t support regular expressions.",
@@ -76,8 +76,8 @@
         }
       },
       "Delete": {
-        "Label": "Delete",
         "Description": "Deletes a file or folder",
+        "Label": "Delete",
         "Fields": {
           "FileName": "Path",
           "FileName-Help": "A path to either a file or folder to delete.\n\nIf left blank the current working file will be deleted."
@@ -103,8 +103,8 @@
         }
       },
       "Executor": {
-        "Label": "Executor",
         "Description": "Execute the following process against the file.\nOutput 1: The process returned the success exit code\nOutput 2: The process return a non-successful exit code.",
+        "Label": "Executor",
         "Fields": {
           "Arguments": "Arguments",
           "Arguments-Help": "The arguments to be passed to the process to execute",
@@ -128,16 +128,16 @@
         }
       },
       "FailFlow": {
-        "Label": "Fail Flow",
         "Description": "Fails a flow immediately, useful if you want a certain path to just fail.",
+        "Label": "Fail Flow",
         "Fields": {
           "Reason": "Reason",
           "Reason-Help": "An optional reason to record why the flow failed."
         }
       },
       "FileDateCompare": {
-        "Label": "File Date Compare",
         "Description": "Checks if the file creation or last write time matches the specified date constraint.",
+        "Label": "File Date Compare",
         "Fields": {
           "Date": "Date",
           "DateComparision": "Comparison",
@@ -150,8 +150,8 @@
         }
       },
       "FileExists": {
-        "Label": "File Exists",
         "Description": "Checks if a file exists\n\nOutput 1: File exists\nOutput 2: File does not exist",
+        "Label": "File Exists",
         "Fields": {
           "FileName": "File Name",
           "FileName-Help": "The file to check.  Leave empty to check the current working file."
@@ -162,8 +162,8 @@
         }
       },
       "FileExtension": {
-        "Label": "File Extension",
         "Description": "Checks if the file has one of the configured extensions.\n\nOutput 1: Matches\nOutput 2: Does not match",
+        "Label": "File Extension",
         "Fields": {
           "Extensions": "Extensions",
           "Extensions-Help": "A list of case insensitive file extensions that will be matched against.\nOutput 1 Matches\nOutput 2: Does not match"
@@ -174,8 +174,8 @@
         }
       },
       "FileSize": {
-        "Label": "File Size",
         "Description": "Checks if the file size matches the configured parameters. The values are in megabytes.\n\nOutput 1: Matches\nOutput 2: Does not match",
+        "Label": "File Size",
         "Fields": {
           "Comparison": "Comparison",
           "Lower": "Greater Than",
@@ -191,8 +191,8 @@
         }
       },
       "FileSizeCompare": {
-        "Label": "File Size Compare",
         "Description": "Checks if the file size has changed sized from the original file.",
+        "Label": "File Size Compare",
         "Outputs": {
           "1": "Smaller than original",
           "2": "Same size as original",
@@ -200,8 +200,8 @@
         }
       },
       "FileSizeWithin": {
-        "Label": "File Size Within",
         "Description": "Checks if the new file size is within the allowed range of the original file size.",
+        "Label": "File Size Within",
         "Fields": {
           "Value": "Value",
           "Value-Help": "The difference allowed for the file size, this value can be either plus or minus this difference."
@@ -226,8 +226,8 @@
         }
       },
       "FolderIterator": {
-        "Label": "Folder Iterator",
         "Description": "Iterates all files in a given folder and executes those files against a sub flow.",
+        "Label": "Folder Iterator",
         "Fields": {
           "Flow": "Flow",
           "Flow-Help": "The sub flow to execute the files against.",
@@ -265,8 +265,8 @@
         }
       },
       "GotoFlow": {
-        "Label": "Goto Flow",
         "Description": "This lets you switch to a different flow to process.  This flow will exit and the parameters and working file will be passed into the new Flow",
+        "Label": "Goto Flow",
         "Fields": {
           "Flow": "Flow",
           "UpdateFlowUsed": "Update Flow",
@@ -274,8 +274,8 @@
         }
       },
       "HasHardLinks": {
-        "Label": "Has Hard Links",
         "Description": "Checks if a file has hard links to it or not",
+        "Label": "Has Hard Links",
         "Fields": {
           "Count": "Count",
           "Count-Help": "The number of hard links required to call output 1.",
@@ -288,8 +288,8 @@
         }
       },
       "IfBoolean": {
-        "Label": "If Boolean",
         "Description": "Tests if a Variable is true or false",
+        "Label": "If Boolean",
         "Fields": {
           "Variable": "Variable",
           "Variable-Help": "The name of the variable to check"
@@ -300,8 +300,8 @@
         }
       },
       "IfString": {
-        "Label": "If String",
         "Description": "Tests if a Variable is matches a string",
+        "Label": "If String",
         "Fields": {
           "Options": "Options",
           "Options-Help": "The string to match against.",
@@ -324,30 +324,30 @@
         }
       },
       "InputFile": {
-        "Label": "Input File",
         "Description": "An input flow element for a file.  This is required and is the starting point of a flow.  Any input flow element can be used, just one is required.",
+        "Label": "Input File",
         "Outputs": {
           "1": "Library File"
         }
       },
       "InputFolder": {
-        "Label": "Input Folder",
         "Description": "An input flow element for a folder.  This will only work if the library using this flow is configured for folders.",
+        "Label": "Input Folder",
         "Outputs": {
           "1": "Library Folder"
         }
       },
       "IsDocker": {
-        "Label": "Is Docker",
         "Description": "Determines if this flow is running on Docker",
+        "Label": "Is Docker",
         "Outputs": {
           "1": "Is running on Docker",
           "2": "Is not running on Docker"
         }
       },
       "IsFromLibrary": {
-        "Label": "Is From Library",
         "Description": "Checks if the file that is processing is from the specified library.",
+        "Label": "Is From Library",
         "Fields": {
           "Library": "Library",
           "Library-Help": "The library to check."
@@ -358,8 +358,8 @@
         }
       },
       "IsLinux": {
-        "Label": "Is Linux",
         "Description": "Determines if this flow is running on Linux",
+        "Label": "Is Linux",
         "Outputs": {
           "1": "Is running on Linux",
           "2": "Is not running on Linux"
@@ -374,8 +374,8 @@
         }
       },
       "IsProcessingOnNode": {
-        "Label": "Is Processing On Node",
         "Description": "Checks if the flow is currently processing on a specified processing node.",
+        "Label": "Is Processing On Node",
         "Fields": {
           "Node": "Node",
           "Node-Help": "The processing node to check."
@@ -386,16 +386,16 @@
         }
       },
       "IsWindows": {
-        "Label": "Is Windows",
         "Description": "Determines if this flow is running on Windows",
+        "Label": "Is Windows",
         "Outputs": {
           "1": "Is running on Windows",
           "2": "Is not running on Windows"
         }
       },
       "ListIterator": {
-        "Label": "List Iterator",
         "Description": "Iterates all strings in a given list and executes those strings against a sub flow.",
+        "Label": "List Iterator",
         "Fields": {
           "Flow": "Flow",
           "Flow-Help": "The sub flow to execute the strings against.",
@@ -407,8 +407,8 @@
         }
       },
       "Log": {
-        "Label": "Log",
         "Description": "Logs a message to the flow log",
+        "Label": "Log",
         "Fields": {
           "LogType": "Type",
           "Message": "Message"
@@ -418,8 +418,8 @@
         }
       },
       "Matches": {
-        "Label": "Matches",
         "Description": "Compares a set of values and matches conditions to see which output should be called",
+        "Label": "Matches",
         "Fields": {
           "MatchConditions": "",
           "MatchConditions-Help": "The matches to test which output should be called.",
@@ -428,8 +428,8 @@
         }
       },
       "MatchesAll": {
-        "Label": "Matches All",
         "Description": "Compares a set of values and checks if all conditions match.",
+        "Label": "Matches All",
         "Fields": {
           "MatchConditions": "",
           "MatchConditionsHelp": "The conditions to test, determining which output should be called.",
@@ -442,8 +442,8 @@
         }
       },
       "MoveFile": {
-        "Label": "Move File",
         "Description": "Moves a file to the destination folder",
+        "Label": "Move File",
         "Fields": {
           "AdditionalFiles": "Additional Files",
           "AdditionalFiles-Help": "Additional files to move from the directory to the new directory.\nEach value can contain a combination of valid literal path and wildcard (* and ?) characters, but it doesn''t support regular expressions.",
@@ -469,8 +469,8 @@
         }
       },
       "MoveFolder": {
-        "Label": "Move Folder",
         "Description": "Moves a folder",
+        "Label": "Move Folder",
         "Fields": {
           "CreateSubfolder": "Create Subfolder",
           "CreateSubfolder-Help": "If a subfolder with the name of the source folder will be created in the destination folder.",
@@ -484,8 +484,8 @@
         }
       },
       "OlderThan": {
-        "Label": "Older Than",
         "Description": "Checks if a folder is older than the range specified",
+        "Label": "Older Than",
         "Fields": {
           "Date": "Date",
           "Number": "Number",
@@ -497,15 +497,15 @@
         }
       },
       "OriginalFile": {
-        "Label": "Original File",
         "Description": "Sets the current working file in the flow to the original file that started the flow",
+        "Label": "Original File",
         "Outputs": {
           "1": "Working file set to original file"
         }
       },
       "PatternMatch": {
-        "Label": "Pattern Match",
         "Description": "Tests the working file and original file against a regular expression.\n\nOutput 1: Matches expression\nOutput 2: Does not match",
+        "Label": "Pattern Match",
         "Fields": {
           "Pattern": "Pattern",
           "Pattern-Help": "A regular expression, using the C# specification for regular expressions."
@@ -558,8 +558,8 @@
         }
       },
       "Renamer": {
-        "Label": "Renamer",
         "Description": "Renames the working file.\nVariables can be used by entering the key '{' inside the Pattern field.",
+        "Label": "Renamer",
         "Fields": {
           "CsvFile": "CSV File",
           "CsvFile-Help": "Will append to this file the original name and the renamed file.  Useful when using ''Log Only'' to test the renamer before changing files.",
@@ -575,8 +575,8 @@
         }
       },
       "ReplaceOriginal": {
-        "Label": "Replace Original",
         "Description": "Replaces the original file with the working file.\n\nIf the extension is different on the working file, the original file will be deleted and the working file will be moved to the original with the new extension.\nE.g. from File.avi to File.mkv",
+        "Label": "Replace Original",
         "Fields": {
           "PreserverOriginalDates": "Preserve Dates",
           "PreserverOriginalDates-Help": "If the original creation time and last write time of the original input file should be preserved."
@@ -586,8 +586,8 @@
         }
       },
       "Reprocess": {
-        "Label": "Reprocess",
         "Description": "The flow element allows you to reprocess the original library file with a different processing node.\n\n If the same processing node is selected as the one currently processing the file, the flow will fail.",
+        "Label": "Reprocess",
         "Fields": {
           "Node": "Node",
           "Node-Help": "The processing node to process this file."
@@ -656,8 +656,8 @@
         }
       },
       "Sleep": {
-        "Label": "Sleep",
         "Description": "Pauses the flow",
+        "Label": "Sleep",
         "Fields": {
           "Milliseconds": "Milliseconds",
           "Milliseconds-Help": "How long to sleep the flow for.  Must be between 1 millisecond and 1 hour"
@@ -667,8 +667,8 @@
         }
       },
       "Touch": {
-        "Label": "Touch",
         "Description": "Touches a file or directory and sets the last write time to now.",
+        "Label": "Touch",
         "Fields": {
           "FileName": "File Name",
           "FileName-Help": "Full filename of file or folder to touch.\nIf left blank the working file will be used."
@@ -678,8 +678,8 @@
         }
       },
       "Unpack": {
-        "Label": "Unpack",
         "Description": "Allows you to unpack an archive (zip, rar, tar, etc)",
+        "Label": "Unpack",
         "Fields": {
           "DestinationPath": "Destination Folder",
           "DestinationPath-Help": "The destination folder where to unpack the file.",
@@ -691,8 +691,8 @@
         }
       },
       "VariableMatch": {
-        "Label": "Variable Match",
         "Description": "Tests if a input matches a stored Variable",
+        "Label": "Variable Match",
         "Fields": {
           "Input": "Value",
           "Input-Help": "The value to match the variable against.",
@@ -707,8 +707,8 @@
         }
       },
       "WebRequest": {
-        "Label": "Web Request",
         "Description": "Allows you to send a web request",
+        "Label": "Web Request",
         "Fields": {
           "Body": "Body",
           "Body-Help": "The body of the request being sent.  Variables can be used in this field.",
@@ -729,8 +729,8 @@
         }
       },
       "WriteText": {
-        "Label": "Write Text",
         "Description": "Writes text to a file",
+        "Label": "Write Text",
         "Fields": {
           "File": "File",
           "File-Help": "The file to write the text to.",
@@ -742,8 +742,8 @@
         }
       },
       "Zip": {
-        "Label": "Zip",
         "Description": "Allows you to zip the input",
+        "Label": "Zip",
         "Fields": {
           "DestinationFile": "Destination File",
           "DestinationFile-Help": "The filename of the newly created zip.  If blank, the name of the item will be used as the zip file.",

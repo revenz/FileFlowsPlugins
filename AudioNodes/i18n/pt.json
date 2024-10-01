@@ -16,22 +16,22 @@
         }
       },
       "AudioFile": {
-        "Label": "Arquivo de áudio",
         "Description": "Um arquivo de entrada para o áudio cujas informações de áudio foram lidas e podem ser processadas.",
+        "Label": "Arquivo de áudio",
         "Outputs": {
           "1": "Arquivo de áudio da biblioteca"
         }
       },
       "AudioFileNormalization": {
-        "Label": "Normalização de arquivo de áudio",
         "Description": "Normaliza um arquivo de áudio com duas passagens do filtro loudnorm do FFMPEG.",
+        "Label": "Normalização de arquivo de áudio",
         "Outputs": {
           "1": "Arquivo de áudio normalizado, salvo em um arquivo temporário"
         }
       },
       "ConvertAudio": {
-        "Label": "Converter áudio",
         "Description": "Converte um arquivo de áudio para o formato de áudio especificado.",
+        "Label": "Converter áudio",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "O bitrate para o novo arquivo, quanto maior o bitrate, melhor a qualidade, mas maior o arquivo.",
@@ -56,8 +56,8 @@
         }
       },
       "ConvertToAAC": {
-        "Label": "Converter para AAC",
         "Description": "Converte um arquivo de áudio para AAC.",
+        "Label": "Converter para AAC",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "O bitrate para o novo arquivo AAC, quanto maior o bitrate, melhor a qualidade, mas maior o arquivo. 192 Kbps é recomendado.",
@@ -80,8 +80,8 @@
         }
       },
       "ConvertToFLAC": {
-        "Label": "Converter para FLAC",
         "Description": "Converte um arquivo de áudio para FLAC.",
+        "Label": "Converter para FLAC",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "O bitrate para o novo arquivo FLAC, quanto maior o bitrate, melhor a qualidade, mas maior o arquivo. 128 Kbps é recomendado.",
@@ -102,8 +102,8 @@
         }
       },
       "ConvertToMP3": {
-        "Label": "Converter para MP3",
         "Description": "Converte um arquivo de áudio para MP3.",
+        "Label": "Converter para MP3",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "O bitrate para o novo arquivo MP3, quanto maior o bitrate, melhor a qualidade, mas maior o arquivo. 192 Kbps é recomendado.",
@@ -124,8 +124,8 @@
         }
       },
       "ConvertToOGG": {
-        "Label": "Converter para OGG",
         "Description": "Converte um arquivo de áudio para OGG.",
+        "Label": "Converter para OGG",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "O bitrate para o novo arquivo OGG, quanto maior o bitrate, melhor a qualidade, mas maior o arquivo. 192 Kbps é recomendado.",
@@ -146,8 +146,8 @@
         }
       },
       "ConvertToWAV": {
-        "Label": "Converter para WAV",
         "Description": "Converte um arquivo de áudio para WAV.",
+        "Label": "Converter para WAV",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "O bitrate para o novo arquivo WAV, quanto maior o bitrate, melhor a qualidade, mas maior o arquivo. 128 Kbps é recomendado.",
@@ -168,8 +168,8 @@
         }
       },
       "CreateAudioBook": {
-        "Label": "Criar audiolivro",
         "Description": "Cria um audiolivro a partir de arquivos de áudio encontrados no diretório de entrada",
+        "Label": "Criar audiolivro",
         "Fields": {
           "DeleteSourceFiles": "Excluir arquivos de origem",
           "DeleteSourceFiles-Help": "Quando ativado, os arquivos de origem que compõem o novo arquivo m4b serão excluídos; caso contrário, eles permanecerão intactos.",
@@ -184,8 +184,8 @@
         }
       },
       "EmbedArtwork": {
-        "Label": "Incorporar arte",
         "Description": "Incorpora arte em um arquivo de áudio",
+        "Label": "Incorporar arte",
         "Outputs": {
           "1": "Arte encontrada e incorporada no arquivo de áudio",
           "2": "Nenhuma arte encontrada para incorporar"

@@ -29,12 +29,12 @@
         }
       },
       "CompleteFlow": {
-        "Label": "Voltooi Flow",
-        "Description": "Voltooit/eindigt de flow als succesvol"
+        "Description": "Voltooit/eindigt de flow als succesvol",
+        "Label": "Voltooi Flow"
       },
       "CopyFile": {
-        "Label": "Kopieer Bestand",
         "Description": "Kopieert een bestand naar de bestemmingsmap",
+        "Label": "Kopieer Bestand",
         "Fields": {
           "AdditionalFiles": "Extra Bestanden",
           "AdditionalFiles-Help": "Extra bestanden om van de directory naar de nieuwe directory te kopiëren.\nElke waarde kan een combinatie van geldige letterlijke paden en jokertekens (* en ?) bevatten, maar ondersteunt geen reguliere expressies.",
@@ -76,8 +76,8 @@
         }
       },
       "Delete": {
-        "Label": "Verwijder",
         "Description": "Verwijdert een bestand of map",
+        "Label": "Verwijder",
         "Fields": {
           "FileName": "Pad",
           "FileName-Help": "Een pad naar een bestand of map om te verwijderen.\n\nAls het leeg is, wordt het huidige werkbestand verwijderd."
@@ -103,8 +103,8 @@
         }
       },
       "Executor": {
-        "Label": "Uitvoerder",
         "Description": "Voert het volgende proces uit tegen het bestand.\nOutput 1: Het proces heeft de succesvolle exitcode geretourneerd\nOutput 2: Het proces heeft een niet-succesvolle exitcode geretourneerd.",
+        "Label": "Uitvoerder",
         "Fields": {
           "Arguments": "Argumenten",
           "Arguments-Help": "De argumenten die aan het uit te voeren proces moeten worden doorgegeven",
@@ -128,16 +128,16 @@
         }
       },
       "FailFlow": {
-        "Label": "Flow falen",
         "Description": "Laat een flow onmiddellijk falen, nuttig als je wilt dat een bepaald pad gewoon faalt.",
+        "Label": "Flow falen",
         "Fields": {
           "Reason": "Reden",
           "Reason-Help": "Een optionele reden om te registreren waarom de flow is mislukt."
         }
       },
       "FileDateCompare": {
-        "Label": "Bestandsdatumvergelijking",
         "Description": "Controleert of de creatiedatum of de laatste schrijftijd van het bestand overeenkomt met de gespecificeerde datumrestrictie.",
+        "Label": "Bestandsdatumvergelijking",
         "Fields": {
           "Date": "Datum",
           "DateComparision": "Vergelijking",
@@ -150,8 +150,8 @@
         }
       },
       "FileExists": {
-        "Label": "Bestand bestaat",
         "Description": "Controleert of een bestand bestaat\n\nOutput 1: Bestand bestaat\nOutput 2: Bestand bestaat niet",
+        "Label": "Bestand bestaat",
         "Fields": {
           "FileName": "Bestandsnaam",
           "FileName-Help": "Het bestand dat gecontroleerd moet worden. Laat leeg om het huidige werkbestand te controleren."
@@ -162,8 +162,8 @@
         }
       },
       "FileExtension": {
-        "Label": "Bestandsextensie",
         "Description": "Controleert of het bestand een van de geconfigureerde extensies heeft.\n\nOutput 1: Komt overeen\nOutput 2: Komt niet overeen",
+        "Label": "Bestandsextensie",
         "Fields": {
           "Extensions": "Extensies",
           "Extensions-Help": "Een lijst van ongevoelige bestandsextensies die tegen elkaar worden vergeleken.\nOutput 1: Komt overeen\nOutput 2: Komt niet overeen"
@@ -174,8 +174,8 @@
         }
       },
       "FileSize": {
-        "Label": "Bestandsgrootte",
         "Description": "Controleert of de bestandsgrootte overeenkomt met de geconfigureerde parameters. De waarden zijn in megabytes.\n\nOutput 1: Komt overeen\nOutput 2: Komt niet overeen",
+        "Label": "Bestandsgrootte",
         "Fields": {
           "Comparison": "Vergelijking",
           "Lower": "Groter dan",
@@ -191,8 +191,8 @@
         }
       },
       "FileSizeCompare": {
-        "Label": "Bestandsgroottevergelijking",
         "Description": "Controleert of de bestandsgrootte is veranderd ten opzichte van het originele bestand.",
+        "Label": "Bestandsgroottevergelijking",
         "Outputs": {
           "1": "Kleiner dan origineel",
           "2": "Zelfde grootte als origineel",
@@ -200,8 +200,8 @@
         }
       },
       "FileSizeWithin": {
-        "Label": "Bestandsgrootte binnen",
         "Description": "Controleert of de nieuwe bestandsgrootte binnen het toegestane bereik van de originele bestandsgrootte valt.",
+        "Label": "Bestandsgrootte binnen",
         "Fields": {
           "Value": "Waarde",
           "Value-Help": "Het toegestane verschil voor de bestandsgrootte; deze waarde kan zowel plus als min dit verschil zijn."
@@ -226,8 +226,8 @@
         }
       },
       "FolderIterator": {
-        "Label": "Map Iterator",
         "Description": "Itereert over alle bestanden in een opgegeven map en voert die bestanden uit tegen een subflow.",
+        "Label": "Map Iterator",
         "Fields": {
           "Flow": "Flow",
           "Flow-Help": "De subflow waarop de bestanden worden uitgevoerd.",
@@ -265,8 +265,8 @@
         }
       },
       "GotoFlow": {
-        "Label": "Ga naar Flow",
         "Description": "Dit stelt je in staat om over te schakelen naar een andere flow om te verwerken. Deze flow zal afsluiten en de parameters en het werkbestand worden doorgegeven aan de nieuwe Flow.",
+        "Label": "Ga naar Flow",
         "Fields": {
           "Flow": "Flow",
           "UpdateFlowUsed": "Update Flow",
@@ -274,8 +274,8 @@
         }
       },
       "HasHardLinks": {
-        "Label": "Heeft harde koppelingen",
         "Description": "Controleert of een bestand harde koppelingen heeft of niet",
+        "Label": "Heeft harde koppelingen",
         "Fields": {
           "Count": "Aantal",
           "Count-Help": "Het aantal harde koppelingen dat nodig is om output 1 aan te roepen.",
@@ -288,8 +288,8 @@
         }
       },
       "IfBoolean": {
-        "Label": "Als Booleaans",
         "Description": "Test of een variabele waar of niet waar is",
+        "Label": "Als Booleaans",
         "Fields": {
           "Variable": "Variabele",
           "Variable-Help": "De naam van de variabele om te controleren"
@@ -300,8 +300,8 @@
         }
       },
       "IfString": {
-        "Label": "Als String",
         "Description": "Test of een variabele overeenkomt met een string",
+        "Label": "Als String",
         "Fields": {
           "Options": "Opties",
           "Options-Help": "De string om mee te vergelijken.",
@@ -324,30 +324,30 @@
         }
       },
       "InputFile": {
-        "Label": "Invoerbestand",
         "Description": "Een invoerflow-element voor een bestand. Dit is verplicht en is het startpunt van een flow. Elk invoerflow-element kan worden gebruikt, maar er is er minstens één nodig.",
+        "Label": "Invoerbestand",
         "Outputs": {
           "1": "Bibliotheekbestand"
         }
       },
       "InputFolder": {
-        "Label": "Invoermap",
         "Description": "Een invoerflow-element voor een map. Dit werkt alleen als de bibliotheek die deze flow gebruikt, is geconfigureerd voor mappen.",
+        "Label": "Invoermap",
         "Outputs": {
           "1": "Bibliotheekmap"
         }
       },
       "IsDocker": {
-        "Label": "Is Docker",
         "Description": "Bepaalt of deze flow op Docker draait",
+        "Label": "Is Docker",
         "Outputs": {
           "1": "Draait op Docker",
           "2": "Draait niet op Docker"
         }
       },
       "IsFromLibrary": {
-        "Label": "Is van bibliotheek",
         "Description": "Controleert of het bestand dat wordt verwerkt uit de opgegeven bibliotheek komt.",
+        "Label": "Is van bibliotheek",
         "Fields": {
           "Library": "Bibliotheek",
           "Library-Help": "De bibliotheek die gecontroleerd moet worden."
@@ -358,8 +358,8 @@
         }
       },
       "IsLinux": {
-        "Label": "Is Linux",
         "Description": "Bepaalt of deze flow op Linux draait",
+        "Label": "Is Linux",
         "Outputs": {
           "1": "Draait op Linux",
           "2": "Draait niet op Linux"
@@ -374,8 +374,8 @@
         }
       },
       "IsProcessingOnNode": {
-        "Label": "Is aan het verwerken op node",
         "Description": "Controleert of de flow momenteel op een opgegeven verwerkingsnode aan het verwerken is.",
+        "Label": "Is aan het verwerken op node",
         "Fields": {
           "Node": "Node",
           "Node-Help": "De verwerkingsnode om te controleren."
@@ -386,16 +386,16 @@
         }
       },
       "IsWindows": {
-        "Label": "Is Windows",
         "Description": "Bepaalt of deze flow op Windows draait",
+        "Label": "Is Windows",
         "Outputs": {
           "1": "Draait op Windows",
           "2": "Draait niet op Windows"
         }
       },
       "ListIterator": {
-        "Label": "Lijst Iterator",
         "Description": "Itereert door alle strings in een gegeven lijst en voert die strings uit tegen een subflow.",
+        "Label": "Lijst Iterator",
         "Fields": {
           "Flow": "Flow",
           "Flow-Help": "De subflow waartegen de strings moeten worden uitgevoerd.",
@@ -407,8 +407,8 @@
         }
       },
       "Log": {
-        "Label": "Log",
         "Description": "Logt een bericht naar het flow-logboek",
+        "Label": "Log",
         "Fields": {
           "LogType": "Type",
           "Message": "Bericht"
@@ -418,8 +418,8 @@
         }
       },
       "Matches": {
-        "Label": "Matches",
         "Description": "Vergelijkt een set waarden en matcht voorwaarden om te zien welke output moet worden aangeroepen",
+        "Label": "Matches",
         "Fields": {
           "MatchConditions": "",
           "MatchConditions-Help": "De overeenkomsten om te testen welke output moet worden aangeroepen.",
@@ -428,8 +428,8 @@
         }
       },
       "MatchesAll": {
-        "Label": "Matches All",
         "Description": "Vergelijkt een set waarden en controleert of aan alle voorwaarden is voldaan.",
+        "Label": "Matches All",
         "Fields": {
           "MatchConditions": "",
           "MatchConditionsHelp": "De voorwaarden om te testen, waarmee wordt bepaald welke output moet worden aangeroepen.",
@@ -442,8 +442,8 @@
         }
       },
       "MoveFile": {
-        "Label": "Verplaats bestand",
         "Description": "Verplaatst een bestand naar de bestemmingsmap",
+        "Label": "Verplaats bestand",
         "Fields": {
           "AdditionalFiles": "Aanvullende Bestanden",
           "AdditionalFiles-Help": "Aanvullende bestanden die van de directory naar de nieuwe directory moeten worden verplaatst.\nElk waarde kan een combinatie van een geldig letterlijk pad en wildcard (* en ?) bevatten, maar ondersteunt geen reguliere expressies.",
@@ -469,8 +469,8 @@
         }
       },
       "MoveFolder": {
-        "Label": "Verplaats map",
         "Description": "Verplaatst een map",
+        "Label": "Verplaats map",
         "Fields": {
           "CreateSubfolder": "Maak Submap",
           "CreateSubfolder-Help": "Of er een submap met de naam van de bronmap in de bestemmingsmap moet worden gemaakt.",
@@ -484,8 +484,8 @@
         }
       },
       "OlderThan": {
-        "Label": "Ouder dan",
         "Description": "Controleert of een map ouder is dan het opgegeven bereik",
+        "Label": "Ouder dan",
         "Fields": {
           "Date": "Datum",
           "Number": "Nummer",
@@ -497,15 +497,15 @@
         }
       },
       "OriginalFile": {
-        "Label": "Origineel bestand",
         "Description": "Stelt het huidige werkbestand in de flow in op het oorspronkelijke bestand dat de flow heeft gestart",
+        "Label": "Origineel bestand",
         "Outputs": {
           "1": "Werkbestand ingesteld op origineel bestand"
         }
       },
       "PatternMatch": {
-        "Label": "Patroonmatch",
         "Description": "Test het werkbestand en het oorspronkelijke bestand tegen een reguliere expressie.\n\nOutput 1: Komt overeen met de expressie\nOutput 2: Komt niet overeen",
+        "Label": "Patroonmatch",
         "Fields": {
           "Pattern": "Patroon",
           "Pattern-Help": "Een reguliere expressie, volgens de C# specificatie voor reguliere expressies."
@@ -558,8 +558,8 @@
         }
       },
       "Renamer": {
-        "Label": "Hernoemer",
         "Description": "Hernoemt het werkbestand.\nVariabelen kunnen worden gebruikt door '{' in het patroonveld in te voeren.",
+        "Label": "Hernoemer",
         "Fields": {
           "CsvFile": "CSV-bestand",
           "CsvFile-Help": "Voegt de originele naam en de hernoemde naam aan dit bestand toe. Handig als je 'Log Only' gebruikt om de hernoemer te testen voordat je de bestanden wijzigt.",
@@ -575,8 +575,8 @@
         }
       },
       "ReplaceOriginal": {
-        "Label": "Vervang origineel",
         "Description": "Vervangt het originele bestand met het werkbestand.\n\nAls de bestandsextensie van het werkbestand anders is, wordt het originele bestand verwijderd en wordt het werkbestand verplaatst naar het originele bestand met de nieuwe extensie.\nBijvoorbeeld, van File.avi naar File.mkv",
+        "Label": "Vervang origineel",
         "Fields": {
           "PreserverOriginalDates": "Bewaar Data",
           "PreserverOriginalDates-Help": "Of de originele aanmaakdatum en de laatste wijzigingsdatum van het invoerbestand behouden moeten blijven."
@@ -586,8 +586,8 @@
         }
       },
       "Reprocess": {
-        "Label": "Herproces",
         "Description": "Dit stroomelement maakt het mogelijk om het originele bibliotheekbestand opnieuw te verwerken met een andere verwerkingsnode.\n\nAls dezelfde verwerkingsnode wordt geselecteerd als die momenteel in verwerking is, zal de stroom mislukken.",
+        "Label": "Herproces",
         "Fields": {
           "Node": "Node",
           "Node-Help": "De verwerkingsnode voor het verwerken van dit bestand."
@@ -656,8 +656,8 @@
         }
       },
       "Sleep": {
-        "Label": "Slaap",
         "Description": "Pauzeert de stroom",
+        "Label": "Slaap",
         "Fields": {
           "Milliseconds": "Milliseconden",
           "Milliseconds-Help": "Hoe lang de stroom moet pauzeren. Moet tussen 1 milliseconde en 1 uur liggen."
@@ -667,8 +667,8 @@
         }
       },
       "Touch": {
-        "Label": "Aanraken",
         "Description": "Raakt een bestand of map aan en stelt de laatste schrijftijd in op nu.",
+        "Label": "Aanraken",
         "Fields": {
           "FileName": "Bestandsnaam",
           "FileName-Help": "Volledige bestandsnaam van het bestand of de map om aan te raken.\nAls leeg gelaten, wordt het werkbestand gebruikt."
@@ -678,8 +678,8 @@
         }
       },
       "Unpack": {
-        "Label": "Uitpakken",
         "Description": "Staat je toe om een archief (zip, rar, tar, enz.) uit te pakken.",
+        "Label": "Uitpakken",
         "Fields": {
           "DestinationPath": "Bestemmingsmap",
           "DestinationPath-Help": "De bestemmingsmap waar het bestand moet worden uitgepakt.",
@@ -691,8 +691,8 @@
         }
       },
       "VariableMatch": {
-        "Label": "Variabele Match",
         "Description": "Test of een invoer overeenkomt met een opgeslagen Variabele.",
+        "Label": "Variabele Match",
         "Fields": {
           "Input": "Waarde",
           "Input-Help": "De waarde waarmee de variabele moet worden vergeleken.",
@@ -707,8 +707,8 @@
         }
       },
       "WebRequest": {
-        "Label": "Webverzoek",
         "Description": "Stelt je in staat om een webverzoek te verzenden",
+        "Label": "Webverzoek",
         "Fields": {
           "Body": "Lichaam",
           "Body-Help": "Het lichaam van het verzonden verzoek. Variabelen kunnen in dit veld worden gebruikt.",
@@ -729,8 +729,8 @@
         }
       },
       "WriteText": {
-        "Label": "Schrijf tekst",
         "Description": "Schrijft tekst naar een bestand",
+        "Label": "Schrijf tekst",
         "Fields": {
           "File": "Bestand",
           "File-Help": "Het bestand waar de tekst naartoe moet worden geschreven.",
@@ -742,8 +742,8 @@
         }
       },
       "Zip": {
-        "Label": "Zip",
         "Description": "Stelt je in staat om de invoer te zippen",
+        "Label": "Zip",
         "Fields": {
           "DestinationFile": "Bestand van bestemming",
           "DestinationFile-Help": "De bestandsnaam van de nieuw aangemaakte zip. Als dit leeg is, wordt de naam van het item als zip-bestand gebruikt.",

@@ -29,12 +29,12 @@
         }
       },
       "CompleteFlow": {
-        "Label": "完成流程",
-        "Description": "成功完成/结束流程"
+        "Description": "成功完成/结束流程",
+        "Label": "完成流程"
       },
       "CopyFile": {
-        "Label": "复制文件",
         "Description": "将文件复制到目标文件夹",
+        "Label": "复制文件",
         "Fields": {
           "AdditionalFiles": "附加文件",
           "AdditionalFiles-Help": "从目录复制到新目录的附加文件。\n每个值可以包含有效的字面路径和通配符（* 和 ?）字符的组合，但不支持正则表达式。",
@@ -76,8 +76,8 @@
         }
       },
       "Delete": {
-        "Label": "删除",
         "Description": "删除文件或文件夹",
+        "Label": "删除",
         "Fields": {
           "FileName": "路径",
           "FileName-Help": "要删除的文件或文件夹的路径。\n\n如果留空，将删除当前工作文件。"
@@ -103,8 +103,8 @@
         }
       },
       "Executor": {
-        "Label": "执行器",
         "Description": "对文件执行以下过程。\n输出 1: 进程返回成功退出代码\n输出 2: 进程返回非成功退出代码。",
+        "Label": "执行器",
         "Fields": {
           "Arguments": "参数",
           "Arguments-Help": "要传递给要执行的进程的参数",
@@ -128,16 +128,16 @@
         }
       },
       "FailFlow": {
-        "Label": "流失败",
         "Description": "立即使流失败，如果您希望某个特定路径只是失败，则很有用。",
+        "Label": "流失败",
         "Fields": {
           "Reason": "原因",
           "Reason-Help": "一个可选的原因，用于记录流失败的原因。"
         }
       },
       "FileDateCompare": {
-        "Label": "文件日期比较",
         "Description": "检查文件创建时间或最后写入时间是否符合指定的日期约束。",
+        "Label": "文件日期比较",
         "Fields": {
           "Date": "日期",
           "DateComparision": "比较",
@@ -150,8 +150,8 @@
         }
       },
       "FileExists": {
-        "Label": "文件存在",
         "Description": "检查文件是否存在\n\n输出 1: 文件存在\n输出 2: 文件不存在",
+        "Label": "文件存在",
         "Fields": {
           "FileName": "文件名",
           "FileName-Help": "要检查的文件。如果留空，则检查当前工作文件。"
@@ -162,8 +162,8 @@
         }
       },
       "FileExtension": {
-        "Label": "文件扩展名",
         "Description": "检查文件是否具有配置的扩展名之一。\n\n输出 1: 匹配\n输出 2: 不匹配",
+        "Label": "文件扩展名",
         "Fields": {
           "Extensions": "扩展名",
           "Extensions-Help": "一个不区分大小写的文件扩展名列表，将与之进行匹配。\n输出 1: 匹配\n输出 2: 不匹配"
@@ -174,8 +174,8 @@
         }
       },
       "FileSize": {
-        "Label": "文件大小",
         "Description": "检查文件大小是否与配置的参数匹配。值以兆字节为单位。\n\n输出 1: 匹配\n输出 2: 不匹配",
+        "Label": "文件大小",
         "Fields": {
           "Comparison": "比较",
           "Lower": "大于",
@@ -191,8 +191,8 @@
         }
       },
       "FileSizeCompare": {
-        "Label": "文件大小比较",
         "Description": "检查文件大小是否与原始文件发生了变化。",
+        "Label": "文件大小比较",
         "Outputs": {
           "1": "小于原始",
           "2": "与原始相同",
@@ -200,8 +200,8 @@
         }
       },
       "FileSizeWithin": {
-        "Label": "文件大小在范围内",
         "Description": "检查新的文件大小是否在原始文件大小的允许范围内。",
+        "Label": "文件大小在范围内",
         "Fields": {
           "Value": "值",
           "Value-Help": "文件大小允许的差异，这个值可以是加上或减去这个差异。"
@@ -226,8 +226,8 @@
         }
       },
       "FolderIterator": {
-        "Label": "文件夹迭代器",
         "Description": "迭代给定文件夹中的所有文件，并对这些文件执行子流程。",
+        "Label": "文件夹迭代器",
         "Fields": {
           "Flow": "流程",
           "Flow-Help": "要执行文件的子流程。",
@@ -265,8 +265,8 @@
         }
       },
       "GotoFlow": {
-        "Label": "转到流程",
         "Description": "这使您能够切换到另一个流程进行处理。此流程将结束，参数和工作文件将转移到新的流程中。",
+        "Label": "转到流程",
         "Fields": {
           "Flow": "流程",
           "UpdateFlowUsed": "更新流程",
@@ -274,8 +274,8 @@
         }
       },
       "HasHardLinks": {
-        "Label": "有硬链接",
         "Description": "检查文件是否有硬链接",
+        "Label": "有硬链接",
         "Fields": {
           "Count": "计数",
           "Count-Help": "调用输出 1 所需的硬链接数量。",
@@ -288,8 +288,8 @@
         }
       },
       "IfBoolean": {
-        "Label": "如果布尔值",
         "Description": "检查变量是否为真或假",
+        "Label": "如果布尔值",
         "Fields": {
           "Variable": "变量",
           "Variable-Help": "要检查的变量名称"
@@ -300,8 +300,8 @@
         }
       },
       "IfString": {
-        "Label": "如果字符串",
         "Description": "测试变量是否与字符串匹配",
+        "Label": "如果字符串",
         "Fields": {
           "Options": "选项",
           "Options-Help": "要匹配的字符串。",
@@ -324,30 +324,30 @@
         }
       },
       "InputFile": {
-        "Label": "输入文件",
         "Description": "文件的输入流元素。 这是必需的，是流的起点。可以使用任何输入流元素，但至少需要一个。",
+        "Label": "输入文件",
         "Outputs": {
           "1": "库文件"
         }
       },
       "InputFolder": {
-        "Label": "输入文件夹",
         "Description": "文件夹的输入流元素。只有当使用此流的库配置为文件夹时，这才有效。",
+        "Label": "输入文件夹",
         "Outputs": {
           "1": "库文件夹"
         }
       },
       "IsDocker": {
-        "Label": "是 Docker",
         "Description": "确定此流是否在 Docker 上运行",
+        "Label": "是 Docker",
         "Outputs": {
           "1": "在 Docker 上运行",
           "2": "未在 Docker 上运行"
         }
       },
       "IsFromLibrary": {
-        "Label": "来自库",
         "Description": "检查正在处理的文件是否来自指定的库。",
+        "Label": "来自库",
         "Fields": {
           "Library": "库",
           "Library-Help": "要检查的库。"
@@ -358,8 +358,8 @@
         }
       },
       "IsLinux": {
-        "Label": "是 Linux",
         "Description": "确定此流是否在 Linux 上运行",
+        "Label": "是 Linux",
         "Outputs": {
           "1": "在 Linux 上运行",
           "2": "未在 Linux 上运行"
@@ -374,8 +374,8 @@
         }
       },
       "IsProcessingOnNode": {
-        "Label": "正在节点上处理",
         "Description": "检查流程是否正在指定的处理节点上处理。",
+        "Label": "正在节点上处理",
         "Fields": {
           "Node": "节点",
           "Node-Help": "要检查的处理节点。"
@@ -386,16 +386,16 @@
         }
       },
       "IsWindows": {
-        "Label": "是 Windows",
         "Description": "确定此流程是否在Windows上运行",
+        "Label": "是 Windows",
         "Outputs": {
           "1": "正在Windows上运行",
           "2": "未在Windows上运行"
         }
       },
       "ListIterator": {
-        "Label": "列表迭代器",
         "Description": "遍历给定列表中的所有字符串，并在子流程中执行这些字符串。",
+        "Label": "列表迭代器",
         "Fields": {
           "Flow": "流程",
           "Flow-Help": "将字符串执行的子流程。",
@@ -407,8 +407,8 @@
         }
       },
       "Log": {
-        "Label": "日志",
         "Description": "将消息记录到流程日志",
+        "Label": "日志",
         "Fields": {
           "LogType": "类型",
           "Message": "消息"
@@ -418,8 +418,8 @@
         }
       },
       "Matches": {
-        "Label": "匹配",
         "Description": "比较一组值并匹配条件，以查看应该调用哪个输出",
+        "Label": "匹配",
         "Fields": {
           "MatchConditions": "",
           "MatchConditions-Help": "要测试的匹配项，以查看应该调用哪个输出。",
@@ -428,8 +428,8 @@
         }
       },
       "MatchesAll": {
-        "Label": "全部匹配",
         "Description": "比较一组值并检查所有条件是否匹配。",
+        "Label": "全部匹配",
         "Fields": {
           "MatchConditions": "",
           "MatchConditionsHelp": "要测试的条件，确定应该调用哪个输出。",
@@ -442,8 +442,8 @@
         }
       },
       "MoveFile": {
-        "Label": "移动文件",
         "Description": "将文件移动到目标文件夹",
+        "Label": "移动文件",
         "Fields": {
           "AdditionalFiles": "附加文件",
           "AdditionalFiles-Help": "要从目录移动到新目录的附加文件。\n每个值可以包含有效字面路径和通配符 (* 和 ?) 的组合，但不支持正则表达式。",
@@ -469,8 +469,8 @@
         }
       },
       "MoveFolder": {
-        "Label": "移动文件夹",
         "Description": "移动文件夹",
+        "Label": "移动文件夹",
         "Fields": {
           "CreateSubfolder": "创建子文件夹",
           "CreateSubfolder-Help": "是否在目标文件夹中创建一个以源文件夹名称命名的子文件夹。",
@@ -484,8 +484,8 @@
         }
       },
       "OlderThan": {
-        "Label": "比指定日期旧",
         "Description": "检查文件夹是否比指定的范围更旧",
+        "Label": "比指定日期旧",
         "Fields": {
           "Date": "日期",
           "Number": "数字",
@@ -497,15 +497,15 @@
         }
       },
       "OriginalFile": {
-        "Label": "原始文件",
         "Description": "将当前工作文件设置为启动流程的原始文件",
+        "Label": "原始文件",
         "Outputs": {
           "1": "工作文件已设置为原始文件"
         }
       },
       "PatternMatch": {
-        "Label": "模式匹配",
         "Description": "测试工作文件和原始文件是否符合正则表达式。\n\n输出 1: 匹配表达式\n输出 2: 不匹配",
+        "Label": "模式匹配",
         "Fields": {
           "Pattern": "模式",
           "Pattern-Help": "使用 C# 正则表达式规范的正则表达式。"
@@ -558,8 +558,8 @@
         }
       },
       "Renamer": {
-        "Label": "重命名器",
         "Description": "重命名工作文件。\n可以通过在模式字段中输入 '{' 来使用变量。",
+        "Label": "重命名器",
         "Fields": {
           "CsvFile": "CSV 文件",
           "CsvFile-Help": "将原始名称和重命名的名称添加到此文件中。如果你使用 '仅日志' 来测试重命名器，这是很有用的。",
@@ -575,8 +575,8 @@
         }
       },
       "ReplaceOriginal": {
-        "Label": "替换原始",
         "Description": "用工作文件替换原始文件。\n\n如果工作文件的扩展名不同，原始文件将被删除，工作文件将被移动到原始文件的新扩展名。\n例如，从 File.avi 到 File.mkv",
+        "Label": "替换原始",
         "Fields": {
           "PreserverOriginalDates": "保留日期",
           "PreserverOriginalDates-Help": "是否需要保留输入文件的原始创建时间和最后修改时间。"
@@ -586,8 +586,8 @@
         }
       },
       "Reprocess": {
-        "Label": "重新处理",
         "Description": "此流元素允许使用另一个处理节点重新处理原始库文件。\n\n如果选择与当前正在处理的节点相同的处理节点，流将失败。",
+        "Label": "重新处理",
         "Fields": {
           "Node": "节点",
           "Node-Help": "用于处理该文件的处理节点。"
@@ -656,8 +656,8 @@
         }
       },
       "Sleep": {
-        "Label": "睡眠",
         "Description": "暂停流程",
+        "Label": "睡眠",
         "Fields": {
           "Milliseconds": "毫秒",
           "Milliseconds-Help": "暂停流程的时间。必须在 1 毫秒到 1 小时之间。"
@@ -667,8 +667,8 @@
         }
       },
       "Touch": {
-        "Label": "触碰",
         "Description": "触碰一个文件或目录并将最后写入时间设置为现在。",
+        "Label": "触碰",
         "Fields": {
           "FileName": "文件名",
           "FileName-Help": "要触碰的文件或文件夹的完整文件名。\n如果留空，则将使用工作文件。"
@@ -678,8 +678,8 @@
         }
       },
       "Unpack": {
-        "Label": "解压缩",
         "Description": "允许您解压缩一个档案（zip，rar，tar 等）",
+        "Label": "解压缩",
         "Fields": {
           "DestinationPath": "目标文件夹",
           "DestinationPath-Help": "解压缩文件的目标文件夹。",
@@ -691,8 +691,8 @@
         }
       },
       "VariableMatch": {
-        "Label": "变量匹配",
         "Description": "检查输入值是否与保存的变量匹配。",
+        "Label": "变量匹配",
         "Fields": {
           "Input": "值",
           "Input-Help": "要与变量比较的值。",
@@ -707,8 +707,8 @@
         }
       },
       "WebRequest": {
-        "Label": "网页请求",
         "Description": "允许发送网页请求",
+        "Label": "网页请求",
         "Fields": {
           "Body": "主体",
           "Body-Help": "发送请求的主体。可以在此字段中使用变量。",
@@ -729,8 +729,8 @@
         }
       },
       "WriteText": {
-        "Label": "写入文本",
         "Description": "将文本写入文件",
+        "Label": "写入文本",
         "Fields": {
           "File": "文件",
           "File-Help": "要写入文本的文件。",
@@ -742,8 +742,8 @@
         }
       },
       "Zip": {
-        "Label": "压缩",
         "Description": "允许压缩输入",
+        "Label": "压缩",
         "Fields": {
           "DestinationFile": "目标文件",
           "DestinationFile-Help": "新创建的zip文件的文件名。如果留空，将使用项目的名称作为zip文件。",

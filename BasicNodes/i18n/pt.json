@@ -29,12 +29,12 @@
         }
       },
       "CompleteFlow": {
-        "Label": "Concluir Flow",
-        "Description": "Completa/termina o fluxo como bem-sucedido"
+        "Description": "Completa/termina o fluxo como bem-sucedido",
+        "Label": "Concluir Flow"
       },
       "CopyFile": {
-        "Label": "Copiar Arquivo",
         "Description": "Copia um arquivo para a pasta de destino",
+        "Label": "Copiar Arquivo",
         "Fields": {
           "AdditionalFiles": "Arquivos adicionais",
           "AdditionalFiles-Help": "Arquivos adicionais para copiar do diretório para o novo diretório.\nCada valor pode conter uma combinação de caminho literal válido e caracteres curinga (* e ?), mas não suporta expressões regulares.",
@@ -76,8 +76,8 @@
         }
       },
       "Delete": {
-        "Label": "Excluir",
         "Description": "Exclui um arquivo ou pasta",
+        "Label": "Excluir",
         "Fields": {
           "FileName": "Caminho",
           "FileName-Help": "Um caminho para um arquivo ou pasta a ser excluído.\n\nSe deixado em branco, o arquivo de trabalho atual será excluído."
@@ -103,8 +103,8 @@
         }
       },
       "Executor": {
-        "Label": "Executor",
         "Description": "Executa o seguinte processo no arquivo.\nSaída 1: O processo retornou o código de saída de sucesso\nSaída 2: O processo retornou um código de saída não bem-sucedido.",
+        "Label": "Executor",
         "Fields": {
           "Arguments": "Argumentos",
           "Arguments-Help": "Os argumentos a serem passados para o processo a ser executado",
@@ -128,16 +128,16 @@
         }
       },
       "FailFlow": {
-        "Label": "Falhar Flow",
         "Description": "Falha um flow imediatamente, útil se você quiser que um determinado caminho simplesmente falhe.",
+        "Label": "Falhar Flow",
         "Fields": {
           "Reason": "Razão",
           "Reason-Help": "Uma razão opcional para registrar por que o fluxo falhou."
         }
       },
       "FileDateCompare": {
-        "Label": "Comparação de data de arquivo",
         "Description": "Verifica se a criação ou a hora da última gravação do arquivo corresponde à restrição de data especificada.",
+        "Label": "Comparação de data de arquivo",
         "Fields": {
           "Date": "Data",
           "DateComparision": "Comparação",
@@ -150,8 +150,8 @@
         }
       },
       "FileExists": {
-        "Label": "Arquivo existe",
         "Description": "Verifica se um arquivo existe\n\nSaída 1: O arquivo existe\nSaída 2: O arquivo não existe",
+        "Label": "Arquivo existe",
         "Fields": {
           "FileName": "Nome do arquivo",
           "FileName-Help": "O arquivo a ser verificado. Deixe em branco para verificar o arquivo de trabalho atual."
@@ -162,8 +162,8 @@
         }
       },
       "FileExtension": {
-        "Label": "Extensão de arquivo", 
         "Description": "Verifica se o arquivo possui uma das extensões configuradas.\n\nSaída 1: Corresponde\nSaída 2: Não corresponde",
+        "Label": "Extensão de arquivo",
         "Fields": {
           "Extensions": "Extensões",
           "Extensions-Help": "Uma lista de extensões de arquivo sem diferenciação entre maiúsculas e minúsculas que serão correspondidas.\nSaída 1: Corresponde\nSaída 2: Não corresponde"
@@ -174,8 +174,8 @@
         }
       },
       "FileSize": {
-        "Label": "Tamanho do arquivo",
         "Description": "Verifica se o tamanho do arquivo corresponde aos parâmetros configurados. Os valores estão em megabytes.\n\nSaída 1: Corresponde\nSaída 2: Não corresponde",
+        "Label": "Tamanho do arquivo",
         "Fields": {
           "Comparison": "Comparação",
           "Lower": "Maior que",
@@ -191,8 +191,8 @@
         }
       },
       "FileSizeCompare": {
-        "Label": "Comparação de tamanho de arquivo",
         "Description": "Verifica se o tamanho do arquivo mudou em relação ao arquivo original.",
+        "Label": "Comparação de tamanho de arquivo",
         "Outputs": {
           "1": "Menor que o original",
           "2": "Mesma tamanho que o original",
@@ -200,8 +200,8 @@
         }
       },
       "FileSizeWithin": {
-        "Label": "Tamanho do arquivo dentro",
         "Description": "Verifica se o novo tamanho do arquivo está dentro da faixa permitida do tamanho original do arquivo.",
+        "Label": "Tamanho do arquivo dentro",
         "Fields": {
           "Value": "Valor",
           "Value-Help": "A diferença permitida para o tamanho do arquivo, este valor pode ser tanto mais quanto menos essa diferença."
@@ -226,8 +226,8 @@
         }
       },
       "FolderIterator": {
-        "Label": "Iterador de pasta",
         "Description": "Itera todos os arquivos em uma pasta específica e executa esses arquivos contra um subfluxo.",
+        "Label": "Iterador de pasta",
         "Fields": {
           "Flow": "Fluxo",
           "Flow-Help": "O subfluxo para executar os arquivos.",
@@ -265,8 +265,8 @@
         }
       },
       "GotoFlow": {
-        "Label": "Ir para o Flow",
         "Description": "Isso permite que você mude para um flow diferente para processamento. Este flow será encerrado e os parâmetros e o arquivo de trabalho serão passados para o novo flow.",
+        "Label": "Ir para o Flow",
         "Fields": {
           "Flow": "Fluxo",
           "UpdateFlowUsed": "Atualizar Fluxo",
@@ -274,8 +274,8 @@
         }
       },
       "HasHardLinks": {
-        "Label": "Tem links físicos",
         "Description": "Verifica se um arquivo possui links físicos ou não",
+        "Label": "Tem links físicos",
         "Fields": {
           "Count": "Contar",
           "Count-Help": "O número de links físicos necessários para chamar a saída 1.",
@@ -288,8 +288,8 @@
         }
       },
       "IfBoolean": {
-        "Label": "Se booleano",
         "Description": "Testa se uma variável é verdadeira ou falsa",
+        "Label": "Se booleano",
         "Fields": {
           "Variable": "Variável",
           "Variable-Help": "O nome da variável a ser verificada"
@@ -300,8 +300,8 @@
         }
       },
       "IfString": {
-        "Label": "Se string",
         "Description": "Testa se uma variável corresponde a uma string",
+        "Label": "Se string",
         "Fields": {
           "Options": "Opções",
           "Options-Help": "A string a ser correspondida.",
@@ -324,30 +324,30 @@
         }
       },
       "InputFile": {
-        "Label": "Arquivo de entrada",
         "Description": "Um elemento de fluxo de entrada para um arquivo. Isso é obrigatório e é o ponto de partida de um fluxo. Qualquer elemento de fluxo de entrada pode ser usado, apenas um é necessário.",
+        "Label": "Arquivo de entrada",
         "Outputs": {
           "1": "Arquivo da biblioteca"
         }
       },
       "InputFolder": {
-        "Label": "Pasta de entrada",
         "Description": "Um elemento de fluxo de entrada para uma pasta. Isso só funcionará se a biblioteca que utiliza este fluxo estiver configurada para pastas.",
+        "Label": "Pasta de entrada",
         "Outputs": {
           "1": "Pasta da biblioteca"
         }
       },
       "IsDocker": {
-        "Label": "É Docker",
         "Description": "Determina se este fluxo está sendo executado no Docker",
+        "Label": "É Docker",
         "Outputs": {
           "1": "Está executando no Docker",
           "2": "Não está executando no Docker"
         }
       },
       "IsFromLibrary": {
-        "Label": "É da biblioteca",
         "Description": "Verifica se o arquivo que está sendo processado é da biblioteca especificada.",
+        "Label": "É da biblioteca",
         "Fields": {
           "Library": "Biblioteca",
           "Library-Help": "A biblioteca a ser verificada."
@@ -358,8 +358,8 @@
         }
       },
       "IsLinux": {
-        "Label": "É Linux",
         "Description": "Determina se este fluxo está sendo executado no Linux",
+        "Label": "É Linux",
         "Outputs": {
           "1": "Está executando no Linux",
           "2": "Não está executando no Linux"
@@ -374,8 +374,8 @@
         }
       },
       "IsProcessingOnNode": {
-        "Label": "Está processando no nó",
         "Description": "Verifica se o fluxo está atualmente processando em um nó de processamento especificado.",
+        "Label": "Está processando no nó",
         "Fields": {
           "Node": "Nó",
           "Node-Help": "O nó de processamento a ser verificado."
@@ -386,16 +386,16 @@
         }
       },
       "IsWindows": {
-        "Label": "É Windows",
         "Description": "Determina se este fluxo está sendo executado no Windows",
+        "Label": "É Windows",
         "Outputs": {
           "1": "Está executando no Windows",
           "2": "Não está executando no Windows"
         }
       },
       "ListIterator": {
-        "Label": "Iterador de lista",
         "Description": "Itera todas as strings em uma lista específica e executa essas strings contra um subfluxo.",
+        "Label": "Iterador de lista",
         "Fields": {
           "Flow": "Fluxo",
           "Flow-Help": "O subfluxo para executar as strings.",
@@ -407,8 +407,8 @@
         }
       },
       "Log": {
-        "Label": "Log",
         "Description": "Registra uma mensagem no log do fluxo",
+        "Label": "Log",
         "Fields": {
           "LogType": "Tipo",
           "Message": "Mensagem"
@@ -418,8 +418,8 @@
         }
       },
       "Matches": {
-        "Label": "Corresponde",
         "Description": "Compara um conjunto de valores e condições de correspondência para ver qual saída deve ser chamada",
+        "Label": "Corresponde",
         "Fields": {
           "MatchConditions": "",
           "MatchConditions-Help": "As correspondências a serem testadas para determinar qual saída deve ser chamada.",
@@ -428,8 +428,8 @@
         }
       },
       "MatchesAll": {
-        "Label": "Corresponde a todos",
         "Description": "Compara um conjunto de valores e verifica se todas as condições correspondem.",
+        "Label": "Corresponde a todos",
         "Fields": {
           "MatchConditions": "",
           "MatchConditionsHelp": "As condições a serem testadas, determinando qual saída deve ser chamada.",
@@ -442,8 +442,8 @@
         }
       },
       "MoveFile": {
-        "Label": "Mover arquivo",
         "Description": "Move um arquivo para a pasta de destino",
+        "Label": "Mover arquivo",
         "Fields": {
           "AdditionalFiles": "Arquivos Adicionais",
           "AdditionalFiles-Help": "Arquivos adicionais a serem movidos do diretório para o novo diretório.\nCada valor pode conter uma combinação de caminho literal válido e caracteres curinga (* e ?), mas não suporta expressões regulares.",
@@ -469,8 +469,8 @@
         }
       },
       "MoveFolder": {
-        "Label": "Mover pasta",
         "Description": "Move uma pasta",
+        "Label": "Mover pasta",
         "Fields": {
           "CreateSubfolder": "Criar Subpasta",
           "CreateSubfolder-Help": "Se uma subpasta com o nome da pasta de origem deve ser criada na pasta de destino.",
@@ -484,8 +484,8 @@
         }
       },
       "OlderThan": {
-        "Label": "Mais antigo que",
         "Description": "Verifica se uma pasta é mais antiga do que o intervalo especificado",
+        "Label": "Mais antigo que",
         "Fields": {
           "Date": "Data",
           "Number": "Número",
@@ -497,15 +497,15 @@
         }
       },
       "OriginalFile": {
-        "Label": "Arquivo original",
         "Description": "Define o arquivo atual no fluxo como o arquivo original que iniciou o fluxo",
+        "Label": "Arquivo original",
         "Outputs": {
           "1": "Arquivo atual definido como arquivo original"
         }
       },
       "PatternMatch": {
-        "Label": "Correspondência de padrão",
         "Description": "Testa o arquivo atual e o arquivo original com uma expressão regular.\n\nSaída 1: Corresponde à expressão\nSaída 2: Não corresponde",
+        "Label": "Correspondência de padrão",
         "Fields": {
           "Pattern": "Padrão",
           "Pattern-Help": "Uma expressão regular, usando a especificação C# para expressões regulares."
@@ -558,8 +558,8 @@
         }
       },
       "Renamer": {
-        "Label": "Renomeador",
         "Description": "Renomeia o arquivo atual.\nVariáveis podem ser usadas ao inserir a chave '{' no campo Padrão.",
+        "Label": "Renomeador",
         "Fields": {
           "CsvFile": "Arquivo CSV",
           "CsvFile-Help": "Adiciona ao arquivo o nome original e o arquivo renomeado. Útil ao usar ''Apenas Log'' para testar a renomeação antes de modificar os arquivos.",
@@ -575,8 +575,8 @@
         }
       },
       "ReplaceOriginal": {
-        "Label": "Substituir Original",
         "Description": "Substitui o arquivo original pelo arquivo atual.\n\nSe a extensão for diferente no arquivo atual, o arquivo original será excluído e o arquivo atual será movido para o original com a nova extensão.\nPor exemplo, de Arquivo.avi para Arquivo.mkv",
+        "Label": "Substituir Original",
         "Fields": {
           "PreserverOriginalDates": "Preservar Datas",
           "PreserverOriginalDates-Help": "Se a data de criação e a última data de modificação do arquivo original devem ser preservadas."
@@ -586,8 +586,8 @@
         }
       },
       "Reprocess": {
-        "Label": "Reprocessar",
         "Description": "O elemento de fluxo permite que você reprocesse o arquivo de biblioteca original com um nó de processamento diferente.\n\n Se o mesmo nó de processamento for selecionado como o que está processando o arquivo atualmente, o fluxo falhará.",
+        "Label": "Reprocessar",
         "Fields": {
           "Node": "Nó",
           "Node-Help": "O nó de processamento para processar este arquivo."
@@ -656,8 +656,8 @@
         }
       },
       "Sleep": {
-        "Label": "Dormir",
         "Description": "Pausa o fluxo",
+        "Label": "Dormir",
         "Fields": {
           "Milliseconds": "Milissegundos",
           "Milliseconds-Help": "Duração durante a qual o fluxo deve ser colocado em espera. Deve estar entre 1 milissegundo e 1 hora"
@@ -667,8 +667,8 @@
         }
       },
       "Touch": {
-        "Label": "Toque",
         "Description": "Modifica um arquivo ou pasta e atualiza a data da última modificação para agora.",
+        "Label": "Toque",
         "Fields": {
           "FileName": "Nome do Arquivo",
           "FileName-Help": "Nome completo do arquivo ou pasta a ser modificado.\nSe deixado em branco, o arquivo atual será usado."
@@ -678,8 +678,8 @@
         }
       },
       "Unpack": {
-        "Label": "Descompactar",
         "Description": "Permite descompactar um arquivo (zip, rar, tar, etc.)",
+        "Label": "Descompactar",
         "Fields": {
           "DestinationPath": "Pasta de Destino",
           "DestinationPath-Help": "A pasta de destino onde descompactar o arquivo.",
@@ -691,8 +691,8 @@
         }
       },
       "VariableMatch": {
-        "Label": "Correspondência de variável",
         "Description": "Teste se uma entrada corresponde a uma Variável armazenada",
+        "Label": "Correspondência de variável",
         "Fields": {
           "Input": "Valor",
           "Input-Help": "O valor a ser comparado com a variável.",
@@ -707,8 +707,8 @@
         }
       },
       "WebRequest": {
-        "Label": "Solicitação Web",
         "Description": "Permite enviar uma solicitação web",
+        "Label": "Solicitação Web",
         "Fields": {
           "Body": "Corpo",
           "Body-Help": "O corpo da solicitação a ser enviada. Variáveis podem ser usadas neste campo.",
@@ -729,8 +729,8 @@
         }
       },
       "WriteText": {
-        "Label": "Escrever texto",
         "Description": "Escreve texto em um arquivo",
+        "Label": "Escrever texto",
         "Fields": {
           "File": "Arquivo",
           "File-Help": "O arquivo onde escrever o texto.",
@@ -742,8 +742,8 @@
         }
       },
       "Zip": {
-        "Label": "Zip",
         "Description": "Permite compactar a entrada",
+        "Label": "Zip",
         "Fields": {
           "DestinationFile": "Arquivo de Destino",
           "DestinationFile-Help": "O nome do arquivo do zip recém-criado. Se em branco, o nome do item será usado como o arquivo zip.",

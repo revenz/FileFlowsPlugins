@@ -16,8 +16,8 @@
         }
       },
       "AudioFile": {
-        "Label": "音频文件",
         "Description": "一个输入音频文件，已读取其音频信息，可以进行处理",
+        "Label": "音频文件",
         "Outputs": {
           "1": "来自库的音频文件"
         }
@@ -29,8 +29,8 @@
         }
       },
       "ConvertAudio": {
-        "Label": "转换音频",
         "Description": "将音频文件转换为指定的音频编码",
+        "Label": "转换音频",
         "Fields": {
           "Bitrate": "比特率",
           "Bitrate-Help": "新文件的比特率，比特率越高质量越好，但文件越大。",
@@ -55,8 +55,8 @@
         }
       },
       "ConvertToAAC": {
-        "Label": "转换为 AAC",
         "Description": "将音频文件转换为 AAC",
+        "Label": "转换为 AAC",
         "Fields": {
           "Bitrate": "比特率",
           "Bitrate-Help": "新 AAC 文件的比特率，比特率越高质量越好，但文件越大。192 Kbps 是推荐速度。",
@@ -79,8 +79,8 @@
         }
       },
       "ConvertToFLAC": {
-        "Label": "转换为 FLAC",
         "Description": "将音频文件转换为 FLAC",
+        "Label": "转换为 FLAC",
         "Fields": {
           "Bitrate": "比特率",
           "Bitrate-Help": "新 FLAC 文件的比特率，比特率越高质量越好，但文件越大。128 Kbps 是推荐速度。",
@@ -101,8 +101,8 @@
         }
       },
       "ConvertToMP3": {
-        "Label": "转换为 MP3",
         "Description": "将音频文件转换为MP3",
+        "Label": "转换为 MP3",
         "Fields": {
           "Bitrate": "比特率",
           "Bitrate-Help": "新MP3文件的比特率，比特率越高质量越好，但文件也越大。推荐比特率为192 Kbps。",
@@ -123,8 +123,8 @@
         }
       },
       "ConvertToOGG": {
-        "Label": "转换为 OGG",
         "Description": "将音频文件转换为OGG",
+        "Label": "转换为 OGG",
         "Fields": {
           "Bitrate": "比特率",
           "Bitrate-Help": "新OGG文件的比特率，比特率越高质量越好，但文件也越大。推荐比特率为128 Kbps。",
@@ -145,8 +145,8 @@
         }
       },
       "ConvertToWAV": {
-        "Label": "转换为 WAV",
         "Description": "将音频文件转换为WAV",
+        "Label": "转换为 WAV",
         "Fields": {
           "Bitrate": "比特率",
           "Bitrate-Help": "新WAV文件的比特率，比特率越高质量越好，但文件也越大。推荐比特率为128 Kbps。",
@@ -167,8 +167,8 @@
         }
       },
       "CreateAudioBook": {
-        "Label": "创建有声书",
         "Description": "从输入目录中找到的音频文件创建有声书",
+        "Label": "创建有声书",
         "Fields": {
           "DeleteSourceFiles": "删除源文件",
           "DeleteSourceFiles-Help": "启用后，将删除组成新创建的m4b文件的源文件，否则将保留源文件。",
@@ -183,8 +183,8 @@
         }
       },
       "EmbedArtwork": {
-        "Label": "嵌入艺术作品",
         "Description": "将艺术作品嵌入音频文件",
+        "Label": "嵌入艺术作品",
         "Outputs": {
           "1": "找到艺术作品并嵌入音频文件",
           "2": "未找到可嵌入的艺术作品"

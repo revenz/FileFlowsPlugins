@@ -16,22 +16,22 @@
         }
       },
       "AudioFile": {
-        "Label": "Audiodatei",
         "Description": "Eine Eingabedatei für Audio, deren Audoinformationen gelesen wurden und die verarbeitet werden kann",
+        "Label": "Audiodatei",
         "Outputs": {
           "1": "Audio-Datei aus der Bibliothek"
         }
       },
       "AudioFileNormalization": {
-        "Label": "Audio-Datei-Normalisierung",
         "Description": "Normalisiert eine Audiodatei mit zwei Durchläufen des loudnorm-Filters von FFMPEG",
+        "Label": "Audio-Datei-Normalisierung",
         "Outputs": {
           "1": "Normalisierte Audio-Datei, gespeichert in einer temporären Datei"
         }
       },
       "ConvertAudio": {
-        "Label": "Audio konvertieren",
         "Description": "Konvertiert eine Audiodatei in das angegebene Audioformat",
+        "Label": "Audio konvertieren",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "Die Bitrate für die neue Datei, je höher die Bitrate, desto besser die Qualität, aber desto größer die Datei.",
@@ -56,8 +56,8 @@
         }
       },
       "ConvertToAAC": {
-        "Label": "In AAC konvertieren",
         "Description": "Konvertiert eine Audiodatei in AAC",
+        "Label": "In AAC konvertieren",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "Die Bitrate für die neue AAC-Datei, je höher die Bitrate, desto besser die Qualität, aber desto größer die Datei. 192 Kbps wird empfohlen.",
@@ -80,8 +80,8 @@
         }
       },
       "ConvertToFLAC": {
-        "Label": "In FLAC konvertieren",
         "Description": "Konvertiert eine Audiodatei in FLAC",
+        "Label": "In FLAC konvertieren",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "Die Bitrate für die neue FLAC-Datei, je höher die Bitrate, desto besser die Qualität, aber desto größer die Datei. 128 Kbps wird empfohlen.",
@@ -102,8 +102,8 @@
         }
       },
       "ConvertToMP3": {
-        "Label": "In MP3 konvertieren",
         "Description": "Konvertiert eine Audiodatei in MP3",
+        "Label": "In MP3 konvertieren",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "Die Bitrate für die neue MP3-Datei, je höher die Bitrate, desto besser die Qualität, aber desto größer die Datei. 192 Kbps wird empfohlen.",
@@ -124,8 +124,8 @@
         }
       },
       "ConvertToOGG": {
-        "Label": "In OGG konvertieren",
         "Description": "Konvertiert eine Audiodatei in OGG",
+        "Label": "In OGG konvertieren",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "Die Bitrate für die neue OGG-Datei, je höher die Bitrate, desto besser die Qualität, aber desto größer die Datei. 192 Kbps wird empfohlen.",
@@ -146,8 +146,8 @@
         }
       },
       "ConvertToWAV": {
-        "Label": "In WAV konvertieren",
         "Description": "Konvertiere eine Audiodatei in WAV",
+        "Label": "In WAV konvertieren",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "Die Bitrate für die neue WAV-Datei. Je höher die Bitrate, desto besser die Qualität, aber auch größer die Datei. 128 Kbps ist die empfohlene Rate.",
@@ -168,8 +168,8 @@
         }
       },
       "CreateAudioBook": {
-        "Label": "Hörbuch erstellen",
         "Description": "Erstellt ein Hörbuch aus Audiodateien im Eingangsverzeichnis",
+        "Label": "Hörbuch erstellen",
         "Fields": {
           "DeleteSourceFiles": "Quelldateien löschen",
           "DeleteSourceFiles-Help": "Wenn aktiviert, werden die Quelldateien, die die neu erstellte m4b-Datei ausmachen, gelöscht, andernfalls bleiben sie unberührt.",
@@ -184,8 +184,8 @@
         }
       },
       "EmbedArtwork": {
-        "Label": "Artwork einbetten",
         "Description": "Bettet das Artwork in eine Audiodatei ein",
+        "Label": "Artwork einbetten",
         "Outputs": {
           "1": "Artwork gefunden und in die Audiodatei eingebettet",
           "2": "Kein Artwork zum Einbetten gefunden"

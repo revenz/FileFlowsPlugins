@@ -16,22 +16,22 @@
         }
       },
       "AudioFile": {
-        "Label": "オーディオファイル",
         "Description": "オーディオ情報が読み取られ、処理可能な入力オーディオファイル",
+        "Label": "オーディオファイル",
         "Outputs": {
           "1": "ライブラリからのオーディオファイル"
         }
       },
       "AudioFileNormalization": {
-        "Label": "オーディオファイルの正規化",
         "Description": "FFMPEGのloudnormフィルターを使用してオーディオファイルを二重処理します。",
+        "Label": "オーディオファイルの正規化",
         "Outputs": {
           "1": "正規化されたオーディオファイルが一時ファイルとして保存されました"
         }
       },
       "ConvertAudio": {
-        "Label": "オーディオの変換",
         "Description": "指定されたオーディオコーデックにオーディオファイルを変換します。",
+        "Label": "オーディオの変換",
         "Fields": {
           "Bitrate": "ビットレート",
           "Bitrate-Help": "新しいファイルのビットレート。ビットレートが高いほど品質が良くなりますが、ファイルサイズも大きくなります。",
@@ -56,8 +56,8 @@
         }
       },
       "ConvertToAAC": {
-        "Label": "AACへの変換",
         "Description": "オーディオファイルをAACに変換します。",
+        "Label": "AACへの変換",
         "Fields": {
           "Bitrate": "ビットレート",
           "Bitrate-Help": "新しいAACファイルのビットレート。ビットレートが高いほど品質が良くなりますが、ファイルサイズも大きくなります。192 Kbpsが推奨されています。",
@@ -80,8 +80,8 @@
         }
       },
       "ConvertToFLAC": {
-        "Label": "FLACへの変換",
         "Description": "音声ファイルをFLACに変換します",
+        "Label": "FLACへの変換",
         "Fields": {
           "Bitrate": "ビットレート",
           "Bitrate-Help": "新しいFLACファイルのビットレート、ビットレートが高いほど品質は良くなりますが、ファイルサイズも大きくなります。推奨ビットレートは128 Kbpsです。",
@@ -102,8 +102,8 @@
         }
       },
       "ConvertToMP3": {
-        "Label": "MP3への変換",
         "Description": "音声ファイルをMP3に変換します",
+        "Label": "MP3への変換",
         "Fields": {
           "Bitrate": "ビットレート",
           "Bitrate-Help": "新しいMP3ファイルのビットレート、ビットレートが高いほど品質は良くなりますが、ファイルサイズも大きくなります。推奨ビットレートは192 Kbpsです。",
@@ -124,8 +124,8 @@
         }
       },
       "ConvertToOGG": {
-        "Label": "OGGへの変換",
         "Description": "音声ファイルをOGGに変換します",
+        "Label": "OGGへの変換",
         "Fields": {
           "Bitrate": "ビットレート",
           "Bitrate-Help": "新しいOGGファイルのビットレート、ビットレートが高いほど品質は良くなりますが、ファイルサイズも大きくなります。推奨ビットレートは128 Kbpsです。",
@@ -146,8 +146,8 @@
         }
       },
       "ConvertToWAV": {
-        "Label": "WAVへの変換",
         "Description": "音声ファイルをWAVに変換します",
+        "Label": "WAVへの変換",
         "Fields": {
           "Bitrate": "ビットレート",
           "Bitrate-Help": "新しいWAVファイルのビットレート、ビットレートが高いほど品質は良くなりますが、ファイルサイズも大きくなります。推奨ビットレートは128 Kbpsです。",
@@ -168,8 +168,8 @@
         }
       },
       "CreateAudioBook": {
-        "Label": "オーディオブックの作成",
         "Description": "入力ディレクトリ内の音声ファイルからオーディオブックを作成します",
+        "Label": "オーディオブックの作成",
         "Fields": {
           "DeleteSourceFiles": "ソースファイルを削除",
           "DeleteSourceFiles-Help": "有効にすると、新しく作成されたm4bファイルを構成するソースファイルが削除されます。そうでなければ、そのまま残ります。",
@@ -184,8 +184,8 @@
         }
       },
       "EmbedArtwork": {
-        "Label": "アートワークの埋め込み",
         "Description": "音声ファイルにアートワークを埋め込みます",
+        "Label": "アートワークの埋め込み",
         "Outputs": {
           "1": "アートワークが見つかり、音声ファイルに埋め込まれました",
           "2": "埋め込むアートワークが見つかりませんでした"
