@@ -3,6 +3,7 @@
     "Parts": {
       "GenreMatches": {
         "Description": "Vergleicht die Genre-Metadaten mit dem angegebenen Genre(s).",
+        "Label": "Genre stimmt überein",
         "Fields": {
           "Genres": "Genres",
           "MatchAll": "Alle übereinstimmen",
@@ -15,6 +16,7 @@
       },
       "MovieLookup": {
         "Description": "Durchführt eine Suche auf TheMovieDB.org nach einem Film.\nSpeichert die Metadaten in der Variablen 'MovieInfo'.",
+        "Label": "Film suchen",
         "Fields": {
           "UseFolderName": "Ordnernamen verwenden",
           "UseFolderName-Help": "Ob der Ordnername anstelle des Dateinamens verwendet werden soll."
@@ -26,6 +28,7 @@
       },
       "MovieRenamer": {
         "Description": "Bennant die Arbeitsdatei mithilfe der in 'MovieInfo' gespeicherten Metadaten um.\nHinweis: MovieLookup sollte vor diesemflow element im Flow ausgeführt werden, damit es funktioniert.\n\nAusgabe 1: Datei wurde umbenannt\nAusgabe 2: Datei konnte nicht umbenannt werden",
+        "Label": "Film umbenennen",
         "Fields": {
           "DestinationPath": "Zielpfad",
           "DestinationPath-Help": "Ob die Datei in ein anderes Verzeichnis verschoben werden soll.",
@@ -36,10 +39,12 @@
         }
       },
       "MusicMeta": {
-        "Description": "Lädt die Metadaten einer Musikdatei in die Flussvariablen."
+        "Description": "Lädt die Metadaten einer Musikdatei in die Flussvariablen.",
+        "Label": "Musik-Metadaten"
       },
       "NfoFileCreator": {
         "Description": "Erstellt eine Kodi NFO-Datei aus zuvor geladenen Metadaten.",
+        "Label": "NFO-Datei erstellen",
         "Fields": {
           "DestinationFile": "Ziel-Datei",
           "DestinationFile-Help": "Der Dateiname der neuen NFO-Datei. Wenn leer, wird der ursprüngliche Dateiname mit der Erweiterung auf `.nfo` geändert",
@@ -53,6 +58,7 @@
       },
       "TVEpisodeLookup": {
         "Description": "Durchführt eine Suche auf TheMovieDB.org nach einer TV-Episode.",
+        "Label": "TV-Episode suchen",
         "Fields": {
           "UseFolderName": "Ordnernamen verwenden",
           "UseFolderName-Help": "Ob der Ordnername anstelle des Dateinamens verwendet werden soll.\n\nHinweis: Wenn der Ordner mit Staffel oder Specials beginnt, wird der übergeordnete Ordner verwendet."
@@ -64,6 +70,7 @@
       },
       "TVShowLookup": {
         "Description": "Durchführt eine Suche auf TheMovieDB.org nach einer TV-Show.\nSpeichert die Metadaten in der Variablen 'TVShowInfo'.",
+        "Label": "TV-Show suchen",
         "Fields": {
           "UseFolderName": "Ordnernamen verwenden",
           "UseFolderName-Help": "Ob der Ordnername anstelle des Dateinamens verwendet werden soll.\n\nHinweis: Wenn der Ordner mit Staffel oder Specials beginnt, wird der übergeordnete Ordner verwendet."
