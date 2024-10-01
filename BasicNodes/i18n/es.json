@@ -29,9 +29,11 @@
         }
       },
       "CompleteFlow": {
-        "Description": "Completa/termina el flujo como exitoso"
+        "Description": "Completa/termina el flujo como exitoso",
+        "Label": "Flow Completo"
       },
       "CopyFile": {
+        "Label": "Copiar archivo",
         "Description": "Copia un archivo en la carpeta de destino",
         "Fields": {
           "AdditionalFiles": "Archivos adicionales",
@@ -74,6 +76,7 @@
         }
       },
       "Delete": {
+        "Label": "Eliminar archivo",
         "Description": "Elimina un archivo o carpeta",
         "Fields": {
           "FileName": "Ruta",
@@ -100,6 +103,7 @@
         }
       },
       "Executor": {
+        "Label": "Ejecutor",
         "Description": "Ejecuta el siguiente proceso contra el archivo.\nSalida 1: El proceso devolvió el código de salida de éxito\nSalida 2: El proceso devolvió un código de salida no exitoso.",
         "Fields": {
           "Arguments": "Argumentos",
@@ -124,6 +128,7 @@
         }
       },
       "FailFlow": {
+        "Label": "Flow fallido",
         "Description": "Falla un flujo de inmediato, útil si quieres que un cierto camino simplemente falle.",
         "Fields": {
           "Reason": "Razón",
@@ -131,6 +136,7 @@
         }
       },
       "FileDateCompare": {
+        "Label": "Comparación de fecha de archivo",
         "Description": "Verifica si la creación o la hora de última escritura del archivo coincide con la restricción de fecha especificada.",
         "Fields": {
           "Date": "Fecha",
@@ -144,6 +150,7 @@
         }
       },
       "FileExists": {
+        "Label": "Archivo existe",
         "Description": "Verifica si un archivo existe\n\nSalida 1: El archivo existe\nSalida 2: El archivo no existe",
         "Fields": {
           "FileName": "Nombre de archivo",
@@ -155,6 +162,7 @@
         }
       },
       "FileExtension": {
+        "Label": "Extensión de archivo",
         "Description": "Verifica si el archivo tiene una de las extensiones configuradas.\n\nSalida 1: Coincide\nSalida 2: No coincide",
         "Fields": {
           "Extensions": "Extensiones",
@@ -166,6 +174,7 @@
         }
       },
       "FileSize": {
+        "Label": "Tamaño de archivo",
         "Description": "Verifica si el tamaño del archivo coincide con los parámetros configurados. Los valores están en megabytes.\n\nSalida 1: Coincide\nSalida 2: No coincide",
         "Fields": {
           "Comparison": "Comparación",
@@ -182,6 +191,7 @@
         }
       },
       "FileSizeCompare": {
+        "Label": "Comparación de tamaño de archivo",
         "Description": "Verifica si el tamaño del archivo ha cambiado desde el archivo original.",
         "Outputs": {
           "1": "Más pequeño que el original",
@@ -190,15 +200,18 @@
         }
       },
       "FileSizeWithin": {
+        "Label": "Tamaño de archivo dentro",
         "Description": "Verifica si el nuevo tamaño del archivo está dentro del rango permitido del tamaño del archivo original.",
-        "Value": "Valor",
-        "Value-Help": "La diferencia permitida para el tamaño del archivo, este valor puede ser tanto positivo como negativo respecto a esta diferencia.",
+        "Fields": {
+          "Value": "Valor",
+          "Value-Help": "La diferencia permitida para el tamaño del archivo, este valor puede ser tanto positivo como negativo respecto a esta diferencia."
+        },
         "Outputs": {
           "1": "El tamaño del archivo está dentro del rango permitido",
           "2": "El tamaño del archivo no está dentro del rango permitido"
         }
       },
-      "FolderDateCompare": {
+      "FolderDateCompare": {        
         "Description": "Verifica si la creación o la hora de última escritura de la carpeta coincide con la restricción de fecha especificada.",
         "Label": "Comparación de fecha de carpeta",
         "Fields": {
@@ -213,6 +226,7 @@
         }
       },
       "FolderIterator": {
+        "Label": "Iterador de carpeta",
         "Description": "Itera todos los archivos en una carpeta dada y ejecuta esos archivos contra un subflujo.",
         "Fields": {
           "Flow": "Flujo",
@@ -251,6 +265,7 @@
         }
       },
       "GotoFlow": {
+        "Label": "Ir a Flow",
         "Description": "Esto te permite cambiar a un flujo diferente para procesar. Este flujo saldrá y los parámetros y el archivo de trabajo se pasarán al nuevo flujo.",
         "Fields": {
           "Flow": "Flujo",
@@ -259,6 +274,7 @@
         }
       },
       "HasHardLinks": {
+        "Label": "Tiene enlaces duros",
         "Description": "Verifica si un archivo tiene enlaces duros o no",
         "Fields": {
           "Count": "Contar",
@@ -272,6 +288,7 @@
         }
       },
       "IfBoolean": {
+        "Label": "Si booleano",
         "Description": "Prueba si una variable es verdadera o falsa",
         "Fields": {
           "Variable": "Variable",
@@ -283,6 +300,7 @@
         }
       },
       "IfString": {
+        "Label": "Si cadena",
         "Description": "Prueba si una variable coincide con una cadena",
         "Fields": {
           "Options": "Opciones",
@@ -306,18 +324,21 @@
         }
       },
       "InputFile": {
+        "Label": "Archivo de entrada",
         "Description": "Un elemento de flujo de entrada para un archivo. Esto es obligatorio y es el punto de partida de un flujo. Se puede utilizar cualquier elemento de flujo de entrada, solo se requiere uno.",
         "Outputs": {
           "1": "Archivo de la biblioteca"
         }
       },
       "InputFolder": {
+        "Label": "Carpeta de entrada",
         "Description": "Un elemento de flujo de entrada para una carpeta. Esto solo funcionará si la biblioteca que utiliza este flujo está configurada para carpetas.",
         "Outputs": {
           "1": "Carpeta de la biblioteca"
         }
       },
       "IsDocker": {
+        "Label": "Es Docker",
         "Description": "Determina si este flujo se está ejecutando en Docker",
         "Outputs": {
           "1": "Se está ejecutando en Docker",
@@ -325,6 +346,7 @@
         }
       },
       "IsFromLibrary": {
+        "Label": "Es de la biblioteca",
         "Description": "Verifica si el archivo que se está procesando proviene de la biblioteca especificada.",
         "Fields": {
           "Library": "Biblioteca",
@@ -336,6 +358,7 @@
         }
       },
       "IsLinux": {
+        "Label": "Es Linux",
         "Description": "Determina si este flujo se está ejecutando en Linux",
         "Outputs": {
           "1": "Se está ejecutando en Linux",
@@ -351,6 +374,7 @@
         }
       },
       "IsProcessingOnNode": {
+        "Label": "Está procesando en el nodo",
         "Description": "Verifica si el flujo se está procesando actualmente en un nodo de procesamiento específico.",
         "Fields": {
           "Node": "Nodo",
@@ -362,6 +386,7 @@
         }
       },
       "IsWindows": {
+        "Label": "Es Windows",
         "Description": "Determina si este flujo se está ejecutando en Windows",
         "Outputs": {
           "1": "Se está ejecutando en Windows",
@@ -369,6 +394,7 @@
         }
       },
       "ListIterator": {
+        "Label": "Iterador de lista",
         "Description": "Itera todas las cadenas en una lista dada y ejecuta esas cadenas contra un subflujo.",
         "Fields": {
           "Flow": "Flujo",
@@ -381,6 +407,7 @@
         }
       },
       "Log": {
+        "Label": "Registro",
         "Description": "Registra un mensaje en el registro del flujo",
         "Fields": {
           "LogType": "Tipo",
@@ -391,6 +418,7 @@
         }
       },
       "Matches": {
+        "Label": "Coincidencias",
         "Description": "Compara un conjunto de valores y condiciones de coincidencia para ver qué salida debe ser llamada",
         "Fields": {
           "MatchConditions": "",
@@ -400,6 +428,7 @@
         }
       },
       "MatchesAll": {
+        "Label": "Coincide con todo",
         "Description": "Compara un conjunto de valores y verifica si todas las condiciones coinciden.",
         "Fields": {
           "MatchConditions": "",
@@ -413,6 +442,7 @@
         }
       },
       "MoveFile": {
+        "Label": "Mover archivo",
         "Description": "Mueve un archivo a la carpeta de destino",
         "Fields": {
           "AdditionalFiles": "Archivos Adicionales",
@@ -439,6 +469,7 @@
         }
       },
       "MoveFolder": {
+        "Label": "Mover carpeta",
         "Description": "Mueve una carpeta",
         "Fields": {
           "CreateSubfolder": "Crear Subcarpeta",
@@ -453,6 +484,7 @@
         }
       },
       "OlderThan": {
+        "Label": "Más antiguo que",
         "Description": "Verifica si una carpeta es más antigua que el rango especificado",
         "Fields": {
           "Date": "Fecha",
@@ -465,12 +497,14 @@
         }
       },
       "OriginalFile": {
+        "Label": "Archivo original",
         "Description": "Establece el archivo de trabajo actual en el flujo al archivo original que inició el flujo",
         "Outputs": {
           "1": "Archivo de trabajo establecido como archivo original"
         }
       },
       "PatternMatch": {
+        "Label": "Coincidencia de patrón",
         "Description": "Prueba el archivo de trabajo y el archivo original contra una expresión regular.\n\nSalida 1: Coincide con la expresión\nSalida 2: No coincide",
         "Fields": {
           "Pattern": "Patrón",
@@ -524,6 +558,7 @@
         }
       },
       "Renamer": {
+        "Label": "Renombrador",
         "Description": "Renombra el archivo de trabajo.\nSe pueden usar variables ingresando la clave '{' dentro del campo Patrón.",
         "Fields": {
           "CsvFile": "Archivo CSV",
@@ -540,6 +575,7 @@
         }
       },
       "ReplaceOriginal": {
+        "Label": "Reemplazar Original",
         "Description": "Reemplaza el archivo original con el archivo de trabajo.\n\nSi la extensión es diferente en el archivo de trabajo, el archivo original será eliminado y el archivo de trabajo será movido al original con la nueva extensión.\nEj. de File.avi a File.mkv",
         "Fields": {
           "PreserverOriginalDates": "Preservar Fechas",
@@ -550,6 +586,7 @@
         }
       },
       "Reprocess": {
+        "Label": "Reprocesar",
         "Description": "El elemento de flujo te permite reprocesar el archivo original de la biblioteca con un nodo de procesamiento diferente.\n\n Si se selecciona el mismo nodo de procesamiento que el que actualmente procesa el archivo, el flujo fallará.",
         "Fields": {
           "Node": "Nodo",
@@ -619,6 +656,7 @@
         }
       },
       "Sleep": {
+        "Label": "Dormir",
         "Description": "Pausa el flujo",
         "Fields": {
           "Milliseconds": "Milisegundos",
@@ -629,6 +667,7 @@
         }
       },
       "Touch": {
+        "Label": "Tocar",
         "Description": "Toca un archivo o directorio y establece la última hora de escritura a ahora.",
         "Fields": {
           "FileName": "Nombre de Archivo",
@@ -639,6 +678,7 @@
         }
       },
       "Unpack": {
+        "Label": "Descomprimir",
         "Description": "Permite descomprimir un archivo (zip, rar, tar, etc.)",
         "Fields": {
           "DestinationPath": "Carpeta de Destino",
@@ -651,6 +691,7 @@
         }
       },
       "VariableMatch": {
+        "Label": "Variable coincide",
         "Description": "Prueba si una entrada coincide con una Variable almacenada",
         "Fields": {
           "Input": "Valor",
@@ -666,6 +707,7 @@
         }
       },
       "WebRequest": {
+        "Label": "Solicitud web",
         "Description": "Te permite enviar una solicitud web",
         "Fields": {
           "Body": "Cuerpo",
@@ -687,6 +729,7 @@
         }
       },
       "WriteText": {
+        "Label": "Escribir texto",
         "Description": "Escribe texto en un archivo",
         "Fields": {
           "File": "Archivo",
@@ -699,6 +742,7 @@
         }
       },
       "Zip": {
+        "Label": "Zip",
         "Description": "Permite comprimir la entrada",
         "Fields": {
           "DestinationFile": "Archivo de Destino",

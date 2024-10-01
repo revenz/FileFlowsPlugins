@@ -16,18 +16,21 @@
         }
       },
       "AudioFile": {
+        "Label": "Audiodatei",
         "Description": "Eine Eingabedatei für Audio, deren Audoinformationen gelesen wurden und die verarbeitet werden kann",
         "Outputs": {
           "1": "Audio-Datei aus der Bibliothek"
         }
       },
       "AudioFileNormalization": {
+        "Label": "Audio-Datei-Normalisierung",
         "Description": "Normalisiert eine Audiodatei mit zwei Durchläufen des loudnorm-Filters von FFMPEG",
         "Outputs": {
           "1": "Normalisierte Audio-Datei, gespeichert in einer temporären Datei"
         }
       },
       "ConvertAudio": {
+        "Label": "Audio konvertieren",
         "Description": "Konvertiert eine Audiodatei in das angegebene Audioformat",
         "Fields": {
           "Bitrate": "Bitrate",
@@ -53,6 +56,7 @@
         }
       },
       "ConvertToAAC": {
+        "Label": "In AAC konvertieren",
         "Description": "Konvertiert eine Audiodatei in AAC",
         "Fields": {
           "Bitrate": "Bitrate",
@@ -76,6 +80,7 @@
         }
       },
       "ConvertToFLAC": {
+        "Label": "In FLAC konvertieren",
         "Description": "Konvertiert eine Audiodatei in FLAC",
         "Fields": {
           "Bitrate": "Bitrate",
@@ -97,6 +102,7 @@
         }
       },
       "ConvertToMP3": {
+        "Label": "In MP3 konvertieren",
         "Description": "Konvertiert eine Audiodatei in MP3",
         "Fields": {
           "Bitrate": "Bitrate",
@@ -118,6 +124,7 @@
         }
       },
       "ConvertToOGG": {
+        "Label": "In OGG konvertieren",
         "Description": "Konvertiert eine Audiodatei in OGG",
         "Fields": {
           "Bitrate": "Bitrate",
@@ -139,6 +146,7 @@
         }
       },
       "ConvertToWAV": {
+        "Label": "In WAV konvertieren",
         "Description": "Konvertiere eine Audiodatei in WAV",
         "Fields": {
           "Bitrate": "Bitrate",
@@ -160,6 +168,7 @@
         }
       },
       "CreateAudioBook": {
+        "Label": "Hörbuch erstellen",
         "Description": "Erstellt ein Hörbuch aus Audiodateien im Eingangsverzeichnis",
         "Fields": {
           "DeleteSourceFiles": "Quelldateien löschen",
@@ -175,6 +184,7 @@
         }
       },
       "EmbedArtwork": {
+        "Label": "Artwork einbetten",
         "Description": "Bettet das Artwork in eine Audiodatei ein",
         "Outputs": {
           "1": "Artwork gefunden und in die Audiodatei eingebettet",

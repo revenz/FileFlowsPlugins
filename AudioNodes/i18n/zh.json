@@ -16,6 +16,7 @@
         }
       },
       "AudioFile": {
+        "Label": "音频文件",
         "Description": "一个输入音频文件，已读取其音频信息，可以进行处理",
         "Outputs": {
           "1": "来自库的音频文件"
@@ -28,6 +29,7 @@
         }
       },
       "ConvertAudio": {
+        "Label": "转换音频",
         "Description": "将音频文件转换为指定的音频编码",
         "Fields": {
           "Bitrate": "比特率",
@@ -53,6 +55,7 @@
         }
       },
       "ConvertToAAC": {
+        "Label": "转换为 AAC",
         "Description": "将音频文件转换为 AAC",
         "Fields": {
           "Bitrate": "比特率",
@@ -76,6 +79,7 @@
         }
       },
       "ConvertToFLAC": {
+        "Label": "转换为 FLAC",
         "Description": "将音频文件转换为 FLAC",
         "Fields": {
           "Bitrate": "比特率",
@@ -97,6 +101,7 @@
         }
       },
       "ConvertToMP3": {
+        "Label": "转换为 MP3",
         "Description": "将音频文件转换为MP3",
         "Fields": {
           "Bitrate": "比特率",
@@ -118,6 +123,7 @@
         }
       },
       "ConvertToOGG": {
+        "Label": "转换为 OGG",
         "Description": "将音频文件转换为OGG",
         "Fields": {
           "Bitrate": "比特率",
@@ -139,6 +145,7 @@
         }
       },
       "ConvertToWAV": {
+        "Label": "转换为 WAV",
         "Description": "将音频文件转换为WAV",
         "Fields": {
           "Bitrate": "比特率",
@@ -160,6 +167,7 @@
         }
       },
       "CreateAudioBook": {
+        "Label": "创建有声书",
         "Description": "从输入目录中找到的音频文件创建有声书",
         "Fields": {
           "DeleteSourceFiles": "删除源文件",
@@ -175,6 +183,7 @@
         }
       },
       "EmbedArtwork": {
+        "Label": "嵌入艺术作品",
         "Description": "将艺术作品嵌入音频文件",
         "Outputs": {
           "1": "找到艺术作品并嵌入音频文件",

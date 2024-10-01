@@ -16,18 +16,21 @@
         }
       },
       "AudioFile": {
+        "Label": "Archivo de Audio",
         "Description": "Un archivo de audio de entrada que ha tenido su información de audio leída y puede ser procesado",
         "Outputs": {
           "1": "Archivo de audio de la biblioteca"
         }
       },
       "AudioFileNormalization": {
+        "Label": "Normalización de Archivo de Audio",
         "Description": "Normaliza un archivo de audio usando dos pasadas del filtro loudnorm de FFMPEG",
         "Outputs": {
           "1": "Archivo de audio normalizado y guardado en un archivo temporal"
         }
       },
       "ConvertAudio": {
+        "Label": "Convertir Audio",
         "Description": "Convierte un archivo de audio al códec de audio especificado",
         "Fields": {
           "Bitrate": "Bitrate",
@@ -53,6 +56,7 @@
         }
       },
       "ConvertToAAC": {
+        "Label": "Convertir a AAC",
         "Description": "Convierte un archivo de audio a AAC",
         "Fields": {
           "Bitrate": "Bitrate",
@@ -76,6 +80,7 @@
         }
       },
       "ConvertToFLAC": {
+        "Label": "Convertir a FLAC",
         "Description": "Convierte un archivo de audio a FLAC",
         "Fields": {
           "Bitrate": "Bitrate",
@@ -97,6 +102,7 @@
         }
       },
       "ConvertToMP3": {
+        "Label": "Convertir a MP3",
         "Description": "Convierte un archivo de audio a MP3",
         "Fields": {
           "Bitrate": "Bitrate",
@@ -118,6 +124,7 @@
         }
       },
       "ConvertToOGG": {
+        "Label": "Convertir a OGG",
         "Description": "Convierte un archivo de audio a OGG",
         "Fields": {
           "Bitrate": "Bitrate",
@@ -139,6 +146,7 @@
         }
       },
       "ConvertToWAV": {
+        "Label": "Convertir a WAV",
         "Description": "Convertir un archivo de audio a WAV",
         "Fields": {
           "Bitrate": "Tasa de bits",
@@ -160,6 +168,7 @@
         }
       },
       "CreateAudioBook": {
+        "Label": "Crear Audiolibro",
         "Description": "Crea un libro de audio a partir de archivos de audio encontrados en el directorio de entrada",
         "Fields": {
           "DeleteSourceFiles": "Eliminar archivos fuente",
@@ -175,6 +184,7 @@
         }
       },
       "EmbedArtwork": {
+        "Label": "Incorporar Obra de Arte",
         "Description": "Incorpora una obra de arte en un archivo de audio",
         "Outputs": {
           "1": "Obra de arte encontrada e incorporada en el archivo de audio",

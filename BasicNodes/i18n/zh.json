@@ -29,9 +29,11 @@
         }
       },
       "CompleteFlow": {
+        "Label": "完成流程",
         "Description": "成功完成/结束流程"
       },
       "CopyFile": {
+        "Label": "复制文件",
         "Description": "将文件复制到目标文件夹",
         "Fields": {
           "AdditionalFiles": "附加文件",
@@ -74,6 +76,7 @@
         }
       },
       "Delete": {
+        "Label": "删除",
         "Description": "删除文件或文件夹",
         "Fields": {
           "FileName": "路径",
@@ -100,6 +103,7 @@
         }
       },
       "Executor": {
+        "Label": "执行器",
         "Description": "对文件执行以下过程。\n输出 1: 进程返回成功退出代码\n输出 2: 进程返回非成功退出代码。",
         "Fields": {
           "Arguments": "参数",
@@ -124,6 +128,7 @@
         }
       },
       "FailFlow": {
+        "Label": "流失败",
         "Description": "立即使流失败，如果您希望某个特定路径只是失败，则很有用。",
         "Fields": {
           "Reason": "原因",
@@ -131,6 +136,7 @@
         }
       },
       "FileDateCompare": {
+        "Label": "文件日期比较",
         "Description": "检查文件创建时间或最后写入时间是否符合指定的日期约束。",
         "Fields": {
           "Date": "日期",
@@ -144,6 +150,7 @@
         }
       },
       "FileExists": {
+        "Label": "文件存在",
         "Description": "检查文件是否存在\n\n输出 1: 文件存在\n输出 2: 文件不存在",
         "Fields": {
           "FileName": "文件名",
@@ -155,6 +162,7 @@
         }
       },
       "FileExtension": {
+        "Label": "文件扩展名",
         "Description": "检查文件是否具有配置的扩展名之一。\n\n输出 1: 匹配\n输出 2: 不匹配",
         "Fields": {
           "Extensions": "扩展名",
@@ -166,6 +174,7 @@
         }
       },
       "FileSize": {
+        "Label": "文件大小",
         "Description": "检查文件大小是否与配置的参数匹配。值以兆字节为单位。\n\n输出 1: 匹配\n输出 2: 不匹配",
         "Fields": {
           "Comparison": "比较",
@@ -182,6 +191,7 @@
         }
       },
       "FileSizeCompare": {
+        "Label": "文件大小比较",
         "Description": "检查文件大小是否与原始文件发生了变化。",
         "Outputs": {
           "1": "小于原始",
@@ -190,9 +200,12 @@
         }
       },
       "FileSizeWithin": {
+        "Label": "文件大小在范围内",
         "Description": "检查新的文件大小是否在原始文件大小的允许范围内。",
-        "Value": "值",
-        "Value-Help": "文件大小允许的差异，这个值可以是加上或减去这个差异。",
+        "Fields": {
+          "Value": "值",
+          "Value-Help": "文件大小允许的差异，这个值可以是加上或减去这个差异。"
+        },
         "Outputs": {
           "1": "文件大小在允许范围内",
           "2": "文件大小不在允许范围内"
@@ -213,6 +226,7 @@
         }
       },
       "FolderIterator": {
+        "Label": "文件夹迭代器",
         "Description": "迭代给定文件夹中的所有文件，并对这些文件执行子流程。",
         "Fields": {
           "Flow": "流程",
@@ -251,6 +265,7 @@
         }
       },
       "GotoFlow": {
+        "Label": "转到流程",
         "Description": "这使您能够切换到另一个流程进行处理。此流程将结束，参数和工作文件将转移到新的流程中。",
         "Fields": {
           "Flow": "流程",
@@ -259,6 +274,7 @@
         }
       },
       "HasHardLinks": {
+        "Label": "有硬链接",
         "Description": "检查文件是否有硬链接",
         "Fields": {
           "Count": "计数",
@@ -272,6 +288,7 @@
         }
       },
       "IfBoolean": {
+        "Label": "如果布尔值",
         "Description": "检查变量是否为真或假",
         "Fields": {
           "Variable": "变量",
@@ -283,6 +300,7 @@
         }
       },
       "IfString": {
+        "Label": "如果字符串",
         "Description": "测试变量是否与字符串匹配",
         "Fields": {
           "Options": "选项",
@@ -306,18 +324,21 @@
         }
       },
       "InputFile": {
+        "Label": "输入文件",
         "Description": "文件的输入流元素。 这是必需的，是流的起点。可以使用任何输入流元素，但至少需要一个。",
         "Outputs": {
           "1": "库文件"
         }
       },
       "InputFolder": {
+        "Label": "输入文件夹",
         "Description": "文件夹的输入流元素。只有当使用此流的库配置为文件夹时，这才有效。",
         "Outputs": {
           "1": "库文件夹"
         }
       },
       "IsDocker": {
+        "Label": "是 Docker",
         "Description": "确定此流是否在 Docker 上运行",
         "Outputs": {
           "1": "在 Docker 上运行",
@@ -325,6 +346,7 @@
         }
       },
       "IsFromLibrary": {
+        "Label": "来自库",
         "Description": "检查正在处理的文件是否来自指定的库。",
         "Fields": {
           "Library": "库",
@@ -336,6 +358,7 @@
         }
       },
       "IsLinux": {
+        "Label": "是 Linux",
         "Description": "确定此流是否在 Linux 上运行",
         "Outputs": {
           "1": "在 Linux 上运行",
@@ -351,6 +374,7 @@
         }
       },
       "IsProcessingOnNode": {
+        "Label": "正在节点上处理",
         "Description": "检查流程是否正在指定的处理节点上处理。",
         "Fields": {
           "Node": "节点",
@@ -362,6 +386,7 @@
         }
       },
       "IsWindows": {
+        "Label": "是 Windows",
         "Description": "确定此流程是否在Windows上运行",
         "Outputs": {
           "1": "正在Windows上运行",
@@ -369,6 +394,7 @@
         }
       },
       "ListIterator": {
+        "Label": "列表迭代器",
         "Description": "遍历给定列表中的所有字符串，并在子流程中执行这些字符串。",
         "Fields": {
           "Flow": "流程",
@@ -381,6 +407,7 @@
         }
       },
       "Log": {
+        "Label": "日志",
         "Description": "将消息记录到流程日志",
         "Fields": {
           "LogType": "类型",
@@ -391,6 +418,7 @@
         }
       },
       "Matches": {
+        "Label": "匹配",
         "Description": "比较一组值并匹配条件，以查看应该调用哪个输出",
         "Fields": {
           "MatchConditions": "",
@@ -400,6 +428,7 @@
         }
       },
       "MatchesAll": {
+        "Label": "全部匹配",
         "Description": "比较一组值并检查所有条件是否匹配。",
         "Fields": {
           "MatchConditions": "",
@@ -413,6 +442,7 @@
         }
       },
       "MoveFile": {
+        "Label": "移动文件",
         "Description": "将文件移动到目标文件夹",
         "Fields": {
           "AdditionalFiles": "附加文件",
@@ -439,6 +469,7 @@
         }
       },
       "MoveFolder": {
+        "Label": "移动文件夹",
         "Description": "移动文件夹",
         "Fields": {
           "CreateSubfolder": "创建子文件夹",
@@ -453,6 +484,7 @@
         }
       },
       "OlderThan": {
+        "Label": "比指定日期旧",
         "Description": "检查文件夹是否比指定的范围更旧",
         "Fields": {
           "Date": "日期",
@@ -465,12 +497,14 @@
         }
       },
       "OriginalFile": {
+        "Label": "原始文件",
         "Description": "将当前工作文件设置为启动流程的原始文件",
         "Outputs": {
           "1": "工作文件已设置为原始文件"
         }
       },
       "PatternMatch": {
+        "Label": "模式匹配",
         "Description": "测试工作文件和原始文件是否符合正则表达式。\n\n输出 1: 匹配表达式\n输出 2: 不匹配",
         "Fields": {
           "Pattern": "模式",
@@ -524,6 +558,7 @@
         }
       },
       "Renamer": {
+        "Label": "重命名器",
         "Description": "重命名工作文件。\n可以通过在模式字段中输入 '{' 来使用变量。",
         "Fields": {
           "CsvFile": "CSV 文件",
@@ -540,6 +575,7 @@
         }
       },
       "ReplaceOriginal": {
+        "Label": "替换原始",
         "Description": "用工作文件替换原始文件。\n\n如果工作文件的扩展名不同，原始文件将被删除，工作文件将被移动到原始文件的新扩展名。\n例如，从 File.avi 到 File.mkv",
         "Fields": {
           "PreserverOriginalDates": "保留日期",
@@ -550,6 +586,7 @@
         }
       },
       "Reprocess": {
+        "Label": "重新处理",
         "Description": "此流元素允许使用另一个处理节点重新处理原始库文件。\n\n如果选择与当前正在处理的节点相同的处理节点，流将失败。",
         "Fields": {
           "Node": "节点",
@@ -619,6 +656,7 @@
         }
       },
       "Sleep": {
+        "Label": "睡眠",
         "Description": "暂停流程",
         "Fields": {
           "Milliseconds": "毫秒",
@@ -629,6 +667,7 @@
         }
       },
       "Touch": {
+        "Label": "触碰",
         "Description": "触碰一个文件或目录并将最后写入时间设置为现在。",
         "Fields": {
           "FileName": "文件名",
@@ -639,6 +678,7 @@
         }
       },
       "Unpack": {
+        "Label": "解压缩",
         "Description": "允许您解压缩一个档案（zip，rar，tar 等）",
         "Fields": {
           "DestinationPath": "目标文件夹",
@@ -651,6 +691,7 @@
         }
       },
       "VariableMatch": {
+        "Label": "变量匹配",
         "Description": "检查输入值是否与保存的变量匹配。",
         "Fields": {
           "Input": "值",
@@ -666,6 +707,7 @@
         }
       },
       "WebRequest": {
+        "Label": "网页请求",
         "Description": "允许发送网页请求",
         "Fields": {
           "Body": "主体",
@@ -687,6 +729,7 @@
         }
       },
       "WriteText": {
+        "Label": "写入文本",
         "Description": "将文本写入文件",
         "Fields": {
           "File": "文件",
@@ -699,6 +742,7 @@
         }
       },
       "Zip": {
+        "Label": "压缩",
         "Description": "允许压缩输入",
         "Fields": {
           "DestinationFile": "目标文件",

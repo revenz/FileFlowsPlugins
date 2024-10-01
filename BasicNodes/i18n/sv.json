@@ -29,9 +29,11 @@
         }
       },
       "CompleteFlow": {
+        "Label": "Slutför flöde",
         "Description": "Avslutar/avslutar flödet som framgångsrikt"
       },
       "CopyFile": {
+        "Label": "Kopiera fil",
         "Description": "Kopierar en fil till målmappen",
         "Fields": {
           "AdditionalFiles": "Ytterligare filer",
@@ -74,6 +76,7 @@
         }
       },
       "Delete": {
+        "Label": "Ta bort",
         "Description": "Tar bort en fil eller mapp",
         "Fields": {
           "FileName": "Sökväg",
@@ -100,6 +103,7 @@
         }
       },
       "Executor": {
+        "Label": "Utförare",
         "Description": "Utför följande process mot filen.\nUtdata 1: Processen returnerade framgångsrik exitkod\nUtdata 2: Processen returnerade en icke-framgångsrik exitkod.",
         "Fields": {
           "Arguments": "Argument",
@@ -124,6 +128,7 @@
         }
       },
       "FailFlow": {
+        "Label": "Misslyckas med flöde",
         "Description": "Misslyckas med en flow omedelbart, användbart om du vill att en viss väg ska misslyckas.",
         "Fields": {
           "Reason": "Orsak",
@@ -131,6 +136,7 @@
         }
       },
       "FileDateCompare": {
+        "Label": "Filens datumjämförelse",
         "Description": "Kontrollerar om filens skapelse- eller senaste skrivdatum matchar den angivna datumbegränsningen.",
         "Fields": {
           "Date": "Datum",
@@ -144,6 +150,7 @@
         }
       },
       "FileExists": {
+        "Label": "Fil finns",
         "Description": "Kontrollerar om en fil finns\n\nOutput 1: Filen finns\nOutput 2: Filen finns inte",
         "Fields": {
           "FileName": "Filnamn",
@@ -155,6 +162,7 @@
         }
       },
       "FileExtension": {
+        "Label": "Filändelse",
         "Description": "Kontrollerar om filen har ett av de konfigurerade filändelserna.\n\nOutput 1: Matchar\nOutput 2: Matchar inte",
         "Fields": {
           "Extensions": "Filändelser",
@@ -166,6 +174,7 @@
         }
       },
       "FileSize": {
+        "Label": "Filstorlek",
         "Description": "Kontrollerar om filstorleken matchar de konfigurerade parametrarna. Värdena är i megabyte.\n\nOutput 1: Matchar\nOutput 2: Matchar inte",
         "Fields": {
           "Comparison": "Jämförelse",
@@ -182,6 +191,7 @@
         }
       },
       "FileSizeCompare": {
+        "Label": "Filstorleksjämförelse",
         "Description": "Kontrollerar om filstorleken har ändrats jämfört med den ursprungliga filen.",
         "Outputs": {
           "1": "Mindre än originalet",
@@ -190,9 +200,12 @@
         }
       },
       "FileSizeWithin": {
+        "Label": "Filstorlek inom",
         "Description": "Kontrollerar om den nya filstorleken ligger inom det tillåtna intervallet för den ursprungliga filstorleken.",
-        "Value": "Värde",
-        "Value-Help": "Det tillåtna avvikelsen för filstorleken, detta värde kan vara både plus och minus denna avvikelse.",
+        "Fields": {
+          "Value": "Värde",
+          "Value-Help": "Det tillåtna avvikelsen för filstorleken, detta värde kan vara både plus och minus denna avvikelse."
+        },
         "Outputs": {
           "1": "Filstorleken ligger inom det tillåtna intervallet",
           "2": "Filstorleken ligger inte inom det tillåtna intervallet"
@@ -214,6 +227,7 @@
       },
       "FolderIterator": {
         "Description": "Itererar över alla filer i en angiven mapp och kör dessa filer mot en underflöde.",
+        "Label": "Mappiterering",
         "Fields": {
           "Flow": "Flöde",
           "Flow-Help": "Underflödet som filerna ska köras mot.",
@@ -251,6 +265,7 @@
         }
       },
       "GotoFlow": {
+        "Label": "Gå till flöde",
         "Description": "Detta gör att du kan byta till ett annat flöde för att bearbeta. Detta flöde kommer att avslutas och parametrarna samt arbetsfilen kommer att överföras till det nya Flödet.",
         "Fields": {
           "Flow": "Flöde",
@@ -259,6 +274,7 @@
         }
       },
       "HasHardLinks": {
+        "Label": "Har hårda länkar",
         "Description": "Kontrollerar om en fil har hårda länkar eller inte",
         "Fields": {
           "Count": "Antal",
@@ -272,6 +288,7 @@
         }
       },
       "IfBoolean": {
+        "Label": "Om Boolesk",
         "Description": "Kontrollerar om en variabel är sann eller falsk",
         "Fields": {
           "Variable": "Variabel",
@@ -283,6 +300,7 @@
         }
       },
       "IfString": {
+        "Label": "Om Sträng",
         "Description": "Testar om en variabel matchar en sträng",
         "Fields": {
           "Options": "Alternativ",
@@ -306,18 +324,21 @@
         }
       },
       "InputFile": {
+        "Label": "Ingångsfil",
         "Description": "Ett ingångsflödeselement för en fil. Detta är obligatoriskt och är startpunkten för ett flöde. Vilket ingångsflödeselement kan användas, men minst ett krävs.",
         "Outputs": {
           "1": "Biblioteksfil"
         }
       },
       "InputFolder": {
+        "Label": "Ingångsmapp",
         "Description": "Ett ingångsflödeselement för en mapp. Detta fungerar endast om biblioteket som använder detta flöde är konfigurerat för mappar.",
         "Outputs": {
           "1": "Biblioteksmap"
         }
       },
       "IsDocker": {
+        "Label": "Är Docker",
         "Description": "Bestämmer om detta flöde körs på Docker",
         "Outputs": {
           "1": "Körs på Docker",
@@ -325,6 +346,7 @@
         }
       },
       "IsFromLibrary": {
+        "Label": "Är från bibliotek",
         "Description": "Kontrollerar om filen som behandlas kommer från det angivna biblioteket.",
         "Fields": {
           "Library": "Bibliotek",
@@ -336,6 +358,7 @@
         }
       },
       "IsLinux": {
+        "Label": "Är Linux",
         "Description": "Bestämmer om detta flöde körs på Linux",
         "Outputs": {
           "1": "Körs på Linux",
@@ -351,6 +374,7 @@
         }
       },
       "IsProcessingOnNode": {
+        "Label": "Bearbetar på nod",
         "Description": "Kontrollerar om flödet för närvarande bearbetas på en angiven bearbetningsnod.",
         "Fields": {
           "Node": "Nod",
@@ -362,6 +386,7 @@
         }
       },
       "IsWindows": {
+        "Label": "Är Windows",
         "Description": "Bestämmer om detta flöde körs på Windows",
         "Outputs": {
           "1": "Körs på Windows",
@@ -369,6 +394,7 @@
         }
       },
       "ListIterator": {
+        "Label": "Listiterering",
         "Description": "Itererar alla strängar i en given lista och utför dessa strängar mot en underflöde.",
         "Fields": {
           "Flow": "Flöde",
@@ -381,6 +407,7 @@
         }
       },
       "Log": {
+        "Label": "Logga",
         "Description": "Loggar ett meddelande till flödesloggen",
         "Fields": {
           "LogType": "Typ",
@@ -391,6 +418,7 @@
         }
       },
       "Matches": {
+        "Label": "Matcher",
         "Description": "Jämför en uppsättning värden och matchar villkor för att se vilken utdata som ska anropas",
         "Fields": {
           "MatchConditions": "",
@@ -400,6 +428,7 @@
         }
       },
       "MatchesAll": {
+        "Label": "Matcher alla",
         "Description": "Jämför en uppsättning värden och kontrollerar om alla villkor matchar.",
         "Fields": {
           "MatchConditions": "",
@@ -413,6 +442,7 @@
         }
       },
       "MoveFile": {
+        "Label": "Flytta fil",
         "Description": "Flyttar en fil till destinationsmappen",
         "Fields": {
           "AdditionalFiles": "Ytterligare Filer",
@@ -439,6 +469,7 @@
         }
       },
       "MoveFolder": {
+        "Label": "Flytta mapp",
         "Description": "Flyttar en mapp",
         "Fields": {
           "CreateSubfolder": "Skapa Undermapp",
@@ -453,6 +484,7 @@
         }
       },
       "OlderThan": {
+        "Label": "Äldre än",
         "Description": "Kontrollerar om en mapp är äldre än det angivna intervallet",
         "Fields": {
           "Date": "Datum",
@@ -465,12 +497,14 @@
         }
       },
       "OriginalFile": {
+        "Label": "Ursprunglig fil",
         "Description": "Ställer in den aktuella arbetsfilen i flödet på den ursprungliga filen som startade flödet",
         "Outputs": {
           "1": "Arbetsfil inställd på originalfil"
         }
       },
       "PatternMatch": {
+        "Label": "Mönstermatchning",
         "Description": "Testar arbetsfilen och originalfilen mot ett reguljärt uttryck.\n\nUtdata 1: Matchar uttrycket\nUtdata 2: Matchar inte",
         "Fields": {
           "Pattern": "Mönster",
@@ -524,6 +558,7 @@
         }
       },
       "Renamer": {
+        "Label": "Filnamn",
         "Description": "Ändrar namnet på arbetsfilen.\nVariabler kan användas genom att skriva '{' i mönstret.",
         "Fields": {
           "CsvFile": "CSV-fil",
@@ -540,6 +575,7 @@
         }
       },
       "ReplaceOriginal": {
+        "Label": "Ersätt original",
         "Description": "Ersätter den ursprungliga filen med arbetsfilen.\n\nOm arbetsfilens filändelse är annorlunda kommer den ursprungliga filen att tas bort och arbetsfilen kommer att flyttas till den ursprungliga filen med den nya filändelsen.\nTill exempel, från File.avi till File.mkv",
         "Fields": {
           "PreserverOriginalDates": "Bevara Datum",
@@ -550,6 +586,7 @@
         }
       },
       "Reprocess": {
+        "Label": "Bearbeta igen",
         "Description": "Detta flödeselement gör det möjligt att behandla den ursprungliga bibliotekfilen igen med en annan behandlingsnod.\n\nOm samma behandlingsnod väljs som för närvarande bearbetas, kommer flödet att misslyckas.",
         "Fields": {
           "Node": "Nod",
@@ -619,6 +656,7 @@
         }
       },
       "Sleep": {
+        "Label": "Sov",
         "Description": "Pausar flödet",
         "Fields": {
           "Milliseconds": "Millisekunder",
@@ -629,6 +667,7 @@
         }
       },
       "Touch": {
+        "Label": "Rör vid",
         "Description": "Rör vid en fil eller mapp och sätter den sista skrivtiden till nu.",
         "Fields": {
           "FileName": "Filnamn",
@@ -639,6 +678,7 @@
         }
       },
       "Unpack": {
+        "Label": "Packa upp",
         "Description": "Gör att du kan packa upp ett arkiv (zip, rar, tar, etc.)",
         "Fields": {
           "DestinationPath": "Målmapp",
@@ -651,6 +691,7 @@
         }
       },
       "VariableMatch": {
+        "Label": "Variabelmatchning",
         "Description": "Kontrollerar om ett inmatningsvärde matchar en sparad variabel.",
         "Fields": {
           "Input": "Värde",
@@ -666,6 +707,7 @@
         }
       },
       "WebRequest": {
+        "Label": "Webbförfrågan",
         "Description": "Gör det möjligt att skicka en webbförfrågan",
         "Fields": {
           "Body": "Kropp",
@@ -687,6 +729,7 @@
         }
       },
       "WriteText": {
+        "Label": "Skriv text",
         "Description": "Skriver text till en fil",
         "Fields": {
           "File": "Fil",
@@ -699,6 +742,7 @@
         }
       },
       "Zip": {
+        "Label": "Zip",
         "Description": "Gör det möjligt att zippa indata",
         "Fields": {
           "DestinationFile": "Destinationfil",

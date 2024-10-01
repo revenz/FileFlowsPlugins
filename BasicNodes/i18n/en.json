@@ -29,9 +29,11 @@
         }
       },
       "CompleteFlow": {
+        "Label": "Complete Flow",
         "Description": "Completes/ends the flow as successful"
       },
       "CopyFile": {
+        "Label": "Copy File",
         "Description": "Copies a file to the destination folder",
         "Fields": {
           "AdditionalFiles": "Additional Files",
@@ -74,6 +76,7 @@
         }
       },
       "Delete": {
+        "Label": "Delete",
         "Description": "Deletes a file or folder",
         "Fields": {
           "FileName": "Path",
@@ -100,6 +103,7 @@
         }
       },
       "Executor": {
+        "Label": "Executor",
         "Description": "Execute the following process against the file.\nOutput 1: The process returned the success exit code\nOutput 2: The process return a non-successful exit code.",
         "Fields": {
           "Arguments": "Arguments",
@@ -124,6 +128,7 @@
         }
       },
       "FailFlow": {
+        "Label": "Fail Flow",
         "Description": "Fails a flow immediately, useful if you want a certain path to just fail.",
         "Fields": {
           "Reason": "Reason",
@@ -131,6 +136,7 @@
         }
       },
       "FileDateCompare": {
+        "Label": "File Date Compare",
         "Description": "Checks if the file creation or last write time matches the specified date constraint.",
         "Fields": {
           "Date": "Date",
@@ -144,6 +150,7 @@
         }
       },
       "FileExists": {
+        "Label": "File Exists",
         "Description": "Checks if a file exists\n\nOutput 1: File exists\nOutput 2: File does not exist",
         "Fields": {
           "FileName": "File Name",
@@ -155,6 +162,7 @@
         }
       },
       "FileExtension": {
+        "Label": "File Extension",
         "Description": "Checks if the file has one of the configured extensions.\n\nOutput 1: Matches\nOutput 2: Does not match",
         "Fields": {
           "Extensions": "Extensions",
@@ -166,6 +174,7 @@
         }
       },
       "FileSize": {
+        "Label": "File Size",
         "Description": "Checks if the file size matches the configured parameters. The values are in megabytes.\n\nOutput 1: Matches\nOutput 2: Does not match",
         "Fields": {
           "Comparison": "Comparison",
@@ -182,6 +191,7 @@
         }
       },
       "FileSizeCompare": {
+        "Label": "File Size Compare",
         "Description": "Checks if the file size has changed sized from the original file.",
         "Outputs": {
           "1": "Smaller than original",
@@ -190,9 +200,12 @@
         }
       },
       "FileSizeWithin": {
+        "Label": "File Size Within",
         "Description": "Checks if the new file size is within the allowed range of the original file size.",
-        "Value": "Value",
-        "Value-Help": "The difference allowed for the file size, this value can be either plus or minus this difference.",
+        "Fields": {
+          "Value": "Value",
+          "Value-Help": "The difference allowed for the file size, this value can be either plus or minus this difference."
+        },
         "Outputs": {
           "1": "File size is within allowed range",
           "2": "File size is not within allowed range"
@@ -213,6 +226,7 @@
         }
       },
       "FolderIterator": {
+        "Label": "Folder Iterator",
         "Description": "Iterates all files in a given folder and executes those files against a sub flow.",
         "Fields": {
           "Flow": "Flow",
@@ -251,6 +265,7 @@
         }
       },
       "GotoFlow": {
+        "Label": "Goto Flow",
         "Description": "This lets you switch to a different flow to process.  This flow will exit and the parameters and working file will be passed into the new Flow",
         "Fields": {
           "Flow": "Flow",
@@ -259,6 +274,7 @@
         }
       },
       "HasHardLinks": {
+        "Label": "Has Hard Links",
         "Description": "Checks if a file has hard links to it or not",
         "Fields": {
           "Count": "Count",
@@ -272,6 +288,7 @@
         }
       },
       "IfBoolean": {
+        "Label": "If Boolean",
         "Description": "Tests if a Variable is true or false",
         "Fields": {
           "Variable": "Variable",
@@ -283,6 +300,7 @@
         }
       },
       "IfString": {
+        "Label": "If String",
         "Description": "Tests if a Variable is matches a string",
         "Fields": {
           "Options": "Options",
@@ -306,18 +324,21 @@
         }
       },
       "InputFile": {
+        "Label": "Input File",
         "Description": "An input flow element for a file.  This is required and is the starting point of a flow.  Any input flow element can be used, just one is required.",
         "Outputs": {
           "1": "Library File"
         }
       },
       "InputFolder": {
+        "Label": "Input Folder",
         "Description": "An input flow element for a folder.  This will only work if the library using this flow is configured for folders.",
         "Outputs": {
           "1": "Library Folder"
         }
       },
       "IsDocker": {
+        "Label": "Is Docker",
         "Description": "Determines if this flow is running on Docker",
         "Outputs": {
           "1": "Is running on Docker",
@@ -325,6 +346,7 @@
         }
       },
       "IsFromLibrary": {
+        "Label": "Is From Library",
         "Description": "Checks if the file that is processing is from the specified library.",
         "Fields": {
           "Library": "Library",
@@ -336,6 +358,7 @@
         }
       },
       "IsLinux": {
+        "Label": "Is Linux",
         "Description": "Determines if this flow is running on Linux",
         "Outputs": {
           "1": "Is running on Linux",
@@ -351,6 +374,7 @@
         }
       },
       "IsProcessingOnNode": {
+        "Label": "Is Processing On Node",
         "Description": "Checks if the flow is currently processing on a specified processing node.",
         "Fields": {
           "Node": "Node",
@@ -362,6 +386,7 @@
         }
       },
       "IsWindows": {
+        "Label": "Is Windows",
         "Description": "Determines if this flow is running on Windows",
         "Outputs": {
           "1": "Is running on Windows",
@@ -369,6 +394,7 @@
         }
       },
       "ListIterator": {
+        "Label": "List Iterator",
         "Description": "Iterates all strings in a given list and executes those strings against a sub flow.",
         "Fields": {
           "Flow": "Flow",
@@ -381,6 +407,7 @@
         }
       },
       "Log": {
+        "Label": "Log",
         "Description": "Logs a message to the flow log",
         "Fields": {
           "LogType": "Type",
@@ -391,6 +418,7 @@
         }
       },
       "Matches": {
+        "Label": "Matches",
         "Description": "Compares a set of values and matches conditions to see which output should be called",
         "Fields": {
           "MatchConditions": "",
@@ -400,6 +428,7 @@
         }
       },
       "MatchesAll": {
+        "Label": "Matches All",
         "Description": "Compares a set of values and checks if all conditions match.",
         "Fields": {
           "MatchConditions": "",
@@ -413,6 +442,7 @@
         }
       },
       "MoveFile": {
+        "Label": "Move File",
         "Description": "Moves a file to the destination folder",
         "Fields": {
           "AdditionalFiles": "Additional Files",
@@ -439,6 +469,7 @@
         }
       },
       "MoveFolder": {
+        "Label": "Move Folder",
         "Description": "Moves a folder",
         "Fields": {
           "CreateSubfolder": "Create Subfolder",
@@ -453,6 +484,7 @@
         }
       },
       "OlderThan": {
+        "Label": "Older Than",
         "Description": "Checks if a folder is older than the range specified",
         "Fields": {
           "Date": "Date",
@@ -465,12 +497,14 @@
         }
       },
       "OriginalFile": {
+        "Label": "Original File",
         "Description": "Sets the current working file in the flow to the original file that started the flow",
         "Outputs": {
           "1": "Working file set to original file"
         }
       },
       "PatternMatch": {
+        "Label": "Pattern Match",
         "Description": "Tests the working file and original file against a regular expression.\n\nOutput 1: Matches expression\nOutput 2: Does not match",
         "Fields": {
           "Pattern": "Pattern",
@@ -524,6 +558,7 @@
         }
       },
       "Renamer": {
+        "Label": "Renamer",
         "Description": "Renames the working file.\nVariables can be used by entering the key '{' inside the Pattern field.",
         "Fields": {
           "CsvFile": "CSV File",
@@ -540,6 +575,7 @@
         }
       },
       "ReplaceOriginal": {
+        "Label": "Replace Original",
         "Description": "Replaces the original file with the working file.\n\nIf the extension is different on the working file, the original file will be deleted and the working file will be moved to the original with the new extension.\nE.g. from File.avi to File.mkv",
         "Fields": {
           "PreserverOriginalDates": "Preserve Dates",
@@ -550,6 +586,7 @@
         }
       },
       "Reprocess": {
+        "Label": "Reprocess",
         "Description": "The flow element allows you to reprocess the original library file with a different processing node.\n\n If the same processing node is selected as the one currently processing the file, the flow will fail.",
         "Fields": {
           "Node": "Node",
@@ -619,6 +656,7 @@
         }
       },
       "Sleep": {
+        "Label": "Sleep",
         "Description": "Pauses the flow",
         "Fields": {
           "Milliseconds": "Milliseconds",
@@ -629,6 +667,7 @@
         }
       },
       "Touch": {
+        "Label": "Touch",
         "Description": "Touches a file or directory and sets the last write time to now.",
         "Fields": {
           "FileName": "File Name",
@@ -639,6 +678,7 @@
         }
       },
       "Unpack": {
+        "Label": "Unpack",
         "Description": "Allows you to unpack an archive (zip, rar, tar, etc)",
         "Fields": {
           "DestinationPath": "Destination Folder",
@@ -651,6 +691,7 @@
         }
       },
       "VariableMatch": {
+        "Label": "Variable Match",
         "Description": "Tests if a input matches a stored Variable",
         "Fields": {
           "Input": "Value",
@@ -666,6 +707,7 @@
         }
       },
       "WebRequest": {
+        "Label": "Web Request",
         "Description": "Allows you to send a web request",
         "Fields": {
           "Body": "Body",
@@ -687,6 +729,7 @@
         }
       },
       "WriteText": {
+        "Label": "Write Text",
         "Description": "Writes text to a file",
         "Fields": {
           "File": "File",
@@ -699,6 +742,7 @@
         }
       },
       "Zip": {
+        "Label": "Zip",
         "Description": "Allows you to zip the input",
         "Fields": {
           "DestinationFile": "Destination File",

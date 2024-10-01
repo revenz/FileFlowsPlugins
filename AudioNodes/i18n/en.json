@@ -16,18 +16,21 @@
         }
       },
       "AudioFile": {
+        "Label": "Audio File",
         "Description": "An input Audio file that has had its Audio Information read and can be processed",
         "Outputs": {
           "1": "Audio file from library"
         }
       },
       "AudioFileNormalization": {
+        "Label": "Audio File Normalization",
         "Description": "Normalizes an audio file using two passes of FFMPEGs loudnorm filter",
         "Outputs": {
           "1": "Audio file normalized and saved to temporary file"
         }
       },
       "ConvertAudio": {
+        "Label": "Convert Audio",
         "Description": "Convert a Audio file to the specified audio codec",
         "Fields": {
           "Bitrate": "Bitrate",
@@ -53,6 +56,7 @@
         }
       },
       "ConvertToAAC": {
+        "Label": "Convert To AAC",
         "Description": "Convert a Audio file to AAC",
         "Fields": {
           "Bitrate": "Bitrate",
@@ -76,6 +80,7 @@
         }
       },
       "ConvertToFLAC": {
+        "Label": "Convert To FLAC",
         "Description": "Convert a Audio file to FLAC",
         "Fields": {
           "Bitrate": "Bitrate",
@@ -97,6 +102,7 @@
         }
       },
       "ConvertToMP3": {
+        "Label": "Convert To MP3",
         "Description": "Convert a Audio file to MP3",
         "Fields": {
           "Bitrate": "Bitrate",
@@ -118,6 +124,7 @@
         }
       },
       "ConvertToOGG": {
+        "Label": "Convert To OGG",
         "Description": "Convert a Audio file to OGG",
         "Fields": {
           "Bitrate": "Bitrate",
@@ -139,6 +146,7 @@
         }
       },
       "ConvertToWAV": {
+        "Label": "Convert To WAV",
         "Description": "Convert a Audio file to WAV",
         "Fields": {
           "Bitrate": "Bitrate",
@@ -160,6 +168,7 @@
         }
       },
       "CreateAudioBook": {
+        "Label": "Create Audio Book",
         "Description": "Creates a audio book from audio files found in input directory",
         "Fields": {
           "DeleteSourceFiles": "Delete Source Files",
@@ -175,6 +184,7 @@
         }
       },
       "EmbedArtwork": {
+        "Label": "EmbedArtwork",
         "Description": "Embeds artwork into an audio file",
         "Outputs": {
           "1": "Artwork found and embedded into the audio file",

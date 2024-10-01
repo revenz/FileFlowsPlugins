@@ -29,9 +29,11 @@
         }
       },
       "CompleteFlow": {
+        "Label": "Flow abschließen",
         "Description": "Beendet den Ablauf erfolgreich"
       },
       "CopyFile": {
+        "Label": "Datei kopieren",
         "Description": "Kopiert die Datei zum Zielverzeichnis",
         "Fields": {
           "AdditionalFiles": "Zusätzliche Dateien",
@@ -74,6 +76,7 @@
         }
       },
       "Delete": {
+        "Label": "Löschen",
         "Description": "Löscht eine Datei oder einen Ordner",
         "Fields": {
           "FileName": "Pfad",
@@ -100,6 +103,7 @@
         }
       },
       "Executor": {
+        "Label": "Prozess ausführen",
         "Description": "Execute the following process against the file.\nAusgang 1: The process returned the success exit code\nAusgang 2: The process return a non-successful exit code.",
         "Fields": {
           "Arguments": "Befehle",
@@ -124,6 +128,7 @@
         }
       },
       "FailFlow": {
+        "Label": "Flow fehlschlagen",
         "Description": "Lässt einen Flow sofort fehlschlagen. Dies ist nützlich, wenn ein bestimmter Pfad fehlschlägt.",
         "Fields": {
           "Reason": "Grund",
@@ -131,6 +136,7 @@
         }
       },
       "FileDateCompare": {
+        "Label": "Dateidatum vergleichen",
         "Description": "Überprüft, ob das Erstellungsdatum oder das letzte Änderungsdatum der Datei dem angegebenen Datumsbereich entspricht.",
         "Fields": {
           "Date": "Datum",
@@ -144,6 +150,7 @@
         }
       },
       "FileExists": {
+        "Label": "Datei existiert",
         "Description": "Prüft ob die Datei existiert.\n\nAusgang 1: Datei existiert\nAusgang 2: Datei nicht gefunden",
         "Fields": {
           "FileName": "Dateiname",
@@ -155,6 +162,7 @@
         }
       },
       "FileExtension": {
+        "Label": "Dateiendung",
         "Description": "Es wird überprüft ob die Datei eine bestimmte Endung hat.\n\nAusgang 1: Trifft zu\nAusgang 2: Trifft nicht zu",
         "Fields": {
           "Extensions": "Endungen",
@@ -166,6 +174,7 @@
         }
       },
       "FileSize": {
+        "Label": "Dateigröße",
         "Description": "Überprüft, ob die Dateigröße mit den konfigurierten Parametern übereinstimmt. Die Werte sind in Megabyte angegeben.\n\nAusgang 1: Trifft zu\nAusgang 2: Trifft nicht zu",
         "Fields": {
           "Comparison": "Vergleich",
@@ -182,6 +191,7 @@
         }
       },
       "FileSizeCompare": {
+        "Label": "Dateigröße vergleichen",
         "Description": "Überprüft, ob sich die Größe der Datei im Vergleich zur Originaldatei geändert hat.\n\nAusgang 1: Datei ist kleiner\nAusgang 2: Datei ist gleichgroß\nAusgang 3: Datei ist größer",
         "Outputs": {
           "1": "Kleiner als Originaldatei",
@@ -190,9 +200,12 @@
         }
       },
       "FileSizeWithin": {
+        "Label": "Dateigröße innerhalb",
         "Description": "Überprüft, ob die neue Dateigröße innerhalb des zulässigen Bereichs der ursprünglichen Dateigröße liegt.",
-        "Value": "Wert",
-        "Value-Help": "Der zulässige Unterschied für die Dateigröße, dieser Wert kann entweder plus oder minus diesen Unterschied sein.",
+        "Fields": {
+          "Value": "Wert",
+          "Value-Help": "Der zulässige Unterschied für die Dateigröße, dieser Wert kann entweder plus oder minus diesen Unterschied sein."
+        },
         "Outputs": {
           "1": "Die Dateigröße liegt im zulässigen Bereich",
           "2": "Die Dateigröße liegt nicht im zulässigen Bereich"
@@ -213,6 +226,7 @@
         }
       },
       "FolderIterator": {
+        "Label": "Ordner durchlaufen",
         "Description": "Durchläuft alle Dateien in einem bestimmten Ordner und führt diese Dateien in einem Unterfluss aus.",
         "Fields": {
           "Flow": "Flow",
@@ -251,6 +265,7 @@
         }
       },
       "GotoFlow": {
+        "Label": "Flow wechseln",
         "Description": "Dadurch können Sie zur Verarbeitung zu einem anderen Flow wechseln. Dieser Flow wird beendet und die Parameter und das Workingfile werden an den neuen Flow übergeben.",
         "Fields": {
           "Flow": "Flow",
@@ -259,6 +274,7 @@
         }
       },
       "HasHardLinks": {
+        "Label": "Harte Links",
         "Description": "Überprüft, ob eine Datei harte Links hat oder nicht.",
         "Fields": {
           "Count": "Anzahl",
@@ -272,6 +288,7 @@
         }
       },
       "IfBoolean": {
+        "Label": "Wenn Wahr",
         "Description": "Testet, ob eine Variable wahr oder falsch ist",
         "Fields": {
           "Variable": "Variable",
@@ -283,6 +300,7 @@
         }
       },
       "IfString": {
+        "Label": "Wenn Zeichenfolge",
         "Description": "Testet, ob eine Variable mit einer Zeichenfolge übereinstimmt.",
         "Fields": {
           "Options": "Optionen",
@@ -306,18 +324,21 @@
         }
       },
       "InputFile": {
+        "Label": "Eingabedatei",
         "Description": "Ein Imput für einzelne Dateien. Dies ist für einen Flow erforderlich. Es können mehrere Imputs genutzt werden, es ist jedoch nur einer erforderlich.",
         "Outputs": {
           "1": "Datei einfügen"
         }
       },
       "InputFolder": {
+        "Label": "Eingabeordner",
         "Description": "Ein Imput für einen Ordner. Dies funktioniert nur, wenn der Flow auf Ordner eingestellt ist.",
         "Outputs": {
           "1": "Ordner einfügen"
         }
       },
       "IsDocker": {
+        "Label": "Ist Docker",
         "Description": "Bestimmt, ob dieser Flow auf Docker läuft",
         "Outputs": {
           "1": "Läuft auf Docker",
@@ -325,6 +346,7 @@
         }
       },
       "IsFromLibrary": {
+        "Label": "Stammt aus Bibliothek",
         "Description": "Überprüft, ob die verarbeitete Datei aus der angegebenen Bibliothek stammt.",
         "Fields": {
           "Library": "Bibliothek",
@@ -336,6 +358,7 @@
         }
       },
       "IsLinux": {
+        "Label": "Ist Linux",
         "Description": "Bestimmt, ob dieser Flow unter Linux läuft.",
         "Outputs": {
           "1": "Läuft unter Linux",
@@ -351,6 +374,7 @@
         }
       },
       "IsProcessingOnNode": {
+        "Label": "Wird auf Knoten verarbeitet",
         "Description": "Überprüft, ob der Flow derzeit auf einem bestimmten Verarbeitungs-Knoten verarbeitet wird.",
         "Fields": {
           "Node": "Knoten",
@@ -362,6 +386,7 @@
         }
       },
       "IsWindows": {
+        "Label": "Ist Windows",
         "Description": "Bestimmt, ob dieser Flow unter Windows läuft.",
         "Outputs": {
           "1": "Läuft unter Windows",
@@ -369,6 +394,7 @@
         }
       },
       "ListIterator": {
+        "Label": "Liste durchlaufen",
         "Description": "Durchläuft alle Strings in einer gegebenen Liste und führt diese Strings gegen einen Unterfluss aus.",
         "Fields": {
           "Flow": "Flow",
@@ -381,6 +407,7 @@
         }
       },
       "Log": {
+        "Label": "Protokoll",
         "Description": "Protokolliert eine Nachricht im Flowlog",
         "Fields": {
           "LogType": "Typ",
@@ -391,6 +418,7 @@
         }
       },
       "Matches": {
+        "Label": "Übereinstimmungen",
         "Description": "Vergleicht eine Menge von Werten und prüft die Bedingungen, um zu sehen, welche Ausgabe aufgerufen werden soll.",
         "Fields": {
           "MatchConditions": "",
@@ -400,6 +428,7 @@
         }
       },
       "MatchesAll": {
+        "Label": "Alle Übereinstimmungen",
         "Description": "Vergleicht eine Menge von Werten und prüft, ob alle Bedingungen übereinstimmen.",
         "Fields": {
           "MatchConditions": "",
@@ -413,6 +442,7 @@
         }
       },
       "MoveFile": {
+        "Label": "Datei verschieben",
         "Description": "Verschiebt eine Datei in den Zielordner",
         "Fields": {
           "AdditionalFiles": "Zusätzliche Dateien",
@@ -439,6 +469,7 @@
         }
       },
       "MoveFolder": {
+        "Label": "Ordner verschieben",
         "Description": "Verschiebt einen Ordner",
         "Fields": {
           "CreateSubfolder": "Unterordner erstellen",
@@ -453,6 +484,7 @@
         }
       },
       "OlderThan": {
+        "Label": "Älter als",
         "Description": "Überprüft, ob eine Datei älter als der angegebene Bereich ist.",
         "Fields": {
           "Date": "Datum",
@@ -465,12 +497,14 @@
         }
       },
       "OriginalFile": {
+        "Label": "Originaldatei",
         "Description": "Setzt das aktuelle Workingfile im Flow auf die Originaldatei, mit dem der Flow gestartet hat.",
         "Outputs": {
           "1": "Originaldatei mit Workingfile ersetzen."
         }
       },
       "PatternMatch": {
+        "Label": "Musterübereinstimmung",
         "Description": "Testet das Workingfile und die Originaldatei anhand eines regulären Ausdrucks.\n\nAusgang 1: Entspricht dem Ausdruck\nAusgang 2: Entspricht nicht dem Ausdruck",
         "Fields": {
           "Pattern": "Muster",
@@ -482,6 +516,7 @@
         }
       },
       "PatternReplacer": {
+        "Label": "Musterersetzer",
         "Description": "Ermöglicht das Ersetzen des Dateinamens. Kann reguläre Ausdrücke für Ersetzungen oder einfache Zeichenfolgenersetzungen verwenden.\n\nAusgang 1: ausgetauscht\nAusgang 2: Nicht ausgetauscht",
         "Label": "Dateinamen-Musteraustausch",
         "Fields": {
@@ -524,6 +559,7 @@
         }
       },
       "Renamer": {
+        "Label": "Umbenennen",
         "Description": "Umbennenen des Workingfiles.\nVariablen können durch Eingabe des Zeichens „{“ im Feld „Muster“ verwenden.",
         "Fields": {
           "CsvFile": "CSV Datei",
@@ -540,6 +576,7 @@
         }
       },
       "ReplaceOriginal": {
+        "Label": "Original ersetzen",
         "Description": "Ersetzt die Originaldatei durch das Workingfile.\n\nWenn die Dateiendung des Workingfiles eine andere ist, wird die Originaldatei gelöscht und das Workingfiles mit der neuen Erweiterung in den Ordner der Originaldatei verschoben.\nZ.B von File.avi zu File.mkv",
         "Fields": {
           "PreserverOriginalDates": "Zeitstempel übernehmen",
@@ -550,6 +587,7 @@
         }
       },
       "Reprocess": {
+        "Label": "Erneut verarbeiten",
         "Description": "Das Fluss-Element ermöglicht es Ihnen, die ursprüngliche Bibliotheksdatei mit einem anderen Verarbeitungsnode erneut zu verarbeiten.\n\n Wenn derselbe Verarbeitungsnode ausgewählt wird, der derzeit die Datei verarbeitet, schlägt der Fluss fehl.",
         "Fields": {
           "Node": "Node",
@@ -619,6 +657,7 @@
         }
       },
       "Sleep": {
+        "Label": "Schlafen",
         "Description": "Unterbricht den Flow",
         "Fields": {
           "Milliseconds": "Millisekunden",
@@ -629,6 +668,7 @@
         }
       },
       "Touch": {
+        "Label": "Touch",
         "Description": "Toucht eine Datei oder ein Verzeichnis und setzt die letzte Schreibzeit auf „Jetzt“.",
         "Fields": {
           "FileName": "Dateiname",
@@ -639,6 +679,7 @@
         }
       },
       "Unpack": {
+        "Label": "Entpacken",
         "Description": "Ermöglicht das Entpacken eines Archivs. (zip, rar, tar, ect.)",
         "Fields": {
           "DestinationPath": "Zielordner",
@@ -651,6 +692,7 @@
         }
       },
       "VariableMatch": {
+        "Label": "Variable übereinstimmen",
         "Description": "Testet, ob eine Eingabe mit einer gespeicherten Variablen übereinstimmt",
         "Fields": {
           "Input": "Eingang",
@@ -666,6 +708,7 @@
         }
       },
       "WebRequest": {
+        "Label": "Webanfrage",
         "Description": "Ermöglicht das Senden einer Webanfrage",
         "Fields": {
           "Body": "Body",
@@ -687,6 +730,7 @@
         }
       },
       "WriteText": {
+        "Label": "Text schreiben",
         "Description": "Schreibt Text in eine Datei",
         "Fields": {
           "File": "Datei",
@@ -699,6 +743,7 @@
         }
       },
       "Zip": {
+        "Label": "Zip",
         "Description": "Ermöglicht Ihnen, die Datei zu komprimieren",
         "Fields": {
           "DestinationFile": "Zieldatei",

@@ -16,18 +16,21 @@
         }
       },
       "AudioFile": {
+        "Label": "Ljudfil",
         "Description": "En inmatningsljudfil som har läst sin ljudinformation och kan bearbetas",
         "Outputs": {
           "1": "Ljudfil från bibliotek"
         }
       },
       "AudioFileNormalization": {
+        "Label": "Ljudfil Normalisering",
         "Description": "Normaliserar en ljudfil med hjälp av två pass av FFMPEG:s loudnorm-filter",
         "Outputs": {
           "1": "Ljudfil normaliserad och sparad i tillfällig fil"
         }
       },
       "ConvertAudio": {
+        "Label": "Konvertera ljud",
         "Description": "Konvertera en ljudfil till den specificerade ljudkodningen",
         "Fields": {
           "Bitrate": "Bitrate",
@@ -53,6 +56,7 @@
         }
       },
       "ConvertToAAC": {
+        "Label": "Konvertera till AAC",
         "Description": "Konvertera en ljudfil till AAC",
         "Fields": {
           "Bitrate": "Bitrate",
@@ -76,6 +80,7 @@
         }
       },
       "ConvertToFLAC": {
+        "Label": "Konvertera till FLAC",
         "Description": "Konvertera en ljudfil till FLAC",
         "Fields": {
           "Bitrate": "Bitrate",
@@ -97,6 +102,7 @@
         }
       },
       "ConvertToMP3": {
+        "Label": "Konvertera till MP3",
         "Description": "Konvertera en ljudfil till MP3",
         "Fields": {
           "Bitrate": "Bitrate",
@@ -118,6 +124,7 @@
         }
       },
       "ConvertToOGG": {
+        "Label": "Konvertera till OGG",
         "Description": "Konvertera en ljudfil till OGG",
         "Fields": {
           "Bitrate": "Bitrate",
@@ -139,6 +146,7 @@
         }
       },
       "ConvertToWAV": {
+        "Label": "Konvertera till WAV",
         "Description": "Konvertera en ljudfil till WAV",
         "Fields": {
           "Bitrate": "Bitrate",
@@ -160,6 +168,7 @@
         }
       },
       "CreateAudioBook": {
+        "Label": "Skapa ljudbok",
         "Description": "Skapar en ljudbok från ljudfiler som finns i inmatningskatalogen",
         "Fields": {
           "DeleteSourceFiles": "Ta bort källfiler",
@@ -175,6 +184,7 @@
         }
       },
       "EmbedArtwork": {
+        "Label": "Bädda in omslagsbild",
         "Description": "Infogar omslagsbild i en ljudfil",
         "Outputs": {
           "1": "Omslagsbild hittad och infogad i ljudfilen",

@@ -16,18 +16,21 @@
         }
       },
       "AudioFile": {
+        "Label": "オーディオファイル",
         "Description": "オーディオ情報が読み取られ、処理可能な入力オーディオファイル",
         "Outputs": {
           "1": "ライブラリからのオーディオファイル"
         }
       },
       "AudioFileNormalization": {
+        "Label": "オーディオファイルの正規化",
         "Description": "FFMPEGのloudnormフィルターを使用してオーディオファイルを二重処理します。",
         "Outputs": {
           "1": "正規化されたオーディオファイルが一時ファイルとして保存されました"
         }
       },
       "ConvertAudio": {
+        "Label": "オーディオの変換",
         "Description": "指定されたオーディオコーデックにオーディオファイルを変換します。",
         "Fields": {
           "Bitrate": "ビットレート",
@@ -53,6 +56,7 @@
         }
       },
       "ConvertToAAC": {
+        "Label": "AACへの変換",
         "Description": "オーディオファイルをAACに変換します。",
         "Fields": {
           "Bitrate": "ビットレート",
@@ -76,6 +80,7 @@
         }
       },
       "ConvertToFLAC": {
+        "Label": "FLACへの変換",
         "Description": "音声ファイルをFLACに変換します",
         "Fields": {
           "Bitrate": "ビットレート",
@@ -97,6 +102,7 @@
         }
       },
       "ConvertToMP3": {
+        "Label": "MP3への変換",
         "Description": "音声ファイルをMP3に変換します",
         "Fields": {
           "Bitrate": "ビットレート",
@@ -118,6 +124,7 @@
         }
       },
       "ConvertToOGG": {
+        "Label": "OGGへの変換",
         "Description": "音声ファイルをOGGに変換します",
         "Fields": {
           "Bitrate": "ビットレート",
@@ -139,6 +146,7 @@
         }
       },
       "ConvertToWAV": {
+        "Label": "WAVへの変換",
         "Description": "音声ファイルをWAVに変換します",
         "Fields": {
           "Bitrate": "ビットレート",
@@ -160,6 +168,7 @@
         }
       },
       "CreateAudioBook": {
+        "Label": "オーディオブックの作成",
         "Description": "入力ディレクトリ内の音声ファイルからオーディオブックを作成します",
         "Fields": {
           "DeleteSourceFiles": "ソースファイルを削除",
@@ -175,6 +184,7 @@
         }
       },
       "EmbedArtwork": {
+        "Label": "アートワークの埋め込み",
         "Description": "音声ファイルにアートワークを埋め込みます",
         "Outputs": {
           "1": "アートワークが見つかり、音声ファイルに埋め込まれました",

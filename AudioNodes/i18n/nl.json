@@ -16,18 +16,21 @@
         }
       },
       "AudioFile": {
+        "Label": "Audiobestand",
         "Description": "Een invoer audiobestand waarvan de audio-informatie is gelezen en dat kan worden verwerkt.",
         "Outputs": {
           "1": "Audiobestand uit bibliotheek"
         }
       },
       "AudioFileNormalization": {
+        "Label": "Audiobestand normaliseren",
         "Description": "Normaliseert een audiobestand met behulp van twee passes van de loudnorm-filter van FFMPEG.",
         "Outputs": {
           "1": "Audiobestand genormaliseerd en opgeslagen in tijdelijk bestand"
         }
       },
       "ConvertAudio": {
+        "Label": "Converteer audio",
         "Description": "Converteer een audiobestand naar de opgegeven audio-codec",
         "Fields": {
           "Bitrate": "Bitrate",
@@ -53,6 +56,7 @@
         }
       },
       "ConvertToAAC": {
+        "Label": "Converteer naar AAC",
         "Description": "Converteer een audiobestand naar AAC",
         "Fields": {
           "Bitrate": "Bitrate",
@@ -76,6 +80,7 @@
         }
       },
       "ConvertToFLAC": {
+        "Label": "Converteer naar FLAC",
         "Description": "Converteer een audiobestand naar FLAC",
         "Fields": {
           "Bitrate": "Bitrate",
@@ -97,6 +102,7 @@
         }
       },
       "ConvertToMP3": {
+        "Label": "Converteer naar MP3",
         "Description": "Converteer een audiobestand naar MP3",
         "Fields": {
           "Bitrate": "Bitrate",
@@ -118,6 +124,7 @@
         }
       },
       "ConvertToOGG": {
+        "Label": "Converteer naar OGG",
         "Description": "Converteer een audiobestand naar OGG",
         "Fields": {
           "Bitrate": "Bitrate",
@@ -139,6 +146,7 @@
         }
       },
       "ConvertToWAV": {
+        "Label": "Converteer naar WAV",
         "Description": "Converteer een audiobestand naar WAV",
         "Fields": {
           "Bitrate": "Bitrate",
@@ -160,6 +168,7 @@
         }
       },
       "CreateAudioBook": {
+        "Label": "Audioboek maken",
         "Description": "Maakt een audioboek van audiobestanden die in de invoermap zijn gevonden",
         "Fields": {
           "DeleteSourceFiles": "Bronbestanden Verwijderen",
@@ -175,6 +184,7 @@
         }
       },
       "EmbedArtwork": {
+        "Label": "Artwork insluiten",
         "Description": "Voegt artwork toe aan een audiobestand",
         "Outputs": {
           "1": "Artwork gevonden en toegevoegd aan het audiobestand",
