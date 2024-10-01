@@ -18,6 +18,7 @@
     "Parts": {
       "AudioToVideo": {
         "Description": "Konvertiert eine Audiodatei in eine Videodatei und erzeugt ein Video auf der Grundlage des Audios.",
+        "Label": "Audio zu Video",
         "Fields": {
           "Codec": "Codec",
           "Color": "Farbe",
@@ -32,6 +33,7 @@
       },
       "CanUseHardwareEncoding": {
         "Description": "Prüft, ob der angegebene Hardware-Encoder derzeit für den Flow verfügbar ist.",
+        "Label": "Kann Hardware-Encoding verwenden",
         "Fields": {
           "Encoder": "Encoder",
           "Encoder-Help": "Der zu überprüfende Hardware-Decoder"
@@ -39,6 +41,7 @@
       },
       "ComskipRemoveAds": {
         "Description": "Verwendet eine EDL-Datei von comskip und entfernt Werbespots mit dieser Datei.",
+        "Label": "Comskip Werbung entfernen",
         "Fields": {
           "RunComskipIfNoEdl": "Starte Comskip",
           "RunComskipIfNoEdl-Help": "Führen Sie comskip gegen die Datei aus, wenn keine comskip (EDL)-Datei gefunden wird."
@@ -817,6 +820,7 @@
       },
       "ReadVideoInfo": {
         "Description": "Liest die Videoinformationen aus der aktuellen Arbeitsdatei und aktualisiert die vi-Variablen.",
+        "Label": "Video-Informationen lesen",
         "Outputs": {
           "1": "Die Datei ist eine Videodatei und die Informationen wurden in den Flow eingetragen",
           "2": "Datei war keine Videodatei oder konnte nicht gelesen werden"
@@ -824,6 +828,7 @@
       },
       "SubtitleExtractor": {
         "Description": "Extrahiert eine einzelne Untertitelspur und speichert sie am Zielort.  Es können die Formate srt, ass und ssa extrahiert werden.\nDie Arbeitsdatei wird NICHT aktualisiert und bleibt mit der Eingabedatei identisch.\n\nAusgabe 1: Untertitel wurden extrahiert\nAusgabe 2: Keine Untertitel zum Extrahieren gefunden.",
+        "Label": "Untertitel-Extraktor",
         "Fields": {
           "ExtractAll": "Alle Entpacken",
           "ExtractAll-Help": "Wenn alle passenden Untertitel extrahiert werden sollen.",
@@ -877,6 +882,7 @@
       },
       "VideoDuration": {
         "Description": "Überprüft, ob die Dauer des Videos den angegebenen Parametern entspricht.",
+        "Label": "Videodauer",
         "Fields": {
           "Match": "Übereinstimmung",
           "ValueHigh": " ",
@@ -889,6 +895,7 @@
       },
       "VideoDurationCompare": {
         "Description": "Vergleicht die ursprüngliche Dauer eines Videos mit seiner finalen Dauer.",
+        "Label": "Videodauer vergleichen",
         "Fields": {
           "AllowedDifference": "Erlaubte Differenz",
           "AllowedDifference-Help": "Die erlaubte Zeitdifferenz zwischen der ursprünglichen Dauer des Videos und der finalen Dauer."
@@ -928,6 +935,7 @@
       },
       "VideoFile": {
         "Description": "Eine Eingangsvideodatei, deren Videoinformationen gelesen wurden und die verarbeitet werden kann.",
+        "Label": "Videodatei",
         "Fields": {
           "AnalyzeDuration": "Dauer analysieren",
           "AnalyzeDuration-Help": "Geben Sie an, wie viele Sekunden analysiert werden, um die Eingabe zu prüfen",
