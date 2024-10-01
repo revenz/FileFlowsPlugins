@@ -2,6 +2,7 @@
   "Flow": {
     "Parts": {
       "PlexAnalyze": {
+        "Label": "Plex Analyze",
         "Description": "Sends a message to a Plex server to analyze the working file. \nThe working file must already be known to Plex for this to work.",
         "Fields": {
           "AccessToken": "Access Token",
@@ -20,6 +21,7 @@
         }
       },
       "PlexUpdater": {
+        "Label": "Plex Update",
         "Description": "Sends a message to a Plex server to update the library.",
         "Fields": {
           "AccessToken": "Access Token",
