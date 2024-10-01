@@ -17,8 +17,8 @@
   "Flow": {
     "Parts": {
       "AudioToVideo": {
-        "Label": "Audio vers Vidéo",
         "Description": "Convertit un fichier audio en un fichier vidéo et génère une vidéo basée sur l'audio",
+        "Label": "Audio vers Vidéo",
         "Fields": {
           "Codec": "Codec",
           "Color": "Couleur",
@@ -32,16 +32,16 @@
         }
       },
       "CanUseHardwareEncoding": {
-        "Label": "Peut Utiliser l'Encodage Matériel",
         "Description": "Vérifie si l'encodeur matériel spécifié est actuellement disponible pour le flux.",
+        "Label": "Peut Utiliser l'Encodage Matériel",
         "Fields": {
           "Encoder": "Encodeur",
           "Encoder-Help": "L'encodeur matériel à vérifier"
         }
       },
       "ComskipRemoveAds": {
-        "Label": "Comskip: Supprimer les Publicités",
         "Description": "Utilise un fichier EDL comskip et supprimera les publicités en utilisant ce fichier.",
+        "Label": "Comskip: Supprimer les Publicités",
         "Fields": {
           "RunComskipIfNoEdl": "Exécuter Comskip",
           "RunComskipIfNoEdl-Help": "Exécuter comskip contre le fichier si aucun fichier comskip (EDL) n'est trouvé."
@@ -819,16 +819,16 @@
         }
       },
       "ReadVideoInfo": {
-        "Label": "Lire les Informations Vidéo",
         "Description": "Lit les informations vidéo du fichier de travail actuel et met à jour les variables vi.",
+        "Label": "Lire les Informations Vidéo",
         "Outputs": {
           "1": "Le fichier était un fichier vidéo et les informations ont été lues dans le flux",
           "2": "Le fichier n'était pas un fichier vidéo ou n'a pas pu être lu"
         }
       },
       "SubtitleExtractor": {
-        "Label": "Extracteur de Sous-titres",
         "Description": "Extrait une seule piste de sous-titres et la sauvegarde à la destination. Peut extraire les formats srt, ass et ssa.\nCela NE metTRA PAS à jour le fichier de travail et gardera le fichier de travail identique au fichier d'entrée.\n\nSortie 1: Sous-titres extraits\nSortie 2: Aucun sous-titre trouvé à extraire",
+        "Label": "Extracteur de Sous-titres",
         "Fields": {
           "ExtractAll": "Extraire Tout",
           "ExtractAll-Help": "Si tous les sous-titres correspondants doivent être extraits.",
@@ -850,7 +850,7 @@
           "2": "Aucun sous-titre extrait"
         }
       },
-      "VideoAlreadyProcessed": {        
+      "VideoAlreadyProcessed": {
         "Description": "Teste si un fichier vidéo a déjà été traité par FileFlows",
         "Label": "Vidéo Déjà Traité",
         "Outputs": {
@@ -881,8 +881,8 @@
         }
       },
       "VideoDuration": {
-        "Label": "Durée de la Vidéo",
         "Description": "Vérifie si la durée de la vidéo correspond aux paramètres donnés.",
+        "Label": "Durée de la Vidéo",
         "Fields": {
           "Match": "Correspondance",
           "ValueHigh": " ",
@@ -894,8 +894,8 @@
         }
       },
       "VideoDurationCompare": {
-        "Label": "Comparer la Durée de la Vidéo",
         "Description": "Compare la durée originale d'une vidéo avec sa durée finale.",
+        "Label": "Comparer la Durée de la Vidéo",
         "Fields": {
           "AllowedDifference": "Différence Autorisée",
           "AllowedDifference-Help": "La différence de temps autorisée entre la durée originale de la vidéo et la durée finale."
@@ -934,8 +934,8 @@
         }
       },
       "VideoFile": {
-        "Label": "Fichier Vidéo",
         "Description": "Un fichier vidéo d'entrée dont les informations vidéo ont été lues et qui peut être traité",
+        "Label": "Fichier Vidéo",
         "Fields": {
           "AnalyzeDuration": "Durée d'analyse",
           "AnalyzeDuration-Help": "Spécifiez combien de secondes sont analysées pour sonder l'entrée",

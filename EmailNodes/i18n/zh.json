@@ -2,8 +2,8 @@
   "Flow": {
     "Parts": {
       "SendEmail": {
-        "Label": "发送电子邮件",
         "Description": "使用配置的SMTP服务器发送电子邮件",
+        "Label": "发送电子邮件",
         "Fields": {
           "Body": "正文",
           "Body-Help": "要发送的电子邮件内容。使用 [scriban](https://github.com/scriban/scriban) 模板语言",

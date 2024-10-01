@@ -2,8 +2,8 @@
   "Flow": {
     "Parts": {
       "EmbyUpdater": {
-        "Label": "Uppdatera Emby-bibliotek",
         "Description": "Skickar ett meddelande till en Emby-server för att uppdatera biblioteket.",
+        "Label": "Uppdatera Emby-bibliotek",
         "Fields": {
           "AccessToken": "Åtkomsttoken",
           "AccessToken-Help": "Ett Emby API-åtkomsttoken.\nObservera: Sätt endast detta om du vill åsidosätta plugin-inställningarnas åtkomsttoken.",

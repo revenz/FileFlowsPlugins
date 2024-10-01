@@ -2,8 +2,8 @@
   "Flow": {
     "Parts": {
       "AutoCropImage": {
-        "Label": "Auto Crop Image"
         "Description": "Automatically crops an image",
+        "Label": "Auto Crop Image",
         "Fields": {
           "Format": "Format",
           "Format-Help": "The image format to convert to",
@@ -16,15 +16,15 @@
         }
       },
       "ImageFile": {
-        "Label": "Image File",
         "Description": "An image file",
+        "Label": "Image File",
         "Outputs": {
           "1": "Image file"
         }
       },
       "ImageFlip": {
-        "Label": "Image Flip",
         "Description": "Flips an image",
+        "Label": "Image Flip",
         "Fields": {
           "Format": "Format",
           "Format-Help": "The image format to convert to",
@@ -36,8 +36,8 @@
         }
       },
       "ImageFormat": {
-        "Label": "Image Format",
         "Description": "Converts an image to the specified format",
+        "Label": "Image Format",
         "Fields": {
           "Format": "Format",
           "Format-Help": "The image format to convert to"
@@ -48,24 +48,24 @@
         }
       },
       "ImageIsLandscape": {
-        "Label": "Image Is Landscape",
         "Description": "Test if an image is landscape",
+        "Label": "Image Is Landscape",
         "Outputs": {
           "1": "Image is landscape",
           "2": "Image is not landscape"
         }
       },
       "ImageIsPortrait": {
-        "Label": "Image Is Portrait",
         "Description": "Test if an image is portrait",
+        "Label": "Image Is Portrait",
         "Outputs": {
           "1": "Image is portrait",
           "2": "Image is not portrait"
         }
       },
       "ImageResizer": {
-        "Label": "Image Resizer",
         "Description": "Resizes an image",
+        "Label": "Image Resizer",
         "Fields": {
           "Format": "Format",
           "Format-Help": "The image format to convert to",
@@ -79,8 +79,8 @@
         }
       },
       "ImageRotate": {
-        "Label": "Image Rotate",
         "Description": "Rotates an image",
+        "Label": "Image Rotate",
         "Fields": {
           "Angle": "Angle",
           "Angle-Help": "The rotation angle",
@@ -92,8 +92,8 @@
         }
       },
       "IsImage": {
-        "Label": "Is Image",
         "Description": "Tests if a file is an image file.",
+        "Label": "Is Image",
         "Fields": {
           "File": "File",
           "File-Help": "Optional path to the file to check, if left blank then the current working file will be checked.",
@@ -105,8 +105,8 @@
         }
       },
       "PixelCheck": {
-        "Label": "Pixel Check",
         "Description": "This flow element verifies if an image's total pixel count exceeds the specified threshold.",
+        "Label": "Pixel Check",
         "Fields": {
           "Pixels": "Pixels",
           "Pixels-Help": "The number of pixels an image should contain.  This is calculated by the width of the image multiplied by its height."

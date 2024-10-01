@@ -2,8 +2,8 @@
   "Flow": {
     "Parts": {
       "ComicConverter": {
-        "Label": "コミックコンバーター",
         "Description": "コミックを別のコミックブックフォーマットに変換します。\n\nCBZ、CBR、CB7、PDF、GZ、BZ2からの変換をサポートします",
+        "Label": "コミックコンバーター",
         "Fields": {
           "Codec": "コーデック",
           "Codec-Help": "画像を保存するためのコーデック",
@@ -26,8 +26,8 @@
         }
       },
       "ComicExtractor": {
-        "Label": "コミックエクストラクター",
         "Description": "コミックブックフォーマットからすべてのファイルを抽出し、特定のフォルダーに保存します。\n\nCBZ、CBR、CB7、PDF、GZ、BZ2の抽出をサポートします",
+        "Label": "コミックエクストラクター",
         "Fields": {
           "DestinationPath": "宛先パス",
           "DestinationPath-Help": "抽出されたコミックブックファイルを保存するフォルダー"
@@ -37,8 +37,8 @@
         }
       },
       "CreateComicInfo": {
-        "Label": "コミック情報を作成",
         "Description": "コミックのパスを解析し、コミックブックアーカイブ内にcomicinfo.xmlファイルを作成します。",
+        "Label": "コミック情報を作成",
         "Fields": {
           "IssueDigits": "号数の桁数",
           "IssueDigits-Help": "この数値まで、号数を先頭にゼロでパディングします。\n例えば、号数が1でパディングが3の場合、号数は#001として表示されます",

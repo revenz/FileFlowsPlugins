@@ -2,8 +2,8 @@
   "Flow": {
     "Parts": {
       "AutoCropImage": {
-        "Label": "Automatisch bijsnijden van afbeelding",
         "Description": "Snijdt automatisch een afbeelding bij",
+        "Label": "Automatisch bijsnijden van afbeelding",
         "Fields": {
           "Format": "Formaat",
           "Format-Help": "Het afbeeldingsformaat om naar te converteren",
@@ -16,15 +16,15 @@
         }
       },
       "ImageFile": {
-        "Label": "Afbeeldingsbestand",
         "Description": "Een afbeeldingsbestand",
+        "Label": "Afbeeldingsbestand",
         "Outputs": {
           "1": "Afbeeldingsbestand"
         }
       },
       "ImageFlip": {
-        "Label": "Afbeelding omdraaien",
         "Description": "Draait een afbeelding om",
+        "Label": "Afbeelding omdraaien",
         "Fields": {
           "Format": "Formaat",
           "Format-Help": "Het afbeeldingsformaat om naar te converteren",
@@ -36,8 +36,8 @@
         }
       },
       "ImageFormat": {
-        "Label": "Afbeelding converteren",
         "Description": "Converteert een afbeelding naar het opgegeven formaat",
+        "Label": "Afbeelding converteren",
         "Fields": {
           "Format": "Formaat",
           "Format-Help": "Het afbeeldingsformaat om naar te converteren"
@@ -48,24 +48,24 @@
         }
       },
       "ImageIsLandscape": {
-        "Label": "Afbeelding is liggend",
         "Description": "Test of een afbeelding liggend is",
+        "Label": "Afbeelding is liggend",
         "Outputs": {
           "1": "Afbeelding is liggend",
           "2": "Afbeelding is niet liggend"
         }
       },
       "ImageIsPortrait": {
-        "Label": "Afbeelding is staand",
         "Description": "Test of een afbeelding staand is",
+        "Label": "Afbeelding is staand",
         "Outputs": {
           "1": "Afbeelding is staand",
           "2": "Afbeelding is niet staand"
         }
       },
       "ImageResizer": {
-        "Label": "Afbeelding resizen",
         "Description": "Wijzigt de grootte van een afbeelding",
+        "Label": "Afbeelding resizen",
         "Fields": {
           "Format": "Formaat",
           "Format-Help": "Het afbeeldingsformaat om naar te converteren",
@@ -79,8 +79,8 @@
         }
       },
       "ImageRotate": {
-        "Label": "Afbeelding draaien",
         "Description": "Draait een afbeelding",
+        "Label": "Afbeelding draaien",
         "Fields": {
           "Angle": "Hoek",
           "Angle-Help": "De rotatiehoek",
@@ -92,8 +92,8 @@
         }
       },
       "IsImage": {
-        "Label": "Is afbeelding",
         "Description": "Test of een bestand een afbeeldingsbestand is.",
+        "Label": "Is afbeelding",
         "Fields": {
           "File": "Bestand",
           "File-Help": "Optioneel pad naar het bestand om te controleren, als het leeg is, wordt het huidige werkbestand gecontroleerd.",
@@ -105,8 +105,8 @@
         }
       },
       "PixelCheck": {
-        "Label": "Pixelcontrole",
         "Description": "Dit stroomelement controleert of het totale aantal pixels van een afbeelding de opgegeven drempel overschrijdt.",
+        "Label": "Pixelcontrole",
         "Fields": {
           "Pixels": "Pixels",
           "Pixels-Help": "Het aantal pixels dat een afbeelding moet bevatten. Dit wordt berekend door de breedte van de afbeelding te vermenigvuldigen met de hoogte."

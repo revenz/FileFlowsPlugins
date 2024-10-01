@@ -17,8 +17,8 @@
   "Flow": {
     "Parts": {
       "AudioToVideo": {
-        "Label": "オーディオからビデオ",
         "Description": "オーディオファイルをビデオファイルに変換し、オーディオに基づいてビデオを生成します。",
+        "Label": "オーディオからビデオ",
         "Fields": {
           "Codec": "コーデック",
           "Color": "色",
@@ -32,16 +32,16 @@
         }
       },
       "CanUseHardwareEncoding": {
-        "Label": "ハードウェアエンコードを使用できるか",
         "Description": "指定されたハードウェアエンコーダーが現在フローで利用可能かどうかをチェックします。",
+        "Label": "ハードウェアエンコードを使用できるか",
         "Fields": {
           "Encoder": "エンコーダー",
           "Encoder-Help": "チェックするハードウェアデコーダー"
         }
       },
       "ComskipRemoveAds": {
-        "Label": "Comskip広告を削除",
         "Description": "comskip EDLファイルを使用し、そのファイルを使用してコマーシャルを削除します。",
+        "Label": "Comskip広告を削除",
         "Fields": {
           "RunComskipIfNoEdl": "Comskipを実行",
           "RunComskipIfNoEdl-Help": "comskip（EDL）ファイルが見つからない場合は、ファイルに対してcomskipを実行します。"
@@ -819,16 +819,16 @@
         }
       },
       "ReadVideoInfo": {
-        "Label": "動画情報を読み取る",
         "Description": "現在の作業ファイルから動画情報を読み取り、vi変数を更新します。",
+        "Label": "動画情報を読み取る",
         "Outputs": {
           "1": "ファイルは動画ファイルで、情報がフローに読み込まれました",
           "2": "ファイルは動画ファイルではないか、読み取りに失敗しました"
         }
       },
       "SubtitleExtractor": {
-        "Label": "字幕抽出",
         "Description": "単一の字幕トラックを抽出し、宛先に保存します。srt、ass、およびssa形式を抽出できます。\nこれにより、作業ファイルは更新されず、作業ファイルは入力ファイルと同じになります。\n\n出力1: 字幕が抽出されました\n出力2: 抽出する字幕が見つかりませんでした",
+        "Label": "字幕抽出",
         "Fields": {
           "ExtractAll": "すべて抽出",
           "ExtractAll-Help": "すべての一致する字幕を抽出する必要があるかどうか。",
@@ -851,7 +851,6 @@
         }
       },
       "VideoAlreadyProcessed": {
-        "Label": "動画は既に処理されています",
         "Description": "動画ファイルが既にFileFlowsによって処理されているかどうかをテストします。",
         "Label": "動画は既に処理されています",
         "Outputs": {
@@ -882,8 +881,8 @@
         }
       },
       "VideoDuration": {
-        "Label": "動画の長さ",
         "Description": "動画の長さが指定されたパラメータと一致するかどうかをテストします。",
+        "Label": "動画の長さ",
         "Fields": {
           "Match": "一致",
           "ValueHigh": " ",
@@ -895,8 +894,8 @@
         }
       },
       "VideoDurationCompare": {
-        "Label": "動画の長さ比較",
         "Description": "動画の元の長さと最終的な長さを比較します。",
+        "Label": "動画の長さ比較",
         "Fields": {
           "AllowedDifference": "許容される差",
           "AllowedDifference-Help": "動画の元の長さと最終的な長さの間で許可される時間の差。"
@@ -935,8 +934,8 @@
         }
       },
       "VideoFile": {
-        "Label": "ビデオファイル",
         "Description": "ビデオ情報が読み取られ、処理可能な入力ビデオファイル",
+        "Label": "ビデオファイル",
         "Fields": {
           "AnalyzeDuration": "分析時間",
           "AnalyzeDuration-Help": "入力を調べるために分析される秒数を指定します",

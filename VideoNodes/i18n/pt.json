@@ -17,8 +17,8 @@
   "Flow": {
     "Parts": {
       "AudioToVideo": {
-        "Label": "Áudio para Vídeo",
         "Description": "Converte um arquivo de áudio em um arquivo de vídeo e gera um vídeo baseado no áudio",
+        "Label": "Áudio para Vídeo",
         "Fields": {
           "Codec": "Codec",
           "Color": "Cor",
@@ -32,16 +32,16 @@
         }
       },
       "CanUseHardwareEncoding": {
-        "Label": "Pode Usar Codificação de Hardware",
         "Description": "Verifica se o codificador de hardware especificado está atualmente disponível para o fluxo.",
+        "Label": "Pode Usar Codificação de Hardware",
         "Fields": {
           "Encoder": "Codificador",
           "Encoder-Help": "O decodificador de hardware a ser verificado"
         }
       },
       "ComskipRemoveAds": {
-        "Label": "Comskip: Remover Comerciais",
         "Description": "Usa um arquivo EDL comskip e removerá os comerciais usando esse arquivo.",
+        "Label": "Comskip: Remover Comerciais",
         "Fields": {
           "RunComskipIfNoEdl": "Executar Comskip",
           "RunComskipIfNoEdl-Help": "Executar comskip contra o arquivo se nenhum arquivo comskip (EDL) for encontrado."
@@ -819,16 +819,16 @@
         }
       },
       "ReadVideoInfo": {
-        "Label": "Ler Informações do Vídeo",
         "Description": "Lê as informações do vídeo do arquivo de trabalho atual e atualiza as variáveis vi.",
+        "Label": "Ler Informações do Vídeo",
         "Outputs": {
           "1": "O arquivo era um arquivo de vídeo e as informações foram lidas no fluxo",
           "2": "O arquivo não era um arquivo de vídeo ou não pôde ser lido"
         }
       },
       "SubtitleExtractor": {
-        "Label": "Extrator de Legendas",
         "Description": "Extrai uma única faixa de legendas e a salva no destino. Pode extrair formatos srt, ass e ssa.\nIsto NÃO atualizará o arquivo de trabalho e manterá o arquivo de trabalho igual ao arquivo de entrada.\n\nSaída 1: Legendas foram extraídas\nSaída 2: Nenhuma legenda encontrada para extrair",
+        "Label": "Extrator de Legendas",
         "Fields": {
           "ExtractAll": "Extrair Todos",
           "ExtractAll-Help": "Se todos os subtítulos correspondentes devem ser extraídos.",
@@ -850,7 +850,7 @@
           "2": "Nenhuma legenda extraída"
         }
       },
-      "VideoAlreadyProcessed": {        
+      "VideoAlreadyProcessed": {
         "Description": "Testa se um arquivo de vídeo já foi processado pelo FileFlows",
         "Label": "Vídeo Já Processado",
         "Outputs": {
@@ -881,8 +881,8 @@
         }
       },
       "VideoDuration": {
-        "Label": "Duração do Vídeo",
         "Description": "Verifica se a duração do vídeo corresponde aos parâmetros dados.",
+        "Label": "Duração do Vídeo",
         "Fields": {
           "Match": "Correspondência",
           "ValueHigh": " ",
@@ -894,8 +894,8 @@
         }
       },
       "VideoDurationCompare": {
-        "Label": "Comparar Duração do Vídeo",
         "Description": "Compara a duração original de um vídeo com sua duração final.",
+        "Label": "Comparar Duração do Vídeo",
         "Fields": {
           "AllowedDifference": "Diferença Permitida",
           "AllowedDifference-Help": "A diferença de tempo permitida entre a duração original do vídeo e a duração final."
@@ -934,8 +934,8 @@
         }
       },
       "VideoFile": {
-        "Label": "Arquivo de Vídeo",
         "Description": "Um arquivo de vídeo de entrada que teve suas informações de vídeo lidas e pode ser processado",
+        "Label": "Arquivo de Vídeo",
         "Fields": {
           "AnalyzeDuration": "Duração da análise",
           "AnalyzeDuration-Help": "Especifique quantos segundos são analisados para sondar a entrada",

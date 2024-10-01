@@ -2,8 +2,8 @@
   "Flow": {
     "Parts": {
       "AutoCropImage": {
-        "Label": "Auto Crop Image",
         "Description": "Schneidet ein Bild automatisch zu",
+        "Label": "Auto Crop Image",
         "Fields": {
           "Format": "Format",
           "Format-Help": "Das Bildformat, in das konvertiert werden soll",
@@ -16,15 +16,15 @@
         }
       },
       "ImageFile": {
-        "Label": "Bild-Datei",
         "Description": "Eine Bilddatei",
+        "Label": "Bild-Datei",
         "Outputs": {
           "1": "Bilddatei"
         }
       },
       "ImageFlip": {
-        "Label": "Bild drehen",
         "Description": "Dreht ein Bild",
+        "Label": "Bild drehen",
         "Fields": {
           "Format": "Format",
           "Format-Help": "Das Bildformat, in das konvertiert werden soll",
@@ -36,8 +36,8 @@
         }
       },
       "ImageFormat": {
-        "Label": "Bildformat",
         "Description": "Konvertiert ein Bild in das angegebene Format",
+        "Label": "Bildformat",
         "Fields": {
           "Format": "Format",
           "Format-Help": "Das Bildformat, in das konvertiert werden soll"
@@ -48,24 +48,24 @@
         }
       },
       "ImageIsLandscape": {
-        "Label": "Bild ist Querformat",
         "Description": "Testet, ob ein Bild im Querformat ist",
+        "Label": "Bild ist Querformat",
         "Outputs": {
           "1": "Bild ist im Querformat",
           "2": "Bild ist nicht im Querformat"
         }
       },
       "ImageIsPortrait": {
-        "Label": "Bild ist Hochformat",
         "Description": "Testet, ob ein Bild im Hochformat ist",
+        "Label": "Bild ist Hochformat",
         "Outputs": {
           "1": "Bild ist im Hochformat",
           "2": "Bild ist nicht im Hochformat"
         }
       },
       "ImageResizer": {
-        "Label": "Bildgrößenänderung",
         "Description": "Ändert die Größe eines Bildes",
+        "Label": "Bildgrößenänderung",
         "Fields": {
           "Format": "Format",
           "Format-Help": "Das Bildformat, in das konvertiert werden soll",
@@ -79,8 +79,8 @@
         }
       },
       "ImageRotate": {
-        "Label": "Bild drehen",
         "Description": "Rotiert ein Bild",
+        "Label": "Bild drehen",
         "Fields": {
           "Angle": "Winkel",
           "Angle-Help": "Der Rotationswinkel",
@@ -92,8 +92,8 @@
         }
       },
       "IsImage": {
-        "Label": "Ist Bild",
         "Description": "Überprüft, ob eine Datei eine Bilddatei ist.",
+        "Label": "Ist Bild",
         "Fields": {
           "File": "Datei",
           "File-Help": "Optionaler Pfad zur zu überprüfenden Datei; wenn leer gelassen, wird die aktuelle Arbeitsdatei überprüft.",
@@ -105,8 +105,8 @@
         }
       },
       "PixelCheck": {
-        "Label": "Pixel-Check",
         "Description": "Diesesflow element überprüft, ob die Gesamtpixelanzahl eines Bildes die angegebene Schwelle überschreitet.",
+        "Label": "Pixel-Check",
         "Fields": {
           "Pixels": "Pixel",
           "Pixels-Help": "Die Anzahl der Pixel, die ein Bild enthalten sollte. Dies wird berechnet, indem die Breite des Bildes mit seiner Höhe multipliziert wird."

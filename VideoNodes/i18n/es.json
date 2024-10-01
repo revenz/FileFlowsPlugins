@@ -17,8 +17,8 @@
   "Flow": {
     "Parts": {
       "AudioToVideo": {
-        "Label": "Audio a Video",
         "Description": "Convierte un archivo de audio en un archivo de video y genera un video basado en el audio",
+        "Label": "Audio a Video",
         "Fields": {
           "Codec": "Codec",
           "Color": "Color",
@@ -32,16 +32,16 @@
         }
       },
       "CanUseHardwareEncoding": {
-        "Label": "¿Puede Usar Codificación de Hardware?",
         "Description": "Verifica si el codificador de hardware especificado está actualmente disponible para el flujo.",
+        "Label": "¿Puede Usar Codificación de Hardware?",
         "Fields": {
           "Encoder": "Codificador",
           "Encoder-Help": "El decodificador de hardware a verificar"
         }
       },
       "ComskipRemoveAds": {
-        "Label": "Comskip: Eliminar Comerciales",
         "Description": "Utiliza un archivo EDL de comskip y eliminará los comerciales utilizando ese archivo.",
+        "Label": "Comskip: Eliminar Comerciales",
         "Fields": {
           "RunComskipIfNoEdl": "Ejecutar Comskip",
           "RunComskipIfNoEdl-Help": "Ejecutar comskip contra el archivo si no se encuentra ningún archivo comskip (EDL)."
@@ -819,16 +819,16 @@
         }
       },
       "ReadVideoInfo": {
-        "Label": "Leer Información de Video",
         "Description": "Lee la información del video del archivo de trabajo actual y actualiza las variables vi.",
+        "Label": "Leer Información de Video",
         "Outputs": {
           "1": "El archivo era un archivo de video y la información se leyó en el flujo",
           "2": "El archivo no era un archivo de video o no se pudo leer"
         }
       },
       "SubtitleExtractor": {
-        "Label": "Extractor de Subtítulos",
         "Description": "Extrae una única pista de subtítulos y la guarda en la ubicación de destino. Puede extraer formatos srt, ass y ssa.\nEsto NO actualizará el archivo de trabajo y mantendrá el archivo de trabajo igual que el archivo de entrada.\n\nSalida 1: Se extrajeron subtítulos\nSalida 2: No se encontraron subtítulos para extraer",
+        "Label": "Extractor de Subtítulos",
         "Fields": {
           "ExtractAll": "Extraer Todos",
           "ExtractAll-Help": "Si se deben extraer todos los subtítulos coincidentes.",
@@ -881,8 +881,8 @@
         }
       },
       "VideoDuration": {
-        "Label": "Duración de Video",
         "Description": "Prueba si la duración del video coincide con los parámetros dados.",
+        "Label": "Duración de Video",
         "Fields": {
           "Match": "Coincidencia",
           "ValueHigh": " ",
@@ -894,8 +894,8 @@
         }
       },
       "VideoDurationCompare": {
-        "Label": "Comparar Duración de Video",
         "Description": "Compara la duración original de un video con su duración final.",
+        "Label": "Comparar Duración de Video",
         "Fields": {
           "AllowedDifference": "Diferencia Permitida",
           "AllowedDifference-Help": "La diferencia de tiempo permitida entre la duración original del video y la duración final."
@@ -934,8 +934,8 @@
         }
       },
       "VideoFile": {
-        "Label": "Archivo de Video",
         "Description": "Un archivo de video de entrada que ha tenido su información de video leída y que puede ser procesado",
+        "Label": "Archivo de Video",
         "Fields": {
           "AnalyzeDuration": "Duración de análisis",
           "AnalyzeDuration-Help": "Especifique cuántos segundos se analizan para sondear la entrada",

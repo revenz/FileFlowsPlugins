@@ -17,8 +17,8 @@
   "Flow": {
     "Parts": {
       "AudioToVideo": {
-        "Label": "Audio to Video",
         "Description": "Converts an audio file into a video file and generates a video based on the audio",
+        "Label": "Audio to Video",
         "Fields": {
           "Codec": "Codec",
           "Color": "Color",
@@ -32,16 +32,16 @@
         }
       },
       "CanUseHardwareEncoding": {
-        "Label": "Can Use Hardware Encoding",
         "Description": "Checks if the specified hardware encoder is currently available to the Flow.",
+        "Label": "Can Use Hardware Encoding",
         "Fields": {
           "Encoder": "Encoder",
           "Encoder-Help": "The hardware decoder to check"
         }
       },
       "ComskipRemoveAds": {
-        "Label": "Comskip Remove Ads",
         "Description": "Uses a comskip EDL file and will remove commercials using that file.",
+        "Label": "Comskip Remove Ads",
         "Fields": {
           "RunComskipIfNoEdl": "Run Comskip",
           "RunComskipIfNoEdl-Help": "Run comskip against the file if no comskip (EDL) file is found."
@@ -819,16 +819,16 @@
         }
       },
       "ReadVideoInfo": {
-        "Label": "Read Video Info",
         "Description": "Reads the video information from the current working file and updates the vi variables.",
+        "Label": "Read Video Info",
         "Outputs": {
           "1": "File was a video file and information read into flow",
           "2": "File was not a video file or failed to be read"
         }
       },
       "SubtitleExtractor": {
-        "Label": "Subtitle Extractor",
         "Description": "Extract a single subtitle tracks and saves it to the destination.  Can extract srt, ass, and ssa format.\nThis will NOT update the working file, and will keep the working file the same as the input file.\n\nOutput 1: Subtitles were extracted\nOutput 2: No subtitles found to extract",
+        "Label": "Subtitle Extractor",
         "Fields": {
           "ExtractAll": "Extract All",
           "ExtractAll-Help": "If all matching subtitles should be extracted.",
@@ -881,8 +881,8 @@
         }
       },
       "VideoDuration": {
-        "Label": "Video Duration",
         "Description": "Tests whether or not the duration of the video matches the given parameters.",
+        "Label": "Video Duration",
         "Fields": {
           "Match": "Match",
           "ValueHigh": " ",
@@ -894,8 +894,8 @@
         }
       },
       "VideoDurationCompare": {
-        "Label": "Video Duration Compare",
         "Description": "Compares the original duration of a video with its final duration.",
+        "Label": "Video Duration Compare",
         "Fields": {
           "AllowedDifference": "Allowed Difference",
           "AllowedDifference-Help": "The allowed time difference between the original duration of the video and the final duration."
@@ -934,8 +934,8 @@
         }
       },
       "VideoFile": {
-        "Label": "Video File",
         "Description": "An input video file that has had its Video Information read and can be processed",
+        "Label": "Video File",
         "Fields": {
           "AnalyzeDuration": "Analyze Duration",
           "AnalyzeDuration-Help": "Specify how many seconds are analyzed to probe the input",

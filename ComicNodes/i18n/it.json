@@ -2,8 +2,8 @@
   "Flow": {
     "Parts": {
       "ComicConverter": {
-        "Label": "Convertitore Fumetto",
         "Description": "Converte un fumetto in un diverso formato di fumetto.\n\nSupporta la conversione da CBZ, CBR, CB7, PDF, GZ, BZ2",
+        "Label": "Convertitore Fumetto",
         "Fields": {
           "Codec": "Codec",
           "Codec-Help": "Il codec per salvare le immagini come",
@@ -26,8 +26,8 @@
         }
       },
       "ComicExtractor": {
-        "Label": "Estrattore Fumetto",
         "Description": "Estrae tutti i file da un formato di fumetto e li salva in una cartella specifica.\n\nSupporta l'estrazione di CBZ, CBR, CB7, PDF, GZ, BZ2",
+        "Label": "Estrattore Fumetto",
         "Fields": {
           "DestinationPath": "Percorso di Destinazione",
           "DestinationPath-Help": "La cartella in cui salvare i file estratti del fumetto"
@@ -37,8 +37,8 @@
         }
       },
       "CreateComicInfo": {
-        "Label": "Crea ComicInfo",
         "Description": "Analizza il percorso di un fumetto e crea un file comicinfo.xml all'interno dell'archivio del fumetto.",
+        "Label": "Crea ComicInfo",
         "Fields": {
           "IssueDigits": "Cifre dell'Edizione",
           "IssueDigits-Help": "Riempirà il numero dell'edizione con zeri iniziali fino a questo importo.\nAd esempio, per l'edizione 1 se il riempimento è 3, allora l'edizione apparirà come #001",

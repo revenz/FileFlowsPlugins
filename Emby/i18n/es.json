@@ -2,8 +2,8 @@
   "Flow": {
     "Parts": {
       "EmbyUpdater": {
-        "Label": "Actualizador de Emby",
         "Description": "Envía un mensaje a un servidor Emby para actualizar la biblioteca.",
+        "Label": "Actualizador de Emby",
         "Fields": {
           "AccessToken": "Token de acceso",
           "AccessToken-Help": "Un token de acceso de la API de Emby.\nNota: Establezca esto solo si desea sobrescribir el token de acceso en la configuración del plugin.",

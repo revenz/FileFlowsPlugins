@@ -2,8 +2,8 @@
   "Flow": {
     "Parts": {
       "AutoCropImage": {
-        "Label": "自動トリミング",
         "Description": "画像を自動的にトリミングします",
+        "Label": "自動トリミング",
         "Fields": {
           "Format": "フォーマット",
           "Format-Help": "変換する画像のフォーマット",
@@ -16,15 +16,15 @@
         }
       },
       "ImageFile": {
-        "Label": "画像ファイル",
         "Description": "画像ファイル",
+        "Label": "画像ファイル",
         "Outputs": {
           "1": "画像ファイル"
         }
       },
       "ImageFlip": {
-        "Label": "画像を反転",
         "Description": "画像を反転します",
+        "Label": "画像を反転",
         "Fields": {
           "Format": "フォーマット",
           "Format-Help": "変換する画像のフォーマット",
@@ -36,8 +36,8 @@
         }
       },
       "ImageFormat": {
-        "Label": "画像をフォーマットに変換",
         "Description": "画像を指定されたフォーマットに変換します",
+        "Label": "画像をフォーマットに変換",
         "Fields": {
           "Format": "フォーマット",
           "Format-Help": "変換する画像のフォーマット"
@@ -48,24 +48,24 @@
         }
       },
       "ImageIsLandscape": {
-        "Label": "画像が横向きかどうか",
         "Description": "画像が横向きかどうかをテストします",
+        "Label": "画像が横向きかどうか",
         "Outputs": {
           "1": "画像は横向きです",
           "2": "画像は横向きではありません"
         }
       },
       "ImageIsPortrait": {
-        "Label": "画像が縦向きかどうか",
         "Description": "画像が縦向きかどうかをテストします",
+        "Label": "画像が縦向きかどうか",
         "Outputs": {
           "1": "画像は縦向きです",
           "2": "画像は縦向きではありません"
         }
       },
       "ImageResizer": {
-        "Label": "画像リサイズ",
         "Description": "画像のサイズを変更します",
+        "Label": "画像リサイズ",
         "Fields": {
           "Format": "フォーマット",
           "Format-Help": "変換する画像のフォーマット",
@@ -79,8 +79,8 @@
         }
       },
       "ImageRotate": {
-        "Label": "画像を回転",
         "Description": "画像を回転させます",
+        "Label": "画像を回転",
         "Fields": {
           "Angle": "角度",
           "Angle-Help": "回転角度",
@@ -92,8 +92,8 @@
         }
       },
       "IsImage": {
-        "Label": "画像かどうか",
         "Description": "ファイルが画像ファイルかどうかをテストします。",
+        "Label": "画像かどうか",
         "Fields": {
           "File": "ファイル",
           "File-Help": "確認するファイルへのオプションのパス。空白の場合は現在の作業ファイルが確認されます。",
@@ -105,8 +105,8 @@
         }
       },
       "PixelCheck": {
-        "Label": "ピクセルチェック",
         "Description": "このフロー要素は、画像の総ピクセル数が指定された閾値を超えているかどうかを確認します。",
+        "Label": "ピクセルチェック",
         "Fields": {
           "Pixels": "ピクセル",
           "Pixels-Help": "画像が含むべきピクセルの数。これは画像の幅と高さを掛け算したものです。"

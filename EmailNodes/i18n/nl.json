@@ -2,8 +2,8 @@
   "Flow": {
     "Parts": {
       "SendEmail": {
-        "Label": "Verzend e-mail",
         "Description": "Verzendt een e-mail met behulp van de geconfigureerde SMTP-server",
+        "Label": "Verzend e-mail",
         "Fields": {
           "Body": "Inhoud",
           "Body-Help": "De inhoud van het te verzenden e-mailbericht. Gebruikt de [scriban](https://github.com/scriban/scriban) sjablonentaal",

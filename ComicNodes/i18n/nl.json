@@ -2,8 +2,8 @@
   "Flow": {
     "Parts": {
       "ComicConverter": {
-        "Label": "Stripverhaal Converter",
         "Description": "Converteert een stripverhaal naar een ander stripboekformaat.\n\nOndersteunt het converteren van CBZ, CBR, CB7, PDF, GZ, BZ2",
+        "Label": "Stripverhaal Converter",
         "Fields": {
           "Codec": "Codec",
           "Codec-Help": "De codec om de afbeeldingen als op te slaan",
@@ -26,8 +26,8 @@
         }
       },
       "ComicExtractor": {
-        "Label": "Stripverhaal Extractor",
         "Description": "Extraheert alle bestanden uit een stripboekformaat en slaat ze op in een specifieke map.\n\nOndersteunt het extraheren van CBZ, CBR, CB7, PDF, GZ, BZ2",
+        "Label": "Stripverhaal Extractor",
         "Fields": {
           "DestinationPath": "Bestemming Pad",
           "DestinationPath-Help": "De map om de geëxtraheerde stripboekbestanden op te slaan"
@@ -37,8 +37,8 @@
         }
       },
       "CreateComicInfo": {
-        "Label": "Maak ComicInfo",
         "Description": "Parset het pad van een stripverhaal en maakt een comicinfo.xml-bestand aan in het stripboekarchief.",
+        "Label": "Maak ComicInfo",
         "Fields": {
           "IssueDigits": "Nummer Cijfers",
           "IssueDigits-Help": "Zal het nummer aanvullen met voorloopnullen tot dit aantal.\nBijvoorbeeld, voor nummer 1 als aanvulling 3 is, verschijnt het nummer als #001",

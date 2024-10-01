@@ -2,8 +2,8 @@
   "Flow": {
     "Parts": {
       "EmbyUpdater": {
-        "Label": "Emby 更新器",
         "Description": "向Emby服务器发送消息以更新库。",
+        "Label": "Emby 更新器",
         "Fields": {
           "AccessToken": "访问令牌",
           "AccessToken-Help": "Emby API 访问令牌。\n注意：仅在您想要覆盖插件设置的访问令牌时设置此项。",

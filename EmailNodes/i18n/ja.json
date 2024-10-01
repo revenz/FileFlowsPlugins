@@ -2,8 +2,8 @@
   "Flow": {
     "Parts": {
       "SendEmail": {
-        "Label": "メールを送信",
         "Description": "構成されたSMTPサーバーを使用してメールを送信します。",
+        "Label": "メールを送信",
         "Fields": {
           "Body": "本文",
           "Body-Help": "送信されるメールメッセージの内容。 [scriban](https://github.com/scriban/scriban) テンプレート言語を使用します。",

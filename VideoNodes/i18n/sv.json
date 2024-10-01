@@ -17,8 +17,8 @@
   "Flow": {
     "Parts": {
       "AudioToVideo": {
-        "Label": "Ljud till Video",
         "Description": "Konverterar en ljudfil till en videofil och genererar en video baserad på ljudet.",
+        "Label": "Ljud till Video",
         "Fields": {
           "Codec": "Codec",
           "Color": "Färg",
@@ -32,16 +32,16 @@
         }
       },
       "CanUseHardwareEncoding": {
-        "Label": "Kan använda hårdvaruavkodning",
         "Description": "Kontrollerar om den angivna hårdvaruavkodaren för närvarande är tillgänglig för flödet.",
+        "Label": "Kan använda hårdvaruavkodning",
         "Fields": {
           "Encoder": "Avkodare",
           "Encoder-Help": "Den hårdvaruavkodare som ska kontrolleras"
         }
       },
       "ComskipRemoveAds": {
-        "Label": "Comskip: Ta bort reklam",
         "Description": "Använder en comskip EDL-fil och tar bort reklam med hjälp av den filen.",
+        "Label": "Comskip: Ta bort reklam",
         "Fields": {
           "RunComskipIfNoEdl": "Kör Comskip",
           "RunComskipIfNoEdl-Help": "Kör comskip mot filen om ingen comskip (EDL) fil hittas."
@@ -819,16 +819,16 @@
         }
       },
       "ReadVideoInfo": {
-        "Label": "Läs videoinformation",
         "Description": "Läser videoinformation från den aktuella arbetsfilen och uppdaterar vi-variablerna.",
+        "Label": "Läs videoinformation",
         "Outputs": {
           "1": "Fil var en videofil och information lästes in i flödet",
           "2": "Fil var inte en videofil eller kunde inte läsas"
         }
       },
       "SubtitleExtractor": {
-        "Label": "Undertextsextraktor",
         "Description": "Extraherar en enda undertextspår och sparar den till destinationen. Kan extrahera srt, ass och ssa-format.\nDetta kommer INTE att uppdatera arbetsfilen och kommer att hålla arbetsfilen densamma som ingångsfilen.\n\nUtdata 1: Undertexter extraherade\nUtdata 2: Inga undertexter hittades för att extrahera",
+        "Label": "Undertextsextraktor",
         "Fields": {
           "ExtractAll": "Extrahera alla",
           "ExtractAll-Help": "Om alla matchande undertexter ska extraheras.",
@@ -881,8 +881,8 @@
         }
       },
       "VideoDuration": {
-        "Label": "Videovaraktighet",
         "Description": "Testar om varaktigheten av videon matchar de angivna parametrarna.",
+        "Label": "Videovaraktighet",
         "Fields": {
           "Match": "Matcha",
           "ValueHigh": " ",
@@ -894,8 +894,8 @@
         }
       },
       "VideoDurationCompare": {
-        "Label": "Jämför videovaraktighet",
         "Description": "Jämför den ursprungliga varaktigheten av en video med dess slutliga varaktighet.",
+        "Label": "Jämför videovaraktighet",
         "Fields": {
           "AllowedDifference": "Tillåten skillnad",
           "AllowedDifference-Help": "Den tillåtna tidskillnaden mellan videons ursprungliga varaktighet och den slutliga varaktigheten."
@@ -934,8 +934,8 @@
         }
       },
       "VideoFile": {
-        "Label": "Videofil",
         "Description": "En inmatningsvideofil som har fått sin videoinformation läst och kan bearbetas",
+        "Label": "Videofil",
         "Fields": {
           "AnalyzeDuration": "Analysera Varaktighet",
           "AnalyzeDuration-Help": "Ange hur många sekunder som analyseras för att undersöka inmatningen",

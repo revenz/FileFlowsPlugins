@@ -2,8 +2,8 @@
   "Flow": {
     "Parts": {
       "EmbyUpdater": {
-        "Label": "Emby Updater",
         "Description": "Sends a message to a Emby server to update the library.",
+        "Label": "Emby Updater",
         "Fields": {
           "AccessToken": "Access Token",
           "AccessToken-Help": "An Emby API access token.\nNote: Only set this if you want to override the plugin settings access token.",

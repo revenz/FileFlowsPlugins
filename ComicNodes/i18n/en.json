@@ -2,8 +2,8 @@
   "Flow": {
     "Parts": {
       "ComicConverter": {
-        "Label": "Comic Converter",
         "Description": "Converts a comic to a different comic book format.\n\nSupports converting from CBZ, CBR, CB7, PDF, GZ, BZ2",
+        "Label": "Comic Converter",
         "Fields": {
           "Codec": "Codec",
           "Codec-Help": "The codec to save the images as",
@@ -26,8 +26,8 @@
         }
       },
       "ComicExtractor": {
-        "Label": "Comic Extractor",
         "Description": "Extracts all files from a comic book format and saves them to them to a specific folder.\n\nSupports extracting CBZ, CBR, CB7, PDF, GZ, BZ2",
+        "Label": "Comic Extractor",
         "Fields": {
           "DestinationPath": "Destination Path",
           "DestinationPath-Help": "The folder to save the extract comic book files to"
@@ -37,8 +37,8 @@
         }
       },
       "CreateComicInfo": {
-        "Label": "Create Comic Info",
         "Description": "Parses the path of a comic and create a comicinfo.xml file inside the comic book archive.",
+        "Label": "Create Comic Info",
         "Fields": {
           "IssueDigits": "Issue Digits",
           "IssueDigits-Help": "Will pad the issue number with leading zeros for up to this amount.\nFor example, for issue 1 if padding is 3, then the issue will appear as #001",

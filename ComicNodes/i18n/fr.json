@@ -2,8 +2,8 @@
   "Flow": {
     "Parts": {
       "ComicConverter": {
-        "Label": "Convertir cómic",
         "Description": "Convertit un comic dans un format différent de bande dessinée.\n\nPrend en charge la conversion depuis CBZ, CBR, CB7, PDF, GZ, BZ2",
+        "Label": "Convertir cómic",
         "Fields": {
           "Codec": "Codec",
           "Codec-Help": "Le codec pour enregistrer les images sous",
@@ -26,8 +26,8 @@
         }
       },
       "ComicExtractor": {
-        "Label": "Extraire comic",
         "Description": "Extrait tous les fichiers d'un format de bande dessinée et les enregistre dans un dossier spécifique.\n\nPrend en charge l'extraction de CBZ, CBR, CB7, PDF, GZ, BZ2",
+        "Label": "Extraire comic",
         "Fields": {
           "DestinationPath": "Chemin de destination",
           "DestinationPath-Help": "Le dossier où les fichiers du comic extrait seront enregistrés"
@@ -37,8 +37,8 @@
         }
       },
       "CreateComicInfo": {
-        "Label": "Créer ComicInfo",
         "Description": "Analyse le chemin d'un comic et crée un fichier comicinfo.xml à l'intérieur de l'archive de bande dessinée.",
+        "Label": "Créer ComicInfo",
         "Fields": {
           "IssueDigits": "Chiffres de l'édition",
           "IssueDigits-Help": "Remplira le numéro de l'édition avec des zéros devant jusqu'à ce montant.\nPar exemple, pour l'édition 1 si le remplissage est 3, alors l'édition apparaîtra comme #001",

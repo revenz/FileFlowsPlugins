@@ -2,8 +2,8 @@
   "Flow": {
     "Parts": {
       "ComicConverter": {
-        "Label": "Konvertera serietidning",
         "Description": "Konverterar en serie till ett annat serietidningsformat.\n\nStöder konvertering från CBZ, CBR, CB7, PDF, GZ, BZ2",
+        "Label": "Konvertera serietidning",
         "Fields": {
           "Codec": "Codec",
           "Codec-Help": "Den codec som bilderna ska sparas som",
@@ -26,8 +26,8 @@
         }
       },
       "ComicExtractor": {
-        "Label": "Extrahera serietidning",
         "Description": "Extraherar alla filer från ett serietidningsformat och sparar dem i en specifik mapp.\n\nStöder extrahering av CBZ, CBR, CB7, PDF, GZ, BZ2",
+        "Label": "Extrahera serietidning",
         "Fields": {
           "DestinationPath": "Destinationsväg",
           "DestinationPath-Help": "Mappen för att spara de extraherade serietidningsfilerna"
@@ -37,8 +37,8 @@
         }
       },
       "CreateComicInfo": {
-        "Label": "Skapa ComicInfo",
         "Description": "Parsar sökvägen till en serie och skapar en comicinfo.xml-fil inuti serietidningsarkivet.",
+        "Label": "Skapa ComicInfo",
         "Fields": {
           "IssueDigits": "Utgåvanummer",
           "IssueDigits-Help": "Kommer att fylla ut utgåvenumret med ledande nollor upp till detta antal.\nTill exempel, för utgåvan 1 om fyllningen är 3, kommer utgåvan att visas som #001",

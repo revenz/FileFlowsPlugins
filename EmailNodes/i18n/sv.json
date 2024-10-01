@@ -2,8 +2,8 @@
   "Flow": {
     "Parts": {
       "SendEmail": {
-        "Label": "Skicka e-post",
         "Description": "Skickar ett e-postmeddelande med den konfigurerade SMTP-servern",
+        "Label": "Skicka e-post",
         "Fields": {
           "Body": "Innehåll",
           "Body-Help": "Innehållet i det e-postmeddelande som skickas. Använder [scriban](https://github.com/scriban/scriban) mallspråk",

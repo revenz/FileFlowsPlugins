@@ -2,8 +2,8 @@
   "Flow": {
     "Parts": {
       "SendEmail": {
-        "Label": "Send Email",
         "Description": "Sends an email using the configured SMTP Server",
+        "Label": "Send Email",
         "Fields": {
           "Body": "Body",
           "Body-Help": "The content of the email message being sent. Uses the [scriban](https://github.com/scriban/scriban) templating language",

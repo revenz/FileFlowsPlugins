@@ -2,8 +2,8 @@
   "Flow": {
     "Parts": {
       "AutoCropImage": {
-        "Label": "Rogner l'Image Automatiquement",
         "Description": "Recadre automatiquement une image",
+        "Label": "Rogner l'Image Automatiquement",
         "Fields": {
           "Format": "Format",
           "Format-Help": "Le format d'image dans lequel convertir",
@@ -16,15 +16,15 @@
         }
       },
       "ImageFile": {
-        "Label": "Fichier Image",
         "Description": "Un fichier image",
+        "Label": "Fichier Image",
         "Outputs": {
           "1": "Fichier image"
         }
       },
       "ImageFlip": {
-        "Label": "Retourner l'Image",
         "Description": "Retourne une image",
+        "Label": "Retourner l'Image",
         "Fields": {
           "Format": "Format",
           "Format-Help": "Le format d'image dans lequel convertir",
@@ -36,8 +36,8 @@
         }
       },
       "ImageFormat": {
-        "Label": "Convertir l'Image",
         "Description": "Convertit une image au format spécifié",
+        "Label": "Convertir l'Image",
         "Fields": {
           "Format": "Format",
           "Format-Help": "Le format d'image dans lequel convertir"
@@ -48,24 +48,24 @@
         }
       },
       "ImageIsLandscape": {
-        "Label": "Image en Paysage",
         "Description": "Teste si une image est en paysage",
+        "Label": "Image en Paysage",
         "Outputs": {
           "1": "L'image est en paysage",
           "2": "L'image n'est pas en paysage"
         }
       },
       "ImageIsPortrait": {
-        "Label": "Image en Portrait",
         "Description": "Teste si une image est en portrait",
+        "Label": "Image en Portrait",
         "Outputs": {
           "1": "L'image est en portrait",
           "2": "L'image n'est pas en portrait"
         }
       },
       "ImageResizer": {
-        "Label": "Redimensionner l'Image",
         "Description": "Redimensionne une image",
+        "Label": "Redimensionner l'Image",
         "Fields": {
           "Format": "Format",
           "Format-Help": "Le format d'image dans lequel convertir",
@@ -79,8 +79,8 @@
         }
       },
       "ImageRotate": {
-        "Label": "Tourner l'Image",
         "Description": "Tourne une image",
+        "Label": "Tourner l'Image",
         "Fields": {
           "Angle": "Angle",
           "Angle-Help": "L'angle de rotation",
@@ -92,8 +92,8 @@
         }
       },
       "IsImage": {
-        "Label": "Est une Image",
         "Description": "Teste si un fichier est un fichier image.",
+        "Label": "Est une Image",
         "Fields": {
           "File": "Fichier",
           "File-Help": "Chemin optionnel vers le fichier à vérifier ; s'il est laissé vide, le fichier de travail actuel sera vérifié.",
@@ -105,8 +105,8 @@
         }
       },
       "PixelCheck": {
-        "Label": "Vérification des Pixels",
         "Description": "Cet élément de flux vérifie si le nombre total de pixels d'une image dépasse le seuil spécifié.",
+        "Label": "Vérification des Pixels",
         "Fields": {
           "Pixels": "Pixels",
           "Pixels-Help": "Le nombre de pixels qu'une image doit contenir. Cela est calculé en multipliant la largeur de l'image par sa hauteur."

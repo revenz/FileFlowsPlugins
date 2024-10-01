@@ -2,8 +2,8 @@
   "Flow": {
     "Parts": {
       "AutoCropImage": {
-        "Label": "Beskär Bild Automatiskt",
         "Description": "Automatiskt beskär ett bild",
+        "Label": "Beskär Bild Automatiskt",
         "Fields": {
           "Format": "Format",
           "Format-Help": "Bildformatet att konvertera till",
@@ -16,15 +16,15 @@
         }
       },
       "ImageFile": {
-        "Label": "Bildfil",
         "Description": "En bildfil",
+        "Label": "Bildfil",
         "Outputs": {
           "1": "Bildfil"
         }
       },
       "ImageFlip": {
-        "Label": "Vänd Bild",
         "Description": "Vänder en bild",
+        "Label": "Vänd Bild",
         "Fields": {
           "Format": "Format",
           "Format-Help": "Bildformatet att konvertera till",
@@ -36,8 +36,8 @@
         }
       },
       "ImageFormat": {
-        "Label": "Konvertera Bild",
         "Description": "Konverterar en bild till det angivna formatet",
+        "Label": "Konvertera Bild",
         "Fields": {
           "Format": "Format",
           "Format-Help": "Bildformatet att konvertera till"
@@ -48,24 +48,24 @@
         }
       },
       "ImageIsLandscape": {
-        "Label": "Bild Är Liggande",
         "Description": "Testar om en bild är liggande",
+        "Label": "Bild Är Liggande",
         "Outputs": {
           "1": "Bilden är liggande",
           "2": "Bilden är inte liggande"
         }
       },
       "ImageIsPortrait": {
-        "Label": "Bild Är Porträtt",
         "Description": "Testar om en bild är porträtt",
+        "Label": "Bild Är Porträtt",
         "Outputs": {
           "1": "Bilden är porträtt",
           "2": "Bilden är inte porträtt"
         }
       },
       "ImageResizer": {
-        "Label": "Ändra Bildstorlek",
         "Description": "Ändrar storlek på en bild",
+        "Label": "Ändra Bildstorlek",
         "Fields": {
           "Format": "Format",
           "Format-Help": "Bildformatet att konvertera till",
@@ -79,8 +79,8 @@
         }
       },
       "ImageRotate": {
-        "Label": "Rotera Bild",
         "Description": "Rotera en bild",
+        "Label": "Rotera Bild",
         "Fields": {
           "Angle": "Vinkel",
           "Angle-Help": "Rotationsvinkeln",
@@ -92,8 +92,8 @@
         }
       },
       "IsImage": {
-        "Label": "Är Bild",
         "Description": "Kontrollerar om en fil är en bildfil.",
+        "Label": "Är Bild",
         "Fields": {
           "File": "Fil",
           "File-Help": "Valfri sökväg till filen som ska kontrolleras, om lämnas tomt kommer den aktuella arbetsfilen att kontrolleras.",
@@ -105,8 +105,8 @@
         }
       },
       "PixelCheck": {
-        "Label": "Pixelkontroll",
         "Description": "Detta flödeselement verifierar om det totala antalet pixlar i en bild överstiger den angivna tröskeln.",
+        "Label": "Pixelkontroll",
         "Fields": {
           "Pixels": "Pixlar",
           "Pixels-Help": "Antalet pixlar en bild bör innehålla. Detta beräknas genom att multiplicera bildens bredd med dess höjd."

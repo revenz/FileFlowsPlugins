@@ -2,8 +2,8 @@
   "Flow": {
     "Parts": {
       "EmbyUpdater": {
-        "Label": "Emby Updater",
         "Description": "Embyサーバーにメッセージを送信してライブラリを更新します。",
+        "Label": "Emby Updater",
         "Fields": {
           "AccessToken": "アクセストークン",
           "AccessToken-Help": "Emby APIアクセストークンです。\n注意：プラグイン設定のアクセストークンを上書きする場合のみ設定してください。",
