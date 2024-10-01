@@ -24,6 +24,7 @@
       },
       "AudioFileNormalization": {
         "Description": "使用 FFMPEG 的 loudnorm 滤镜对音频文件进行双通道归一化",
+        "Label": "音频归一化",
         "Outputs": {
           "1": "音频文件已归一化并保存在临时文件中"
         }
