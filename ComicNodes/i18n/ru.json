@@ -2,6 +2,7 @@
   "Flow": {
     "Parts": {
       "ComicConverter": {
+        "Label": "Конвертер комиксов",
         "Description": "Конвертирует комикс в другой формат комикса.\n\nПоддерживает конвертацию из CBZ, CBR, CB7, PDF, GZ, BZ2",
         "Fields": {
           "Codec": "Кодек",
@@ -25,6 +26,7 @@
         }
       },
       "ComicExtractor": {
+        "Label": "Извлекатель комиксов",
         "Description": "Извлекает все файлы из формата комикса и сохраняет их в определенную папку.\n\nПоддерживает извлечение из CBZ, CBR, CB7, PDF, GZ, BZ2",
         "Fields": {
           "DestinationPath": "Путь назначения",
@@ -35,6 +37,7 @@
         }
       },
       "CreateComicInfo": {
+        "Label": "Создатель ComicInfo",
         "Description": "Парсит путь к комиксу и создает файл comicinfo.xml внутри архива комикса.",
         "Fields": {
           "IssueDigits": "Цифры выпуска",

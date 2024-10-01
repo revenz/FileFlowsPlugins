@@ -2,6 +2,7 @@
   "Flow": {
     "Parts": {
       "ComicConverter": {
+        "Label": "Convertitore Fumetto",
         "Description": "Converte un fumetto in un diverso formato di fumetto.\n\nSupporta la conversione da CBZ, CBR, CB7, PDF, GZ, BZ2",
         "Fields": {
           "Codec": "Codec",
@@ -25,6 +26,7 @@
         }
       },
       "ComicExtractor": {
+        "Label": "Estrattore Fumetto",
         "Description": "Estrae tutti i file da un formato di fumetto e li salva in una cartella specifica.\n\nSupporta l'estrazione di CBZ, CBR, CB7, PDF, GZ, BZ2",
         "Fields": {
           "DestinationPath": "Percorso di Destinazione",
@@ -35,6 +37,7 @@
         }
       },
       "CreateComicInfo": {
+        "Label": "Crea ComicInfo",
         "Description": "Analizza il percorso di un fumetto e crea un file comicinfo.xml all'interno dell'archivio del fumetto.",
         "Fields": {
           "IssueDigits": "Cifre dell'Edizione",

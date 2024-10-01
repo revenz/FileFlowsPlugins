@@ -2,6 +2,7 @@
   "Flow": {
     "Parts": {
       "AutoCropImage": {
+        "Label": "Beskär Bild Automatiskt",
         "Description": "Automatiskt beskär ett bild",
         "Fields": {
           "Format": "Format",
@@ -15,12 +16,14 @@
         }
       },
       "ImageFile": {
+        "Label": "Bildfil",
         "Description": "En bildfil",
         "Outputs": {
           "1": "Bildfil"
         }
       },
       "ImageFlip": {
+        "Label": "Vänd Bild",
         "Description": "Vänder en bild",
         "Fields": {
           "Format": "Format",
@@ -33,6 +36,7 @@
         }
       },
       "ImageFormat": {
+        "Label": "Konvertera Bild",
         "Description": "Konverterar en bild till det angivna formatet",
         "Fields": {
           "Format": "Format",
@@ -44,6 +48,7 @@
         }
       },
       "ImageIsLandscape": {
+        "Label": "Bild Är Liggande",
         "Description": "Testar om en bild är liggande",
         "Outputs": {
           "1": "Bilden är liggande",
@@ -51,6 +56,7 @@
         }
       },
       "ImageIsPortrait": {
+        "Label": "Bild Är Porträtt",
         "Description": "Testar om en bild är porträtt",
         "Outputs": {
           "1": "Bilden är porträtt",
@@ -58,6 +64,7 @@
         }
       },
       "ImageResizer": {
+        "Label": "Ändra Bildstorlek",
         "Description": "Ändrar storlek på en bild",
         "Fields": {
           "Format": "Format",
@@ -72,6 +79,7 @@
         }
       },
       "ImageRotate": {
+        "Label": "Rotera Bild",
         "Description": "Rotera en bild",
         "Fields": {
           "Angle": "Vinkel",
@@ -84,6 +92,7 @@
         }
       },
       "IsImage": {
+        "Label": "Är Bild",
         "Description": "Kontrollerar om en fil är en bildfil.",
         "Fields": {
           "File": "Fil",
@@ -96,6 +105,7 @@
         }
       },
       "PixelCheck": {
+        "Label": "Pixelkontroll",
         "Description": "Detta flödeselement verifierar om det totala antalet pixlar i en bild överstiger den angivna tröskeln.",
         "Fields": {
           "Pixels": "Pixlar",

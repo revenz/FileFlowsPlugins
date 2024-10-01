@@ -2,6 +2,7 @@
   "Flow": {
     "Parts": {
       "EmbyUpdater": {
+        "Label": "Emby 更新器",
         "Description": "向Emby服务器发送消息以更新库。",
         "Fields": {
           "AccessToken": "访问令牌",

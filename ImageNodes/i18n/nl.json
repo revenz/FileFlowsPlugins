@@ -2,6 +2,7 @@
   "Flow": {
     "Parts": {
       "AutoCropImage": {
+        "Label": "Automatisch bijsnijden van afbeelding",
         "Description": "Snijdt automatisch een afbeelding bij",
         "Fields": {
           "Format": "Formaat",
@@ -15,12 +16,14 @@
         }
       },
       "ImageFile": {
+        "Label": "Afbeeldingsbestand",
         "Description": "Een afbeeldingsbestand",
         "Outputs": {
           "1": "Afbeeldingsbestand"
         }
       },
       "ImageFlip": {
+        "Label": "Afbeelding omdraaien",
         "Description": "Draait een afbeelding om",
         "Fields": {
           "Format": "Formaat",
@@ -33,6 +36,7 @@
         }
       },
       "ImageFormat": {
+        "Label": "Afbeelding converteren",
         "Description": "Converteert een afbeelding naar het opgegeven formaat",
         "Fields": {
           "Format": "Formaat",
@@ -44,6 +48,7 @@
         }
       },
       "ImageIsLandscape": {
+        "Label": "Afbeelding is liggend",
         "Description": "Test of een afbeelding liggend is",
         "Outputs": {
           "1": "Afbeelding is liggend",
@@ -51,6 +56,7 @@
         }
       },
       "ImageIsPortrait": {
+        "Label": "Afbeelding is staand",
         "Description": "Test of een afbeelding staand is",
         "Outputs": {
           "1": "Afbeelding is staand",
@@ -58,6 +64,7 @@
         }
       },
       "ImageResizer": {
+        "Label": "Afbeelding resizen",
         "Description": "Wijzigt de grootte van een afbeelding",
         "Fields": {
           "Format": "Formaat",
@@ -72,6 +79,7 @@
         }
       },
       "ImageRotate": {
+        "Label": "Afbeelding draaien",
         "Description": "Draait een afbeelding",
         "Fields": {
           "Angle": "Hoek",
@@ -84,6 +92,7 @@
         }
       },
       "IsImage": {
+        "Label": "Is afbeelding",
         "Description": "Test of een bestand een afbeeldingsbestand is.",
         "Fields": {
           "File": "Bestand",
@@ -96,6 +105,7 @@
         }
       },
       "PixelCheck": {
+        "Label": "Pixelcontrole",
         "Description": "Dit stroomelement controleert of het totale aantal pixels van een afbeelding de opgegeven drempel overschrijdt.",
         "Fields": {
           "Pixels": "Pixels",

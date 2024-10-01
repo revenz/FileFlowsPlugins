@@ -17,6 +17,7 @@
   "Flow": {
     "Parts": {
       "AudioToVideo": {
+        "Label": "Audio naar Video",
         "Description": "Converteert een audiobestand naar een videobestand en genereert een video op basis van de audio.",
         "Fields": {
           "Codec": "Codec",
@@ -31,6 +32,7 @@
         }
       },
       "CanUseHardwareEncoding": {
+        "Label": "Kan Hardware Codering Gebruiken",
         "Description": "Controleert of de opgegeven hardware-encoder momenteel beschikbaar is voor de Flow.",
         "Fields": {
           "Encoder": "Encoder",
@@ -38,6 +40,7 @@
         }
       },
       "ComskipRemoveAds": {
+        "Label": "Comskip: Verwijder Reclames",
         "Description": "Gebruik een comskip EDL-bestand en verwijdert reclames met dat bestand.",
         "Fields": {
           "RunComskipIfNoEdl": "Voer Comskip uit",
@@ -816,6 +819,7 @@
         }
       },
       "ReadVideoInfo": {
+        "Label": "Lees Video Informatie",
         "Description": "Leest de video-informatie van het huidige werkbestand en werkt de vi-variabelen bij.",
         "Outputs": {
           "1": "Bestand was een videobestand en informatie is in de flow gelezen",
@@ -823,6 +827,7 @@
         }
       },
       "SubtitleExtractor": {
+        "Label": "Ondertitel Extractor",
         "Description": "Extraheert een enkele ondertiteltrack en slaat deze op de bestemming op. Kan srt-, ass- en ssa-indeling extraheren.\nDit zal het werkbestand NIET bijwerken en zal het werkbestand hetzelfde houden als het invoerbestand.\n\nOutput 1: Ondertitels zijn geëxtraheerd\nOutput 2: Geen ondertitels gevonden om te extraheren",
         "Fields": {
           "ExtractAll": "Alle Extraheren",
@@ -876,6 +881,7 @@
         }
       },
       "VideoDuration": {
+        "Label": "Video Duur",
         "Description": "Test of de duur van de video overeenkomt met de gegeven parameters.",
         "Fields": {
           "Match": "Overeenkomen",
@@ -888,6 +894,7 @@
         }
       },
       "VideoDurationCompare": {
+        "Label": "Video Duur Vergelijking",
         "Description": "Vergelijkt de oorspronkelijke duur van een video met de uiteindelijke duur.",
         "Fields": {
           "AllowedDifference": "Toegestane Verschil",
@@ -927,6 +934,7 @@
         }
       },
       "VideoFile": {
+        "Label": "Videobestand",
         "Description": "Een invoervideobestand waarvan de videoinformatie is gelezen en dat kan worden verwerkt",
         "Fields": {
           "AnalyzeDuration": "Analyse Duur",

@@ -2,6 +2,7 @@
   "Flow": {
     "Parts": {
       "EmbyUpdater": {
+        "Label": "Emby Updater",
         "Description": "Embyサーバーにメッセージを送信してライブラリを更新します。",
         "Fields": {
           "AccessToken": "アクセストークン",

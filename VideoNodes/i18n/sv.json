@@ -17,6 +17,7 @@
   "Flow": {
     "Parts": {
       "AudioToVideo": {
+        "Label": "Ljud till Video",
         "Description": "Konverterar en ljudfil till en videofil och genererar en video baserad på ljudet.",
         "Fields": {
           "Codec": "Codec",
@@ -31,6 +32,7 @@
         }
       },
       "CanUseHardwareEncoding": {
+        "Label": "Kan använda hårdvaruavkodning",
         "Description": "Kontrollerar om den angivna hårdvaruavkodaren för närvarande är tillgänglig för flödet.",
         "Fields": {
           "Encoder": "Avkodare",
@@ -38,6 +40,7 @@
         }
       },
       "ComskipRemoveAds": {
+        "Label": "Comskip: Ta bort reklam",
         "Description": "Använder en comskip EDL-fil och tar bort reklam med hjälp av den filen.",
         "Fields": {
           "RunComskipIfNoEdl": "Kör Comskip",
@@ -816,6 +819,7 @@
         }
       },
       "ReadVideoInfo": {
+        "Label": "Läs videoinformation",
         "Description": "Läser videoinformation från den aktuella arbetsfilen och uppdaterar vi-variablerna.",
         "Outputs": {
           "1": "Fil var en videofil och information lästes in i flödet",
@@ -823,6 +827,7 @@
         }
       },
       "SubtitleExtractor": {
+        "Label": "Undertextsextraktor",
         "Description": "Extraherar en enda undertextspår och sparar den till destinationen. Kan extrahera srt, ass och ssa-format.\nDetta kommer INTE att uppdatera arbetsfilen och kommer att hålla arbetsfilen densamma som ingångsfilen.\n\nUtdata 1: Undertexter extraherade\nUtdata 2: Inga undertexter hittades för att extrahera",
         "Fields": {
           "ExtractAll": "Extrahera alla",
@@ -876,6 +881,7 @@
         }
       },
       "VideoDuration": {
+        "Label": "Videovaraktighet",
         "Description": "Testar om varaktigheten av videon matchar de angivna parametrarna.",
         "Fields": {
           "Match": "Matcha",
@@ -888,6 +894,7 @@
         }
       },
       "VideoDurationCompare": {
+        "Label": "Jämför videovaraktighet",
         "Description": "Jämför den ursprungliga varaktigheten av en video med dess slutliga varaktighet.",
         "Fields": {
           "AllowedDifference": "Tillåten skillnad",
@@ -927,6 +934,7 @@
         }
       },
       "VideoFile": {
+        "Label": "Videofil",
         "Description": "En inmatningsvideofil som har fått sin videoinformation läst och kan bearbetas",
         "Fields": {
           "AnalyzeDuration": "Analysera Varaktighet",

@@ -2,24 +2,28 @@
   "Flow": {
     "Parts": {
       "MD5Checksum": {
+        "Label": "MD5 Checksum",
         "Description": "Calcula uma soma de verificação MD5 do arquivo de trabalho e a armazena na variável \"MD5\" e em \"Checksum\".",
         "Outputs": {
           "1": "Soma de verificação armazenada nas variáveis \"MD5\" e \"Checksum\""
         }
       },
       "SHA1Checksum": {
+        "Label": "SHA1 Checksum",
         "Description": "Calcula uma soma de verificação SHA1 do arquivo de trabalho e a armazena na variável \"SHA1\" e em \"Checksum\".",
         "Outputs": {
           "1": "Soma de verificação armazenada nas variáveis \"SHA1\" e \"Checksum\""
         }
       },
       "SHA256Checksum": {
+        "Label": "SHA256 Checksum",
         "Description": "Calcula uma soma de verificação SHA256 do arquivo de trabalho e a armazena na variável \"SHA256\" e em \"Checksum\".",
         "Outputs": {
           "1": "Soma de verificação armazenada nas variáveis \"SHA256\" e \"Checksum\""
         }
       },
       "SHA512Checksum": {
+        "Label": "SHA512 Checksum",
         "Description": "Calcula uma soma de verificação SHA512 do arquivo de trabalho e a armazena na variável \"SHA512\" e em \"Checksum\".",
         "Outputs": {
           "1": "Soma de verificação armazenada nas variáveis \"SHA512\" e \"Checksum\""

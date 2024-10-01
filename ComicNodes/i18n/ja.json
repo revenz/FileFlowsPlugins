@@ -2,6 +2,7 @@
   "Flow": {
     "Parts": {
       "ComicConverter": {
+        "Label": "コミックコンバーター",
         "Description": "コミックを別のコミックブックフォーマットに変換します。\n\nCBZ、CBR、CB7、PDF、GZ、BZ2からの変換をサポートします",
         "Fields": {
           "Codec": "コーデック",
@@ -25,6 +26,7 @@
         }
       },
       "ComicExtractor": {
+        "Label": "コミックエクストラクター",
         "Description": "コミックブックフォーマットからすべてのファイルを抽出し、特定のフォルダーに保存します。\n\nCBZ、CBR、CB7、PDF、GZ、BZ2の抽出をサポートします",
         "Fields": {
           "DestinationPath": "宛先パス",
@@ -35,6 +37,7 @@
         }
       },
       "CreateComicInfo": {
+        "Label": "コミック情報を作成",
         "Description": "コミックのパスを解析し、コミックブックアーカイブ内にcomicinfo.xmlファイルを作成します。",
         "Fields": {
           "IssueDigits": "号数の桁数",

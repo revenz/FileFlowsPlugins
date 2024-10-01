@@ -2,6 +2,7 @@
   "Flow": {
     "Parts": {
       "SendEmail": {
+        "Label": "Enviar correo electrónico",
         "Description": "Envía un correo electrónico utilizando el servidor SMTP configurado",
         "Fields": {
           "Body": "Cuerpo",

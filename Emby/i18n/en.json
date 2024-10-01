@@ -2,6 +2,7 @@
   "Flow": {
     "Parts": {
       "EmbyUpdater": {
+        "Label": "Emby Updater",
         "Description": "Sends a message to a Emby server to update the library.",
         "Fields": {
           "AccessToken": "Access Token",

@@ -2,24 +2,28 @@
   "Flow": {
     "Parts": {
       "MD5Checksum": {
+        "Label": "MD5 Checksum",
         "Description": "Calcola un checksum MD5 del file di lavoro e lo memorizza nella variabile \"MD5\" e in \"Checksum\".",
         "Outputs": {
           "1": "Checksum memorizzato nelle variabili \"MD5\" e \"Checksum\""
         }
       },
       "SHA1Checksum": {
+        "Label": "SHA1 Checksum",
         "Description": "Calcola un checksum SHA1 del file di lavoro e lo memorizza nella variabile \"SHA1\" e in \"Checksum\".",
         "Outputs": {
           "1": "Checksum memorizzato nelle variabili \"SHA1\" e \"Checksum\""
         }
       },
       "SHA256Checksum": {
+        "Label": "SHA256 Checksum",
         "Description": "Calcola un checksum SHA256 del file di lavoro e lo memorizza nella variabile \"SHA256\" e in \"Checksum\".",
         "Outputs": {
           "1": "Checksum memorizzato nelle variabili \"SHA256\" e \"Checksum\""
         }
       },
       "SHA512Checksum": {
+        "Label": "SHA512 Checksum",
         "Description": "Calcola un checksum SHA512 del file di lavoro e lo memorizza nella variabile \"SHA512\" e in \"Checksum\".",
         "Outputs": {
           "1": "Checksum memorizzato nelle variabili \"SHA512\" e \"Checksum\""

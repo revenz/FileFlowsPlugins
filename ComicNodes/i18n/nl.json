@@ -2,6 +2,7 @@
   "Flow": {
     "Parts": {
       "ComicConverter": {
+        "Label": "Stripverhaal Converter",
         "Description": "Converteert een stripverhaal naar een ander stripboekformaat.\n\nOndersteunt het converteren van CBZ, CBR, CB7, PDF, GZ, BZ2",
         "Fields": {
           "Codec": "Codec",
@@ -25,6 +26,7 @@
         }
       },
       "ComicExtractor": {
+        "Label": "Stripverhaal Extractor",
         "Description": "Extraheert alle bestanden uit een stripboekformaat en slaat ze op in een specifieke map.\n\nOndersteunt het extraheren van CBZ, CBR, CB7, PDF, GZ, BZ2",
         "Fields": {
           "DestinationPath": "Bestemming Pad",
@@ -35,6 +37,7 @@
         }
       },
       "CreateComicInfo": {
+        "Label": "Maak ComicInfo",
         "Description": "Parset het pad van een stripverhaal en maakt een comicinfo.xml-bestand aan in het stripboekarchief.",
         "Fields": {
           "IssueDigits": "Nummer Cijfers",

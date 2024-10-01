@@ -2,6 +2,7 @@
   "Flow": {
     "Parts": {
       "SendEmail": {
+        "Label": "メールを送信",
         "Description": "構成されたSMTPサーバーを使用してメールを送信します。",
         "Fields": {
           "Body": "本文",

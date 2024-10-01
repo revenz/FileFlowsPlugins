@@ -17,6 +17,7 @@
   "Flow": {
     "Parts": {
       "AudioToVideo": {
+        "Label": "Áudio para Vídeo",
         "Description": "Converte um arquivo de áudio em um arquivo de vídeo e gera um vídeo baseado no áudio",
         "Fields": {
           "Codec": "Codec",
@@ -31,6 +32,7 @@
         }
       },
       "CanUseHardwareEncoding": {
+        "Label": "Pode Usar Codificação de Hardware",
         "Description": "Verifica se o codificador de hardware especificado está atualmente disponível para o fluxo.",
         "Fields": {
           "Encoder": "Codificador",
@@ -38,6 +40,7 @@
         }
       },
       "ComskipRemoveAds": {
+        "Label": "Comskip: Remover Comerciais",
         "Description": "Usa um arquivo EDL comskip e removerá os comerciais usando esse arquivo.",
         "Fields": {
           "RunComskipIfNoEdl": "Executar Comskip",
@@ -816,6 +819,7 @@
         }
       },
       "ReadVideoInfo": {
+        "Label": "Ler Informações do Vídeo",
         "Description": "Lê as informações do vídeo do arquivo de trabalho atual e atualiza as variáveis vi.",
         "Outputs": {
           "1": "O arquivo era um arquivo de vídeo e as informações foram lidas no fluxo",
@@ -823,6 +827,7 @@
         }
       },
       "SubtitleExtractor": {
+        "Label": "Extrator de Legendas",
         "Description": "Extrai uma única faixa de legendas e a salva no destino. Pode extrair formatos srt, ass e ssa.\nIsto NÃO atualizará o arquivo de trabalho e manterá o arquivo de trabalho igual ao arquivo de entrada.\n\nSaída 1: Legendas foram extraídas\nSaída 2: Nenhuma legenda encontrada para extrair",
         "Fields": {
           "ExtractAll": "Extrair Todos",
@@ -845,7 +850,7 @@
           "2": "Nenhuma legenda extraída"
         }
       },
-      "VideoAlreadyProcessed": {
+      "VideoAlreadyProcessed": {        
         "Description": "Testa se um arquivo de vídeo já foi processado pelo FileFlows",
         "Label": "Vídeo Já Processado",
         "Outputs": {
@@ -876,6 +881,7 @@
         }
       },
       "VideoDuration": {
+        "Label": "Duração do Vídeo",
         "Description": "Verifica se a duração do vídeo corresponde aos parâmetros dados.",
         "Fields": {
           "Match": "Correspondência",
@@ -888,6 +894,7 @@
         }
       },
       "VideoDurationCompare": {
+        "Label": "Comparar Duração do Vídeo",
         "Description": "Compara a duração original de um vídeo com sua duração final.",
         "Fields": {
           "AllowedDifference": "Diferença Permitida",
@@ -927,6 +934,7 @@
         }
       },
       "VideoFile": {
+        "Label": "Arquivo de Vídeo",
         "Description": "Um arquivo de vídeo de entrada que teve suas informações de vídeo lidas e pode ser processado",
         "Fields": {
           "AnalyzeDuration": "Duração da análise",

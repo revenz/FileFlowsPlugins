@@ -2,6 +2,7 @@
   "Flow": {
     "Parts": {
       "AutoCropImage": {
+        "Label": "Auto Crop Image",
         "Description": "Schneidet ein Bild automatisch zu",
         "Fields": {
           "Format": "Format",
@@ -15,12 +16,14 @@
         }
       },
       "ImageFile": {
+        "Label": "Bild-Datei",
         "Description": "Eine Bilddatei",
         "Outputs": {
           "1": "Bilddatei"
         }
       },
       "ImageFlip": {
+        "Label": "Bild drehen",
         "Description": "Dreht ein Bild",
         "Fields": {
           "Format": "Format",
@@ -33,6 +36,7 @@
         }
       },
       "ImageFormat": {
+        "Label": "Bildformat",
         "Description": "Konvertiert ein Bild in das angegebene Format",
         "Fields": {
           "Format": "Format",
@@ -44,6 +48,7 @@
         }
       },
       "ImageIsLandscape": {
+        "Label": "Bild ist Querformat",
         "Description": "Testet, ob ein Bild im Querformat ist",
         "Outputs": {
           "1": "Bild ist im Querformat",
@@ -51,6 +56,7 @@
         }
       },
       "ImageIsPortrait": {
+        "Label": "Bild ist Hochformat",
         "Description": "Testet, ob ein Bild im Hochformat ist",
         "Outputs": {
           "1": "Bild ist im Hochformat",
@@ -58,6 +64,7 @@
         }
       },
       "ImageResizer": {
+        "Label": "Bildgrößenänderung",
         "Description": "Ändert die Größe eines Bildes",
         "Fields": {
           "Format": "Format",
@@ -72,6 +79,7 @@
         }
       },
       "ImageRotate": {
+        "Label": "Bild drehen",
         "Description": "Rotiert ein Bild",
         "Fields": {
           "Angle": "Winkel",
@@ -84,6 +92,7 @@
         }
       },
       "IsImage": {
+        "Label": "Ist Bild",
         "Description": "Überprüft, ob eine Datei eine Bilddatei ist.",
         "Fields": {
           "File": "Datei",
@@ -96,6 +105,7 @@
         }
       },
       "PixelCheck": {
+        "Label": "Pixel-Check",
         "Description": "Diesesflow element überprüft, ob die Gesamtpixelanzahl eines Bildes die angegebene Schwelle überschreitet.",
         "Fields": {
           "Pixels": "Pixel",

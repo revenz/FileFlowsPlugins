@@ -2,24 +2,28 @@
   "Flow": {
     "Parts": {
       "MD5Checksum": {
+        "Label": "MD5校验和"
         "Description": "计算工作文件的MD5校验和，并将其存储在变量\"MD5\"和\"Checksum\"中。",
         "Outputs": {
           "1": "校验和已存储在变量\"MD5\"和\"Checksum\"中"
         }
       },
       "SHA1Checksum": {
+        "Label": "SHA1校验和"
         "Description": "计算工作文件的SHA1校验和，并将其存储在变量\"SHA1\"和\"Checksum\"中。",
         "Outputs": {
           "1": "校验和已存储在变量\"SHA1\"和\"Checksum\"中"
         }
       },
       "SHA256Checksum": {
+        "Label": "SHA256校验和"
         "Description": "计算工作文件的SHA256校验和，并将其存储在变量\"SHA256\"和\"Checksum\"中。",
         "Outputs": {
           "1": "校验和已存储在变量\"SHA256\"和\"Checksum\"中"
         }
       },
       "SHA512Checksum": {
+        "Label": "SHA512校验和"
         "Description": "计算工作文件的SHA512校验和，并将其存储在变量\"SHA512\"和\"Checksum\"中。",
         "Outputs": {
           "1": "校验和已存储在变量\"SHA512\"和\"Checksum\"中"

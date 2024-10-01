@@ -2,6 +2,7 @@
   "Flow": {
     "Parts": {
       "SendEmail": {
+        "Label": "Verzend e-mail",
         "Description": "Verzendt een e-mail met behulp van de geconfigureerde SMTP-server",
         "Fields": {
           "Body": "Inhoud",

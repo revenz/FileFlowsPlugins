@@ -2,6 +2,7 @@
   "Flow": {
     "Parts": {
       "ComicConverter": {
+        "Label": "Comic Converter",
         "Description": "Converts a comic to a different comic book format.\n\nSupports converting from CBZ, CBR, CB7, PDF, GZ, BZ2",
         "Fields": {
           "Codec": "Codec",
@@ -25,6 +26,7 @@
         }
       },
       "ComicExtractor": {
+        "Label": "Comic Extractor",
         "Description": "Extracts all files from a comic book format and saves them to them to a specific folder.\n\nSupports extracting CBZ, CBR, CB7, PDF, GZ, BZ2",
         "Fields": {
           "DestinationPath": "Destination Path",
@@ -35,6 +37,7 @@
         }
       },
       "CreateComicInfo": {
+        "Label": "Create Comic Info",
         "Description": "Parses the path of a comic and create a comicinfo.xml file inside the comic book archive.",
         "Fields": {
           "IssueDigits": "Issue Digits",

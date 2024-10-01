@@ -2,6 +2,7 @@
   "Flow": {
     "Parts": {
       "AutoCropImage": {
+        "Label": "Auto Crop Image"
         "Description": "Automatically crops an image",
         "Fields": {
           "Format": "Format",
@@ -15,12 +16,14 @@
         }
       },
       "ImageFile": {
+        "Label": "Image File",
         "Description": "An image file",
         "Outputs": {
           "1": "Image file"
         }
       },
       "ImageFlip": {
+        "Label": "Image Flip",
         "Description": "Flips an image",
         "Fields": {
           "Format": "Format",
@@ -33,6 +36,7 @@
         }
       },
       "ImageFormat": {
+        "Label": "Image Format",
         "Description": "Converts an image to the specified format",
         "Fields": {
           "Format": "Format",
@@ -44,6 +48,7 @@
         }
       },
       "ImageIsLandscape": {
+        "Label": "Image Is Landscape",
         "Description": "Test if an image is landscape",
         "Outputs": {
           "1": "Image is landscape",
@@ -51,6 +56,7 @@
         }
       },
       "ImageIsPortrait": {
+        "Label": "Image Is Portrait",
         "Description": "Test if an image is portrait",
         "Outputs": {
           "1": "Image is portrait",
@@ -58,6 +64,7 @@
         }
       },
       "ImageResizer": {
+        "Label": "Image Resizer",
         "Description": "Resizes an image",
         "Fields": {
           "Format": "Format",
@@ -72,6 +79,7 @@
         }
       },
       "ImageRotate": {
+        "Label": "Image Rotate",
         "Description": "Rotates an image",
         "Fields": {
           "Angle": "Angle",
@@ -84,6 +92,7 @@
         }
       },
       "IsImage": {
+        "Label": "Is Image",
         "Description": "Tests if a file is an image file.",
         "Fields": {
           "File": "File",
@@ -96,6 +105,7 @@
         }
       },
       "PixelCheck": {
+        "Label": "Pixel Check",
         "Description": "This flow element verifies if an image's total pixel count exceeds the specified threshold.",
         "Fields": {
           "Pixels": "Pixels",

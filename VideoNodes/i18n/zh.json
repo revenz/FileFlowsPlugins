@@ -17,6 +17,7 @@
   "Flow": {
     "Parts": {
       "AudioToVideo": {
+        "Label": "音频转视频",
         "Description": "将音频文件转换为视频文件，并基于音频生成视频",
         "Fields": {
           "Codec": "编解码器",
@@ -31,6 +32,7 @@
         }
       },
       "CanUseHardwareEncoding": {
+        "Label": "可以使用硬件编码",
         "Description": "检查指定的硬件编码器当前是否可用",
         "Fields": {
           "Encoder": "编码器",
@@ -38,6 +40,7 @@
         }
       },
       "ComskipRemoveAds": {
+        "Label": "Comskip 删除广告",
         "Description": "使用 comskip EDL 文件并根据该文件删除广告",
         "Fields": {
           "RunComskipIfNoEdl": "运行 Comskip",
@@ -816,6 +819,7 @@
         }
       },
       "ReadVideoInfo": {
+        "Label": "读取视频信息",
         "Description": "从当前工作文件读取视频信息并更新 vi 变量。",
         "Outputs": {
           "1": "文件是视频文件，信息已读取到流程中",
@@ -823,6 +827,7 @@
         }
       },
       "SubtitleExtractor": {
+        "Label": "字幕提取器",
         "Description": "提取单个字幕轨道并保存到目标位置。可以提取 srt、ass 和 ssa 格式。\n这不会更新工作文件，工作文件将保持与输入文件相同。\n\n输出 1：提取了字幕\n输出 2：未找到可提取的字幕",
         "Fields": {
           "ExtractAll": "提取所有",
@@ -876,6 +881,7 @@
         }
       },
       "VideoDuration": {
+        "Label": "视频持续时间",
         "Description": "测试视频的持续时间是否符合给定参数。",
         "Fields": {
           "Match": "匹配",
@@ -888,6 +894,7 @@
         }
       },
       "VideoDurationCompare": {
+        "Label": "视频持续时间比较",
         "Description": "比较视频的原始时长和最终时长。",
         "Fields": {
           "AllowedDifference": "允许的差异",
@@ -927,6 +934,7 @@
         }
       },
       "VideoFile": {
+        "Label": "视频文件",
         "Description": "输入视频文件，其视频信息已被读取，可以进行处理",
         "Fields": {
           "AnalyzeDuration": "分析时长",

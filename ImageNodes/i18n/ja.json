@@ -2,6 +2,7 @@
   "Flow": {
     "Parts": {
       "AutoCropImage": {
+        "Label": "自動トリミング",
         "Description": "画像を自動的にトリミングします",
         "Fields": {
           "Format": "フォーマット",
@@ -15,12 +16,14 @@
         }
       },
       "ImageFile": {
+        "Label": "画像ファイル",
         "Description": "画像ファイル",
         "Outputs": {
           "1": "画像ファイル"
         }
       },
       "ImageFlip": {
+        "Label": "画像を反転",
         "Description": "画像を反転します",
         "Fields": {
           "Format": "フォーマット",
@@ -33,6 +36,7 @@
         }
       },
       "ImageFormat": {
+        "Label": "画像をフォーマットに変換",
         "Description": "画像を指定されたフォーマットに変換します",
         "Fields": {
           "Format": "フォーマット",
@@ -44,6 +48,7 @@
         }
       },
       "ImageIsLandscape": {
+        "Label": "画像が横向きかどうか",
         "Description": "画像が横向きかどうかをテストします",
         "Outputs": {
           "1": "画像は横向きです",
@@ -51,6 +56,7 @@
         }
       },
       "ImageIsPortrait": {
+        "Label": "画像が縦向きかどうか",
         "Description": "画像が縦向きかどうかをテストします",
         "Outputs": {
           "1": "画像は縦向きです",
@@ -58,6 +64,7 @@
         }
       },
       "ImageResizer": {
+        "Label": "画像リサイズ",
         "Description": "画像のサイズを変更します",
         "Fields": {
           "Format": "フォーマット",
@@ -72,6 +79,7 @@
         }
       },
       "ImageRotate": {
+        "Label": "画像を回転",
         "Description": "画像を回転させます",
         "Fields": {
           "Angle": "角度",
@@ -84,6 +92,7 @@
         }
       },
       "IsImage": {
+        "Label": "画像かどうか",
         "Description": "ファイルが画像ファイルかどうかをテストします。",
         "Fields": {
           "File": "ファイル",
@@ -96,6 +105,7 @@
         }
       },
       "PixelCheck": {
+        "Label": "ピクセルチェック",
         "Description": "このフロー要素は、画像の総ピクセル数が指定された閾値を超えているかどうかを確認します。",
         "Fields": {
           "Pixels": "ピクセル",

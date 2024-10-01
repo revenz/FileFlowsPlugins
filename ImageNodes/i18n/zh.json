@@ -2,6 +2,7 @@
   "Flow": {
     "Parts": {
       "AutoCropImage": {
+        "Label": "自动裁剪图像",
         "Description": "自动裁剪图像",
         "Fields": {
           "Format": "格式",
@@ -15,12 +16,14 @@
         }
       },
       "ImageFile": {
+        "Label": "图像文件",
         "Description": "图像文件",
         "Outputs": {
           "1": "图像文件"
         }
       },
       "ImageFlip": {
+        "Label": "翻转图像",
         "Description": "翻转图像",
         "Fields": {
           "Format": "格式",
@@ -33,6 +36,7 @@
         }
       },
       "ImageFormat": {
+        "Label": "图像格式",
         "Description": "将图像转换为指定格式",
         "Fields": {
           "Format": "格式",
@@ -44,6 +48,7 @@
         }
       },
       "ImageIsLandscape": {
+        "Label": "图像为横向",
         "Description": "测试图像是否为横向",
         "Outputs": {
           "1": "图像为横向",
@@ -51,6 +56,7 @@
         }
       },
       "ImageIsPortrait": {
+        "Label": "图像为纵向",
         "Description": "测试图像是否为纵向",
         "Outputs": {
           "1": "图像为纵向",
@@ -58,6 +64,7 @@
         }
       },
       "ImageResizer": {
+        "Label": "调整图像大小",
         "Description": "调整图像大小",
         "Fields": {
           "Format": "格式",
@@ -72,6 +79,7 @@
         }
       },
       "ImageRotate": {
+        "Label": "旋转图像",
         "Description": "旋转图像",
         "Fields": {
           "Angle": "角度",
@@ -84,6 +92,7 @@
         }
       },
       "IsImage": {
+        "Label": "是图像",
         "Description": "测试文件是否为图像文件。",
         "Fields": {
           "File": "文件",
@@ -96,6 +105,7 @@
         }
       },
       "PixelCheck": {
+        "Label": "像素检查",
         "Description": "此流元素验证图像的总像素数是否超过指定阈值。",
         "Fields": {
           "Pixels": "像素",

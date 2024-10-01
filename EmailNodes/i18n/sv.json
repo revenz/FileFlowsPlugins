@@ -2,6 +2,7 @@
   "Flow": {
     "Parts": {
       "SendEmail": {
+        "Label": "Skicka e-post",
         "Description": "Skickar ett e-postmeddelande med den konfigurerade SMTP-servern",
         "Fields": {
           "Body": "Innehåll",

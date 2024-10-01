@@ -2,6 +2,7 @@
   "Flow": {
     "Parts": {
       "SendEmail": {
+        "Label": "Send Email",
         "Description": "Sends an email using the configured SMTP Server",
         "Fields": {
           "Body": "Body",

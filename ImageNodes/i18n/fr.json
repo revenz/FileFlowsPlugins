@@ -2,6 +2,7 @@
   "Flow": {
     "Parts": {
       "AutoCropImage": {
+        "Label": "Rogner l'Image Automatiquement",
         "Description": "Recadre automatiquement une image",
         "Fields": {
           "Format": "Format",
@@ -15,12 +16,14 @@
         }
       },
       "ImageFile": {
+        "Label": "Fichier Image",
         "Description": "Un fichier image",
         "Outputs": {
           "1": "Fichier image"
         }
       },
       "ImageFlip": {
+        "Label": "Retourner l'Image",
         "Description": "Retourne une image",
         "Fields": {
           "Format": "Format",
@@ -33,6 +36,7 @@
         }
       },
       "ImageFormat": {
+        "Label": "Convertir l'Image",
         "Description": "Convertit une image au format spécifié",
         "Fields": {
           "Format": "Format",
@@ -44,6 +48,7 @@
         }
       },
       "ImageIsLandscape": {
+        "Label": "Image en Paysage",
         "Description": "Teste si une image est en paysage",
         "Outputs": {
           "1": "L'image est en paysage",
@@ -51,6 +56,7 @@
         }
       },
       "ImageIsPortrait": {
+        "Label": "Image en Portrait",
         "Description": "Teste si une image est en portrait",
         "Outputs": {
           "1": "L'image est en portrait",
@@ -58,6 +64,7 @@
         }
       },
       "ImageResizer": {
+        "Label": "Redimensionner l'Image",
         "Description": "Redimensionne une image",
         "Fields": {
           "Format": "Format",
@@ -72,6 +79,7 @@
         }
       },
       "ImageRotate": {
+        "Label": "Tourner l'Image",
         "Description": "Tourne une image",
         "Fields": {
           "Angle": "Angle",
@@ -84,6 +92,7 @@
         }
       },
       "IsImage": {
+        "Label": "Est une Image",
         "Description": "Teste si un fichier est un fichier image.",
         "Fields": {
           "File": "Fichier",
@@ -96,6 +105,7 @@
         }
       },
       "PixelCheck": {
+        "Label": "Vérification des Pixels",
         "Description": "Cet élément de flux vérifie si le nombre total de pixels d'une image dépasse le seuil spécifié.",
         "Fields": {
           "Pixels": "Pixels",

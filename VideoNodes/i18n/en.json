@@ -17,6 +17,7 @@
   "Flow": {
     "Parts": {
       "AudioToVideo": {
+        "Label": "Audio to Video",
         "Description": "Converts an audio file into a video file and generates a video based on the audio",
         "Fields": {
           "Codec": "Codec",
@@ -31,6 +32,7 @@
         }
       },
       "CanUseHardwareEncoding": {
+        "Label": "Can Use Hardware Encoding",
         "Description": "Checks if the specified hardware encoder is currently available to the Flow.",
         "Fields": {
           "Encoder": "Encoder",
@@ -38,6 +40,7 @@
         }
       },
       "ComskipRemoveAds": {
+        "Label": "Comskip Remove Ads",
         "Description": "Uses a comskip EDL file and will remove commercials using that file.",
         "Fields": {
           "RunComskipIfNoEdl": "Run Comskip",
@@ -816,6 +819,7 @@
         }
       },
       "ReadVideoInfo": {
+        "Label": "Read Video Info",
         "Description": "Reads the video information from the current working file and updates the vi variables.",
         "Outputs": {
           "1": "File was a video file and information read into flow",
@@ -823,6 +827,7 @@
         }
       },
       "SubtitleExtractor": {
+        "Label": "Subtitle Extractor",
         "Description": "Extract a single subtitle tracks and saves it to the destination.  Can extract srt, ass, and ssa format.\nThis will NOT update the working file, and will keep the working file the same as the input file.\n\nOutput 1: Subtitles were extracted\nOutput 2: No subtitles found to extract",
         "Fields": {
           "ExtractAll": "Extract All",
@@ -876,6 +881,7 @@
         }
       },
       "VideoDuration": {
+        "Label": "Video Duration",
         "Description": "Tests whether or not the duration of the video matches the given parameters.",
         "Fields": {
           "Match": "Match",
@@ -888,6 +894,7 @@
         }
       },
       "VideoDurationCompare": {
+        "Label": "Video Duration Compare",
         "Description": "Compares the original duration of a video with its final duration.",
         "Fields": {
           "AllowedDifference": "Allowed Difference",
@@ -927,6 +934,7 @@
         }
       },
       "VideoFile": {
+        "Label": "Video File",
         "Description": "An input video file that has had its Video Information read and can be processed",
         "Fields": {
           "AnalyzeDuration": "Analyze Duration",

@@ -17,6 +17,7 @@
   "Flow": {
     "Parts": {
       "AudioToVideo": {
+        "Label": "Audio in Video",
         "Description": "Converte un file audio in un file video e genera un video basato sull'audio",
         "Fields": {
           "Codec": "Codec",
@@ -31,6 +32,7 @@
         }
       },
       "CanUseHardwareEncoding": {
+        "Label": "Può Usare Codifica Hardware",
         "Description": "Controlla se l'encoder hardware specificato è attualmente disponibile per il Flusso.",
         "Fields": {
           "Encoder": "Encoder",
@@ -38,6 +40,7 @@
         }
       },
       "ComskipRemoveAds": {
+        "Label": "Comskip Rimuovi Pubblicità",
         "Description": "Utilizza un file EDL comskip e rimuoverà le pubblicità utilizzando quel file.",
         "Fields": {
           "RunComskipIfNoEdl": "Esegui Comskip",
@@ -816,6 +819,7 @@
         }
       },
       "ReadVideoInfo": {
+        "Label": "Leggi Informazioni Video",
         "Description": "Legge le informazioni video dal file di lavoro corrente e aggiorna le variabili vi.",
         "Outputs": {
           "1": "Il file era un file video e le informazioni sono state lette nel flusso",
@@ -823,6 +827,7 @@
         }
       },
       "SubtitleExtractor": {
+        "Label": "Estrattore Sottotitoli",
         "Description": "Estrae una singola traccia di sottotitoli e la salva nella destinazione. Può estrarre formati srt, ass e ssa.\nQuesto NON aggiornerà il file di lavoro e manterrà il file di lavoro lo stesso del file di input.\n\nOutput 1: I sottotitoli sono stati estratti\nOutput 2: Nessun sottotitolo trovato da estrarre",
         "Fields": {
           "ExtractAll": "Estrai Tutto",
@@ -876,6 +881,7 @@
         }
       },
       "VideoDuration": {
+        "Label": "Durata Video",
         "Description": "Controlla se la durata del video corrisponde ai parametri dati.",
         "Fields": {
           "Match": "Corrispondenza",
@@ -888,6 +894,7 @@
         }
       },
       "VideoDurationCompare": {
+        "Label": "Confronto Durata Video",
         "Description": "Confronta la durata originale di un video con la sua durata finale.",
         "Fields": {
           "AllowedDifference": "Differenza Consentita",
@@ -927,6 +934,7 @@
         }
       },
       "VideoFile": {
+        "Label": "File Video",
         "Description": "Un file video di input dal quale sono state lette le informazioni video e può essere elaborato.",
         "Fields": {
           "AnalyzeDuration": "Analizza Durata",

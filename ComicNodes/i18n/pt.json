@@ -2,6 +2,7 @@
   "Flow": {
     "Parts": {
       "ComicConverter": {
+        "Label": "Conversor de Quadrinhos",
         "Description": "Converte um comic para um formato diferente de quadrinhos.\n\nSuporta conversão de CBZ, CBR, CB7, PDF, GZ, BZ2",
         "Fields": {
           "Codec": "Codec",
@@ -25,6 +26,7 @@
         }
       },
       "ComicExtractor": {
+        "Label": "Extrator de Quadrinhos",
         "Description": "Extrai todos os arquivos de um formato de quadrinhos e os salva em uma pasta específica.\n\nSuporta extração de CBZ, CBR, CB7, PDF, GZ, BZ2",
         "Fields": {
           "DestinationPath": "Caminho de Destino",
@@ -35,6 +37,7 @@
         }
       },
       "CreateComicInfo": {
+        "Label": "Criar ComicInfo",
         "Description": "Analisa o caminho de um comic e cria um arquivo comicinfo.xml dentro do arquivo de quadrinhos.",
         "Fields": {
           "IssueDigits": "Dígitos da Edição",

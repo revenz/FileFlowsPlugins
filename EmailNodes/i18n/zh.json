@@ -2,6 +2,7 @@
   "Flow": {
     "Parts": {
       "SendEmail": {
+        "Label": "发送电子邮件",
         "Description": "使用配置的SMTP服务器发送电子邮件",
         "Fields": {
           "Body": "正文",

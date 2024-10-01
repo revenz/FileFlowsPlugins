@@ -2,6 +2,7 @@
   "Flow": {
     "Parts": {
       "ComicConverter": {
+        "Label": "漫画转换",
         "Description": "将漫画转换为另一种漫画书格式。\n\n支持从 CBZ、CBR、CB7、PDF、GZ、BZ2 转换",
         "Fields": {
           "Codec": "编解码器",
@@ -25,6 +26,7 @@
         }
       },
       "ComicExtractor": {
+        "Label": "漫画提取",
         "Description": "从漫画书格式中提取所有文件并将其保存到特定文件夹。\n\n支持从 CBZ、CBR、CB7、PDF、GZ、BZ2 中提取",
         "Fields": {
           "DestinationPath": "目标路径",
@@ -35,6 +37,7 @@
         }
       },
       "CreateComicInfo": {
+        "Label": "创建漫画信息",
         "Description": "解析漫画的路径并在漫画书档案中创建 comicinfo.xml 文件。",
         "Fields": {
           "IssueDigits": "期号数字",
