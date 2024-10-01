@@ -3,6 +3,7 @@
     "Parts": {
       "PlexAnalyze": {
         "Description": "向 Plex 服务器发送消息以分析工作文件。 \n工作文件必须已经为 Plex 所知，以使其工作。",
+        "Label": "Plex分析",
         "Fields": {
           "AccessToken": "访问令牌",
           "AccessToken-Help": "用于与 Plex 服务器通信的 [访问令牌](https://github.com/revenz/Fenrus/wiki/Plex-Token)。\n注意：只有在您想要覆盖插件设置的访问令牌时才设置此项。",
@@ -21,6 +22,7 @@
       },
       "PlexUpdater": {
         "Description": "向 Plex 服务器发送消息以更新库。",
+        "Label": "Plex更新",
         "Fields": {
           "AccessToken": "访问令牌",
           "AccessToken-Help": "用于与 Plex 服务器通信的 [访问令牌](https://github.com/revenz/Fenrus/wiki/Plex-Token)。\n注意：只有在您想要覆盖插件设置的访问令牌时才设置此项。",

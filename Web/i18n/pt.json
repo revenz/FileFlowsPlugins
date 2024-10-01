@@ -3,6 +3,7 @@
     "Parts": {
       "Downloader": {
         "Description": "Baixa a URL especificada",
+        "Label": "Baixador",
         "Fields": {
           "Url": "URL",
           "Url-Help": "A URL a ser baixada, deixe em branco para usar o arquivo de trabalho atual. Se o arquivo de trabalho atual não for uma URL, isso falhará."
@@ -45,6 +46,7 @@
       },
       "WebRequest": {
         "Description": "Permite que você envie uma solicitação web",
+        "Label": "Solicitação Web",
         "Fields": {
           "Body": "Corpo",
           "Body-Help": "O corpo da solicitação sendo enviada. Variáveis podem ser usadas neste campo.",

@@ -3,6 +3,7 @@
     "Parts": {
       "PlexAnalyze": {
         "Description": "Skickar ett meddelande till en Plex-server för att analysera arbetsfilen. \nArbetsfilen måste redan vara känd av Plex för att detta ska fungera.",
+        "Label": "Plex Analysera",
         "Fields": {
           "AccessToken": "Åtkomsttoken",
           "AccessToken-Help": "Den [åtkomsttoken](https://github.com/revenz/Fenrus/wiki/Plex-Token) som används för att kommunicera med Plex-servern.\nObservera: Ställ in detta endast om du vill överskrida plugininställningarnas åtkomsttoken.",
@@ -21,6 +22,7 @@
       },
       "PlexUpdater": {
         "Description": "Skickar ett meddelande till en Plex-server för att uppdatera biblioteket.",
+        "Label": "Plex Uppdaterare",
         "Fields": {
           "AccessToken": "Åtkomsttoken",
           "AccessToken-Help": "Den [åtkomsttoken](https://github.com/revenz/Fenrus/wiki/Plex-Token) som används för att kommunicera med Plex-servern.\nObservera: Ställ in detta endast om du vill överskrida plugininställningarnas åtkomsttoken.",

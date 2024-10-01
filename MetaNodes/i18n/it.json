@@ -3,6 +3,7 @@
     "Parts": {
       "GenreMatches": {
         "Description": "Confronta i metadati del genere con il/i genere/i specificato/i.",
+        "Label": "Corrispondenza Genere",
         "Fields": {
           "Genres": "Generi",
           "MatchAll": "Confronta Tutto",
@@ -15,6 +16,7 @@
       },
       "MovieLookup": {
         "Description": "Esegue una ricerca su TheMovieDB.org per un film.\nMemorizza i metadati nella variabile 'MovieInfo'.",
+        "Label": "Ricerca Film",
         "Fields": {
           "UseFolderName": "Usa Nome Cartella",
           "UseFolderName-Help": "Se il nome della cartella deve essere usato al posto del nome del file."
@@ -26,6 +28,7 @@
       },
       "MovieRenamer": {
         "Description": "Rinomina il file di lavoro utilizzando i metadati memorizzati in 'MovieInfo'.\nNota: MovieLookup deve essere eseguito nel flusso prima di questo elemento del flusso per funzionare.\n\nOutput 1: Il file è stato rinominato\nOutput 2: Il file non è riuscito a essere rinominato",
+        "Label": "Rinomina Film",
         "Fields": {
           "DestinationPath": "Percorso di Destinazione",
           "DestinationPath-Help": "Se il file deve essere spostato in una directory diversa.",
@@ -36,10 +39,12 @@
         }
       },
       "MusicMeta": {
-        "Description": "Carica i metadati di un file musicale nelle variabili del flusso."
+        "Description": "Carica i metadati di un file musicale nelle variabili del flusso.",
+        "Label": "Metadati Musica"
       },
       "NfoFileCreator": {
         "Description": "Crea un file NFO per Kodi dai metadati precedentemente caricati.",
+        "Label": "Crea File NFO",
         "Fields": {
           "DestinationFile": "File di Destinazione",
           "DestinationFile-Help": "Il nome del nuovo file NFO. Se vuoto, verrà utilizzato il nome originale con l'estensione cambiata in `.nfo`",
@@ -53,6 +58,7 @@
       },
       "TVEpisodeLookup": {
         "Description": "Esegue una ricerca su TheMovieDB.org per un episodio TV.",
+        "Label": "Ricerca Episodio TV",
         "Fields": {
           "UseFolderName": "Usa Nome Cartella",
           "UseFolderName-Help": "Se il nome della cartella deve essere usato al posto del nome del file.\n\nNota: se la cartella inizia con Stagione, Staffel, Saison o Speciali, verrà utilizzata la cartella principale."
@@ -64,6 +70,7 @@
       },
       "TVShowLookup": {
         "Description": "Esegue una ricerca su TheMovieDB.org per uno show TV.\nMemorizza i metadati nella variabile 'TVShowInfo'.",
+        "Label": "Ricerca Show TV",
         "Fields": {
           "UseFolderName": "Usa Nome Cartella",
           "UseFolderName-Help": "Se il nome della cartella deve essere usato al posto del nome del file.\n\nNota: se la cartella inizia con Stagione, Staffel, Saison o Speciali, verrà utilizzata la cartella principale."

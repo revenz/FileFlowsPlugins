@@ -3,6 +3,7 @@
     "Parts": {
       "GenreMatches": {
         "Description": "将流派元数据与指定的流派进行匹配。",
+        "Label": "流派匹配",
         "Fields": {
           "Genres": "流派",
           "MatchAll": "匹配所有",
@@ -15,6 +16,7 @@
       },
       "MovieLookup": {
         "Description": "在 TheMovieDB.org 上执行电影搜索。\n将元数据存储在变量 'MovieInfo' 中。",
+        "Label": "电影搜索",
         "Fields": {
           "UseFolderName": "使用文件夹名称",
           "UseFolderName-Help": "如果应使用文件夹名称而不是文件名。"
@@ -26,6 +28,7 @@
       },
       "MovieRenamer": {
         "Description": "使用存储在 'MovieInfo' 中的元数据重命名工作文件。\n注意：MovieLookup 应在此流元素之前执行以正常工作。\n\n输出 1：文件已重命名\n输出 2：文件未能重命名",
+        "Label": "电影重命名",
         "Fields": {
           "DestinationPath": "目标路径",
           "DestinationPath-Help": "如果文件应移动到其他目录。",
@@ -36,10 +39,12 @@
         }
       },
       "MusicMeta": {
-        "Description": "将音乐文件的元数据加载到流变量中。"
+        "Description": "将音乐文件的元数据加载到流变量中。",
+        "Label": "音乐元数据"
       },
       "NfoFileCreator": {
         "Description": "从先前加载的元数据创建 Kodi NFO 文件。",
+        "Label": "NFO 文件创建器",
         "Fields": {
           "DestinationFile": "目标文件",
           "DestinationFile-Help": "新 NFO 文件的文件名。如果为空，将使用原始文件名，并将扩展名更改为 `.nfo`",
@@ -53,6 +58,7 @@
       },
       "TVEpisodeLookup": {
         "Description": "在 TheMovieDB.org 上执行 TV 集搜索。",
+        "Label": "电视集搜索",
         "Fields": {
           "UseFolderName": "使用文件夹名称",
           "UseFolderName-Help": "如果应使用文件夹名称而不是文件名。\n\n注意，如果文件夹以季节、Staffel、Saison 或 Specials 开头，将使用父文件夹。"
@@ -64,6 +70,7 @@
       },
       "TVShowLookup": {
         "Description": "在 TheMovieDB.org 上执行 TV 节目搜索。\n将元数据存储在变量 'TVShowInfo' 中。",
+        "Label": "电视节目搜索",
         "Fields": {
           "UseFolderName": "使用文件夹名称",
           "UseFolderName-Help": "如果应使用文件夹名称而不是文件名。\n\n注意，如果文件夹以季节、Staffel、Saison 或 Specials 开头，将使用父文件夹。"

@@ -3,6 +3,7 @@
     "Parts": {
       "Downloader": {
         "Description": "Scarica l'URL specificato",
+        "Label": "Scarica URL",
         "Fields": {
           "Url": "URL",
           "Url-Help": "L'URL da scaricare, lasciare vuoto per usare il file corrente in lavorazione, se il file corrente non è un URL, il download fallirà."
@@ -45,6 +46,7 @@
       },
       "WebRequest": {
         "Description": "Consente di inviare una richiesta web",
+        "Label": "Richiesta Web",
         "Fields": {
           "Body": "Corpo",
           "Body-Help": "Il corpo della richiesta inviata. È possibile usare variabili in questo campo.",

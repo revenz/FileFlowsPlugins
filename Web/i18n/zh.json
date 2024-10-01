@@ -3,6 +3,7 @@
     "Parts": {
       "Downloader": {
         "Description": "下载指定的URL",
+        "Label": "下载器",
         "Fields": {
           "Url": "URL",
           "Url-Help": "要下载的URL，留空则使用当前工作文件，如果当前工作文件不是URL，则此操作会失败。"
@@ -45,6 +46,7 @@
       },
       "WebRequest": {
         "Description": "允许您发送一个网络请求",
+        "Label": "网络请求",
         "Fields": {
           "Body": "请求正文",
           "Body-Help": "要发送的请求正文。该字段可以使用变量。",

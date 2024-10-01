@@ -3,6 +3,7 @@
     "Parts": {
       "GenreMatches": {
         "Description": "Matches the genre metadata against the specified genre(s).",
+        "Label": "Genre Matches",
         "Fields": {
           "Genres": "Genres",
           "MatchAll": "Match All",
@@ -15,6 +16,7 @@
       },
       "MovieLookup": {
         "Description": "Performs a search on TheMovieDB.org for a movie.\nStores the Metadata inside the variable 'MovieInfo'.",
+        "Label": "Movie Lookup",
         "Fields": {
           "UseFolderName": "Use Folder Name",
           "UseFolderName-Help": "If the folder name should be used instead of the filename."
@@ -26,6 +28,7 @@
       },
       "MovieRenamer": {
         "Description": "Renames the working file using the metadata stored in 'MovieInfo'.\nNote: MovieLookup should be executed in the flow before this flow element to work.\n\nOutput 1: File was renamed\nOutput 2: File failed to be renamed",
+        "Label": "Movie Renamer",
         "Fields": {
           "DestinationPath": "Destination Path",
           "DestinationPath-Help": "If the file should be moved to a different directory.",
@@ -36,10 +39,12 @@
         }
       },
       "MusicMeta": {
-        "Description": "Loads the metadata of a music file into the flow variables."
+        "Description": "Loads the metadata of a music file into the flow variables.",
+        "Label": "Music Metadata"
       },
       "NfoFileCreator": {
         "Description": "Creates a Kodi NFO file from previously loaded metadata.",
+        "Label": "NFO File Creator",
         "Fields": {
           "DestinationFile": "Destination File",
           "DestinationFile-Help": "The filename of the new NFO file.  If empty, the original filename will be used with the extension changed to `.nfo`",
@@ -53,6 +58,7 @@
       },
       "TVEpisodeLookup": {
         "Description": "Performs a search on TheMovieDB.org for a TV Epsidoe.",
+        "Label": "TV Episode Lookup",
         "Fields": {
           "UseFolderName": "Use Folder Name",
           "UseFolderName-Help": "If the folder name should be used instead of the filename.\n\nNote if the folder starts with Season or Staffel or Saison or Specials the parent folder will be used."
@@ -64,6 +70,7 @@
       },
       "TVShowLookup": {
         "Description": "Performs a search on TheMovieDB.org for a TV Show.\nStores the Metadata inside the variable 'TVShowInfo'.",
+        "Label": "TV Show Lookup",
         "Fields": {
           "UseFolderName": "Use Folder Name",
           "UseFolderName-Help": "If the folder name should be used instead of the filename.\n\nNote if the folder starts with Season or Staffel or Saison or Specials the parent folder will be used."

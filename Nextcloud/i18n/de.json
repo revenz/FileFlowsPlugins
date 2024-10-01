@@ -3,6 +3,7 @@
     "Parts": {
       "UploadToNextcloud": {
         "Description": "Lädt eine Datei nach Nextcloud hoch",
+        "Label": "Hochladen nach Nextcloud",
         "Fields": {
           "DestinationPath": "Ziel",
           "DestinationPath-Help": "Der Speicherort und der Dateiname, d.h. der vollständige Pfad, der Datei in Nextcloud.",

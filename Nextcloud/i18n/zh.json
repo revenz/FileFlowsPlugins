@@ -3,6 +3,7 @@
     "Parts": {
       "UploadToNextcloud": {
         "Description": "将文件上传到Nextcloud",
+        "Label": "上传到Nextcloud",
         "Fields": {
           "DestinationPath": "目的地",
           "DestinationPath-Help": "文件在Nextcloud中的位置和文件名，即完整路径。",

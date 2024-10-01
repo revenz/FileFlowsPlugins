@@ -3,6 +3,7 @@
     "Parts": {
       "PlexAnalyze": {
         "Description": "Envoie un message à un serveur Plex pour analyser le fichier de travail. \nLe fichier de travail doit déjà être connu de Plex pour que cela fonctionne.",
+        "Label": "Analyseur Plex",
         "Fields": {
           "AccessToken": "Token d'accès",
           "AccessToken-Help": "Le [token d'accès](https://github.com/revenz/Fenrus/wiki/Plex-Token) utilisé pour communiquer avec le serveur Plex.\nRemarque : Ne définissez cela que si vous souhaitez remplacer le token d'accès des paramètres du plugin.",
@@ -21,6 +22,7 @@
       },
       "PlexUpdater": {
         "Description": "Envoie un message à un serveur Plex pour mettre à jour la bibliothèque.",
+        "Label": "Mise à jour Plex",
         "Fields": {
           "AccessToken": "Token d'accès",
           "AccessToken-Help": "Le [token d'accès](https://github.com/revenz/Fenrus/wiki/Plex-Token) utilisé pour communiquer avec le serveur Plex.\nRemarque : Ne définissez cela que si vous souhaitez remplacer le token d'accès des paramètres du plugin.",

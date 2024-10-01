@@ -3,6 +3,7 @@
     "Parts": {
       "UploadToNextcloud": {
         "Description": "Nextcloudにファイルをアップロードします",
+        "Label": "Nextcloudにアップロード",
         "Fields": {
           "DestinationPath": "宛先",
           "DestinationPath-Help": "Nextcloud内のファイルの場所とファイル名、すなわち完全なパス。",

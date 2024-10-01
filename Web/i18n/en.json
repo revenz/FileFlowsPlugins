@@ -3,6 +3,7 @@
     "Parts": {
       "Downloader": {
         "Description": "Downloads the specified URL",
+        "Label": "Downloader",
         "Fields": {
           "Url": "URL",
           "Url-Help": "The URL to download, leave empty to use the current working file, if the current working file is not a URL, then this will fail."
@@ -45,6 +46,7 @@
       },
       "WebRequest": {
         "Description": "Allows you to send a web request",
+        "Label": "Web Request",
         "Fields": {
           "Body": "Body",
           "Body-Help": "The body of the request being sent.  Variables can be used in this field.",

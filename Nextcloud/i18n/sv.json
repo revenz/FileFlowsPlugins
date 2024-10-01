@@ -3,6 +3,7 @@
     "Parts": {
       "UploadToNextcloud": {
         "Description": "Laddar upp en fil till Nextcloud",
+        "Label": "Ladda upp till Nextcloud",
         "Fields": {
           "DestinationPath": "Mål",
           "DestinationPath-Help": "Platsen och filnamnet, dvs. den fullständiga sökvägen, för filen i Nextcloud.",

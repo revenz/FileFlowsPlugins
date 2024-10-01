@@ -3,6 +3,7 @@
     "Parts": {
       "GenreMatches": {
         "Description": "Vergelijkt de genre-metadata met de opgegeven genre(s).",
+        "Label": "Genre Overeenkomsten",
         "Fields": {
           "Genres": "Genres",
           "MatchAll": "Match Alle",
@@ -15,6 +16,7 @@
       },
       "MovieLookup": {
         "Description": "Voert een zoekopdracht uit op TheMovieDB.org voor een film.\nSlaat de metadata op in de variabele 'MovieInfo'.",
+        "Label": "Film Zoeken",
         "Fields": {
           "UseFolderName": "Gebruik Mapnaam",
           "UseFolderName-Help": "Als de mapnaam in plaats van de bestandsnaam moet worden gebruikt."
@@ -26,6 +28,7 @@
       },
       "MovieRenamer": {
         "Description": "Hernoemt het werkbestand met behulp van de metadata opgeslagen in 'MovieInfo'.\nLet op: MovieLookup moet in de flow worden uitgevoerd voordat dit flow-element werkt.\n\nOutput 1: Bestand is hernoemd\nOutput 2: Bestand kon niet worden hernoemd",
+        "Label": "Film Hernoemen",
         "Fields": {
           "DestinationPath": "Bestemming Pad",
           "DestinationPath-Help": "Als het bestand naar een andere map moet worden verplaatst.",
@@ -36,10 +39,12 @@
         }
       },
       "MusicMeta": {
-        "Description": "Laadt de metadata van een muziekbestand in de flow-variabelen."
+        "Description": "Laadt de metadata van een muziekbestand in de flow-variabelen.",
+        "Label": "Muziek Metadata"
       },
       "NfoFileCreator": {
         "Description": "Creëert een Kodi NFO-bestand van eerder geladen metadata.",
+        "Label": "NFO Bestand Aanmaken",
         "Fields": {
           "DestinationFile": "Bestemming Bestand",
           "DestinationFile-Help": "De bestandsnaam van het nieuwe NFO-bestand. Als leeg, wordt de oorspronkelijke bestandsnaam gebruikt met de extensie gewijzigd naar `.nfo`",
@@ -53,6 +58,7 @@
       },
       "TVEpisodeLookup": {
         "Description": "Voert een zoekopdracht uit op TheMovieDB.org voor een TV-aflevering.",
+        "Label": "TV Aflevering Zoeken",
         "Fields": {
           "UseFolderName": "Gebruik Mapnaam",
           "UseFolderName-Help": "Als de mapnaam in plaats van de bestandsnaam moet worden gebruikt.\n\nLet op, als de map begint met Seizoen of Staffel of Saison of Specials, wordt de bovenliggende map gebruikt."
@@ -64,6 +70,7 @@
       },
       "TVShowLookup": {
         "Description": "Voert een zoekopdracht uit op TheMovieDB.org voor een TV-show.\nSlaat de metadata op in de variabele 'TVShowInfo'.",
+        "Label": "TV Show Zoeken",
         "Fields": {
           "UseFolderName": "Gebruik Mapnaam",
           "UseFolderName-Help": "Als de mapnaam in plaats van de bestandsnaam moet worden gebruikt.\n\nLet op, als de map begint met Seizoen of Staffel of Saison of Specials, wordt de bovenliggende map gebruikt."

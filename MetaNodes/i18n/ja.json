@@ -3,6 +3,7 @@
     "Parts": {
       "GenreMatches": {
         "Description": "指定されたジャンルとメタデータのジャンルを照合します。",
+        "Label": "ジャンル一致",
         "Fields": {
           "Genres": "ジャンル",
           "MatchAll": "すべてを照合",
@@ -15,6 +16,7 @@
       },
       "MovieLookup": {
         "Description": "TheMovieDB.orgで映画を検索します。\nメタデータを'MovieInfo'変数に保存します。",
+        "Label": "映画検索",
         "Fields": {
           "UseFolderName": "フォルダ名を使用",
           "UseFolderName-Help": "ファイル名の代わりにフォルダ名を使用するかどうか。"
@@ -26,6 +28,7 @@
       },
       "MovieRenamer": {
         "Description": "'MovieInfo'に保存されたメタデータを使用して作業ファイルの名前を変更します。\n注意: このフロー要素が機能するためには、MovieLookupをこのフロー内で実行する必要があります。\n\n出力1: ファイルの名前が変更されました\n出力2: ファイルの名前の変更に失敗しました",
+        "Label": "映画リネーマ",
         "Fields": {
           "DestinationPath": "宛先パス",
           "DestinationPath-Help": "ファイルを別のディレクトリに移動する必要があるかどうか。",
@@ -36,10 +39,12 @@
         }
       },
       "MusicMeta": {
-        "Description": "音楽ファイルのメタデータをフローバリアブルに読み込みます。"
+        "Description": "音楽ファイルのメタデータをフローバリアブルに読み込みます。",
+        "Label": "音楽メタ"
       },
       "NfoFileCreator": {
         "Description": "以前に読み込まれたメタデータからKodi NFOファイルを作成します。",
+        "Label": "NFOファイル作成",
         "Fields": {
           "DestinationFile": "宛先ファイル",
           "DestinationFile-Help": "新しいNFOファイルのファイル名。空の場合は、元のファイル名が使用され、拡張子が`.nfo`に変更されます。",
@@ -53,6 +58,7 @@
       },
       "TVEpisodeLookup": {
         "Description": "TheMovieDB.orgでTVエピソードを検索します。",
+        "Label": "TVエピソード検索",
         "Fields": {
           "UseFolderName": "フォルダ名を使用",
           "UseFolderName-Help": "ファイル名の代わりにフォルダ名を使用するかどうか。\n\n注意: フォルダがシーズン、スタッフ、シーズン、特別のいずれかで始まる場合は、親フォルダが使用されます。"
@@ -64,6 +70,7 @@
       },
       "TVShowLookup": {
         "Description": "TheMovieDB.orgでTVショーを検索します。\nメタデータを'TVShowInfo'変数に保存します。",
+        "Label": "TVショー検索",
         "Fields": {
           "UseFolderName": "フォルダ名を使用",
           "UseFolderName-Help": "ファイル名の代わりにフォルダ名を使用するかどうか。\n\n注意: フォルダがシーズン、スタッフ、シーズン、特別のいずれかで始まる場合は、親フォルダが使用されます。"

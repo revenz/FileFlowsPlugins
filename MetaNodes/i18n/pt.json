@@ -3,6 +3,7 @@
     "Parts": {
       "GenreMatches": {
         "Description": "Compara os metadados de gênero com o(s) gênero(s) especificado(s).",
+        "Label": "Gênero",
         "Fields": {
           "Genres": "Gêneros",
           "MatchAll": "Corresponder Todos",
@@ -15,6 +16,7 @@
       },
       "MovieLookup": {
         "Description": "Realiza uma busca no TheMovieDB.org por um filme.\nArmazena os metadados na variável 'MovieInfo'.",
+        "Label": "Consulta de Filmes",
         "Fields": {
           "UseFolderName": "Usar Nome da Pasta",
           "UseFolderName-Help": "Se o nome da pasta deve ser usado em vez do nome do arquivo."
@@ -26,6 +28,7 @@
       },
       "MovieRenamer": {
         "Description": "Renomeia o arquivo de trabalho usando os metadados armazenados em 'MovieInfo'.\nNota: MovieLookup deve ser executado neste fluxo antes deste elemento de fluxo para funcionar.\n\nSaída 1: Arquivo foi renomeado\nSaída 2: Não foi possível renomear o arquivo",
+        "Label": "Renomear Filme",
         "Fields": {
           "DestinationPath": "Caminho de Destino",
           "DestinationPath-Help": "Se o arquivo deve ser movido para um diretório diferente.",
@@ -36,10 +39,12 @@
         }
       },
       "MusicMeta": {
-        "Description": "Carrega os metadados de um arquivo de música nas variáveis de fluxo."
+        "Description": "Carrega os metadados de um arquivo de música nas variáveis de fluxo.",
+        "Label": "Metadados de Música"
       },
       "NfoFileCreator": {
         "Description": "Cria um arquivo NFO do Kodi a partir de metadados previamente carregados.",
+        "Label": "Criar Arquivo NFO",
         "Fields": {
           "DestinationFile": "Arquivo de Destino",
           "DestinationFile-Help": "O nome do novo arquivo NFO. Se estiver vazio, o nome do arquivo original será usado com a extensão alterada para `.nfo`",
@@ -53,6 +58,7 @@
       },
       "TVEpisodeLookup": {
         "Description": "Realiza uma busca no TheMovieDB.org por um episódio de TV.",
+        "Label": "Consulta de Episódio de TV",
         "Fields": {
           "UseFolderName": "Usar Nome da Pasta",
           "UseFolderName-Help": "Se o nome da pasta deve ser usado em vez do nome do arquivo.\n\nNota: se a pasta começar com Temporada ou Especiais, a pasta principal será usada."
@@ -64,6 +70,7 @@
       },
       "TVShowLookup": {
         "Description": "Realiza uma busca no TheMovieDB.org por um programa de TV.\nArmazena os metadados na variável 'TVShowInfo'.",
+        "Label": "Consulta de Programa de TV",
         "Fields": {
           "UseFolderName": "Usar Nome da Pasta",
           "UseFolderName-Help": "Se o nome da pasta deve ser usado em vez do nome do arquivo.\n\nNota: se a pasta começar com Temporada ou Especiais, a pasta principal será usada."

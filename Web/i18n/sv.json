@@ -3,6 +3,7 @@
     "Parts": {
       "Downloader": {
         "Description": "Laddar ner den angivna URL:en",
+        "Label": "Nedladdare",
         "Fields": {
           "Url": "URL",
           "Url-Help": "URL:en som ska laddas ner, lämna tomt för att använda den aktuella arbetsfilen. Om den aktuella arbetsfilen inte är en URL, kommer detta att misslyckas."
@@ -45,6 +46,7 @@
       },
       "WebRequest": {
         "Description": "Låter dig skicka en webbfråga",
+        "Label": "Webbförfrågan",
         "Fields": {
           "Body": "Innehåll",
           "Body-Help": "Innehållet i den skickade förfrågan. Variabler kan användas i detta fält.",

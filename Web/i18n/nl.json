@@ -3,6 +3,7 @@
     "Parts": {
       "Downloader": {
         "Description": "Downloadt de opgegeven URL",
+        "Label": "Downloader",
         "Fields": {
           "Url": "URL",
           "Url-Help": "De URL om te downloaden, laat leeg om het huidige werkbestand te gebruiken. Als het huidige werkbestand geen URL is, zal dit mislukken."
@@ -45,6 +46,7 @@
       },
       "WebRequest": {
         "Description": "Staat u toe een webverzoek te verzenden",
+        "Label": "Webverzoek",
         "Fields": {
           "Body": "Inhoud",
           "Body-Help": "De inhoud van het verzoek dat wordt verzonden. Variabelen kunnen in dit veld worden gebruikt.",

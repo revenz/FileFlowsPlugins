@@ -3,6 +3,7 @@
     "Parts": {
       "PlexAnalyze": {
         "Description": "作業ファイルを分析するためにPlexサーバーにメッセージを送信します。\n作業ファイルは、これが機能するためにPlexに既に知られている必要があります。",
+        "Label": "Plex分析",
         "Fields": {
           "AccessToken": "アクセストークン",
           "AccessToken-Help": "Plexサーバーと通信するために使用される[アクセストークン](https://github.com/revenz/Fenrus/wiki/Plex-Token)。\n注意: プラグイン設定のアクセストークンをオーバーライドしたい場合のみ、これを設定してください。",
@@ -21,6 +22,7 @@
       },
       "PlexUpdater": {
         "Description": "Plexサーバーにメッセージを送信してライブラリを更新します。",
+        "Label": "Plex更新",
         "Fields": {
           "AccessToken": "アクセストークン",
           "AccessToken-Help": "Plexサーバーと通信するために使用される[アクセストークン](https://github.com/revenz/Fenrus/wiki/Plex-Token)。\n注意: プラグイン設定のアクセストークンをオーバーライドしたい場合のみ、これを設定してください。",
