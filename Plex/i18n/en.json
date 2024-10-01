@@ -2,8 +2,8 @@
   "Flow": {
     "Parts": {
       "PlexAnalyze": {
-        "Label": "Plex Analyze",
         "Description": "Sends a message to a Plex server to analyze the working file. \nThe working file must already be known to Plex for this to work.",
+        "Label": "Plex Analyze",
         "Fields": {
           "AccessToken": "Access Token",
           "AccessToken-Help": "The [access token](https://github.com/revenz/Fenrus/wiki/Plex-Token) used to communicate with the Plex server.\nNote: Only set this if you want to override the plugin settings access token.",
@@ -21,8 +21,8 @@
         }
       },
       "PlexUpdater": {
-        "Label": "Plex Update",
         "Description": "Sends a message to a Plex server to update the library.",
+        "Label": "Plex Update",
         "Fields": {
           "AccessToken": "Access Token",
           "AccessToken-Help": "The [access token](https://github.com/revenz/Fenrus/wiki/Plex-Token) used to communicate with the Plex server.\nNote: Only set this if you want to override the plugin settings access token.",
