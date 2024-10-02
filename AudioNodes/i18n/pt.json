@@ -194,7 +194,7 @@
     }
   },
   "Plugins": {
-    "Audio": {
+    "AudioNodes": {
       "Description": "Uma coleção de elementos de fluxo relacionados ao áudio para ajudar no processamento de arquivos de áudio.",
       "Label": "Áudio"
     }
