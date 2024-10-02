@@ -761,7 +761,9 @@
     }
   },
   "Plugin": {
-    "Label": "Grundläggande",
-    "Description": "Grundläggande flödeselement för FileFlows. Detta plugin innehåller grundläggande och vanliga flödeselement för att bearbeta filer.\nDetta plugin är nödvändigt för att FileFlows ska fungera."
+    "Basic": {
+      "Description": "Grundläggande flödeselement för FileFlows. Detta plugin innehåller grundläggande och vanliga flödeselement för att bearbeta filer.\nDetta plugin är nödvändigt för att FileFlows ska fungera.",
+      "Label": "Grundläggande"
+    }
   }
 }

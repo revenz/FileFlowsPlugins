@@ -55,7 +55,9 @@
     }
   },
   "Plugin": {
-    "Label": "Quadrinhos",
-    "Description": "Elementos de fluxo para processar quadrinhos (cbr, cbz, pdf, etc.)"
+    "Comic": {
+      "Description": "Elementos de fluxo para processar quadrinhos (cbr, cbz, pdf, etc.)",
+      "Label": "Quadrinhos"
+    }
   }
 }

@@ -67,5 +67,11 @@
         }
       }
     }
+  },
+  "Plugin": {
+    "Web": {
+      "Description": "Plugin qui fournit des éléments de flux liés au Web.",
+      "Label": "Web"
+    }
   }
 }

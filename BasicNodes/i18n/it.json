@@ -761,7 +761,9 @@
     }
   },
   "Plugin": {
-    "Label": "Base",
-    "Description": "Elementi di flusso di base per FileFlows. Questo plugin contiene elementi di flusso di base e comuni per elaborare i file.\nQuesto plugin è necessario per il funzionamento di FileFlows."
+    "Basic": {
+      "Description": "Elementi di flusso di base per FileFlows. Questo plugin contiene elementi di flusso di base e comuni per elaborare i file.\nQuesto plugin è necessario per il funzionamento di FileFlows.",
+      "Label": "Base"
+    }
   }
 }

@@ -24,8 +24,8 @@
   },
   "Plugins": {
     "Emby": {
-      "Label": "Emby",
       "Description": "Embyと通信するためのプラグインです。",
+      "Label": "Emby",
       "Fields": {
         "AccessToken": "アクセストークン",
         "AccessToken-Help": "Emby APIアクセストークン",

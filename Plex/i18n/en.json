@@ -44,6 +44,7 @@
   "Plugins": {
     "Plex": {
       "Description": "A plugin that allows you to communicate with Plex.",
+      "Label": "Plex",
       "Fields": {
         "AccessToken": "Access Token",
         "AccessToken-Help": "The [access token](https://github.com/revenz/Fenrus/wiki/Plex-Token) used to communicate with the Plex server.",

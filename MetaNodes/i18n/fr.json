@@ -81,5 +81,11 @@
         }
       }
     }
+  },
+  "Plugins": {
+    "Meta": {
+      "Description": "Un plugin qui contient des éléments de flux d'informations méta utilisés pour rechercher des informations méta sur les fichiers.\n\nContient des éléments de flux pour rechercher des informations sur les films à partir de TheMovieDB et des informations musicales à partir des balises ID3 dans le fichier.",
+      "Label": "Meta"
+    }
   }
 }

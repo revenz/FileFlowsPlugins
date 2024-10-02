@@ -1039,5 +1039,11 @@
   "H": {
     "264": "H.264",
     "265": "H.265"
+  },
+  "Plugin": {
+    "Video": {
+      "Description": "Plugin for the processing of video files, including but not limited to video file conversion, video file detection, upscaling, downscaling, and transcoding.",
+      "Label": "Video"
+    }
   }
 }

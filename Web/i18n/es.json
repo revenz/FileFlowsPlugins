@@ -67,5 +67,11 @@
         }
       }
     }
+  },
+  "Plugin": {
+    "Web": {
+      "Description": "Plugin que proporciona elementos de flujo relacionados con la web.",
+      "Label": "Web"
+    }
   }
 }

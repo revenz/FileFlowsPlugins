@@ -24,8 +24,8 @@
   },
   "Plugins": {
     "Emby": {
-      "Label": "Emby",
       "Description": "Un plugin que permite comunicarse con Emby.",
+      "Label": "Emby",
       "Fields": {
         "AccessToken": "Token de acceso",
         "AccessToken-Help": "Un token de acceso de la API de Emby",

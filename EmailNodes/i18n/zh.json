@@ -21,6 +21,8 @@
   },
   "Plugins": {
     "EmailNodes": {
+      "Description": "此插件允许您在执行流程时发送电子邮件。",
+      "Label": "电子邮件",
       "Fields": {
         "Sender": "发件人",
         "Sender-Help": "发送邮件的电子邮件地址",

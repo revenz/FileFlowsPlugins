@@ -20,6 +20,7 @@
   "Plugins": {
     "Pushbullet": {
       "Description": "Плагин, который позволяет вам отправлять сообщения на сервер Pushbullet.",
+      "Label": "Pushbullet",
       "Fields": {
         "ApiToken": "API-токен",
         "ApiToken-Help": "Токен API приложения, используемый для отправки уведомлений.",

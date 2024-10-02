@@ -20,6 +20,7 @@
   "Plugins": {
     "Nextcloud": {
       "Description": "Плагин, который позволяет загружать файлы в Nextcloud.",
+      "Label": "Nextcloud",
       "Fields": {
         "Password": "Пароль",
         "Password-Help": "Пароль, созданный вами для FileFlows для этого пользователя Nextcloud.",

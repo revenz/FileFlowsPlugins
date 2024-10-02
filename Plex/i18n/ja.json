@@ -44,6 +44,7 @@
   "Plugins": {
     "Plex": {
       "Description": "Plexと通信するためのプラグイン。",
+      "Label": "Plex",
       "Fields": {
         "AccessToken": "アクセストークン",
         "AccessToken-Help": "Plexサーバーと通信するために使用される[アクセストークン](https://github.com/revenz/Fenrus/wiki/Plex-Token)。",

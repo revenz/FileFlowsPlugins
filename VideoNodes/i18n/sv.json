@@ -1039,5 +1039,11 @@
   "H": {
     "264": "H.264",
     "265": "H.265"
+  },
+  "Plugin": {
+    "Video": {
+      "Description": "Plugin för bearbetning av videofiler, inklusive men inte begränsat till videofilkonvertering, videofilavkänning, uppskalning, nedskalning och transkodning.",
+      "Label": "Video"
+    }
   }
 }

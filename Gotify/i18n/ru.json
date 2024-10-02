@@ -20,8 +20,8 @@
   },
   "Plugins": {
     "Gotify": {
-      "Label": "Gotify",
       "Description": "Плагин, который позволяет отправлять сообщения на сервер Gotify.",
+      "Label": "Gotify",
       "Fields": {
         "AccessToken": "Токен доступа",
         "AccessToken-Help": "Токен доступа, используемый для связи с сервером Gotify.",

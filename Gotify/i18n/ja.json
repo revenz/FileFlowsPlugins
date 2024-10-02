@@ -20,8 +20,8 @@
   },
   "Plugins": {
     "Gotify": {
-      "Label": "Gotify",
       "Description": "Gotifyサーバーにメッセージを送信するためのプラグイン。",
+      "Label": "Gotify",
       "Fields": {
         "AccessToken": "アクセス・トークン",
         "AccessToken-Help": "Gotifyサーバーとの通信に使用されるアクセス・トークン。",

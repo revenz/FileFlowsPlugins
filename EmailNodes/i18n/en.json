@@ -21,8 +21,8 @@
   },
   "Plugins": {
     "EmailNodes": {
-      "Label": "Email",
       "Description": "This plugin allows you to send an email while executing a Flow.",
+      "Label": "Email",
       "Fields": {
         "Sender": "Sender",
         "Sender-Help": "The email address who emails will be sent from",

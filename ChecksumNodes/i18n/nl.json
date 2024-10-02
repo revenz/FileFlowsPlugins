@@ -32,7 +32,9 @@
     }
   },
   "Plugin": {
-    "Label": "Controlegetal",
-    "Description": "Stroomelementen die de mogelijkheid bieden om een controlegetal op een bestand uit te voeren."
+    "Checksum": {
+      "Description": "Stroomelementen die de mogelijkheid bieden om een controlegetal op een bestand uit te voeren.",
+      "Label": "Controlegetal"
+    }
   }
 }

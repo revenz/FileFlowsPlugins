@@ -25,6 +25,7 @@
   "Plugins": {
     "Pushover": {
       "Description": "一个允许你向 Pushover 服务器发送消息的插件。",
+      "Label": "Pushover",
       "Fields": {
         "ApiToken": "API 令牌",
         "ApiToken-Help": "用于发送通知的应用程序 API 令牌。",

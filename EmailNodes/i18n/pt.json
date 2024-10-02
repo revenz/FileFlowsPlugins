@@ -21,6 +21,8 @@
   },
   "Plugins": {
     "EmailNodes": {
+      "Description": "Este plugin permite que você envie um e-mail enquanto executa um fluxo.",
+      "Label": "Email",
       "Fields": {
         "Sender": "Remetente",
         "Sender-Help": "O endereço de e-mail de onde os e-mails serão enviados",

@@ -32,7 +32,9 @@
     }
   },
   "Plugin": {
-    "Label": "Checksum",
-    "Description": "Elementos de fluxo que fornecem a capacidade de executar um checksum em um arquivo."
+    "Checksum": {
+      "Description": "Elementos de fluxo que fornecem a capacidade de executar um checksum em um arquivo.",
+      "Label": "Checksum"
+    }
   }
 }

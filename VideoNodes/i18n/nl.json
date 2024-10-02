@@ -1039,5 +1039,11 @@
   "H": {
     "264": "H.264",
     "265": "H.265"
+  },
+  "Plugin": {
+    "Video": {
+      "Description": "Plugin voor het verwerken van videobestanden, inclusief maar niet beperkt tot videobestandconversie, videobestandsdetectie, opschaling, afschaling en transcodering.",
+      "Label": "Video"
+    }
   }
 }

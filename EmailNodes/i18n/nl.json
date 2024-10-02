@@ -21,6 +21,8 @@
   },
   "Plugins": {
     "EmailNodes": {
+      "Description": "Deze plugin stelt je in staat om een e-mail te verzenden tijdens het uitvoeren van een flow.",
+      "Label": "E-mail",
       "Fields": {
         "Sender": "Afzender",
         "Sender-Help": "Het e-mailadres waaruit e-mails worden verzonden",

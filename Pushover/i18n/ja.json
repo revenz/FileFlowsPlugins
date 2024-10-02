@@ -25,6 +25,7 @@
   "Plugins": {
     "Pushover": {
       "Description": "Pushoverサーバーにメッセージを送信するためのプラグインです。",
+      "Label": "Pushover",
       "Fields": {
         "ApiToken": "APIトークン",
         "ApiToken-Help": "通知を送信するために使用されるアプリケーションのAPIトークン。",

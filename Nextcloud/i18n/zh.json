@@ -20,6 +20,7 @@
   "Plugins": {
     "Nextcloud": {
       "Description": "一个允许您将文件上传到Nextcloud的插件。",
+      "Label": "Nextcloud",
       "Fields": {
         "Password": "密码",
         "Password-Help": "您为FileFlows为该Nextcloud用户创建的应用程序特定密码。",

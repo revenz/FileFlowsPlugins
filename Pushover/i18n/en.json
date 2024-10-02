@@ -25,6 +25,7 @@
   "Plugins": {
     "Pushover": {
       "Description": "A plugin that allows you to send messages to a Pushover server.",
+      "Label": "Pushover",
       "Fields": {
         "ApiToken": "API Token",
         "ApiToken-Help": "The application API token use for sending notifications.",

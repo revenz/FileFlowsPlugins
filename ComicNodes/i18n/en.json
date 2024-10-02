@@ -55,7 +55,9 @@
     }
   },
   "Plugin": {
-    "Label": "Comic",
-    "Description": "Flow elements for processing comic books (cbr, cbz, pdf etc)"
+    "Comic": {
+      "Description": "Flow elements for processing comic books (cbr, cbz, pdf etc)",
+      "Label": "Comic"
+    }
   }
 }

@@ -55,7 +55,9 @@
     }
   },
   "Plugin": {
-    "Label": "Fumetto",
-    "Description": "Elementi di flusso per l'elaborazione di fumetti (cbr, cbz, pdf, ecc.)"
+    "Comic": {
+      "Description": "Elementi di flusso per l'elaborazione di fumetti (cbr, cbz, pdf, ecc.)",
+      "Label": "Fumetto"
+    }
   }
 }

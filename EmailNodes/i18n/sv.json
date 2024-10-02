@@ -21,6 +21,8 @@
   },
   "Plugins": {
     "EmailNodes": {
+      "Description": "Denna plugin gör att du kan skicka ett e-postmeddelande medan ett flöde körs.",
+      "Label": "E-post",
       "Fields": {
         "Sender": "Avsändare",
         "Sender-Help": "E-postadressen som e-postmeddelandena skickas från",

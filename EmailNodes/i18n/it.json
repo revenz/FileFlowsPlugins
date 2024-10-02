@@ -21,6 +21,8 @@
   },
   "Plugins": {
     "EmailNodes": {
+      "Description": "Questo plugin ti consente di inviare un'e-mail durante l'esecuzione di un Flusso.",
+      "Label": "Email",
       "Fields": {
         "Sender": "Mittente",
         "Sender-Help": "L'indirizzo email da cui verranno inviate le email",

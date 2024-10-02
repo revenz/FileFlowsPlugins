@@ -20,6 +20,7 @@
   "Plugins": {
     "Pushbullet": {
       "Description": "Pushbulletサーバーにメッセージを送信するためのプラグインです。",
+      "Label": "Pushbullet",
       "Fields": {
         "ApiToken": "APIトークン",
         "ApiToken-Help": "通知を送信するために使用するアプリケーションAPIトークン。",

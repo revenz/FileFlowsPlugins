@@ -55,7 +55,9 @@
     }
   },
   "Plugin": {
-    "Label": "Serier",
-    "Description": "Flödeselement för att bearbeta serietidningar (cbr, cbz, pdf osv.)"
+    "Comic": {
+      "Description": "Flödeselement för att bearbeta serietidningar (cbr, cbz, pdf osv.)",
+      "Label": "Serier"
+    }
   }
 }

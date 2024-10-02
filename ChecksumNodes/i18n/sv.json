@@ -32,7 +32,9 @@
     }
   },
   "Plugin": {
-    "Label": "Kontrollsumma",
-    "Description": "Flödeselement som ger möjlighet att köra en kontrollsumma på en fil."
+    "Checksum": {
+      "Description": "Flödeselement som ger möjlighet att köra en kontrollsumma på en fil.",
+      "Label": "Kontrollsumma"
+    }
   }
 }

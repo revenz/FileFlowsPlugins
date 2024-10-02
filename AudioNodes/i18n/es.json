@@ -194,7 +194,9 @@
     }
   },
   "Plugin": {
-    "Label": "Audio",
-    "Description": "Una colección de elementos de flujo relacionados con el audio para ayudar a procesar archivos de audio."
+    "Audio": {
+      "Description": "Una colección de elementos de flujo relacionados con el audio para ayudar a procesar archivos de audio.",
+      "Label": "Audio"
+    }
   }
 }

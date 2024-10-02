@@ -10,7 +10,7 @@
     <Authors>John Andrews</Authors>
     <Product>Video</Product>
     <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
-    <Description>Flow element for the processing of video files, including but not limited to video file conversion, video file detection, upscaling, downscaling, and transcoding.</Description>
+    <Description>Flow elements for the processing of video files, including but not limited to video file conversion, video file detection, upscaling, downscaling, and transcoding.</Description>
     <RootNamespace> FileFlows.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <ParallelizeAssemblies>true</ParallelizeAssemblies>

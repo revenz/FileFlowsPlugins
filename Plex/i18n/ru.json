@@ -44,6 +44,7 @@
   "Plugins": {
     "Plex": {
       "Description": "Плагин, который позволяет вам общаться с Plex.",
+      "Label": "Plex",
       "Fields": {
         "AccessToken": "Токен доступа",
         "AccessToken-Help": "Токен доступа, используемый для связи с сервером Plex. [Токен доступа](https://github.com/revenz/Fenrus/wiki/Plex-Token).",

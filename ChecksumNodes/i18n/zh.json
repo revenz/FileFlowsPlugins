@@ -32,7 +32,9 @@
     }
   },
   "Plugin": {
-    "Label": "校验和",
-    "Description": "提供针对文件运行校验和的流程元素。"
+    "Checksum": {
+      "Description": "提供针对文件运行校验和的流程元素。",
+      "Label": "校验和"
+    }
   }
 }

@@ -761,7 +761,9 @@
     }
   },
   "Plugin": {
-    "Label": "Basique",
-    "Description": "Éléments de flux basiques pour FileFlows. Ce plugin contient des éléments de flux basiques et communs pour traiter les fichiers.\nCe plugin est requis pour que FileFlows fonctionne."
+    "Basic": {
+      "Description": "Éléments de flux basiques pour FileFlows. Ce plugin contient des éléments de flux basiques et communs pour traiter les fichiers.\nCe plugin est requis pour que FileFlows fonctionne.",
+      "Label": "Basique"
+    }
   }
 }

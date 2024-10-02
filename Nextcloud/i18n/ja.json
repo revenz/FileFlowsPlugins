@@ -20,6 +20,7 @@
   "Plugins": {
     "Nextcloud": {
       "Description": "Nextcloudにファイルをアップロードするためのプラグインです。",
+      "Label": "Nextcloud",
       "Fields": {
         "Password": "パスワード",
         "Password-Help": "このNextcloudユーザーのためにFileFlows用に作成したアプリケーション固有のパスワード。",

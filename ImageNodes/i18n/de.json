@@ -119,7 +119,9 @@
     }
   },
   "Plugin": {
-    "Label": "Bild",
-    "Description": "Flusselemente zur Verarbeitung von Bilddateien. Dieses Plugin enthält Knoten zum Konvertieren und Manipulieren von Bildern."
+    "Image": {
+      "Description": "Flusselemente zur Verarbeitung von Bilddateien. Dieses Plugin enthält Knoten zum Konvertieren und Manipulieren von Bildern.",
+      "Label": "Bild"
+    }
   }
 }

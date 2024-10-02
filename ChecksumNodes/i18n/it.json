@@ -32,7 +32,9 @@
     }
   },
   "Plugin": {
-    "Label": "Checksum",
-    "Description": "Elementi di flusso che forniscono la possibilità di eseguire un checksum su un file."
+    "Checksum": {
+      "Description": "Elementi di flusso che forniscono la possibilità di eseguire un checksum su un file.",
+      "Label": "Checksum"
+    }
   }
 }

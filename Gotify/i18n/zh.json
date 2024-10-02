@@ -20,8 +20,8 @@
   },
   "Plugins": {
     "Gotify": {
-      "Label": "Gotify",
       "Description": "一个插件，可以向Gotify服务器发送消息。",
+      "Label": "Gotify",
       "Fields": {
         "AccessToken": "访问令牌",
         "AccessToken-Help": "用于与Gotify服务器通信的访问令牌。",

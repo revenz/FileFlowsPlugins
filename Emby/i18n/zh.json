@@ -24,8 +24,8 @@
   },
   "Plugins": {
     "Emby": {
-      "Label": "Emby",
       "Description": "一个允许您与Emby通信的插件。",
+      "Label": "Emby",
       "Fields": {
         "AccessToken": "访问令牌",
         "AccessToken-Help": "Emby API 访问令牌",

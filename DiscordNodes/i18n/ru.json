@@ -20,8 +20,8 @@
   },
   "Plugins": {
     "DiscordNodes": {
-      "Label": "Discord",
       "Description": "Плагин, который позволяет вам отправлять сообщения на сервер Discord.\n\nWebhook ID и токен можно получить из URL вебхука\n https://discord.com/api/webhooks/[webhookid]/[webhooktoken]",
+      "Label": "Discord",
       "Fields": {
         "WebhookId": "Webhook ID",
         "WebhookToken": "Webhook Token"

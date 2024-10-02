@@ -17,6 +17,7 @@
   "Plugins": {
     "Telegram": {
       "Description": "Плагин, который позволяет отправлять сообщения Telegram.",
+      "Label": "Telegram",
       "Fields": {
         "BotToken": "Токен бота",
         "BotToken-Help": "Ваш токен бота Telegram.",

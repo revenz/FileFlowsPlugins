@@ -44,6 +44,7 @@
   "Plugins": {
     "Plex": {
       "Description": "一个允许您与 Plex 通信的插件。",
+      "Label": "Plex",
       "Fields": {
         "AccessToken": "访问令牌",
         "AccessToken-Help": "用于与 Plex 服务器通信的 [访问令牌](https://github.com/revenz/Fenrus/wiki/Plex-Token)。",

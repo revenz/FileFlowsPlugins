@@ -20,8 +20,8 @@
   },
   "Plugins": {
     "Apprise": {
-      "Label": "Apprise",
       "Description": "En plugin som låter dig skicka meddelanden till en Apprise-server.",
+      "Label": "Apprise",
       "Fields": {
         "Endpoint": "Endpoint",
         "Endpoint-Help": "Endpoint på Apprise-servern, till exempel notify/apprise",

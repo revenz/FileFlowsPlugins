@@ -25,6 +25,7 @@
   "Plugins": {
     "Pushover": {
       "Description": "Плагин, который позволяет отправлять сообщения на сервер Pushover.",
+      "Label": "Pushover",
       "Fields": {
         "ApiToken": "API токен",
         "ApiToken-Help": "API токен приложения, используемый для отправки уведомлений.",

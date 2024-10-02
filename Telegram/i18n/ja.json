@@ -17,6 +17,7 @@
   "Plugins": {
     "Telegram": {
       "Description": "Telegramメッセージを送信するためのプラグインです。",
+      "Label": "Telegram",
       "Fields": {
         "BotToken": "ボットトークン",
         "BotToken-Help": "あなたのTelegramボットトークン。",

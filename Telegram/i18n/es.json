@@ -17,6 +17,7 @@
   "Plugins": {
     "Telegram": {
       "Description": "Un plugin que te permite enviar mensajes de Telegram.",
+      "Label": "Telegram",
       "Fields": {
         "BotToken": "Token del bot",
         "BotToken-Help": "Tu token de bot de Telegram.",

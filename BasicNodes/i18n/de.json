@@ -761,7 +761,7 @@
     }
   },
   "Plugin": {
-    "Label": "Basic",
-    "Description": "Grundlegende Flusselemente für FileFlows. Dieses Plugin enthält grundlegende und allgemeine Flusselemente zur Verarbeitung von Dateien.\nDieses Plugin ist erforderlich, damit FileFlows funktioniert."
+    "Description": "Grundlegende Flusselemente für FileFlows. Dieses Plugin enthält grundlegende und allgemeine Flusselemente zur Verarbeitung von Dateien.\nDieses Plugin ist erforderlich, damit FileFlows funktioniert.",
+    "Label": "Basic"
   }
 }

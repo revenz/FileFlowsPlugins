@@ -17,6 +17,7 @@
   "Plugins": {
     "Telegram": {
       "Description": "一个允许您发送Telegram消息的插件。",
+      "Label": "Telegram",
       "Fields": {
         "BotToken": "机器人令牌",
         "BotToken-Help": "您的Telegram机器人令牌。",

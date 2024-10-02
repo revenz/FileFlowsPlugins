@@ -55,7 +55,9 @@
     }
   },
   "Plugin": {
-    "Label": "BD",
-    "Description": "Éléments de flux pour traiter des bandes dessinées (cbr, cbz, pdf, etc.)"
+    "Comic": {
+      "Description": "Éléments de flux pour traiter des bandes dessinées (cbr, cbz, pdf, etc.)",
+      "Label": "BD"
+    }
   }
 }

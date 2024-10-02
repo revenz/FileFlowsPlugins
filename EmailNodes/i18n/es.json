@@ -21,6 +21,8 @@
   },
   "Plugins": {
     "EmailNodes": {
+      "Description": "Este complemento te permite enviar un correo electrónico mientras se ejecuta un flujo.",
+      "Label": "Correo electrónico",
       "Fields": {
         "Sender": "Remitente",
         "Sender-Help": "La dirección de correo electrónico desde la cual se enviarán los correos",

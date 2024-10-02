@@ -20,6 +20,7 @@
   "Plugins": {
     "Pushbullet": {
       "Description": "Ett plugin som gör att du kan skicka meddelanden till en Pushbullet-server.",
+      "Label": "Pushbullet",
       "Fields": {
         "ApiToken": "API-token",
         "ApiToken-Help": "API-token för appen som används för att skicka aviseringar.",

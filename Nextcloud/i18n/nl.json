@@ -20,6 +20,7 @@
   "Plugins": {
     "Nextcloud": {
       "Description": "Een plugin waarmee je bestanden naar Nextcloud kunt uploaden.",
+      "Label": "Nextcloud",
       "Fields": {
         "Password": "Wachtwoord",
         "Password-Help": "Het applicatie-specifieke wachtwoord dat je hebt aangemaakt voor FileFlows voor deze Nextcloud-gebruiker.",

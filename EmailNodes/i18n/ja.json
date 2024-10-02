@@ -21,6 +21,8 @@
   },
   "Plugins": {
     "EmailNodes": {
+      "Description": "このプラグインを使用すると、フローを実行している間にメールを送信できます。",
+      "Label": "メール",
       "Fields": {
         "Sender": "送信者",
         "Sender-Help": "メールが送信されるメールアドレス",
