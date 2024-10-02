@@ -32,7 +32,7 @@
     }
   },
   "Plugins": {
-    "Checksum": {
+    "ChecksumNodes": {
       "Description": "Flusselemente, die die Möglichkeit bieten, eine Prüfsumme für eine Datei auszuführen.",
       "Label": "Checksumme"
     }

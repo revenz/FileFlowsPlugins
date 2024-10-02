@@ -55,7 +55,7 @@
     }
   },
   "Plugins": {
-    "Comic": {
+    "ComicNodes": {
       "Description": "Éléments de flux pour traiter des bandes dessinées (cbr, cbz, pdf, etc.)",
       "Label": "BD"
     }

@@ -55,7 +55,7 @@
     }
   },
   "Plugins": {
-    "Comic": {
+    "ComicNodes": {
       "Description": "Flusselemente zur Verarbeitung von Comics (cbr, cbz, pdf usw.)",
       "Label": "Comic"
     }

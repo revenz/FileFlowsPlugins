@@ -1041,7 +1041,7 @@
     "265": "H.265"
   },
   "Plugins": {
-    "Video": {
+    "VideoNodes": {
       "Description": "Plugin per l'elaborazione di file video, inclusa, ma non limitata a, conversione di file video, rilevamento di file video, upscaling, downscaling e transcodifica.",
       "Label": "Video"
     }

@@ -32,7 +32,7 @@
     }
   },
   "Plugins": {
-    "Checksum": {
+    "ChecksumNodes": {
       "Description": "ファイルに対してチェックサムを実行する機能を提供するフロー要素。",
       "Label": "チェックサム"
     }

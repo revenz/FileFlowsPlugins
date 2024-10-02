@@ -83,7 +83,7 @@
     }
   },
   "Plugins": {
-    "Meta": {
+    "MetaNodes": {
       "Description": "Een plugin die meta-informatie flow-elementen bevat die worden gebruikt om meta-informatie over bestanden op te zoeken.\n\nBevat flow-elementen om filmgegevens van TheMovieDB en muziekinformatie van ID3-tags in het bestand op te zoeken.",
       "Label": "Meta"
     }

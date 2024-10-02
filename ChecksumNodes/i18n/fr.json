@@ -32,7 +32,7 @@
     }
   },
   "Plugins": {
-    "Checksum": {
+    "ChecksumNodes": {
       "Description": "Éléments de flux permettant d'exécuter une somme de contrôle sur un fichier.",
       "Label": "Somme de contrôle"
     }

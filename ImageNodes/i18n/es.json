@@ -119,7 +119,7 @@
     }
   },
   "Plugins": {
-    "Image": {
+    "ImageNodes": {
       "Description": "Elementos de flujo para procesar archivos de imagen. Este complemento contiene nodos para convertir y manipular imágenes.",
       "Label": "Imagen"
     }

@@ -32,7 +32,7 @@
     }
   },
   "Plugins": {
-    "Checksum": {
+    "ChecksumNodes": {
       "Description": "Elementos de flujo que proporcionan la capacidad de ejecutar una suma de verificación en un archivo.",
       "Label": "Suma de verificación"
     }

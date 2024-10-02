@@ -119,7 +119,7 @@
     }
   },
   "Plugins": {
-    "Image": {
+    "ImageNodes": {
       "Description": "Flow elements for processing images files.  This plugin contains nodes to convert and manipulate images.",
       "Label": "Image"
     }

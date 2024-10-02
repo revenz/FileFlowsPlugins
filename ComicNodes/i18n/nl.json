@@ -55,7 +55,7 @@
     }
   },
   "Plugins": {
-    "Comic": {
+    "ComicNodes": {
       "Description": "Stroomelementen voor het verwerken van stripboeken (cbr, cbz, pdf, enz.)",
       "Label": "Strip"
     }

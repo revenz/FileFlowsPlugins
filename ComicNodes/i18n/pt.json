@@ -55,7 +55,7 @@
     }
   },
   "Plugins": {
-    "Comic": {
+    "ComicNodes": {
       "Description": "Elementos de fluxo para processar quadrinhos (cbr, cbz, pdf, etc.)",
       "Label": "Quadrinhos"
     }

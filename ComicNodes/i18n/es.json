@@ -55,7 +55,7 @@
     }
   },
   "Plugins": {
-    "Comic": {
+    "ComicNodes": {
       "Description": "Elementos de flujo para procesar cómics (cbr, cbz, pdf, etc.)",
       "Label": "Cómic"
     }

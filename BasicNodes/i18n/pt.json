@@ -761,7 +761,7 @@
     }
   },
   "Plugins": {
-    "Basic": {
+    "BasicNodes": {
       "Description": "Elementos de fluxo básicos para FileFlows. Este plugin contém elementos de fluxo básicos e comuns para processar arquivos.\nEste plugin é necessário para que o FileFlows funcione.",
       "Label": "Básico"
     }

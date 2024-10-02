@@ -1041,7 +1041,7 @@
     "265": "H.265"
   },
   "Plugins": {
-    "Video": {
+    "VideoNodes": {
       "Description": "Plugin för bearbetning av videofiler, inklusive men inte begränsat till videofilkonvertering, videofilavkänning, uppskalning, nedskalning och transkodning.",
       "Label": "Video"
     }
