@@ -118,7 +118,7 @@
       }
     }
   },
-  "Plugin": {
+  "Plugins": {
     "Image": {
       "Description": "Flödeselement för att bearbeta bildfiler. Denna plugin innehåller noder för att konvertera och manipulera bilder.",
       "Label": "Bild"

@@ -31,7 +31,7 @@
       }
     }
   },
-  "Plugin": {
+  "Plugins": {
     "Checksum": {
       "Description": "Elementos de fluxo que fornecem a capacidade de executar um checksum em um arquivo.",
       "Label": "Checksum"

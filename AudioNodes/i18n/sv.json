@@ -193,7 +193,7 @@
       }
     }
   },
-  "Plugin": {
+  "Plugins": {
     "Audio": {
       "Description": "En samling av ljudrelaterade flödeselement för att hjälpa till att bearbeta ljudfiler.",
       "Label": "Ljud"

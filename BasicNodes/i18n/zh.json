@@ -760,7 +760,7 @@
       }
     }
   },
-  "Plugin": {
+  "Plugins": {
     "Basic": {
       "Description": "FileFlows的基础流程元素。此插件包含用于处理文件的基础和常用流程元素。\nFileFlows的正常工作需要此插件。",
       "Label": "基础"

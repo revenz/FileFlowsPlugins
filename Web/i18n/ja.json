@@ -68,7 +68,7 @@
       }
     }
   },
-  "Plugin": {
+  "Plugins": {
     "Web": {
       "Description": "Web関連のフロー要素を提供するプラグイン。",
       "Label": "Web"

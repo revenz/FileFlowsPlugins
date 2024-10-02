@@ -68,7 +68,7 @@
       }
     }
   },
-  "Plugin": {
+  "Plugins": {
     "Web": {
       "Description": "提供与网页相关的流元素的插件。",
       "Label": "网页"

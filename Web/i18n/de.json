@@ -68,7 +68,7 @@
       }
     }
   },
-  "Plugin": {
+  "Plugins": {
     "Web": {
       "Description": "Plugin, das webbezogene Flusselemente bereitstellt.",
       "Label": "Web"

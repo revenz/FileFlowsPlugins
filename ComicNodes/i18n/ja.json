@@ -54,7 +54,7 @@
       }
     }
   },
-  "Plugin": {
+  "Plugins": {
     "Comic": {
       "Description": "コミックブックを処理するためのフロー要素（cbr、cbz、pdfなど）",
       "Label": "コミック"

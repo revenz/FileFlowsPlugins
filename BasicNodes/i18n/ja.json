@@ -760,7 +760,7 @@
       }
     }
   },
-  "Plugin": {
+  "Plugins": {
     "Basic": {
       "Description": "FileFlowsの基本フロー要素。このプラグインには、ファイル処理のための基本的で共通のフロー要素が含まれています。\nFileFlowsが機能するには、このプラグインが必要です。",
       "Label": "基本"

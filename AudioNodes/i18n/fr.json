@@ -193,7 +193,7 @@
       }
     }
   },
-  "Plugin": {
+  "Plugins": {
     "Audio": {
       "Description": "Une collection d'éléments de flux liés à l'audio pour aider à traiter les fichiers audio.",
       "Label": "Audio"

@@ -193,7 +193,7 @@
       }
     }
   },
-  "Plugin": {
+  "Plugins": {
     "Audio": {
       "Description": "Eine Sammlung von audiobezogenen Flusselementen, die bei der Verarbeitung von Audiodateien helfen.",
       "Label": "Audio"

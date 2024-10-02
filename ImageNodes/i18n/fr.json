@@ -118,7 +118,7 @@
       }
     }
   },
-  "Plugin": {
+  "Plugins": {
     "Image": {
       "Description": "Éléments de flux pour traiter les fichiers image. Ce plugin contient des nœuds pour convertir et manipuler des images.",
       "Label": "Image"

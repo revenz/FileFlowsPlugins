@@ -68,7 +68,7 @@
       }
     }
   },
-  "Plugin": {
+  "Plugins": {
     "Web": {
       "Description": "Plugin que fornece elementos de fluxo relacionados à web.",
       "Label": "Web"

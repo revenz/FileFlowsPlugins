@@ -68,7 +68,7 @@
       }
     }
   },
-  "Plugin": {
+  "Plugins": {
     "Web": {
       "Description": "Plugin som tillhandahåller webbrelaterade flödeselement.",
       "Label": "Web"

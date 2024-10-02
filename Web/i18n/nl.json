@@ -68,7 +68,7 @@
       }
     }
   },
-  "Plugin": {
+  "Plugins": {
     "Web": {
       "Description": "Plugin die webgerelateerde stromen biedt.",
       "Label": "Web"

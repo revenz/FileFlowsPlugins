@@ -31,7 +31,7 @@
       }
     }
   },
-  "Plugin": {
+  "Plugins": {
     "Checksum": {
       "Description": "Flow elements that provide the ability to run a checksum against a file.",
       "Label": "Checksum"

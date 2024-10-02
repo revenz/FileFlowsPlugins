@@ -54,7 +54,7 @@
       }
     }
   },
-  "Plugin": {
+  "Plugins": {
     "Comic": {
       "Description": "Элементы потока для обработки комиксов (cbr, cbz, pdf и т.д.)",
       "Label": "Комикс"

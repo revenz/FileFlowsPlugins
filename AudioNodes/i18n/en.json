@@ -193,7 +193,7 @@
       }
     }
   },
-  "Plugin": {
+  "Plugins": {
     "Audio": {
       "Description": "A collection of audio related flow elements to help process audio files.",
       "Label": "Audio"
