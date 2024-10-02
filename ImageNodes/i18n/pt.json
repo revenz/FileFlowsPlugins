@@ -117,5 +117,9 @@
         }
       }
     }
+  },
+  "Plugin": {
+    "Label": "Imagem",
+    "Description": "Elementos de fluxo para processar arquivos de imagem. Este plugin contém nós para converter e manipular imagens."
   }
 }

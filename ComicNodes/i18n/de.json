@@ -53,5 +53,9 @@
         }
       }
     }
+  },
+  "Plugin": {
+    "Label": "Comic",
+    "Description": "Flusselemente zur Verarbeitung von Comics (cbr, cbz, pdf usw.)"
   }
 }

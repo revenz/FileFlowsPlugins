@@ -20,6 +20,7 @@
   },
   "Plugins": {
     "Apprise": {
+      "Label": "Apprise",
       "Description": "A plugin that allows you to send messages to a Apprise server.",
       "Fields": {
         "Endpoint": "Endpoint",

@@ -20,6 +20,7 @@
   },
   "Plugins": {
     "DiscordNodes": {
+      "Label": "Discord",
       "Description": "Mit diesem Plugin können Sie Nachrichten an Discord senden.\n\nDie Webhook Id und der  Token kann aus der URL entnommen werden.\n https://discord.com/api/webhooks/[webhookid]/[webhooktoken]",
       "Fields": {
         "WebhookId": "Webhook-ID",

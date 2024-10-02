@@ -117,5 +117,9 @@
         }
       }
     }
+  },
+  "Plugin": {
+    "Label": "Afbeelding",
+    "Description": "Stroomelementen voor het verwerken van afbeeldingsbestanden. Deze plugin bevat knooppunten om afbeeldingen te converteren en te manipuleren."
   }
 }

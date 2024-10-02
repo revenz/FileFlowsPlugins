@@ -30,5 +30,9 @@
         }
       }
     }
+  },
+  "Plugin": {
+    "Label": "Somme de contrôle",
+    "Description": "Éléments de flux permettant d'exécuter une somme de contrôle sur un fichier."
   }
 }

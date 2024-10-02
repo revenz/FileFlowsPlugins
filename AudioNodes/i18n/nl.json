@@ -192,5 +192,9 @@
         }
       }
     }
+  },
+  "Plugin": {
+    "Label": "Audio",
+    "Description": "Een verzameling van audio-gerelateerde stroomelementen om te helpen bij het verwerken van audiobestanden."
   }
 }

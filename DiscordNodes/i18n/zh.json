@@ -20,6 +20,7 @@
   },
   "Plugins": {
     "DiscordNodes": {
+      "Label": "Discord",
       "Description": "一个插件，允许您向Discord服务器发送消息。\n\nWebhook ID和令牌可以从Webhook URL中获取\n https://discord.com/api/webhooks/[webhookid]/[webhooktoken]",
       "Fields": {
         "WebhookId": "Webhook ID",

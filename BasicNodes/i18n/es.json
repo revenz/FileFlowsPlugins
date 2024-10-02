@@ -759,5 +759,9 @@
         }
       }
     }
+  },
+  "Plugin": {
+    "Label": "Básico",
+    "Description": "Elementos de flujo básicos para FileFlows. Este plugin contiene elementos de flujo básicos y comunes para procesar archivos.\nEste plugin es necesario para que FileFlows funcione."
   }
 }

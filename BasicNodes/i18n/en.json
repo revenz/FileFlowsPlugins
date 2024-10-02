@@ -759,5 +759,9 @@
         }
       }
     }
+  },
+  "Plugin": {
+    "Label": "Basic",
+    "Description": "Basic flow elements for FileFlows.  This plugin contains basic and common flow elements to process files.\nThis plugin is required for FileFlows to work."
   }
 }

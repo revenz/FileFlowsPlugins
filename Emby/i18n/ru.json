@@ -24,6 +24,7 @@
   },
   "Plugins": {
     "Emby": {
+      "Label": "Emby",
       "Description": "Плагин, который позволяет вам общаться с Emby.",
       "Fields": {
         "AccessToken": "Токен доступа",

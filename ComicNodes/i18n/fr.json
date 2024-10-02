@@ -53,5 +53,9 @@
         }
       }
     }
+  },
+  "Plugin": {
+    "Label": "BD",
+    "Description": "Éléments de flux pour traiter des bandes dessinées (cbr, cbz, pdf, etc.)"
   }
 }

@@ -20,6 +20,7 @@
   },
   "Plugins": {
     "Gotify": {
+      "Label": "Gotify",
       "Description": "Un plugin qui vous permet d'envoyer des messages à un serveur Gotify.",
       "Fields": {
         "AccessToken": "Token d'accès",

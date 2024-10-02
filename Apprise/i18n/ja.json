@@ -20,6 +20,7 @@
   },
   "Plugins": {
     "Apprise": {
+      "Label": "Apprise",
       "Description": "Appriseサーバーにメッセージを送信できるプラグインです。",
       "Fields": {
         "Endpoint": "エンドポイント",

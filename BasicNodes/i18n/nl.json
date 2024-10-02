@@ -759,5 +759,9 @@
         }
       }
     }
+  },
+  "Plugin": {
+    "Label": "Basis",
+    "Description": "Basisstroomelementen voor FileFlows. Deze plugin bevat basis- en algemene stroomelementen voor het verwerken van bestanden.\nDeze plugin is vereist om FileFlows te laten werken."
   }
 }

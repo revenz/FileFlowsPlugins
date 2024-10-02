@@ -20,6 +20,7 @@
   },
   "Plugins": {
     "Apprise": {
+      "Label": "Apprise",
       "Description": "Плагин, позволяющий отправлять сообщения на сервер Apprise.",
       "Fields": {
         "Endpoint": "Конечная точка",

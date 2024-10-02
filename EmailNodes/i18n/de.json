@@ -21,6 +21,8 @@
   },
   "Plugins": {
     "EmailNodes": {
+      "Label": "Email",
+      "Description": "Ein Plugin, das es Ihnen ermöglicht, E-Mails zu senden",
       "Fields": {
         "Sender": "Absender",
         "Sender-Help": "Die E-Mail-Adresse, von der E-Mails gesendet werden",

@@ -117,5 +117,9 @@
         }
       }
     }
+  },
+  "Plugin": {
+    "Label": "Immagine",
+    "Description": "Elementi di flusso per l'elaborazione di file immagine. Questo plugin contiene nodi per convertire e manipolare immagini."
   }
 }

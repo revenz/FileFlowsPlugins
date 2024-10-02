@@ -20,6 +20,7 @@
   },
   "Plugins": {
     "DiscordNodes": {
+      "Label": "Discord",
       "Description": "Discordサーバーにメッセージを送信できるプラグインです。\n\nWebhook IDとトークンは、Webhook URLから取得できます\n https://discord.com/api/webhooks/[webhookid]/[webhooktoken]",
       "Fields": {
         "WebhookId": "Webhook ID",

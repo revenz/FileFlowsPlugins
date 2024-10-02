@@ -53,5 +53,9 @@
         }
       }
     }
+  },
+  "Plugin": {
+    "Label": "Cómic",
+    "Description": "Elementos de flujo para procesar cómics (cbr, cbz, pdf, etc.)"
   }
 }

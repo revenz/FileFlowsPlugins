@@ -11,7 +11,7 @@
     <Authors>John Andrews</Authors>
     <Product>Checksum</Product>
     <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
-    <Description>Nodes that provide the ability to run a checksum against a file.</Description>
+    <Description>Flow elements that provide the ability to run a checksum against a file.</Description>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup Condition=" '$(Configuration)' == 'Debug'">

@@ -20,6 +20,7 @@
   },
   "Plugins": {
     "Apprise": {
+      "Label": "Apprise",
       "Description": "允许您向Apprise服务器发送消息的插件。",
       "Fields": {
         "Endpoint": "端点",

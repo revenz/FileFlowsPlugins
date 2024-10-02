@@ -53,5 +53,9 @@
         }
       }
     }
+  },
+  "Plugin": {
+    "Label": "漫画",
+    "Description": "处理漫画书的流程元素（cbr、cbz、pdf 等）"
   }
 }
