@@ -47,12 +47,14 @@ namespace FileFlows.VideoNodes
             if (string.IsNullOrEmpty(ffmpeg))
             {
                 Args.Logger.ELog("FFmpeg variable not found.");
+                Args.FailureReason = "FFmpeg variable not found.";
                 return string.Empty;
             }
             var fileInfo = new System.IO.FileInfo(ffmpeg);
             if (fileInfo.Exists == false)
             {
                 Args.Logger.ELog("FFmpeg does not exist: " + ffmpeg);
+                Args.FailureReason = "FFmpeg does not exist: " + ffmpeg;
                 return string.Empty;
             }
             return fileInfo.FullName;
