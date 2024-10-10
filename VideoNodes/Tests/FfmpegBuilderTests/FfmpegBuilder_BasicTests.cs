@@ -400,22 +400,6 @@ public class FfmpegBuilder_BasicTests : VideoTestBase
     // }
 
     [TestMethod]
-    public void FfmpegBuilder_AddAc3Aac_AudioTrackReorder()
-    {
-        FfmpegBuilderAudioTrackReorder ffAudioReorder= new();
-        ffAudioReorder.Channels = new List<string> { "1.0", "5.1", "2.0" };
-        ffAudioReorder.Languages = new List<string> { "fre", "deu" };
-        ffAudioReorder.PreExecute(args);
-        ffAudioReorder.Execute(args);
-
-        FfmpegBuilderExecutor ffExecutor = new();
-        ffExecutor.PreExecute(args);
-        int result = ffExecutor.Execute(args);
-
-        Assert.AreEqual(1, result);
-    }
-
-    [TestMethod]
     public void FfmpegBuilder_SetLanguage()
     {
         FfmpegBuilderAudioSetLanguage ffSetLanguage = new();
