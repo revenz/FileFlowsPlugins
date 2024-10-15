@@ -1,0 +1,35 @@
+{
+  "Flow": {
+    "Parts": {
+      "Apprise": {
+        "Description": "向 Apprise 伺服器發送消息。",
+        "Fields": {
+          "Message": "消息",
+          "Message-Help": "要發送到 Apprise 伺服器的消息",
+          "MessageType": "類型",
+          "MessageType-Help": "要發送的消息類型",
+          "Tag": "標籤",
+          "Tag-Help": "發送此消息的標籤列表，如果為空則會標記為 ''all''。"
+        },
+        "Outputs": {
+          "1": "Apprise 消息已發送",
+          "2": "Apprise 消息發送失敗"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Apprise": {
+      "Description": "一個允許您向 Apprise 伺服器發送消息的插件。",
+      "Label": "Apprise",
+      "Fields": {
+        "Endpoint": "端點",
+        "Endpoint-Help": "Apprise 伺服器上的端點，例如 notify/apprise",
+        "Endpoint-Placeholder": "notify/apprise",
+        "ServerUrl": "伺服器",
+        "ServerUrl-Help": "Apprise 伺服器的 URL",
+        "ServerUrl-Placeholder": "http://apprise.lan"
+      }
+    }
+  }
+}

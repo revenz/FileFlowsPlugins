@@ -1,0 +1,34 @@
+{
+  "Flow": {
+    "Parts": {
+      "Gotify": {
+        "Description": "將消息發送到Gotify伺服器。",
+        "Fields": {
+          "Message": "消息",
+          "Message-Help": "要發送到Gotify伺服器的消息",
+          "Priority": "優先級",
+          "Priority-Help": "發送消息的優先級",
+          "Title": "標題",
+          "Title-Help": "要發送的可選標題。"
+        },
+        "Outputs": {
+          "1": "Gotify消息已發送",
+          "2": "Gotify消息發送失敗"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Gotify": {
+      "Description": "一個允許您將消息發送到Gotify伺服器的插件。",
+      "Label": "Gotify",
+      "Fields": {
+        "AccessToken": "訪問令牌",
+        "AccessToken-Help": "用於與Gotify伺服器通信的訪問令牌。",
+        "ServerUrl": "伺服器",
+        "ServerUrl-Help": "Gotify伺服器的URL",
+        "ServerUrl-Placeholder": "http://gotify.lan"
+      }
+    }
+  }
+}

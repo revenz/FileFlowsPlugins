@@ -1,0 +1,31 @@
+{
+  "Flow": {
+    "Parts": {
+      "Discord": {
+        "Description": "向Discord伺服器發送消息。",
+        "Fields": {
+          "Message": "消息",
+          "Message-Help": "要發送到Discord伺服器的消息",
+          "MessageType": "類型",
+          "MessageType-Help": "要發送的消息類型。基本類型將僅是消息，沒有標題且沒有顏色。",
+          "Title": "標題",
+          "Title-Help": "要發送的可選標題，如果未設置，消息類型將成為標題。"
+        },
+        "Outputs": {
+          "1": "Discord消息已發送",
+          "2": "Discord消息發送失敗"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "DiscordNodes": {
+      "Description": "一個允許您向Discord伺服器發送消息的插件。\n\nWebhook Id和令牌可以從Webhook URL獲取\n https://discord.com/api/webhooks/[webhookid]/[webhooktoken]",
+      "Label": "Discord",
+      "Fields": {
+        "WebhookId": "Webhook Id",
+        "WebhookToken": "Webhook令牌"
+      }
+    }
+  }
+}

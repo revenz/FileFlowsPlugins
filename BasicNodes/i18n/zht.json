@@ -1,0 +1,769 @@
+{
+  "Enums": {
+    "LogType": {
+      "Debug": "除錯",
+      "Error": "錯誤",
+      "Info": "資訊",
+      "Warning": "警告"
+    }
+  },
+  "Flow": {
+    "Parts": {
+      "BatchScript": {
+        "Description": "允許您在 Windows 環境中執行批次 (.bat) 腳本。",
+        "Label": "批次腳本 (.bat)",
+        "Fields": {
+          "Code": "程式碼"
+        },
+        "Outputs": {
+          "1": "返回 1",
+          "10": "返回 10",
+          "2": "返回 2",
+          "3": "返回 3",
+          "4": "返回 4",
+          "5": "返回 5",
+          "6": "返回 6",
+          "7": "返回 7",
+          "8": "返回 8",
+          "9": "返回 9"
+        }
+      },
+      "CompleteFlow": {
+        "Description": "將流程完成/結束為成功狀態",
+        "Label": "完成流程"
+      },
+      "CopyFile": {
+        "Description": "將檔案複製到目的資料夾",
+        "Label": "複製檔案",
+        "Fields": {
+          "AdditionalFiles": "附加檔案",
+          "AdditionalFiles-Help": "要從目錄複製到新目錄的附加檔案。\n每個值可以包含有效的字面路徑和通配符 (* 和 ?) 字元的組合，但不支援正則表達式。",
+          "AdditionalFilesFromOriginal": "原始目錄",
+          "AdditionalFilesFromOriginal-Help": "附加檔案是否應該從工作目錄或原始目錄複製。啟用以從原始目錄複製。",
+          "CopyFolder": "複製資料夾",
+          "CopyFolder-Help": "是否也應該複製相對的資料庫資料夾結構",
+          "DestinationFile": "目的檔案",
+          "DestinationFile-Help": "要複製檔案的檔名。如果留空，將使用原始檔名",
+          "DestinationPath": "目的資料夾",
+          "DestinationPath-Help": "檔案將被複製到的資料夾",
+          "InputFile": "要複製的檔案",
+          "InputFile-Help": "要複製的檔案，如果留空，則會複製工作檔案",
+          "InputFile-Placeholder": "工作檔案",
+          "PreserverOriginalDates": "保留日期",
+          "PreserverOriginalDates-Help": "是否應保留原始輸入檔案的原始創建時間和最後寫入時間。"
+        },
+        "Outputs": {
+          "1": "檔案已複製"
+        }
+      },
+      "CSharpScript": {
+        "Description": "允許您在流程中執行 C# 程式碼。",
+        "Label": "C# 函數",
+        "Fields": {
+          "Code": "程式碼"
+        },
+        "Outputs": {
+          "1": "返回 1",
+          "10": "返回 10",
+          "2": "返回 2",
+          "3": "返回 3",
+          "4": "返回 4",
+          "5": "返回 5",
+          "6": "返回 6",
+          "7": "返回 7",
+          "8": "返回 8",
+          "9": "返回 9"
+        }
+      },
+      "Delete": {
+        "Description": "刪除檔案或資料夾",
+        "Label": "刪除",
+        "Fields": {
+          "FileName": "路徑",
+          "FileName-Help": "要刪除的檔案或資料夾的路徑。\n\n如果留空，將刪除當前工作檔案。"
+        },
+        "Outputs": {
+          "1": "檔案已刪除"
+        }
+      },
+      "DeleteSourceDirectory": {
+        "Description": "刪除原始資料庫檔案的來源資料夾",
+        "Label": "刪除來源資料夾",
+        "Fields": {
+          "IfEmpty": "如果為空",
+          "IfEmpty-Help": "僅在來源資料夾為空時刪除",
+          "IncludePatterns": "包含模式",
+          "IncludePatterns-Help": "可選，如果設定，僅計算與這些模式匹配的檔案來判斷資料夾是否為空。這些模式中的任何一個都可以匹配。",
+          "TopMostOnly": "僅最上層",
+          "TopMostOnly-Help": "啟用時，僅刪除直接包含檔案的資料夾，保持更高層的資料夾不變。"
+        },
+        "Outputs": {
+          "1": "來源資料夾已刪除",
+          "2": "資料夾未被刪除"
+        }
+      },
+      "Executor": {
+        "Description": "對檔案執行以下過程。\n輸出 1：該過程返回成功退出代碼\n輸出 2：該過程返回非成功退出代碼。",
+        "Label": "執行器",
+        "Fields": {
+          "Arguments": "參數",
+          "Arguments-Help": "要傳遞給要執行的過程的參數",
+          "FileName": "檔案名稱",
+          "FileName-Help": "要執行的檔案名稱",
+          "OutputErrorVariable": "輸出錯誤變數",
+          "OutputErrorVariable-Help": "可選的變數名稱，用於存儲過程的錯誤輸出",
+          "OutputVariable": "輸出變數",
+          "OutputVariable-Help": "可選的變數名稱，用於存儲過程的輸出",
+          "SuccessCode": "成功代碼",
+          "SuccessCode-Help": "該過程的退出代碼，表示該過程成功。通常應為0。",
+          "Timeout": "超時",
+          "Timeout-Help": "該過程可以運行多長時間後被終止。使用0表示不超時。",
+          "Timeout-Suffix": "秒",
+          "WorkingDirectory": "工作資料夾",
+          "WorkingDirectory-Help": "該過程將從中執行的資料夾"
+        },
+        "Outputs": {
+          "1": "過程返回成功",
+          "2": "過程返回失敗"
+        }
+      },
+      "FailFlow": {
+        "Description": "立即失敗流，如果您希望某條路徑失敗，這很有用。",
+        "Label": "失敗流",
+        "Fields": {
+          "Reason": "原因",
+          "Reason-Help": "可選的原因，以記錄流失敗的原因。"
+        }
+      },
+      "FileDateCompare": {
+        "Description": "檢查檔案的創建時間或最後寫入時間是否符合指定的日期約束。",
+        "Label": "檔案日期比較",
+        "Fields": {
+          "Date": "日期",
+          "DateComparision": "比較",
+          "FileName": "檔案名稱",
+          "FileName-Help": "要檢查的檔案。留空以檢查當前工作檔案。"
+        },
+        "Outputs": {
+          "1": "符合日期約束。",
+          "2": "不符合日期約束。"
+        }
+      },
+      "FileExists": {
+        "Description": "檢查檔案是否存在\n\n輸出 1：檔案存在\n輸出 2：檔案不存在",
+        "Label": "檔案存在",
+        "Fields": {
+          "FileName": "檔案名稱",
+          "FileName-Help": "要檢查的檔案。留空以檢查當前工作檔案。"
+        },
+        "Outputs": {
+          "1": "檔案存在",
+          "2": "檔案不存在"
+        }
+      },
+      "FileExtension": {
+        "Description": "檢查檔案是否具有配置的擴展名。\n\n輸出 1：匹配\n輸出 2：不匹配",
+        "Label": "檔案擴展名",
+        "Fields": {
+          "Extensions": "擴展名",
+          "Extensions-Help": "一個不區分大小寫的檔案擴展名列表，將用於匹配。\n輸出 1：匹配\n輸出 2：不匹配"
+        },
+        "Outputs": {
+          "1": "擴展名匹配",
+          "2": "擴展名不匹配"
+        }
+      },
+      "FileSize": {
+        "Description": "檢查檔案大小是否符合配置的參數。數值以兆字節為單位。\n\n輸出 1：匹配\n輸出 2：不匹配",
+        "Label": "檔案大小",
+        "Fields": {
+          "Comparison": "比較",
+          "Lower": "大於",
+          "Lower-Help": "它必須大於這個數量的兆字節",
+          "Lower-Suffix": "MB",
+          "Upper": "小於",
+          "Upper-Help": "它必須小於這個數量的兆字節。留作0以不測試上限。",
+          "Upper-Suffix": "MB"
+        },
+        "Outputs": {
+          "1": "檔案大小在範圍內",
+          "2": "檔案大小不在範圍內"
+        }
+      },
+      "FileSizeCompare": {
+        "Description": "檢查檔案大小是否與原始檔案大小變化。",
+        "Label": "檔案大小比較",
+        "Outputs": {
+          "1": "小於原始檔案",
+          "2": "與原始檔案大小相同",
+          "3": "大於原始檔案"
+        }
+      },
+      "FileSizeWithin": {
+        "Description": "檢查新檔案大小是否在原始檔案大小的允許範圍內。",
+        "Label": "檔案大小在內",
+        "Fields": {
+          "Value": "數值",
+          "Value-Help": "允許的檔案大小差異，此數值可以是加或減此差異。"
+        },
+        "Outputs": {
+          "1": "檔案大小在允許範圍內",
+          "2": "檔案大小不在允許範圍內"
+        }
+      },
+      "FolderDateCompare": {
+        "Description": "檢查資料夾的創建時間或最後寫入時間是否符合指定的日期約束。",
+        "Label": "資料夾日期比較",
+        "Fields": {
+          "Date": "日期",
+          "DateComparision": "比較",
+          "Path": "路徑",
+          "Path-Help": "要檢查的資料夾路徑。留空以檢查當前工作檔案。\n如果指定了一個檔案，將檢查包含該檔案的資料夾。"
+        },
+        "Outputs": {
+          "1": "符合日期約束。",
+          "2": "不符合日期約束。"
+        }
+      },
+      "FolderIterator": {
+        "Description": "迭代給定資料夾中的所有檔案，並對這些檔案執行子流。",
+        "Label": "資料夾迭代器",
+        "Fields": {
+          "Flow": "流",
+          "Flow-Help": "對檔案執行的子流。",
+          "Folder": "資料夾",
+          "Folder-Help": "將迭代其檔案的資料夾。",
+          "Pattern": "模式",
+          "Pattern-Help": "任何可選的模式來限制迭代的檔案，這可以是以`*`開頭的通配符模式或正則表達式。",
+          "Recursive": "遞歸",
+          "Recursive-Help": "是否也應迭代所有子資料夾中的檔案，或僅應迭代頂級檔案。"
+        },
+        "Outputs": {
+          "1": "資料夾檔案已迭代"
+        }
+      },
+      "Function": {
+        "Label": "函數",
+        "Fields": {
+          "Code": "代碼",
+          "Code-Help": "返回 -1 以表示錯誤並停止流程。返回 0 以表示流程完成。返回 1 或更多以調用所需的輸出。",
+          "Outputs": "輸出",
+          "Template": "模板",
+          "Template-Help": "警告：這將用您選擇的模板替換代碼塊中的任何內容。"
+        },
+        "Outputs": {
+          "1": "返回 1",
+          "10": "返回 10",
+          "2": "返回 2",
+          "3": "返回 3",
+          "4": "返回 4",
+          "5": "返回 5",
+          "6": "返回 6",
+          "7": "返回 7",
+          "8": "返回 8",
+          "9": "返回 9"
+        }
+      },
+      "GotoFlow": {
+        "Description": "這允許您切換到另一個流程以進行處理。此流程將退出，並且參數和工作檔案將傳遞到新流程中。",
+        "Label": "轉到流程",
+        "Fields": {
+          "Flow": "流程",
+          "UpdateFlowUsed": "更新流程",
+          "UpdateFlowUsed-Help": "如果文件的 `Flow` 應更新以引用此新流程，或將其保留為原始流程。"
+        }
+      },
+      "HasHardLinks": {
+        "Description": "檢查文件是否有硬鏈接",
+        "Label": "是否有硬鏈接",
+        "Fields": {
+          "Count": "計數",
+          "Count-Help": "所需的硬鏈接數量以調用輸出 1。",
+          "FileName": "檔案名稱",
+          "FileName-Help": "要檢查的檔案。留空以檢查當前工作檔案。"
+        },
+        "Outputs": {
+          "1": "檢測到硬鏈接",
+          "2": "未檢測到硬鏈接"
+        }
+      },
+      "IfBoolean": {
+        "Description": "測試變數是否為真或假",
+        "Label": "如果布林值",
+        "Fields": {
+          "Variable": "變數",
+          "Variable-Help": "要檢查的變數名稱"
+        },
+        "Outputs": {
+          "1": "真",
+          "2": "假"
+        }
+      },
+      "IfString": {
+        "Description": "測試變數是否與字串匹配",
+        "Label": "如果字串",
+        "Fields": {
+          "Options": "選項",
+          "Options-Help": "要匹配的字串。",
+          "Outputs": "輸出",
+          "Outputs-Help": "這應該與選項數量匹配",
+          "Variable": "變數",
+          "Variable-Help": "要檢查的變數名稱"
+        },
+        "Outputs": {
+          "1": "匹配字串 1",
+          "10": "匹配字串 10",
+          "2": "匹配字串 2",
+          "3": "匹配字串 3",
+          "4": "匹配字串 4",
+          "5": "匹配字串 5",
+          "6": "匹配字串 6",
+          "7": "匹配字串 7",
+          "8": "匹配字串 8",
+          "9": "匹配字串 9"
+        }
+      },
+      "InputFile": {
+        "Description": "一個用於檔案的輸入流程元素。這是必需的，是流程的起始點。可以使用任何輸入流程元素，只需一個即可。",
+        "Label": "輸入檔案",
+        "Outputs": {
+          "1": "庫檔案"
+        }
+      },
+      "InputFolder": {
+        "Description": "一個用於資料夾的輸入流程元素。這僅在使用此流程的庫配置為資料夾時有效。",
+        "Label": "輸入資料夾",
+        "Outputs": {
+          "1": "庫資料夾"
+        }
+      },
+      "IsDocker": {
+        "Description": "確定此流程是否在 Docker 上運行",
+        "Label": "是否為 Docker",
+        "Outputs": {
+          "1": "正在 Docker 上運行",
+          "2": "未在 Docker 上運行"
+        }
+      },
+      "IsFromLibrary": {
+        "Description": "檢查正在處理的文件是否來自指定的庫。",
+        "Label": "來自庫",
+        "Fields": {
+          "Library": "庫",
+          "Library-Help": "要檢查的庫。"
+        },
+        "Outputs": {
+          "1": "檔案來自指定的庫。",
+          "2": "檔案不來自指定的庫。"
+        }
+      },
+      "IsLinux": {
+        "Description": "確定此流程是否在 Linux 上運行",
+        "Label": "是否為 Linux",
+        "Outputs": {
+          "1": "正在 Linux 上運行",
+          "2": "未在 Linux 上運行"
+        }
+      },
+      "IsMacOS": {
+        "Description": "判斷此流程是否在 MacOS 上運行",
+        "Label": "是否是 MacOS",
+        "Outputs": {
+          "1": "正在 MacOS 上運行",
+          "2": "未在 MacOS 上運行"
+        }
+      },
+      "IsProcessingOnNode": {
+        "Description": "檢查流程是否目前正在指定的處理節點上進行處理。",
+        "Label": "是否在節點上處理",
+        "Fields": {
+          "Node": "節點",
+          "Node-Help": "要檢查的處理節點。"
+        },
+        "Outputs": {
+          "1": "正在節點上處理",
+          "2": "未在節點上處理"
+        }
+      },
+      "IsWindows": {
+        "Description": "判斷此流程是否在 Windows 上運行",
+        "Label": "是否是 Windows",
+        "Outputs": {
+          "1": "正在 Windows 上運行",
+          "2": "未在 Windows 上運行"
+        }
+      },
+      "ListIterator": {
+        "Description": "迭代給定列表中的所有字符串，並在子流程中執行這些字符串。",
+        "Label": "列表迭代器",
+        "Fields": {
+          "Flow": "流程",
+          "Flow-Help": "要執行字符串的子流程。",
+          "List": "列表",
+          "List-Help": "包含要迭代的列表的變量名稱。"
+        },
+        "Outputs": {
+          "1": "列表已迭代"
+        }
+      },
+      "Log": {
+        "Description": "將消息記錄到流程日誌",
+        "Label": "日誌",
+        "Fields": {
+          "LogType": "類型",
+          "Message": "消息"
+        },
+        "Outputs": {
+          "1": "消息已記錄"
+        }
+      },
+      "Matches": {
+        "Description": "比較一組值並匹配條件，以確定應該調用哪個輸出",
+        "Label": "匹配",
+        "Fields": {
+          "MatchConditions": "",
+          "MatchConditions-Help": "測試的匹配條件，以確定應該調用哪個輸出。",
+          "MatchConditionsKey": "值",
+          "MatchConditionsValue": "表達式"
+        }
+      },
+      "MatchesAll": {
+        "Description": "比較一組值並檢查是否所有條件匹配。",
+        "Label": "匹配所有",
+        "Fields": {
+          "MatchConditions": "",
+          "MatchConditionsHelp": "要測試的條件，確定應該調用哪個輸出。",
+          "MatchConditionsKey": "值",
+          "MatchConditionsValue": "表達式"
+        },
+        "Outputs": {
+          "1": "所有條件匹配",
+          "2": "並非所有條件匹配"
+        }
+      },
+      "MoveFile": {
+        "Description": "將文件移動到目標文件夾",
+        "Label": "移動文件",
+        "Fields": {
+          "AdditionalFiles": "附加文件",
+          "AdditionalFiles-Help": "從目錄移動到新目錄的附加文件。\n每個值可以包含有效文字路徑和通配符（* 和 ?）字符的組合，但不支持正則表達式。",
+          "AdditionalFilesFromOriginal": "原始目錄",
+          "AdditionalFilesFromOriginal-Help": "附加文件應該從工作目錄移動還是從原始目錄移動。如果啟用，則從原始目錄移動。",
+          "DeleteOriginal": "刪除原始文件",
+          "DeleteOriginal-Help": "如果應該刪除原始文件，則僅在工作文件與原始文件不同時才會這樣做。",
+          "DestinationFile": "目標文件",
+          "DestinationFile-Help": "要移動到的文件名。如果為空，則使用原始文件名。",
+          "DestinationPath": "目標文件夾",
+          "DestinationPath-Help": "要移動文件的文件夾。",
+          "InputFile": "要移動的文件",
+          "InputFile-Help": "要移動的文件，如果留空，則將移動工作文件。",
+          "InputFile-Placeholder": "工作文件",
+          "MoveFolder": "複製文件夾",
+          "MoveFolder-Help": "是否應該複製相對的庫文件夾結構。",
+          "PreserverOriginalDates": "保留日期",
+          "PreserverOriginalDates-Help": "是否應保留原始輸入文件的原始創建時間和最後寫入時間。"
+        },
+        "Outputs": {
+          "1": "文件已移動",
+          "2": "文件已移動，但無法刪除原始文件"
+        }
+      },
+      "MoveFolder": {
+        "Description": "移動一個文件夾",
+        "Label": "移動文件夾",
+        "Fields": {
+          "CreateSubfolder": "創建子文件夾",
+          "CreateSubfolder-Help": "是否在目標文件夾中創建一個具有源文件夾名稱的子文件夾。",
+          "DestinationPath": "目標",
+          "DestinationPath-Help": "要將源文件夾移動到的目標文件夾。",
+          "SourcePath": "來源",
+          "SourcePath-Help": "要移動的文件夾，如果留空，則將使用工作文件；如果這不是文件夾，則流程元素將失敗。"
+        },
+        "Outputs": {
+          "1": "文件夾已移動"
+        }
+      },
+      "OlderThan": {
+        "Description": "檢查一個文件夾是否比指定範圍舊",
+        "Label": "比...舊",
+        "Fields": {
+          "Date": "日期",
+          "Number": "數量",
+          "Unit": "單位"
+        },
+        "Outputs": {
+          "1": "文件夾較舊",
+          "2": "文件夾不較舊"
+        }
+      },
+      "OriginalFile": {
+        "Description": "將流程中的當前工作文件設置為啟動流程的原始文件",
+        "Label": "原始文件",
+        "Outputs": {
+          "1": "工作文件設置為原始文件"
+        }
+      },
+      "PatternMatch": {
+        "Description": "測試工作檔案和原始檔案是否符合正則表達式。\n\n輸出 1: 符合表達式\n輸出 2: 不符合",
+        "Label": "模式匹配",
+        "Fields": {
+          "Pattern": "模式",
+          "Pattern-Help": "使用 C# 規範的正則表達式。"
+        },
+        "Outputs": {
+          "1": "符合表達式",
+          "2": "不符合"
+        }
+      },
+      "PatternReplacer": {
+        "Description": "允許您在檔名中進行替換。可以使用正則表達式進行替換，或簡單的字串替換。\n\n輸出 1: 替換完成\n輸出 2: 沒有進行替換",
+        "Label": "檔名模式替換器",
+        "Fields": {
+          "Replacements": "替換",
+          "ReplacementsKey": "模式",
+          "ReplacementsValue": "值",
+          "UseWorkingFileName": "使用工作檔名",
+          "UseWorkingFileName-Help": "如果應使用當前工作檔名，或如果為 false，將使用進來檔案的原始檔名。"
+        },
+        "Outputs": {
+          "1": "替換完成",
+          "2": "沒有進行替換"
+        }
+      },
+      "PowerShellScript": {
+        "Description": "允許您在 Windows 環境中執行 PowerShell (.ps1) 腳本。",
+        "Label": "PowerShell 腳本 (.ps1)",
+        "Fields": {
+          "Code": "程式碼"
+        },
+        "Outputs": {
+          "1": "返回 1",
+          "10": "返回 10",
+          "2": "返回 2",
+          "3": "返回 3",
+          "4": "返回 4",
+          "5": "返回 5",
+          "6": "返回 6",
+          "7": "返回 7",
+          "8": "返回 8",
+          "9": "返回 9"
+        }
+      },
+      "Random": {
+        "Description": "隨機選擇一個輸出",
+        "Label": "隨機",
+        "Fields": {
+          "Outputs": "輸出",
+          "Outputs-Help": "可能被調用的輸出數量。"
+        }
+      },
+      "Renamer": {
+        "Description": "重新命名工作檔案。\n可以通過在模式欄位中輸入鍵 '{' 使用變數。",
+        "Label": "重命名器",
+        "Fields": {
+          "CsvFile": "CSV 檔案",
+          "CsvFile-Help": "將原始名稱和重命名檔案附加到此檔案。當使用「僅記錄」來測試重命名器而不實際更改檔案時很有用。",
+          "DestinationPath": "目標資料夾",
+          "DestinationPath-Help": "如果檔案應移動到不同的資料夾。",
+          "LogOnly": "僅記錄",
+          "LogOnly-Help": "如果您只想測試此流程元素而不實際重命名檔案，請打開。",
+          "Pattern": "新名稱",
+          "Pattern-Help": "檔案的新名稱。可以使用變數。任何空的 () 和 '{}' 將被移除。"
+        },
+        "Outputs": {
+          "1": "檔案已重命名"
+        }
+      },
+      "ReplaceOriginal": {
+        "Description": "用工作檔案替換原始檔案。\n\n如果工作檔案的擴展名不同，原始檔案將被刪除，工作檔案將以新擴展名移動到原始檔案。\n例如：從 File.avi 到 File.mkv",
+        "Label": "替換原始檔案",
+        "Fields": {
+          "PreserverOriginalDates": "保留日期",
+          "PreserverOriginalDates-Help": "是否應保留原始輸入檔案的原始創建時間和最後寫入時間。"
+        },
+        "Outputs": {
+          "1": "原始檔案已替換"
+        }
+      },
+      "Reprocess": {
+        "Description": "該流程元素允許您使用不同的處理節點重新處理原始庫檔案。\n\n如果選擇的處理節點與當前處理檔案的節點相同，流程將失敗。",
+        "Label": "重新處理",
+        "Fields": {
+          "Node": "節點",
+          "Node-Help": "處理此檔案的處理節點。"
+        }
+      },
+      "SetVariable": {
+        "Description": "在流程中設置變數。",
+        "Label": "設置變數",
+        "Fields": {
+          "Value": "值",
+          "Value-Help": "要設置的變數值。",
+          "Variable": "變數",
+          "Variable-Help": "要設置的變數名稱"
+        },
+        "Outputs": {
+          "1": "變數已設置"
+        }
+      },
+      "SetWorkingFile": {
+        "Description": "將當前工作檔案更新為指定的檔案。",
+        "Label": "設置工作檔案",
+        "Fields": {
+          "DontDeletePrevious": "不刪除先前的檔案",
+          "DontDeletePrevious-Help": "如果先前的 *臨時* 工作檔案 *不* 應被刪除。\n僅臨時檔案將被刪除，FileFlows 創建的檔案將被放入運行者臨時目錄中。",
+          "File": "檔案",
+          "File-Description": "新工作檔案或資料夾的路徑。"
+        },
+        "Outputs": {
+          "1": "工作檔案已設置"
+        }
+      },
+      "SevenZip": {
+        "Description": "允許您對輸入進行7zip壓縮",
+        "Label": "7-Zip",
+        "Fields": {
+          "CompressionLevel": "壓縮等級",
+          "CompressionLevel-Help": "壓縮時使用的壓縮等級。",
+          "CompressionMethod": "壓縮方法",
+          "CompressionMethod-Help": "用於壓縮的壓縮方法，推薦使用LZMA2。",
+          "DestinationFile": "目標檔案",
+          "DestinationFile-Help": "新創建的7zip的檔名。如果留空，將使用項目的名稱作為7zip檔案。",
+          "DestinationPath": "目標資料夾",
+          "DestinationPath-Help": "將7zip檔案放置的目標資料夾。如果留空，7zip將放置在庫根目錄中。"
+        },
+        "Outputs": {
+          "1": "7zip創建成功"
+        }
+      },
+      "ShellScript": {
+        "Description": "允許您在類Unix環境中執行shell (.sh) 腳本。",
+        "Label": "Shell 腳本 (.sh)",
+        "Fields": {
+          "Code": "代碼"
+        },
+        "Outputs": {
+          "1": "返回 1",
+          "10": "返回 10",
+          "2": "返回 2",
+          "3": "返回 3",
+          "4": "返回 4",
+          "5": "返回 5",
+          "6": "返回 6",
+          "7": "返回 7",
+          "8": "返回 8",
+          "9": "返回 9"
+        }
+      },
+      "Sleep": {
+        "Description": "暫停流程",
+        "Label": "暫停",
+        "Fields": {
+          "Milliseconds": "毫秒",
+          "Milliseconds-Help": "流程暫停的時間。必須介於1毫秒到1小時之間"
+        },
+        "Outputs": {
+          "1": "流程恢復"
+        }
+      },
+      "Touch": {
+        "Description": "觸碰檔案或資料夾，並將最後寫入時間設置為現在。",
+        "Label": "觸碰",
+        "Fields": {
+          "FileName": "檔案名稱",
+          "FileName-Help": "要觸碰的檔案或資料夾的完整檔名。\n如果留空，將使用工作檔案。"
+        },
+        "Outputs": {
+          "1": "成功觸碰項目"
+        }
+      },
+      "Unpack": {
+        "Description": "允許您解壓縮檔案（zip、rar、tar等）",
+        "Label": "解壓縮",
+        "Fields": {
+          "DestinationPath": "目標資料夾",
+          "DestinationPath-Help": "解壓縮檔案的目標資料夾。",
+          "File": "檔案",
+          "File-Help": "要解壓縮的檔案名稱。可以留空，若留空則使用當前工作檔案。"
+        },
+        "Outputs": {
+          "1": "檔案已解壓縮"
+        }
+      },
+      "VariableMatch": {
+        "Description": "測試輸入是否與存儲的變數匹配",
+        "Label": "變數匹配",
+        "Fields": {
+          "Input": "值",
+          "Input-Help": "要與變數匹配的值。",
+          "Variable": "變數",
+          "Variable-Help": "要匹配的變數",
+          "VariableName": "變數",
+          "VariableName-Help": "要匹配的變數"
+        },
+        "Outputs": {
+          "1": "輸入與變數匹配",
+          "2": "輸入未與變數匹配"
+        }
+      },
+      "WebRequest": {
+        "Description": "允許您發送網頁請求",
+        "Label": "網頁請求",
+        "Fields": {
+          "Body": "主體",
+          "Body-Help": "發送的請求主體。此字段可以使用變數。",
+          "ContentType": "內容類型",
+          "ContentType-Help": "要發送的消息的內容類型",
+          "Headers": "標頭",
+          "Headers-Help": "隨請求發送的可選標頭",
+          "HeadersKey": "鍵",
+          "HeadersValue": "值",
+          "Method": "方法",
+          "Method-Help": "發送此請求時使用的網頁方法",
+          "Url": "URL",
+          "Url-Help": "請求的URL"
+        },
+        "Outputs": {
+          "1": "成功發送",
+          "2": "請求返回非成功狀態碼"
+        }
+      },
+      "WriteText": {
+        "Description": "將文本寫入檔案",
+        "Label": "寫入文本",
+        "Fields": {
+          "File": "檔案",
+          "File-Help": "要寫入文本的檔案。",
+          "Text": "文本",
+          "Text-Help": "要寫入檔案的文本。如果留空，將寫入當前工作檔案的完整路徑。"
+        },
+        "Outputs": {
+          "1": "文本已寫入檔案"
+        }
+      },
+      "Zip": {
+        "Description": "允許您對輸入進行壓縮",
+        "Label": "壓縮",
+        "Fields": {
+          "DestinationFile": "目標檔案",
+          "DestinationFile-Help": "新創建的zip的檔名。如果留空，將使用項目的名稱作為zip檔案。",
+          "DestinationPath": "目標資料夾",
+          "DestinationPath-Help": "將zip檔案放置的目標資料夾。如果留空，zip將放置在庫根目錄中。",
+          "Path": "路徑",
+          "Path-Help": "要壓縮的檔案或資料夾的路徑。如果留空，將壓縮當前工作檔案。",
+          "SetWorkingFile": "設置工作檔案",
+          "SetWorkingFile-Help": "如果新創建的zip應成為新的工作檔案。"
+        },
+        "Outputs": {
+          "1": "zip創建成功"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "BasicNodes": {
+      "Description": "FileFlows 的基本流程元素。此插件包含基本且常見的流程元素，用於處理檔案。\n此插件是 FileFlows 正常運行所必需的。",
+      "Label": "基本"
+    }
+  }
+}

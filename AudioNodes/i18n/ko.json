@@ -1,0 +1,202 @@
+{
+  "Flow": {
+    "Parts": {
+      "AudioBitrateMatches": {
+        "Description": "오디오 비트레이트가 제약 조건과 일치하는지 확인합니다.",
+        "Label": "오디오 비트레이트 일치",
+        "Fields": {
+          "BitrateKilobytes": "비트레이트",
+          "BitrateKilobytes-Help": "일치 여부를 확인할 비트레이트 (킬로바이트)입니다.",
+          "BitrateKilobytes-Suffix": "킬로바이트",
+          "Match": "일치"
+        },
+        "Outputs": {
+          "1": "일치함",
+          "2": "일치하지 않음"
+        }
+      },
+      "AudioFile": {
+        "Description": "오디오 정보를 읽은 입력 오디오 파일로, 처리할 수 있습니다.",
+        "Label": "오디오 파일",
+        "Outputs": {
+          "1": "라이브러리에서 가져온 오디오 파일"
+        }
+      },
+      "AudioFileNormalization": {
+        "Description": "FFMPEG의 loudnorm 필터를 사용하여 오디오 파일을 두 번 정규화합니다.",
+        "Label": "오디오 파일 정규화",
+        "Outputs": {
+          "1": "정규화된 오디오 파일이 임시 파일로 저장됨"
+        }
+      },
+      "ConvertAudio": {
+        "Description": "지정된 오디오 코덱으로 오디오 파일을 변환합니다.",
+        "Label": "오디오 변환",
+        "Fields": {
+          "Bitrate": "비트레이트",
+          "Bitrate-Help": "새 파일의 비트레이트로, 비트레이트가 높을수록 품질이 향상되지만 파일 크기가 커집니다.",
+          "Channels": "채널 수",
+          "Channels-Help": "변환된 파일이 가질 채널 수입니다.\n소스보다 더 많은 채널을 지정하면 FFmpeg가 자동으로 업믹스합니다.\n소스보다 적은 채널을 지정하면 FFmpeg가 자동으로 다운믹스합니다.",
+          "Codec": "코덱",
+          "Codec-Help": "파일을 변환할 오디오 코덱입니다.",
+          "CustomExtension": "확장자",
+          "CustomExtension-Help": "코덱에 의해 자동으로 결정된 대신 사용할 사용자 지정 파일 확장자를 설정할 수 있습니다.",
+          "HighEfficiency": "고효율",
+          "HighEfficiency-Help": "고효율 모드를 사용합니다. 이렇게 하면 확장자가 m4a로 변경되며 지원되는 재생 장치가 줄어들 수 있지만 파일 크기가 줄어들 수 있습니다.",
+          "Normalize": "정규화",
+          "Normalize-Help": "오디오를 두 번의 패스 정규화로 정규화해야 하는지 여부입니다.",
+          "SampleRate": "샘플링 주파수",
+          "SampleRate-Help": "사용할 샘플링 주파수입니다.",
+          "SkipIfCodecMatches": "코덱이 일치하면 건너뛰기",
+          "SkipIfCodecMatches-Help": "기존 오디오 코덱이 일치하면 이 파일은 비트레이트에 관계없이 처리되지 않습니다. 그렇지 않으면 비트레이트가 작거나 같아야 건너뜁니다."
+        },
+        "Outputs": {
+          "1": "오디오가 변환되어 임시 파일로 저장됨",
+          "2": "오디오가 이미 코덱에 있음, 변환되지 않음"
+        }
+      },
+      "ConvertToAAC": {
+        "Description": "오디오 파일을 AAC로 변환합니다.",
+        "Label": "AAC로 변환",
+        "Fields": {
+          "Bitrate": "비트레이트",
+          "Bitrate-Help": "새 AAC 파일의 비트레이트로, 비트레이트가 높을수록 품질이 향상되지만 파일 크기가 커집니다. 192 Kbps가 권장 비율입니다.",
+          "Channels": "채널 수",
+          "Channels-Help": "변환된 파일이 가질 채널 수입니다.\n소스보다 더 많은 채널을 지정하면 FFmpeg가 자동으로 업믹스합니다.\n소스보다 적은 채널을 지정하면 FFmpeg가 자동으로 다운믹스합니다.",
+          "CustomExtension": "확장자",
+          "CustomExtension-Help": "코덱에 의해 자동으로 결정된 대신 사용할 사용자 지정 파일 확장자를 설정할 수 있습니다.",
+          "HighEfficiency": "고효율",
+          "HighEfficiency-Help": "고효율 모드를 사용합니다. 이렇게 하면 확장자가 m4a로 변경되며 지원되는 재생 장치가 줄어들 수 있지만 파일 크기가 줄어들 수 있습니다.",
+          "Normalize": "정규화",
+          "Normalize-Help": "오디오를 두 번의 패스 정규화로 정규화해야 하는지 여부입니다.",
+          "SampleRate": "샘플링 주파수",
+          "SampleRate-Help": "사용할 샘플링 주파수입니다.",
+          "SkipIfCodecMatches": "코덱이 일치하면 건너뛰기",
+          "SkipIfCodecMatches-Help": "기존 오디오 코덱이 일치하면 이 파일은 비트레이트에 관계없이 처리되지 않습니다. 그렇지 않으면 비트레이트가 작거나 같아야 건너뜁니다."
+        },
+        "Outputs": {
+          "1": "오디오가 변환되어 임시 파일로 저장됨",
+          "2": "오디오가 이미 코덱에 있음, 변환되지 않음"
+        }
+      },
+      "ConvertToFLAC": {
+        "Description": "오디오 파일을 FLAC으로 변환합니다.",
+        "Label": "FLAC로 변환",
+        "Fields": {
+          "Bitrate": "비트레이트",
+          "Bitrate-Help": "새 FLAC 파일의 비트레이트로, 비트레이트가 높을수록 품질이 향상되지만 파일 크기가 커집니다. 128 Kbps가 권장 비율입니다.",
+          "Channels": "채널 수",
+          "Channels-Help": "변환된 파일이 가질 채널 수입니다.\n소스보다 더 많은 채널을 지정하면 FFmpeg가 자동으로 업믹스합니다.\n소스보다 적은 채널을 지정하면 FFmpeg가 자동으로 다운믹스합니다.",
+          "CustomExtension": "확장자",
+          "CustomExtension-Help": "코덱에 의해 자동으로 결정된 대신 사용할 사용자 지정 파일 확장자를 설정할 수 있습니다.",
+          "Normalize": "정규화",
+          "Normalize-Help": "오디오를 두 번의 패스 정규화로 정규화해야 하는지 여부입니다.",
+          "SampleRate": "샘플링 주파수",
+          "SampleRate-Help": "사용할 샘플링 주파수입니다.",
+          "SkipIfCodecMatches": "코덱이 일치하면 건너뛰기",
+          "SkipIfCodecMatches-Help": "기존 오디오 코덱이 일치하면 이 파일은 비트레이트에 관계없이 처리되지 않습니다. 그렇지 않으면 비트레이트가 작거나 같아야 건너뜁니다."
+        },
+        "Outputs": {
+          "1": "오디오가 변환되어 임시 파일로 저장됨",
+          "2": "오디오가 이미 코덱에 있음, 변환되지 않음"
+        }
+      },
+      "ConvertToMP3": {
+        "Description": "오디오 파일을 MP3로 변환합니다.",
+        "Label": "MP3로 변환",
+        "Fields": {
+          "Bitrate": "비트 전송률",
+          "Bitrate-Help": "새 MP3 파일의 비트 전송률, 비트 전송률이 높을수록 품질이 좋아지지만 파일 크기도 커집니다. 192 Kbps가 권장되는 비트 전송률입니다.",
+          "Channels": "채널",
+          "Channels-Help": "변환된 파일이 가질 채널 수입니다.\n원본보다 더 많은 채널을 지정하면 FFmpeg가 자동으로 업믹스합니다.\n원본보다 더 적은 채널을 지정하면 FFmpeg가 자동으로 다운믹스합니다.",
+          "CustomExtension": "확장자",
+          "CustomExtension-Help": "코덱에 의해 자동으로 결정된 것 대신 사용할 사용자 정의 파일 확장자를 설정할 수 있습니다.",
+          "Normalize": "정규화",
+          "Normalize-Help": "오디오가 2회 통과 오디오 정규화로 정규화되어야 하는지 여부입니다.",
+          "SampleRate": "샘플 레이트",
+          "SampleRate-Help": "사용할 샘플 레이트입니다.",
+          "SkipIfCodecMatches": "코덱이 일치하면 건너뛰기",
+          "SkipIfCodecMatches-Help": "기존 오디오 코덱이 일치하는 경우, 비트 전송률에 관계없이 이 파일은 처리되지 않습니다. 그렇지 않으면 꺼져 있는 경우 비트 전송률이 건너뛰기 위해서는 이하이어야 합니다."
+        },
+        "Outputs": {
+          "1": "오디오가 변환되어 임시 파일로 저장됨",
+          "2": "오디오가 이미 코덱에 있음, 변환되지 않음"
+        }
+      },
+      "ConvertToOGG": {
+        "Description": "오디오 파일을 OGG로 변환합니다.",
+        "Label": "OGG로 변환",
+        "Fields": {
+          "Bitrate": "비트 전송률",
+          "Bitrate-Help": "새 OGG 파일의 비트 전송률, 비트 전송률이 높을수록 품질이 좋아지지만 파일 크기도 커집니다. 128 Kbps가 권장되는 비트 전송률입니다.",
+          "Channels": "채널",
+          "Channels-Help": "변환된 파일이 가질 채널 수입니다.\n원본보다 더 많은 채널을 지정하면 FFmpeg가 자동으로 업믹스합니다.\n원본보다 더 적은 채널을 지정하면 FFmpeg가 자동으로 다운믹스합니다.",
+          "CustomExtension": "확장자",
+          "CustomExtension-Help": "코덱에 의해 자동으로 결정된 것 대신 사용할 사용자 정의 파일 확장자를 설정할 수 있습니다.",
+          "Normalize": "정규화",
+          "Normalize-Help": "오디오가 2회 통과 오디오 정규화로 정규화되어야 하는지 여부입니다.",
+          "SampleRate": "샘플 레이트",
+          "SampleRate-Help": "사용할 샘플 레이트입니다.",
+          "SkipIfCodecMatches": "코덱이 일치하면 건너뛰기",
+          "SkipIfCodecMatches-Help": "기존 오디오 코덱이 일치하는 경우, 비트 전송률에 관계없이 이 파일은 처리되지 않습니다. 그렇지 않으면 꺼져 있는 경우 비트 전송률이 건너뛰기 위해서는 이하이어야 합니다."
+        },
+        "Outputs": {
+          "1": "오디오가 변환되어 임시 파일로 저장됨",
+          "2": "오디오가 이미 코덱에 있음, 변환되지 않음"
+        }
+      },
+      "ConvertToWAV": {
+        "Description": "오디오 파일을 WAV로 변환합니다.",
+        "Label": "WAV로 변환",
+        "Fields": {
+          "Bitrate": "비트 전송률",
+          "Bitrate-Help": "새 WAV 파일의 비트 전송률, 비트 전송률이 높을수록 품질이 좋아지지만 파일 크기도 커집니다. 128 Kbps가 권장되는 비트 전송률입니다.",
+          "Channels": "채널",
+          "Channels-Help": "변환된 파일이 가질 채널 수입니다.\n원본보다 더 많은 채널을 지정하면 FFmpeg가 자동으로 업믹스합니다.\n원본보다 더 적은 채널을 지정하면 FFmpeg가 자동으로 다운믹스합니다.",
+          "CustomExtension": "확장자",
+          "CustomExtension-Help": "코덱에 의해 자동으로 결정된 것 대신 사용할 사용자 정의 파일 확장자를 설정할 수 있습니다.",
+          "Normalize": "정규화",
+          "Normalize-Help": "오디오가 2회 통과 오디오 정규화로 정규화되어야 하는지 여부입니다.",
+          "SampleRate": "샘플 레이트",
+          "SampleRate-Help": "사용할 샘플 레이트입니다.",
+          "SkipIfCodecMatches": "코덱이 일치하면 건너뛰기",
+          "SkipIfCodecMatches-Help": "기존 오디오 코덱이 일치하는 경우, 비트 전송률에 관계없이 이 파일은 처리되지 않습니다. 그렇지 않으면 꺼져 있는 경우 비트 전송률이 건너뛰기 위해서는 이하이어야 합니다."
+        },
+        "Outputs": {
+          "1": "오디오가 변환되어 임시 파일로 저장됨",
+          "2": "오디오가 이미 코덱에 있음, 변환되지 않음"
+        }
+      },
+      "CreateAudioBook": {
+        "Description": "입력 디렉토리에서 찾은 오디오 파일로 오디오 북을 생성합니다.",
+        "Label": "오디오 북 생성",
+        "Fields": {
+          "DeleteSourceFiles": "원본 파일 삭제",
+          "DeleteSourceFiles-Help": "활성화하면 새로 생성된 m4b 파일을 구성하는 원본 파일이 삭제됩니다. 그렇지 않으면 원본 파일은 그대로 유지됩니다.",
+          "DestinationPath": "대상 경로",
+          "DestinationPath-Help": "새로 생성된 파일을 저장할 위치입니다. 비워두면 임시 디렉토리에 파일이 생성되고 이후 이동되지 않으면 삭제됩니다.",
+          "UpdateWorkingFile": "작업 파일 업데이트",
+          "UpdateWorkingFile-Help": "활성화하면 작업 파일이 새로 생성된 파일로 업데이트됩니다."
+        },
+        "Outputs": {
+          "1": "오디오 북이 생성되었습니다.",
+          "2": "오디오 북이 생성되지 않았습니다."
+        }
+      },
+      "EmbedArtwork": {
+        "Description": "오디오 파일에 아트워크를 삽입합니다.",
+        "Label": "아트워크 삽입",
+        "Outputs": {
+          "1": "아트워크가 발견되어 오디오 파일에 삽입됨",
+          "2": "삽입할 아트워크가 없음"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "AudioNodes": {
+      "Description": "오디오 파일 처리를 도와주는 오디오 관련 흐름 요소 모음입니다.",
+      "Label": "오디오"
+    }
+  }
+}

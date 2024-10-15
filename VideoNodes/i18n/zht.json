@@ -1,0 +1,1049 @@
+{
+  "5": {
+    "1": "5.1"
+  },
+  "7": {
+    "1": "7.1"
+  },
+  "Enums": {
+    "WatermarkPosition": {
+      "BottomLeft": "左下角",
+      "BottomRight": "右下角",
+      "Center": "中心",
+      "TopLeft": "左上角",
+      "TopRight": "右上角"
+    }
+  },
+  "Flow": {
+    "Parts": {
+      "AudioToVideo": {
+        "Description": "將音頻文件轉換為視頻文件，並根據音頻生成視頻",
+        "Label": "音頻轉視頻",
+        "Fields": {
+          "Codec": "編解碼器",
+          "Color": "顏色",
+          "Color-Help": "可選的 #RRGGBB 顏色代碼，用於聲波，必須使用格式 #RRGGBB，例如 #FF0090",
+          "Container": "容器",
+          "HardwareEncoding": "硬體編碼",
+          "HardwareEncoding-Help": "選中時，將測試在處理節點上是否找到硬體編碼器，如果找到，則將使用硬體編碼，否則將回退到 CPU 編碼。",
+          "Resolution": "解析度",
+          "Visualization": "可視化",
+          "Visualization-Help": "生成視頻中使用的可視化效果。請參見幫助以獲取示例"
+        }
+      },
+      "CanUseHardwareEncoding": {
+        "Description": "檢查指定的硬體編碼器是否目前可用於流程。",
+        "Label": "可以使用硬體編碼",
+        "Fields": {
+          "Encoder": "編碼器",
+          "Encoder-Help": "要檢查的硬體解碼器"
+        }
+      },
+      "ComskipRemoveAds": {
+        "Description": "使用 comskip EDL 文件並將使用該文件去除廣告。",
+        "Label": "Comskip 去除廣告",
+        "Fields": {
+          "RunComskipIfNoEdl": "運行 Comskip",
+          "RunComskipIfNoEdl-Help": "如果未找到 comskip (EDL) 文件，則對該文件運行 comskip。"
+        },
+        "Outputs": {
+          "1": "廣告已移除，保存到臨時文件",
+          "2": "未檢測到廣告"
+        }
+      },
+      "DisableAmd": {
+        "Description": "禁用 AMD AMF 硬體編碼器",
+        "Label": "禁用 AMD",
+        "Outputs": {
+          "1": "已禁用"
+        }
+      },
+      "DisableIntelQsv": {
+        "Description": "禁用 Intel QSV 硬體編碼器",
+        "Label": "禁用 Intel QSV",
+        "Outputs": {
+          "1": "已禁用"
+        }
+      },
+      "DisableNvidia": {
+        "Description": "禁用 NVIDIA 硬體編碼器",
+        "Label": "禁用 NVIDIA",
+        "Outputs": {
+          "1": "已禁用"
+        }
+      },
+      "DisableVaapi": {
+        "Description": "禁用 VAAPI 硬體編碼器",
+        "Label": "禁用 VAAPI",
+        "Outputs": {
+          "1": "已禁用"
+        }
+      },
+      "FfmpegBuilderAddInputFile": {
+        "Label": "FFMPEG Builder: 添加輸入文件",
+        "Fields": {
+          "Pattern": "模式",
+          "Pattern-Help": "用於搜索輸入文件的正則表達式",
+          "UseSourceDirectory": "使用來源目錄",
+          "UseSourceDirectory-Help": "如果選中，將搜索原始來源目錄，否則將使用工作目錄。"
+        },
+        "Outputs": {
+          "1": "找到文件並已添加",
+          "2": "未找到文件"
+        }
+      },
+      "FfmpegBuilderAspectRatio": {
+        "Label": "FFMPEG Builder: 長寬比",
+        "Fields": {
+          "AdjustmentMode": "調整模式",
+          "AdjustmentMode-Help": "選擇如何強制執行長寬比。選項包括拉伸視頻、添加黑邊（信箱模式）或裁剪視頻以適應長寬比。",
+          "AspectRatio": "長寬比",
+          "AspectRatio-Help": "選擇所需的視頻長寬比。可用選項包括標準長寬比（16:9、4:3、21:9）或自定義比率。",
+          "CustomHeight": "自定義高度",
+          "CustomHeight-Help": "指定選擇自定義長寬比選項時使用的高度。",
+          "CustomWidth": "自定義寬度",
+          "CustomWidth-Help": "指定選擇自定義長寬比選項時使用的寬度。"
+        },
+        "Outputs": {
+          "1": "長寬比已成功更改",
+          "2": "視頻已在所需的長寬比中"
+        }
+      },
+      "FfmpegBuilderAudioAddTrack": {
+        "Description": "將新音軌添加到 FFMPEG Builder，該音軌會在執行建構器時添加。",
+        "Label": "FFMPEG Builder：音頻添加音軌",
+        "Fields": {
+          "Bitrate": "比特率",
+          "Bitrate-Help": "新音軌的比特率",
+          "BitratePerChannel": "每個通道的比特率",
+          "BitratePerChannel-Help": "如果指定的比特率應該是每個通道的比特率",
+          "Channels": "通道數",
+          "Channels-Help": "此新音軌的通道數。\n如果您指定的通道數超過源通道，FFMPEG 會自動上混。\n如果您指定的通道數少於源通道，FFMPEG 會自動下混。",
+          "Codec": "編解碼器",
+          "Codec-Help": "用於編碼音頻的編解碼器",
+          "CustomTrackSelection": "源音軌選擇",
+          "Index": "索引",
+          "Index-Help": "插入新音軌的位置索引。基於 0，因此要將新音軌作為第一個音軌插入，請將此設置為 0。",
+          "Language": "語言",
+          "Language-Help": "可選的 [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) 語言代碼。如果未找到此語言代碼的音軌，將使用最佳音軌。",
+          "NewTitle": "新標題",
+          "NewTitle-Help": "新創建音軌的可選標題。如果留空，將使用源標題",
+          "RemoveTitle": "移除標題",
+          "RemoveTitle-Help": "如果源標題應被移除且音軌不應有標題",
+          "SampleRate": "取樣率",
+          "SampleRate-Help": "用於新音軌的取樣率",
+          "TrackSelectionOptions": "音軌選擇",
+          "TrackSelectionOptionsKey": "屬性",
+          "TrackSelectionOptionsValue": "值"
+        },
+        "Outputs": {
+          "1": "已將音軌添加到 FFMPEG Builder",
+          "2": "未找到合適的源音軌以創建新音軌"
+        }
+      },
+      "FfmpegBuilderAudioAdjustVolume": {
+        "Description": "使用 FFMPEG 調整視頻文件中的音頻音軌音量",
+        "Label": "FFMPEG Builder：音頻調整音量",
+        "Fields": {
+          "AllAudio": "所有音頻音軌",
+          "AllAudio-Help": "是否應對所有音頻音軌進行標準化，或者僅對第一個音軌進行標準化",
+          "NotMatching": "不匹配",
+          "NotMatching-Help": "如果不匹配模式的音軌應被移除",
+          "Pattern": "模式",
+          "Pattern-Help": "用於匹配的正則表達式，例如 \"commentary\" 用於移除評論音軌",
+          "UseLanguageCode": "使用語言代碼",
+          "UseLanguageCode-Help": "是否應使用音軌的語言代碼，而不是標題",
+          "VolumePercent": "音量百分比",
+          "VolumePercent-Help": "調整後的音量百分比。\n100 表示不調整\n50 表示半音量\n0 表示靜音"
+        },
+        "Outputs": {
+          "1": "已將音頻音軌音量過濾器添加到 FFMPEG Builder",
+          "2": "音頻音軌未進行調整"
+        }
+      },
+      "FfmpegBuilderAudioConvert": {
+        "Description": "允許您將所有匹配參數的音軌轉換。",
+        "Label": "FFMPEG Builder：音頻轉換",
+        "Fields": {
+          "Bitrate": "比特率",
+          "Bitrate-Help": "音軌的比特率",
+          "BitratePerChannel": "每個通道的比特率",
+          "BitratePerChannel-Help": "如果指定的比特率應該是每個通道的比特率",
+          "Channels": "通道數",
+          "Channels-Help": "此新音軌的通道數。\n如果您指定的通道數超過源通道，FFMPEG 會自動上混。\n如果您指定的通道數少於源通道，FFMPEG 會自動下混。",
+          "Codec": "編解碼器",
+          "Codec-Help": "用於編碼音頻的編解碼器",
+          "CustomTrackSelection": "轉換",
+          "PcmFormat": "格式",
+          "PcmFormat-Help": "用於編碼 PCM 音頻的 PCM 格式。",
+          "TrackSelectionOptions": "匹配",
+          "TrackSelectionOptionsKey": "屬性",
+          "TrackSelectionOptionsValue": "值"
+        },
+        "Outputs": {
+          "1": "待轉換的音軌",
+          "2": "沒有待轉換的音軌"
+        }
+      },
+      "FfmpegBuilderAudioConverter": {
+        "Description": "允許您將所有匹配參數的音軌轉換。",
+        "Label": "FFMPEG Builder：音頻轉換器",
+        "Fields": {
+          "Bitrate": "比特率",
+          "Bitrate-Help": "音軌的比特率",
+          "BitratePerChannel": "每個通道的比特率",
+          "BitratePerChannel-Help": "如果指定的比特率應該是每個通道的比特率",
+          "Channels": "通道數",
+          "Channels-Help": "此新音軌的通道數。\n如果您指定的通道數超過源通道，FFMPEG 會自動上混。\n如果您指定的通道數少於源通道，FFMPEG 會自動下混。",
+          "Codec": "編解碼器",
+          "Codec-Help": "用於編碼音頻的編解碼器",
+          "Field": "字段",
+          "Field-Help": "要匹配模式的字段。保持模式為空以匹配任何沒有設置值的內容。",
+          "NotMatching": "不匹配",
+          "NotMatching-Help": "如果不匹配模式的音軌應轉換",
+          "Pattern": "模式",
+          "Pattern-Help": "用於匹配的字符串或正則表達式，例如 \"commentary\" 用於精確匹配評論，或 \".*commentary.*\" 用於匹配字符串中任何地方的評論",
+          "PcmFormat": "格式",
+          "PcmFormat-Help": "用於編碼 PCM 音頻的 PCM 格式。"
+        },
+        "Outputs": {
+          "1": "待轉換的音軌",
+          "2": "沒有待轉換的音軌"
+        }
+      },
+      "FfmpegBuilderAudioNormalization": {
+        "Description": "使用 FFMPEG 的 loudnorm 過濾器標準化視頻文件中的所有音頻音軌",
+        "Label": "FFMPEG Builder：音頻標準化",
+        "Fields": {
+          "AllAudio": "所有音頻音軌",
+          "AllAudio-Help": "是否應對所有音頻音軌進行標準化，或者僅對第一個音軌進行標準化",
+          "NotMatching": "不匹配",
+          "NotMatching-Help": "如果不匹配模式的音軌應被移除",
+          "Pattern": "模式",
+          "Pattern-Help": "用於匹配的正則表達式，例如 \"commentary\" 用於移除評論音軌",
+          "TwoPass": "雙通道",
+          "TwoPass-Help": "如果音頻音軌應使用雙通道標準化。這提高了標準化效果，但增加了處理時間。",
+          "UseLanguageCode": "使用語言代碼",
+          "UseLanguageCode-Help": "如果應使用音軌的語言代碼，而不是標題"
+        },
+        "Outputs": {
+          "1": "音頻音軌已標準化並添加到 FFMPEG Builder",
+          "2": "未找到要標準化的音頻音軌"
+        }
+      },
+      "FfmpegBuilderAudioSetLanguage": {
+        "Description": "允許您為任何未設置語言的音軌設置語言。如果音軌已設置語言，則將被跳過。\n\n輸出 1：音軌已更新\n輸出 2：沒有音軌需要更新",
+        "Label": "FFMPEG Builder: 設置語言",
+        "Fields": {
+          "Language": "語言",
+          "Language-Help": "要使用的 [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) 語言代碼。",
+          "StreamType": "類型",
+          "StreamType-Help": "要設置語言的音軌類型"
+        },
+        "Outputs": {
+          "1": "在 FFMPEG 建構器中更新的音軌",
+          "2": "未更新的音軌"
+        }
+      },
+      "FfmpegBuilderAudioTrackRemover": {
+        "Description": "允許您根據標題或語言代碼刪除音軌。\n\n任何空白的標題（或如果設置為 \"使用語言代碼\" 的語言代碼）將不會被刪除，無論模式如何。",
+        "Label": "FFMPEG Builder: 音軌刪除器（過時）",
+        "Fields": {
+          "MatchType": "匹配",
+          "MatchType-Help": "要匹配的值。",
+          "NotMatching": "不匹配",
+          "NotMatching-Help": "是否應刪除不匹配模式的音軌",
+          "Pattern": "模式",
+          "Pattern-Help": "要匹配的正則表達式，例如 \"commentary\" 以刪除解說音軌",
+          "RemoveAll": "刪除所有",
+          "RemoveAll-Help": "從輸出文件中刪除所有當前音軌。您可以在之後使用添加音軌來添加特定編解碼器的音軌",
+          "RemoveIndex": "刪除索引",
+          "RemoveIndex-Help": "要從中刪除音軌的起始索引。這使您能夠在起始索引之後刪除所有或所有匹配的音軌。\n設置為零以刪除所有匹配的參數。\n設置為 1 以保留第一個音軌並刪除任何在第一個之後的匹配參數的音軌",
+          "StreamType": "類型",
+          "StreamType-Help": "要在 FFMPEG 建構器中重新排序的音軌類型",
+          "UseLanguageCode": "使用語言代碼",
+          "UseLanguageCode-Help": "是否應使用音軌的語言代碼而不是標題"
+        },
+        "Outputs": {
+          "1": "設置刪除的音軌",
+          "2": "未設置刪除的音軌"
+        }
+      },
+      "FfmpegBuilderAudioTrackReorder": {
+        "Description": "允許您按首選順序重新排序音軌。\n\n輸入您想要的語言/音頻編解碼器/通道的順序。未列出的任何內容將按照其原始順序在輸入的內容之後排序。\n如果有多個相同語言/編解碼器/通道的音軌，將首先按您輸入的順序進行排序，然後按其原始順序進行排序。\n\n請注意，重新排序後的第一個音軌將被設置為默認音軌。\n\n輸出 1：音軌已重新排序\n輸出 2：音軌不需要重新排序",
+        "Label": "FFMPEG Builder: 音軌重新排序",
+        "Fields": {
+          "Channels": "通道",
+          "Channels-Help": "按順序對音頻通道進行排序的順序。此排序在語言之前進行。\n例如 \"5.1\",\"7.1\",\"6.2\",\"2\"",
+          "Languages": "語言",
+          "Languages-Help": "按順序對音軌進行排序的語言。此排序在編解碼器之前進行。",
+          "OrderedTracks": "排序的編解碼器",
+          "OrderedTracks-Help": "按順序對音軌的編解碼器進行排序。這在語言（如果有）之後進行",
+          "StreamType": "類型",
+          "StreamType-Help": "要在 FFMPEG 建構器中重新排序的音軌類型"
+        },
+        "Outputs": {
+          "1": "在 FFMPEG 建構器中重新排序的音軌",
+          "2": "未重新排序的音軌"
+        }
+      },
+      "FfmpegBuilderAutoChapters": {
+        "Description": "自動檢測視頻中的場景變化以生成章節。",
+        "Label": "FFMPEG Builder: 自動章節",
+        "Fields": {
+          "MinimumLength": "最小長度",
+          "MinimumLength-Help": "章節的最小長度（以秒為單位）",
+          "MinimumLength-Suffix": "秒",
+          "Percent": "百分比",
+          "Percent-Help": "用於場景檢測變化的閾值百分比。好的值是 45%",
+          "Percent-Suffix": "%"
+        },
+        "Outputs": {
+          "1": "生成的章節已添加到 FFMPEG 建構器",
+          "2": "未檢測到章節或視頻已經有章節"
+        }
+      },
+      "FfmpegBuilderComskipChapters": {
+        "Description": "使用 comskip EDL 文件並根據該 EDL comskip 文件創建章節。",
+        "Label": "FFMPEG Builder: Comskip 章節",
+        "Fields": {
+          "RunComskipIfNoEdl": "運行 Comskip",
+          "RunComskipIfNoEdl-Help": "如果未找到 comskip（EDL）文件，則對該文件運行 comskip。"
+        },
+        "Outputs": {
+          "1": "創建的商業章節已添加到 FFMPEG 建構器",
+          "2": "未檢測到商業"
+        }
+      },
+      "FfmpegBuilderCropBlackBars": {
+        "Description": "更新 FFMPEG 建構器以裁剪檢測到的黑邊。",
+        "Label": "FFMPEG Builder: 裁剪黑邊",
+        "Fields": {
+          "CroppingThreshold": "閾值",
+          "CroppingThreshold-Help": "必須超過的像素數量才能進行裁剪。例如，如果僅檢測到 5 像素為黑色空間，您可能認為這太小而無法裁剪。"
+        },
+        "Outputs": {
+          "1": "FFMPEG 建構器更新以裁剪黑邊",
+          "2": "未檢測到黑邊，未進行裁剪"
+        }
+      },
+      "FfmpegBuilderCustomParameters": {
+        "Description": "允許您向 FFMPEG 建構器添加自定義參數以進行執行",
+        "Label": "FFMPEG Builder: 自定義參數",
+        "Fields": {
+          "ForceEncode": "強制編碼",
+          "ForceEncode-Help": "這是否應強制 FFMPEG 建構器執行器始終執行，即使未檢測到通常需要執行器運行的更改。",
+          "Parameters": "參數",
+          "Parameters-Help": "要添加到 FFMPEG 建構器以進行執行的參數"
+        },
+        "Outputs": {
+          "1": "已添加參數"
+        }
+      },
+      "FfmpegBuilderDefaultOriginalLanguage": {
+        "Description": "此流程元素將嘗試將原始語言音軌設置為默認。它將嘗試找到第一個與原始語言匹配的音軌，然後將其設置為默認。\n\n如果未找到原始語言的音軌，則不會進行任何更改。",
+        "Label": "FFMPEG Builder: 默認原始語言",
+        "Fields": {
+          "MakeFirst": "設為第一",
+          "MakeFirst-Help": "如果原始語言音軌也應成為第一個音軌。",
+          "StreamType": "類型",
+          "StreamType-Help": "應該更新的音軌類型"
+        },
+        "Outputs": {
+          "1": "音軌已被修改",
+          "2": "未更改音軌"
+        }
+      },
+      "FfmpegBuilderDeinterlace": {
+        "Label": "FFMPEG Builder: 去交錯",
+        "Fields": {
+          "Mode": "模式",
+          "Mode-Help": "要使用的去交錯方法。請參見幫助以獲取更多信息。"
+        },
+        "Outputs": {
+          "1": "已向視頻流添加去交錯濾鏡"
+        }
+      },
+      "FFmpegBuilderDurationStart": {
+        "Descriptions": "此流程元素使用戶能夠定義從視頻中提取片段的起始點和持續時間。",
+        "Label": "FFMPEG Builder: 持續時間/起始",
+        "Fields": {
+          "Duration": "持續時間",
+          "Duration-Help": "視頻文件的持續時間，若為 0，則不會調整持續時間。",
+          "Start": "開始",
+          "Start-Help": "視頻文件的開始，若為 0，則不會調整開始。"
+        },
+        "Outputs": {
+          "1": "持續時間/起始已配置",
+          "2": "設置持續時間/起始失敗"
+        }
+      },
+      "FfmpegBuilderExecutor": {
+        "Description": "執行由其他 FFMPEG 建構器流程元素創建的 FFMPEG 建構器命令。",
+        "Label": "FFMPEG Builder: 執行者",
+        "Fields": {
+          "HardwareDecoding": "硬體解碼",
+          "HardwareDecoding-Help": "執行者是否應嘗試使用硬體解碼。若不可用，執行將正常進行，但不啟用硬體解碼。",
+          "Strictness": "嚴格性",
+          "Strictness-Help": "允許您自定義 FFmpeg 的嚴格性。對於大多數用戶，應將其保留為「實驗性」。"
+        },
+        "Outputs": {
+          "1": "FFMPEG 建構器成功運行並創建了新的臨時文件",
+          "2": "FFMPEG 建構器未檢測到更改，文件未創建"
+        }
+      },
+      "FfmpegBuilderHdrToSdr": {
+        "Description": "檢查視頻流是否為 HDR，如果是，則更新 FFMPEG 建構器以將其轉換為 SDR。",
+        "Label": "FFMPEG Builder: HDR 轉 SDR",
+        "Outputs": {
+          "1": "檢測到 HDR 流並更新 FFMPEG 建構器以進行轉換",
+          "2": "未找到 HDR 流"
+        }
+      },
+      "FfmpegBuilderKeepOriginalLanguage": {
+        "Description": "此流程元素將僅保留原始語言和用戶定義的任何附加語言。\n\n所有其他語言流將被刪除/標記為刪除。",
+        "Label": "FFMPEG Builder: 保留原始語言",
+        "Fields": {
+          "AdditionalLanguages": "附加語言",
+          "AdditionalLanguages-Help": "要保留的附加語言代碼的可選列表。\n\n建議使用 [ISO 639-2 語言代碼](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes)。",
+          "FirstIfNone": "如果沒有，則為第一",
+          "FirstIfNone-Help": "啟用後，這確保至少保留一條音軌。如果未找到與原始語言匹配的音軌且未找到與附加語言匹配的音軌，則無論如何將保留第一條音軌。\n\n這可以避免視頻上沒有音頻的問題。",
+          "KeepOnlyFirst": "僅保留第一",
+          "KeepOnlyFirst-Help": "啟用後，僅保留每種語言的第一條音軌。\n\n例如，如果有 2 條英語音軌、3 條西班牙語音軌和 1 條德語音軌。原始語言為西班牙語，附加語言設置為 `eng`，則結果將是 1 條英語音軌和 1 條西班牙語音軌，其他的將被刪除。",
+          "StreamType": "類型",
+          "StreamType-Help": "應該更新的音軌類型",
+          "TreatEmptyAsOriginal": "將空白視為原始",
+          "TreatEmptyAsOriginal-Help": "啟用後，任何未設置語言的音軌將被視為原始語言。\n\n例如，原始語言為毛利語，且音軌未設置語言，則將被視為毛利語。"
+        },
+        "Outputs": {
+          "1": "音軌已被修改",
+          "2": "未更改音軌"
+        }
+      },
+      "FfmpegBuilderMetadataRemover": {
+        "Description": "從 FFMPEG 建構器中移除元數據，以便在處理文件時將刪除所選的元數據。\n\n注意：只有當此流程元素生效時，元數據才會被移除，如果在此節點運行後添加元數據，則不會受到影響。",
+        "Label": "FFMPEG Builder: 元數據移除器",
+        "Fields": {
+          "Audio": "音頻",
+          "Audio-Help": "是否應該刪除此元數據的音頻音軌",
+          "RemoveAdditionalMetadata": "移除附加元數據",
+          "RemoveAdditionalMetadata-Help": "是否應該移除附加元數據。附加元數據是可能已添加到視頻文件中的非標準元數據，例如由 iTunes 添加的元數據。",
+          "RemoveImages": "移除圖片",
+          "RemoveImages-Help": "是否應該移除在元數據中找到的任何圖片",
+          "RemoveLanguage": "移除語言",
+          "RemoveLanguage-Help": "是否應該從音軌中刪除語言",
+          "RemoveTitle": "移除標題",
+          "RemoveTitle-Help": "是否應該從音軌中刪除標題",
+          "Subtitle": "字幕",
+          "Subtitle-Help": "是否應該刪除此元數據的字幕音軌",
+          "Video": "視頻",
+          "Video-Help": "是否應該從音軌中刪除此元數據"
+        },
+        "Outputs": {
+          "1": "已從 FFMPEG 建構器中移除元數據"
+        }
+      },
+      "FfmpegBuilderPreExecute": {
+        "Description": "此元素允許您在 [FFMPEG Builder: 執行者](https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder) 執行 FFmpeg 之前運行自定義代碼。\n\n這使您能夠更改傳遞給 FFmpeg 的參數。",
+        "Label": "FFMPEG Builder: 預執行",
+        "Fields": {
+          "Code": "代碼"
+        },
+        "Outputs": {
+          "1": "預執行已設置"
+        }
+      },
+      "FfmpegBuilderProres": {
+        "Description": "將視頻編碼為 prores 格式。",
+        "Label": "FFMPEG Builder: Prores",
+        "Fields": {
+          "Encoder": "編碼器",
+          "Encoder-Help": "要使用的 FFmpeg prores 編碼器。",
+          "PixelFormat": "像素格式",
+          "Profile": "配置文件",
+          "Quality": "質量",
+          "Quality-Help": "0 表示最大質量，32 表示最小質量。9 到 13 是好的值。"
+        },
+        "Outputs": {
+          "1": "視頻設置為使用 prores"
+        }
+      },
+      "FfmpegBuilderRemoveAttachments": {
+        "Description": "從視頻中移除任何附件（如果有）。",
+        "Label": "FFMPEG Builder: 移除附件",
+        "Outputs": {
+          "1": "FFMPEG 建構器設置為移除附件。"
+        }
+      },
+      "FfmpegBuilderRemuxToMkv": {
+        "Description": "將視頻文件重新封裝到 MKV 容器中。",
+        "Label": "FFMPEG Builder: 重新封裝為 MKV",
+        "Outputs": {
+          "1": "FFMPEG 建構器設置為重新封裝為 MKV"
+        }
+      },
+      "FfmpegBuilderRemuxToMov": {
+        "Description": "將視頻文件重新封裝到 MOV 容器中。",
+        "Label": "FFMPEG Builder: 重新封裝為 MOV",
+        "Outputs": {
+          "1": "FFMPEG 建構器設置為重新封裝為 MOV"
+        }
+      },
+      "FfmpegBuilderRemuxToMP4": {
+        "Description": "將視頻文件重新封裝到 MP4 容器中。",
+        "Label": "FFMPEG Builder: 重新封裝為 MP4",
+        "Fields": {
+          "UseHvc1": "使用 HVC1",
+          "UseHvc1-Help": "如果應使用 HVC1 而不是默認的 HEV1"
+        },
+        "Outputs": {
+          "1": "FFMPEG 建構器設置為重新封裝為 MP4"
+        }
+      },
+      "FfmpegBuilderRemuxToMxf": {
+        "Description": "將視頻文件重新封裝到 MXF 容器中。",
+        "Label": "FFMPEG Builder: 重新封裝為 MXF",
+        "Outputs": {
+          "1": "FFMPEG 建構器設置為重新封裝為 MXF"
+        }
+      },
+      "FfmpegBuilderRemuxToWebm": {
+        "Description": "將視頻文件重新封裝到 WEBM 容器中。",
+        "Label": "FFMPEG Builder: 重新封裝為 WEBM",
+        "Outputs": {
+          "1": "FFMPEG 建構器設置為重新封裝為 WEBM"
+        }
+      },
+      "FfmpegBuilderScaler": {
+        "Description": "這允許您將視頻縮放到指定的尺寸。它將保留視頻的長寬比，因此如果視頻為 1920x1000，則如果您選擇 720P，則會縮放到 1280x668。",
+        "Label": "FFMPEG Builder: 視頻縮放器",
+        "Fields": {
+          "Force": "強制",
+          "Force-Help": "選中時，即使工作文件已經是該分辨率（或接近該分辨率），視頻也將被強制縮放。",
+          "OnlyIfLarger": "僅在更大時",
+          "OnlyIfLarger-Help": "只有當視頻當前大於此分辨率時，視頻才會縮放到此分辨率",
+          "Resolution": "分辨率"
+        },
+        "Outputs": {
+          "1": "FFMPEG 建構器縮放過濾器已添加",
+          "2": "視頻已經在/接近縮放的分辨率"
+        }
+      },
+      "FfmpegBuilderSetDefaultTrack": {
+        "Description": "在 FFmpeg 建構器中設置一個軌道為默認。",
+        "Label": "FFMPEG Builder: 設置默認軌道",
+        "Fields": {
+          "Index": "索引",
+          "Index-Help": "要設置為默認的軌道索引，僅在未指定語言時使用。",
+          "Language": "語言",
+          "Language-Help": "可選的 [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) 語言代碼。",
+          "StreamType": "類型",
+          "StreamType-Help": "要在 FFMPEG 建構器中設置為默認的軌道類型"
+        },
+        "Outputs": {
+          "1": "軌道設置為默認",
+          "2": "設置軌道為默認失敗"
+        }
+      },
+      "FfmpegBuilderSetDevice": {
+        "Description": "如果編碼器/解碼器支持，則設置用於硬件編碼/解碼的設備。",
+        "Label": "FFMPEG Builder: 設置設備",
+        "Fields": {
+          "Device": "設備",
+          "Device-Help": "設備的路徑，或如果不應指定設備則留空。"
+        },
+        "Outputs": {
+          "1": "設備已設置"
+        }
+      },
+      "FfmpegBuilderSetFps": {
+        "Description": "在 FFmpeg Builder 中設定每秒幀數 (FPS)",
+        "Label": "FFMPEG Builder: 設定 FPS",
+        "Fields": {
+          "Fps": "FPS",
+          "Fps-Help": "所需的 FPS，如果輸入 FPS 與所需 FPS 不匹配，則 FFmpeg 將進行轉換，例如 (23.976、24、30、60)。",
+          "OnlyIfHigher": "僅在更高時",
+          "OnlyIfHigher-Help": "如果僅在當前 FPS 大於當前時，則應調整 FPS。"
+        },
+        "Outputs": {
+          "1": "FPS 已更新",
+          "2": "不需要進行更改"
+        }
+      },
+      "FfmpegBuilderSetTrackTitles": {
+        "Description": "根據格式設定 FFmpeg 建構器中的音軌標題。",
+        "Label": "FFMPEG Builder: 設定音軌標題",
+        "Fields": {
+          "CommentaryFormat": "解說",
+          "CommentaryFormat-Help": "解說音軌應如何處理，您可以使用與其他音軌相同的格式器或使用不同的方法。",
+          "Format": "格式",
+          "Format-Help": "要使用的格式器，請參見 _Help_ 以獲取更多信息。",
+          "Separator": "分隔符",
+          "Separator-Help": "在格式值之間使用的字符串分隔符，這是需要的，以確保不保留空值。",
+          "StreamType": "類型",
+          "StreamType-Help": "要在 FFMPEG 建構器中設置為默認的音軌類型"
+        },
+        "Outputs": {
+          "1": "音軌標題已更新",
+          "2": "未受影響的音軌標題"
+        }
+      },
+      "FfmpegBuilderStart": {
+        "Description": "創建 FFMPEG 建構器的實例，該實例可以構建 FFMPEG 參數以便使用 FFMPEG 執行器執行。",
+        "Label": "FFMPEG Builder: 開始",
+        "Outputs": {
+          "1": "FFMPEG 建構器已創建並準備添加 FFMPEG 建構器流元素"
+        }
+      },
+      "FfmpegBuilderSubtitleClearDefault": {
+        "Description": "此流元素將從字幕中清除默認標記。",
+        "Label": "FFMPEG Builder: 字幕清除默認",
+        "Fields": {
+          "LeaveForced": "保留強制",
+          "LeaveForced-Help": "當選中時，所有強制字幕將不會被修改，將保持其原始設置。這是在「設定強制默認」之前執行，因此優先級更高。",
+          "SetForcedDefault": "設置強制默認",
+          "SetForcedDefault-Help": "當選中時，將第一個帶有強制標記的字幕設置為默認，所有其他的將清除其默認標記。"
+        },
+        "Outputs": {
+          "1": "字幕默認標記已更改",
+          "2": "字幕未進行更改"
+        }
+      },
+      "FfmpegBuilderSubtitleFormatRemover": {
+        "Description": "如果找到，從視頻文件中刪除字幕。",
+        "Label": "FFMPEG Builder: 字幕格式刪除器",
+        "Fields": {
+          "RemoveAll": "刪除所有",
+          "RemoveAll-Help": "當選中時，將從文件中刪除所有字幕，否則僅刪除下方選中的字幕。",
+          "SubtitlesToRemove": "要刪除的字幕"
+        },
+        "Outputs": {
+          "1": "在 FFMPEG 建構器中標記要刪除的字幕",
+          "2": "沒有字幕要刪除"
+        }
+      },
+      "FfmpegBuilderSubtitleTrackMerge": {
+        "Label": "FFMPEG Builder: 字幕音軌合併",
+        "Fields": {
+          "Default": "默認",
+          "Default-Help": "如果字幕應該是默認字幕",
+          "DeleteAfterwards": "合併後刪除",
+          "DeleteAfterwards-Help": "如果字幕文件在合併後應被刪除",
+          "Forced": "強制",
+          "Forced-Help": "如果字幕應該是強制的",
+          "Language": "語言",
+          "Language-Help": "添加字幕的可選 [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) 語言代碼。",
+          "MatchFilename": "匹配檔名",
+          "MatchFilename-Help": "當選中時，僅合併檔名與輸入文件或工作文件相同的字幕",
+          "Pattern": "模式",
+          "Pattern-Help": "可選的正則表達式以匹配文件。",
+          "Subtitles": "字幕",
+          "Subtitles-Help": "選擇要搜索以添加的字幕",
+          "Title": "標題",
+          "Title-Help": "字幕的標題，如果未設置，將使用語言作為標題（如果找到）。",
+          "UseSourceDirectory": "使用來源目錄",
+          "UseSourceDirectory-Help": "如果選中，將搜索原始來源目錄，否則將使用工作目錄。"
+        },
+        "Outputs": {
+          "1": "找到並添加字幕",
+          "2": "未找到字幕"
+        }
+      },
+      "FfmpegBuilderSubtitleTrackRemover": {
+        "Description": "允許您根據標題或語言代碼移除字幕。\n\n任何語言（或設置為「使用標題」的標題）為空的將不會被刪除，無論模式如何。",
+        "Label": "FFMPEG Builder: 字幕音軌移除器",
+        "Fields": {
+          "NotMatching": "不匹配",
+          "NotMatching-Help": "如果不匹配模式的字幕應該被刪除",
+          "Pattern": "模式",
+          "Pattern-Help": "用於匹配的正則表達式，例如「eng」以刪除英語音軌",
+          "UseLanguageCode": "使用語言代碼",
+          "UseLanguageCode-Help": "如果應使用音軌的語言代碼而不是標題"
+        },
+        "Outputs": {
+          "1": "在 FFMPEG 建構器中標記要刪除的字幕",
+          "2": "沒有字幕要刪除"
+        }
+      },
+      "FfmpegBuilderTrackRemover": {
+        "Description": "允許您根據指定條件移除音軌。",
+        "Label": "FFMPEG Builder: 音軌移除器",
+        "Fields": {
+          "CustomTrackSelection": "移除",
+          "StreamType": "類型",
+          "StreamType-Help": "在 FFMPEG 建構器中重新排序的音軌類型",
+          "TrackSelectionOptions": "",
+          "TrackSelectionOptionsKey": "屬性",
+          "TrackSelectionOptionsValue": "值"
+        },
+        "Outputs": {
+          "1": "設置為刪除的音軌",
+          "2": "未設置為刪除的音軌"
+        }
+      },
+      "FfmpegBuilderTrackSorter": {
+        "Description": "此流程元素根據用戶設置的排序選項對音軌進行排序。",
+        "Label": "FFMPEG Builder: 音軌排序器",
+        "Fields": {
+          "SetFirstDefault": "設置默認",
+          "SetFirstDefault-Help": "如果在排序後應設置第一個音軌為默認。",
+          "Sorters": "排序器",
+          "Sorters-Help": "添加一個或多個排序選項以對音軌進行排序。",
+          "SortersKey": "字段",
+          "SortersValue": "值",
+          "StreamType": "類型",
+          "StreamType-Help": "應更新的音軌類型"
+        },
+        "Outputs": {
+          "1": "音軌已被修改",
+          "2": "沒有音軌已被更改"
+        }
+      },
+      "FfmpegBuilderVideo10Bit": {
+        "Description": "將 FFMPEG 建構器設置為以 10 位編碼視頻流。",
+        "Label": "FFMPEG Builder: 視頻 10 位",
+        "Outputs": {
+          "1": "FFMPEG 建構器視頻流設置為以 10 位編碼"
+        }
+      },
+      "FfmpegBuilderVideoBitrate": {
+        "Description": "設置 FFMPEG 建構器以給定比特率編碼視頻。",
+        "Label": "FFMPEG Builder: 視頻比特率",
+        "Fields": {
+          "Bitrate": "比特率",
+          "Bitrate-Help": "視頻的目標比特率（以千字節計）",
+          "Bitrate-Suffix": "KB / %",
+          "Percent": "百分比",
+          "Percent-Help": "當選擇時，比特率將根據當前比特率計算為百分比。"
+        },
+        "Outputs": {
+          "1": "FFMPEG 建構器視頻流已更新"
+        }
+      },
+      "FfmpegBuilderVideoBitrateEncode": {
+        "Description": "設置 FFMPEG 建構器以使用基於比特率的簡單預設進行視頻編碼。",
+        "Label": "FFMPEG Builder: 比特率編碼",
+        "Fields": {
+          "Bitrate": "比特率",
+          "Bitrate-Suffix": "Kbps",
+          "Codec": "編碼器",
+          "Encoder": "編碼器",
+          "Encoder-Help": "強制使用的編碼器。如果指定的硬件編碼器不可用，則編碼將失敗。",
+          "HardwareEncoding": "硬件編碼",
+          "HardwareEncoding-Help": "當選中時，將檢測處理節點上是否找到硬件編碼器，如果找到，則使用硬件編碼，否則將回退到 CPU 編碼。"
+        },
+        "Outputs": {
+          "1": "FFMPEG 建構器視頻流設置為編碼"
+        }
+      },
+      "FfmpegBuilderVideoCodec": {
+        "Description": "設置 FFMPEG 建構器以在指定編碼器中編碼視頻流。",
+        "Label": "FFMPEG Builder: 視頻編碼器",
+        "Fields": {
+          "DisableOtherVideoStreams": "僅第一個",
+          "DisableOtherVideoStreams-Help": "當選中時，如果文件中有多個視頻流，則執行後將刪除除第一個視頻流外的所有視頻流。",
+          "Force": "強制編碼",
+          "Force-Help": "即使視頻已經在目標視頻編碼器中，也將強制編碼。",
+          "VideoCodec": "視頻編碼器",
+          "VideoCodec-Help": "視頻應該使用的編碼器，例如 hevc、h264。\n如果留空，則所有原始視頻軌道將被複製。",
+          "VideoCodecParameters": "視頻編碼器參數",
+          "VideoCodecParameters-Help": "用於編碼視頻的參數，例如 \"hevc_nvenc -preset hq -crf 23\" 以使用 HQ 預設編碼為 hevc，並使用 23 的恆定比特率因素，並使用 NVIDIA 硬件加速。"
+        },
+        "Outputs": {
+          "1": "FFMPEG 建構器視頻流設置為編碼",
+          "2": "視頻已在目標編碼器中，將不會重新編碼"
+        }
+      },
+      "FfmpegBuilderVideoEncode": {
+        "Description": "設置 FFMPEG 建構器以使用簡單的預設進行視頻編碼。",
+        "Label": "FFMPEG Builder: 視頻編碼",
+        "Fields": {
+          "Codec": "編碼器",
+          "Encoder": "編碼器",
+          "Encoder-Help": "強制使用的編碼器。如果指定的硬件編碼器不可用，則編碼將失敗。",
+          "HardwareEncoding": "硬件編碼",
+          "HardwareEncoding-Help": "當選中時，將檢測處理節點上是否找到硬件編碼器，如果找到，則使用硬件編碼，否則將回退到 CPU 編碼。",
+          "Quality": "質量",
+          "Quality-Help": "一個對數質量比例，因此此滑塊中的小變化會導致文件大小/質量的巨大變化。\n數字越小質量越高。\n有關更多信息，請參見幫助。",
+          "Quality-Suffix": "(更高質量，較大文件)",
+          "Speed": "速度"
+        },
+        "Outputs": {
+          "1": "FFMPEG 建構器視頻流設置為編碼"
+        }
+      },
+      "FfmpegBuilderVideoMaxBitrate": {
+        "Description": "設置 FFMPEG 建構器限制視頻的比特率。",
+        "Label": "FFMPEG Builder: 視頻最大比特率",
+        "Fields": {
+          "Bitrate": "最大比特率",
+          "Bitrate-Help": "視頻的最大比特率（以千字節計）",
+          "Bitrate-Suffix": "KB"
+        },
+        "Outputs": {
+          "1": "FFMPEG 建構器視頻流已更新"
+        }
+      },
+      "FfmpegBuilderVideoTag": {
+        "Description": "在文件上設置視頻標籤。",
+        "Label": "FFMPEG Builder: 視頻標籤",
+        "Fields": {
+          "Tag": "標籤",
+          "Tag-Help": "要添加到視頻文件的標籤"
+        },
+        "Outputs": {
+          "1": "FFMPEG 建構器標籤已添加"
+        }
+      },
+      "FFmpegBuilderWatermark": {
+        "Description": "為視頻文件添加水印。",
+        "Label": "FFMPEG Builder: 水印",
+        "Fields": {
+          "Height": "高度",
+          "Height-Help": "設置圖像的自定義高度，或設置為 0 以獲取源高度或在設置寬度時縮放。",
+          "Image": "圖像",
+          "Image-Help": "水印的圖像文件，為獲得最佳效果，請使用 PNG 文件。",
+          "Opacity": "不透明度",
+          "Opacity-Help": "調整疊加圖像的透明度，範圍從 0（完全透明）到 100（完全不透明）。",
+          "Position": "位置",
+          "Position-Help": "水印放置的位置",
+          "Width": "寬度",
+          "Width-Help": "設置圖像的自定義寬度，或設置為 0 以獲取源寬度或在設置高度時縮放。",
+          "XPos": "X-位置",
+          "XPos-Help": "水印在 x 軸上的位置",
+          "YPos": "Y-位置",
+          "YPos-Help": "水印在 y 軸上的位置"
+        },
+        "Outputs": {
+          "1": "水印已添加"
+        }
+      },
+      "ReadVideoInfo": {
+        "Description": "從當前工作文件中讀取視頻信息並更新 vi 變量。",
+        "Label": "讀取視頻信息",
+        "Outputs": {
+          "1": "文件是視頻文件，信息已讀取到流程中",
+          "2": "文件不是視頻文件或讀取失敗"
+        }
+      },
+      "SubtitleExtractor": {
+        "Description": "提取單個字幕軌並將其保存到目的地。可以提取srt、ass和ssa格式。\n這不會更新工作文件，並將保持工作文件與輸入文件相同。\n\n輸出1：已提取字幕\n輸出2：未找到可提取的字幕",
+        "Label": "字幕提取器",
+        "Fields": {
+          "ExtractAll": "提取全部",
+          "ExtractAll-Help": "是否應提取所有匹配的字幕。",
+          "ForcedOnly": "僅強制提取",
+          "ForcedOnly-Help": "是否僅提取強制字幕。",
+          "Language": "語言",
+          "Language-Help": "要使用的[ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes)語言代碼。",
+          "OnlyTextSubtitles": "僅文本字幕",
+          "OnlyTextSubtitles-Help": "是否僅應提取文本字幕，所有基於圖像的字幕將被跳過。",
+          "OutputFile": "輸出文件",
+          "OutputFile-Help": "輸出文件的保存位置，例如\"'{folder.Orig.FullName}\\{file.Orig.FileName}.srt'\"以將其作為srt輸出保存到原始文件中。\n如果留空，將在與原始輸入文件相同的文件夾中創建srt字幕。",
+          "SetWorkingFile": "設置為工作文件",
+          "SetWorkingFile-Help": "當勾選此項時，如果提取了字幕，工作文件將更改為此提取的字幕。原始工作文件不會被刪除。",
+          "Title": "標題",
+          "Title-Help": "可選，輸入標題。這可以是正則表達式或必須出現在標題中的字符串以進行匹配。"
+        },
+        "Outputs": {
+          "1": "已提取字幕",
+          "2": "未提取字幕"
+        }
+      },
+      "VideoAlreadyProcessed": {
+        "Description": "測試視頻文件是否已由FileFlows處理過",
+        "Label": "視頻已處理",
+        "Outputs": {
+          "1": "視頻已被處理過",
+          "2": "視頻尚未被處理"
+        }
+      },
+      "VideoBitCheck": {
+        "Description": "檢查視頻是8位、10位、12位還是未知。",
+        "Label": "視頻位檢查",
+        "Outputs": {
+          "1": "視頻是8位",
+          "2": "視頻是10位",
+          "3": "視頻是12位",
+          "4": "未知"
+        }
+      },
+      "VideoBitrateGreaterThan": {
+        "Description": "測試視頻的比特率是否大於給定的比特率。",
+        "Label": "視頻比特率大於",
+        "Fields": {
+          "Bitrate": "比特率",
+          "Bitrate-Suffix": "KBps"
+        },
+        "Outputs": {
+          "1": "比特率大於",
+          "2": "比特率不大於"
+        }
+      },
+      "VideoDuration": {
+        "Description": "測試視頻的持續時間是否符合給定的參數。",
+        "Label": "視頻持續時間",
+        "Fields": {
+          "Match": "匹配",
+          "ValueHigh": " ",
+          "ValueLow": "持續時間"
+        },
+        "Outputs": {
+          "1": "視頻持續時間匹配",
+          "2": "視頻持續時間不匹配"
+        }
+      },
+      "VideoDurationCompare": {
+        "Description": "比較視頻的原始持續時間與其最終持續時間。",
+        "Label": "視頻持續時間比較",
+        "Fields": {
+          "AllowedDifference": "允許的差異",
+          "AllowedDifference-Help": "視頻的原始持續時間與最終持續時間之間允許的時間差異。"
+        },
+        "Outputs": {
+          "1": "視頻在允許的持續時間差異內",
+          "2": "視頻不在允許的持續時間差異內"
+        }
+      },
+      "VideoExtractAudio": {
+        "Description": "從視頻文件中提取音頻並將其保存到文件中",
+        "Label": "視頻提取音頻",
+        "Fields": {
+          "Channels": "通道數",
+          "Channels-Help": "源音軌必須匹配的通道數。設置為0以跳過通道匹配。",
+          "Codec": "編解碼器",
+          "Codec-Help": "用於測試流編解碼器的正則表達式",
+          "Language": "語言",
+          "Language-Help": "用於測試流語言的正則表達式",
+          "NotMatching": "不匹配",
+          "NotMatching-Help": "是否應提取不匹配模式的音頻軌道",
+          "OutputBitrate": "輸出比特率",
+          "OutputBitrate-Help": "提取的音頻軌道的比特率",
+          "OutputCodec": "輸出編解碼器",
+          "OutputCodec-Help": "用於保存提取音頻的編解碼器",
+          "OutputFile": "輸出文件",
+          "OutputFile-Help": "將輸出文件保存到的位置，例如\"'{folder.Orig.FullName}\\{file.Orig.FileName}.mp3'\"將其作為mp3輸出保存。如果未設置擴展名，將使用輸出編解碼器來確定擴展名。",
+          "SetWorkingFile": "設置為工作文件",
+          "SetWorkingFile-Help": "當選中此項時，如果提取音軌，工作文件將更改為此提取的音軌。原始工作文件將不會被刪除。",
+          "Title": "標題",
+          "Title-Help": "用於測試流標題的正則表達式"
+        },
+        "Outputs": {
+          "1": "音頻已提取並保存到文件",
+          "2": "找不到可提取的音軌"
+        }
+      },
+      "VideoFile": {
+        "Description": "一個輸入視頻文件，其視頻信息已被讀取並可以被處理",
+        "Label": "視頻文件",
+        "Fields": {
+          "AnalyzeDuration": "分析持續時間",
+          "AnalyzeDuration-Help": "指定要分析多少秒以探測輸入",
+          "AnalyzeDuration-Suffix": "秒",
+          "ProbeSize": "探測大小",
+          "ProbeSize-Help": "在執行時使用的FFMPEG探測大小",
+          "ProbeSize-Suffix": "MB"
+        },
+        "Outputs": {
+          "1": "來自庫的視頻文件"
+        }
+      },
+      "VideoHasErrors": {
+        "Description": "測試視頻文件是否包含任何錯誤",
+        "Label": "視頻有錯誤",
+        "Fields": {
+          "HardwareDecoding": "硬件解碼",
+          "HardwareDecoding-Help": "是否應嘗試使用硬件解碼。如果不可用，則執行將無法啟用硬件解碼"
+        },
+        "Outputs": {
+          "1": "包含錯誤",
+          "2": "未檢測到任何錯誤"
+        }
+      },
+      "VideoHasStream": {
+        "Description": "測試視頻文件是否包含音軌",
+        "Label": "視頻有流",
+        "Fields": {
+          "Channels": "通道數",
+          "Channels-Help": "要測試的通道數。留空以忽略此檢查",
+          "CheckDeleted": "檢查已刪除",
+          "CheckDeleted-Help": "是否應檢查已刪除的音軌",
+          "Codec": "編解碼器",
+          "Codec-Help": "用於測試流編解碼器的正則表達式",
+          "Default": "默認",
+          "Default-Help": "此流是否應為默認流。",
+          "Forced": "強制",
+          "Forced-Help": "此流是否應為強制流。",
+          "Invert": "反轉",
+          "Invert-Help": "反轉結果，因此實際上變為`視頻沒有流`",
+          "Language": "語言",
+          "Language-Help": "用於測試流語言的正則表達式",
+          "Stream": "類型",
+          "Stream-Help": "要查找的流類型",
+          "Title": "標題",
+          "Title-Help": "用於測試流標題的正則表達式"
+        },
+        "Outputs": {
+          "1": "包含匹配的音軌",
+          "2": "不包含匹配的音軌"
+        }
+      },
+      "VideoIs10Bit": {
+        "Description": "測試視頻文件是否為10位",
+        "Label": "視頻為10位",
+        "Outputs": {
+          "1": "視頻為10位",
+          "2": "視頻不是10位"
+        }
+      },
+      "VideoIs12Bit": {
+        "Description": "測試視頻文件是否為12位",
+        "Label": "視頻為12位",
+        "Outputs": {
+          "1": "視頻為12位",
+          "2": "視頻不是12位"
+        }
+      },
+      "VideoIs8Bit": {
+        "Description": "測試視頻文件是否為8位",
+        "Label": "視頻為8位",
+        "Outputs": {
+          "1": "視頻為8位",
+          "2": "視頻不是8位"
+        }
+      },
+      "VideoIsInterlaced": {
+        "Description": "測試視頻文件是否為交錯",
+        "Label": "視頻為交錯",
+        "Fields": {
+          "Threshold": "閾值",
+          "Threshold-Help": "必須檢測到的幀百分比才能被視為交錯"
+        },
+        "Outputs": {
+          "1": "視頻為交錯",
+          "2": "視頻不是交錯"
+        }
+      },
+      "VideoResolution": {
+        "Description": "確定視頻的解析度並相應輸出。",
+        "Label": "視頻解析度",
+        "Outputs": {
+          "1": "視頻為4K",
+          "2": "視頻為1080p",
+          "3": "視頻為720p",
+          "4": "視頻為標準清晰度"
+        }
+      }
+    }
+  },
+  "H": {
+    "264": "H.264",
+    "265": "H.265"
+  },
+  "Plugins": {
+    "VideoNodes": {
+      "Description": "用於處理視頻文件的插件，包括但不限於視頻文件轉換、視頻文件檢測、升級、降級和轉碼。",
+      "Label": "視頻"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "Flow": {
+    "Parts": {
+      "SendEmail": {
+        "Description": "구성된 SMTP 서버를 사용하여 이메일을 보냅니다.",
+        "Label": "이메일 보내기",
+        "Fields": {
+          "Body": "본문",
+          "Body-Help": "전송되는 이메일 메시지의 내용입니다. [scriban](https://github.com/scriban/scriban) 템플릿 언어를 사용합니다.",
+          "Recipients": "수신자",
+          "Recipients-Help": "메시지를 보낼 이메일 주소 목록입니다.",
+          "Subject": "제목",
+          "Subject-Help": "설정된 이메일의 제목입니다."
+        },
+        "Outputs": {
+          "1": "이메일 ''{Subject}''이(가) 전송되었습니다.",
+          "2": "이메일 전송 실패"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "EmailNodes": {
+      "Description": "이 플러그인은 흐름을 실행하는 동안 이메일을 보낼 수 있게 해줍니다.",
+      "Label": "이메일",
+      "Fields": {
+        "Sender": "발신자",
+        "Sender-Help": "이메일이 발송될 이메일 주소입니다.",
+        "SmtpPassword": "SMTP 비밀번호",
+        "SmtpPassword-Help": "SMTP 서버에 대한 인증에 사용되는 비밀번호입니다.",
+        "SmtpPort": "SMTP 포트",
+        "SmtpPort-Help": "이메일 전송에 사용되는 SMTP 서버의 포트, 기본값 25입니다.",
+        "SmtpServer": "SMTP 서버",
+        "SmtpServer-Help": "이메일 전송에 사용되는 SMTP 서버의 주소입니다.",
+        "SmtpUsername": "SMTP 사용자 이름",
+        "SmtpUsername-Help": "SMTP 서버에 대한 인증에 사용되는 사용자 이름입니다."
+      }
+    }
+  }
+}

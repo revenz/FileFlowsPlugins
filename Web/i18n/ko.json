@@ -1,0 +1,77 @@
+{
+  "Flow": {
+    "Parts": {
+      "Downloader": {
+        "Description": "지정된 URL을 다운로드합니다.",
+        "Label": "다운로더",
+        "Fields": {
+          "Url": "URL",
+          "Url-Help": "다운로드할 URL, 현재 작업 파일을 사용하려면 비워 두십시오. 현재 작업 파일이 URL이 아니면 실패합니다."
+        },
+        "Outputs": {
+          "1": "URL이 성공적으로 다운로드되었습니다.",
+          "2": "URL 다운로드에 실패했습니다."
+        }
+      },
+      "HtmlImageParser": {
+        "Label": "HTML 이미지 파서",
+        "Fields": {
+          "Path": "파일",
+          "Path-Description": "이미지를 파싱할 선택적 파일 또는 변수입니다. 주어지지 않으면 작업 파일이 파싱됩니다.",
+          "Pattern": "패턴",
+          "Pattern-Help": "결과와 일치하는 선택적 대소문자 구분 없는 정규 표현식입니다. 이와 일치하는 결과만 허용됩니다.",
+          "Pattern-Placeholder": "선택적"
+        },
+        "Outputs": {
+          "1": "이미지를 찾고 ImageUrls 변수에 저장되었습니다.",
+          "2": "찾은 이미지가 없습니다."
+        }
+      },
+      "HtmlLinkParser": {
+        "Label": "HTML 링크 파서",
+        "Fields": {
+          "Path": "파일",
+          "Path-Description": "링크를 파싱할 선택적 파일 또는 변수입니다. 주어지지 않으면 작업 파일이 파싱됩니다.",
+          "Pattern": "패턴",
+          "Pattern-Help": "결과와 일치하는 선택적 대소문자 구분 없는 정규 표현식입니다. 이와 일치하는 결과만 허용됩니다.",
+          "Pattern-Placeholder": "선택적"
+        },
+        "Outputs": {
+          "1": "링크가 발견되어 Links 변수에 저장되었습니다.",
+          "2": "찾은 링크가 없습니다."
+        }
+      },
+      "InputUrl": {
+        "Label": "입력 URL"
+      },
+      "WebRequest": {
+        "Description": "웹 요청을 보낼 수 있게 해줍니다.",
+        "Label": "웹 요청",
+        "Fields": {
+          "Body": "본문",
+          "Body-Help": "전송되는 요청의 본문입니다. 이 필드에서 변수를 사용할 수 있습니다.",
+          "ContentType": "콘텐츠 유형",
+          "ContentType-Help": "전송할 메시지의 콘텐츠 유형",
+          "Headers": "헤더",
+          "Headers-Help": "요청과 함께 보낼 선택적 헤더",
+          "HeadersKey": "키",
+          "HeadersValue": "값",
+          "Method": "메서드",
+          "Method-Help": "이 요청을 보낼 때 사용할 웹 메서드",
+          "Url": "URL",
+          "Url-Help": "요청의 URL"
+        },
+        "Outputs": {
+          "1": "성공적으로 전송되었습니다.",
+          "2": "요청이 비정상적인 상태 코드를 반환했습니다."
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Web": {
+      "Description": "웹 관련 흐름 요소를 제공하는 플러그인입니다.",
+      "Label": "웹"
+    }
+  }
+}

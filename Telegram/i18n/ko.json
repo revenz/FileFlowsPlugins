@@ -1,0 +1,29 @@
+{
+  "Flow": {
+    "Parts": {
+      "Telegram": {
+        "Description": "텔레그램 메시지를 전송합니다.",
+        "Fields": {
+          "Message": "메시지",
+          "Message-Help": "전송할 메시지."
+        },
+        "Outputs": {
+          "1": "텔레그램 메시지가 전송되었습니다.",
+          "2": "텔레그램 메시지 전송에 실패했습니다."
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Telegram": {
+      "Description": "텔레그램 메시지를 전송할 수 있는 플러그인입니다.",
+      "Label": "텔레그램",
+      "Fields": {
+        "BotToken": "봇 토큰",
+        "BotToken-Help": "당신의 텔레그램 봇 토큰입니다.",
+        "ChatId": "채팅 ID",
+        "ChatId-Help": "메시지를 전송할 채팅의 ID입니다."
+      }
+    }
+  }
+}

@@ -15,7 +15,9 @@ public class ComicExtractor : Node
     public override string Icon => "fas fa-file-pdf";
     /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/comic-nodes/comic-extractor";
-
+    /// <summary>
+    /// The cancelation token source
+    /// </summary>
     CancellationTokenSource cancellation = new CancellationTokenSource();
 
     /// <summary>

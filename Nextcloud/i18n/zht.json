@@ -1,0 +1,34 @@
+{
+  "Flow": {
+    "Parts": {
+      "UploadToNextcloud": {
+        "Description": "將文件上傳到Nextcloud",
+        "Label": "上傳到Nextcloud",
+        "Fields": {
+          "DestinationPath": "目的地",
+          "DestinationPath-Help": "文件在Nextcloud中的位置和文件名，即完整路徑。",
+          "File": "文件",
+          "File-Help": "要上傳的文件，留空以使用當前工作文件。"
+        },
+        "Outputs": {
+          "1": "已成功上傳到Nextcloud",
+          "2": "上傳到Nextcloud失敗"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Nextcloud": {
+      "Description": "一個允許您將文件上傳到Nextcloud的插件。",
+      "Label": "Nextcloud",
+      "Fields": {
+        "Password": "密碼",
+        "Password-Help": "您為此Nextcloud用戶為FileFlows創建的應用專用密碼。",
+        "Url": "URL",
+        "Url-Help": "Nextcloud伺服器的URL",
+        "Username": "用戶名",
+        "Username-Help": "要上傳的用戶的用戶名。"
+      }
+    }
+  }
+}
