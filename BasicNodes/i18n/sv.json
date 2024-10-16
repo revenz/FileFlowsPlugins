@@ -595,15 +595,6 @@
           "Node-Help": "Behandlingsnod för att bearbeta denna fil."
         }
       },
-      "Tag": {
-        "Description": "Taggar filen med de angivna taggarna",
-        "Label": "Tagg",
-        "Fields": {
-          "Tags": "Taggar",
-          "Replace": "Ersätt",
-          "Replace-Help": "Om taggarna ska ersättas eller läggas till de befintliga taggarna."
-        }
-      },
       "SetVariable": {
         "Description": "Sätter en variabel i flödet.",
         "Label": "Ställ In Variabel",
@@ -675,6 +666,15 @@
         },
         "Outputs": {
           "1": "Flöde återupptaget"
+        }
+      },
+      "Tag": {
+        "Description": "Taggar filen med de angivna taggarna",
+        "Label": "Tagg",
+        "Fields": {
+          "Replace": "Ersätt",
+          "Replace-Help": "Om taggarna ska ersättas eller läggas till de befintliga taggarna.",
+          "Tags": "Taggar"
         }
       },
       "Touch": {

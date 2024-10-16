@@ -595,15 +595,6 @@
           "Node-Help": "O nó de processamento para processar este arquivo."
         }
       },
-      "Tag": {
-        "Description": "Marca o arquivo com as tags especificadas",
-        "Label": "Tag",
-        "Fields": {
-          "Tags": "Tags",
-          "Replace": "Substituir",
-          "Replace-Help": "Se as tags devem ser substituídas ou adicionadas às tags existentes."
-        }
-      },
       "SetVariable": {
         "Description": "Define uma variável no fluxo.",
         "Label": "Definir uma Variável",
@@ -675,6 +666,15 @@
         },
         "Outputs": {
           "1": "Fluxo retomado"
+        }
+      },
+      "Tag": {
+        "Description": "Marca o arquivo com as tags especificadas",
+        "Label": "Tag",
+        "Fields": {
+          "Replace": "Substituir",
+          "Replace-Help": "Se as tags devem ser substituídas ou adicionadas às tags existentes.",
+          "Tags": "Tags"
         }
       },
       "Touch": {

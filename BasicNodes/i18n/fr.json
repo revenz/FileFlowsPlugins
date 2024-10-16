@@ -595,15 +595,6 @@
           "Node-Help": "Le nœud de traitement pour traiter ce fichier."
         }
       },
-      "Tag": {
-        "Description": "Tague le fichier avec les balises spécifiées",
-        "Label": "Tag",
-        "Fields": {
-          "Tags": "Balises",
-          "Replace": "Remplacer",
-          "Replace-Help": "Si les balises doivent être remplacées ou ajoutées aux balises existantes."
-        }
-      },
       "SetVariable": {
         "Description": "Définit une variable dans le flux.",
         "Label": "Définir une Variable",
@@ -675,6 +666,15 @@
         },
         "Outputs": {
           "1": "Flux repris"
+        }
+      },
+      "Tag": {
+        "Description": "Tague le fichier avec les balises spécifiées",
+        "Label": "Tag",
+        "Fields": {
+          "Replace": "Remplacer",
+          "Replace-Help": "Si les balises doivent être remplacées ou ajoutées aux balises existantes.",
+          "Tags": "Balises"
         }
       },
       "Touch": {

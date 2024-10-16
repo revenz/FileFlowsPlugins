@@ -595,15 +595,6 @@
           "Node-Help": "用于处理该文件的处理节点。"
         }
       },
-      "Tag": {
-        "Description": "使用指定的标签标记文件",
-        "Label": "标签",
-        "Fields": {
-          "Tags": "标签",
-          "Replace": "替换",
-          "Replace-Help": "标签是替换还是附加到现有标签。"
-        }
-      },
       "SetVariable": {
         "Description": "在流中设置一个变量。",
         "Label": "设置变量",
@@ -675,6 +666,15 @@
         },
         "Outputs": {
           "1": "流程恢复"
+        }
+      },
+      "Tag": {
+        "Description": "使用指定的标签标记文件",
+        "Label": "标签",
+        "Fields": {
+          "Replace": "替换",
+          "Replace-Help": "标签是替换还是附加到现有标签。",
+          "Tags": "标签"
         }
       },
       "Touch": {
