@@ -25,16 +25,16 @@ public class Tag : Node
     public override LicenseLevel LicenseLevel => LicenseLevel.Basic;
     
     /// <summary>
-    /// Gets or sets the tags
-    /// </summary>
-    [TagSelection(1)]
-    public List<Guid> Tags { get; set; }
-    
-    /// <summary>
     /// Gets or sets if the tags should replace the existing tags
     /// </summary>
-    [Boolean(2)]
+    [Boolean(1)]
     public bool Replace { get; set; }
+    
+    /// <summary>
+    /// Gets or sets the tags
+    /// </summary>
+    [TagSelection(2)]
+    public List<Guid> Tags { get; set; }
 
     /// <inheritdoc />
     public override int Execute(NodeParameters args)
