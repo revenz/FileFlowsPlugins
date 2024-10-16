@@ -55,6 +55,6 @@ public class Reprocess : Node
             args.ReprocessNode = Node;
         }
 
-        return 1;
+        return 0;
     }
 }
