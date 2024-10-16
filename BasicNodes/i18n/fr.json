@@ -589,6 +589,8 @@
         "Description": "L'élément de flux vous permet de reproceser le fichier de bibliothèque original avec un nœud de traitement différent.\n\n Si le même nœud de traitement est sélectionné que celui qui traite actuellement le fichier, le flux échouera.",
         "Label": "Reprocesser",
         "Fields": {
+          "HoldMinutes": "Minutes de Réserve",
+          "HoldMinutes-Help": "Le nombre de minutes à attendre avant de traiter à nouveau le fichier. Utilisez 0 pour traiter immédiatement.",
           "Node": "Nœud",
           "Node-Help": "Le nœud de traitement pour traiter ce fichier."
         }

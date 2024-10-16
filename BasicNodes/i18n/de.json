@@ -589,6 +589,8 @@
         "Description": "Das Fluss-Element ermöglicht es Ihnen, die ursprüngliche Bibliotheksdatei mit einem anderen Verarbeitungsnode erneut zu verarbeiten.\n\n Wenn derselbe Verarbeitungsnode ausgewählt wird, der derzeit die Datei verarbeitet, schlägt der Fluss fehl.",
         "Label": "Erneut verarbeiten",
         "Fields": {
+          "HoldMinutes": "Wartezeit in Minuten",
+          "HoldMinutes-Help": "Die Anzahl der Minuten, die die Datei gehalten werden soll, bevor sie erneut verarbeitet wird. Verwenden Sie 0, um sofort zu verarbeiten.",
           "Node": "Node",
           "Node-Help": "Der Verarbeitungsnode, um diese Datei zu verarbeiten."
         }

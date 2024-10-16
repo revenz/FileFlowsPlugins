@@ -589,6 +589,8 @@
         "Description": "L'elemento del flusso consente di rielaborare il file della libreria originale con un nodo di elaborazione diverso.\n\n Se viene selezionato lo stesso nodo di elaborazione di quello attualmente in elaborazione, il flusso non avrà successo.",
         "Label": "Rielabora",
         "Fields": {
+          "HoldMinutes": "Minuti di Attesa",
+          "HoldMinutes-Help": "Il numero di minuti per trattenere il file prima di elaborarlo nuovamente. Usa 0 per elaborarlo immediatamente.",
           "Node": "Nodo",
           "Node-Help": "Il nodo di elaborazione per elaborare questo file."
         }

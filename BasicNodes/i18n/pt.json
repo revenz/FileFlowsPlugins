@@ -589,6 +589,8 @@
         "Description": "O elemento de fluxo permite que você reprocesse o arquivo de biblioteca original com um nó de processamento diferente.\n\n Se o mesmo nó de processamento for selecionado como o que está processando o arquivo atualmente, o fluxo falhará.",
         "Label": "Reprocessar",
         "Fields": {
+          "HoldMinutes": "Minutos de Espera",
+          "HoldMinutes-Help": "O número de minutos para manter o arquivo antes de processá-lo novamente. Use 0 para processar imediatamente.",
           "Node": "Nó",
           "Node-Help": "O nó de processamento para processar este arquivo."
         }

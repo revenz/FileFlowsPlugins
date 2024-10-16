@@ -589,6 +589,8 @@
         "Description": "El elemento de flujo te permite reprocesar el archivo original de la biblioteca con un nodo de procesamiento diferente.\n\n Si se selecciona el mismo nodo de procesamiento que el que actualmente procesa el archivo, el flujo fallará.",
         "Label": "Reprocesar",
         "Fields": {
+          "HoldMinutes": "Minutos de Espera",
+          "HoldMinutes-Help": "El número de minutos para retener el archivo antes de procesarlo nuevamente. Use 0 para procesarlo inmediatamente.",
           "Node": "Nodo",
           "Node-Help": "El nodo de procesamiento para procesar este archivo."
         }

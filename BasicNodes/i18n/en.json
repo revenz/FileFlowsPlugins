@@ -589,6 +589,8 @@
         "Description": "The flow element allows you to reprocess the original library file with a different processing node.\n\n If the same processing node is selected as the one currently processing the file, the flow will fail.",
         "Label": "Reprocess",
         "Fields": {
+          "HoldMinutes": "Hold Minutes",
+          "HoldMinutes-Help": "The number of minutes to hold the file before processing it again.  Use 0 to process immediately.",
           "Node": "Node",
           "Node-Help": "The processing node to process this file."
         }

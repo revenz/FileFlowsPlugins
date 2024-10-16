@@ -589,6 +589,8 @@
         "Description": "Detta flödeselement gör det möjligt att behandla den ursprungliga bibliotekfilen igen med en annan behandlingsnod.\n\nOm samma behandlingsnod väljs som för närvarande bearbetas, kommer flödet att misslyckas.",
         "Label": "Bearbeta igen",
         "Fields": {
+          "HoldMinutes": "Håll Minuter",
+          "HoldMinutes-Help": "Antalet minuter att hålla filen innan den bearbetas igen. Använd 0 för att bearbeta omedelbart.",
           "Node": "Nod",
           "Node-Help": "Behandlingsnod för att bearbeta denna fil."
         }

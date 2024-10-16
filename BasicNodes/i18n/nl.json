@@ -589,6 +589,8 @@
         "Description": "Dit stroomelement maakt het mogelijk om het originele bibliotheekbestand opnieuw te verwerken met een andere verwerkingsnode.\n\nAls dezelfde verwerkingsnode wordt geselecteerd als die momenteel in verwerking is, zal de stroom mislukken.",
         "Label": "Herproces",
         "Fields": {
+          "HoldMinutes": "Vasthoud Minuten",
+          "HoldMinutes-Help": "Het aantal minuten om het bestand vast te houden voordat het opnieuw wordt verwerkt. Gebruik 0 om onmiddellijk te verwerken.",
           "Node": "Node",
           "Node-Help": "De verwerkingsnode voor het verwerken van dit bestand."
         }
