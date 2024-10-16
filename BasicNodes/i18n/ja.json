@@ -595,6 +595,15 @@
           "Node-Help": "このファイルを処理するための処理ノード。"
         }
       },
+      "Tag": {
+        "Description": "指定されたタグでファイルにタグを付けます",
+        "Label": "タグ",
+        "Fields": {
+          "Tags": "タグ",
+          "Replace": "置き換える",
+          "Replace-Help": "タグを置き換えるか、既存のタグに追加するか。"
+        }
+      },
       "SetVariable": {
         "Description": "フロー内で変数を設定します。",
         "Label": "変数を設定",

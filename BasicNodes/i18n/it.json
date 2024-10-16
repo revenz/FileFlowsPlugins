@@ -595,6 +595,15 @@
           "Node-Help": "Il nodo di elaborazione per elaborare questo file."
         }
       },
+      "Tag": {
+        "Description": "Etichetta il file con i tag specificati",
+        "Label": "Etichetta",
+        "Fields": {
+          "Tags": "Tag",
+          "Replace": "Sostituire",
+          "Replace-Help": "Se i tag devono essere sostituiti o aggiunti ai tag esistenti."
+        }
+      },
       "SetVariable": {
         "Description": "Imposta una variabile nel flusso.",
         "Label": "Imposta Variabile",

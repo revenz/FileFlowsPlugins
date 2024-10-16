@@ -585,6 +585,15 @@
           "1": "Archivo original reemplazado"
         }
       },
+      "Tag": {
+        "Description": "Etiqueta el archivo con las etiquetas especificadas",
+        "Label": "Etiqueta",
+        "Fields": {
+          "Tags": "Etiquetas",
+          "Replace": "Reemplazar",
+          "Replace-Help": "Si las etiquetas deben reemplazarse o añadirse a las etiquetas existentes."
+        }
+      },
       "Reprocess": {
         "Description": "El elemento de flujo te permite reprocesar el archivo original de la biblioteca con un nodo de procesamiento diferente.\n\n Si se selecciona el mismo nodo de procesamiento que el que actualmente procesa el archivo, el flujo fallará.",
         "Label": "Reprocesar",

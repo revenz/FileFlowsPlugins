@@ -759,6 +759,15 @@
         "Outputs": {
           "1": "Zip created"
         }
+      },
+      "Tag": {
+        "Description": "Tags the file with the specified tags",
+        "Label": "Tag",
+        "Fields": {
+          "Tags": "Tags",
+          "Replace": "Replace",
+          "Replace-Help": "If the tags should be replaced or appended to the existing tags."
+        }
       }
     }
   },

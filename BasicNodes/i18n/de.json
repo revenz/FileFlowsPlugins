@@ -759,6 +759,15 @@
         "Outputs": {
           "1": "Zip-Datei erstellt"
         }
+      },
+      "Tag": {
+        "Description": "Markiert die Datei mit den angegebenen Tags",
+        "Label": "Tag",
+        "Fields": {
+          "Tags": "Tags",
+          "Replace": "Ersetzen",
+          "Replace-Help": "Ob die Tags ersetzt oder den vorhandenen Tags hinzugefügt werden sollen."
+        }
       }
     }
   },

@@ -595,6 +595,15 @@
           "Node-Help": "De verwerkingsnode voor het verwerken van dit bestand."
         }
       },
+      "Tag": {
+        "Description": "Tagt het bestand met de opgegeven tags",
+        "Label": "Tag",
+        "Fields": {
+          "Tags": "Tags",
+          "Replace": "Vervangen",
+          "Replace-Help": "Of de tags vervangen of toegevoegd moeten worden aan de bestaande tags."
+        }
+      },
       "SetVariable": {
         "Description": "Stelt een variabele in binnen de stroom.",
         "Label": "Stel Variabele In",

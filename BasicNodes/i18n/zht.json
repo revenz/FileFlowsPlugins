@@ -595,6 +595,15 @@
           "Node-Help": "處理此檔案的處理節點。"
         }
       },
+      "Tag": {
+        "Description": "使用指定的標籤標記文件",
+        "Label": "標籤",
+        "Fields": {
+          "Tags": "標籤",
+          "Replace": "替換",
+          "Replace-Help": "標籤是替換還是附加到現有標籤。"
+        }
+      },
       "SetVariable": {
         "Description": "在流程中設置變數。",
         "Label": "設置變數",

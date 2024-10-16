@@ -595,6 +595,15 @@
           "Node-Help": "이 파일을 처리할 처리 노드입니다."
         }
       },
+      "Tag": {
+        "Description": "지정된 태그로 파일에 태그를 지정합니다",
+        "Label": "태그",
+        "Fields": {
+          "Tags": "태그",
+          "Replace": "교체",
+          "Replace-Help": "태그를 교체하거나 기존 태그에 추가할지 여부."
+        }
+      },
       "SetVariable": {
         "Description": "흐름에서 변수를 설정합니다.",
         "Label": "변수 설정",
