@@ -39,6 +39,23 @@ public class Tag : Node
     /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
+        args.Logger?.ILog("Replace: " + Replace);
+
+        if (Replace)
+        {
+            if (Tags?.Any() == true)
+                args.Logger?.ILog("Settings Tags: " + string.Join(";", Tags));
+            else
+                args.Logger?.ILog("Settings Tags: No Tags");
+        }
+        else
+        {
+            if (Tags?.Any() == true)
+                args.Logger?.ILog("Appending Tags: " + string.Join(";", Tags));
+            else
+                args.Logger?.ILog("Appending Tags: No Tags.   Nothing will happen");
+        }
+
         args.SetTags(Tags ?? [], Replace);
         return 1;
     }
