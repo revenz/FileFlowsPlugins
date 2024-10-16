@@ -35,10 +35,17 @@ public class Reprocess : Node
     public override int Execute(NodeParameters args)
     {
         bool holding = HoldMinutes is > 0;
-        bool onNode = Node is not null && Node.Uid != Guid.Empty && Node.Uid != args.Node.Uid;
+        bool onNode = Node is not null && Node.Uid != Guid.Empty;
         if (holding == false && onNode == false)
         {
             args.FailureReason = "Must select at least one of Hold Minutes or Reprocess Node.";
+            args.Logger?.ELog(args.FailureReason);
+            return -1;
+        }
+
+        if (holding == false && Node.Uid == args.Node.Uid)
+        {
+            args.FailureReason = "Cannot reprocess on the same node without holding.";
             args.Logger?.ELog(args.FailureReason);
             return -1;
         }
