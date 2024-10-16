@@ -39,17 +39,7 @@ public class Tag : Node
     /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
-        if (Tags == null || Tags.Count == 0)
-        {
-            args.FailureReason = "No tags selected";
-            args.Logger?.ELog(args.FailureReason);
-            return -1;
-        }
-        
-        // if (Replace)
-        //     args.File.Tags = Tags;
-        // else
-        //     args.File.Tags.AddRange(Tags);
+        args.SetTags(Tags ?? [], Replace);
         return 1;
     }
 }
