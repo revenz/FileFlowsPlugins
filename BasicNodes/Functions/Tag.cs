@@ -56,7 +56,7 @@ public class Tag : Node
                 args.Logger?.ILog("Appending Tags: No Tags.   Nothing will happen");
         }
 
-        args.SetTags(Tags ?? [], Replace);
+        args.SetTagsByUid(Tags ?? [], Replace);
         return 1;
     }
 }
