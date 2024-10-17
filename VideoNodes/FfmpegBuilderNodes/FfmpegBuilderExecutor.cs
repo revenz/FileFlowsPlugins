@@ -395,7 +395,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
     {
         if (KeepModel)
             return;
-        Args.Logger?.ILog("Clearing FFMPEG Builder Model");
+        Args.Logger?.ILog("Clearing FFmpeg Builder Model");
         
         if(Variables.ContainsKey(MODEL_KEY))
             Variables.Remove(MODEL_KEY);
