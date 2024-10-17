@@ -384,6 +384,8 @@
         "Fields": {
           "HardwareDecoding": "Décodage Matériel",
           "HardwareDecoding-Help": "Si l'exécuteur doit essayer d'utiliser le décodage matériel. Si non disponible, l'exécution se poursuivra sans le décodage matériel activé.",
+          "KeepModel": "Conserver le modèle",
+          "KeepModel-Help": "Détermine si le modèle FFmpeg Builder utilisé pour construire la commande FFmpeg doit être conservé. Si désactivé, le modèle sera supprimé après l'exécution réussie de l'élément de flux (c.-à-d., sans échec).",
           "Strictness": "Rigueur",
           "Strictness-Help": "Vous permet de personnaliser la rigueur de FFmpeg. Cela doit être laissé sur 'Expérimental' pour la plupart des utilisateurs."
         },

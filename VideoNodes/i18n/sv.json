@@ -384,6 +384,8 @@
         "Fields": {
           "HardwareDecoding": "Hårdvaruavkodning",
           "HardwareDecoding-Help": "Om exekutorn ska försöka använda hårdvaruavkodning. Om inte tillgängligt kommer exekveringen att fortsätta utan att hårdvaruavkodning är aktiverad.",
+          "KeepModel": "Behåll Modell",
+          "KeepModel-Help": "Anger om FFmpeg Builder-modellen som används för att skapa FFmpeg-kommandot ska behållas. När inaktiverad kommer modellen att tas bort efter att flödeselementet har slutförts framgångsrikt (dvs. utan fel).",
           "Strictness": "Strikthet",
           "Strictness-Help": "Ger dig möjlighet att anpassa strängheten hos FFmpeg. Detta bör lämnas på 'Experimentell' för de flesta användare."
         },

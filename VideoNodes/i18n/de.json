@@ -384,6 +384,8 @@
         "Fields": {
           "HardwareDecoding": "Hardware Decoding",
           "HardwareDecoding-Help": "Wenn der Executor versuchen soll, die Hardware-Dekodierung zu verwenden.  Falls nicht verfügbar, wird die Ausführung ohne aktivierte Hardware-Dekodierung fortgesetzt.",
+          "KeepModel": "Modell behalten",
+          "KeepModel-Help": "Bestimmt, ob das FFmpeg-Builder-Modell, das zur Erstellung des FFmpeg-Befehls verwendet wurde, beibehalten werden soll. Wenn deaktiviert, wird das Modell nach erfolgreicher Ausführung des Flusselements (d. h. ohne Fehler) entfernt.",
           "Strictness": "Strikt",
           "Strictness-Help": "Ermöglicht es Ihnen, die Strenge von FFmpeg einzustellen.  Für die meisten Benutzer sollte diese Einstellung auf 'Experimentell' belassen werden."
         },

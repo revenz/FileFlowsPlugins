@@ -384,6 +384,8 @@
         "Fields": {
           "HardwareDecoding": "硬體解碼",
           "HardwareDecoding-Help": "執行者是否應嘗試使用硬體解碼。若不可用，執行將正常進行，但不啟用硬體解碼。",
+          "KeepModel": "保留模型",
+          "KeepModel-Help": "決定是否保留用於構建FFmpeg命令的FFmpeg構建器模型。禁用後，流元素成功執行後（即沒有失敗）模型將被刪除。",
           "Strictness": "嚴格性",
           "Strictness-Help": "允許您自定義 FFmpeg 的嚴格性。對於大多數用戶，應將其保留為「實驗性」。"
         },

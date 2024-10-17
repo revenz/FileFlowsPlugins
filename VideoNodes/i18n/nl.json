@@ -384,6 +384,8 @@
         "Fields": {
           "HardwareDecoding": "Hardware Decoding",
           "HardwareDecoding-Help": "Of de executor moet proberen hardwaredecodering te gebruiken. Als deze niet beschikbaar is, gaat de uitvoering gewoon door zonder hardwaredecodering ingeschakeld.",
+          "KeepModel": "Model behouden",
+          "KeepModel-Help": "Bepaalt of het FFmpeg Builder-model dat wordt gebruikt om het FFmpeg-commando op te bouwen, behouden moet blijven. Als deze optie is uitgeschakeld, wordt het model verwijderd nadat het flow-element met succes is voltooid (dwz geen fouten).",
           "Strictness": "Striktheid",
           "Strictness-Help": "Stelt u in staat de striktheid van FFmpeg aan te passen. Dit moet voor de meeste gebruikers op 'Experimenteel' blijven staan."
         },

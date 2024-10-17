@@ -384,6 +384,8 @@
         "Fields": {
           "HardwareDecoding": "Hardware Decoding",
           "HardwareDecoding-Help": "If the executor should attempt to use hardware decoding.  If not available the execution will proceed just without hardware decoding enabled.",
+          "KeepModel": "Keep Model",
+          "KeepModel-Help": "Determines whether to retain the FFmpeg Builder model used to construct the FFmpeg command. When disabled, the model will be removed after the flow element successfully completes (i.e., no failure occurs).",
           "Strictness": "Strictness",
           "Strictness-Help": "Allows you to customize the strictness of FFmpeg.  This should be left on 'Experimental' for most users."
         },
