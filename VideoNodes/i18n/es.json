@@ -422,6 +422,22 @@
           "2": "No se han cambiado pistas"
         }
       },
+      "FFmpegBuilderLanguageRemover": {
+        "Description": "Un elemento básico de flujo que elimina pistas de audio y/o subtítulos no deseados de un archivo de video según los idiomas especificados.",
+        "Label": "FFMPEG Builder: Eliminador de Idiomas",
+        "Fields": {
+          "Languages": "Idiomas",
+          "Languages-Help": "Una lista de idiomas para eliminar o conservar, según la opción No Coincidente.",
+          "NotMatching": "No Coincidente",
+          "NotMatching-Help": "Indica si deben eliminarse las pistas de audio que NO coincidan con los idiomas especificados.",
+          "StreamType": "Tipo de Pista",
+          "StreamType-Help": "Especifica el tipo de pistas (audio o subtítulos) que deben eliminarse en el FFMPEG Builder."
+        },
+        "Outputs": {
+          "1": "Pistas marcadas para eliminar",
+          "2": "Pistas NO marcadas para eliminar"
+        }
+      },
       "FfmpegBuilderMetadataRemover": {
         "Description": "Elimina metadatos del FFMPEG Builder para que, cuando se procese el archivo, se eliminen los metadatos seleccionados.\n\nNota: Solo los metadatos cuando este elemento del flujo se vea afectado; si se añaden metadatos después de que se ejecute este nodo, eso no se verá afectado.",
         "Label": "FFMPEG Builder: Eliminador de Metadatos",

@@ -422,6 +422,22 @@
           "2": "未更改轨道"
         }
       },
+      "FFmpegBuilderLanguageRemover": {
+        "Description": "根据指定的语言，删除视频文件中不需要的音轨和/或字幕的基本流程元素。",
+        "Label": "FFMPEG Builder: 语言移除器",
+        "Fields": {
+          "Languages": "语言",
+          "Languages-Help": "根据不匹配字段，列出要删除或保留的语言。",
+          "NotMatching": "不匹配",
+          "NotMatching-Help": "是否应删除与指定语言不匹配的音轨。",
+          "StreamType": "轨道类型",
+          "StreamType-Help": "指定在 FFMPEG Builder 中要删除的轨道类型（音轨或字幕）。"
+        },
+        "Outputs": {
+          "1": "标记为删除的轨道",
+          "2": "未标记为删除的轨道"
+        }
+      },
       "FfmpegBuilderMetadataRemover": {
         "Description": "从FFMPEG构建器中移除元数据，以便在处理文件时选定的元数据将被移除。\n\n注意：只有在此流程元素作用时才会移除元数据，如果在此节点运行后添加了元数据，则不会受到影响。",
         "Label": "FFMPEG构建器：元数据移除器",

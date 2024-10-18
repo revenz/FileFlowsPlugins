@@ -422,6 +422,22 @@
           "2": "No tracks have been changed"
         }
       },
+      "FFmpegBuilderLanguageRemover": {
+        "Description": "A basic flow element that removes unwanted audio and/or subtitles from a video file based on the specified languages.",
+        "Label": "FFMPEG Builder: Language Remover",
+        "Fields": {
+          "Languages": "Languages",
+          "Languages-Help": "A list of languages to either remove or keep, depending on the Not Matching option.",
+          "NotMatching": "Not Matching",
+          "NotMatching-Help": "Indicates whether to remove audio tracks that do NOT match the specified languages.",
+          "StreamType": "Track Type",
+          "StreamType-Help": "Specifies the type of tracks (audio or subtitles) to remove in the FFMPEG Builder."
+        },
+        "Outputs": {
+          "1": "Tracks marked for removal",
+          "2": "Tracks NOT marked for removal"
+        }
+      },
       "FfmpegBuilderMetadataRemover": {
         "Description": "Removes metadata from the FFMPEG Builder so when the file is processed the selected metadata will be removed.\n\nNote: Only the metadata when this flow element is effected, if metadata is added after this node runs, that will not be effected.",
         "Label": "FFMPEG Builder: Metadata Remover",

@@ -422,6 +422,22 @@
           "2": "Nessuna traccia è stata cambiata"
         }
       },
+      "FFmpegBuilderLanguageRemover": {
+        "Description": "Un elemento di flusso di base che rimuove tracce audio e/o sottotitoli indesiderati da un file video in base alle lingue specificate.",
+        "Label": "FFMPEG Builder: Rimozione Lingua",
+        "Fields": {
+          "Languages": "Lingue",
+          "Languages-Help": "Un elenco di lingue da rimuovere o mantenere, a seconda dell'opzione Non Corrispondente.",
+          "NotMatching": "Non Corrispondente",
+          "NotMatching-Help": "Indica se rimuovere le tracce audio che NON corrispondono alle lingue specificate.",
+          "StreamType": "Tipo di Traccia",
+          "StreamType-Help": "Specifica il tipo di tracce (audio o sottotitoli) da rimuovere nel FFMPEG Builder."
+        },
+        "Outputs": {
+          "1": "Tracce contrassegnate per la rimozione",
+          "2": "Tracce NON contrassegnate per la rimozione"
+        }
+      },
       "FfmpegBuilderMetadataRemover": {
         "Description": "Rimuove i metadati dal FFMPEG Builder in modo che, quando il file viene elaborato, i metadati selezionati vengano rimossi.\n\nNota: Solo i metadati quando questo elemento del flusso è in vigore, se i metadati vengono aggiunti dopo che questo nodo è stato eseguito, non verranno influenzati.",
         "Label": "FFMPEG Builder: Rimuovi Metadati",

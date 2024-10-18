@@ -422,6 +422,22 @@
           "2": "トラックが変更されていません"
         }
       },
+      "FFmpegBuilderLanguageRemover": {
+        "Description": "指定された言語に基づいて、ビデオファイルから不要なオーディオおよび/または字幕を削除する基本的なフローユニットです。",
+        "Label": "FFMPEG Builder: 言語除去",
+        "Fields": {
+          "Languages": "言語",
+          "Languages-Help": "一致しないオプションに応じて、削除または保持する言語のリストです。",
+          "NotMatching": "一致しない",
+          "NotMatching-Help": "指定された言語と一致しないオーディオトラックを削除するかどうかを示します。",
+          "StreamType": "トラックタイプ",
+          "StreamType-Help": "FFMPEG Builderで削除するトラックの種類（オーディオまたは字幕）を指定します。"
+        },
+        "Outputs": {
+          "1": "削除対象としてマークされたトラック",
+          "2": "削除対象としてマークされていないトラック"
+        }
+      },
       "FfmpegBuilderMetadataRemover": {
         "Description": "FFMPEG Builderからメタデータを削除します。ファイルが処理されると、選択されたメタデータが削除されます。\n\n注意: このフロー要素に影響を与えるメタデータのみが対象です。このノードが実行された後にメタデータが追加された場合、それは影響を受けません。",
         "Label": "FFMPEG Builder: メタデータ削除",

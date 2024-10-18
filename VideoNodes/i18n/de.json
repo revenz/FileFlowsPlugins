@@ -422,6 +422,22 @@
           "2": "Es wurden keine Spuren geändert"
         }
       },
+      "FFmpegBuilderLanguageRemover": {
+        "Description": "Ein grundlegendes Flusselement, das unerwünschte Audiospuren und/oder Untertitel aus einer Videodatei basierend auf den angegebenen Sprachen entfernt.",
+        "Label": "FFMPEG Builder: Sprachentferner",
+        "Fields": {
+          "Languages": "Sprachen",
+          "Languages-Help": "Eine Liste von Sprachen, die entweder entfernt oder behalten werden sollen, abhängig von der Nicht Übereinstimmend-Option.",
+          "NotMatching": "Nicht Übereinstimmend",
+          "NotMatching-Help": "Gibt an, ob Audiospuren, die NICHT den angegebenen Sprachen entsprechen, entfernt werden sollen.",
+          "StreamType": "Spurentyp",
+          "StreamType-Help": "Gibt an, welche Art von Spuren (Audio oder Untertitel) im FFMPEG Builder entfernt werden sollen."
+        },
+        "Outputs": {
+          "1": "Spuren zur Entfernung markiert",
+          "2": "Spuren NICHT zur Entfernung markiert"
+        }
+      },
       "FfmpegBuilderMetadataRemover": {
         "Description": " Entfernt Metadaten aus dem FFMPEG Builder, so dass bei der Verarbeitung der Datei die ausgewählten Metadaten entfernt werden.\n\nHinweis: Nur die Metadaten dieses Nodes sind betroffen, wenn Metadaten nach der Ausführung dieses Nodes hinzugefügt werden, sind diese nicht betroffen. ",
         "Label": "FFMPEG Builder: Metadata Remover",

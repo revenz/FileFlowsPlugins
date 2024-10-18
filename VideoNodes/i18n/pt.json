@@ -422,6 +422,22 @@
           "2": "Nenhuma faixa foi alterada"
         }
       },
+      "FFmpegBuilderLanguageRemover": {
+        "Description": "Um elemento básico de fluxo que remove faixas de áudio e/ou legendas indesejadas de um arquivo de vídeo com base nos idiomas especificados.",
+        "Label": "FFMPEG Builder: Removedor de Idiomas",
+        "Fields": {
+          "Languages": "Idiomas",
+          "Languages-Help": "Uma lista de idiomas para remover ou manter, dependendo da opção Não Correspondente.",
+          "NotMatching": "Não Correspondente",
+          "NotMatching-Help": "Indica se as faixas de áudio que NÃO correspondem aos idiomas especificados devem ser removidas.",
+          "StreamType": "Tipo de Faixa",
+          "StreamType-Help": "Especifica o tipo de faixas (áudio ou legendas) que devem ser removidas no FFMPEG Builder."
+        },
+        "Outputs": {
+          "1": "Faixas marcadas para remoção",
+          "2": "Faixas NÃO marcadas para remoção"
+        }
+      },
       "FfmpegBuilderMetadataRemover": {
         "Description": "Remove metadados do Construtor FFMPEG para que, quando o arquivo for processado, os metadados selecionados sejam removidos.\n\nNota: Apenas os metadados quando este elemento do fluxo é afetado; se metadados forem adicionados após a execução deste nó, isso não será afetado.",
         "Label": "Construtor FFMPEG: Removedor de Metadados",

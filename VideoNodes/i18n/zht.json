@@ -422,6 +422,22 @@
           "2": "未更改音軌"
         }
       },
+      "FFmpegBuilderLanguageRemover": {
+        "Description": "根據指定的語言，從視頻文件中移除不需要的音軌和/或字幕的基本流程元素。",
+        "Label": "FFMPEG Builder: 語言移除器",
+        "Fields": {
+          "Languages": "語言",
+          "Languages-Help": "根據不匹配字段，列出要刪除或保留的語言。",
+          "NotMatching": "不匹配",
+          "NotMatching-Help": "是否應刪除與指定語言不匹配的音軌。",
+          "StreamType": "軌道類型",
+          "StreamType-Help": "指定在 FFMPEG Builder 中要刪除的軌道類型（音軌或字幕）。"
+        },
+        "Outputs": {
+          "1": "標記為刪除的軌道",
+          "2": "未標記為刪除的軌道"
+        }
+      },
       "FfmpegBuilderMetadataRemover": {
         "Description": "從 FFMPEG 建構器中移除元數據，以便在處理文件時將刪除所選的元數據。\n\n注意：只有當此流程元素生效時，元數據才會被移除，如果在此節點運行後添加元數據，則不會受到影響。",
         "Label": "FFMPEG Builder: 元數據移除器",

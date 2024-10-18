@@ -422,6 +422,22 @@
           "2": "Aucune piste n'a été changée"
         }
       },
+      "FFmpegBuilderLanguageRemover": {
+        "Description": "Un élément de flux de base qui supprime les pistes audio et/ou les sous-titres indésirables d'un fichier vidéo en fonction des langues spécifiées.",
+        "Label": "FFMPEG Builder: Suppression de Langue",
+        "Fields": {
+          "Languages": "Langues",
+          "Languages-Help": "Une liste de langues à supprimer ou à conserver, selon l'option Non Correspondant.",
+          "NotMatching": "Non Correspondant",
+          "NotMatching-Help": "Indique si les pistes audio qui NE correspondent PAS aux langues spécifiées doivent être supprimées.",
+          "StreamType": "Type de Piste",
+          "StreamType-Help": "Spécifie le type de pistes (audio ou sous-titres) à supprimer dans le FFMPEG Builder."
+        },
+        "Outputs": {
+          "1": "Pistes marquées pour suppression",
+          "2": "Pistes NON marquées pour suppression"
+        }
+      },
       "FfmpegBuilderMetadataRemover": {
         "Description": "Supprime les métadonnées du FFMPEG Builder afin que, lorsque le fichier est traité, les métadonnées sélectionnées soient supprimées.\n\nRemarque : Seules les métadonnées lorsque cet élément de flux est affecté ; si des métadonnées sont ajoutées après l'exécution de ce nœud, cela ne sera pas affecté.",
         "Label": "FFMPEG Builder : Supprimeur de Métadonnées",

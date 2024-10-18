@@ -422,6 +422,22 @@
           "2": "Inga spår har ändrats"
         }
       },
+      "FFmpegBuilderLanguageRemover": {
+        "Description": "Grundläggande flödeskomponent som tar bort oönskade ljud- och/eller undertextspår från en videofil baserat på de angivna språken.",
+        "Label": "FFMPEG Builder: Språk Borttagning",
+        "Fields": {
+          "Languages": "Språk",
+          "Languages-Help": "En lista över språk som ska tas bort eller behållas, beroende på fältet Ej Matchande.",
+          "NotMatching": "Ej Matchande",
+          "NotMatching-Help": "Anger om ljudspår som INTE matchar de angivna språken ska tas bort.",
+          "StreamType": "Spårtyp",
+          "StreamType-Help": "Anger vilken typ av spår (ljud eller undertexter) som ska tas bort i FFMPEG Builder."
+        },
+        "Outputs": {
+          "1": "Spår markerade för borttagning",
+          "2": "Spår INTE markerade för borttagning"
+        }
+      },
       "FfmpegBuilderMetadataRemover": {
         "Description": "Tar bort metadata från FFMPEG Builder så att när filen behandlas kommer den valda metadatan att tas bort.\n\nObs: Endast metadatan när detta flödeselement är påverkat, om metadata läggs till efter att denna nod har kört, kommer den inte att påverkas.",
         "Label": "FFMPEG Builder: Metadata Borttagare",

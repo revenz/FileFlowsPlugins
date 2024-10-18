@@ -422,6 +422,22 @@
           "2": "Geen sporen zijn gewijzigd"
         }
       },
+      "FFmpegBuilderLanguageRemover": {
+        "Description": "Een basis flowelement dat ongewenste audio- en/of ondertitels uit een videobestand verwijdert op basis van de opgegeven talen.",
+        "Label": "FFMPEG Builder: Taalverwijderaar",
+        "Fields": {
+          "Languages": "Talen",
+          "Languages-Help": "Een lijst met talen om te verwijderen of te behouden, afhankelijk van de optie Niet Overeenkomend.",
+          "NotMatching": "Niet Overeenkomend",
+          "NotMatching-Help": "Geeft aan of audiotracks die NIET overeenkomen met de opgegeven talen, moeten worden verwijderd.",
+          "StreamType": "Type Track",
+          "StreamType-Help": "Specificeert het type tracks (audio of ondertitels) dat in de FFMPEG Builder moet worden verwijderd."
+        },
+        "Outputs": {
+          "1": "Tracks gemarkeerd voor verwijdering",
+          "2": "Tracks NIET gemarkeerd voor verwijdering"
+        }
+      },
       "FfmpegBuilderMetadataRemover": {
         "Description": "Verwijdert metadata uit de FFMPEG Builder, zodat de geselecteerde metadata wordt verwijderd wanneer het bestand wordt verwerkt.\n\nOpmerking: Alleen de metadata wanneer dit flowelement wordt uitgevoerd, als metadata wordt toegevoegd nadat deze knooppunt is uitgevoerd, wordt dit niet beïnvloed.",
         "Label": "FFMPEG Builder: Metadata Verwijderaar",
