@@ -32,6 +32,23 @@ public class TVEpisodeLookupTests : TestBase
         Assert.IsFalse(string.IsNullOrWhiteSpace(args.Variables["tvepisode.Overview"] as string));
     }
     
+
+    [TestMethod]
+    public void TheBatman_s02space01()
+    {
+        var args = GetNodeParameters("The Batman/Season 2/The Batman s02 e01.mkv");
+
+        var element = new TVEpisodeLookup();
+
+        var result = element.Execute(args);
+        Assert.AreEqual(1, result);
+        
+        Assert.AreEqual("The Batman", args.Variables["tvepisode.Title"]);
+        Assert.AreEqual(2, args.Variables["tvepisode.Season"]);
+        Assert.AreEqual(1, args.Variables["tvepisode.Episode"]);
+        Assert.AreEqual("The Cat, the Bat and the Very Ugly", args.Variables["tvepisode.Subtitle"]);
+        Assert.IsFalse(string.IsNullOrWhiteSpace(args.Variables["tvepisode.Overview"] as string));
+    } 
     [TestMethod]
     public void TheBatman_2x03()
     {

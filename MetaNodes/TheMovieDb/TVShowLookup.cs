@@ -196,7 +196,7 @@ public class TVShowLookup : Node
         // Replace "1x02" format with "s1e02"
         text = Regex.Replace(text, @"(?<season>\d+)x(?<episode>\d+)", "s${season}e${episode}", RegexOptions.IgnoreCase);
         // Replace "s01.02" or "s01.e02" with "s01e02"
-        text = Regex.Replace(text, @"(?<season>s\d+)\.(e)?(?<episode>\d+)", "${season}e${episode}", RegexOptions.IgnoreCase);
+        text = Regex.Replace(text, @"(?<season>s\d+)[\.\s]?(e)?(?<episode>\d+)", "${season}e${episode}", RegexOptions.IgnoreCase);
 
         // this removes any {tvdb-123456} etc
         string variableMatch = @"\{[a-zA-Z]+-[0-9]+\}";
