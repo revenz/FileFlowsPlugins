@@ -8,7 +8,7 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 public class FFmpegBuilderLanguageRemover: FfmpegBuilderNode
 {
     /// <inheritdoc />
-    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/langauge-remover";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/language-remover";
 
     /// <inheritdoc />
     public override int Outputs => 2;
