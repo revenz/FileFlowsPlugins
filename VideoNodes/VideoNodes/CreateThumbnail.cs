@@ -17,13 +17,15 @@ public class CreateThumbnail : VideoNode
     /// The width of the thumbnail.
     /// </summary>
     [NumberInt(2)]
-    public int Width { get; set; } = 1280;
+    [DefaultValue(200)]
+    public int Width { get; set; }
 
     /// <summary>
     /// The height of the thumbnail.
     /// </summary>
     [NumberInt(3)]
-    public int Height { get; set; } = 720;
+    [DefaultValue(200)]
+    public int Height { get; set; }
 
     /// <summary>
     /// The time in the video to capture the thumbnail (in seconds or percentage of the video duration).
@@ -36,6 +38,7 @@ public class CreateThumbnail : VideoNode
     /// The image resize mode to use.
     /// </summary>
     [Select(nameof(ResizeModeOptions), 5)]
+    [DefaultValue(ResizeMode.Contain)]
     public ResizeMode ResizeMode { get; set; } = ResizeMode.Contain;
 
     /// <summary>
