@@ -51,6 +51,28 @@
           "2": "No commercials detected"
         }
       },
+      "CreateThumbnail": {
+        "Description": "Creates a thumbnail image from a video file.",
+        "Label": "Create Thumbnail",
+        "Fields": {
+          "Height": "Height",
+          "Height-Help": "The height of the thumbnail image.",
+          "OutputFile": "Output File",
+          "OutputFile-Help": "The file path where the thumbnail image will be saved. If left blank, a .jpg file will be created in the same location as the original file.",
+          "ResizeMode": "Mode",
+          "ResizeMode-Help": "The method used for resizing the image.",
+          "SkipBlackFrames": "Skip Black Frames",
+          "SkipBlackFrames-Help": "If enabled, the system will skip black frames and select another frame instead.",
+          "Time": "Time",
+          "Time-Help": "The time in the video from which to capture the thumbnail.",
+          "Width": "Width",
+          "Width-Help": "The width of the thumbnail image."
+        },
+        "Outputs": {
+          "1": "Thumbnail created.",
+          "2": "Failed to create thumbnail."
+        }
+      },
       "DisableAmd": {
         "Description": "Disables AMD AMF hardware encoder",
         "Label": "Disable AMD",
@@ -845,27 +867,27 @@
         }
       },
       "SubtitleExtractor": {
-        "Description": "Extract a single subtitle tracks and saves it to the destination.  Can extract srt, ass, and ssa format.\nThis will NOT update the working file, and will keep the working file the same as the input file.\n\nOutput 1: Subtitles were extracted\nOutput 2: No subtitles found to extract",
+        "Description": "Extracts a single subtitle track and saves it to the specified destination. Supports extraction of SRT, ASS, and SSA formats.\nThis operation does NOT modify the working file; it will remain unchanged from the input file.\n\nOutput 1: Subtitles extracted successfully.\nOutput 2: No subtitles found to extract.",
         "Label": "Subtitle Extractor",
         "Fields": {
           "ExtractAll": "Extract All",
-          "ExtractAll-Help": "If all matching subtitles should be extracted.",
+          "ExtractAll-Help": "Whether to extract all matching subtitles.",
           "ForcedOnly": "Forced Only",
-          "ForcedOnly-Help": "If only forced subtitles should be extracted.",
+          "ForcedOnly-Help": "Whether to extract only forced subtitles.",
           "Language": "Language",
           "Language-Help": "The [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) language code to use.",
           "OnlyTextSubtitles": "Only Text Subtitles",
-          "OnlyTextSubtitles-Help": "If only text subtitles should be extracted, all image based subtitles will be skipped.",
+          "OnlyTextSubtitles-Help": "Whether to extract only text subtitles; all image-based subtitles will be skipped.",
           "OutputFile": "Output File",
-          "OutputFile-Help": "Where to save the the output file to, e.g. \"'{folder.Orig.FullName}\\{file.Orig.FileName}.srt'\" to save it with the original file as a srt output.\nIf left blank an srt subtitle will be created in the same folder as the original input file.",
+          "OutputFile-Help": "Location to save the extracted subtitle. If left blank, a .srt file will be created in the same location as the original file.",
           "SetWorkingFile": "Set as Working File",
-          "SetWorkingFile-Help": "When this is checked, if a subtitle is extracted, the working file will be changed to this extracted subtitle.  The original working file will NOT be deleted.",
+          "SetWorkingFile-Help": "If checked, the working file will be updated to this extracted subtitle if one is successfully extracted. The original working file will not be deleted.",
           "Title": "Title",
-          "Title-Help": "Optionally, enter a title. This can be either a regular expression or a string that must appear in the title to be matched."
+          "Title-Help": "Optionally enter a title. This can be either a regular expression or a string that must appear in the title to match."
         },
         "Outputs": {
-          "1": "Subtitles extracted",
-          "2": "No subtitles extracted"
+          "1": "Subtitles extracted successfully.",
+          "2": "No subtitles extracted."
         }
       },
       "VideoAlreadyProcessed": {

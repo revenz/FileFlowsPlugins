@@ -51,6 +51,28 @@
           "2": "コマーシャルは検出されませんでした"
         }
       },
+      "CreateThumbnail": {
+        "Description": "動画ファイルからサムネイル画像を作成します。",
+        "Label": "サムネイル作成",
+        "Fields": {
+          "Height": "高さ",
+          "Height-Help": "サムネイル画像の高さ。",
+          "OutputFile": "出力ファイル",
+          "OutputFile-Help": "サムネイル画像を保存するファイルパス。空白の場合、元のファイルと同じ場所に .jpg ファイルが作成されます。",
+          "ResizeMode": "モード",
+          "ResizeMode-Help": "画像のサイズを変更する際に使用するモード。",
+          "SkipBlackFrames": "黒いフレームをスキップ",
+          "SkipBlackFrames-Help": "チェックされている場合、黒いフレームが検出された場合は他のフレームが使用されます。",
+          "Time": "時間",
+          "Time-Help": "サムネイルを作成する動画の時刻。",
+          "Width": "幅",
+          "Width-Help": "サムネイル画像の幅。"
+        },
+        "Outputs": {
+          "1": "サムネイルが作成されました。",
+          "2": "サムネイルの作成に失敗しました。"
+        }
+      },
       "DisableAmd": {
         "Description": "AMD AMFハードウェアエンコーダーを無効にします。",
         "Label": "AMDを無効にする",

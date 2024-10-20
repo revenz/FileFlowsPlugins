@@ -51,6 +51,28 @@
           "2": "未检测到广告"
         }
       },
+      "CreateThumbnail": {
+        "Description": "从视频文件创建缩略图。",
+        "Label": "创建缩略图",
+        "Fields": {
+          "Height": "高度",
+          "Height-Help": "缩略图的高度。",
+          "OutputFile": "输出文件",
+          "OutputFile-Help": "保存缩略图的文件路径。如果为空，将在与原始文件相同的位置创建一个 .jpg 文件。",
+          "ResizeMode": "模式",
+          "ResizeMode-Help": "调整图片大小时使用的模式。",
+          "SkipBlackFrames": "跳过黑帧",
+          "SkipBlackFrames-Help": "选中时，如果检测到黑帧，将使用其他帧。",
+          "Time": "时间",
+          "Time-Help": "从视频中截取缩略图的时间点。",
+          "Width": "宽度",
+          "Width-Help": "缩略图的宽度。"
+        },
+        "Outputs": {
+          "1": "缩略图已创建。",
+          "2": "创建缩略图失败。"
+        }
+      },
       "DisableAmd": {
         "Description": "禁用 AMD AMF 硬件编码器",
         "Label": "禁用 AMD",

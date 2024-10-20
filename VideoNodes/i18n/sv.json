@@ -51,6 +51,28 @@
           "2": "Ingen reklam upptäckt"
         }
       },
+      "CreateThumbnail": {
+        "Description": "Skapar en miniatyrbild från en videofil.",
+        "Label": "Skapa Miniatyrbild",
+        "Fields": {
+          "Height": "Höjd",
+          "Height-Help": "Miniatyrbildens höjd.",
+          "OutputFile": "Utdatafil",
+          "OutputFile-Help": "Sökvägen där miniatyrbilden ska sparas. Om fältet lämnas tomt skapas en .jpg-fil på samma plats som originalfilen.",
+          "ResizeMode": "Läge",
+          "ResizeMode-Help": "Läget som används vid storleksändring av bilden.",
+          "SkipBlackFrames": "Hoppa över svarta bildrutor",
+          "SkipBlackFrames-Help": "Om markerad, kommer en annan bildruta att användas om en svart bildruta upptäcks.",
+          "Time": "Tid",
+          "Time-Help": "Tiden i videon där miniatyrbilden ska tas från.",
+          "Width": "Bredd",
+          "Width-Help": "Miniatyrbildens bredd."
+        },
+        "Outputs": {
+          "1": "Miniatyrbild skapad.",
+          "2": "Misslyckades med att skapa miniatyrbild."
+        }
+      },
       "DisableAmd": {
         "Description": "Inaktiverar AMD AMF hårdvaruavkodare",
         "Label": "Inaktivera AMD",

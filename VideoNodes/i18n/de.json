@@ -51,6 +51,28 @@
           "2": "Keine Werbespots entdeckt"
         }
       },
+      "CreateThumbnail": {
+        "Description": "Erstellt ein Thumbnail-Bild aus einer Videodatei.",
+        "Label": "Thumbnail erstellen",
+        "Fields": {
+          "Height": "Höhe",
+          "Height-Help": "Die Höhe des Thumbnail-Bildes.",
+          "OutputFile": "Ausgabedatei",
+          "OutputFile-Help": "Der Dateipfad, in dem das Thumbnail-Bild gespeichert wird. Wenn das Feld leer bleibt, wird eine .jpg-Datei im selben Verzeichnis wie die Originaldatei erstellt.",
+          "ResizeMode": "Modus",
+          "ResizeMode-Help": "Die Methode, die zum Skalieren des Bildes verwendet wird.",
+          "SkipBlackFrames": "Schwarze Frames überspringen",
+          "SkipBlackFrames-Help": "Wenn aktiviert, wird ein schwarzer Frame übersprungen und ein anderer Frame verwendet.",
+          "Time": "Zeit",
+          "Time-Help": "Die Zeit im Video, aus der das Thumbnail erstellt wird.",
+          "Width": "Breite",
+          "Width-Help": "Die Breite des Thumbnail-Bildes."
+        },
+        "Outputs": {
+          "1": "Thumbnail erstellt.",
+          "2": "Thumbnail konnte nicht erstellt werden."
+        }
+      },
       "DisableAmd": {
         "Description": "Deaktiviert den AMD AMF Hardware-Encoder",
         "Label": "Deaktiviert AMD",

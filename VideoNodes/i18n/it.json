@@ -51,6 +51,28 @@
           "2": "Nessuna pubblicità rilevata"
         }
       },
+      "CreateThumbnail": {
+        "Description": "Crea un'immagine di anteprima da un file video.",
+        "Label": "Crea Anteprima",
+        "Fields": {
+          "Height": "Altezza",
+          "Height-Help": "L'altezza dell'immagine di anteprima.",
+          "OutputFile": "File di Uscita",
+          "OutputFile-Help": "Il percorso del file in cui verrà salvata l'immagine di anteprima. Se lasciato vuoto, verrà creato un file .jpg nella stessa posizione del file originale.",
+          "ResizeMode": "Modalità",
+          "ResizeMode-Help": "Il metodo utilizzato per ridimensionare l'immagine.",
+          "SkipBlackFrames": "Salta Frame Neri",
+          "SkipBlackFrames-Help": "Se attivato, verranno saltati i frame neri e selezionato un altro frame.",
+          "Time": "Tempo",
+          "Time-Help": "Il tempo nel video da cui prendere l'anteprima.",
+          "Width": "Larghezza",
+          "Width-Help": "La larghezza dell'immagine di anteprima."
+        },
+        "Outputs": {
+          "1": "Anteprima creata.",
+          "2": "Impossibile creare l'anteprima."
+        }
+      },
       "DisableAmd": {
         "Description": "Disabilita l'encoder hardware AMD AMF",
         "Label": "Disabilita AMD",

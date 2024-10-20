@@ -51,6 +51,28 @@
           "2": "Geen reclames gedetecteerd"
         }
       },
+      "CreateThumbnail": {
+        "Description": "Maakt een miniatuurafbeelding van een videobestand.",
+        "Label": "Miniatuur maken",
+        "Fields": {
+          "Height": "Hoogte",
+          "Height-Help": "De hoogte van de miniatuurafbeelding.",
+          "OutputFile": "Uitvoerbestand",
+          "OutputFile-Help": "Het pad waar de miniatuurafbeelding wordt opgeslagen. Als dit veld leeg is, wordt er een .jpg-bestand gemaakt in dezelfde locatie als het originele bestand.",
+          "ResizeMode": "Modus",
+          "ResizeMode-Help": "De modus die gebruikt wordt bij het schalen van de afbeelding.",
+          "SkipBlackFrames": "Zwarte frames overslaan",
+          "SkipBlackFrames-Help": "Indien aangevinkt, wordt een ander frame gebruikt wanneer een zwart frame wordt gedetecteerd.",
+          "Time": "Tijd",
+          "Time-Help": "De tijd in de video waar de miniatuur van wordt gemaakt.",
+          "Width": "Breedte",
+          "Width-Help": "De breedte van de miniatuurafbeelding."
+        },
+        "Outputs": {
+          "1": "Miniatuur gemaakt.",
+          "2": "Mislukt om miniatuur te maken."
+        }
+      },
       "DisableAmd": {
         "Description": "Deactiveert de AMD AMF hardware-encoder",
         "Label": "Deactiveer AMD",

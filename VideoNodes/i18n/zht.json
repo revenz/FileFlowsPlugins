@@ -51,6 +51,28 @@
           "2": "未檢測到廣告"
         }
       },
+      "CreateThumbnail": {
+        "Description": "從影片檔案創建縮圖。",
+        "Label": "創建縮圖",
+        "Fields": {
+          "Height": "高度",
+          "Height-Help": "縮圖的高度。",
+          "OutputFile": "輸出檔案",
+          "OutputFile-Help": "保存縮圖的檔案路徑。如果留空，將在與原始檔案相同的位置創建一個 .jpg 檔案。",
+          "ResizeMode": "模式",
+          "ResizeMode-Help": "調整圖片大小時使用的模式。",
+          "SkipBlackFrames": "跳過黑幀",
+          "SkipBlackFrames-Help": "勾選此選項時，如果檢測到黑幀，將使用其他幀。",
+          "Time": "時間",
+          "Time-Help": "從影片中擷取縮圖的時間點。",
+          "Width": "寬度",
+          "Width-Help": "縮圖的寬度。"
+        },
+        "Outputs": {
+          "1": "縮圖已創建。",
+          "2": "創建縮圖失敗。"
+        }
+      },
       "DisableAmd": {
         "Description": "禁用 AMD AMF 硬體編碼器",
         "Label": "禁用 AMD",

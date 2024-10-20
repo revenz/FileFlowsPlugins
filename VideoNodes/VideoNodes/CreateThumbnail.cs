@@ -22,8 +22,7 @@ public class CreateThumbnail : VideoNode
     /// Gets or sets the destination path for zipping.
     /// </summary>
     [TextVariable(1)]
-    [Required]
-    public string Destination { get; set; } = string.Empty;
+    public string OutputFile { get; set; }
     
     /// <summary>
     /// The width of the thumbnail.
@@ -104,6 +103,10 @@ public class CreateThumbnail : VideoNode
                 return -1;
             }
             string localFile = lfResult.Value;
+            
+            string output = args.ReplaceVariables(OutputFile, stripMissing: true);
+            if (string.IsNullOrWhiteSpace(output))
+                output = FileHelper.ChangeExtension(args.FileName, "jpg");
 
             // Ensure time is within bounds
             TimeSpan captureTime = GetValidCaptureTime(videoInfo.VideoStreams[0].Duration);
@@ -136,23 +139,14 @@ public class CreateThumbnail : VideoNode
                 return 2;
             }
 
-
-            string dest = args.ReplaceVariables(Destination, stripMissing: true);
-            if (string.IsNullOrWhiteSpace(dest))
+            if (args.FileService.FileMove(resizedThumbnailPath, output).Failed(out error))
             {
-                dest = resizedThumbnailPath;
+                args.Logger?.WLog("Failed to move file: " + error);
+                return 2;
             }
-            else
-            {
-                if (args.FileService.FileMove(resizedThumbnailPath, dest).Failed(out error))
-                {
-                    args.Logger?.WLog("Failed to move file: " + error);
-                    return 2;
-                }
-            }
-            args.Logger?.ILog("Thumbnail Path: " + dest);
+            args.Logger?.ILog("Thumbnail Path: " + output);
             // Set output variable
-            args.UpdateVariables(new Dictionary<string, object> { { "ThumbnailPath", dest } });
+            args.UpdateVariables(new Dictionary<string, object> { { "ThumbnailPath", output } });
             return 1;
         }
         catch (Exception ex)
@@ -205,6 +199,8 @@ public class CreateThumbnail : VideoNode
             args.Logger?.ELog("FFmpeg failed to capture thumbnail.");
             return false;
         }
+        
+        args.LogImage(outputPath);
 
         return true;
     }

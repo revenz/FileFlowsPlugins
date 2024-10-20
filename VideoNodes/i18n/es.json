@@ -51,6 +51,28 @@
           "2": "No se detectaron comerciales"
         }
       },
+      "CreateThumbnail": {
+        "Description": "Crea una imagen miniatura de un archivo de video.",
+        "Label": "Crear Miniatura",
+        "Fields": {
+          "Height": "Altura",
+          "Height-Help": "La altura de la imagen miniatura.",
+          "OutputFile": "Archivo de Salida",
+          "OutputFile-Help": "La ruta del archivo donde se guardará la imagen miniatura. Si se deja en blanco, se creará un archivo .jpg en la misma ubicación que el archivo original.",
+          "ResizeMode": "Modo",
+          "ResizeMode-Help": "El método utilizado para redimensionar la imagen.",
+          "SkipBlackFrames": "Omitir Marcos Negros",
+          "SkipBlackFrames-Help": "Si está activado, se omitirán los marcos negros y se seleccionará otro marco.",
+          "Time": "Tiempo",
+          "Time-Help": "El tiempo en el video del que se capturará la miniatura.",
+          "Width": "Ancho",
+          "Width-Help": "El ancho de la imagen miniatura."
+        },
+        "Outputs": {
+          "1": "Miniatura creada.",
+          "2": "Error al crear la miniatura."
+        }
+      },
       "DisableAmd": {
         "Description": "Desactiva el codificador de hardware AMD AMF",
         "Label": "Desactivar AMD",
