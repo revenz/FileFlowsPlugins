@@ -27,6 +27,7 @@ namespace FileFlows.VideoNodes
         /// Gets the FFMPEG executable location
         /// </summary>
         protected string FFMPEG { get; private set; }
+        /// <inheritdoc />
         public override string Icon => "fas fa-video";
 
         /// <summary>

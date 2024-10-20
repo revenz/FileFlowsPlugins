@@ -7,6 +7,17 @@ namespace FileFlows.VideoNodes;
 /// </summary>
 public class CreateThumbnail : VideoNode
 {
+    /// <inheritdoc />
+    public override int Inputs => 1;
+    /// <inheritdoc />
+    public override int Outputs => 2;
+    /// <inheritdoc />
+    public override FlowElementType Type => FlowElementType.Process;
+    /// <inheritdoc />
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/create-thumbnail";
+    /// <inheritdoc />
+    public override string Icon => "fas fa-photo-video";
+    
     /// <summary>
     /// Gets or sets the destination path for zipping.
     /// </summary>
