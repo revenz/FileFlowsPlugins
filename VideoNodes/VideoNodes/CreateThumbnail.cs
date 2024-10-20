@@ -224,7 +224,7 @@ public class CreateThumbnail : VideoNode
             }
 
             args.Logger?.ILog($"Darkness level detected: {result.Value}");
-            return result.Value < 20;
+            return result.Value > 90;
         }
         catch (Exception ex)
         {
