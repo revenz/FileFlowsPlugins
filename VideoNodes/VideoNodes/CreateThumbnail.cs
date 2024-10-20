@@ -11,6 +11,7 @@ public class CreateThumbnail : VideoNode
     /// Gets or sets the destination path for zipping.
     /// </summary>
     [TextVariable(1)]
+    [Required]
     public string Destination { get; set; } = string.Empty;
     
     /// <summary>
