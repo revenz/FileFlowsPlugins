@@ -58,7 +58,7 @@ public class ComskipHelper
             args.Variables.FirstOrDefault(x => x.Key.Equals("comskipini", StringComparison.InvariantCultureIgnoreCase))
                 .Value?.ToString();
         
-        var csIni = csIniFile?.EmptyAsNull() ?? args.GetToolPath("comskip.ini");
+        var csIni = csIniFile?.EmptyAsNull() ?? args.GetToolPath("comskipini")?.EmptyAsNull() ?? args.GetToolPath("comskip.ini");
         if (string.IsNullOrWhiteSpace(csIni) == false)
         {
             if (csIni.IndexOf('\n') > 0)
