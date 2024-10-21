@@ -138,6 +138,11 @@ public class CreateThumbnail : VideoNode
                 args.Logger?.ELog("Failed to resize thumbnail: " + error);
                 return 2;
             }
+            #if(DEBUG)
+            // unit test doesnt have image helper
+            if (File.Exists(resizedThumbnailPath) == false && File.Exists(thumbnailPath))
+                resizedThumbnailPath = thumbnailPath;
+            #endif
 
             if (args.FileService.FileMove(resizedThumbnailPath, output).Failed(out error))
             {
