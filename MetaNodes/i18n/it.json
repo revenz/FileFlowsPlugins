@@ -1,6 +1,18 @@
 {
   "Flow": {
     "Parts": {
+      "AnimeShowLookup": {
+        "Description": "Esegue una ricerca su AniList.co per uno spettacolo di anime.",
+        "Label": "Ricerca Spettacolo Anime",
+        "Fields": {
+          "UseFolderName": "Usa Nome Cartella",
+          "UseFolderName-Help": "Se il nome della cartella deve essere utilizzato invece del nome del file."
+        },
+        "Outputs": {
+          "1": "Spettacolo di anime trovato",
+          "2": "Spettacolo di anime NON trovato"
+        }
+      },
       "GenreMatches": {
         "Description": "Confronta i metadati del genere con il/i genere/i specificato/i.",
         "Label": "Corrispondenza Genere",

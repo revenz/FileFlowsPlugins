@@ -1,6 +1,18 @@
 {
   "Flow": {
     "Parts": {
+      "AnimeShowLookup": {
+        "Description": "Genomför en sökning på AniList.co efter ett animeprogram.",
+        "Label": "Animeprogramsökning",
+        "Fields": {
+          "UseFolderName": "Använd mappnamn",
+          "UseFolderName-Help": "Om mappnamnet ska användas istället för filnamnet."
+        },
+        "Outputs": {
+          "1": "Animeprogrammet hittades",
+          "2": "Animeprogrammet hittades INTE"
+        }
+      },
       "GenreMatches": {
         "Description": "Jämför genremetadata med angivna genre(s).",
         "Label": "Genreöverensstämmelser",

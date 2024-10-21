@@ -1,6 +1,18 @@
 {
   "Flow": {
     "Parts": {
+      "AnimeShowLookup": {
+        "Description": "Effectue une recherche sur AniList.co pour une émission d'anime.",
+        "Label": "Recherche d'Anime",
+        "Fields": {
+          "UseFolderName": "Utiliser le nom du dossier",
+          "UseFolderName-Help": "Si le nom du dossier doit être utilisé au lieu du nom du fichier."
+        },
+        "Outputs": {
+          "1": "Émission d'anime trouvée",
+          "2": "Émission d'anime NON trouvée"
+        }
+      },
       "GenreMatches": {
         "Description": "Compare les métadonnées de genre avec le(s) genre(s) spécifié(s).",
         "Label": "Correspondances de Genre",

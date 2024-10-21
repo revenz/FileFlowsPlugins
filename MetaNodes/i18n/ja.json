@@ -1,6 +1,18 @@
 {
   "Flow": {
     "Parts": {
+      "AnimeShowLookup": {
+        "Description": "AniList.coでアニメ番組を検索します。",
+        "Label": "アニメ番組検索",
+        "Fields": {
+          "UseFolderName": "フォルダー名を使用",
+          "UseFolderName-Help": "ファイル名の代わりにフォルダー名を使用するかどうか。"
+        },
+        "Outputs": {
+          "1": "アニメ番組が見つかりました",
+          "2": "アニメ番組が見つかりませんでした"
+        }
+      },
       "GenreMatches": {
         "Description": "指定されたジャンルとメタデータのジャンルを照合します。",
         "Label": "ジャンル一致",

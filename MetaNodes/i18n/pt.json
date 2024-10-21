@@ -1,6 +1,18 @@
 {
   "Flow": {
     "Parts": {
+      "AnimeShowLookup": {
+        "Description": "Realiza uma busca no AniList.co por um programa de anime.",
+        "Label": "Pesquisa de Programa de Anime",
+        "Fields": {
+          "UseFolderName": "Usar Nome da Pasta",
+          "UseFolderName-Help": "Se o nome da pasta deve ser usado em vez do nome do arquivo."
+        },
+        "Outputs": {
+          "1": "Programa de anime encontrado",
+          "2": "Programa de anime NÃO encontrado"
+        }
+      },
       "GenreMatches": {
         "Description": "Compara os metadados de gênero com o(s) gênero(s) especificado(s).",
         "Label": "Gênero",

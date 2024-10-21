@@ -1,6 +1,18 @@
 {
   "Flow": {
     "Parts": {
+      "AnimeShowLookup": {
+        "Description": "Performs a search on AniList.co for an Anime Show.",
+        "Label": "Anime Show Lookup",
+        "Fields": {
+          "UseFolderName": "Use Folder Name",
+          "UseFolderName-Help": "If the folder name should be used instead of the filename."
+        },
+        "Outputs": {
+          "1": "Anime Show found",
+          "2": "Anime Show NOT found"
+        }
+      },
       "GenreMatches": {
         "Description": "Matches the genre metadata against the specified genre(s).",
         "Label": "Genre Matches",

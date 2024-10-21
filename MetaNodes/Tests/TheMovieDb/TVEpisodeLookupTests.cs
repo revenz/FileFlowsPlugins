@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using DM.MovieApi.MovieDb.Movies;
 using DM.MovieApi.MovieDb.TV;
 using FileFlows.Plugin;
+using MetaNodes.Helpers;
 using MetaNodes.TheMovieDb;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PluginTestLibrary;
@@ -198,7 +199,9 @@ public class TVEpisodeLookupTests : TestBase
                      new("Phantom 2040", "/media/tv/Phantom 2040 (1992)/Phantom 2040.1x03.mkv"),
                  })
         {
-            (string lookupName, string year) = TVShowLookup.GetLookupName(test.Path, true);
+            var helper = new TVShowHelper(null);
+            
+            (string lookupName, string year) = helper.GetLookupName(test.Path, true);
             Assert.AreEqual(test.Show, lookupName);
             //
             // var args = GetNodeParameters(test.Path);

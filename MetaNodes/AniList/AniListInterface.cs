@@ -1,0 +1,200 @@
+using System.Text;
+using System.Text.Json;
+using FileFlows.Plugin;
+
+namespace MetaNodes.AniList;
+
+/// <summary>
+/// Helper class for interacting with the AniList API.
+/// </summary>
+/// <param name="_args">The node parameters.</param>
+public class AniListInterface(NodeParameters _args)
+{
+    private const string AniListGraphQLUrl = "https://graphql.anilist.co";
+
+    private static HttpClient _HttpClient = new();
+
+    /// <summary>
+    /// Fetches show information from AniList based on the provided show name.
+    /// </summary>
+    /// <param name="showName">The name of the anime show to look up.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the <see cref="AniListShowInfo"/> object.</returns>
+    public async Task<AniListShowInfo> FetchShowInfo(string showName)
+    {
+        var query = @"
+        query ($search: String) {
+          Media(search: $search, type: ANIME) {
+            title {
+              romaji,
+              english,
+              native
+            }
+            description
+            startDate {
+              year
+            }
+            averageScore
+          }
+        }";
+
+        var variables = new { search = showName };
+        var jsonRequest = JsonSerializer.Serialize(new { query, variables });
+
+        var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
+
+        try
+        {
+            var response = await _HttpClient.PostAsync(AniListGraphQLUrl, content);
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                var data = JsonSerializer.Deserialize<AniListShowResponse>(jsonResponse, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+
+                var media = data?.Data?.Media;
+
+                if (media != null)
+                {
+                    return new AniListShowInfo
+                    {
+                        Title = media.Title.English?.EmptyAsNull() ??
+                                media.Title.Native?.EmptyAsNull() ?? media.Title.Romaji,
+                        TitleRomaji = media.Title.Romaji,
+                        TitleEnglish = media.Title.English,
+                        TitleNative = media.Title.Native,
+                        Description = media.Description,
+                        Year = media.StartDate.Year,
+                        Score = media.AverageScore
+                    };
+                }
+            }
+            else
+            {
+                _args.Logger?.ELog($"Error fetching data from AniList: {jsonResponse}");
+            }
+        }
+        catch (Exception ex)
+        {
+            _args.Logger?.ELog($"Exception occurred: {ex.Message}");
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Fetches episode information from AniList based on the provided show name.
+    /// </summary>
+    /// <param name="showName">The name of the anime show.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="AniListEpisodeInfo"/> objects.</returns>
+    public async Task<List<AniListEpisodeInfo>> FetchEpisode(string showName)
+    {
+        var queryAiringSchedule = @"
+        query ($search: String) {
+          Media(search: $search, type: ANIME) {
+            airingSchedule {
+              edges {
+                node {
+                  episode
+                  airingAt
+                }
+              }
+            }
+            id
+          }
+        }";
+
+        var variablesAiringSchedule = new { search = showName };
+        var jsonRequestAiringSchedule = JsonSerializer.Serialize(new { query = queryAiringSchedule, variables = variablesAiringSchedule });
+
+        var episodeDetails = new List<AniListEpisodeInfo>();
+
+        try
+        {
+            var content = new StringContent(jsonRequestAiringSchedule, Encoding.UTF8, "application/json");
+            var responseAiringSchedule = await _HttpClient.PostAsync(AniListGraphQLUrl, content);
+            var jsonResponseAiringSchedule = await responseAiringSchedule.Content.ReadAsStringAsync();
+
+            if (responseAiringSchedule.IsSuccessStatusCode)
+            {
+                // var dataAiringSchedule = JsonSerializer.Deserialize<AniListAiringScheduleResponse>(jsonResponseAiringSchedule, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                //
+                // var media = dataAiringSchedule?.Data?.Media;
+                //
+                // if (media != null)
+                // {
+                //     int mediaId = media.Id;
+                //
+                //     var queryEpisodeDetails = @"
+                //     query ($id: Int) {
+                //       Media(id: $id) {
+                //         episodes {
+                //           episode
+                //           title {
+                //             romaji
+                //             english
+                //             native
+                //           }
+                //           description
+                //         }
+                //       }
+                //     }";
+                //
+                //     var variablesEpisodeDetails = new { id = mediaId };
+                //     var jsonRequestEpisodeDetails = JsonSerializer.Serialize(new { query = queryEpisodeDetails, variables = variablesEpisodeDetails });
+                //
+                //     var contentEpisodeDetails = new StringContent(jsonRequestEpisodeDetails, Encoding.UTF8, "application/json");
+                //     var responseEpisodeDetails = await _HttpClient.PostAsync(AniListGraphQLUrl, contentEpisodeDetails);
+                //     var jsonResponseEpisodeDetails = await responseEpisodeDetails.Content.ReadAsStringAsync();
+                //
+                //     if (responseEpisodeDetails.IsSuccessStatusCode)
+                //     {
+                //         var dataEpisodeDetails = JsonSerializer.Deserialize<AniListEpisodeResponse>(jsonResponseEpisodeDetails, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                //
+                //         var episodes = dataEpisodeDetails?.Data?.Media?.Episodes;
+                //         if (episodes != null)
+                //         {
+                //             foreach (var episode in episodes)
+                //             {
+                //                 episodeDetails.Add(new AniListEpisodeInfo
+                //                 {
+                //                     EpisodeNumber = episode.Episode,
+                //                     Title = episode.Title?.Romaji ?? episode.Title?.English ?? episode.Title?.Native,
+                //                     Description = episode.Description
+                //                 });
+                //             }
+                //              }
+                //}
+            }
+            else
+            {
+                _args.Logger?.ELog($"Error fetching data from AniList: {jsonResponseAiringSchedule}");
+            }
+        }
+        catch (Exception ex)
+        {
+            _args.Logger?.ELog($"Exception occurred: {ex.Message}");
+        }
+
+        return episodeDetails;
+    }
+    
+    
+    /// <summary>
+    /// Response class for show information.
+    /// </summary>
+    public class AniListShowResponse
+    {
+        public AniListShowData Data { get; set; }
+    }
+
+    /// <summary>
+    /// Data class for show information.
+    /// </summary>
+    public class AniListShowData
+    {
+        public AniListMediaData Media { get; set; }
+    }
+}

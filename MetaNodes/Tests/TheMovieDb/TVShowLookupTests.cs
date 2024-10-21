@@ -2,6 +2,7 @@
 
 using DM.MovieApi.MovieDb.Movies;
 using DM.MovieApi.MovieDb.TV;
+using MetaNodes.Helpers;
 using MetaNodes.TheMovieDb;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PluginTestLibrary;
@@ -177,7 +178,8 @@ public class TVShowLookupTests : TestBase
                      ("Test Show", "Test.Show.5x09-12"),
                  })
         {
-            var result = TVShowLookup.GetTVShowInfo(item.Item2);
+            var helper = new TVShowHelper(null);
+            var result = helper.GetTVShowInfo(item.Item2);
             Assert.AreEqual(item.Item1, result.ShowName);
         }
     }
@@ -188,7 +190,8 @@ public class TVShowLookupTests : TestBase
         string filename =
             "/media/downloads/complete/tv/Orange.is.the.New.Black.S01E06.2013.Bluray.1080p.DTS-MA.x264.dvxa-JohnGalt-Obfuscated/fdfdg43tetgfdsfdsfdsf.mkv";
         
-        (string lookupName, string year) = TVShowLookup.GetLookupName(filename, true);
+        var helper = new TVShowHelper(null);
+        (string lookupName, string year) = helper.GetLookupName(filename, true);
         Assert.AreEqual("Orange is the New Black", lookupName);
     }
     

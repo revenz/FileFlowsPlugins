@@ -1,6 +1,18 @@
 {
   "Flow": {
     "Parts": {
+      "AnimeShowLookup": {
+        "Description": "在AniList.co上執行動畫節目的搜索。",
+        "Label": "動畫節目查找",
+        "Fields": {
+          "UseFolderName": "使用資料夾名稱",
+          "UseFolderName-Help": "是否應使用資料夾名稱而非檔案名稱。"
+        },
+        "Outputs": {
+          "1": "找到動畫節目",
+          "2": "未找到動畫節目"
+        }
+      },
       "GenreMatches": {
         "Description": "將流派元數據與指定的流派進行匹配。",
         "Label": "流派匹配",
