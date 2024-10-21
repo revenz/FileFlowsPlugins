@@ -3,7 +3,7 @@ namespace MetaNodes.AniList;
 /// <summary>
 /// Represents the media data of an anime show from AniList API.
 /// </summary>
-public class AniListMediaData
+public class AniListShowInfoResponse
 {
     /// <summary>
     /// Gets or sets the title information of the media.
