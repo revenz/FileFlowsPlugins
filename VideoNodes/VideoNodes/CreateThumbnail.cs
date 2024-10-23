@@ -196,7 +196,8 @@ public class CreateThumbnail : VideoNode
                 "-frames:v", "1",                           // capture just one frame
                 "-update", "1",                             // allow overwriting the file
                 outputPath                                  // output single image, no sequence pattern
-            ]
+            ],
+            Timeout = 30
         }).Result;
 
         if (result.ExitCode != 0 || File.Exists(outputPath) == false)
