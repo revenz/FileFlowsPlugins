@@ -1,0 +1,63 @@
+{
+  "Flow": {
+    "Parts": {
+      "ComicConverter": {
+        "Description": "만화를 다른 만화책 형식으로 변환합니다.\n\nCBZ, CBR, CB7, PDF, GZ, BZ2 형식으로 변환하는 것을 지원합니다.",
+        "Label": "만화 변환기",
+        "Fields": {
+          "Codec": "코덱",
+          "Codec-Help": "이미지를 저장할 코덱",
+          "DeleteNonPageImages": "비페이지 이미지 삭제",
+          "DeleteNonPageImages-Help": "페이지를 위한 명명 구조를 따르지 않는 이미지를 삭제합니다. 즉, 숫자로 끝나지 않는 이미지.",
+          "EnsureTopDirectory": "최상위 디렉터리 확인",
+          "EnsureTopDirectory-Help": "모든 파일이 만화책 파일의 최상위 디렉터리에 직접 위치하고, 하위 디렉터리가 없도록 합니다.",
+          "Format": "형식",
+          "Format-Help": "만화를 변환할 형식",
+          "MaxHeight": "최대 높이",
+          "MaxHeight-Help": "페이지의 최대 높이, 조정 없이 유지하려면 0을 사용합니다.",
+          "MaxWidth": "최대 너비",
+          "MaxWidth-Help": "페이지의 최대 너비, 조정 없이 유지하려면 0을 사용합니다.",
+          "Quality": "품질",
+          "Quality-Help": "만화책 페이지의 품질, 0은 가장 압축되고 최악의 품질, 100은 최고의 품질"
+        },
+        "Outputs": {
+          "1": "만화가 변환되어 임시 파일로 저장됨",
+          "2": "만화가 이미 원하는 형식임"
+        }
+      },
+      "ComicExtractor": {
+        "Description": "만화책 형식에서 모든 파일을 추출하고 특정 폴더에 저장합니다.\n\nCBZ, CBR, CB7, PDF, GZ, BZ2 형식으로 추출하는 것을 지원합니다.",
+        "Label": "만화 추출기",
+        "Fields": {
+          "DestinationPath": "대상 경로",
+          "DestinationPath-Help": "추출한 만화책 파일을 저장할 폴더"
+        },
+        "Outputs": {
+          "1": "만화가 추출됨"
+        }
+      },
+      "CreateComicInfo": {
+        "Description": "만화의 경로를 분석하고 만화책 아카이브 내에 comicinfo.xml 파일을 생성합니다.",
+        "Label": "만화 정보 생성",
+        "Fields": {
+          "IssueDigits": "호 숫자",
+          "IssueDigits-Help": "이 수치만큼 앞에 0으로 패딩합니다.\n예를 들어, 1호의 경우 패딩이 3이면 호는 #001로 표시됩니다.",
+          "Publisher": "출판사",
+          "Publisher-Help": "만화가 출판사 디렉터리에 있을 경우, 더 많은 정보는 도움말을 참조하십시오.",
+          "RenameFile": "파일 이름 바꾸기",
+          "RenameFile-Help": "파일을 `시리즈 - 호 - 제목.확장자` 형식으로 이름을 바꿔야 하는지 여부"
+        },
+        "Outputs": {
+          "1": "만화 정보가 만화 아카이브에 추가됨",
+          "2": "만화 정보가 이미 아카이브에 있음"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "ComicNodes": {
+      "Description": "만화책(cbr, cbz, pdf 등) 처리를 위한 흐름 요소입니다.",
+      "Label": "만화"
+    }
+  }
+}

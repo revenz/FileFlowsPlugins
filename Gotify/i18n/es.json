@@ -1,0 +1,34 @@
+{
+  "Flow": {
+    "Parts": {
+      "Gotify": {
+        "Description": "Envía un mensaje a un servidor Gotify.",
+        "Fields": {
+          "Message": "Mensaje",
+          "Message-Help": "El mensaje a enviar al servidor Gotify",
+          "Priority": "Prioridad",
+          "Priority-Help": "La prioridad del mensaje que se envía",
+          "Title": "Título",
+          "Title-Help": "Un título opcional para enviar."
+        },
+        "Outputs": {
+          "1": "Mensaje de Gotify enviado",
+          "2": "Error al enviar el mensaje de Gotify"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Gotify": {
+      "Description": "Un plugin que permite enviar mensajes a un servidor Gotify.",
+      "Label": "Gotify",
+      "Fields": {
+        "AccessToken": "Token de acceso",
+        "AccessToken-Help": "El token de acceso utilizado para comunicarse con el servidor Gotify.",
+        "ServerUrl": "Servidor",
+        "ServerUrl-Help": "La URL del servidor Gotify",
+        "ServerUrl-Placeholder": "http://gotify.lan"
+      }
+    }
+  }
+}

@@ -1,32 +1,33 @@
 {
-  "Plugins": {
-    "Gotify": {
-      "Description": "A plugin that allows you to send messages to a Gotify server.",
-      "Fields": {
-        "ServerUrl": "Server",
-        "ServerUrl-Placeholder":"http://gotify.lan",
-        "ServerUrl-Help":"The URL of the Gotify server",
-        "AccessToken": "Access Token",
-        "AccessToken-Help":"The access token used to communicate with the Gotify server."
-      }
-    }
-  },
   "Flow": {
     "Parts": {
       "Gotify": {
-        "Outputs": {
-          "1": "Gotify message sent",
-          "2": "Gotify message failed to send"
-        },
         "Description": "Sends a message to a Gotify server.",
         "Fields": {
           "Message": "Message",
           "Message-Help": "The message to send to the Gotify server",
-          "Title": "Title",
-          "Title-Help": "An optional title to send.",
           "Priority": "Priority",
-          "Priority-Help": "The priority of the message being sent"
+          "Priority-Help": "The priority of the message being sent",
+          "Title": "Title",
+          "Title-Help": "An optional title to send."
+        },
+        "Outputs": {
+          "1": "Gotify message sent",
+          "2": "Gotify message failed to send"
         }
+      }
+    }
+  },
+  "Plugins": {
+    "Gotify": {
+      "Description": "A plugin that allows you to send messages to a Gotify server.",
+      "Label": "Gotify",
+      "Fields": {
+        "AccessToken": "Access Token",
+        "AccessToken-Help": "The access token used to communicate with the Gotify server.",
+        "ServerUrl": "Server",
+        "ServerUrl-Help": "The URL of the Gotify server",
+        "ServerUrl-Placeholder": "http://gotify.lan"
       }
     }
   }

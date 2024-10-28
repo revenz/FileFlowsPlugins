@@ -1,0 +1,32 @@
+{
+  "Flow": {
+    "Parts": {
+      "Pushbullet": {
+        "Description": "Pushbullet을 통해 메시지를 전송합니다.",
+        "Fields": {
+          "Message": "메시지",
+          "Message-Help": "Pushbullet 서버로 전송할 메시지",
+          "Priority": "우선 순위",
+          "Priority-Help": "전송되는 메시지의 우선 순위",
+          "Title": "제목"
+        },
+        "Outputs": {
+          "1": "Pushbullet 메시지가 전송되었습니다.",
+          "2": "Pushbullet 메시지 전송에 실패했습니다."
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Pushbullet": {
+      "Description": "Pushbullet 서버에 메시지를 전송할 수 있는 플러그인입니다.",
+      "Label": "Pushbullet",
+      "Fields": {
+        "ApiToken": "API 토큰",
+        "ApiToken-Help": "알림 전송에 사용되는 애플리케이션 API 토큰입니다.",
+        "UserKey": "사용자 키",
+        "UserKey-Help": "알림 수신을 위한 개인 사용자 키입니다."
+      }
+    }
+  }
+}

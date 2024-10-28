@@ -1,0 +1,29 @@
+{
+  "Flow": {
+    "Parts": {
+      "Telegram": {
+        "Description": "Telegramメッセージを送信します。",
+        "Fields": {
+          "Message": "メッセージ",
+          "Message-Help": "送信するメッセージ。"
+        },
+        "Outputs": {
+          "1": "Telegramメッセージが送信されました",
+          "2": "Telegramメッセージの送信に失敗しました"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Telegram": {
+      "Description": "Telegramメッセージを送信するためのプラグインです。",
+      "Label": "Telegram",
+      "Fields": {
+        "BotToken": "ボットトークン",
+        "BotToken-Help": "あなたのTelegramボットトークン。",
+        "ChatId": "チャットID",
+        "ChatId-Help": "メッセージを送信するチャットのID。"
+      }
+    }
+  }
+}

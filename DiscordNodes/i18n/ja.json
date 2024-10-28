@@ -1,0 +1,31 @@
+{
+  "Flow": {
+    "Parts": {
+      "Discord": {
+        "Description": "Discordサーバーにメッセージを送信します。",
+        "Fields": {
+          "Message": "メッセージ",
+          "Message-Help": "Discordサーバーに送信するメッセージ",
+          "MessageType": "タイプ",
+          "MessageType-Help": "送信するメッセージのタイプ。基本タイプはタイトルなし、色なしのメッセージになります。",
+          "Title": "タイトル",
+          "Title-Help": "送信するオプションのタイトル。設定されていない場合、メッセージタイプはタイトルになります。"
+        },
+        "Outputs": {
+          "1": "Discordメッセージが送信されました",
+          "2": "Discordメッセージの送信に失敗しました"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "DiscordNodes": {
+      "Description": "Discordサーバーにメッセージを送信できるプラグインです。\n\nWebhook IDとトークンは、Webhook URLから取得できます\n https://discord.com/api/webhooks/[webhookid]/[webhooktoken]",
+      "Label": "Discord",
+      "Fields": {
+        "WebhookId": "Webhook ID",
+        "WebhookToken": "Webhookトークン"
+      }
+    }
+  }
+}

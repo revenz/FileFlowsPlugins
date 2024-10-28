@@ -116,7 +116,11 @@ public abstract class ImageBaseNode:Node
         args.Variables["img.IsLandscape"] = imageInfo.IsLandscape;
 
         if (imageInfo.DateTaken != null)
+        {
             args.Variables["img.DateTaken"] = imageInfo.DateTaken.Value;
+            args.Variables["img.DateYear"] = imageInfo.DateTaken.Value.Year;
+            args.Variables["img.DateMont"] = imageInfo.DateTaken.Value.Year;
+        }
         else
             args.Variables.Remove("img.DateTaken");
         

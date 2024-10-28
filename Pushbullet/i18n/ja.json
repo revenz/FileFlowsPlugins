@@ -1,0 +1,32 @@
+{
+  "Flow": {
+    "Parts": {
+      "Pushbullet": {
+        "Description": "Pushbullet経由でメッセージを送信します。",
+        "Fields": {
+          "Message": "メッセージ",
+          "Message-Help": "Pushbulletサーバーに送信するメッセージ",
+          "Priority": "優先度",
+          "Priority-Help": "送信中のメッセージの優先度",
+          "Title": "タイトル"
+        },
+        "Outputs": {
+          "1": "Pushbulletメッセージを送信しました",
+          "2": "Pushbulletメッセージの送信に失敗しました"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Pushbullet": {
+      "Description": "Pushbulletサーバーにメッセージを送信するためのプラグインです。",
+      "Label": "Pushbullet",
+      "Fields": {
+        "ApiToken": "APIトークン",
+        "ApiToken-Help": "通知を送信するために使用するアプリケーションAPIトークン。",
+        "UserKey": "ユーザーキー",
+        "UserKey-Help": "通知を受信するためのあなたの個人ユーザーキー。"
+      }
+    }
+  }
+}

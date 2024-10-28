@@ -250,15 +250,14 @@ public class VideoHasStream : VideoNode
                     return false;
                 }
 
-                if (ValueMatch(lang, x.Language) == MatchResult.NoMatch)
-                {
-                    args.Logger.ILog("Language does not match: " + x.Language);
+                if (string.IsNullOrEmpty(lang) == false && LanguageHelper.Matches(args, lang, x.Language) == false)
                     return false;
-                }
 
-                if (string.IsNullOrWhiteSpace(Channels) == false && args.MathHelper.IsFalse(Channels, x.Channels))
+                double xChannels = Math.Round(x.Channels, 1);
+
+                if (string.IsNullOrWhiteSpace(Channels) == false && args.MathHelper.IsFalse(Channels, xChannels))
                 {
-                    args.Logger.ILog("Channels does not match: " + x.Channels + " vs " + Channels);
+                    args.Logger.ILog("Channels does not match: " + xChannels + " vs " + Channels);
                     return false;
                 }
 
@@ -296,11 +295,8 @@ public class VideoHasStream : VideoNode
                     return false;
                 }
 
-                if (ValueMatch(lang, x.Language) == MatchResult.NoMatch)
-                {
-                    args.Logger.ILog("Language does not match: " + x.Language);
+                if (string.IsNullOrEmpty(lang) == false && LanguageHelper.Matches(args, lang, x.Language) == false)
                     return false;
-                }
 
                 if (string.IsNullOrEmpty(Default) == false)
                 {
@@ -334,6 +330,7 @@ public class VideoHasStream : VideoNode
         return found ? 1 : 2;
     }
 
+
     /// <summary>
     /// Tests if a value matches the pattern
     /// </summary>
@@ -344,30 +341,39 @@ public class VideoHasStream : VideoNode
     {
         if (string.IsNullOrWhiteSpace(pattern))
             return MatchResult.Skipped;
-        try
-        {            
-
-            if (string.IsNullOrEmpty(value))
-                return MatchResult.NoMatch;
-            
-            if (GeneralHelper.IsRegex(pattern))
-            {
-                var rgx = new Regex(pattern, RegexOptions.IgnoreCase);
-                if (rgx.IsMatch(value))
-                    return MatchResult.Matched;
-            }
-
-            if (value.ToLowerInvariant() == "hevc" && (pattern.ToLowerInvariant() is "h265" or "265" or "h.265"))
-                return MatchResult.Matched; // special case
-
-            return pattern.ToLowerInvariant().Trim() == value.ToLowerInvariant().Trim()
-                ? MatchResult.Matched
-                : MatchResult.NoMatch;
-        }
-        catch (Exception)
-        {
+        if (string.IsNullOrEmpty(value))
             return MatchResult.NoMatch;
-        }
+        
+        if (value.ToLowerInvariant() == "hevc" && (pattern.ToLowerInvariant() is "h265" or "265" or "h.265"))
+            return MatchResult.Matched; // special case
+        
+        bool matches = Args.StringHelper.Matches(pattern, value);
+        return matches ? MatchResult.Matched : MatchResult.NoMatch;
+        //
+        // try
+        // {            
+        //
+        //     if (string.IsNullOrEmpty(value))
+        //         return MatchResult.NoMatch;
+        //     
+        //     if (GeneralHelper.IsRegex(pattern))
+        //     {
+        //         var rgx = new Regex(pattern, RegexOptions.IgnoreCase);
+        //         if (rgx.IsMatch(value))
+        //             return MatchResult.Matched;
+        //     }
+        //
+        //     if (value.ToLowerInvariant() == "hevc" && (pattern.ToLowerInvariant() is "h265" or "265" or "h.265"))
+        //         return MatchResult.Matched; // special case
+        //
+        //     return pattern.ToLowerInvariant().Trim() == value.ToLowerInvariant().Trim()
+        //         ? MatchResult.Matched
+        //         : MatchResult.NoMatch;
+        // }
+        // catch (Exception)
+        // {
+        //     return MatchResult.NoMatch;
+        // }
     }
 
     /// <summary>

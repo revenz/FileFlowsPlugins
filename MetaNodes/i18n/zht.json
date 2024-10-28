@@ -1,0 +1,103 @@
+{
+  "Flow": {
+    "Parts": {
+      "AnimeShowLookup": {
+        "Description": "在AniList.co上執行動畫節目的搜索。",
+        "Label": "動畫節目查找",
+        "Fields": {
+          "UseFolderName": "使用資料夾名稱",
+          "UseFolderName-Help": "是否應使用資料夾名稱而非檔案名稱。"
+        },
+        "Outputs": {
+          "1": "找到動畫節目",
+          "2": "未找到動畫節目"
+        }
+      },
+      "GenreMatches": {
+        "Description": "將流派元數據與指定的流派進行匹配。",
+        "Label": "流派匹配",
+        "Fields": {
+          "Genres": "流派",
+          "MatchAll": "全部匹配",
+          "MatchAll-Help": "如果所有選定的流派必須出現在元數據中，否則可以出現任何一個流派"
+        },
+        "Outputs": {
+          "1": "流派匹配",
+          "2": "流派不匹配"
+        }
+      },
+      "MovieLookup": {
+        "Description": "在TheMovieDB.org上搜索電影。\n將元數據存儲在變量 'MovieInfo' 中。",
+        "Label": "電影查找",
+        "Fields": {
+          "UseFolderName": "使用資料夾名稱",
+          "UseFolderName-Help": "如果應使用資料夾名稱而不是文件名。"
+        },
+        "Outputs": {
+          "1": "找到電影",
+          "2": "未找到電影"
+        }
+      },
+      "MovieRenamer": {
+        "Description": "使用存儲在 'MovieInfo' 中的元數據重命名工作文件。\n注意：在此流元素之前，應先執行MovieLookup。\n\n輸出 1：文件已重命名\n輸出 2：文件重命名失敗",
+        "Label": "電影重命名",
+        "Fields": {
+          "DestinationPath": "目標路徑",
+          "DestinationPath-Help": "如果文件應移動到不同的目錄。",
+          "LogOnly": "僅日誌",
+          "LogOnly-Help": "如果您只想測試此流元素而不實際重命名文件，請開啟此選項。",
+          "Pattern": "模式",
+          "Pattern-Help": "用於重命名文件夾的模式。 '{Title}'、'{Year}'、'{Extension}'。"
+        }
+      },
+      "MusicMeta": {
+        "Description": "將音樂文件的元數據加載到流變量中。",
+        "Label": "音樂元數據"
+      },
+      "NfoFileCreator": {
+        "Description": "從之前加載的元數據創建Kodi NFO文件。",
+        "Label": "NFO文件創建器",
+        "Fields": {
+          "DestinationFile": "目標文件",
+          "DestinationFile-Help": "新NFO文件的文件名。如果為空，將使用原始文件名並將擴展名更改為 `.nfo`",
+          "DestinationPath": "目標文件夾",
+          "DestinationPath-Help": "NFO文件將在其中創建的文件夾。\n如果為空，將在原始文件的同一目錄中創建。"
+        },
+        "Outputs": {
+          "1": "NFO文件已創建",
+          "2": "NFO文件創建失敗"
+        }
+      },
+      "TVEpisodeLookup": {
+        "Description": "在TheMovieDB.org上搜索電視劇集。",
+        "Label": "電視劇集查找",
+        "Fields": {
+          "UseFolderName": "使用資料夾名稱",
+          "UseFolderName-Help": "如果應使用資料夾名稱而不是文件名。\n\n注意：如果資料夾以Season、Staffel、Saison或Specials開頭，將使用父資料夾。"
+        },
+        "Outputs": {
+          "1": "找到電視劇集",
+          "2": "未找到電視劇集"
+        }
+      },
+      "TVShowLookup": {
+        "Description": "在TheMovieDB.org上搜索電視節目。\n將元數據存儲在變量 'TVShowInfo' 中。",
+        "Label": "電視節目查找",
+        "Fields": {
+          "UseFolderName": "使用資料夾名稱",
+          "UseFolderName-Help": "如果應使用資料夾名稱而不是文件名。\n\n注意：如果資料夾以Season、Staffel、Saison或Specials開頭，將使用父資料夾。"
+        },
+        "Outputs": {
+          "1": "找到電視節目",
+          "2": "未找到電視節目"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "MetaNodes": {
+      "Description": "一個包含元信息流元素的插件，用於查找文件的元信息。\n\n包含從TheMovieDB查找電影信息和從文件內的ID3標籤獲取音樂信息的流元素。",
+      "Label": "元"
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "Flow": {
+    "Parts": {
+      "Pushover": {
+        "Description": "Pushoverを介してメッセージを送信します。",
+        "Fields": {
+          "Expire": "有効期限",
+          "Expire-Help": "この緊急メッセージの有効期限が切れるまでの時間（秒）を設定し、配信の再試行を停止します。",
+          "Expire-Suffix": "秒",
+          "Message": "メッセージ",
+          "Message-Help": "Pushoverサーバーに送信するメッセージ",
+          "Priority": "優先度",
+          "Priority-Help": "送信するメッセージの優先度",
+          "Retry": "再試行",
+          "Retry-Help": "配信失敗の場合にこの緊急メッセージの再試行間隔（秒）を指定します。",
+          "Retry-Suffix": "秒"
+        },
+        "Outputs": {
+          "1": "Pushoverメッセージが送信されました",
+          "2": "Pushoverメッセージの送信に失敗しました"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Pushover": {
+      "Description": "Pushoverサーバーにメッセージを送信するためのプラグインです。",
+      "Label": "Pushover",
+      "Fields": {
+        "ApiToken": "APIトークン",
+        "ApiToken-Help": "通知を送信するために使用されるアプリケーションのAPIトークン。",
+        "UserKey": "ユーザーキー",
+        "UserKey-Help": "通知を受信するためのあなたの個人ユーザーキー。"
+      }
+    }
+  }
+}

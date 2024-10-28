@@ -1,0 +1,202 @@
+{
+  "Flow": {
+    "Parts": {
+      "AudioBitrateMatches": {
+        "Description": "檢查音頻比特率是否符合約束。",
+        "Label": "音頻比特率匹配",
+        "Fields": {
+          "BitrateKilobytes": "比特率",
+          "BitrateKilobytes-Help": "用於匹配的比特率（以千字節為單位）。",
+          "BitrateKilobytes-Suffix": "千字節",
+          "Match": "匹配"
+        },
+        "Outputs": {
+          "1": "匹配",
+          "2": "不匹配"
+        }
+      },
+      "AudioFile": {
+        "Description": "輸入音頻文件，已讀取其音頻信息並可進行處理",
+        "Label": "音頻文件",
+        "Outputs": {
+          "1": "來自庫的音頻文件"
+        }
+      },
+      "AudioFileNormalization": {
+        "Description": "使用兩次FFMPEG的loudnorm濾波器對音頻文件進行標準化",
+        "Label": "音頻文件標準化",
+        "Outputs": {
+          "1": "音頻文件已標準化並保存到臨時文件"
+        }
+      },
+      "ConvertAudio": {
+        "Description": "將音頻文件轉換為指定的音頻編解碼器",
+        "Label": "轉換音頻",
+        "Fields": {
+          "Bitrate": "比特率",
+          "Bitrate-Help": "新文件的比特率，比特率越高，質量越好，但文件越大。",
+          "Channels": "通道",
+          "Channels-Help": "轉換文件的通道數。\n如果您指定的通道數多於源，FFmpeg將自動進行升級混合。\n如果您指定的通道數少於源，FFmpeg將自動進行降混合。",
+          "Codec": "編解碼器",
+          "Codec-Help": "將文件轉換為的音頻編解碼器。",
+          "CustomExtension": "擴展名",
+          "CustomExtension-Help": "允許您設置自定義文件擴展名，以代替由編解碼器自動確定的擴展名。",
+          "HighEfficiency": "高效率",
+          "HighEfficiency-Help": "將使用高效率模式，這將把擴展名更改為m4a並減少支持的播放設備，但可能會減小文件大小。",
+          "Normalize": "標準化",
+          "Normalize-Help": "音頻是否應進行兩次通過的音頻標準化",
+          "SampleRate": "取樣率",
+          "SampleRate-Help": "要使用的取樣率",
+          "SkipIfCodecMatches": "如果編解碼器匹配則跳過",
+          "SkipIfCodecMatches-Help": "如果現有音頻編解碼器匹配，則無論比特率如何，該文件都不會被處理。否則如果關閉，則比特率必須小於或等於才能跳過。"
+        },
+        "Outputs": {
+          "1": "音頻已轉換並保存到臨時文件",
+          "2": "音頻已在編解碼器中，未進行轉換"
+        }
+      },
+      "ConvertToAAC": {
+        "Description": "將音頻文件轉換為AAC",
+        "Label": "轉換為AAC",
+        "Fields": {
+          "Bitrate": "比特率",
+          "Bitrate-Help": "新AAC文件的比特率，比特率越高，質量越好，但文件越大。建議使用192 Kbps的比特率。",
+          "Channels": "通道",
+          "Channels-Help": "轉換文件的通道數。\n如果您指定的通道數多於源，FFmpeg將自動進行升級混合。\n如果您指定的通道數少於源，FFmpeg將自動進行降混合。",
+          "CustomExtension": "擴展名",
+          "CustomExtension-Help": "允許您設置自定義文件擴展名，以代替由編解碼器自動確定的擴展名。",
+          "HighEfficiency": "高效率",
+          "HighEfficiency-Help": "將使用高效率模式，這將把擴展名更改為m4a並減少支持的播放設備，但可能會減小文件大小。",
+          "Normalize": "標準化",
+          "Normalize-Help": "音頻是否應進行兩次通過的音頻標準化",
+          "SampleRate": "取樣率",
+          "SampleRate-Help": "要使用的取樣率",
+          "SkipIfCodecMatches": "如果編解碼器匹配則跳過",
+          "SkipIfCodecMatches-Help": "如果現有音頻編解碼器匹配，則無論比特率如何，該文件都不會被處理。否則如果關閉，則比特率必須小於或等於才能跳過。"
+        },
+        "Outputs": {
+          "1": "音頻已轉換並保存到臨時文件",
+          "2": "音頻已在編解碼器中，未進行轉換"
+        }
+      },
+      "ConvertToFLAC": {
+        "Description": "將音頻文件轉換為FLAC",
+        "Label": "轉換為FLAC",
+        "Fields": {
+          "Bitrate": "比特率",
+          "Bitrate-Help": "新FLAC文件的比特率，比特率越高，質量越好，但文件越大。建議使用128 Kbps的比特率。",
+          "Channels": "通道",
+          "Channels-Help": "轉換文件的通道數。\n如果您指定的通道數多於源，FFmpeg將自動進行升級混合。\n如果您指定的通道數少於源，FFmpeg將自動進行降混合。",
+          "CustomExtension": "擴展名",
+          "CustomExtension-Help": "允許您設置自定義文件擴展名，以代替由編解碼器自動確定的擴展名。",
+          "Normalize": "標準化",
+          "Normalize-Help": "音頻是否應進行兩次通過的音頻標準化",
+          "SampleRate": "取樣率",
+          "SampleRate-Help": "要使用的取樣率",
+          "SkipIfCodecMatches": "如果編解碼器匹配則跳過",
+          "SkipIfCodecMatches-Help": "如果現有音頻編解碼器匹配，則無論比特率如何，該文件都不會被處理。否則如果關閉，則比特率必須小於或等於才能跳過。"
+        },
+        "Outputs": {
+          "1": "音頻已轉換並保存到臨時文件",
+          "2": "音頻已在編解碼器中，未進行轉換"
+        }
+      },
+      "ConvertToMP3": {
+        "Description": "將音頻文件轉換為MP3",
+        "Label": "轉換為MP3",
+        "Fields": {
+          "Bitrate": "比特率",
+          "Bitrate-Help": "新MP3文件的比特率，比特率越高，質量越好，但文件越大。建議使用192 Kbps的比特率。",
+          "Channels": "通道",
+          "Channels-Help": "轉換文件的通道數。\n如果您指定的通道數多於源，FFmpeg將自動進行升級混合。\n如果您指定的通道數少於源，FFmpeg將自動進行降混合。",
+          "CustomExtension": "擴展名",
+          "CustomExtension-Help": "允許您設置自定義文件擴展名，以代替由編解碼器自動確定的擴展名。",
+          "Normalize": "標準化",
+          "Normalize-Help": "音頻是否應進行兩次通過的音頻標準化",
+          "SampleRate": "取樣率",
+          "SampleRate-Help": "要使用的取樣率",
+          "SkipIfCodecMatches": "如果編解碼器匹配則跳過",
+          "SkipIfCodecMatches-Help": "如果現有音頻編解碼器匹配，則無論比特率如何，該文件都不會被處理。否則如果關閉，則比特率必須小於或等於才能跳過。"
+        },
+        "Outputs": {
+          "1": "音頻已轉換並保存到臨時文件",
+          "2": "音頻已在編解碼器中，未進行轉換"
+        }
+      },
+      "ConvertToOGG": {
+        "Description": "將音訊文件轉換為 OGG",
+        "Label": "轉換為 OGG",
+        "Fields": {
+          "Bitrate": "比特率",
+          "Bitrate-Help": "新 OGG 文件的比特率，較高的比特率能提供更好的質量，但文件較大。建議使用 128 Kbps 的比特率。",
+          "Channels": "通道",
+          "Channels-Help": "轉換後的文件將擁有的通道數。\n如果指定的通道數多於源文件，FFmpeg 將自動進行升頻混音。\n如果指定的通道數少於源文件，FFmpeg 將自動進行降頻混音。",
+          "CustomExtension": "擴展名",
+          "CustomExtension-Help": "允許您設置自定義文件擴展名，以替代由編解碼器自動確定的擴展名。",
+          "Normalize": "歸一化",
+          "Normalize-Help": "音訊是否應進行雙通道歸一化處理。",
+          "SampleRate": "取樣率",
+          "SampleRate-Help": "使用的取樣率",
+          "SkipIfCodecMatches": "如果編解碼器匹配則跳過",
+          "SkipIfCodecMatches-Help": "如果現有的音訊編解碼器匹配，則該文件將不會被處理，無論比特率如何。否則，如果未開啟，比特率必須小於或等於才能跳過。"
+        },
+        "Outputs": {
+          "1": "音訊已轉換並保存到臨時文件",
+          "2": "音訊已在編解碼器中，無需轉換"
+        }
+      },
+      "ConvertToWAV": {
+        "Description": "將音訊文件轉換為 WAV",
+        "Label": "轉換為 WAV",
+        "Fields": {
+          "Bitrate": "比特率",
+          "Bitrate-Help": "新 WAV 文件的比特率，較高的比特率能提供更好的質量，但文件較大。建議使用 128 Kbps 的比特率。",
+          "Channels": "通道",
+          "Channels-Help": "轉換後的文件將擁有的通道數。\n如果指定的通道數多於源文件，FFmpeg 將自動進行升頻混音。\n如果指定的通道數少於源文件，FFmpeg 將自動進行降頻混音。",
+          "CustomExtension": "擴展名",
+          "CustomExtension-Help": "允許您設置自定義文件擴展名，以替代由編解碼器自動確定的擴展名。",
+          "Normalize": "歸一化",
+          "Normalize-Help": "音訊是否應進行雙通道歸一化處理。",
+          "SampleRate": "取樣率",
+          "SampleRate-Help": "使用的取樣率",
+          "SkipIfCodecMatches": "如果編解碼器匹配則跳過",
+          "SkipIfCodecMatches-Help": "如果現有的音訊編解碼器匹配，則該文件將不會被處理，無論比特率如何。否則，如果未開啟，比特率必須小於或等於才能跳過。"
+        },
+        "Outputs": {
+          "1": "音訊已轉換並保存到臨時文件",
+          "2": "音訊已在編解碼器中，無需轉換"
+        }
+      },
+      "CreateAudioBook": {
+        "Description": "從輸入目錄中找到的音訊文件創建有聲書",
+        "Label": "創建有聲書",
+        "Fields": {
+          "DeleteSourceFiles": "刪除源文件",
+          "DeleteSourceFiles-Help": "當啟用時，組成新創建的 m4b 文件的源文件將被刪除，否則將保留原樣。",
+          "DestinationPath": "目標路徑",
+          "DestinationPath-Help": "保存新創建文件的目標位置。如果留空，文件將創建在臨時目錄中，如果未移動則將被刪除。",
+          "UpdateWorkingFile": "更新工作文件",
+          "UpdateWorkingFile-Help": "當啟用時，工作文件將更新為新創建的文件。"
+        },
+        "Outputs": {
+          "1": "有聲書已創建",
+          "2": "有聲書未創建"
+        }
+      },
+      "EmbedArtwork": {
+        "Description": "將藝術作品嵌入音訊文件中",
+        "Label": "嵌入藝術作品",
+        "Outputs": {
+          "1": "找到藝術作品並嵌入到音訊文件中",
+          "2": "未找到要嵌入的藝術作品"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "AudioNodes": {
+      "Description": "一組與音訊相關的流程元素，以幫助處理音訊文件。",
+      "Label": "音訊"
+    }
+  }
+}

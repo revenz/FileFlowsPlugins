@@ -1,0 +1,127 @@
+{
+  "Flow": {
+    "Parts": {
+      "AutoCropImage": {
+        "Description": "自動裁剪圖像",
+        "Label": "自動裁剪圖像",
+        "Fields": {
+          "Format": "格式",
+          "Format-Help": "要轉換的圖像格式",
+          "Threshold": "閾值",
+          "Threshold-Help": "熵密度的閾值，默認為50。 必須在0到100之間。"
+        },
+        "Outputs": {
+          "1": "圖像已裁剪，保存到新的臨時文件",
+          "2": "圖像未裁剪"
+        }
+      },
+      "ImageFile": {
+        "Description": "一個圖像文件",
+        "Label": "圖像文件",
+        "Outputs": {
+          "1": "圖像文件"
+        }
+      },
+      "ImageFlip": {
+        "Description": "翻轉圖像",
+        "Label": "翻轉圖像",
+        "Fields": {
+          "Format": "格式",
+          "Format-Help": "要轉換的圖像格式",
+          "Vertical": "垂直",
+          "Vertical-Help": "如果設置，圖像將垂直翻轉，否則水平翻轉"
+        },
+        "Outputs": {
+          "1": "圖像已翻轉，保存到新的臨時文件"
+        }
+      },
+      "ImageFormat": {
+        "Description": "將圖像轉換為指定格式",
+        "Label": "圖像格式",
+        "Fields": {
+          "Format": "格式",
+          "Format-Help": "要轉換的圖像格式"
+        },
+        "Outputs": {
+          "1": "圖像已轉換，保存到新的臨時文件",
+          "2": "圖像已在目標格式中"
+        }
+      },
+      "ImageIsLandscape": {
+        "Description": "測試圖像是否為橫向",
+        "Label": "圖像是橫向",
+        "Outputs": {
+          "1": "圖像是橫向",
+          "2": "圖像不是橫向"
+        }
+      },
+      "ImageIsPortrait": {
+        "Description": "測試圖像是否為縱向",
+        "Label": "圖像是縱向",
+        "Outputs": {
+          "1": "圖像是縱向",
+          "2": "圖像不是縱向"
+        }
+      },
+      "ImageResizer": {
+        "Description": "調整圖像大小",
+        "Label": "圖像調整大小",
+        "Fields": {
+          "Format": "格式",
+          "Format-Help": "要轉換的圖像格式",
+          "Height": "高度",
+          "Mode": "模式",
+          "Mode-Help": "調整圖像大小時使用的模式",
+          "Width": "寬度"
+        },
+        "Outputs": {
+          "1": "圖像已調整大小，保存到新的臨時文件"
+        }
+      },
+      "ImageRotate": {
+        "Description": "旋轉圖像",
+        "Label": "旋轉圖像",
+        "Fields": {
+          "Angle": "角度",
+          "Angle-Help": "旋轉角度",
+          "Format": "格式",
+          "Format-Help": "要轉換的圖像格式"
+        },
+        "Outputs": {
+          "1": "圖像已旋轉，保存到新的臨時文件"
+        }
+      },
+      "IsImage": {
+        "Description": "測試文件是否為圖像文件。",
+        "Label": "是圖像",
+        "Fields": {
+          "File": "文件",
+          "File-Help": "要檢查的文件的可選路徑，如果留空，則將檢查當前工作文件。",
+          "File-Placeholder": "如果留空則為當前工作文件"
+        },
+        "Outputs": {
+          "1": "文件是被識別的圖像文件",
+          "2": "文件不是被識別的圖像文件"
+        }
+      },
+      "PixelCheck": {
+        "Description": "此流程元素驗證圖像的總像素數是否超過指定的閾值。",
+        "Label": "像素檢查",
+        "Fields": {
+          "Pixels": "像素",
+          "Pixels-Help": "圖像應包含的像素數。 這是通過圖像的寬度乘以其高度計算的。"
+        },
+        "Outputs": {
+          "1": "圖像的像素數大於或等於指定的像素數",
+          "2": "圖像的像素數少於指定的所需像素數"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "ImageNodes": {
+      "Description": "處理圖像文件的流程元素。 此插件包含轉換和操作圖像的節點。",
+      "Label": "圖像"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "Flow": {
+    "Parts": {
+      "MD5Checksum": {
+        "Description": "作業ファイルのMD5チェックサムを計算し、変数「MD5」と「Checksum」に保存します。",
+        "Label": "MD5チェックサム",
+        "Outputs": {
+          "1": "チェックサムが変数「MD5」と「Checksum」に保存されました"
+        }
+      },
+      "SHA1Checksum": {
+        "Description": "作業ファイルのSHA1チェックサムを計算し、変数「SHA1」と「Checksum」に保存します。",
+        "Label": "SHA1チェックサム",
+        "Outputs": {
+          "1": "チェックサムが変数「SHA1」と「Checksum」に保存されました"
+        }
+      },
+      "SHA256Checksum": {
+        "Description": "作業ファイルのSHA256チェックサムを計算し、変数「SHA256」と「Checksum」に保存します。",
+        "Label": "SHA256チェックサム",
+        "Outputs": {
+          "1": "チェックサムが変数「SHA256」と「Checksum」に保存されました"
+        }
+      },
+      "SHA512Checksum": {
+        "Description": "作業ファイルのSHA512チェックサムを計算し、変数「SHA512」と「Checksum」に保存します。",
+        "Label": "SHA512チェックサム",
+        "Outputs": {
+          "1": "チェックサムが変数「SHA512」と「Checksum」に保存されました"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "ChecksumNodes": {
+      "Description": "ファイルに対してチェックサムを実行する機能を提供するフロー要素。",
+      "Label": "チェックサム"
+    }
+  }
+}

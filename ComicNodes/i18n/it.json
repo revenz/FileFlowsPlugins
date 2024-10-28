@@ -1,0 +1,63 @@
+{
+  "Flow": {
+    "Parts": {
+      "ComicConverter": {
+        "Description": "Converte un fumetto in un diverso formato di fumetto.\n\nSupporta la conversione da CBZ, CBR, CB7, PDF, GZ, BZ2",
+        "Label": "Convertitore Fumetto",
+        "Fields": {
+          "Codec": "Codec",
+          "Codec-Help": "Il codec per salvare le immagini come",
+          "DeleteNonPageImages": "Elimina Immagini Non di Pagina",
+          "DeleteNonPageImages-Help": "Elimina le immagini che non seguono una struttura di denominazione per le pagine. Ad esempio, non terminano con un numero.",
+          "EnsureTopDirectory": "Assicurati della Directory Principale",
+          "EnsureTopDirectory-Help": "Assicura che tutti i file si trovino direttamente all'interno della directory principale del file del fumetto, senza sottodirectory presenti.",
+          "Format": "Formato",
+          "Format-Help": "Il formato in cui convertire il fumetto",
+          "MaxHeight": "Altezza Massima",
+          "MaxHeight-Help": "L'altezza massima per le pagine, usa 0 per nessuna regolazione o per mantenere la qualità con la larghezza",
+          "MaxWidth": "Larghezza Massima",
+          "MaxWidth-Help": "La larghezza massima per le pagine, usa 0 per nessuna regolazione o per mantenere la qualità con l'altezza",
+          "Quality": "Qualità",
+          "Quality-Help": "Qualità delle pagine del fumetto, 0 per la massima compressione/peggiore qualità, 100 per la migliore qualità"
+        },
+        "Outputs": {
+          "1": "Il fumetto è stato convertito e salvato come file temporaneo",
+          "2": "Il fumetto era già nel formato desiderato"
+        }
+      },
+      "ComicExtractor": {
+        "Description": "Estrae tutti i file da un formato di fumetto e li salva in una cartella specifica.\n\nSupporta l'estrazione di CBZ, CBR, CB7, PDF, GZ, BZ2",
+        "Label": "Estrattore Fumetto",
+        "Fields": {
+          "DestinationPath": "Percorso di Destinazione",
+          "DestinationPath-Help": "La cartella in cui salvare i file estratti del fumetto"
+        },
+        "Outputs": {
+          "1": "Il fumetto è stato estratto"
+        }
+      },
+      "CreateComicInfo": {
+        "Description": "Analizza il percorso di un fumetto e crea un file comicinfo.xml all'interno dell'archivio del fumetto.",
+        "Label": "Crea ComicInfo",
+        "Fields": {
+          "IssueDigits": "Cifre dell'Edizione",
+          "IssueDigits-Help": "Riempirà il numero dell'edizione con zeri iniziali fino a questo importo.\nAd esempio, per l'edizione 1 se il riempimento è 3, allora l'edizione apparirà come #001",
+          "Publisher": "Editore",
+          "Publisher-Help": "Se il fumetto è in una directory dell'editore, consulta l'aiuto per maggiori informazioni.",
+          "RenameFile": "Rinomina File",
+          "RenameFile-Help": "Se il file deve essere rinominato `Serie - Edizione - Titolo.estensione`"
+        },
+        "Outputs": {
+          "1": "ComicInfo aggiunto all'archivio del fumetto",
+          "2": "ComicInfo già presente nell'archivio"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "ComicNodes": {
+      "Description": "Elementi di flusso per l'elaborazione di fumetti (cbr, cbz, pdf, ecc.)",
+      "Label": "Fumetto"
+    }
+  }
+}

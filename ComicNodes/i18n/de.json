@@ -2,26 +2,62 @@
   "Flow": {
     "Parts": {
       "ComicConverter": {
-        "Outputs": {
-          "1": "Comic wurde konvertiert und als temporäre Datei gespeichert.",
-          "2": "Comic ist bereits im gewünschten Format"
-        },
-        "Description": "Konvertiert einen Comic in ein anderes Format.\n\nUnterstützt die Konvertierung von CBZ, CBR, CB7, PDF, GZ und BZ2",
+        "Description": "Konvertiert ein Comic in ein anderes Comicbuchformat.\n\nUnterstützt die Konvertierung von CBZ, CBR, CB7, PDF, GZ, BZ2",
+        "Label": "Comic Konvertieren",
         "Fields": {
+          "Codec": "Codec",
+          "Codec-Help": "Der Codec, um die Bilder zu speichern",
+          "DeleteNonPageImages": "Nicht-Seitenbilder löschen",
+          "DeleteNonPageImages-Help": "Löscht Bilder, die nicht einer Namensstruktur für Seiten folgen. D.h. sie enden nicht mit einer Zahl.",
+          "EnsureTopDirectory": "Oberstes Verzeichnis sicherstellen",
+          "EnsureTopDirectory-Help": "Stellt sicher, dass alle Dateien direkt im obersten Verzeichnis der Comicbuchdatei liegen, ohne Unterverzeichnisse.",
           "Format": "Format",
-          "Format-Help": "Das Format, in das der Comic konvertiert werden soll."
+          "Format-Help": "Das Format, in das das Comic konvertiert werden soll",
+          "MaxHeight": "Maximale Höhe",
+          "MaxHeight-Help": "Die maximale Höhe für die Seiten, verwenden Sie 0 für keine Anpassungen oder um die Qualität mit der Breite beizubehalten",
+          "MaxWidth": "Maximale Breite",
+          "MaxWidth-Help": "Die maximale Breite für die Seiten, verwenden Sie 0 für keine Anpassungen oder um die Qualität mit der Höhe beizubehalten",
+          "Quality": "Qualität",
+          "Quality-Help": "Qualität der Comicbuchseiten, 0 für die meiste Kompression/schlechteste Qualität, 100 für beste Qualität"
+        },
+        "Outputs": {
+          "1": "Comic wurde konvertiert und als temporäre Datei gespeichert",
+          "2": "Comic war bereits im gewünschten Format"
         }
       },
       "ComicExtractor": {
-        "Outputs": {
-          "1": "Comic wurde extrahiert."
-        },
-        "Description": "Extrahiert alle Dateien aus einem Format und speichert sie in einem bestimmten Ordner.\n\nUnterstützt das Entpacken von CBZ, CBR, CB7, PDF, GZ und BZ2",
+        "Description": "Extrahiert alle Dateien aus einem Comicbuchformat und speichert sie in einen bestimmten Ordner.\n\nUnterstützt das Extrahieren von CBZ, CBR, CB7, PDF, GZ, BZ2",
+        "Label": "Comic Extrahieren",
         "Fields": {
-          "DestinationPath": "Zielverzeichnis",
-          "DestinationPath-Help": "Der Ordner in dem die extrahierten Dateien gespeichert werden sollen."
+          "DestinationPath": "Zielpfad",
+          "DestinationPath-Help": "Der Ordner, in dem die extrahierten Comicbuchdateien gespeichert werden sollen"
+        },
+        "Outputs": {
+          "1": "Comic wurde extrahiert"
+        }
+      },
+      "CreateComicInfo": {
+        "Description": "Analysiert den Pfad eines Comics und erstellt eine comicinfo.xml-Datei im Comicbucharchiv.",
+        "Label": "Comic-Informationen Erstellen",
+        "Fields": {
+          "IssueDigits": "Ausgabenziffern",
+          "IssueDigits-Help": "Die Ausgabennummer wird mit führenden Nullen bis zu dieser Anzahl gepolstert.\nBeispiel: Für Ausgabe 1, wenn die Polsterung 3 ist, erscheint die Ausgabe als #001",
+          "Publisher": "Verlag",
+          "Publisher-Help": "Wenn das Comic in einem Verlagsverzeichnis ist, siehe Hilfe für weitere Informationen.",
+          "RenameFile": "Datei umbenennen",
+          "RenameFile-Help": "Ob die Datei in `Serie - Ausgabe - Titel.erweiterung` umbenannt werden soll"
+        },
+        "Outputs": {
+          "1": "ComicInfo zum Comicarchiv hinzugefügt",
+          "2": "ComicInfo bereits im Archiv"
         }
       }
+    }
+  },
+  "Plugins": {
+    "ComicNodes": {
+      "Description": "Flusselemente zur Verarbeitung von Comics (cbr, cbz, pdf usw.)",
+      "Label": "Comic"
     }
   }
 }

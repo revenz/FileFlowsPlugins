@@ -1,0 +1,35 @@
+{
+  "Flow": {
+    "Parts": {
+      "Apprise": {
+        "Description": "Отправляет сообщение на сервер Apprise.",
+        "Fields": {
+          "Message": "Сообщение",
+          "Message-Help": "Сообщение для отправки на сервер Apprise",
+          "MessageType": "Тип",
+          "MessageType-Help": "Тип отправляемого сообщения",
+          "Tag": "Тег",
+          "Tag-Help": "Список тегов для отправки сообщения. Если список пуст, будет использован тег 'all'."
+        },
+        "Outputs": {
+          "1": "Сообщение Apprise отправлено",
+          "2": "Не удалось отправить сообщение Apprise"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Apprise": {
+      "Description": "Плагин, позволяющий отправлять сообщения на сервер Apprise.",
+      "Label": "Apprise",
+      "Fields": {
+        "Endpoint": "Конечная точка",
+        "Endpoint-Help": "Конечная точка на сервере Apprise, например notify/apprise",
+        "Endpoint-Placeholder": "notify/apprise",
+        "ServerUrl": "Сервер",
+        "ServerUrl-Help": "URL сервера Apprise",
+        "ServerUrl-Placeholder": "http://apprise.lan"
+      }
+    }
+  }
+}

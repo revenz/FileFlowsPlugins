@@ -1,332 +1,716 @@
 {
-  "Enums":{
-    "LogType":{
-      "Info":"Information",
-      "Debug":"Debug",
-      "Warning":"Warnung",
-      "Error":"Fehler"
+  "Enums": {
+    "LogType": {
+      "Debug": "Debug",
+      "Error": "Fehler",
+      "Info": "Information",
+      "Warning": "Warnung"
     }
   },
-  "Flow":{
+  "Flow": {
     "Parts": {
+      "BatchScript": {
+        "Description": "Ermöglicht das Ausführen eines Batch (.bat) Skripts in einer Windows-Umgebung.",
+        "Label": "Batch-Skript (.bat)",
+        "Fields": {
+          "Code": "Code"
+        },
+        "Outputs": {
+          "1": "gab 1 zurück",
+          "10": "gab 10 zurück",
+          "2": "gab 2 zurück",
+          "3": "gab 3 zurück",
+          "4": "gab 4 zurück",
+          "5": "gab 5 zurück",
+          "6": "gab 6 zurück",
+          "7": "gab 7 zurück",
+          "8": "gab 8 zurück",
+          "9": "gab 9 zurück"
+        }
+      },
+      "CompleteFlow": {
+        "Description": "Beendet den Ablauf erfolgreich",
+        "Label": "Flow abschließen"
+      },
+      "CopyFile": {
+        "Description": "Kopiert die Datei zum Zielverzeichnis",
+        "Label": "Datei kopieren",
+        "Fields": {
+          "AdditionalFiles": "Zusätzliche Dateien",
+          "AdditionalFiles-Help": "Zusätzliche Dateien zum Zielverzeichnis kopieren.\nJeder Wert kann eine Kombination aus gültigem Literalpfad und Platzhalterzeichen (* und ?) enthalten, unterstützt jedoch keine regulären Ausdrücke.",
+          "AdditionalFilesFromOriginal": "Ausgangsverzeichnis",
+          "AdditionalFilesFromOriginal-Help": "Sollen die neu erstellten Dateien in das Ausgangsverzeichnis kopiert werden? Wenn ja, Aktivieren.",
+          "CopyFolder": "Ordner kopieren",
+          "CopyFolder-Help": "Ordnerstruktur kopieren. Relativ zum Ausgangsordner.",
+          "DestinationFile": "Dateinamen anpassen",
+          "DestinationFile-Help": "Dieser Name wird beim Kopieren verwendet.  Leer lassen, um den originalen Dateinamen zu nutzen.",
+          "DestinationPath": "Zielverzeichnis",
+          "DestinationPath-Help": "In dieses Zielverzeichnis wird kopiert",
+          "InputFile": "Datei kopieren",
+          "InputFile-Help": "Datei kopieren? Leer lassen um die bearbeitete Datei zu verwenden!",
+          "InputFile-Placeholder": "Working File",
+          "PreserverOriginalDates": "Zeitstempel übernehmen",
+          "PreserverOriginalDates-Help": "Soll das Erstellungsdatum von der Ausgangsdatei übernommen werden?"
+        },
+        "Outputs": {
+          "1": "Datei kopiert"
+        }
+      },
+      "CSharpScript": {
+        "Description": "Ermöglicht das Ausführen von C#-Code innerhalb des Flows.",
+        "Label": "C#-Funktion",
+        "Fields": {
+          "Code": "Code"
+        },
+        "Outputs": {
+          "1": "gab 1 zurück",
+          "10": "gab 10 zurück",
+          "2": "gab 2 zurück",
+          "3": "gab 3 zurück",
+          "4": "gab 4 zurück",
+          "5": "gab 5 zurück",
+          "6": "gab 6 zurück",
+          "7": "gab 7 zurück",
+          "8": "gab 8 zurück",
+          "9": "gab 9 zurück"
+        }
+      },
+      "Delete": {
+        "Description": "Löscht eine Datei oder einen Ordner",
+        "Label": "Löschen",
+        "Fields": {
+          "FileName": "Pfad",
+          "FileName-Help": "Ein Pfad zu einer zu löschenden Datei oder einem Ordner.\n\nBleibt das Feld leer, wird das Working-File gelöscht."
+        },
+        "Outputs": {
+          "1": "Datei gelöscht"
+        }
+      },
+      "DeleteSourceDirectory": {
+        "Description": "Deletes the source folder of the original library file",
+        "Label": "Ausgangsordner löschen?",
+        "Fields": {
+          "IfEmpty": "Leer",
+          "IfEmpty-Help": "Löscht den Ausgangsordner nur, wenn er leer ist.",
+          "IncludePatterns": "Muster prüfen",
+          "IncludePatterns-Help": "Optional, wenn diese Option aktiv ist, werden nur Dateien gewertet, die diesen Mustern entsprechen. Jedes dieser Muster kann übereinstimmen.",
+          "TopMostOnly": "Nur oberstes Element",
+          "TopMostOnly-Help": "Wenn aktiviert, wird nur der Ordner, der die Datei direkt enthält, gelöscht, während übergeordnete Ordner intakt bleiben."
+        },
+        "Outputs": {
+          "1": "Ausgangsordner gelöscht",
+          "2": "Ausgangsordner nicht gelöscht"
+        }
+      },
+      "Executor": {
+        "Description": "Execute the following process against the file.\nAusgang 1: The process returned the success exit code\nAusgang 2: The process return a non-successful exit code.",
+        "Label": "Prozess ausführen",
+        "Fields": {
+          "Arguments": "Befehle",
+          "Arguments-Help": "Die Befehle, welche an den auszuführenden Prozess übergeben werden sollen",
+          "FileName": "Dateiname",
+          "FileName-Help": "Der Name der auszuführenden Datei.",
+          "OutputErrorVariable": "Ausgabefehlervariable",
+          "OutputErrorVariable-Help": "Ein optionaler Variablenname zum Speichern der Prozessfehlerausgabe.",
+          "OutputVariable": "Ausgabevariable",
+          "OutputVariable-Help": "Ein optionaler Variablenname zum Speichern der Prozessausgabe.",
+          "SuccessCode": "Erfolgscode",
+          "SuccessCode-Help": "Der Exit-Code des Prozesses gibt an, dass der Prozess erfolgreich war. Normalerweise sollte dieser 0 lauten.",
+          "Timeout": "Timeout",
+          "Timeout-Help": "Wie lange der Prozess laufen kann, bevor er beendet wird. Verwenden Sie 0 für keinen Timeout.",
+          "Timeout-Suffix": "sekunden",
+          "WorkingDirectory": "Ausführungsorner",
+          "WorkingDirectory-Help": "Der Ordner, indem die Aufgaben ausgeführt werden."
+        },
+        "Outputs": {
+          "1": "Process returned success",
+          "2": "Process returned failure"
+        }
+      },
+      "FailFlow": {
+        "Description": "Lässt einen Flow sofort fehlschlagen. Dies ist nützlich, wenn ein bestimmter Pfad fehlschlägt.",
+        "Label": "Flow fehlschlagen",
+        "Fields": {
+          "Reason": "Grund",
+          "Reason-Help": "Ein optionaler Grund zum Protokollieren, warum dieser Flow fehlschlägt."
+        }
+      },
+      "FileDateCompare": {
+        "Description": "Überprüft, ob das Erstellungsdatum oder das letzte Änderungsdatum der Datei dem angegebenen Datumsbereich entspricht.",
+        "Label": "Dateidatum vergleichen",
+        "Fields": {
+          "Date": "Datum",
+          "DateComparision": "Vergleich",
+          "FileName": "Dateiname",
+          "FileName-Help": "Die zu überprüfende Datei. Lassen Sie das Feld leer, um die aktuelle Arbeitsdatei zu überprüfen."
+        },
+        "Outputs": {
+          "1": "Entspricht dem Datumsbereich.",
+          "2": "Entspricht nicht dem Datumsbereich."
+        }
+      },
+      "FileExists": {
+        "Description": "Prüft ob die Datei existiert.\n\nAusgang 1: Datei existiert\nAusgang 2: Datei nicht gefunden",
+        "Label": "Datei existiert",
+        "Fields": {
+          "FileName": "Dateiname",
+          "FileName-Help": "Prüfen ob die Datei existiert.  Dies sollte mit einer Variablen aus einem vorherigen Node verwendet werden."
+        },
+        "Outputs": {
+          "1": "Datei existiert",
+          "2": "Datei nicht gefunden"
+        }
+      },
+      "FileExtension": {
+        "Description": "Es wird überprüft ob die Datei eine bestimmte Endung hat.\n\nAusgang 1: Trifft zu\nAusgang 2: Trifft nicht zu",
+        "Label": "Dateiendung",
+        "Fields": {
+          "Extensions": "Endungen",
+          "Extensions-Help": "Eine Liste von Dateierweiterungen ohne Berücksichtigung der Groß- und Kleinschreibung, mit denen abgeglichen wird.\nAusgang 1: Trifft zu\nAusgang 2: Trifft nicht zu"
+        },
+        "Outputs": {
+          "1": "Endnung trifft zu",
+          "2": "Endung trifft nicht zu"
+        }
+      },
+      "FileSize": {
+        "Description": "Überprüft, ob die Dateigröße mit den konfigurierten Parametern übereinstimmt. Die Werte sind in Megabyte angegeben.\n\nAusgang 1: Trifft zu\nAusgang 2: Trifft nicht zu",
+        "Label": "Dateigröße",
+        "Fields": {
+          "Comparison": "Vergleich",
+          "Lower": "Größer als",
+          "Lower-Help": "Der Wert muss größer als X MB sein",
+          "Lower-Suffix": "MB",
+          "Upper": "Kleiner als",
+          "Upper-Help": "Der Wert muss kleiner als X MB sein. Wird bei 0 ignoriert.",
+          "Upper-Suffix": "MB"
+        },
+        "Outputs": {
+          "1": "Dateigröße innerhalb des zulässigen Bereichs",
+          "2": "FDateigröße liegt nicht im zulässigen Bereich"
+        }
+      },
+      "FileSizeCompare": {
+        "Description": "Überprüft, ob sich die Größe der Datei im Vergleich zur Originaldatei geändert hat.\n\nAusgang 1: Datei ist kleiner\nAusgang 2: Datei ist gleichgroß\nAusgang 3: Datei ist größer",
+        "Label": "Dateigröße vergleichen",
+        "Outputs": {
+          "1": "Kleiner als Originaldatei",
+          "2": "Größe gleich der Originaldatei",
+          "3": "Größer als Originaldatei"
+        }
+      },
+      "FileSizeWithin": {
+        "Description": "Überprüft, ob die neue Dateigröße innerhalb des zulässigen Bereichs der ursprünglichen Dateigröße liegt.",
+        "Label": "Dateigröße innerhalb",
+        "Fields": {
+          "Value": "Wert",
+          "Value-Help": "Der zulässige Unterschied für die Dateigröße, dieser Wert kann entweder plus oder minus diesen Unterschied sein."
+        },
+        "Outputs": {
+          "1": "Die Dateigröße liegt im zulässigen Bereich",
+          "2": "Die Dateigröße liegt nicht im zulässigen Bereich"
+        }
+      },
+      "FolderDateCompare": {
+        "Description": "Überprüft, ob das Erstellungsdatum oder das letzte Änderungsdatum des Ordners dem angegebenen Datumsbereich entspricht.",
+        "Label": "Ordnerdatum vergleichen",
+        "Fields": {
+          "Date": "Datum",
+          "DateComparision": "Vergleich",
+          "Path": "Pfad",
+          "Path-Help": "Der Pfad zum zu überprüfenden Ordner. Lassen Sie das Feld leer, um die aktuelle Arbeitsdatei zu überprüfen.\nWenn eine Datei angegeben wird, wird der Ordner, der die Datei enthält, überprüft."
+        },
+        "Outputs": {
+          "1": "Entspricht dem Datumsbereich.",
+          "2": "Entspricht nicht dem Datumsbereich."
+        }
+      },
+      "FolderIterator": {
+        "Description": "Durchläuft alle Dateien in einem bestimmten Ordner und führt diese Dateien in einem Unterfluss aus.",
+        "Label": "Ordner durchlaufen",
+        "Fields": {
+          "Flow": "Flow",
+          "Flow-Help": "Der Unterfluss, gegen den die Dateien ausgeführt werden sollen.",
+          "Folder": "Ordner",
+          "Folder-Help": "Der Ordner, dessen Dateien durchlaufen werden.",
+          "Pattern": "Muster",
+          "Pattern-Help": "Ein optionales Muster zur Einschränkung der Dateien für die Iteration, dies kann ein Platzhaltermuster sein, das mit einem `*` beginnt, oder ein regulärer Ausdruck.",
+          "Recursive": "Rekursiv",
+          "Recursive-Help": "Ob auch Dateien in allen Unterordnern durchlaufen werden sollen, oder ob nur die obersten Dateien durchlaufen werden sollen."
+        },
+        "Outputs": {
+          "1": "Ordnerdateien durchlaufen"
+        }
+      },
+      "Function": {
+        "Label": "Funktion",
+        "Fields": {
+          "Code": "Code",
+          "Code-Help": "Geben Sie -1 für einen Fehler zurück und der Flow stoppt. Geben Sie 0 zurück, damit der Flow abgeschlossen wird. Geben Sie 1 oder mehr zurück, um die gewünschte Ausgabe aufzurufen.",
+          "Outputs": "Ausgaben",
+          "Template": "Vorlage",
+          "Template-Help": "WARNUNG: Dies ersetzt alles im Codeblock mit der ausgewählten Vorlage."
+        },
+        "Outputs": {
+          "1": "gab 1 zurück",
+          "10": "gab 10 zurück",
+          "2": "gab 2 zurück",
+          "3": "gab 3 zurück",
+          "4": "gab 4 zurück",
+          "5": "gab 5 zurück",
+          "6": "gab 6 zurück",
+          "7": "gab 7 zurück",
+          "8": "gab 8 zurück",
+          "9": "gab 9 zurück"
+        }
+      },
+      "GotoFlow": {
+        "Description": "Dadurch können Sie zur Verarbeitung zu einem anderen Flow wechseln. Dieser Flow wird beendet und die Parameter und das Workingfile werden an den neuen Flow übergeben.",
+        "Label": "Flow wechseln",
+        "Fields": {
+          "Flow": "Flow",
+          "UpdateFlowUsed": "Flow aktualisieren",
+          "UpdateFlowUsed-Help": "Ob die Datei `Flow` aktualisiert werden soll, um auf diesen neuen Flow zu verweisen, oder ob sie als ursprünglicher Flow belassen werden soll."
+        }
+      },
+      "HasHardLinks": {
+        "Description": "Überprüft, ob eine Datei harte Links hat oder nicht.",
+        "Label": "Harte Links",
+        "Fields": {
+          "Count": "Anzahl",
+          "Count-Help": "Die Anzahl der harten Links, die erforderlich sind, um Ausgabe 1 zu aktivieren.",
+          "FileName": "Dateiname",
+          "FileName-Help": "Die zu überprüfende Datei. Lassen Sie das Feld leer, um die aktuelle Arbeitsdatei zu überprüfen."
+        },
+        "Outputs": {
+          "1": "Harte Links erkannt",
+          "2": "Keine harten Links erkannt"
+        }
+      },
+      "IfBoolean": {
+        "Description": "Testet, ob eine Variable wahr oder falsch ist",
+        "Label": "Wenn Wahr",
+        "Fields": {
+          "Variable": "Variable",
+          "Variable-Help": "Der Name der zu überprüfenden Variablen."
+        },
+        "Outputs": {
+          "1": "Wahr",
+          "2": "Falsch"
+        }
+      },
+      "IfString": {
+        "Description": "Testet, ob eine Variable mit einer Zeichenfolge übereinstimmt.",
+        "Label": "Wenn Zeichenfolge",
+        "Fields": {
+          "Options": "Optionen",
+          "Options-Help": "Die Zeichenfolge, mit der abgeglichen werden soll.",
+          "Outputs": "Ausgänge",
+          "Outputs-Help": "Dies sollte der Anzahl der verfügbaren Optionen entsprechen. Maximal 10.",
+          "Variable": "Variable",
+          "Variable-Help": "Der Name der zu überprüfenden Variablen"
+        },
+        "Outputs": {
+          "1": "Passende Zeichenfolge 1",
+          "10": "Passende Zeichenfolge 10",
+          "2": "Passende Zeichenfolge 2",
+          "3": "Passende Zeichenfolge 3",
+          "4": "Passende Zeichenfolge 4",
+          "5": "Passende Zeichenfolge 5",
+          "6": "Passende Zeichenfolge 6",
+          "7": "Passende Zeichenfolge 7",
+          "8": "Passende Zeichenfolge 8",
+          "9": "Passende Zeichenfolge 9"
+        }
+      },
       "InputFile": {
         "Description": "Ein Imput für einzelne Dateien. Dies ist für einen Flow erforderlich. Es können mehrere Imputs genutzt werden, es ist jedoch nur einer erforderlich.",
+        "Label": "Eingabedatei",
         "Outputs": {
           "1": "Datei einfügen"
         }
       },
       "InputFolder": {
         "Description": "Ein Imput für einen Ordner. Dies funktioniert nur, wenn der Flow auf Ordner eingestellt ist.",
+        "Label": "Eingabeordner",
         "Outputs": {
           "1": "Ordner einfügen"
         }
       },
-      "CopyFile": {
-        "Description": "Kopiert die Datei zum Zielverzeichnis",
+      "IsDocker": {
+        "Description": "Bestimmt, ob dieser Flow auf Docker läuft",
+        "Label": "Ist Docker",
         "Outputs": {
-          "1": "Datei kopiert"
+          "1": "Läuft auf Docker",
+          "2": "Läuft nicht auf Docker"
+        }
+      },
+      "IsFromLibrary": {
+        "Description": "Überprüft, ob die verarbeitete Datei aus der angegebenen Bibliothek stammt.",
+        "Label": "Stammt aus Bibliothek",
+        "Fields": {
+          "Library": "Bibliothek",
+          "Library-Help": "Die zu überprüfende Bibliothek."
         },
-        "Fields": {
-          "InputFile": "Datei kopieren",
-          "InputFile-Help": "Datei kopieren? Leer lassen um die bearbeitete Datei zu verwenden!",
-          "InputFile-Placeholder": "Working File",
-          "DestinationPath": "Zielverzeichnis",
-          "DestinationPath-Help": "In dieses Zielverzeichnis wird kopiert",
-          "DestinationFile": "Dateinamen anpassen",
-          "DestinationFile-Help": "Dieser Name wird beim Kopieren verwendet.  Leer lassen, um den originalen Dateinamen zu nutzen.",
-          "CopyFolder": "Ordner kopieren",
-          "CopyFolder-Help": "Ordnerstruktur kopieren. Relativ zum Ausgangsordner.",
-          "AdditionalFiles": "Zusätzliche Dateien",
-          "AdditionalFiles-Help": "Zusätzliche Dateien zum Zielverzeichnis kopieren.\nJeder Wert kann eine Kombination aus gültigem Literalpfad und Platzhalterzeichen (* und ?) enthalten, unterstützt jedoch keine regulären Ausdrücke.",
-          "AdditionalFilesFromOriginal": "Ausgangsverzeichnis",
-          "AdditionalFilesFromOriginal-Help": "Sollen die neu erstellten Dateien in das Ausgangsverzeichnis kopiert werden? Wenn ja, Aktivieren.",
-          "PreserverOriginalDates": "Zeitstempel übernehmen",
-          "PreserverOriginalDates-Help": "Soll das Erstellungsdatum von der Ausgangsdatei übernommen werden?"
+        "Outputs": {
+          "1": "Datei stammt aus der angegebenen Bibliothek.",
+          "2": "Datei stammt nicht aus der angegebenen Bibliothek."
         }
       },
-      "DeleteSourceDirectory": {
-        "Label": "Ausgangsordner löschen?",
+      "IsLinux": {
+        "Description": "Bestimmt, ob dieser Flow unter Linux läuft.",
+        "Label": "Ist Linux",
         "Outputs": {
-          "1": "Ausgangsordner gelöscht",
-          "2": "Ausgangsordner nicht gelöscht"
+          "1": "Läuft unter Linux",
+          "2": "Läuft nicht unter Linux"
+        }
+      },
+      "IsMacOS": {
+        "Description": "Bestimmt, ob dieser Flow unter MacOS läuft.",
+        "Label": "Ist MacOS",
+        "Outputs": {
+          "1": "Läuft unter MacOS",
+          "2": "Läuft nicht unter MacOS"
+        }
+      },
+      "IsProcessingOnNode": {
+        "Description": "Überprüft, ob der Flow derzeit auf einem bestimmten Verarbeitungs-Knoten verarbeitet wird.",
+        "Label": "Wird auf Knoten verarbeitet",
+        "Fields": {
+          "Node": "Knoten",
+          "Node-Help": "Der zu überprüfende Verarbeitungs-Knoten."
         },
-        "Description": "Deletes the source folder of the original library file",
-        "Fields": {
-          "IfEmpty": "Leer",
-          "IfEmpty-Help": "Löscht den Ausgangsordner nur, wenn er leer ist.",
-          "IncludePatterns": "Muster prüfen",
-          "IncludePatterns-Help": "Optional, wenn diese Option aktiv ist, werden nur Dateien gewertet, die diesen Mustern entsprechen. Jedes dieser Muster kann übereinstimmen."
+        "Outputs": {
+          "1": "Verarbeitet auf Knoten",
+          "2": "Wird nicht auf Knoten verarbeitet"
         }
       },
-      "Executor": {
-        "Description": "Execute the following process against the file.\nAusgang 1: The process returned the success exit code\nAusgang 2: The process return a non-successful exit code.",
+      "IsWindows": {
+        "Description": "Bestimmt, ob dieser Flow unter Windows läuft.",
+        "Label": "Ist Windows",
         "Outputs": {
-          "1": "Process returned success",
-          "2": "Process returned failure"
+          "1": "Läuft unter Windows",
+          "2": "Läuft nicht unter Windows"
+        }
+      },
+      "ListIterator": {
+        "Description": "Durchläuft alle Strings in einer gegebenen Liste und führt diese Strings gegen einen Unterfluss aus.",
+        "Label": "Liste durchlaufen",
+        "Fields": {
+          "Flow": "Flow",
+          "Flow-Help": "Der Unterfluss, gegen den die Strings ausgeführt werden sollen.",
+          "List": "Liste",
+          "List-Help": "Ein Name einer Variablen, die die zu durchlaufende Liste enthält."
         },
-        "Fields": {
-          "FileName": "Dateiname",
-          "FileName-Help": "Der Name der auszuführenden Datei.",
-          "Arguments": "Befehle",
-          "Arguments-Help": "Die Befehle, welche an den auszuführenden Prozess übergeben werden sollen",
-          "WorkingDirectory": "Ausführungsorner",
-          "WorkingDirectory-Help": "Der Ordner, indem die Aufgaben ausgeführt werden.",
-          "SuccessCode": "Erfolgscode",
-          "SuccessCode-Help": "Der Exit-Code des Prozesses gibt an, dass der Prozess erfolgreich war. Normalerweise sollte dieser 0 lauten.",
-          "Timeout": "Timeout",
-          "Timeout-Help": "Wie lange der Prozess laufen kann, bevor er beendet wird. Verwenden Sie 0 für keinen Timeout.",
-          "Timeout-Suffix": "sekunden",
-          "OutputVariable": "Ausgabevariable",
-          "OutputVariable-Help": "Ein optionaler Variablenname zum Speichern der Prozessausgabe.",
-          "OutputErrorVariable": "Ausgabefehlervariable",
-          "OutputErrorVariable-Help": "Ein optionaler Variablenname zum Speichern der Prozessfehlerausgabe."
-        }
-      },
-      "FileExtension": {
-        "Description": "Es wird überprüft ob die Datei eine bestimmte Endung hat.\n\nAusgang 1: Trifft zu\nAusgang 2: Trifft nicht zu",
         "Outputs": {
-          "1": "Endnung trifft zu",
-          "2": "Endung trifft nicht zu"
-        },
-        "Fields": {
-          "Extensions": "Endungen",
-          "Extensions-Help": "Eine Liste von Dateierweiterungen ohne Berücksichtigung der Groß- und Kleinschreibung, mit denen abgeglichen wird.\nAusgang 1: Trifft zu\nAusgang 2: Trifft nicht zu"
-        }
-      },
-      "FileExists": {
-        "Description": "Prüft ob die Datei existiert.\n\nAusgang 1: Datei existiert\nAusgang 2: Datei nicht gefunden",
-        "Outputs": {
-          "1": "Datei existiert",
-          "2": "Datei nicht gefunden"
-        },
-        "Fields": {
-          "FileName": "Dateiname",
-          "FileName-Help": "Prüfen ob die Datei existiert.  Dies sollte mit einer Variablen aus einem vorherigen Node verwendet werden."
-        }
-      },
-      "Delete": {
-        "Description": "Löscht eine Datei oder einen Ordner",
-        "Outputs": {
-          "1": "Datei gelöscht"
-        },
-        "Fields": {
-          "FileName": "Pfad",
-          "FileName-Help": "Ein Pfad zu einer zu löschenden Datei oder einem Ordner.\n\nBleibt das Feld leer, wird das Working-File gelöscht."
-        }
-      },
-      "FailFlow": {
-        "Description": "Lässt einen Flow sofort fehlschlagen. Dies ist nützlich, wenn ein bestimmter Pfad fehlschlägt.",
-        "Fields": {
-          "Reason": "Grund",
-          "Reason-Help": "Ein optionaler Grund zum Protokollieren, warum dieser Flow fehlschlägt."
-        }
-      },
-      "FileSize": {
-        "Description": "Überprüft, ob die Dateigröße mit den konfigurierten Parametern übereinstimmt. Die Werte sind in Megabyte angegeben.\n\nAusgang 1: Trifft zu\nAusgang 2: Trifft nicht zu",
-        "Outputs": {
-          "1": "Dateigröße innerhalb des zulässigen Bereichs",
-          "2": "FDateigröße liegt nicht im zulässigen Bereich"
-        },
-        "Fields": {
-          "Comparison": "Vergleich",
-          "Lower": "Größer als",
-          "Lower-Suffix": "MB",
-          "Lower-Help": "Der Wert muss größer als X MB sein",
-          "Upper": "Kleiner als",
-          "Upper-Suffix": "MB",
-          "Upper-Help": "Der Wert muss kleiner als X MB sein. Wird bei 0 ignoriert."
-        }
-      },
-      "FileSizeCompare": {
-        "Description": "Überprüft, ob sich die Größe der Datei im Vergleich zur Originaldatei geändert hat.\n\nAusgang 1: Datei ist kleiner\nAusgang 2: Datei ist gleichgroß\nAusgang 3: Datei ist größer",
-        "Outputs": {
-          "1": "Kleiner als Originaldatei",
-          "2": "Größe gleich der Originaldatei",
-          "3": "Größer als Originaldatei"
-        }
-
-      },
-      "Function": {
-        "Outputs": {
-          "1": "returned 1",
-          "2": "returned 2",
-          "3": "returned 3",
-          "4": "returned 4",
-          "5": "returned 5",
-          "6": "returned 6",
-          "7": "returned 7",
-          "8": "returned 8",
-          "9": "returned 9",
-          "10": "returned 10"
-        },
-        "Fields": {
-          "Outputs": "Ausgänge",
-          "Template": "Template",
-          "Template-Help": "WARNUNG: Dadurch wird alles, was sich im Codeblock befindet, durch die von Ihnen ausgewählte Vorlage ersetzt.",
-          "Code": "Code",
-          "Code-Help": "return -1 for error and flow to stop.  return 0 for flow to complete.  return 1 or more for the desired output to be called"
-        }
-      },
-      "GotoFlow": {
-        "Description": "Dadurch können Sie zur Verarbeitung zu einem anderen Flow wechseln. Dieser Flow wird beendet und die Parameter und das Workingfile werden an den neuen Flow übergeben.",
-        "Fields": {
-          "Flow": "Flow"
+          "1": "Liste durchlaufen"
         }
       },
       "Log": {
         "Description": "Protokolliert eine Nachricht im Flowlog",
-        "Outputs": {
-          "1": "Nachricht eingetragen"
-        },
+        "Label": "Protokoll",
         "Fields": {
           "LogType": "Typ",
           "Message": "Nachricht"
+        },
+        "Outputs": {
+          "1": "Nachricht eingetragen"
+        }
+      },
+      "Matches": {
+        "Description": "Vergleicht eine Menge von Werten und prüft die Bedingungen, um zu sehen, welche Ausgabe aufgerufen werden soll.",
+        "Label": "Übereinstimmungen",
+        "Fields": {
+          "MatchConditions": "",
+          "MatchConditions-Help": "Die Übereinstimmungen, die getestet werden, um zu bestimmen, welcher Ausgang aufgerufen werden soll.",
+          "MatchConditionsKey": "Wert",
+          "MatchConditionsValue": "Ausdruck"
+        }
+      },
+      "MatchesAll": {
+        "Description": "Vergleicht eine Menge von Werten und prüft, ob alle Bedingungen übereinstimmen.",
+        "Label": "Alle Übereinstimmungen",
+        "Fields": {
+          "MatchConditions": "",
+          "MatchConditionsHelp": "Die Bedingungen, die geprüft werden, um festzustellen, welche Ausgabe aufgerufen werden soll.",
+          "MatchConditionsKey": "Wert",
+          "MatchConditionsValue": "Ausdruck"
+        },
+        "Outputs": {
+          "1": "Alle Bedingungen stimmen überein",
+          "2": "Nicht alle Bedingungen stimmen überein"
         }
       },
       "MoveFile": {
         "Description": "Verschiebt eine Datei in den Zielordner",
-        "Outputs": {
-          "1": "Datei verschoben",
-          "2": "Die Datei wurde verschoben, die Originaldatei konnte jedoch nicht gelöscht werden"
-        },
+        "Label": "Datei verschieben",
         "Fields": {
-          "InputFile": "Zu verschiebende Datei",
-          "InputFile-Help": "Die zu verschiebende Datei. Wenn das Feld leer bleibt, wird das Workingfile verschoben.",
-          "InputFile-Placeholder": "Working File",
-          "DestinationPath": "Zielordner",
-          "DestinationPath-Help": "Der Ordner, in den die Datei verschoben wird.",
-          "DestinationFile": "Zieldatei-Name",
-          "DestinationFile-Help": "Der Dateiname, mit dem die Datei verschoben werden soll. Wenn leer, wird der ursprüngliche Dateiname verwendet.",
-          "MoveFolder": "Ordner kopieren",
-          "MoveFolder-Help": "Wenn auch die relative Ordnerstruktur der Bibliothek kopiert werden soll.",
-          "DeleteOriginal": "Originaldatei löschen",
-          "DeleteOriginal-Help": "Soll die Originaldatei gelöscht werden, geschieht dies nur, wenn sich das Workingfile von der Originaldatei unterscheidet",
           "AdditionalFiles": "Zusätzliche Dateien",
           "AdditionalFiles-Help": "Zusätzliche Dateien zum Zielverzeichnis kopieren.\nJeder Wert kann eine Kombination aus gültigem Literalpfad und Platzhalterzeichen (* und ?) enthalten, unterstützt jedoch keine regulären Ausdrücke.",
           "AdditionalFilesFromOriginal": "Ausgangsverzeichnis",
           "AdditionalFilesFromOriginal-Help": "Ob die zusätzlichen Dateien aus dem Arbeitsverzeichnis oder aus dem Originalverzeichnis verschoben werden sollen. Für Originalverzeichnis aktivieren.",
+          "DeleteOriginal": "Originaldatei löschen",
+          "DeleteOriginal-Help": "Soll die Originaldatei gelöscht werden, geschieht dies nur, wenn sich das Workingfile von der Originaldatei unterscheidet",
+          "DestinationFile": "Zieldatei-Name",
+          "DestinationFile-Help": "Der Dateiname, mit dem die Datei verschoben werden soll. Wenn leer, wird der ursprüngliche Dateiname verwendet.",
+          "DestinationPath": "Zielordner",
+          "DestinationPath-Help": "Der Ordner, in den die Datei verschoben wird.",
+          "InputFile": "Zu verschiebende Datei",
+          "InputFile-Help": "Die zu verschiebende Datei. Wenn das Feld leer bleibt, wird das Workingfile verschoben.",
+          "InputFile-Placeholder": "Working File",
+          "MoveFolder": "Ordner kopieren",
+          "MoveFolder-Help": "Wenn auch die relative Ordnerstruktur der Bibliothek kopiert werden soll.",
           "PreserverOriginalDates": "Zeitstempel übernehmen",
           "PreserverOriginalDates-Help": "Soll das Erstellungsdatum von der Ausgangsdatei übernommen werden?"
+        },
+        "Outputs": {
+          "1": "Datei verschoben",
+          "2": "Die Datei wurde verschoben, die Originaldatei konnte jedoch nicht gelöscht werden"
+        }
+      },
+      "MoveFolder": {
+        "Description": "Verschiebt einen Ordner",
+        "Label": "Ordner verschieben",
+        "Fields": {
+          "CreateSubfolder": "Unterordner erstellen",
+          "CreateSubfolder-Help": "Ob ein Unterordner mit dem Namen des Quellordners im Zielordner erstellt werden soll.",
+          "DestinationPath": "Ziel",
+          "DestinationPath-Help": "Der Zielordner, in den der Quellordner verschoben werden soll.",
+          "SourcePath": "Quelle",
+          "SourcePath-Help": "Der zu verschiebende Ordner. Wenn leer gelassen, wird die Arbeitsdatei verwendet. Wenn dies kein Ordner ist, schlägt das Flusselement fehl."
+        },
+        "Outputs": {
+          "1": "Ordner verschoben"
         }
       },
       "OlderThan": {
         "Description": "Überprüft, ob eine Datei älter als der angegebene Bereich ist.",
+        "Label": "Älter als",
+        "Fields": {
+          "Date": "Datum",
+          "Number": "Nummer",
+          "Unit": "Einheit"
+        },
         "Outputs": {
           "1": "Datei ist älter",
           "2": "Datei ist jünger"
-        },
-        "Fields": {
-          "Number": "Nummer",
-          "Unit": "Einheit",
-          "Date": "Datum"
         }
       },
       "OriginalFile": {
         "Description": "Setzt das aktuelle Workingfile im Flow auf die Originaldatei, mit dem der Flow gestartet hat.",
+        "Label": "Originaldatei",
         "Outputs": {
           "1": "Originaldatei mit Workingfile ersetzen."
         }
       },
       "PatternMatch": {
         "Description": "Testet das Workingfile und die Originaldatei anhand eines regulären Ausdrucks.\n\nAusgang 1: Entspricht dem Ausdruck\nAusgang 2: Entspricht nicht dem Ausdruck",
-        "Outputs": {
-          "1": "Entspricht dem Ausdruck",
-          "2": "Entspricht nicht dem Ausdruck"
-        },
+        "Label": "Musterübereinstimmung",
         "Fields": {
           "Pattern": "Muster",
           "Pattern-Help": "Ein regulärer Ausdruck, der die C#-Spezifikation für reguläre Ausdrücke verwendet."
+        },
+        "Outputs": {
+          "1": "Entspricht dem Ausdruck",
+          "2": "Entspricht nicht dem Ausdruck"
         }
       },
       "PatternReplacer": {
-        "Label": "Dateinamen-Musteraustausch",
         "Description": "Ermöglicht das Ersetzen des Dateinamens. Kann reguläre Ausdrücke für Ersetzungen oder einfache Zeichenfolgenersetzungen verwenden.\n\nAusgang 1: ausgetauscht\nAusgang 2: Nicht ausgetauscht",
-        "Outputs": {
-          "1": "Ausgetauscht",
-          "2": "Nicht ausgetauscht"
-        },
+        "Label": "Dateinamen-Musteraustausch",
         "Fields": {
           "Replacements": "Ersatz",
           "ReplacementsKey": "Muster",
           "ReplacementsValue": "Wert",
           "UseWorkingFileName": "Verwenden des Mamens vom Workingfile.",
           "UseWorkingFileName-Help": "Wenn der aktuelle Workingfilename verwendet werden soll. Wenn „false“ angegeben ist, wird der ursprüngliche Dateiname der eingehenden Datei verwendet."
+        },
+        "Outputs": {
+          "1": "Ausgetauscht",
+          "2": "Nicht ausgetauscht"
+        }
+      },
+      "PowerShellScript": {
+        "Description": "Erlaubt die Ausführung eines PowerShell (.ps1) Skripts in einer Windows-Umgebung.",
+        "Label": "PowerShell-Skript (.ps1)",
+        "Fields": {
+          "Code": "Code"
+        },
+        "Outputs": {
+          "1": "gab 1 zurück",
+          "10": "gab 10 zurück",
+          "2": "gab 2 zurück",
+          "3": "gab 3 zurück",
+          "4": "gab 4 zurück",
+          "5": "gab 5 zurück",
+          "6": "gab 6 zurück",
+          "7": "gab 7 zurück",
+          "8": "gab 8 zurück",
+          "9": "gab 9 zurück"
         }
       },
       "Random": {
-        "Label": "Zufall",
         "Description": "Wählt eine zufällige Ausgabe",
+        "Label": "Zufall",
         "Fields": {
           "Outputs": "Ausgabe",
           "Outputs-Help": "Die Anzahl der Ausgänge, die aufgerufen werden könnten."
         }
       },
-      "ReplaceOriginal": {
-        "Description": "Ersetzt die Originaldatei durch das Workingfile.\n\nWenn die Dateiendung des Workingfiles eine andere ist, wird die Originaldatei gelöscht und das Workingfiles mit der neuen Erweiterung in den Ordner der Originaldatei verschoben.\nZ.B von File.avi zu File.mkv",
-        "Outputs": {
-          "1": "Original file replaced"
-        },
-        "Fields": {
-          "PreserverOriginalDates": "Zeitstempel übernehmen",
-          "PreserverOriginalDates-Help": "Soll das Erstellungsdatum von der Ausgangsdatei übernommen werden?"
-        }
-      },
       "Renamer": {
         "Description": "Umbennenen des Workingfiles.\nVariablen können durch Eingabe des Zeichens „{“ im Feld „Muster“ verwenden.",
-        "Outputs": {
-          "1": "Datei umbenannt"
-        },
+        "Label": "Umbenennen",
         "Fields": {
-          "Pattern": "Neuer Name",
-          "Pattern-Help": "Der neue Name der Datei. Kann Variablen verwenden. Alle leeren () und „{}“ werden entfernt.",
+          "CsvFile": "CSV Datei",
+          "CsvFile-Help": "Der ursprüngliche Name und die umbenannte Datei werden an diese Datei angehängt. Nützlich, wenn Sie „Nur protokollieren“ verwenden, um den Renamer zu testen, bevor Sie Dateien ändern. Symbol „Von der Community überprüft“",
           "DestinationPath": "Zielordner",
           "DestinationPath-Help": "Wenn die Datei in einen anderen Ordner verschoben werden soll.",
           "LogOnly": "Log Only",
           "LogOnly-Help": "Aktivieren Sie diese Option, wenn Sie diese Funktion nur testen möchten, ohne die Datei dabei tatsächlich umzubenennen.",
-          "CsvFile": "CSV Datei",
-          "CsvFile-Help": "Der ursprüngliche Name und die umbenannte Datei werden an diese Datei angehängt. Nützlich, wenn Sie „Nur protokollieren“ verwenden, um den Renamer zu testen, bevor Sie Dateien ändern. Symbol „Von der Community überprüft“"
+          "Pattern": "Neuer Name",
+          "Pattern-Help": "Der neue Name der Datei. Kann Variablen verwenden. Alle leeren () und „{}“ werden entfernt."
+        },
+        "Outputs": {
+          "1": "Datei umbenannt"
+        }
+      },
+      "ReplaceOriginal": {
+        "Description": "Ersetzt die Originaldatei durch das Workingfile.\n\nWenn die Dateiendung des Workingfiles eine andere ist, wird die Originaldatei gelöscht und das Workingfiles mit der neuen Erweiterung in den Ordner der Originaldatei verschoben.\nZ.B von File.avi zu File.mkv",
+        "Label": "Original ersetzen",
+        "Fields": {
+          "PreserverOriginalDates": "Zeitstempel übernehmen",
+          "PreserverOriginalDates-Help": "Soll das Erstellungsdatum von der Ausgangsdatei übernommen werden?"
+        },
+        "Outputs": {
+          "1": "Original file replaced"
+        }
+      },
+      "Reprocess": {
+        "Description": "Das Fluss-Element ermöglicht es Ihnen, die ursprüngliche Bibliotheksdatei mit einem anderen Verarbeitungsnode erneut zu verarbeiten.\n\n Wenn derselbe Verarbeitungsnode ausgewählt wird, der derzeit die Datei verarbeitet, schlägt der Fluss fehl.",
+        "Label": "Erneut verarbeiten",
+        "Fields": {
+          "HoldMinutes": "Wartezeit in Minuten",
+          "HoldMinutes-Help": "Die Anzahl der Minuten, die die Datei gehalten werden soll, bevor sie erneut verarbeitet wird. Verwenden Sie 0, um sofort zu verarbeiten.",
+          "Node": "Node",
+          "Node-Help": "Der Verarbeitungsnode, um diese Datei zu verarbeiten."
         }
       },
       "SetVariable": {
-        "Label": "Variable setzen",
         "Description": "Setzt eine Variable im Flow.",
+        "Label": "Variable setzen",
+        "Fields": {
+          "Value": "Wert",
+          "Value-Help": "Der Wert der zu setzenden Variable",
+          "Variable": "Variable",
+          "Variable-Help": "Der Name der zu setzenden Variable"
+        },
         "Outputs": {
           "1": "Variable gesetzt"
-        },
+        }
+      },
+      "SetWorkingFile": {
+        "Description": "Aktualisiert die aktuelle Arbeitsdatei auf die angegebene.",
+        "Label": "Arbeitsdatei festlegen",
         "Fields": {
-          "Variable": "Variable",
-          "Variable-Help": "Der Name der zu setzenden Variable",
-          "Value": "Wert",
-          "Value-Help": "Der Wert der zu setzenden Variable"
+          "DontDeletePrevious": "Vorherige nicht löschen",
+          "DontDeletePrevious-Help": "Ob die vorherige *temporäre* Arbeitsdatei *nicht* gelöscht werden soll.\nNur temporäre Dateien werden gelöscht, Dateien, die von FileFlows im temporären Verzeichnis der Runner erstellt wurden.",
+          "File": "Datei",
+          "File-Description": "Der Pfad zur neuen Arbeitsdatei oder zum neuen Ordner."
+        },
+        "Outputs": {
+          "1": "Arbeitsdatei festgelegt"
+        }
+      },
+      "SevenZip": {
+        "Description": "Ermöglicht Ihnen, die Datei im 7ZIP-Format zu komprimieren.",
+        "Label": "7-Zip",
+        "Fields": {
+          "CompressionLevel": "Komprimierungsstufe",
+          "CompressionLevel-Help": "Die Komprimierungsstufe, die beim Komprimieren der Ebene verwendet werden soll.",
+          "CompressionMethod": "Kompressionsverfahren",
+          "CompressionMethod-Help": "Als Komprimierungsmethode wird LZMA2 empfohlen.",
+          "DestinationFile": "Zieldatei",
+          "DestinationFile-Help": "Der Dateiname der neu erstellten 7zip-Datei. Wenn leer, wird der Name des Elements als 7zip-Datei verwendet.",
+          "DestinationPath": "Zielordner",
+          "DestinationPath-Help": "Der Zielordner, in dem die 7zip-Datei abgelegt werden soll. Wenn leer, wird die 7zip-Datei im Stammverzeichnis der Bibliothek abgelegt."
+        },
+        "Outputs": {
+          "1": "7zip erstellt"
+        }
+      },
+      "ShellScript": {
+        "Description": "Erlaubt das Ausführen eines Shell-Skripts (.sh) in einer Unix-ähnlichen Umgebung.",
+        "Label": "Shell-Skript (.sh)",
+        "Fields": {
+          "Code": "Code"
+        },
+        "Outputs": {
+          "1": "gab 1 zurück",
+          "10": "gab 10 zurück",
+          "2": "gab 2 zurück",
+          "3": "gab 3 zurück",
+          "4": "gab 4 zurück",
+          "5": "gab 5 zurück",
+          "6": "gab 6 zurück",
+          "7": "gab 7 zurück",
+          "8": "gab 8 zurück",
+          "9": "gab 9 zurück"
         }
       },
       "Sleep": {
         "Description": "Unterbricht den Flow",
-        "Outputs": {
-          "1": "Flow wird fortgesetzt"
-        },
+        "Label": "Schlafen",
         "Fields": {
           "Milliseconds": "Millisekunden",
           "Milliseconds-Help": "Wie lange soll der Flow pausieren? Muss zwischen 1 Millisekunde und 1 Stunde liegen"
+        },
+        "Outputs": {
+          "1": "Flow wird fortgesetzt"
+        }
+      },
+      "Tag": {
+        "Description": "Markiert die Datei mit den angegebenen Tags",
+        "Label": "Tag",
+        "Fields": {
+          "Replace": "Ersetzen",
+          "Replace-Help": "Ob die Tags ersetzt oder den vorhandenen Tags hinzugefügt werden sollen.",
+          "Tags": "Tags"
         }
       },
       "Touch": {
         "Description": "Toucht eine Datei oder ein Verzeichnis und setzt die letzte Schreibzeit auf „Jetzt“.",
-        "Outputs": {
-          "1": "Erfolgreich getoucht"
-        },
+        "Label": "Touch",
         "Fields": {
           "FileName": "Dateiname",
           "FileName-Help": "Vollständiger Dateiname der zu touchenden Datei oder des Ordners.\nBleibt das Feld leer, wird das Workingfile verwendet."
+        },
+        "Outputs": {
+          "1": "Erfolgreich getoucht"
+        }
+      },
+      "Unpack": {
+        "Description": "Ermöglicht das Entpacken eines Archivs. (zip, rar, tar, ect.)",
+        "Label": "Entpacken",
+        "Fields": {
+          "DestinationPath": "Zielordner",
+          "DestinationPath-Help": "Der Zielordner, in den die Datei entpackt werden soll.",
+          "File": "Datei",
+          "File-Help": "Der Name der zu entpackenden Datei. Kann leer gelassen werden. In diesem Fall wird der Name der zu entpackenden Datei verwendet."
+        },
+        "Outputs": {
+          "1": "Datei entpackt"
         }
       },
       "VariableMatch": {
         "Description": "Testet, ob eine Eingabe mit einer gespeicherten Variablen übereinstimmt",
+        "Label": "Variable übereinstimmen",
         "Fields": {
+          "Input": "Eingang",
+          "Input-Help": "Die Eingabe, mit der die Variable abgeglichen werden soll.",
           "Variable": "Variable",
           "Variable-Help": "Die Variable, mit der abgeglichen werden soll",
-          "Input": "Eingang",
-          "Input-Help": "Die Eingabe, mit der die Variable abgeglichen werden soll."
+          "VariableName": "Variable",
+          "VariableName-Help": "Die Variable, mit der verglichen werden soll."
         },
         "Outputs": {
           "1": "Übereinstimmende Eingabevariable",
@@ -335,100 +719,62 @@
       },
       "WebRequest": {
         "Description": "Ermöglicht das Senden einer Webanfrage",
-        "Outputs": {
-          "1": "Erfolgreich gesendet",
-          "2": "Die Anfrage hat einen nicht erfolgreichen Statuscode zurückgegeben"
-        },
+        "Label": "Webanfrage",
         "Fields": {
-          "Url": "URL",
-          "Url-Help": "Request-URL",
-          "Method": "Methode",
-          "Method-Help": "Die beim Senden dieser Anfrage zu verwendende Webmethode.",
+          "Body": "Body",
+          "Body-Help": "Der Text der gesendeten Anfrage. In diesem Feld können Variablen verwendet werden.",
           "ContentType": "Content Type",
           "ContentType-Help": "Der Inhaltstyp der zu sendenden Nachricht",
           "Headers": "Headers",
           "Headers-Help": "Optionale Header, die mit der Anfrage gesendet werden sollen",
           "HeadersKey": "Key",
           "HeadersValue": "Wert",
-          "Body": "Body",
-          "Body-Help": "Der Text der gesendeten Anfrage. In diesem Feld können Variablen verwendet werden."
+          "Method": "Methode",
+          "Method-Help": "Die beim Senden dieser Anfrage zu verwendende Webmethode.",
+          "Url": "URL",
+          "Url-Help": "Request-URL"
+        },
+        "Outputs": {
+          "1": "Erfolgreich gesendet",
+          "2": "Die Anfrage hat einen nicht erfolgreichen Statuscode zurückgegeben"
         }
       },
-      "Unpack": {
-        "Description": "Ermöglicht das Entpacken eines Archivs. (zip, rar, tar, ect.)",
-        "Outputs": {
-          "1": "Datei entpackt"
-        },
+      "WriteText": {
+        "Description": "Schreibt Text in eine Datei",
+        "Label": "Text schreiben",
         "Fields": {
-          "DestinationPath": "Zielordner",
-          "DestinationPath-Help": "Der Zielordner, in den die Datei entpackt werden soll.",
           "File": "Datei",
-          "File-Help": "Der Name der zu entpackenden Datei. Kann leer gelassen werden. In diesem Fall wird der Name der zu entpackenden Datei verwendet."
+          "File-Help": "Die Datei, in die der Text geschrieben werden soll.",
+          "Text": "Text",
+          "Text-Help": "Der Text, der in die Datei geschrieben werden soll. Wenn leer gelassen, wird der vollständige Pfad der aktuellen Arbeitsdatei geschrieben."
+        },
+        "Outputs": {
+          "1": "Text in die Datei geschrieben"
         }
       },
       "Zip": {
         "Description": "Ermöglicht Ihnen, die Datei zu komprimieren",
-        "Outputs": {
-          "1": "Zip-Datei erstellt"
-        },
+        "Label": "Zip",
         "Fields": {
+          "DestinationFile": "Zieldatei",
+          "DestinationFile-Help": "Der Dateiname der neu erstellten ZIP-Datei. Wenn es leer ist, wird der Name des Elements als ZIP-Datei verwendet.",
           "DestinationPath": "Zielordner",
           "DestinationPath-Help": "Der Zielordner, in dem die ZIP-Datei abgelegt werden soll. Wenn leer, wird die ZIP-Datei im Stammverzeichnis der Bibliothek abgelegt.",
-          "DestinationFile": "Zieldatei",
-          "DestinationFile-Help": "Der Dateiname der neu erstellten ZIP-Datei. Wenn es leer ist, wird der Name des Elements als ZIP-Datei verwendet."
-        }
-      },
-      "SevenZip": {
-        "Label": "7-Zip",
-        "Description": "Ermöglicht Ihnen, die Datei im 7ZIP-Format zu komprimieren.",
-        "Outputs": {
-          "1": "7zip erstellt"
+          "Path": "Pfad",
+          "Path-Help": "Der Pfad zur Datei oder zum Ordner, der gezippt werden soll. Wenn leer gelassen, wird die Arbeitsdatei gezippt.",
+          "SetWorkingFile": "Arbeitsdatei festlegen",
+          "SetWorkingFile-Help": "Wenn das neu erstellte Zip die neue Arbeitsdatei werden soll."
         },
-        "Fields": {
-          "DestinationPath": "Zielordner",
-          "DestinationPath-Help": "Der Zielordner, in dem die 7zip-Datei abgelegt werden soll. Wenn leer, wird die 7zip-Datei im Stammverzeichnis der Bibliothek abgelegt.",
-          "DestinationFile": "Zieldatei",
-          "DestinationFile-Help": "Der Dateiname der neu erstellten 7zip-Datei. Wenn leer, wird der Name des Elements als 7zip-Datei verwendet.",
-          "CompressionLevel": "Komprimierungsstufe",
-          "CompressionLevel-Help": "Die Komprimierungsstufe, die beim Komprimieren der Ebene verwendet werden soll.",
-          "CompressionMethod": "Kompressionsverfahren",
-          "CompressionMethod-Help": "Als Komprimierungsmethode wird LZMA2 empfohlen."
-        }
-      },
-      "IfBoolean": {
-        "Description": "Testet, ob eine Variable wahr oder falsch ist",
         "Outputs": {
-          "1": "Wahr",
-          "2": "Falsch"
-        },
-        "Fields": {
-          "Variable": "Variable",
-          "Variable-Help": "Der Name der zu überprüfenden Variablen."
-        }
-      },
-      "IfString": {
-        "Description": "Testet, ob eine Variable mit einer Zeichenfolge übereinstimmt.",
-        "Outputs": {
-          "1": "Passende Zeichenfolge 1",
-          "2": "Passende Zeichenfolge 2",
-          "3": "Passende Zeichenfolge 3",
-          "4": "Passende Zeichenfolge 4",
-          "5": "Passende Zeichenfolge 5",
-          "6": "Passende Zeichenfolge 6",
-          "7": "Passende Zeichenfolge 7",
-          "8": "Passende Zeichenfolge 8",
-          "9": "Passende Zeichenfolge 9",
-          "10": "Passende Zeichenfolge 10"
-        },
-        "Fields": {
-          "Variable": "Variable",
-          "Variable-Help": "Der Name der zu überprüfenden Variablen",
-          "Outputs": "Ausgänge",
-          "Outputs-Help": "Dies sollte der Anzahl der verfügbaren Optionen entsprechen. Maximal 10.",
-          "Options": "Optionen",
-          "Options-Help": "Die Zeichenfolge, mit der abgeglichen werden soll."
+          "1": "Zip-Datei erstellt"
         }
       }
+    }
+  },
+  "Plugins": {
+    "BasicNodes": {
+      "Description": "Grundlegende Flusselemente für FileFlows. Dieses Plugin enthält grundlegende und allgemeine Flusselemente zur Verarbeitung von Dateien.\nDieses Plugin ist erforderlich, damit FileFlows funktioniert.",
+      "Label": "Basic"
     }
   }
 }

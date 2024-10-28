@@ -1,0 +1,34 @@
+{
+  "Flow": {
+    "Parts": {
+      "UploadToNextcloud": {
+        "Description": "Загружает файл в Nextcloud",
+        "Label": "Загрузить в Nextcloud",
+        "Fields": {
+          "DestinationPath": "Назначение",
+          "DestinationPath-Help": "Местоположение и имя файла, т.е. полный путь, файла в Nextcloud.",
+          "File": "Файл",
+          "File-Help": "Файл для загрузки, оставьте пустым, чтобы использовать текущий рабочий файл."
+        },
+        "Outputs": {
+          "1": "Успешно загружено в Nextcloud",
+          "2": "Не удалось загрузить в Nextcloud"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Nextcloud": {
+      "Description": "Плагин, который позволяет загружать файлы в Nextcloud.",
+      "Label": "Nextcloud",
+      "Fields": {
+        "Password": "Пароль",
+        "Password-Help": "Пароль, созданный вами для FileFlows для этого пользователя Nextcloud.",
+        "Url": "URL",
+        "Url-Help": "URL-адрес сервера Nextcloud",
+        "Username": "Имя пользователя",
+        "Username-Help": "Имя пользователя, для которого нужно загрузить файл."
+      }
+    }
+  }
+}

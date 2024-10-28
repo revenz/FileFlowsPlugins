@@ -1,0 +1,40 @@
+{
+  "Flow": {
+    "Parts": {
+      "SendEmail": {
+        "Description": "Envoie un e-mail en utilisant le serveur SMTP configuré",
+        "Label": "Envoyer un e-mail",
+        "Fields": {
+          "Body": "Corps",
+          "Body-Help": "Le contenu du message e-mail envoyé. Utilise le langage de templating [scriban](https://github.com/scriban/scriban)",
+          "Recipients": "Destinataires",
+          "Recipients-Help": "Une liste d'adresses e-mail à qui envoyer le message",
+          "Subject": "Sujet",
+          "Subject-Help": "Le sujet de l'e-mail à envoyer"
+        },
+        "Outputs": {
+          "1": "E-mail ''{Subject}'' envoyé",
+          "2": "Échec de l'envoi de l'e-mail"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "EmailNodes": {
+      "Description": "Ce plugin vous permet d'envoyer un e-mail lors de l'exécution d'un flux.",
+      "Label": "E-mail",
+      "Fields": {
+        "Sender": "Expéditeur",
+        "Sender-Help": "L'adresse e-mail à partir de laquelle les e-mails seront envoyés",
+        "SmtpPassword": "Mot de passe SMTP",
+        "SmtpPassword-Help": "Le mot de passe utilisé pour s'authentifier auprès du serveur SMTP",
+        "SmtpPort": "Port SMTP",
+        "SmtpPort-Help": "Le port du serveur SMTP utilisé pour envoyer des e-mails, par défaut 25",
+        "SmtpServer": "Serveur SMTP",
+        "SmtpServer-Help": "L'adresse du serveur SMTP utilisé pour envoyer des e-mails",
+        "SmtpUsername": "Nom d'utilisateur SMTP",
+        "SmtpUsername-Help": "Le nom d'utilisateur utilisé pour s'authentifier auprès du serveur SMTP"
+      }
+    }
+  }
+}

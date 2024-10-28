@@ -10,7 +10,7 @@
     <Authors>John Andrews</Authors>
     <Product>Video</Product>
     <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
-    <Description>Flow element for the processing of video files, including but not limited to video file conversion, video file detection, upscaling, downscaling, and transcoding.</Description>
+    <Description>Flow elements for the processing of video files, including but not limited to video file conversion, video file detection, upscaling, downscaling, and transcoding.</Description>
     <RootNamespace> FileFlows.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <ParallelizeAssemblies>true</ParallelizeAssemblies>
@@ -41,6 +41,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Update="i18n\*.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="i18n\nl.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="i18n\ru.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="i18n\ja.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="i18n\it.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="i18n\zh.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="i18n\sv.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

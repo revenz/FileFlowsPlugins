@@ -90,6 +90,20 @@ public class HasHardLinksTest : TestBase
     }
 
     [TestMethod]
+    public void HasHardLink2()
+    {
+        testFile = Path.Combine(TempPath, Guid.NewGuid().ToString());
+        CreateHardLinkFile(testFile, 1);
+        
+        var args = new FileFlows.Plugin.NodeParameters(testFile, Logger, false, string.Empty, MockFileService.Object);
+        
+        HasHardLinks element = new ();
+        
+        var result = element.Execute(args);
+        Assert.AreEqual(1, result);
+    }
+    
+    [TestMethod]
     public void NoHardLinks()
     {
         testFile = Path.Combine(TempFile, Guid.NewGuid().ToString());

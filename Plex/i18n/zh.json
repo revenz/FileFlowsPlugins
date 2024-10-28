@@ -1,0 +1,61 @@
+{
+  "Flow": {
+    "Parts": {
+      "PlexAnalyze": {
+        "Description": "向 Plex 服务器发送消息以分析工作文件。 \n工作文件必须已经为 Plex 所知，以使其工作。",
+        "Label": "Plex分析",
+        "Fields": {
+          "AccessToken": "访问令牌",
+          "AccessToken-Help": "用于与 Plex 服务器通信的 [访问令牌](https://github.com/revenz/Fenrus/wiki/Plex-Token)。\n注意：只有在您想要覆盖插件设置的访问令牌时才设置此项。",
+          "Mapping": "映射",
+          "Mapping-Help": "用于将 FileFlows 中的路径映射到 Plex 中的路径的映射替换列表。\n注意：除非此处也设置服务器 URL，否则将不使用此项，否则将使用插件设置的映射。",
+          "MappingKey": "FileFlows",
+          "MappingValue": "Plex",
+          "ServerUrl": "服务器",
+          "ServerUrl-Help": "Plex 服务器的 URL。如果为空，将使用插件设置中定义的服务器。\n注意：只有在您想要覆盖插件设置的服务器 URL 时才设置此项。",
+          "ServerUrl-Placeholder": "http://localhost:32400/"
+        },
+        "Outputs": {
+          "1": "已发送 Plex 分析请求",
+          "2": "无法发送 Plex 分析请求"
+        }
+      },
+      "PlexUpdater": {
+        "Description": "向 Plex 服务器发送消息以更新库。",
+        "Label": "Plex更新",
+        "Fields": {
+          "AccessToken": "访问令牌",
+          "AccessToken-Help": "用于与 Plex 服务器通信的 [访问令牌](https://github.com/revenz/Fenrus/wiki/Plex-Token)。\n注意：只有在您想要覆盖插件设置的访问令牌时才设置此项。",
+          "Mapping": "映射",
+          "Mapping-Help": "用于将 FileFlows 中的路径映射到 Plex 中的路径的映射替换列表。\n注意：除非此处也设置服务器 URL，否则将不使用此项，否则将使用插件设置的映射。",
+          "MappingKey": "FileFlows",
+          "MappingValue": "Plex",
+          "ServerUrl": "服务器",
+          "ServerUrl-Help": "Plex 服务器的 URL。如果为空，将使用插件设置中定义的服务器。\n注意：只有在您想要覆盖插件设置的服务器 URL 时才设置此项。",
+          "ServerUrl-Placeholder": "http://localhost:32400/"
+        },
+        "Outputs": {
+          "1": "已发送 Plex 更新请求",
+          "2": "无法发送 Plex 更新请求"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Plex": {
+      "Description": "一个允许您与 Plex 通信的插件。",
+      "Label": "Plex",
+      "Fields": {
+        "AccessToken": "访问令牌",
+        "AccessToken-Help": "用于与 Plex 服务器通信的 [访问令牌](https://github.com/revenz/Fenrus/wiki/Plex-Token)。",
+        "Mapping": "映射",
+        "Mapping-Help": "用于将 FileFlows 中的路径映射到 Plex 中的路径的映射替换列表。",
+        "MappingKey": "FileFlows",
+        "MappingValue": "Plex",
+        "ServerUrl": "服务器",
+        "ServerUrl-Help": "Plex 服务器的 URL",
+        "ServerUrl-Placeholder": "http://localhost:32400/"
+      }
+    }
+  }
+}

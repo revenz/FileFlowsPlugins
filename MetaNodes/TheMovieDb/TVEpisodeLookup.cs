@@ -2,6 +2,7 @@
 using DM.MovieApi.MovieDb.TV;
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
+using MetaNodes.Helpers;
 using FileHelper = FileFlows.Plugin.Helpers.FileHelper;
 
 namespace MetaNodes.TheMovieDb;
@@ -72,9 +73,10 @@ public class TVEpisodeLookup : Node
     {
         string filename = FileHelper.GetShortFileNameWithoutExtension(args.LibraryFileName);
         
-        (string lookupName, string year) = TVShowLookup.GetLookupName(args.LibraryFileName, UseFolderName);
+        var helper = new TVShowHelper(args);
+        (string lookupName, string year) = helper.GetLookupName(args.LibraryFileName, UseFolderName);
 
-        (string showName, int? season, int? episode, int? lastEpisode, string year2) = TVShowLookup.GetTVShowInfo(filename);
+        (string showName, int? season, int? episode, int? lastEpisode, string year2) = helper.GetTVShowInfo(filename);
 
         if (season == null)
         {

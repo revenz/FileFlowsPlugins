@@ -1,0 +1,61 @@
+{
+  "Flow": {
+    "Parts": {
+      "PlexAnalyze": {
+        "Description": "Invia un messaggio a un server Plex per analizzare il file di lavoro. \nIl file di lavoro deve essere già conosciuto da Plex affinché questo funzioni.",
+        "Label": "Analizzatore Plex",
+        "Fields": {
+          "AccessToken": "Token di accesso",
+          "AccessToken-Help": "Il [token di accesso](https://github.com/revenz/Fenrus/wiki/Plex-Token) utilizzato per comunicare con il server Plex.\nNota: Imposta questo solo se desideri sovrascrivere il token di accesso delle impostazioni del plugin.",
+          "Mapping": "Mappatura",
+          "Mapping-Help": "Un elenco di sostituzioni di mappatura utilizzate per i percorsi in FileFlows con i percorsi utilizzati in Plex.\nNota: Questo non verrà utilizzato a meno che l'URL del server non sia impostato qui, altrimenti verranno utilizzate le mappature delle impostazioni del plugin.",
+          "MappingKey": "FileFlows",
+          "MappingValue": "Plex",
+          "ServerUrl": "Server",
+          "ServerUrl-Help": "L'URL del server Plex. Se vuoto, verrà utilizzato il server definito nelle impostazioni del plugin.\nNota: Imposta questo solo se desideri sovrascrivere l'URL del server delle impostazioni del plugin.",
+          "ServerUrl-Placeholder": "http://localhost:32400/"
+        },
+        "Outputs": {
+          "1": "Richiesta di analisi Plex inviata",
+          "2": "Impossibile inviare la richiesta di analisi Plex"
+        }
+      },
+      "PlexUpdater": {
+        "Description": "Invia un messaggio a un server Plex per aggiornare la libreria.",
+        "Label": "Aggiornatore Plex",
+        "Fields": {
+          "AccessToken": "Token di accesso",
+          "AccessToken-Help": "Il [token di accesso](https://github.com/revenz/Fenrus/wiki/Plex-Token) utilizzato per comunicare con il server Plex.\nNota: Imposta questo solo se desideri sovrascrivere il token di accesso delle impostazioni del plugin.",
+          "Mapping": "Mappatura",
+          "Mapping-Help": "Un elenco di sostituzioni di mappatura utilizzate per i percorsi in FileFlows con i percorsi utilizzati in Plex.\nNota: Questo non verrà utilizzato a meno che l'URL del server non sia impostato qui, altrimenti verranno utilizzate le mappature delle impostazioni del plugin.",
+          "MappingKey": "FileFlows",
+          "MappingValue": "Plex",
+          "ServerUrl": "Server",
+          "ServerUrl-Help": "L'URL del server Plex. Se vuoto, verrà utilizzato il server definito nelle impostazioni del plugin.\nNota: Imposta questo solo se desideri sovrascrivere l'URL del server delle impostazioni del plugin.",
+          "ServerUrl-Placeholder": "http://localhost:32400/"
+        },
+        "Outputs": {
+          "1": "Richiesta di aggiornamento Plex inviata",
+          "2": "Impossibile inviare la richiesta di aggiornamento Plex"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Plex": {
+      "Description": "Un plugin che consente di comunicare con Plex.",
+      "Label": "Plex",
+      "Fields": {
+        "AccessToken": "Token di accesso",
+        "AccessToken-Help": "Il [token di accesso](https://github.com/revenz/Fenrus/wiki/Plex-Token) utilizzato per comunicare con il server Plex.",
+        "Mapping": "Mappatura",
+        "Mapping-Help": "Un elenco di sostituzioni di mappatura utilizzate per i percorsi in FileFlows con i percorsi utilizzati in Plex.",
+        "MappingKey": "FileFlows",
+        "MappingValue": "Plex",
+        "ServerUrl": "Server",
+        "ServerUrl-Help": "L'URL del server Plex",
+        "ServerUrl-Placeholder": "http://localhost:32400/"
+      }
+    }
+  }
+}

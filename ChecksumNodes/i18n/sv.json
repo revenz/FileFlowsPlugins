@@ -1,0 +1,40 @@
+{
+  "Flow": {
+    "Parts": {
+      "MD5Checksum": {
+        "Description": "Beräknar en MD5-kontrollsumma av arbetsfilen och lagrar den i variablerna \"MD5\" och \"Checksum\".",
+        "Label": "MD5-kontrollsumma",
+        "Outputs": {
+          "1": "Kontrollsumman har lagrats i variablerna \"MD5\" och \"Checksum\""
+        }
+      },
+      "SHA1Checksum": {
+        "Description": "Beräknar en SHA1-kontrollsumma av arbetsfilen och lagrar den i variablerna \"SHA1\" och \"Checksum\".",
+        "Label": "SHA1-kontrollsumma",
+        "Outputs": {
+          "1": "Kontrollsumman har lagrats i variablerna \"SHA1\" och \"Checksum\""
+        }
+      },
+      "SHA256Checksum": {
+        "Description": "Beräknar en SHA256-kontrollsumma av arbetsfilen och lagrar den i variablerna \"SHA256\" och \"Checksum\".",
+        "Label": "SHA256-kontrollsumma",
+        "Outputs": {
+          "1": "Kontrollsumman har lagrats i variablerna \"SHA256\" och \"Checksum\""
+        }
+      },
+      "SHA512Checksum": {
+        "Description": "Beräknar en SHA512-kontrollsumma av arbetsfilen och lagrar den i variablerna \"SHA512\" och \"Checksum\".",
+        "Label": "SHA512-kontrollsumma",
+        "Outputs": {
+          "1": "Kontrollsumman har lagrats i variablerna \"SHA512\" och \"Checksum\""
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "ChecksumNodes": {
+      "Description": "Flödeselement som ger möjlighet att köra en kontrollsumma på en fil.",
+      "Label": "Kontrollsumma"
+    }
+  }
+}

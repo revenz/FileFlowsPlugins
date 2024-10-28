@@ -1,0 +1,35 @@
+{
+  "Flow": {
+    "Parts": {
+      "Apprise": {
+        "Description": "Skickar ett meddelande till en Apprise-server.",
+        "Fields": {
+          "Message": "Meddelande",
+          "Message-Help": "Meddelandet som ska skickas till Apprise-servern",
+          "MessageType": "Typ",
+          "MessageType-Help": "Typen av meddelande som ska skickas",
+          "Tag": "Tagg",
+          "Tag-Help": "En lista över taggar för att skicka meddelandet. Om det är tomt, kommer taggen 'all' att användas."
+        },
+        "Outputs": {
+          "1": "Apprise-meddelande skickat",
+          "2": "Apprise-meddelande misslyckades att skicka"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Apprise": {
+      "Description": "En plugin som låter dig skicka meddelanden till en Apprise-server.",
+      "Label": "Apprise",
+      "Fields": {
+        "Endpoint": "Endpoint",
+        "Endpoint-Help": "Endpoint på Apprise-servern, till exempel notify/apprise",
+        "Endpoint-Placeholder": "notify/apprise",
+        "ServerUrl": "Server",
+        "ServerUrl-Help": "URL till Apprise-servern",
+        "ServerUrl-Placeholder": "http://apprise.lan"
+      }
+    }
+  }
+}

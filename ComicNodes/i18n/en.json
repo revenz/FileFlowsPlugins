@@ -2,53 +2,62 @@
   "Flow": {
     "Parts": {
       "ComicConverter": {
+        "Description": "Converts a comic to a different comic book format.\n\nSupports converting from CBZ, CBR, CB7, PDF, GZ, BZ2",
+        "Label": "Comic Converter",
+        "Fields": {
+          "Codec": "Codec",
+          "Codec-Help": "The codec to save the images as",
+          "DeleteNonPageImages": "Delete Non Page Images",
+          "DeleteNonPageImages-Help": "Delete images that do not following a naming structure for pages.  I.e. they do not end with a number.",
+          "EnsureTopDirectory": "Ensure Top Directory",
+          "EnsureTopDirectory-Help": "Ensures that all files are located directly within the top directory of the comic book file, with no subdirectories present.",
+          "Format": "Format",
+          "Format-Help": "The format to convert the comic into",
+          "MaxHeight": "Max Height",
+          "MaxHeight-Help": "The maximum height for the pages, use 0 for no adjustments or to maintain quality with width",
+          "MaxWidth": "Max Width",
+          "MaxWidth-Help": "The maximum width for the pages, use 0 for no adjustments or to maintain quality with height",
+          "Quality": "Quality",
+          "Quality-Help": "Quality of the comic book pages, 0 for most compression/worst quality, 100 for best quality"
+        },
         "Outputs": {
           "1": "Comic was converted and saved as temporary file",
           "2": "Comic was already in desired format"
-        },
-        "Description": "Converts a comic to a different comic book format.\n\nSupports converting from CBZ, CBR, CB7, PDF, GZ, BZ2",
-        "Fields": {
-          "Format": "Format",
-          "Format-Help": "The format to convert the comic into",          
-          "EnsureTopDirectory": "Ensure Top Directory",
-          "EnsureTopDirectory-Help": "Ensures that all files are located directly within the top directory of the comic book file, with no subdirectories present.",
-          "DeleteNonPageImages": "Delete Non Page Images",
-          "DeleteNonPageImages-Help": "Delete images that do not following a naming structure for pages.  I.e. they do not end with a number.",
-          "Codec": "Codec",
-          "Codec-Help": "The codec to save the images as",
-          "Quality": "Quality",
-          "Quality-Help": "Quality of the comic book pages, 0 for most compression/worst quality, 100 for best quality",
-          "MaxWidth": "Max Width",
-          "MaxWidth-Help": "The maximum width for the pages, use 0 for no adjustments or to maintain quality with height",
-          "MaxHeight": "Max Height",
-          "MaxHeight-Help": "The maximum height for the pages, use 0 for no adjustments or to maintain quality with width"
         }
       },
       "ComicExtractor": {
-        "Outputs": {
-          "1": "Comic was extracted"
-        },
         "Description": "Extracts all files from a comic book format and saves them to them to a specific folder.\n\nSupports extracting CBZ, CBR, CB7, PDF, GZ, BZ2",
+        "Label": "Comic Extractor",
         "Fields": {
           "DestinationPath": "Destination Path",
           "DestinationPath-Help": "The folder to save the extract comic book files to"
+        },
+        "Outputs": {
+          "1": "Comic was extracted"
         }
       },
       "CreateComicInfo": {
         "Description": "Parses the path of a comic and create a comicinfo.xml file inside the comic book archive.",
+        "Label": "Create Comic Info",
         "Fields": {
+          "IssueDigits": "Issue Digits",
+          "IssueDigits-Help": "Will pad the issue number with leading zeros for up to this amount.\nFor example, for issue 1 if padding is 3, then the issue will appear as #001",
           "Publisher": "Publisher",
           "Publisher-Help": "If the comic is in a publisher directory, see help for more information.",
           "RenameFile": "Rename File",
-          "RenameFile-Help": "If the file should be renamed `Series - Issue - Title.extension`",
-          "IssueDigits": "Issue Digits",
-          "IssueDigits-Help": "Will pad the issue number with leading zeros for up to this amount.\nFor example, for issue 1 if padding is 3, then the issue will appear as #001"
+          "RenameFile-Help": "If the file should be renamed `Series - Issue - Title.extension`"
         },
         "Outputs": {
           "1": "ComicInfo added to comic archive",
           "2": "ComicInfo already in archive"
         }
       }
+    }
+  },
+  "Plugins": {
+    "ComicNodes": {
+      "Description": "Flow elements for processing comic books (cbr, cbz, pdf etc)",
+      "Label": "Comic"
     }
   }
 }

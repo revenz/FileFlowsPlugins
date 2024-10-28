@@ -1,0 +1,31 @@
+{
+  "Flow": {
+    "Parts": {
+      "Discord": {
+        "Description": "Отправляет сообщение на сервер Discord.",
+        "Fields": {
+          "Message": "Сообщение",
+          "Message-Help": "Сообщение, которое нужно отправить на сервер Discord",
+          "MessageType": "Тип",
+          "MessageType-Help": "Тип сообщения для отправки. Базовый тип — это просто сообщение без заголовка и без цветовой оформления.",
+          "Title": "Заголовок",
+          "Title-Help": "Необязательный заголовок для отправки; если не установлен, тип сообщения будет заголовком."
+        },
+        "Outputs": {
+          "1": "Сообщение Discord отправлено",
+          "2": "Не удалось отправить сообщение Discord"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "DiscordNodes": {
+      "Description": "Плагин, который позволяет вам отправлять сообщения на сервер Discord.\n\nWebhook ID и токен можно получить из URL вебхука\n https://discord.com/api/webhooks/[webhookid]/[webhooktoken]",
+      "Label": "Discord",
+      "Fields": {
+        "WebhookId": "Webhook ID",
+        "WebhookToken": "Webhook Token"
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "Flow": {
+    "Parts": {
+      "Gotify": {
+        "Description": "Отправляет сообщение на сервер Gotify.",
+        "Fields": {
+          "Message": "Сообщение",
+          "Message-Help": "Сообщение для отправки на сервер Gotify",
+          "Priority": "Приоритет",
+          "Priority-Help": "Приоритет отправляемого сообщения",
+          "Title": "Заголовок",
+          "Title-Help": "Необязательный заголовок для отправки."
+        },
+        "Outputs": {
+          "1": "Сообщение Gotify отправлено",
+          "2": "Не удалось отправить сообщение Gotify"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Gotify": {
+      "Description": "Плагин, который позволяет отправлять сообщения на сервер Gotify.",
+      "Label": "Gotify",
+      "Fields": {
+        "AccessToken": "Токен доступа",
+        "AccessToken-Help": "Токен доступа, используемый для связи с сервером Gotify.",
+        "ServerUrl": "Сервер",
+        "ServerUrl-Help": "URL-адрес сервера Gotify",
+        "ServerUrl-Placeholder": "http://gotify.lan"
+      }
+    }
+  }
+}

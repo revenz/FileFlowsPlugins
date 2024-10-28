@@ -7,7 +7,7 @@ using VideoNodes.Tests;
 namespace FileFlows.VideoNodes.Tests.FfmpegBuilderTests;
 
 /// <summary>
-/// Tests the set track titltes
+/// Tests the set track titles
 /// </summary>
 [TestClass]
 public class FFmpegBuilder_SetTrackTitlesTests : VideoTestBase
@@ -97,6 +97,29 @@ public class FFmpegBuilder_SetTrackTitlesTests : VideoTestBase
 
         // Assert
         Assert.AreEqual("Track: English / Digital Theater Systems / Stereo / Default / 128Kbps / 44.1kHz", result);
+    }
+    
+
+    [TestMethod]
+    public void FormatTitle_Codec_CommericalName_FF1763()
+    {
+        // Arrange
+        string formatter = "lang - codec-cc - numchannels";
+        string separator = " - ";
+        string language = "English";
+        string codec = "DTS";
+        bool isDefault = true;
+        float bitrate = 128_000;
+        float channels = 2.0f;
+        int sampleRate = 44100;
+        bool isForced = false;
+
+        // Act
+        string result = FfmpegBuilderSetTrackTitles.FormatTitle(formatter, separator, language, codec, isDefault, bitrate, 
+            channels, sampleRate, isForced);
+
+        // Assert
+        Assert.AreEqual("English - Digital Theater Systems - 2.0", result);
     }
     
     [TestMethod]
@@ -377,6 +400,34 @@ public class FFmpegBuilder_SetTrackTitlesTests : VideoTestBase
 
         // Assert
         Assert.AreEqual("Track: English / HEVC / 720p", result);
+    }
+    
+    
+    [TestMethod]
+    public void FormatTitle_Video_HDR()
+    {
+        // Arrange
+        string formatter = "Track: lang / codec / fps / resolution / dimensions / pixelformat / dynamicrange";
+        string separator = " / ";
+        string language = "English";
+        string codec = "HEVC";
+
+        ResolutionHelper.Resolution resolution = ResolutionHelper.Resolution.r720p;
+
+        // Act
+        string result = FfmpegBuilderSetTrackTitles.FormatTitle(formatter, separator, language, codec, 
+            resolution: resolution, dynamicRange: "HDR");
+
+        // Assert
+        Assert.AreEqual("Track: English / HEVC / 720P / HDR", result);
+        
+        // Act
+        formatter = "Track: lang / codec / fps / resolution / dimensions / pixelformat / !dynamicrange";
+        result = FfmpegBuilderSetTrackTitles.FormatTitle(formatter, separator, language, codec, 
+            resolution: resolution, dynamicRange: "SDR");
+
+        // Assert
+        Assert.AreEqual("Track: English / HEVC / 720P / sdr", result);
     }
     
     [TestMethod]

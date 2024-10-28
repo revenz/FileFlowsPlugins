@@ -1,0 +1,42 @@
+{
+  "Flow": {
+    "Parts": {
+      "EmbyUpdater": {
+        "Description": "Envía un mensaje a un servidor Emby para actualizar la biblioteca.",
+        "Label": "Actualizador de Emby",
+        "Fields": {
+          "AccessToken": "Token de acceso",
+          "AccessToken-Help": "Un token de acceso de la API de Emby.\nNota: Establezca esto solo si desea sobrescribir el token de acceso en la configuración del plugin.",
+          "Mapping": "Mapeo",
+          "Mapping-Help": "Una lista de reemplazos de mapeo utilizados para las rutas en FileFlows con las rutas que se utilizan en Emby.\nNota: Esto no se utilizará a menos que la URL del servidor también se establezca aquí; de lo contrario, se utilizarán los mapeos de configuración del plugin.",
+          "MappingKey": "FileFlows",
+          "MappingValue": "Emby",
+          "ServerUrl": "Servidor",
+          "ServerUrl-Help": "La URL del servidor Emby.\nNota: Establezca esto solo si desea sobrescribir la URL del servidor en la configuración del plugin.",
+          "ServerUrl-Placeholder": "http://localhost:8096/"
+        },
+        "Outputs": {
+          "1": "Solicitud de actualización de Emby enviada",
+          "2": "Error al enviar la solicitud de actualización de Emby"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Emby": {
+      "Description": "Un plugin que permite comunicarse con Emby.",
+      "Label": "Emby",
+      "Fields": {
+        "AccessToken": "Token de acceso",
+        "AccessToken-Help": "Un token de acceso de la API de Emby",
+        "Mapping": "Mapeo",
+        "Mapping-Help": "Una lista de reemplazos de mapeo utilizados para las rutas en FileFlows con las rutas que se utilizan en Emby.",
+        "MappingKey": "FileFlows",
+        "MappingValue": "Emby",
+        "ServerUrl": "Servidor",
+        "ServerUrl-Help": "La URL del servidor Emby",
+        "ServerUrl-Placeholder": "http://localhost:8096/"
+      }
+    }
+  }
+}

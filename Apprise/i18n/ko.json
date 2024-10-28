@@ -1,0 +1,35 @@
+{
+  "Flow": {
+    "Parts": {
+      "Apprise": {
+        "Description": "Apprise 서버에 메시지를 보냅니다.",
+        "Fields": {
+          "Message": "메시지",
+          "Message-Help": "Apprise 서버에 보낼 메시지",
+          "MessageType": "유형",
+          "MessageType-Help": "보낼 메시지의 유형",
+          "Tag": "태그",
+          "Tag-Help": "이 메시지를 보낼 태그 목록, 비어 있으면 ''all''로 태그가 지정됩니다."
+        },
+        "Outputs": {
+          "1": "Apprise 메시지가 전송되었습니다",
+          "2": "Apprise 메시지 전송에 실패했습니다"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Apprise": {
+      "Description": "Apprise 서버에 메시지를 보낼 수 있는 플러그인입니다.",
+      "Label": "Apprise",
+      "Fields": {
+        "Endpoint": "엔드포인트",
+        "Endpoint-Help": "Apprise 서버의 엔드포인트, 예: notify/apprise",
+        "Endpoint-Placeholder": "notify/apprise",
+        "ServerUrl": "서버",
+        "ServerUrl-Help": "Apprise 서버의 URL",
+        "ServerUrl-Placeholder": "http://apprise.lan"
+      }
+    }
+  }
+}

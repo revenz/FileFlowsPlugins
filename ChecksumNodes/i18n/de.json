@@ -1,0 +1,40 @@
+{
+  "Flow": {
+    "Parts": {
+      "MD5Checksum": {
+        "Description": "Berechnet eine MD5-Prüfziffer der Arbeitsdatei und speichert sie in der Variablen \"MD5\" und in \"Checksum\".",
+        "Label": "MD5-Prüfziffer",
+        "Outputs": {
+          "1": "Prüfziffer in den Variablen \"MD5\" und \"Checksum\" gespeichert"
+        }
+      },
+      "SHA1Checksum": {
+        "Description": "Berechnet eine SHA1-Prüfziffer der Arbeitsdatei und speichert sie in der Variablen \"SHA1\" und in \"Checksum\".",
+        "Label": "SHA1-Prüfziffer",
+        "Outputs": {
+          "1": "Prüfziffer in den Variablen \"SHA1\" und \"Checksum\" gespeichert"
+        }
+      },
+      "SHA256Checksum": {
+        "Description": "Berechnet eine SHA256-Prüfziffer der Arbeitsdatei und speichert sie in der Variablen \"SHA256\" und in \"Checksum\".",
+        "Label": "SHA256-Prüfziffer",
+        "Outputs": {
+          "1": "Prüfziffer in den Variablen \"SHA256\" und \"Checksum\" gespeichert"
+        }
+      },
+      "SHA512Checksum": {
+        "Description": "Berechnet eine SHA512-Prüfziffer der Arbeitsdatei und speichert sie in der Variablen \"SHA512\" und in \"Checksum\".",
+        "Label": "SHA512-Prüfziffer",
+        "Outputs": {
+          "1": "Prüfziffer in den Variablen \"SHA512\" und \"Checksum\" gespeichert"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "ChecksumNodes": {
+      "Description": "Flusselemente, die die Möglichkeit bieten, eine Prüfsumme für eine Datei auszuführen.",
+      "Label": "Checksumme"
+    }
+  }
+}

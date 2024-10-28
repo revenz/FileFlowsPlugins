@@ -1,0 +1,40 @@
+{
+  "Flow": {
+    "Parts": {
+      "SendEmail": {
+        "Description": "使用配置的SMTP服务器发送电子邮件",
+        "Label": "发送电子邮件",
+        "Fields": {
+          "Body": "正文",
+          "Body-Help": "要发送的电子邮件内容。使用 [scriban](https://github.com/scriban/scriban) 模板语言",
+          "Recipients": "收件人",
+          "Recipients-Help": "要发送消息的电子邮件地址列表",
+          "Subject": "主题",
+          "Subject-Help": "正在设置的电子邮件主题"
+        },
+        "Outputs": {
+          "1": "电子邮件 ''{Subject}'' 已发送",
+          "2": "电子邮件发送失败"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "EmailNodes": {
+      "Description": "此插件允许您在执行流程时发送电子邮件。",
+      "Label": "电子邮件",
+      "Fields": {
+        "Sender": "发件人",
+        "Sender-Help": "发送邮件的电子邮件地址",
+        "SmtpPassword": "SMTP 密码",
+        "SmtpPassword-Help": "用于对 SMTP 服务器进行身份验证的密码",
+        "SmtpPort": "SMTP 端口",
+        "SmtpPort-Help": "用于发送电子邮件的 SMTP 服务器端口，默认为 25",
+        "SmtpServer": "SMTP 服务器",
+        "SmtpServer-Help": "用于发送电子邮件的 SMTP 服务器地址",
+        "SmtpUsername": "SMTP 用户名",
+        "SmtpUsername-Help": "用于对 SMTP 服务器进行身份验证的用户名"
+      }
+    }
+  }
+}

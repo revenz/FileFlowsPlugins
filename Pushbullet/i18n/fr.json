@@ -1,0 +1,32 @@
+{
+  "Flow": {
+    "Parts": {
+      "Pushbullet": {
+        "Description": "Envoie un message via Pushbullet.",
+        "Fields": {
+          "Message": "Message",
+          "Message-Help": "Le message à envoyer au serveur Pushbullet",
+          "Priority": "Priorité",
+          "Priority-Help": "La priorité du message envoyé",
+          "Title": "Titre"
+        },
+        "Outputs": {
+          "1": "Message Pushbullet envoyé",
+          "2": "Échec de l'envoi du message Pushbullet"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Pushbullet": {
+      "Description": "Un plugin qui vous permet d'envoyer des messages à un serveur Pushbullet.",
+      "Label": "Pushbullet",
+      "Fields": {
+        "ApiToken": "Token API",
+        "ApiToken-Help": "Le token API de l'application utilisé pour envoyer des notifications.",
+        "UserKey": "Clé utilisateur",
+        "UserKey-Help": "Votre clé utilisateur personnelle pour recevoir des notifications."
+      }
+    }
+  }
+}

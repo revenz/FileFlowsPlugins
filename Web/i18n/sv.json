@@ -1,0 +1,77 @@
+{
+  "Flow": {
+    "Parts": {
+      "Downloader": {
+        "Description": "Laddar ner den angivna URL:en",
+        "Label": "Nedladdare",
+        "Fields": {
+          "Url": "URL",
+          "Url-Help": "URL:en som ska laddas ner, lämna tomt för att använda den aktuella arbetsfilen. Om den aktuella arbetsfilen inte är en URL, kommer detta att misslyckas."
+        },
+        "Outputs": {
+          "1": "URL:en har laddats ner framgångsrikt",
+          "2": "Kunde inte ladda ner URL:en"
+        }
+      },
+      "HtmlImageParser": {
+        "Label": "HTML Bildparser",
+        "Fields": {
+          "Path": "Fil",
+          "Path-Description": "En valfri fil eller variabel att analysera för bilder, om ingen anges kommer arbetsfilen att analyseras.",
+          "Pattern": "Mönster",
+          "Pattern-Help": "Ett valfritt skiftlägesokänsligt reguljärt uttryck för att matcha resultaten, endast matchande resultat kommer att accepteras.",
+          "Pattern-Placeholder": "Valfritt"
+        },
+        "Outputs": {
+          "1": "Bilder hittades och lagrades i variabeln ImageUrls",
+          "2": "Inga bilder hittades"
+        }
+      },
+      "HtmlLinkParser": {
+        "Label": "HTML Länkparser",
+        "Fields": {
+          "Path": "Fil",
+          "Path-Description": "En valfri fil eller variabel att analysera för länkar, om ingen anges kommer arbetsfilen att analyseras.",
+          "Pattern": "Mönster",
+          "Pattern-Help": "Ett valfritt skiftlägesokänsligt reguljärt uttryck för att matcha resultaten, endast matchande resultat kommer att accepteras.",
+          "Pattern-Placeholder": "Valfritt"
+        },
+        "Outputs": {
+          "1": "Länk hittades och lagrades i variabeln Links",
+          "2": "Inga länkar hittades"
+        }
+      },
+      "InputUrl": {
+        "Label": "Ange URL"
+      },
+      "WebRequest": {
+        "Description": "Låter dig skicka en webbfråga",
+        "Label": "Webbförfrågan",
+        "Fields": {
+          "Body": "Innehåll",
+          "Body-Help": "Innehållet i den skickade förfrågan. Variabler kan användas i detta fält.",
+          "ContentType": "Innehållstyp",
+          "ContentType-Help": "Innehållstypen för meddelandet som ska skickas",
+          "Headers": "Rubriker",
+          "Headers-Help": "Valfria rubriker som ska skickas med förfrågan",
+          "HeadersKey": "Nyckel",
+          "HeadersValue": "Värde",
+          "Method": "Metod",
+          "Method-Help": "Webbmetoden att använda när denna förfrågan skickas",
+          "Url": "URL",
+          "Url-Help": "URL:en för förfrågan"
+        },
+        "Outputs": {
+          "1": "Framgångsrikt skickad",
+          "2": "Förfrågan returnerade en icke-framgångsrik statuskod"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Web": {
+      "Description": "Plugin som tillhandahåller webbrelaterade flödeselement.",
+      "Label": "Web"
+    }
+  }
+}

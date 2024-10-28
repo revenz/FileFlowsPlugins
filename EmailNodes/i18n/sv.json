@@ -1,0 +1,40 @@
+{
+  "Flow": {
+    "Parts": {
+      "SendEmail": {
+        "Description": "Skickar ett e-postmeddelande med den konfigurerade SMTP-servern",
+        "Label": "Skicka e-post",
+        "Fields": {
+          "Body": "Innehåll",
+          "Body-Help": "Innehållet i det e-postmeddelande som skickas. Använder [scriban](https://github.com/scriban/scriban) mallspråk",
+          "Recipients": "Mottagare",
+          "Recipients-Help": "En lista med e-postadresser att skicka meddelandet till",
+          "Subject": "Ämne",
+          "Subject-Help": "Ämnet för det e-postmeddelande som sätts"
+        },
+        "Outputs": {
+          "1": "E-postmeddelande ''{Subject}'' har skickats",
+          "2": "E-postmeddelandet kunde inte skickas"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "EmailNodes": {
+      "Description": "Denna plugin gör att du kan skicka ett e-postmeddelande medan ett flöde körs.",
+      "Label": "E-post",
+      "Fields": {
+        "Sender": "Avsändare",
+        "Sender-Help": "E-postadressen som e-postmeddelandena skickas från",
+        "SmtpPassword": "SMTP-lösenord",
+        "SmtpPassword-Help": "Lösenordet som används för att autentisera mot SMTP-servern",
+        "SmtpPort": "SMTP-port",
+        "SmtpPort-Help": "Porten för SMTP-servern som används för att skicka e-post, standard 25",
+        "SmtpServer": "SMTP-server",
+        "SmtpServer-Help": "Adressen till SMTP-servern som används för att skicka e-post",
+        "SmtpUsername": "SMTP-användarnamn",
+        "SmtpUsername-Help": "Användarnamnet som används för att autentisera mot SMTP-servern"
+      }
+    }
+  }
+}

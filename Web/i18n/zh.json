@@ -1,0 +1,77 @@
+{
+  "Flow": {
+    "Parts": {
+      "Downloader": {
+        "Description": "下载指定的URL",
+        "Label": "下载器",
+        "Fields": {
+          "Url": "URL",
+          "Url-Help": "要下载的URL，留空则使用当前工作文件，如果当前工作文件不是URL，则此操作会失败。"
+        },
+        "Outputs": {
+          "1": "URL下载成功",
+          "2": "URL下载失败"
+        }
+      },
+      "HtmlImageParser": {
+        "Label": "HTML图片解析器",
+        "Fields": {
+          "Path": "文件",
+          "Path-Description": "用于解析图片的可选文件或变量，如果未提供，将解析当前工作文件。",
+          "Pattern": "模式",
+          "Pattern-Help": "用于匹配结果的可选不区分大小写的正则表达式，仅接受与此匹配的结果。",
+          "Pattern-Placeholder": "可选"
+        },
+        "Outputs": {
+          "1": "找到的图片已存储在变量ImageUrls中",
+          "2": "未找到图片"
+        }
+      },
+      "HtmlLinkParser": {
+        "Label": "HTML链接解析器",
+        "Fields": {
+          "Path": "文件",
+          "Path-Description": "用于解析链接的可选文件或变量，如果未提供，将解析当前工作文件。",
+          "Pattern": "模式",
+          "Pattern-Help": "用于匹配结果的可选不区分大小写的正则表达式，仅接受与此匹配的结果。",
+          "Pattern-Placeholder": "可选"
+        },
+        "Outputs": {
+          "1": "找到的链接已存储在变量Links中",
+          "2": "未找到链接"
+        }
+      },
+      "InputUrl": {
+        "Label": "输入URL"
+      },
+      "WebRequest": {
+        "Description": "允许您发送一个网络请求",
+        "Label": "网络请求",
+        "Fields": {
+          "Body": "请求正文",
+          "Body-Help": "要发送的请求正文。该字段可以使用变量。",
+          "ContentType": "内容类型",
+          "ContentType-Help": "要发送的消息的内容类型",
+          "Headers": "请求头",
+          "Headers-Help": "可选的请求头，用于与请求一起发送",
+          "HeadersKey": "键",
+          "HeadersValue": "值",
+          "Method": "方法",
+          "Method-Help": "发送此请求时使用的网络方法",
+          "Url": "URL",
+          "Url-Help": "请求的URL"
+        },
+        "Outputs": {
+          "1": "成功发送",
+          "2": "请求返回了非成功的状态码"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Web": {
+      "Description": "提供与网页相关的流元素的插件。",
+      "Label": "网页"
+    }
+  }
+}

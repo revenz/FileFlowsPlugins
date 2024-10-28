@@ -60,8 +60,8 @@ public abstract class AudioTestBase : TestBase
         };
         args.InitFile(filename);
 
-        FFmpeg = File.Exists("/usr/local/bin/ffmpeg") ? "/usr/local/bin/ffmpeg" : "ffmpeg";
-        FFprobe = File.Exists("/usr/local/bin/ffprobe") ? "/usr/local/bin/ffprobe" : "ffprobe";
+        FFmpeg = File.Exists("/tools/ffmpeg/ffmpeg") ? "/tools/ffmpeg/ffmpeg" : File.Exists("/usr/local/bin/ffmpeg") ? "/usr/local/bin/ffmpeg" : "ffmpeg";
+        FFprobe = File.Exists("/tools/ffmpeg/ffprobe") ? "/tools/ffmpeg/ffprobe" : File.Exists("/usr/local/bin/ffprobe") ? "/usr/local/bin/ffprobe" : "ffprobe";
         
         args.GetToolPathActual = (tool) =>
         {

@@ -1,0 +1,34 @@
+{
+  "Flow": {
+    "Parts": {
+      "UploadToNextcloud": {
+        "Description": "Télécharge un fichier sur Nextcloud",
+        "Label": "Télécharger sur Nextcloud",
+        "Fields": {
+          "DestinationPath": "Destination",
+          "DestinationPath-Help": "L'emplacement et le nom de fichier, c'est-à-dire le chemin complet, du fichier dans Nextcloud.",
+          "File": "Fichier",
+          "File-Help": "Le fichier à télécharger, laissez vide pour utiliser le fichier de travail actuel."
+        },
+        "Outputs": {
+          "1": "A été téléchargé avec succès sur Nextcloud",
+          "2": "Échec du téléchargement sur Nextcloud"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Nextcloud": {
+      "Description": "Un plugin qui vous permet de télécharger des fichiers vers Nextcloud.",
+      "Label": "Nextcloud",
+      "Fields": {
+        "Password": "Mot de passe",
+        "Password-Help": "Le mot de passe spécifique à l'application que vous avez créé pour FileFlows pour cet utilisateur Nextcloud.",
+        "Url": "URL",
+        "Url-Help": "L'URL du serveur Nextcloud",
+        "Username": "Nom d'utilisateur",
+        "Username-Help": "Le nom d'utilisateur de l'utilisateur vers lequel télécharger."
+      }
+    }
+  }
+}

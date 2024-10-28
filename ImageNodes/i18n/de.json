@@ -1,0 +1,127 @@
+{
+  "Flow": {
+    "Parts": {
+      "AutoCropImage": {
+        "Description": "Schneidet ein Bild automatisch zu",
+        "Label": "Auto Crop Image",
+        "Fields": {
+          "Format": "Format",
+          "Format-Help": "Das Bildformat, in das konvertiert werden soll",
+          "Threshold": "Schwelle",
+          "Threshold-Help": "Schwelle für die entropische Dichte, Standardwert ist 50. Muss zwischen 0 und 100 liegen."
+        },
+        "Outputs": {
+          "1": "Bild zugeschnitten, in neue temporäre Datei gespeichert",
+          "2": "Bild wurde nicht zugeschnitten"
+        }
+      },
+      "ImageFile": {
+        "Description": "Eine Bilddatei",
+        "Label": "Bild-Datei",
+        "Outputs": {
+          "1": "Bilddatei"
+        }
+      },
+      "ImageFlip": {
+        "Description": "Dreht ein Bild",
+        "Label": "Bild drehen",
+        "Fields": {
+          "Format": "Format",
+          "Format-Help": "Das Bildformat, in das konvertiert werden soll",
+          "Vertical": "Vertikal",
+          "Vertical-Help": "Wenn aktiviert, wird das Bild vertikal gedreht, andernfalls horizontal"
+        },
+        "Outputs": {
+          "1": "Bild umgedreht, in neue temporäre Datei gespeichert"
+        }
+      },
+      "ImageFormat": {
+        "Description": "Konvertiert ein Bild in das angegebene Format",
+        "Label": "Bildformat",
+        "Fields": {
+          "Format": "Format",
+          "Format-Help": "Das Bildformat, in das konvertiert werden soll"
+        },
+        "Outputs": {
+          "1": "Bild konvertiert, in neue temporäre Datei gespeichert",
+          "2": "Bild bereits im Zielformat"
+        }
+      },
+      "ImageIsLandscape": {
+        "Description": "Testet, ob ein Bild im Querformat ist",
+        "Label": "Bild ist Querformat",
+        "Outputs": {
+          "1": "Bild ist im Querformat",
+          "2": "Bild ist nicht im Querformat"
+        }
+      },
+      "ImageIsPortrait": {
+        "Description": "Testet, ob ein Bild im Hochformat ist",
+        "Label": "Bild ist Hochformat",
+        "Outputs": {
+          "1": "Bild ist im Hochformat",
+          "2": "Bild ist nicht im Hochformat"
+        }
+      },
+      "ImageResizer": {
+        "Description": "Ändert die Größe eines Bildes",
+        "Label": "Bildgrößenänderung",
+        "Fields": {
+          "Format": "Format",
+          "Format-Help": "Das Bildformat, in das konvertiert werden soll",
+          "Height": "Höhe",
+          "Mode": "Modus",
+          "Mode-Help": "Der Modus, der beim Ändern der Größe des Bildes verwendet wird",
+          "Width": "Breite"
+        },
+        "Outputs": {
+          "1": "Bild skaliert, in neue temporäre Datei gespeichert"
+        }
+      },
+      "ImageRotate": {
+        "Description": "Rotiert ein Bild",
+        "Label": "Bild drehen",
+        "Fields": {
+          "Angle": "Winkel",
+          "Angle-Help": "Der Rotationswinkel",
+          "Format": "Format",
+          "Format-Help": "Das Bildformat, in das konvertiert werden soll"
+        },
+        "Outputs": {
+          "1": "Bild rotiert, in neue temporäre Datei gespeichert"
+        }
+      },
+      "IsImage": {
+        "Description": "Überprüft, ob eine Datei eine Bilddatei ist.",
+        "Label": "Ist Bild",
+        "Fields": {
+          "File": "Datei",
+          "File-Help": "Optionaler Pfad zur zu überprüfenden Datei; wenn leer gelassen, wird die aktuelle Arbeitsdatei überprüft.",
+          "File-Placeholder": "Wenn leer, aktuelle Arbeitsdatei"
+        },
+        "Outputs": {
+          "1": "Datei ist eine erkannte Bilddatei",
+          "2": "Datei ist keine erkannte Bilddatei"
+        }
+      },
+      "PixelCheck": {
+        "Description": "Diesesflow element überprüft, ob die Gesamtpixelanzahl eines Bildes die angegebene Schwelle überschreitet.",
+        "Label": "Pixel-Check",
+        "Fields": {
+          "Pixels": "Pixel",
+          "Pixels-Help": "Die Anzahl der Pixel, die ein Bild enthalten sollte. Dies wird berechnet, indem die Breite des Bildes mit seiner Höhe multipliziert wird."
+        },
+        "Outputs": {
+          "1": "Bild hat gleich oder mehr Pixel als angegeben",
+          "2": "Bild hat weniger Pixel als die erforderliche Anzahl"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "ImageNodes": {
+      "Description": "Flusselemente zur Verarbeitung von Bilddateien. Dieses Plugin enthält Knoten zum Konvertieren und Manipulieren von Bildern.",
+      "Label": "Bild"
+    }
+  }
+}

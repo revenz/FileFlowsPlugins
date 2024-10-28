@@ -1,27 +1,28 @@
 {
-  "Plugins": {
-    "Telegram": {
-      "Description": "A plugin that allows you to send Telegram messages.",
-      "Fields": {
-        "BotToken": "Bot Token",
-        "BotToken-Help":"Your telegram bot token.",
-        "ChatId": "Chat ID",
-        "ChatId-Help":"The ID of the chat to send messages to."
-      }
-    }
-  },
   "Flow": {
     "Parts": {
       "Telegram": {
-        "Outputs": {
-          "1": "Telegram message sent",
-          "2": "Telegram message failed to send"
-        },
         "Description": "Sends a Telegram message.",
         "Fields": {
           "Message": "Message",
           "Message-Help": "The message to send."
+        },
+        "Outputs": {
+          "1": "Telegram message sent",
+          "2": "Telegram message failed to send"
         }
+      }
+    }
+  },
+  "Plugins": {
+    "Telegram": {
+      "Description": "A plugin that allows you to send Telegram messages.",
+      "Label": "Telegram",
+      "Fields": {
+        "BotToken": "Bot Token",
+        "BotToken-Help": "Your telegram bot token.",
+        "ChatId": "Chat ID",
+        "ChatId-Help": "The ID of the chat to send messages to."
       }
     }
   }

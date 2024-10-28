@@ -1,0 +1,63 @@
+{
+  "Flow": {
+    "Parts": {
+      "ComicConverter": {
+        "Description": "Converteert een stripverhaal naar een ander stripboekformaat.\n\nOndersteunt het converteren van CBZ, CBR, CB7, PDF, GZ, BZ2",
+        "Label": "Stripverhaal Converter",
+        "Fields": {
+          "Codec": "Codec",
+          "Codec-Help": "De codec om de afbeeldingen als op te slaan",
+          "DeleteNonPageImages": "Verwijder Geen Pagina Afbeeldingen",
+          "DeleteNonPageImages-Help": "Verwijder afbeeldingen die niet volgen een naamgevingsstructuur voor pagina's. Bijvoorbeeld, ze eindigen niet met een nummer.",
+          "EnsureTopDirectory": "Zorg voor Hoofdmap",
+          "EnsureTopDirectory-Help": "Zorgt ervoor dat alle bestanden zich rechtstreeks in de hoofdmap van het stripboekbestand bevinden, zonder submappen.",
+          "Format": "Formaat",
+          "Format-Help": "Het formaat waarin het stripverhaal moet worden geconverteerd",
+          "MaxHeight": "Max Hoogte",
+          "MaxHeight-Help": "De maximale hoogte voor de pagina's, gebruik 0 voor geen aanpassingen of om de kwaliteit met de breedte te behouden",
+          "MaxWidth": "Max Breedte",
+          "MaxWidth-Help": "De maximale breedte voor de pagina's, gebruik 0 voor geen aanpassingen of om de kwaliteit met de hoogte te behouden",
+          "Quality": "Kwaliteit",
+          "Quality-Help": "Kwaliteit van de pagina's van het stripboek, 0 voor de meeste compressie/slechtste kwaliteit, 100 voor de beste kwaliteit"
+        },
+        "Outputs": {
+          "1": "Stripverhaal is geconverteerd en opgeslagen als tijdelijk bestand",
+          "2": "Stripverhaal was al in het gewenste formaat"
+        }
+      },
+      "ComicExtractor": {
+        "Description": "Extraheert alle bestanden uit een stripboekformaat en slaat ze op in een specifieke map.\n\nOndersteunt het extraheren van CBZ, CBR, CB7, PDF, GZ, BZ2",
+        "Label": "Stripverhaal Extractor",
+        "Fields": {
+          "DestinationPath": "Bestemming Pad",
+          "DestinationPath-Help": "De map om de geëxtraheerde stripboekbestanden op te slaan"
+        },
+        "Outputs": {
+          "1": "Stripverhaal is geëxtraheerd"
+        }
+      },
+      "CreateComicInfo": {
+        "Description": "Parset het pad van een stripverhaal en maakt een comicinfo.xml-bestand aan in het stripboekarchief.",
+        "Label": "Maak ComicInfo",
+        "Fields": {
+          "IssueDigits": "Nummer Cijfers",
+          "IssueDigits-Help": "Zal het nummer aanvullen met voorloopnullen tot dit aantal.\nBijvoorbeeld, voor nummer 1 als aanvulling 3 is, verschijnt het nummer als #001",
+          "Publisher": "Uitgever",
+          "Publisher-Help": "Als de strip zich in een uitgeverijmap bevindt, zie dan de hulp voor meer informatie.",
+          "RenameFile": "Hernoem Bestand",
+          "RenameFile-Help": "Als het bestand moet worden hernoemd naar `Serie - Nummer - Titel.extensie`"
+        },
+        "Outputs": {
+          "1": "ComicInfo toegevoegd aan striparchief",
+          "2": "ComicInfo al in archief"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "ComicNodes": {
+      "Description": "Stroomelementen voor het verwerken van stripboeken (cbr, cbz, pdf, enz.)",
+      "Label": "Strip"
+    }
+  }
+}

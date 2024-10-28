@@ -1,0 +1,37 @@
+{
+  "Flow": {
+    "Parts": {
+      "Pushover": {
+        "Description": "通过 Pushover 发送消息。",
+        "Fields": {
+          "Expire": "过期",
+          "Expire-Help": "设置此紧急消息过期前的持续时间（以秒为单位），并停止重试交付。",
+          "Expire-Suffix": "秒",
+          "Message": "消息",
+          "Message-Help": "要发送到 Pushover 服务器的消息",
+          "Priority": "优先级",
+          "Priority-Help": "发送消息的优先级",
+          "Retry": "重试",
+          "Retry-Help": "指定此紧急消息在交付失败时的重试间隔（以秒为单位）。",
+          "Retry-Suffix": "秒"
+        },
+        "Outputs": {
+          "1": "Pushover 消息已发送",
+          "2": "Pushover 消息发送失败"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Pushover": {
+      "Description": "一个允许你向 Pushover 服务器发送消息的插件。",
+      "Label": "Pushover",
+      "Fields": {
+        "ApiToken": "API 令牌",
+        "ApiToken-Help": "用于发送通知的应用程序 API 令牌。",
+        "UserKey": "用户密钥",
+        "UserKey-Help": "您用于接收通知的个人用户密钥。"
+      }
+    }
+  }
+}

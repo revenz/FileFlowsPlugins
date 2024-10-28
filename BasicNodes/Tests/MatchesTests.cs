@@ -112,9 +112,9 @@ public class MatchesTests : TestBase
         Matches ele = new ();
         ele.MatchConditions = new()
         {
-            new("{file.Name}", "triggerthis"),
-            new("{file.Name}", ".*batman.*"),
-            new("{file.Name}", "TriggerThis"),
+            new("{file.Name}", "/triggerthis/"),
+            new("{file.Name}", "/.*batman.*/"),
+            new("{file.Name}", "/TriggerThis/"),
         };
         var args = new FileFlows.Plugin.NodeParameters(null, Logger,
             false, string.Empty, new LocalFileService());

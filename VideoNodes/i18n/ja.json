@@ -1,0 +1,1089 @@
+{
+  "5": {
+    "1": "5.1"
+  },
+  "7": {
+    "1": "7.1"
+  },
+  "Enums": {
+    "WatermarkPosition": {
+      "BottomLeft": "左下",
+      "BottomRight": "右下",
+      "Center": "中央",
+      "TopLeft": "左上",
+      "TopRight": "右上"
+    }
+  },
+  "Flow": {
+    "Parts": {
+      "AudioToVideo": {
+        "Description": "オーディオファイルをビデオファイルに変換し、オーディオに基づいてビデオを生成します。",
+        "Label": "オーディオからビデオ",
+        "Fields": {
+          "Codec": "コーデック",
+          "Color": "色",
+          "Color-Help": "音波に使用するオプションの#RRGGBBカラ―コード。形式は#RRGGBBである必要があります。例：#FF0090",
+          "Container": "コンテナ",
+          "HardwareEncoding": "ハードウェアエンコード",
+          "HardwareEncoding-Help": "チェックすると、処理ノードにハードウェアエンコーダーが見つかったかどうかをテストし、見つかった場合はハードウェアエンコーディングを使用します。それ以外の場合はCPUエンコーディングにフォールバックします。",
+          "Resolution": "解像度",
+          "Visualization": "視覚化",
+          "Visualization-Help": "生成されたビデオで使用する視覚化。例についてはヘルプを参照してください。"
+        }
+      },
+      "CanUseHardwareEncoding": {
+        "Description": "指定されたハードウェアエンコーダーが現在フローで利用可能かどうかをチェックします。",
+        "Label": "ハードウェアエンコードを使用できるか",
+        "Fields": {
+          "Encoder": "エンコーダー",
+          "Encoder-Help": "チェックするハードウェアデコーダー"
+        }
+      },
+      "ComskipRemoveAds": {
+        "Description": "comskip EDLファイルを使用し、そのファイルを使用してコマーシャルを削除します。",
+        "Label": "Comskip広告を削除",
+        "Fields": {
+          "RunComskipIfNoEdl": "Comskipを実行",
+          "RunComskipIfNoEdl-Help": "comskip（EDL）ファイルが見つからない場合は、ファイルに対してcomskipを実行します。"
+        },
+        "Outputs": {
+          "1": "コマーシャルが削除され、一時ファイルに保存されました",
+          "2": "コマーシャルは検出されませんでした"
+        }
+      },
+      "CreateThumbnail": {
+        "Description": "動画ファイルからサムネイル画像を作成します。",
+        "Label": "サムネイル作成",
+        "Fields": {
+          "Height": "高さ",
+          "Height-Help": "サムネイル画像の高さ。",
+          "OutputFile": "出力ファイル",
+          "OutputFile-Help": "サムネイル画像を保存するファイルパス。空白の場合、元のファイルと同じ場所に .jpg ファイルが作成されます。",
+          "ResizeMode": "モード",
+          "ResizeMode-Help": "画像のサイズを変更する際に使用するモード。",
+          "SkipBlackFrames": "黒いフレームをスキップ",
+          "SkipBlackFrames-Help": "チェックされている場合、黒いフレームが検出された場合は他のフレームが使用されます。",
+          "Time": "時間",
+          "Time-Help": "サムネイルを作成する動画の時刻。",
+          "Width": "幅",
+          "Width-Help": "サムネイル画像の幅。"
+        },
+        "Outputs": {
+          "1": "サムネイルが作成されました。",
+          "2": "サムネイルの作成に失敗しました。"
+        }
+      },
+      "DisableAmd": {
+        "Description": "AMD AMFハードウェアエンコーダーを無効にします。",
+        "Label": "AMDを無効にする",
+        "Outputs": {
+          "1": "無効"
+        }
+      },
+      "DisableIntelQsv": {
+        "Description": "Intel QSVハードウェアエンコーダーを無効にします。",
+        "Label": "Intel QSVを無効にする",
+        "Outputs": {
+          "1": "無効"
+        }
+      },
+      "DisableNvidia": {
+        "Description": "NVIDIAハードウェアエンコーダーを無効にします。",
+        "Label": "NVIDIAを無効にする",
+        "Outputs": {
+          "1": "無効"
+        }
+      },
+      "DisableVaapi": {
+        "Description": "VAAPIハードウェアエンコーダーを無効にします。",
+        "Label": "VAAPIを無効にする",
+        "Outputs": {
+          "1": "無効"
+        }
+      },
+      "FfmpegBuilderAddInputFile": {
+        "Label": "FFMPEG Builder：入力ファイルを追加",
+        "Fields": {
+          "Pattern": "パターン",
+          "Pattern-Help": "入力ファイルを検索するために使用される正規表現",
+          "UseSourceDirectory": "ソースディレクトリを使用",
+          "UseSourceDirectory-Help": "チェックすると、元のソースディレクトリが検索され、それ以外の場合は作業ディレクトリが使用されます。"
+        },
+        "Outputs": {
+          "1": "ファイルが見つかり、追加されました",
+          "2": "ファイルが見つかりませんでした"
+        }
+      },
+      "FfmpegBuilderAspectRatio": {
+        "Label": "FFMPEG Builder：アスペクト比",
+        "Fields": {
+          "AdjustmentMode": "調整モード",
+          "AdjustmentMode-Help": "アスペクト比がどのように適用されるべきかを選択します。オプションには、ビデオを引き伸ばす、黒いバーを追加する（レターボックス）、またはビデオをアスペクト比に合わせてトリミングすることが含まれます。",
+          "AspectRatio": "アスペクト比",
+          "AspectRatio-Help": "ビデオの望ましいアスペクト比を選択します。利用可能なオプションには、標準アスペクト比（16:9、4:3、21:9）またはカスタム比が含まれます。",
+          "CustomHeight": "カスタム高さ",
+          "CustomHeight-Help": "カスタムアスペクト比オプションを選択する際に使用する高さを指定します。",
+          "CustomWidth": "カスタム幅",
+          "CustomWidth-Help": "カスタムアスペクト比オプションを選択する際に使用する幅を指定します。"
+        },
+        "Outputs": {
+          "1": "アスペクト比が正常に変更されました",
+          "2": "ビデオはすでに望ましいアスペクト比にありました"
+        }
+      },
+      "FfmpegBuilderAudioAddTrack": {
+        "Description": "FFMPEG Builderに新しいオーディオトラックを追加し、ビルダーが実行されると追加されます。",
+        "Label": "FFMPEG Builder: オーディオトラック追加",
+        "Fields": {
+          "Bitrate": "ビットレート",
+          "Bitrate-Help": "新しいオーディオトラックのビットレート",
+          "BitratePerChannel": "チャンネルごとのビットレート",
+          "BitratePerChannel-Help": "指定したビットレートがチャンネルごとであるべきか",
+          "Channels": "チャンネル",
+          "Channels-Help": "この新しいオーディオトラックのチャンネル数。\nソースより多くのチャンネルを指定すると、FFMPEGは自動的にアップミックスします。\nソースより少ないチャンネルを指定すると、FFMPEGは自動的にダウンミックスします。",
+          "Codec": "コーデック",
+          "Codec-Help": "オーディオをエンコードするために使用するコーデック",
+          "CustomTrackSelection": "ソーストラック選択",
+          "Index": "インデックス",
+          "Index-Help": "新しいオーディオトラックを挿入するインデックス。0から始まるので、新しいオーディオトラックを最初のトラックとして挿入するには、0に設定します。",
+          "Language": "言語",
+          "Language-Help": "使用するオプションの[ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes)言語コード。 この言語コードを持つオーディオトラックを探そうとしますが、見つからない場合は最良のオーディオトラックが使用されます。",
+          "NewTitle": "新しいタイトル",
+          "NewTitle-Help": "新しく作成されたオーディオトラックのオプションのタイトル。 空白の場合、ソースタイトルが使用されます",
+          "RemoveTitle": "タイトルを削除",
+          "RemoveTitle-Help": "ソースタイトルを削除し、トラックにタイトルを付けない場合",
+          "SampleRate": "サンプリングレート",
+          "SampleRate-Help": "新しいオーディオトラックに使用するサンプリングレート",
+          "TrackSelectionOptions": "トラック選択",
+          "TrackSelectionOptionsKey": "プロパティ",
+          "TrackSelectionOptionsValue": "値"
+        },
+        "Outputs": {
+          "1": "FFMPEG Builderにオーディオトラックを追加しました",
+          "2": "新しいオーディオトラックを作成するための適切なソースオーディオトラックが見つかりませんでした"
+        }
+      },
+      "FfmpegBuilderAudioAdjustVolume": {
+        "Description": "FFMPEGを使用してビデオファイルのオーディオトラックの音量を調整します",
+        "Label": "FFMPEG Builder: オーディオ音量調整",
+        "Fields": {
+          "AllAudio": "すべてのオーディオトラック",
+          "AllAudio-Help": "すべてのオーディオトラックを正規化する必要があるか、または最初のトラックのみか",
+          "NotMatching": "一致しない",
+          "NotMatching-Help": "パターンに一致しないオーディオトラックを削除するか",
+          "Pattern": "パターン",
+          "Pattern-Help": "マッチする正規表現、例: \"commentary\" で解説トラックを削除",
+          "UseLanguageCode": "言語コードを使用",
+          "UseLanguageCode-Help": "オーディオトラックのタイトルの代わりに言語コードを使用するか",
+          "VolumePercent": "音量パーセント",
+          "VolumePercent-Help": "調整された音量のパーセント。\n100は調整なし\n50は半分の音量\n0はミュート"
+        },
+        "Outputs": {
+          "1": "FFMPEG Builderにオーディオトラック音量フィルターを追加しました",
+          "2": "オーディオトラックは調整されませんでした"
+        }
+      },
+      "FfmpegBuilderAudioConvert": {
+        "Description": "パラメータに一致するすべてのトラックを変換できます。",
+        "Label": "FFMPEG Builder: オーディオ変換",
+        "Fields": {
+          "Bitrate": "ビットレート",
+          "Bitrate-Help": "オーディオトラックのビットレート",
+          "BitratePerChannel": "チャンネルごとのビットレート",
+          "BitratePerChannel-Help": "指定したビットレートがチャンネルごとであるべきか",
+          "Channels": "チャンネル",
+          "Channels-Help": "この新しいオーディオトラックのチャンネル数。\nソースより多くのチャンネルを指定すると、FFMPEGは自動的にアップミックスします。\nソースより少ないチャンネルを指定すると、FFMPEGは自動的にダウンミックスします。",
+          "Codec": "コーデック",
+          "Codec-Help": "オーディオをエンコードするために使用するコーデック",
+          "CustomTrackSelection": "変換",
+          "PcmFormat": "フォーマット",
+          "PcmFormat-Help": "PCMオーディオをエンコードするために使用するPCMフォーマット。",
+          "TrackSelectionOptions": "マッチング",
+          "TrackSelectionOptionsKey": "プロパティ",
+          "TrackSelectionOptionsValue": "値"
+        },
+        "Outputs": {
+          "1": "変換するトラック",
+          "2": "変換するトラックはありません"
+        }
+      },
+      "FfmpegBuilderAudioConverter": {
+        "Description": "パラメータに一致するすべてのトラックを変換できます。",
+        "Label": "FFMPEG Builder: オーディオコンバーター",
+        "Fields": {
+          "Bitrate": "ビットレート",
+          "Bitrate-Help": "オーディオトラックのビットレート",
+          "BitratePerChannel": "チャンネルごとのビットレート",
+          "BitratePerChannel-Help": "指定したビットレートがチャンネルごとであるべきか",
+          "Channels": "チャンネル",
+          "Channels-Help": "この新しいオーディオトラックのチャンネル数。\nソースより多くのチャンネルを指定すると、FFMPEGは自動的にアップミックスします。\nソースより少ないチャンネルを指定すると、FFMPEGは自動的にダウンミックスします。",
+          "Codec": "コーデック",
+          "Codec-Help": "オーディオをエンコードするために使用するコーデック",
+          "Field": "フィールド",
+          "Field-Help": "パターンに対して一致するフィールド。値が設定されていないものと一致するようにパターンを空白のままにします。",
+          "NotMatching": "一致しない",
+          "NotMatching-Help": "パターンに一致しないオーディオトラックを変換するか",
+          "Pattern": "パターン",
+          "Pattern-Help": "一致させるための文字列または正規表現、例: \"commentary\" は解説と正確に一致させる、または \".*commentary.*\" は文字列内の任意の場所に解説を一致させる",
+          "PcmFormat": "フォーマット",
+          "PcmFormat-Help": "PCMオーディオをエンコードするために使用するPCMフォーマット。"
+        },
+        "Outputs": {
+          "1": "変換するトラック",
+          "2": "変換するトラックはありません"
+        }
+      },
+      "FfmpegBuilderAudioNormalization": {
+        "Description": "FFMPEGのloudnormフィルターを使用して、ビデオファイル内のすべての音声トラックを正規化します。",
+        "Label": "FFMPEG Builder: 音声正規化",
+        "Fields": {
+          "AllAudio": "すべての音声トラック",
+          "AllAudio-Help": "すべての音声トラックを正規化するか、最初のトラックのみを正規化するかを指定します。",
+          "NotMatching": "一致しない",
+          "NotMatching-Help": "パターンと一致しない音声トラックを削除するかどうか",
+          "Pattern": "パターン",
+          "Pattern-Help": "例えば「commentary」を使用して解説トラックを削除するための正規表現。",
+          "TwoPass": "二重通過",
+          "TwoPass-Help": "音声トラックが二重通過の正規化を使用するかどうか。この方法は正規化を改善しますが、処理時間が増加します。",
+          "UseLanguageCode": "言語コードを使用",
+          "UseLanguageCode-Help": "音声トラックのタイトルの代わりに言語コードを使用するかどうか"
+        },
+        "Outputs": {
+          "1": "音声トラックが正規化され、FFMPEG Builderに追加されました",
+          "2": "正規化する音声トラックが見つかりませんでした"
+        }
+      },
+      "FfmpegBuilderAudioSetLanguage": {
+        "Description": "言語が設定されていないトラックの言語を設定します。トラックに言語が設定されている場合はスキップされます。\n\n出力1: トラックが更新されました\n出力2: 更新が必要なトラックはありませんでした",
+        "Label": "FFMPEG Builder: 言語設定",
+        "Fields": {
+          "Language": "言語",
+          "Language-Help": "[ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) 言語コードを使用します。",
+          "StreamType": "タイプ",
+          "StreamType-Help": "言語を設定するトラックのタイプ"
+        },
+        "Outputs": {
+          "1": "FFMPEG Builderでトラックが更新されました",
+          "2": "更新されていないトラック"
+        }
+      },
+      "FfmpegBuilderAudioTrackRemover": {
+        "Description": "タイトルまたは言語コードに基づいてトラックを削除できます。\n\n空白のタイトル（または「言語コードを使用」に設定された場合の言語コード）は、パターンに関係なく削除されません。",
+        "Label": "FFMPEG Builder: トラック削除ツール (廃止)",
+        "Fields": {
+          "MatchType": "一致する",
+          "MatchType-Help": "一致させる値。",
+          "NotMatching": "一致しない",
+          "NotMatching-Help": "パターンと一致しない音声トラックを削除するかどうか",
+          "Pattern": "パターン",
+          "Pattern-Help": "例えば「commentary」を使用して解説トラックを削除するための正規表現。",
+          "RemoveAll": "すべて削除",
+          "RemoveAll-Help": "出力ファイルから現在のすべてのトラックを削除します。その後、特定のコーデックのトラックを追加するために「トラック追加」を使用できます。",
+          "RemoveIndex": "インデックス削除",
+          "RemoveIndex-Help": "トラックを削除する開始インデックス。これにより、すべてまたはすべての一致するトラックを開始インデックス以降で削除できます。\n0に設定すると、パラメータに一致するすべてが削除されます。\n1に設定すると、最初のトラックを保持し、最初に一致するパラメータの後のトラックを削除します。",
+          "StreamType": "タイプ",
+          "StreamType-Help": "FFMPEG Builderで順序を変更するトラックのタイプ",
+          "UseLanguageCode": "言語コードを使用",
+          "UseLanguageCode-Help": "トラックのタイトルの代わりに言語コードを使用するかどうか"
+        },
+        "Outputs": {
+          "1": "削除するトラックが設定されました",
+          "2": "削除されないトラック"
+        }
+      },
+      "FfmpegBuilderAudioTrackReorder": {
+        "Description": "希望の順序でトラックの順序を変更できます。\n\n言語/音声コーデック/チャンネルを希望の順序で入力します。リストにないものは、元の順序で入力されたものの後に配置されます。\n同じ言語/コーデック/チャンネルのトラックが複数ある場合、入力した順序で最初に並び、その後元の順序で配置されます。\n\n再編成後の最初のトラックはデフォルトのトラックに設定されます..\n\n出力1: トラックが再編成されました\n出力2: トラックの再編成が必要ありませんでした",
+        "Label": "FFMPEG Builder: トラック再編成",
+        "Fields": {
+          "Channels": "チャンネル",
+          "Channels-Help": "音声トラックをソートするための音声チャンネルの順序。このソートは言語の前に行われます。\n例えば「5.1」「7.1」「6.2」「2」",
+          "Languages": "言語",
+          "Languages-Help": "トラックをソートするための言語の順序。このソートはコーデックの前に行われます。",
+          "OrderedTracks": "順序付きコーデック",
+          "OrderedTracks-Help": "トラックのコーデックの順序。この操作は、言語（あれば）の後に行われます。",
+          "StreamType": "タイプ",
+          "StreamType-Help": "FFMPEG Builderで順序を変更するトラックのタイプ"
+        },
+        "Outputs": {
+          "1": "FFMPEG Builderでトラックが再編成されました",
+          "2": "トラックが再編成されていません"
+        }
+      },
+      "FfmpegBuilderAutoChapters": {
+        "Description": "ビデオ内のシーン変更を自動的に検出して章を生成します。",
+        "Label": "FFMPEG Builder: 自動章",
+        "Fields": {
+          "MinimumLength": "最小長",
+          "MinimumLength-Help": "章の最小長（秒単位）",
+          "MinimumLength-Suffix": "秒",
+          "Percent": "パーセント",
+          "Percent-Help": "シーン変更の検出に使用するしきい値のパーセンテージ。良い値は45%です。",
+          "Percent-Suffix": "%"
+        },
+        "Outputs": {
+          "1": "章が生成され、FFMPEG Builderに追加されました",
+          "2": "章が検出されなかったか、ビデオにはすでに章がありました"
+        }
+      },
+      "FfmpegBuilderComskipChapters": {
+        "Description": "comskip EDLファイルを使用し、そのEDL comskipファイルに基づいて章を作成します。",
+        "Label": "FFMPEG Builder: Comskip章",
+        "Fields": {
+          "RunComskipIfNoEdl": "Comskipを実行",
+          "RunComskipIfNoEdl-Help": "comskip（EDL）ファイルが見つからない場合、ファイルに対してcomskipを実行します。"
+        },
+        "Outputs": {
+          "1": "コマーシャルの章が作成され、FFMPEG Builderに追加されました",
+          "2": "コマーシャルが検出されませんでした"
+        }
+      },
+      "FfmpegBuilderCropBlackBars": {
+        "Description": "検出された場合、黒いバーをトリミングするようにFFMPEG Builderを更新しました。",
+        "Label": "FFMPEG Builder：黒いバーをトリミング",
+        "Fields": {
+          "CroppingThreshold": "閾値",
+          "CroppingThreshold-Help": "トリミングするために超えなければならないピクセルの量。例えば、黒いスペースとして検出されたのが5ピクセルだけの場合、これはトリミングするには小さすぎると見なすことができます。"
+        },
+        "Outputs": {
+          "1": "FFMPEG Builderが黒いバーをトリミングするように更新されました",
+          "2": "黒いバーは検出されず、トリミングしません"
+        }
+      },
+      "FfmpegBuilderCustomParameters": {
+        "Description": "実行のためにFFMPEG Builderにカスタムパラメータを追加できます。",
+        "Label": "FFMPEG Builder：カスタムパラメータ",
+        "Fields": {
+          "ForceEncode": "強制エンコード",
+          "ForceEncode-Help": "これにより、通常はエグゼキュータが実行する必要のある変更が検出されていなくても、FFMPEG Builderエグゼキュータが常に実行されるようになります。",
+          "Parameters": "パラメータ",
+          "Parameters-Help": "実行のためにFFMPEG Builderに追加するパラメータ"
+        },
+        "Outputs": {
+          "1": "パラメータが追加されました"
+        }
+      },
+      "FfmpegBuilderDefaultOriginalLanguage": {
+        "Description": "このフロー要素は、元の言語トラックをデフォルトとして設定しようとします。最初に元の言語に一致するトラックを見つけ、それをデフォルトとして設定します。\n\n元の言語のトラックが見つからない場合は、変更は行われません。",
+        "Label": "FFMPEG Builder：デフォルトの元の言語",
+        "Fields": {
+          "MakeFirst": "最初にする",
+          "MakeFirst-Help": "元の言語トラックも最初のトラックになるべきか。",
+          "StreamType": "タイプ",
+          "StreamType-Help": "更新すべきトラックのタイプ"
+        },
+        "Outputs": {
+          "1": "トラックが変更されました",
+          "2": "トラックが変更されていません"
+        }
+      },
+      "FfmpegBuilderDeinterlace": {
+        "Label": "FFMPEG Builder：インターレース解除",
+        "Fields": {
+          "Mode": "モード",
+          "Mode-Help": "使用するインターレース解除方法。詳細についてはヘルプを参照してください。"
+        },
+        "Outputs": {
+          "1": "ビデオストリームにインターレース解除フィルターを追加しました"
+        }
+      },
+      "FFmpegBuilderDurationStart": {
+        "Descriptions": "このフロー要素は、ビデオからセグメントを抽出するための開始点と持続時間を定義できるようにします。",
+        "Label": "FFMPEG Builder：持続時間/開始",
+        "Fields": {
+          "Duration": "持続時間",
+          "Duration-Help": "ビデオファイルの持続時間。0の場合、持続時間は調整されません。",
+          "Start": "開始",
+          "Start-Help": "ビデオファイルの開始。0の場合、開始は調整されません。"
+        },
+        "Outputs": {
+          "1": "持続時間/開始が設定されました",
+          "2": "持続時間/開始の設定に失敗しました"
+        }
+      },
+      "FfmpegBuilderExecutor": {
+        "Description": "他のFFMPEG Builderフロー要素によって作成されたFFMPEG Builderコマンドを実行します。",
+        "Label": "FFMPEG Builder：エグゼキュータ",
+        "Fields": {
+          "HardwareDecoding": "ハードウェアデコーディング",
+          "HardwareDecoding-Help": "エグゼキュータがハードウェアデコーディングを使用しようとすべきかどうか。利用できない場合は、ハードウェアデコーディングが無効のまま実行されます。",
+          "KeepModel": "モデルを保持",
+          "KeepModel-Help": "FFmpegコマンドを作成するために使用されたFFmpegビルダーモデルを保持するかどうかを決定します。無効にすると、フロー要素が正常に実行された後（失敗がない場合）、モデルは削除されます。",
+          "Strictness": "厳格さ",
+          "Strictness-Help": "FFmpegの厳格さをカスタマイズできます。ほとんどのユーザーは「実験的」のままにするべきです。"
+        },
+        "Outputs": {
+          "1": "FFMPEG Builderが正常に実行され、新しい一時ファイルが作成されました",
+          "2": "FFMPEG Builderで変更が検出されず、ファイルは作成されませんでした"
+        }
+      },
+      "FfmpegBuilderHdrToSdr": {
+        "Description": "ビデオストリームがHDRかどうかを確認し、HDRであればFFMPEG Builderを更新してSDRに変換します。",
+        "Label": "FFMPEG Builder：HDRからSDRへ",
+        "Outputs": {
+          "1": "HDRストリームが検出され、FFMPEG Builderが変換するように更新されました",
+          "2": "HDRストリームが見つかりませんでした"
+        }
+      },
+      "FfmpegBuilderKeepOriginalLanguage": {
+        "Description": "このフロー要素は、元の言語とユーザーが定義する追加の言語のみを保持します。\n\n他のすべての言語ストリームは削除されるか、削除のためにマークされます。",
+        "Label": "FFMPEG Builder：元の言語を保持",
+        "Fields": {
+          "AdditionalLanguages": "追加の言語",
+          "AdditionalLanguages-Help": "保持する追加の言語コードのオプションリスト。\n\n[ISO 639-2 言語コード](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) を使用することをお勧めします。",
+          "FirstIfNone": "ない場合は最初",
+          "FirstIfNone-Help": "有効にすると、少なくとも1つのトラックが保持されることが保証されます。元の言語に一致するトラックや追加の言語に一致するトラックが見つからない場合、最初のトラックが保持されます。\n\nこれにより、ビデオに音声が残らない問題を回避します。",
+          "KeepOnlyFirst": "最初のトラックのみ保持",
+          "KeepOnlyFirst-Help": "有効にすると、各言語の最初のトラックのみが保持されます。\n\n例えば、2つの英語トラック、3つのスペイン語トラック、1つのドイツ語トラックがある場合、元の言語がスペイン語で、追加の言語が'eng'に設定されていると、結果は1つの英語トラックと1つのスペイン語トラックとなり、残りは削除されます。",
+          "StreamType": "タイプ",
+          "StreamType-Help": "更新すべきトラックのタイプ",
+          "TreatEmptyAsOriginal": "空を元の言語として扱う",
+          "TreatEmptyAsOriginal-Help": "有効にすると、言語が設定されていないトラックは元の言語のように扱われます。\n\n例えば、元の言語がマオリ語で、トラックに言語が設定されていない場合、それはマオリ語として扱われます。"
+        },
+        "Outputs": {
+          "1": "トラックが変更されました",
+          "2": "トラックが変更されていません"
+        }
+      },
+      "FFmpegBuilderLanguageRemover": {
+        "Description": "指定された言語に基づいて、ビデオファイルから不要なオーディオおよび/または字幕を削除する基本的なフローユニットです。",
+        "Label": "FFMPEG Builder: 言語除去",
+        "Fields": {
+          "Languages": "言語",
+          "Languages-Help": "一致しないオプションに応じて、削除または保持する言語のリストです。",
+          "NotMatching": "一致しない",
+          "NotMatching-Help": "指定された言語と一致しないオーディオトラックを削除するかどうかを示します。",
+          "StreamType": "トラックタイプ",
+          "StreamType-Help": "FFMPEG Builderで削除するトラックの種類（オーディオまたは字幕）を指定します。"
+        },
+        "Outputs": {
+          "1": "削除対象としてマークされたトラック",
+          "2": "削除対象としてマークされていないトラック"
+        }
+      },
+      "FfmpegBuilderMetadataRemover": {
+        "Description": "FFMPEG Builderからメタデータを削除します。ファイルが処理されると、選択されたメタデータが削除されます。\n\n注意: このフロー要素に影響を与えるメタデータのみが対象です。このノードが実行された後にメタデータが追加された場合、それは影響を受けません。",
+        "Label": "FFMPEG Builder: メタデータ削除",
+        "Fields": {
+          "Audio": "音声",
+          "Audio-Help": "音声トラックからこのメタデータを削除する必要があるかどうか",
+          "RemoveAdditionalMetadata": "追加メタデータを削除",
+          "RemoveAdditionalMetadata-Help": "追加メタデータを削除する必要があるかどうか。追加メタデータは、iTunesなどによってビデオファイルに追加されることのある非標準メタデータです。",
+          "RemoveImages": "画像を削除",
+          "RemoveImages-Help": "メタデータ内の画像が削除されるべきかどうか",
+          "RemoveLanguage": "言語を削除",
+          "RemoveLanguage-Help": "トラックから言語を削除する必要があるかどうか",
+          "RemoveTitle": "タイトルを削除",
+          "RemoveTitle-Help": "トラックからタイトルを削除する必要があるかどうか",
+          "Subtitle": "字幕",
+          "Subtitle-Help": "字幕トラックからこのメタデータを削除する必要があるかどうか",
+          "Video": "ビデオ",
+          "Video-Help": "ビデオトラックからこのメタデータを削除する必要があるかどうか"
+        },
+        "Outputs": {
+          "1": "FFMPEG Builderからメタデータが削除されました"
+        }
+      },
+      "FfmpegBuilderPreExecute": {
+        "Description": "この要素は、[FFMPEG Builder: 実行者](https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder)がFFmpegを実行する直前にカスタムコードを実行することを可能にします。\n\nこれにより、FFmpegに渡される引数を変更できます。",
+        "Label": "FFMPEG Builder: 事前実行",
+        "Fields": {
+          "Code": "コード"
+        },
+        "Outputs": {
+          "1": "事前実行が設定されました"
+        }
+      },
+      "FfmpegBuilderProres": {
+        "Description": "ビデオをproresフォーマットにエンコードします。",
+        "Label": "FFMPEG Builder: Prores",
+        "Fields": {
+          "Encoder": "エンコーダー",
+          "Encoder-Help": "使用するFFmpeg proresエンコーダー。",
+          "PixelFormat": "ピクセルフォーマット",
+          "Profile": "プロファイル",
+          "Quality": "品質",
+          "Quality-Help": "最大品質は0、最小品質は32。9から13が良い値です。"
+        },
+        "Outputs": {
+          "1": "ビデオがproresを使用するように設定されました"
+        }
+      },
+      "FfmpegBuilderRemoveAttachments": {
+        "Description": "ビデオからすべての添付ファイルを削除します（存在する場合）。",
+        "Label": "FFMPEG Builder: 添付ファイルを削除",
+        "Outputs": {
+          "1": "FFMPEG Builderが添付ファイルを削除するように設定されました。"
+        }
+      },
+      "FfmpegBuilderRemuxToMkv": {
+        "Description": "ビデオファイルをMKVコンテナにリマックスします。",
+        "Label": "FFMPEG Builder: MKVにリマックス",
+        "Outputs": {
+          "1": "FFMPEG BuilderがMKVにリマックスするように設定されました"
+        }
+      },
+      "FfmpegBuilderRemuxToMov": {
+        "Description": "ビデオファイルをMOVコンテナにリマックスします。",
+        "Label": "FFMPEG Builder: MOVにリマックス",
+        "Outputs": {
+          "1": "FFMPEG BuilderがMOVにリマックスするように設定されました"
+        }
+      },
+      "FfmpegBuilderRemuxToMP4": {
+        "Description": "ビデオファイルをMP4コンテナにリマックスします。",
+        "Label": "FFMPEG Builder: MP4にリマックス",
+        "Fields": {
+          "UseHvc1": "HVC1を使用",
+          "UseHvc1-Help": "HVC1を使用するか、HEV1のデフォルトを使用するか"
+        },
+        "Outputs": {
+          "1": "FFMPEG BuilderがMP4にリマックスするように設定されました"
+        }
+      },
+      "FfmpegBuilderRemuxToMxf": {
+        "Description": "ビデオファイルをMXFコンテナにリマックスします。",
+        "Label": "FFMPEG Builder: MXFにリマックス",
+        "Outputs": {
+          "1": "FFMPEG BuilderがMXFにリマックスするように設定されました"
+        }
+      },
+      "FfmpegBuilderRemuxToWebm": {
+        "Description": "ビデオファイルをWEBMコンテナにリマックスします。",
+        "Label": "FFMPEG Builder: WEBMにリマックス",
+        "Outputs": {
+          "1": "FFMPEG BuilderがWEBMにリマックスするように設定されました"
+        }
+      },
+      "FfmpegBuilderScaler": {
+        "Description": "指定された寸法にビデオをスケールします。ビデオのアスペクト比を保持するので、ビデオが1920x1000の場合、720Pを選択すると1280x668にスケールされます。",
+        "Label": "FFMPEG Builder: ビデオスケーラー",
+        "Fields": {
+          "Force": "強制",
+          "Force-Help": "チェックされている場合、作業ファイルがすでにこの解像度（またはこの解像度に近い）である場合でも、ビデオが強制的にスケールされます。",
+          "OnlyIfLarger": "大きい場合のみ",
+          "OnlyIfLarger-Help": "ビデオが現在この解像度よりも大きい場合にのみ、ビデオがこの解像度にスケールされます。",
+          "Resolution": "解像度"
+        },
+        "Outputs": {
+          "1": "FFMPEG Builderのスケールフィルターが追加されました",
+          "2": "ビデオはすでにスケール解像度内/近くにありました"
+        }
+      },
+      "FfmpegBuilderSetDefaultTrack": {
+        "Description": "FFMPEG Builderでトラックをデフォルトとして設定します。",
+        "Label": "FFMPEG Builder: デフォルトトラックを設定",
+        "Fields": {
+          "Index": "インデックス",
+          "Index-Help": "デフォルトとして設定するトラックのインデックス、言語が指定されていない場合のみ使用されます。",
+          "Language": "言語",
+          "Language-Help": "使用するオプションの[ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes)言語コード。",
+          "StreamType": "タイプ",
+          "StreamType-Help": "FFMPEG Builderでデフォルトとして設定するトラックのタイプ"
+        },
+        "Outputs": {
+          "1": "トラックがデフォルトとして設定されました",
+          "2": "トラックをデフォルトとして設定できませんでした"
+        }
+      },
+      "FfmpegBuilderSetDevice": {
+        "Description": "エンコーダ/デコーダがサポートしている場合、ハードウェアエンコーディング/デコーディングに使用するデバイスを設定します。",
+        "Label": "FFMPEG Builder: デバイス設定",
+        "Fields": {
+          "Device": "デバイス",
+          "Device-Help": "デバイスへのパス、またはデバイスを指定しない場合は空白のままにします。"
+        },
+        "Outputs": {
+          "1": "デバイスが設定されました"
+        }
+      },
+      "FfmpegBuilderSetFps": {
+        "Description": "FFMPEG Builderでフレームレート（FPS）を設定します",
+        "Label": "FFMPEG Builder: FPS設定",
+        "Fields": {
+          "Fps": "FPS",
+          "Fps-Help": "希望するFPS。入力FPSと希望FPSが一致しない場合、FFMPEGは変換します（例: 23.976, 24, 30, 60）。",
+          "OnlyIfHigher": "現在のFPSが高い場合のみ",
+          "OnlyIfHigher-Help": "FPSを調整する必要があるのは、現在のFPSが高い場合のみです。"
+        },
+        "Outputs": {
+          "1": "FPSが更新されました",
+          "2": "変更は必要ありませんでした"
+        }
+      },
+      "FfmpegBuilderSetTrackTitles": {
+        "Description": "FFMPEG Builderでフォーマッターに基づいてトラックタイトルを設定します。",
+        "Label": "FFMPEG Builder: トラックタイトル設定",
+        "Fields": {
+          "CommentaryFormat": "解説",
+          "CommentaryFormat-Help": "解説トラックの扱い方。同じフォーマッターを使用することも、別の方法を使用することもできます。",
+          "Format": "フォーマット",
+          "Format-Help": "_Help_を参照して詳細情報を確認してください。",
+          "Separator": "区切り文字",
+          "Separator-Help": "フォーマット値の間に使用される文字列の区切り文字。空の値が保持されないようにする必要があります。",
+          "StreamType": "タイプ",
+          "StreamType-Help": "FFMPEG Builderでデフォルトとして設定するトラックのタイプ"
+        },
+        "Outputs": {
+          "1": "トラックタイトルが更新されました",
+          "2": "トラックタイトルには影響がありませんでした"
+        }
+      },
+      "FfmpegBuilderStart": {
+        "Description": "FFMPEG Builderのインスタンスを作成し、FFMPEGエグゼキュータと共に実行するFFMPEG引数を構築します。",
+        "Label": "FFMPEG Builder: 開始",
+        "Outputs": {
+          "1": "FFMPEG Builderが作成され、FFMPEG Builderフローハンドルを追加する準備ができました"
+        }
+      },
+      "FfmpegBuilderSubtitleClearDefault": {
+        "Description": "このフロー要素は、字幕からデフォルトフラグをクリアします。",
+        "Label": "FFMPEG Builder: 字幕デフォルトクリア",
+        "Fields": {
+          "LeaveForced": "強制を保持",
+          "LeaveForced-Help": "チェックが入っていると、すべての強制字幕が変更されず、元の設定を維持します。これは「強制デフォルトを設定する」前に実行されるため、優先されます。",
+          "SetForcedDefault": "強制デフォルトを設定",
+          "SetForcedDefault-Help": "チェックが入っていると、強制フィールドが設定された最初の字幕がデフォルトとして設定され、他のすべてはデフォルトフラグがクリアされます。"
+        },
+        "Outputs": {
+          "1": "字幕のデフォルトフラグが変更されました",
+          "2": "字幕には変更がありませんでした"
+        }
+      },
+      "FfmpegBuilderSubtitleFormatRemover": {
+        "Description": "見つかった場合、ビデオファイルから字幕を削除します。",
+        "Label": "FFMPEG Builder: 字幕フォーマットリムーバー",
+        "Fields": {
+          "RemoveAll": "すべて削除",
+          "RemoveAll-Help": "チェックが入っている場合、すべての字幕がファイルから削除されます。そうでなければ、下で選択されたものだけが削除されます。",
+          "SubtitlesToRemove": "削除する字幕"
+        },
+        "Outputs": {
+          "1": "FFMPEG Builderで削除対象としてマークされた字幕",
+          "2": "削除する字幕はありません"
+        }
+      },
+      "FfmpegBuilderSubtitleTrackMerge": {
+        "Label": "FFMPEG Builder: 字幕トラックマージ",
+        "Fields": {
+          "Default": "デフォルト",
+          "Default-Help": "字幕をデフォルト字幕にするかどうか",
+          "DeleteAfterwards": "マージ後削除",
+          "DeleteAfterwards-Help": "マージ後に字幕ファイルを削除するかどうか",
+          "Forced": "強制",
+          "Forced-Help": "字幕を強制するかどうか",
+          "Language": "言語",
+          "Language-Help": "追加された字幕のオプションの[ISO 639-2](https://ja.wikipedia.org/wiki/ISO_639-2)言語コード。",
+          "MatchFilename": "ファイル名を一致させる",
+          "MatchFilename-Help": "チェックが入っている場合、入力ファイルまたは作業ファイルと同じファイル名の字幕のみがマージされます。",
+          "Pattern": "パターン",
+          "Pattern-Help": "ファイルを一致させるためのオプションの正規表現。",
+          "Subtitles": "字幕",
+          "Subtitles-Help": "追加するために検索する字幕を選択",
+          "Title": "タイトル",
+          "Title-Help": "字幕のタイトル。設定されていない場合、見つかった場合は言語がタイトルとして使用されます。",
+          "UseSourceDirectory": "ソースディレクトリを使用",
+          "UseSourceDirectory-Help": "チェックが入っている場合、元のソースディレクトリが検索され、それ以外の場合は作業ディレクトリが使用されます。"
+        },
+        "Outputs": {
+          "1": "字幕が見つかり追加されました",
+          "2": "字幕は見つかりませんでした"
+        }
+      },
+      "FfmpegBuilderSubtitleTrackRemover": {
+        "Description": "タイトルまたは言語コードに基づいて字幕を削除できます。\n\n空白の言語（または「タイトルを使用」に設定されている場合のタイトル）は、パターンに関係なく削除されません。",
+        "Label": "FFMPEG Builder: 字幕トラックリムーバー",
+        "Fields": {
+          "NotMatching": "一致しない",
+          "NotMatching-Help": "パターンと一致しない字幕を削除するかどうか",
+          "Pattern": "パターン",
+          "Pattern-Help": "一致させるための正規表現。例えば「eng」で英語トラックを削除します。",
+          "UseLanguageCode": "言語コードを使用",
+          "UseLanguageCode-Help": "音声トラックの言語コードをタイトルの代わりに使用するかどうか"
+        },
+        "Outputs": {
+          "1": "FFMPEG Builderで削除対象としてマークされた字幕",
+          "2": "削除する字幕はありません"
+        }
+      },
+      "FfmpegBuilderTrackRemover": {
+        "Description": "指定された条件に基づいてトラックを削除できます。",
+        "Label": "FFMPEG Builder: トラックリムーバー",
+        "Fields": {
+          "CustomTrackSelection": "削除",
+          "StreamType": "タイプ",
+          "StreamType-Help": "FFMPEG Builderで再注文するトラックのタイプ",
+          "TrackSelectionOptions": "",
+          "TrackSelectionOptionsKey": "プロパティ",
+          "TrackSelectionOptionsValue": "値"
+        },
+        "Outputs": {
+          "1": "削除対象に設定されたトラック",
+          "2": "削除対象に設定されていないトラック"
+        }
+      },
+      "FfmpegBuilderTrackSorter": {
+        "Description": "このフロー要素は、ユーザーが設定したソートオプションに基づいてトラックをソートします。",
+        "Label": "FFMPEG ビルダー: トラックソーター",
+        "Fields": {
+          "SetFirstDefault": "デフォルトを設定",
+          "SetFirstDefault-Help": "ソート後に最初のトラックをデフォルトとして設定するかどうか。",
+          "Sorters": "ソーター",
+          "Sorters-Help": "トラックをソートするための1つ以上のソートオプションを追加します。",
+          "SortersKey": "フィールド",
+          "SortersValue": "値",
+          "StreamType": "タイプ",
+          "StreamType-Help": "更新すべきトラックのタイプ"
+        },
+        "Outputs": {
+          "1": "トラックが修正されました",
+          "2": "トラックは変更されていません"
+        }
+      },
+      "FfmpegBuilderVideo10Bit": {
+        "Description": "FFMPEG ビルダーを設定してビデオストリームを10ビットでエンコードします。",
+        "Label": "FFMPEG ビルダー: ビデオ 10 ビット",
+        "Outputs": {
+          "1": "FFMPEG ビルダーのビデオストリームが10ビットでエンコードされるように設定されました"
+        }
+      },
+      "FfmpegBuilderVideoBitrate": {
+        "Description": "FFMPEG ビルダーを設定して、ビデオのビットレートを指定します。",
+        "Label": "FFMPEG ビルダー: ビデオビットレート",
+        "Fields": {
+          "Bitrate": "ビットレート",
+          "Bitrate-Help": "ビデオのターゲットビットレート（キロバイト）",
+          "Bitrate-Suffix": "KB / %",
+          "Percent": "パーセント",
+          "Percent-Help": "選択した場合、ビットレートは現在のビットレートのパーセントとして計算されます。"
+        },
+        "Outputs": {
+          "1": "FFMPEG ビルダーのビデオストリームが更新されました"
+        }
+      },
+      "FfmpegBuilderVideoBitrateEncode": {
+        "Description": "ビットレートに基づいて、使いやすいプリセットでビデオをエンコードするようにFFMPEG Builderを設定します。",
+        "Label": "FFMPEG ビルダー: ビットレートエンコード",
+        "Fields": {
+          "Bitrate": "ビットレート",
+          "Bitrate-Suffix": "Kbps",
+          "Codec": "コーデック",
+          "Encoder": "エンコーダ",
+          "Encoder-Help": "強制的に使用するエンコーダ。 使用できないハードウェアエンコーダを指定すると、エンコードは失敗します。",
+          "HardwareEncoding": "ハードウェアエンコード",
+          "HardwareEncoding-Help": "チェックすると、処理ノードにハードウェアエンコーダが見つかるかテストし、見つかった場合はハードウェアエンコーディングを使用し、そうでない場合はCPUエンコーディングにフォールバックします。"
+        },
+        "Outputs": {
+          "1": "FFMPEG ビルダーのビデオストリームがエンコードするように設定されました"
+        }
+      },
+      "FfmpegBuilderVideoCodec": {
+        "Description": "指定されたコーデックでビデオストリームをエンコードするようにFFMPEG Builderを設定します。",
+        "Label": "FFMPEG ビルダー: ビデオコーデック",
+        "Fields": {
+          "DisableOtherVideoStreams": "最初だけ",
+          "DisableOtherVideoStreams-Help": "チェックすると、ファイルに複数のビデオストリームがある場合、実行後に最初のビデオストリーム以外のすべてがファイルから削除されます。",
+          "Force": "強制エンコード",
+          "Force-Help": "ターゲットビデオコーデックですでに存在している場合でも、ビデオのエンコードを強制します。",
+          "VideoCodec": "ビデオコーデック",
+          "VideoCodec-Help": "ビデオが存在すべきコーデック（例: hevc, h264）。\n空白のままにすると、すべての元のビデオトラックがコピーされます。",
+          "VideoCodecParameters": "ビデオコーデックパラメータ",
+          "VideoCodecParameters-Help": "ビデオをエンコードするために使用するパラメータ（例: \"hevc_nvenc -preset hq -crf 23\" は、HQプリセット、定数レートファクター23を使用してhevcにエンコードし、NVIDIAハードウェアアクセラレーションを使用）。"
+        },
+        "Outputs": {
+          "1": "FFMPEG ビルダーのビデオストリームがエンコードするように設定されました",
+          "2": "ビデオはすでにターゲットコーデックにあり、再エンコードされません"
+        }
+      },
+      "FfmpegBuilderVideoEncode": {
+        "Description": "使いやすいプリセットでビデオをエンコードするようにFFMPEG Builderを設定します。",
+        "Label": "FFMPEG ビルダー: ビデオエンコード",
+        "Fields": {
+          "Codec": "コーデック",
+          "Encoder": "エンコーダ",
+          "Encoder-Help": "強制的に使用するエンコーダ。 使用できないハードウェアエンコーダを指定すると、エンコードは失敗します。",
+          "HardwareEncoding": "ハードウェアエンコード",
+          "HardwareEncoding-Help": "チェックすると、処理ノードにハードウェアエンコーダが見つかるかテストし、見つかった場合はハードウェアエンコーディングを使用し、そうでない場合はCPUエンコーディングにフォールバックします。",
+          "Quality": "品質",
+          "Quality-Help": "対数的な品質スケールで、このスライダーの小さな変化がファイルサイズ/品質に大きな変化を引き起こします。\n数値が小さいほど品質が高くなります。\n詳細についてはヘルプを参照してください。",
+          "Quality-Suffix": "(高品質、大きなファイル)",
+          "Speed": "スピード"
+        },
+        "Outputs": {
+          "1": "FFMPEG ビルダーのビデオストリームがエンコードするように設定されました"
+        }
+      },
+      "FfmpegBuilderVideoMaxBitrate": {
+        "Description": "FFMPEG ビルダーでビデオのビットレートを制限します。",
+        "Label": "FFMPEG ビルダー: ビデオ最大ビットレート",
+        "Fields": {
+          "Bitrate": "最大ビットレート",
+          "Bitrate-Help": "ビデオの最大ビットレート（キロバイト）",
+          "Bitrate-Suffix": "KB"
+        },
+        "Outputs": {
+          "1": "FFMPEG ビルダーのビデオストリームが更新されました"
+        }
+      },
+      "FfmpegBuilderVideoTag": {
+        "Description": "ファイルにビデオタグを設定します。",
+        "Label": "FFMPEG ビルダー: ビデオタグ",
+        "Fields": {
+          "Tag": "タグ",
+          "Tag-Help": "ビデオファイルに追加するタグ"
+        },
+        "Outputs": {
+          "1": "FFMPEG ビルダーのタグが追加されました"
+        }
+      },
+      "FFmpegBuilderWatermark": {
+        "Description": "動画ファイルに透かしを追加します。",
+        "Label": "FFMPEG Builder: 透かし",
+        "Fields": {
+          "Height": "高さ",
+          "Height-Help": "画像のカスタム高さを設定するか、幅が設定されている場合はソースの高さまたはスケーリングを0に設定します。",
+          "Image": "画像",
+          "Image-Help": "透かしの画像ファイルで、最良の結果を得るにはPNGファイルを使用してください。",
+          "Opacity": "不透明度",
+          "Opacity-Help": "オーバーレイ画像の透明度レベルを調整します。0（完全に透明）から100（完全に不透明）までの範囲です。",
+          "Position": "位置",
+          "Position-Help": "透かしを配置する場所",
+          "Width": "幅",
+          "Width-Help": "画像のカスタム幅を設定するか、高さが設定されている場合はソースの幅またはスケーリングを0に設定します。",
+          "XPos": "X位置",
+          "XPos-Help": "X軸上の透かしの位置",
+          "YPos": "Y位置",
+          "YPos-Help": "Y軸上の透かしの位置"
+        },
+        "Outputs": {
+          "1": "透かしが追加されました"
+        }
+      },
+      "ReadVideoInfo": {
+        "Description": "現在の作業ファイルから動画情報を読み取り、vi変数を更新します。",
+        "Label": "動画情報を読み取る",
+        "Outputs": {
+          "1": "ファイルは動画ファイルで、情報がフローに読み込まれました",
+          "2": "ファイルは動画ファイルではないか、読み取りに失敗しました"
+        }
+      },
+      "SubtitleExtractor": {
+        "Description": "単一の字幕トラックを抽出し、宛先に保存します。srt、ass、およびssa形式を抽出できます。\nこれにより、作業ファイルは更新されず、作業ファイルは入力ファイルと同じになります。\n\n出力1: 字幕が抽出されました\n出力2: 抽出する字幕が見つかりませんでした",
+        "Label": "字幕抽出",
+        "Fields": {
+          "ExtractAll": "すべて抽出",
+          "ExtractAll-Help": "すべての一致する字幕を抽出する必要があるかどうか。",
+          "ForcedOnly": "強制のみ",
+          "ForcedOnly-Help": "強制字幕のみを抽出する必要があるかどうか。",
+          "Language": "言語",
+          "Language-Help": "使用する[ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes)言語コード。",
+          "OnlyTextSubtitles": "テキスト字幕のみ",
+          "OnlyTextSubtitles-Help": "テキスト字幕のみを抽出する必要がある場合、画像ベースの字幕はスキップされます。",
+          "OutputFile": "出力ファイル",
+          "OutputFile-Help": "出力ファイルを保存する場所。例: \"'{folder.Orig.FullName}\\{file.Orig.FileName}.srt'\"を使用して、元のファイルと同じ場所にsrt出力として保存します。\n空白のままにすると、元の入力ファイルと同じフォルダーにsrt字幕が作成されます。",
+          "SetWorkingFile": "作業ファイルとして設定",
+          "SetWorkingFile-Help": "これがチェックされている場合、字幕が抽出されると、作業ファイルはこの抽出された字幕に変更されます。元の作業ファイルは削除されません。",
+          "Title": "タイトル",
+          "Title-Help": "任意で、タイトルを入力します。これは正規表現または一致する必要がある文字列にすることができます。"
+        },
+        "Outputs": {
+          "1": "字幕が抽出されました",
+          "2": "字幕が抽出されませんでした"
+        }
+      },
+      "VideoAlreadyProcessed": {
+        "Description": "動画ファイルが既にFileFlowsによって処理されているかどうかをテストします。",
+        "Label": "動画は既に処理されています",
+        "Outputs": {
+          "1": "動画は既に処理されています",
+          "2": "動画は処理されていません"
+        }
+      },
+      "VideoBitCheck": {
+        "Description": "動画が8ビット、10ビット、12ビットまたは不明かを確認します。",
+        "Label": "動画ビットチェック",
+        "Outputs": {
+          "1": "動画は8ビットです",
+          "2": "動画は10ビットです",
+          "3": "動画は12ビットです",
+          "4": "不明"
+        }
+      },
+      "VideoBitrateGreaterThan": {
+        "Description": "動画のビットレートが指定されたビットレートより大きいかどうかをテストします。",
+        "Label": "動画ビットレートがより大きい",
+        "Fields": {
+          "Bitrate": "ビットレート",
+          "Bitrate-Suffix": "KBps"
+        },
+        "Outputs": {
+          "1": "ビットレートはより大きいです",
+          "2": "ビットレートはより大きくありません"
+        }
+      },
+      "VideoDuration": {
+        "Description": "動画の長さが指定されたパラメータと一致するかどうかをテストします。",
+        "Label": "動画の長さ",
+        "Fields": {
+          "Match": "一致",
+          "ValueHigh": " ",
+          "ValueLow": "長さ"
+        },
+        "Outputs": {
+          "1": "動画の長さが一致しています",
+          "2": "動画の長さが一致していません"
+        }
+      },
+      "VideoDurationCompare": {
+        "Description": "動画の元の長さと最終的な長さを比較します。",
+        "Label": "動画の長さ比較",
+        "Fields": {
+          "AllowedDifference": "許容される差",
+          "AllowedDifference-Help": "動画の元の長さと最終的な長さの間で許可される時間の差。"
+        },
+        "Outputs": {
+          "1": "動画は許可された長さの差の範囲内です",
+          "2": "動画は許可された長さの差の範囲外です"
+        }
+      },
+      "VideoExtractAudio": {
+        "Description": "ビデオファイルから音声を抽出し、ファイルに保存します。",
+        "Label": "ビデオ音声抽出",
+        "Fields": {
+          "Channels": "チャンネル",
+          "Channels-Help": "一致させるためにソーストラックが持つ必要のあるチャンネル数。チャンネルの一致をスキップするには0に設定します。",
+          "Codec": "コーデック",
+          "Codec-Help": "ストリームコーデックをテストするために使用される正規表現",
+          "Language": "言語",
+          "Language-Help": "ストリーム言語をテストするために使用される正規表現",
+          "NotMatching": "一致しない",
+          "NotMatching-Help": "パターンに一致しない音声トラックを抽出する必要があるかどうか",
+          "OutputBitrate": "出力ビットレート",
+          "OutputBitrate-Help": "抽出された音声トラックのビットレート",
+          "OutputCodec": "出力コーデック",
+          "OutputCodec-Help": "抽出された音声を保存するためのコーデック",
+          "OutputFile": "出力ファイル",
+          "OutputFile-Help": "出力ファイルを保存する場所、例えば「'{folder.Orig.FullName}\\{file.Orig.FileName}.mp3'」は、元のファイルとともにmp3出力として保存します。\n拡張子が設定されていない場合、出力コーデックが拡張子を決定するために使用されます。",
+          "SetWorkingFile": "作業ファイルとして設定",
+          "SetWorkingFile-Help": "これにチェックが入っている場合、字幕が抽出されると、作業ファイルがこの抽出された字幕に変更されます。元の作業ファイルは削除されません。",
+          "Title": "タイトル",
+          "Title-Help": "ストリームタイトルをテストするために使用される正規表現"
+        },
+        "Outputs": {
+          "1": "音声が抽出され、ファイルに保存されました",
+          "2": "抽出するトラックが見つかりませんでした"
+        }
+      },
+      "VideoFile": {
+        "Description": "ビデオ情報が読み取られ、処理可能な入力ビデオファイル",
+        "Label": "ビデオファイル",
+        "Fields": {
+          "AnalyzeDuration": "分析時間",
+          "AnalyzeDuration-Help": "入力を調べるために分析される秒数を指定します",
+          "AnalyzeDuration-Suffix": "秒",
+          "ProbeSize": "プローブサイズ",
+          "ProbeSize-Help": "実行時にFFMPEGで使用するプローブサイズ。",
+          "ProbeSize-Suffix": "MB"
+        },
+        "Outputs": {
+          "1": "ライブラリからのビデオファイル"
+        }
+      },
+      "VideoHasErrors": {
+        "Description": "ビデオファイルにエラーが含まれているかテストします",
+        "Label": "ビデオにエラーあり",
+        "Fields": {
+          "HardwareDecoding": "ハードウェアデコーディング",
+          "HardwareDecoding-Help": "ハードウェアデコーディングを使用する試みを行うべきかどうか。利用できない場合、実行はハードウェアデコーディングなしで進行します。"
+        },
+        "Outputs": {
+          "1": "エラーが含まれています",
+          "2": "エラーは検出されませんでした"
+        }
+      },
+      "VideoHasStream": {
+        "Description": "ビデオファイルにトラックが含まれているかテストします",
+        "Label": "ビデオにストリームあり",
+        "Fields": {
+          "Channels": "チャンネル",
+          "Channels-Help": "テストするチャンネル数。 このチェックを無視するには空白のままにします",
+          "CheckDeleted": "削除されたものを確認",
+          "CheckDeleted-Help": "削除されたトラックもチェックする必要があるかどうか",
+          "Codec": "コーデック",
+          "Codec-Help": "ストリームコーデックをテストするために使用される正規表現",
+          "Default": "デフォルト",
+          "Default-Help": "このストリームがデフォルトストリームであるべきかどうか。",
+          "Forced": "強制",
+          "Forced-Help": "このストリームが強制ストリームであるべきかどうか。",
+          "Invert": "反転",
+          "Invert-Help": "結果を反転させ、実質的には「ビデオにはストリームがない」になります。",
+          "Language": "言語",
+          "Language-Help": "ストリーム言語をテストするために使用される正規表現",
+          "Stream": "タイプ",
+          "Stream-Help": "探しているストリームのタイプ",
+          "Title": "タイトル",
+          "Title-Help": "ストリームタイトルをテストするために使用される正規表現"
+        },
+        "Outputs": {
+          "1": "一致するトラックが含まれています",
+          "2": "一致するトラックは含まれていません"
+        }
+      },
+      "VideoIs10Bit": {
+        "Description": "ビデオファイルが10ビットであるかテストします。",
+        "Label": "ビデオは10ビット",
+        "Outputs": {
+          "1": "ビデオは10ビットです",
+          "2": "ビデオは10ビットではありません"
+        }
+      },
+      "VideoIs12Bit": {
+        "Description": "ビデオファイルが12ビットであるかテストします。",
+        "Label": "ビデオは12ビット",
+        "Outputs": {
+          "1": "ビデオは12ビットです",
+          "2": "ビデオは12ビットではありません"
+        }
+      },
+      "VideoIs8Bit": {
+        "Description": "ビデオファイルが8ビットであるかテストします。",
+        "Label": "ビデオは8ビット",
+        "Outputs": {
+          "1": "ビデオは8ビットです",
+          "2": "ビデオは8ビットではありません"
+        }
+      },
+      "VideoIsInterlaced": {
+        "Description": "ビデオファイルがインターレースされているかテストします。",
+        "Label": "ビデオはインターレースされています",
+        "Fields": {
+          "Threshold": "しきい値",
+          "Threshold-Help": "ビデオがインターレースと見なされるために検出されたインターレースフレームの割合"
+        },
+        "Outputs": {
+          "1": "ビデオはインターレースされています",
+          "2": "ビデオはインターレースされていません"
+        }
+      },
+      "VideoResolution": {
+        "Description": "ビデオの解像度を決定し、それに応じて出力します。",
+        "Label": "ビデオ解像度",
+        "Outputs": {
+          "1": "ビデオは4Kです",
+          "2": "ビデオは1080pです",
+          "3": "ビデオは720pです",
+          "4": "ビデオはSDです"
+        }
+      }
+    }
+  },
+  "H": {
+    "264": "H.264",
+    "265": "H.265"
+  },
+  "Plugins": {
+    "VideoNodes": {
+      "Description": "ビデオファイルの処理のためのプラグインで、ビデオファイルの変換、ビデオファイルの検出、アップスケーリング、ダウンスケーリング、トランスコーディングなどを含みます。",
+      "Label": "ビデオ"
+    }
+  }
+}

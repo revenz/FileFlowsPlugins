@@ -58,6 +58,12 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
     [DefaultValue("experimental")]
     [Select(nameof(StrictOptions), 2)]
     public string Strictness { get; set; }
+    
+    /// <summary>
+    /// Gets or sets if the FFmpeg model should be kept
+    /// </summary>
+    [Boolean(3)]
+    public bool KeepModel { get; set; }
 
     private static List<ListOption>? _StrictOptions;
     /// <summary>
@@ -81,13 +87,6 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             return _StrictOptions;
         }
     }
-    
-    /// <summary>
-    /// Gets or sets the probe size in bytes
-    /// </summary>
-    [FormInput(FormInputType.FileSize, 3)]
-    [DefaultValue(5_000_000)]
-    public long ProbeSize { get; set; }
 
     /// <inheritdoc />
     public override int Execute(NodeParameters args)
@@ -177,8 +176,13 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             ffArgs.AddRange(model.MetadataParameters);
         }
 
-        if (model.ForceEncode == false && hasChange == false && (string.IsNullOrWhiteSpace(model.Extension) || args.WorkingFile.ToLower().EndsWith("." + model.Extension.ToLower())))
-            return 2; // nothing to do 
+        if (model.ForceEncode == false && hasChange == false && (string.IsNullOrWhiteSpace(model.Extension) ||
+                                                                 args.WorkingFile.ToLower()
+                                                                     .EndsWith("." + model.Extension.ToLower())))
+        {
+            DoClearModel();
+            return 2; // nothing to do
+        }
 
         var localFile = args.FileService.GetLocalPath(args.WorkingFile);
         if (localFile.IsFailed)
@@ -199,13 +203,11 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         // this is used by the qsv filter for hw decoding
         List<string> afterStartArguments = new();
 
-        if (ProbeSize >= 32)
+        startArgs.AddRange(new[]
         {
-            startArgs.AddRange(new[]
-            {
-                "-probesize", ProbeSize.ToString()
-            });
-        }
+            "-probesize", VideoInfoHelper.ProbeSize + "M",
+            "-analyzeduration", VideoInfoHelper.AnalyzeDuration.ToString()
+        });
 
         bool isEncodingVideo =
             model.VideoStreams.Any(x => x.Deleted == false && x.EncodingParameters?.Any() == true || x.Filter?.Any() == true);
@@ -382,8 +384,21 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                 }
             }
         }
-
+        DoClearModel();
         return 1;
+    }
+
+    /// <summary>
+    /// Checks if the model should be kept and if not, clears it
+    /// </summary>
+    private void DoClearModel()
+    {
+        if (KeepModel)
+            return;
+        Args.Logger?.ILog("Clearing FFmpeg Builder Model");
+        
+        if(Variables.ContainsKey(MODEL_KEY))
+            Variables.Remove(MODEL_KEY);
     }
 
     /// <summary>

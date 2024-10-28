@@ -1,0 +1,61 @@
+{
+  "Flow": {
+    "Parts": {
+      "PlexAnalyze": {
+        "Description": "작업 파일을 분석하기 위해 Plex 서버에 메시지를 보냅니다. \n작업 파일은 이 작업을 수행하기 위해 Plex에 이미 등록되어 있어야 합니다.",
+        "Label": "Plex 분석",
+        "Fields": {
+          "AccessToken": "액세스 토큰",
+          "AccessToken-Help": "[액세스 토큰](https://github.com/revenz/Fenrus/wiki/Plex-Token)으로 Plex 서버와 통신하는 데 사용됩니다.\n참고: 플러그인 설정의 액세스 토큰을 덮어쓰려는 경우에만 설정하세요.",
+          "Mapping": "매핑",
+          "Mapping-Help": "FileFlows의 경로를 Plex에서 사용되는 경로로 교체하는 매핑 목록입니다.\n참고: 서버 URL이 여기에 설정되지 않으면 사용되지 않으며, 플러그인 설정의 매핑이 사용됩니다.",
+          "MappingKey": "FileFlows",
+          "MappingValue": "Plex",
+          "ServerUrl": "서버",
+          "ServerUrl-Help": "Plex 서버의 URL입니다. 비워두면 플러그인 설정에서 정의된 서버를 사용합니다.\n참고: 플러그인 설정의 서버 URL을 덮어쓰려는 경우에만 설정하세요.",
+          "ServerUrl-Placeholder": "http://localhost:32400/"
+        },
+        "Outputs": {
+          "1": "Plex 분석 요청이 전송되었습니다.",
+          "2": "Plex 분석 요청 전송에 실패했습니다."
+        }
+      },
+      "PlexUpdater": {
+        "Description": "라이브러리를 업데이트하기 위해 Plex 서버에 메시지를 보냅니다.",
+        "Label": "Plex 업데이트",
+        "Fields": {
+          "AccessToken": "액세스 토큰",
+          "AccessToken-Help": "[액세스 토큰](https://github.com/revenz/Fenrus/wiki/Plex-Token)으로 Plex 서버와 통신하는 데 사용됩니다.\n참고: 플러그인 설정의 액세스 토큰을 덮어쓰려는 경우에만 설정하세요.",
+          "Mapping": "매핑",
+          "Mapping-Help": "FileFlows의 경로를 Plex에서 사용되는 경로로 교체하는 매핑 목록입니다.\n참고: 서버 URL이 여기에 설정되지 않으면 사용되지 않으며, 플러그인 설정의 매핑이 사용됩니다.",
+          "MappingKey": "FileFlows",
+          "MappingValue": "Plex",
+          "ServerUrl": "서버",
+          "ServerUrl-Help": "Plex 서버의 URL입니다. 비워두면 플러그인 설정에서 정의된 서버를 사용합니다.\n참고: 플러그인 설정의 서버 URL을 덮어쓰려는 경우에만 설정하세요.",
+          "ServerUrl-Placeholder": "http://localhost:32400/"
+        },
+        "Outputs": {
+          "1": "Plex 업데이트 요청이 전송되었습니다.",
+          "2": "Plex 업데이트 요청 전송에 실패했습니다."
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Plex": {
+      "Description": "Plex와 통신할 수 있는 플러그인입니다.",
+      "Label": "Plex",
+      "Fields": {
+        "AccessToken": "액세스 토큰",
+        "AccessToken-Help": "Plex 서버와 통신하는 데 사용되는 [액세스 토큰](https://github.com/revenz/Fenrus/wiki/Plex-Token)입니다.",
+        "Mapping": "매핑",
+        "Mapping-Help": "FileFlows의 경로를 Plex에서 사용되는 경로로 교체하는 매핑 목록입니다.",
+        "MappingKey": "FileFlows",
+        "MappingValue": "Plex",
+        "ServerUrl": "서버",
+        "ServerUrl-Help": "Plex 서버의 URL입니다.",
+        "ServerUrl-Placeholder": "http://localhost:32400/"
+      }
+    }
+  }
+}

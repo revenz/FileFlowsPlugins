@@ -1,0 +1,35 @@
+{
+  "Flow": {
+    "Parts": {
+      "Apprise": {
+        "Description": "Stuurt een bericht naar een Apprise-server.",
+        "Fields": {
+          "Message": "Bericht",
+          "Message-Help": "Het bericht om naar de Apprise-server te sturen",
+          "MessageType": "Type",
+          "MessageType-Help": "Het type bericht dat moet worden verzonden",
+          "Tag": "Tag",
+          "Tag-Help": "Een lijst met tags om dit bericht mee te sturen, als leeg wordt het getagd met 'all'."
+        },
+        "Outputs": {
+          "1": "Apprise-bericht verzonden",
+          "2": "Apprise-bericht niet verzonden"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Apprise": {
+      "Description": "Een plugin waarmee je berichten kunt verzenden naar een Apprise-server.",
+      "Label": "Apprise",
+      "Fields": {
+        "Endpoint": "Endpoint",
+        "Endpoint-Help": "Het endpoint op de Apprise-server, bijvoorbeeld notify/apprise",
+        "Endpoint-Placeholder": "notify/apprise",
+        "ServerUrl": "Server",
+        "ServerUrl-Help": "De URL van de Apprise-server",
+        "ServerUrl-Placeholder": "http://apprise.lan"
+      }
+    }
+  }
+}

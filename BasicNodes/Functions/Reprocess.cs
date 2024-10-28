@@ -22,21 +22,46 @@ public class Reprocess : Node
     /// <summary>
     /// Gets or sets the flow to execute
     /// </summary>
-    [Select("NODE_LIST", 1)]
-    public ObjectReference Node { get; set; }
+    [Select("NODE_LIST_ANY", 1)]
+    public ObjectReference? Node { get; set; }
+    
+    /// <summary>
+    /// Gets or sets the number of minutes to hold the file for reprocessing
+    /// </summary>
+    [NumberInt(1)]
+    public int? HoldMinutes { get; set; }
 
     /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
-        if (Node.Uid == args.Node.Uid)
+        bool holding = HoldMinutes is > 0;
+        bool onNode = Node is not null && Node.Uid != Guid.Empty;
+        if (holding == false && onNode == false)
         {
-            args.FailureReason = "Target reprocess node is same as current processing node.";
+            args.FailureReason = "Must select at least one of Hold Minutes or Reprocess Node.";
             args.Logger?.ELog(args.FailureReason);
             return -1;
         }
-        args.Logger?.ILog("Requesting reprocessing on Node: " + Node.Name);
-        args.ReprocessNode = Node;
-        
+
+        if (holding == false && Node.Uid == args.Node.Uid)
+        {
+            args.FailureReason = "Cannot reprocess on the same node without holding.";
+            args.Logger?.ELog(args.FailureReason);
+            return -1;
+        }
+
+        if (holding)
+        {
+            args.Logger?.ILog($"Holding for {HoldMinutes} minutes");
+            args.Reprocess.HoldForMinutes = HoldMinutes;
+        }
+
+        if (onNode)
+        {
+            args.Logger?.ILog($"Reprocessing on node '{Node.Name}'");
+            args.ReprocessNode = Node;
+        }
+
         return 0;
     }
 }

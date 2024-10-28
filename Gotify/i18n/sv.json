@@ -1,0 +1,34 @@
+{
+  "Flow": {
+    "Parts": {
+      "Gotify": {
+        "Description": "Skickar ett meddelande till en Gotify-server.",
+        "Fields": {
+          "Message": "Meddelande",
+          "Message-Help": "Meddelandet som ska skickas till Gotify-servern",
+          "Priority": "Prioritet",
+          "Priority-Help": "Prioriteten för det skickade meddelandet",
+          "Title": "Titel",
+          "Title-Help": "En valfri titel att skicka."
+        },
+        "Outputs": {
+          "1": "Gotify-meddelandet har skickats",
+          "2": "Misslyckades med att skicka Gotify-meddelandet"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Gotify": {
+      "Description": "Ett plugin som låter dig skicka meddelanden till en Gotify-server.",
+      "Label": "Gotify",
+      "Fields": {
+        "AccessToken": "Åtkomsttoken",
+        "AccessToken-Help": "Åtkomsttoken som används för att kommunicera med Gotify-servern.",
+        "ServerUrl": "Server",
+        "ServerUrl-Help": "URL-adressen till Gotify-servern",
+        "ServerUrl-Placeholder": "http://gotify.lan"
+      }
+    }
+  }
+}

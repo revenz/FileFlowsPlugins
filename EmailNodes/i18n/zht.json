@@ -1,0 +1,40 @@
+{
+  "Flow": {
+    "Parts": {
+      "SendEmail": {
+        "Description": "使用配置的SMTP伺服器發送電子郵件",
+        "Label": "發送電子郵件",
+        "Fields": {
+          "Body": "內容",
+          "Body-Help": "要發送的電子郵件消息內容。使用[scriban](https://github.com/scriban/scriban)模板語言",
+          "Recipients": "收件人",
+          "Recipients-Help": "要發送消息的電子郵件地址列表",
+          "Subject": "主題",
+          "Subject-Help": "設置的電子郵件主題"
+        },
+        "Outputs": {
+          "1": "電子郵件 ''{Subject}'' 已發送",
+          "2": "電子郵件發送失敗"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "EmailNodes": {
+      "Description": "此插件允許您在執行流程時發送電子郵件。",
+      "Label": "電子郵件",
+      "Fields": {
+        "Sender": "發件人",
+        "Sender-Help": "發送電子郵件的電子郵件地址",
+        "SmtpPassword": "SMTP密碼",
+        "SmtpPassword-Help": "用於對SMTP伺服器進行身份驗證的密碼",
+        "SmtpPort": "SMTP端口",
+        "SmtpPort-Help": "用於發送電子郵件的SMTP伺服器端口，默認為25",
+        "SmtpServer": "SMTP伺服器",
+        "SmtpServer-Help": "用於發送電子郵件的SMTP伺服器地址",
+        "SmtpUsername": "SMTP用戶名",
+        "SmtpUsername-Help": "用於對SMTP伺服器進行身份驗證的用戶名"
+      }
+    }
+  }
+}

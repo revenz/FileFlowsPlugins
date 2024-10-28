@@ -1,0 +1,63 @@
+{
+  "Flow": {
+    "Parts": {
+      "ComicConverter": {
+        "Description": "Convertit un comic dans un format différent de bande dessinée.\n\nPrend en charge la conversion depuis CBZ, CBR, CB7, PDF, GZ, BZ2",
+        "Label": "Convertir cómic",
+        "Fields": {
+          "Codec": "Codec",
+          "Codec-Help": "Le codec pour enregistrer les images sous",
+          "DeleteNonPageImages": "Supprimer les images non de page",
+          "DeleteNonPageImages-Help": "Supprime les images qui ne suivent pas une structure de nommage pour les pages. C'est-à-dire, elles ne se terminent pas par un nombre.",
+          "EnsureTopDirectory": "Assurer le répertoire principal",
+          "EnsureTopDirectory-Help": "S'assure que tous les fichiers se trouvent directement dans le répertoire principal du fichier comic, sans sous-répertoires présents.",
+          "Format": "Format",
+          "Format-Help": "Le format dans lequel convertir le comic",
+          "MaxHeight": "Hauteur maximale",
+          "MaxHeight-Help": "La hauteur maximale pour les pages, utiliser 0 pour ne pas faire d'ajustements ou pour maintenir la qualité avec la largeur",
+          "MaxWidth": "Largeur maximale",
+          "MaxWidth-Help": "La largeur maximale pour les pages, utiliser 0 pour ne pas faire d'ajustements ou pour maintenir la qualité avec la hauteur",
+          "Quality": "Qualité",
+          "Quality-Help": "Qualité des pages du comic, 0 pour la compression maximale / la pire qualité, 100 pour la meilleure qualité"
+        },
+        "Outputs": {
+          "1": "Le comic a été converti et enregistré en tant que fichier temporaire",
+          "2": "Le comic était déjà dans le format souhaité"
+        }
+      },
+      "ComicExtractor": {
+        "Description": "Extrait tous les fichiers d'un format de bande dessinée et les enregistre dans un dossier spécifique.\n\nPrend en charge l'extraction de CBZ, CBR, CB7, PDF, GZ, BZ2",
+        "Label": "Extraire comic",
+        "Fields": {
+          "DestinationPath": "Chemin de destination",
+          "DestinationPath-Help": "Le dossier où les fichiers du comic extrait seront enregistrés"
+        },
+        "Outputs": {
+          "1": "Le comic a été extrait"
+        }
+      },
+      "CreateComicInfo": {
+        "Description": "Analyse le chemin d'un comic et crée un fichier comicinfo.xml à l'intérieur de l'archive de bande dessinée.",
+        "Label": "Créer ComicInfo",
+        "Fields": {
+          "IssueDigits": "Chiffres de l'édition",
+          "IssueDigits-Help": "Remplira le numéro de l'édition avec des zéros devant jusqu'à ce montant.\nPar exemple, pour l'édition 1 si le remplissage est 3, alors l'édition apparaîtra comme #001",
+          "Publisher": "Éditeur",
+          "Publisher-Help": "Si le comic est dans un répertoire d'éditeur, consultez l'aide pour plus d'informations.",
+          "RenameFile": "Renommer le fichier",
+          "RenameFile-Help": "Si le fichier doit être renommé en `Série - Numéro - Titre.extension`"
+        },
+        "Outputs": {
+          "1": "ComicInfo ajouté à l'archive de comic",
+          "2": "ComicInfo déjà dans l'archive"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "ComicNodes": {
+      "Description": "Éléments de flux pour traiter des bandes dessinées (cbr, cbz, pdf, etc.)",
+      "Label": "BD"
+    }
+  }
+}

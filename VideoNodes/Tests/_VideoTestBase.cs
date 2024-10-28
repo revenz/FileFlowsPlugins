@@ -32,6 +32,16 @@ public abstract class VideoTestBase : TestBase
     protected static readonly string VideoMkvHevc = ResourcesTestFilesDir + "/hevc.mkv";
 
     /// <summary>
+    /// Video 4:7 MKV file
+    /// </summary>
+    protected static readonly string Video4by7 = ResourcesTestFilesDir + "/video4by7.mkv";
+
+    /// <summary>
+    /// Video 4:3 mp4 file
+    /// </summary>
+    protected static readonly string Video4by3 = ResourcesTestFilesDir + "/video4by3.mp4";
+    
+    /// <summary>
     /// Video Corrupt file
     /// </summary>
     protected static readonly string VideoCorrupt = ResourcesTestFilesDir + "/corrupt.mkv";
@@ -72,8 +82,8 @@ public abstract class VideoTestBase : TestBase
         };
         args.InitFile(filename);
 
-        FFmpeg = File.Exists("/usr/local/bin/ffmpeg") ? "/usr/local/bin/ffmpeg" : "ffmpeg";
-        FFprobe = File.Exists("/usr/local/bin/ffprobe") ? "/usr/local/bin/ffprobe" : "ffprobe";
+        FFmpeg = File.Exists("/tools/ffmpeg/ffmpeg") ? "/tools/ffmpeg/ffmpeg" : File.Exists("/usr/local/bin/ffmpeg") ? "/usr/local/bin/ffmpeg" : "ffmpeg";
+        FFprobe = File.Exists("/tools/ffmpeg/ffprobe") ? "/tools/ffmpeg/ffprobe" : File.Exists("/usr/local/bin/ffprobe") ? "/usr/local/bin/ffprobe" : "ffprobe";
         
         args.GetToolPathActual = (tool) =>
         {

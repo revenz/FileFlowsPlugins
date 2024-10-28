@@ -1,0 +1,37 @@
+{
+  "Flow": {
+    "Parts": {
+      "Pushover": {
+        "Description": "Verzendt een bericht via Pushover.",
+        "Fields": {
+          "Expire": "Vervaltijd",
+          "Expire-Help": "Stel de duur in seconden in voordat dit noodbericht vervalt en stopt met het opnieuw proberen van aflevering.",
+          "Expire-Suffix": "seconden",
+          "Message": "Bericht",
+          "Message-Help": "Het bericht dat naar de Pushover-server moet worden verzonden",
+          "Priority": "Prioriteit",
+          "Priority-Help": "De prioriteit van het verzonden bericht",
+          "Retry": "Herhaal",
+          "Retry-Help": "Specificeer het interval in seconden tussen herhalingspogingen voor dit noodbericht in geval van afleveringsfouten.",
+          "Retry-Suffix": "seconden"
+        },
+        "Outputs": {
+          "1": "Pushover-bericht verzonden",
+          "2": "Pushover-bericht verzenden mislukt"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Pushover": {
+      "Description": "Een plugin die je in staat stelt berichten naar een Pushover-server te verzenden.",
+      "Label": "Pushover",
+      "Fields": {
+        "ApiToken": "API-token",
+        "ApiToken-Help": "De API-token van de applicatie die wordt gebruikt om meldingen te verzenden.",
+        "UserKey": "Gebruikerssleutel",
+        "UserKey-Help": "Je persoonlijke gebruikerssleutel voor het ontvangen van meldingen."
+      }
+    }
+  }
+}

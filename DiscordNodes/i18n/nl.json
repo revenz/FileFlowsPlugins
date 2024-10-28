@@ -1,0 +1,31 @@
+{
+  "Flow": {
+    "Parts": {
+      "Discord": {
+        "Description": "Verzendt een bericht naar een Discord-server.",
+        "Fields": {
+          "Message": "Bericht",
+          "Message-Help": "Het bericht dat naar de Discord-server moet worden verzonden",
+          "MessageType": "Type",
+          "MessageType-Help": "Het type bericht dat moet worden verzonden. Basis type is gewoon het bericht zonder titel en zonder kleur.",
+          "Title": "Titel",
+          "Title-Help": "Een optionele titel om te verzenden; als deze niet is ingesteld, is het berichttype de titel."
+        },
+        "Outputs": {
+          "1": "Discord-bericht verzonden",
+          "2": "Verzending van Discord-bericht mislukt"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "DiscordNodes": {
+      "Description": "Een plugin die je in staat stelt om berichten naar een Discord-server te sturen.\n\nDe Webhook-ID en token kunnen worden verkregen via de webhook-URL\n https://discord.com/api/webhooks/[webhookid]/[webhooktoken]",
+      "Label": "Discord",
+      "Fields": {
+        "WebhookId": "Webhook-ID",
+        "WebhookToken": "Webhook-token"
+      }
+    }
+  }
+}

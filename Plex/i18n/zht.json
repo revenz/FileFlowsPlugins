@@ -1,0 +1,61 @@
+{
+  "Flow": {
+    "Parts": {
+      "PlexAnalyze": {
+        "Description": "向Plex伺服器發送消息以分析工作文件。\n工作文件必須已經被Plex識別才能正常運作。",
+        "Label": "Plex 分析",
+        "Fields": {
+          "AccessToken": "訪問令牌",
+          "AccessToken-Help": "用於與Plex伺服器通信的[訪問令牌](https://github.com/revenz/Fenrus/wiki/Plex-Token)。\n注意：僅在想要覆蓋插件設置中的訪問令牌時才設置此項。",
+          "Mapping": "映射",
+          "Mapping-Help": "用於FileFlows中的路徑與Plex中使用的路徑的映射替換列表。\n注意：除非此處也設置了伺服器URL，否則將不會使用此項，否則將使用插件設置的映射。",
+          "MappingKey": "FileFlows",
+          "MappingValue": "Plex",
+          "ServerUrl": "伺服器",
+          "ServerUrl-Help": "Plex伺服器的URL。如果留空，將使用插件設置中定義的伺服器。\n注意：僅在想要覆蓋插件設置中的伺服器URL時才設置此項。",
+          "ServerUrl-Placeholder": "http://localhost:32400/"
+        },
+        "Outputs": {
+          "1": "已發送Plex分析請求",
+          "2": "Plex分析請求發送失敗"
+        }
+      },
+      "PlexUpdater": {
+        "Description": "向Plex伺服器發送消息以更新庫。",
+        "Label": "Plex 更新",
+        "Fields": {
+          "AccessToken": "訪問令牌",
+          "AccessToken-Help": "用於與Plex伺服器通信的[訪問令牌](https://github.com/revenz/Fenrus/wiki/Plex-Token)。\n注意：僅在想要覆蓋插件設置中的訪問令牌時才設置此項。",
+          "Mapping": "映射",
+          "Mapping-Help": "用於FileFlows中的路徑與Plex中使用的路徑的映射替換列表。\n注意：除非此處也設置了伺服器URL，否則將不會使用此項，否則將使用插件設置的映射。",
+          "MappingKey": "FileFlows",
+          "MappingValue": "Plex",
+          "ServerUrl": "伺服器",
+          "ServerUrl-Help": "Plex伺服器的URL。如果留空，將使用插件設置中定義的伺服器。\n注意：僅在想要覆蓋插件設置中的伺服器URL時才設置此項。",
+          "ServerUrl-Placeholder": "http://localhost:32400/"
+        },
+        "Outputs": {
+          "1": "已發送Plex更新請求",
+          "2": "Plex更新請求發送失敗"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Plex": {
+      "Description": "一個允許您與Plex通信的插件。",
+      "Label": "Plex",
+      "Fields": {
+        "AccessToken": "訪問令牌",
+        "AccessToken-Help": "用於與Plex伺服器通信的[訪問令牌](https://github.com/revenz/Fenrus/wiki/Plex-Token)。",
+        "Mapping": "映射",
+        "Mapping-Help": "用於FileFlows中的路徑與Plex中使用的路徑的映射列表。",
+        "MappingKey": "FileFlows",
+        "MappingValue": "Plex",
+        "ServerUrl": "伺服器",
+        "ServerUrl-Help": "Plex伺服器的URL",
+        "ServerUrl-Placeholder": "http://localhost:32400/"
+      }
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "Flow": {
+    "Parts": {
+      "Downloader": {
+        "Description": "Descarga la URL especificada",
+        "Label": "Descargador",
+        "Fields": {
+          "Url": "URL",
+          "Url-Help": "La URL a descargar, dejar vacío para usar el archivo de trabajo actual. Si el archivo de trabajo actual no es una URL, esto fallará."
+        },
+        "Outputs": {
+          "1": "URL descargada con éxito",
+          "2": "Error al descargar la URL"
+        }
+      },
+      "HtmlImageParser": {
+        "Label": "Analizador de imágenes HTML",
+        "Fields": {
+          "Path": "Archivo",
+          "Path-Description": "Un archivo o variable opcional para analizar en busca de imágenes. Si no se proporciona, se analizará el archivo de trabajo.",
+          "Pattern": "Patrón",
+          "Pattern-Help": "Una expresión regular opcional, sin distinción entre mayúsculas y minúsculas, para comparar con los resultados. Solo se aceptarán los resultados que coincidan con esto.",
+          "Pattern-Placeholder": "Opcional"
+        },
+        "Outputs": {
+          "1": "Imágenes encontradas y almacenadas en la variable ImageUrls",
+          "2": "No se encontraron imágenes"
+        }
+      },
+      "HtmlLinkParser": {
+        "Label": "Analizador de enlaces HTML",
+        "Fields": {
+          "Path": "Archivo",
+          "Path-Description": "Un archivo o variable opcional para analizar en busca de enlaces. Si no se proporciona, se analizará el archivo de trabajo.",
+          "Pattern": "Patrón",
+          "Pattern-Help": "Una expresión regular opcional, sin distinción entre mayúsculas y minúsculas, para comparar con los resultados. Solo se aceptarán los resultados que coincidan con esto.",
+          "Pattern-Placeholder": "Opcional"
+        },
+        "Outputs": {
+          "1": "Enlace encontrado y almacenado en la variable Links",
+          "2": "No se encontraron enlaces"
+        }
+      },
+      "InputUrl": {
+        "Label": "URL de entrada"
+      },
+      "WebRequest": {
+        "Description": "Te permite enviar una solicitud web",
+        "Label": "Solicitud web",
+        "Fields": {
+          "Body": "Cuerpo",
+          "Body-Help": "El cuerpo de la solicitud que se envía. Se pueden usar variables en este campo.",
+          "ContentType": "Tipo de contenido",
+          "ContentType-Help": "El Content-Type del mensaje a enviar",
+          "Headers": "Encabezados",
+          "Headers-Help": "Encabezados opcionales para enviar con la solicitud",
+          "HeadersKey": "Clave",
+          "HeadersValue": "Valor",
+          "Method": "Método",
+          "Method-Help": "El método web a utilizar al enviar esta solicitud",
+          "Url": "URL",
+          "Url-Help": "La URL de la solicitud"
+        },
+        "Outputs": {
+          "1": "Enviado con éxito",
+          "2": "La solicitud devolvió un código de estado no exitoso"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Web": {
+      "Description": "Plugin que proporciona elementos de flujo relacionados con la web.",
+      "Label": "Web"
+    }
+  }
+}

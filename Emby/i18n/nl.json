@@ -1,0 +1,42 @@
+{
+  "Flow": {
+    "Parts": {
+      "EmbyUpdater": {
+        "Description": "Verstuurt een bericht naar een Emby-server om de bibliotheek bij te werken.",
+        "Label": "Emby Updater",
+        "Fields": {
+          "AccessToken": "Toegangstoken",
+          "AccessToken-Help": "Een Emby API-toegangstoken.\nOpmerking: Stel dit alleen in als je het toegangstoken van de plugininstellingen wilt overschrijven.",
+          "Mapping": "Mapping",
+          "Mapping-Help": "Een lijst van mappingvervangingen die worden gebruikt voor paden in FileFlows met de paden die in Emby worden gebruikt.\nOpmerking: Dit zal niet worden gebruikt tenzij de server-URL hier ook is ingesteld, anders worden de mappings van de plugininstellingen gebruikt.",
+          "MappingKey": "FileFlows",
+          "MappingValue": "Emby",
+          "ServerUrl": "Server",
+          "ServerUrl-Help": "De URL van de Emby-server.\nOpmerking: Stel dit alleen in als je de server-URL van de plugininstellingen wilt overschrijven.",
+          "ServerUrl-Placeholder": "http://localhost:8096/"
+        },
+        "Outputs": {
+          "1": "Emby-updateverzoek verzonden",
+          "2": "Emby-updateverzoek verzenden mislukt"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Emby": {
+      "Description": "Een plugin die je in staat stelt te communiceren met Emby.",
+      "Label": "Emby",
+      "Fields": {
+        "AccessToken": "Toegangstoken",
+        "AccessToken-Help": "Een Emby API-toegangstoken",
+        "Mapping": "Mapping",
+        "Mapping-Help": "Een lijst van mappingvervangingen die worden gebruikt voor paden in FileFlows met de paden die in Emby worden gebruikt.",
+        "MappingKey": "FileFlows",
+        "MappingValue": "Emby",
+        "ServerUrl": "Server",
+        "ServerUrl-Help": "De URL van de Emby-server",
+        "ServerUrl-Placeholder": "http://localhost:8096/"
+      }
+    }
+  }
+}

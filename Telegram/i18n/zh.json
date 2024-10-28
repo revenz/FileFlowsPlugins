@@ -1,0 +1,29 @@
+{
+  "Flow": {
+    "Parts": {
+      "Telegram": {
+        "Description": "发送Telegram消息。",
+        "Fields": {
+          "Message": "消息",
+          "Message-Help": "要发送的消息。"
+        },
+        "Outputs": {
+          "1": "Telegram消息已发送",
+          "2": "发送Telegram消息失败"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Telegram": {
+      "Description": "一个允许您发送Telegram消息的插件。",
+      "Label": "Telegram",
+      "Fields": {
+        "BotToken": "机器人令牌",
+        "BotToken-Help": "您的Telegram机器人令牌。",
+        "ChatId": "聊天ID",
+        "ChatId-Help": "要发送消息的聊天ID。"
+      }
+    }
+  }
+}

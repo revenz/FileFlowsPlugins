@@ -1,0 +1,77 @@
+{
+  "Flow": {
+    "Parts": {
+      "Downloader": {
+        "Description": "下載指定的URL",
+        "Label": "下載器",
+        "Fields": {
+          "Url": "URL",
+          "Url-Help": "要下載的URL，留空以使用當前工作文件，如果當前工作文件不是URL，則將失敗。"
+        },
+        "Outputs": {
+          "1": "URL成功下載",
+          "2": "URL下載失敗"
+        }
+      },
+      "HtmlImageParser": {
+        "Label": "HTML圖像解析器",
+        "Fields": {
+          "Path": "文件",
+          "Path-Description": "要解析圖像的可選文件或變量，如果未提供，則將解析工作文件。",
+          "Pattern": "模式",
+          "Pattern-Help": "一個可選的不區分大小寫的正則表達式，用於匹配結果，只有匹配此模式的結果將被接受。",
+          "Pattern-Placeholder": "可選"
+        },
+        "Outputs": {
+          "1": "找到圖像並存儲在ImageUrls變量中",
+          "2": "未找到圖像"
+        }
+      },
+      "HtmlLinkParser": {
+        "Label": "HTML鏈接解析器",
+        "Fields": {
+          "Path": "文件",
+          "Path-Description": "要解析鏈接的可選文件或變量，如果未提供，則將解析工作文件。",
+          "Pattern": "模式",
+          "Pattern-Help": "一個可選的不區分大小寫的正則表達式，用於匹配結果，只有匹配此模式的結果將被接受。",
+          "Pattern-Placeholder": "可選"
+        },
+        "Outputs": {
+          "1": "找到鏈接並存儲在Links變量中",
+          "2": "未找到鏈接"
+        }
+      },
+      "InputUrl": {
+        "Label": "輸入URL"
+      },
+      "WebRequest": {
+        "Description": "允許您發送網絡請求",
+        "Label": "網絡請求",
+        "Fields": {
+          "Body": "主體",
+          "Body-Help": "發送的請求主體。此字段可以使用變量。",
+          "ContentType": "內容類型",
+          "ContentType-Help": "要發送的消息的內容類型",
+          "Headers": "標頭",
+          "Headers-Help": "要隨請求發送的可選標頭",
+          "HeadersKey": "鍵",
+          "HeadersValue": "值",
+          "Method": "方法",
+          "Method-Help": "發送此請求時使用的網絡方法",
+          "Url": "URL",
+          "Url-Help": "請求的URL"
+        },
+        "Outputs": {
+          "1": "成功發送",
+          "2": "請求返回非成功狀態碼"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Web": {
+      "Description": "提供Web相關流程元素的插件",
+      "Label": "網絡"
+    }
+  }
+}

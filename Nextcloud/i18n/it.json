@@ -1,0 +1,34 @@
+{
+  "Flow": {
+    "Parts": {
+      "UploadToNextcloud": {
+        "Description": "Carica un file su Nextcloud",
+        "Label": "Carica su Nextcloud",
+        "Fields": {
+          "DestinationPath": "Destinazione",
+          "DestinationPath-Help": "La posizione e il nome del file, ossia il percorso completo, del file in Nextcloud.",
+          "File": "File",
+          "File-Help": "Il file da caricare, lascia vuoto per utilizzare il file di lavoro corrente."
+        },
+        "Outputs": {
+          "1": "È stato caricato con successo su Nextcloud",
+          "2": "Impossibile caricare su Nextcloud"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Nextcloud": {
+      "Description": "Un plugin che ti consente di caricare file su Nextcloud.",
+      "Label": "Nextcloud",
+      "Fields": {
+        "Password": "Password",
+        "Password-Help": "La password specifica dell'applicazione che hai creato per FileFlows per questo utente di Nextcloud.",
+        "Url": "URL",
+        "Url-Help": "L'URL del server Nextcloud",
+        "Username": "Nome utente",
+        "Username-Help": "Il nome utente dell'utente a cui caricare."
+      }
+    }
+  }
+}

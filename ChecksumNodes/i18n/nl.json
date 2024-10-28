@@ -1,0 +1,40 @@
+{
+  "Flow": {
+    "Parts": {
+      "MD5Checksum": {
+        "Description": "Bereken een MD5-checksum van het werkbestand en sla deze op in de variabele \"MD5\" en in \"Checksum\".",
+        "Label": "MD5 Checksum",
+        "Outputs": {
+          "1": "Checksum opgeslagen in de variabelen \"MD5\" en \"Checksum\""
+        }
+      },
+      "SHA1Checksum": {
+        "Description": "Bereken een SHA1-checksum van het werkbestand en sla deze op in de variabele \"SHA1\" en in \"Checksum\".",
+        "Label": "SHA1 Checksum",
+        "Outputs": {
+          "1": "Checksum opgeslagen in de variabelen \"SHA1\" en \"Checksum\""
+        }
+      },
+      "SHA256Checksum": {
+        "Description": "Bereken een SHA256-checksum van het werkbestand en sla deze op in de variabele \"SHA256\" en in \"Checksum\".",
+        "Label": "SHA256 Checksum",
+        "Outputs": {
+          "1": "Checksum opgeslagen in de variabelen \"SHA256\" en \"Checksum\""
+        }
+      },
+      "SHA512Checksum": {
+        "Description": "Bereken een SHA512-checksum van het werkbestand en sla deze op in de variabele \"SHA512\" en in \"Checksum\".",
+        "Label": "SHA512 Checksum",
+        "Outputs": {
+          "1": "Checksum opgeslagen in de variabelen \"SHA512\" en \"Checksum\""
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "ChecksumNodes": {
+      "Description": "Stroomelementen die de mogelijkheid bieden om een controlegetal op een bestand uit te voeren.",
+      "Label": "Controlegetal"
+    }
+  }
+}

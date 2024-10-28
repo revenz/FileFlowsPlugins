@@ -1,0 +1,42 @@
+{
+  "Flow": {
+    "Parts": {
+      "EmbyUpdater": {
+        "Description": "向Emby伺服器發送消息以更新資料庫。",
+        "Label": "Emby更新器",
+        "Fields": {
+          "AccessToken": "訪問令牌",
+          "AccessToken-Help": "一個Emby API訪問令牌。\n注意：僅在您想要覆蓋插件設置的訪問令牌時設置此項。",
+          "Mapping": "映射",
+          "Mapping-Help": "用於在FileFlows中替換路徑的映射列表，與Emby中使用的路徑。\n注意：除非此處也設置了伺服器URL，否則將不會使用此項，否則將使用插件設置的映射。",
+          "MappingKey": "FileFlows",
+          "MappingValue": "Emby",
+          "ServerUrl": "伺服器",
+          "ServerUrl-Help": "Emby伺服器的URL。\n注意：僅在您想要覆蓋插件設置的伺服器URL時設置此項。",
+          "ServerUrl-Placeholder": "http://localhost:8096/"
+        },
+        "Outputs": {
+          "1": "Emby更新請求已發送",
+          "2": "Emby更新請求發送失敗"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Emby": {
+      "Description": "一個允許您與Emby通信的插件。",
+      "Label": "Emby",
+      "Fields": {
+        "AccessToken": "訪問令牌",
+        "AccessToken-Help": "一個Emby API訪問令牌",
+        "Mapping": "映射",
+        "Mapping-Help": "用於在FileFlows中替換路徑的映射列表。",
+        "MappingKey": "FileFlows",
+        "MappingValue": "Emby",
+        "ServerUrl": "伺服器",
+        "ServerUrl-Help": "Emby伺服器的URL",
+        "ServerUrl-Placeholder": "http://localhost:8096/"
+      }
+    }
+  }
+}

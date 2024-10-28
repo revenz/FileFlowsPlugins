@@ -2,110 +2,126 @@
   "Flow": {
     "Parts": {
       "AutoCropImage": {
-        "Outputs": {
-          "1": "Image cropped, saved to new temporary file",
-          "2": "Image was not cropped"
-        },
         "Description": "Automatically crops an image",
+        "Label": "Auto Crop Image",
         "Fields": {
           "Format": "Format",
           "Format-Help": "The image format to convert to",
           "Threshold": "Threshold",
           "Threshold-Help": "Threshold for entropic density, default is 50.  Must be between 0 and 100."
+        },
+        "Outputs": {
+          "1": "Image cropped, saved to new temporary file",
+          "2": "Image was not cropped"
+        }
+      },
+      "ImageFile": {
+        "Description": "An image file",
+        "Label": "Image File",
+        "Outputs": {
+          "1": "Image file"
         }
       },
       "ImageFlip": {
-        "Outputs": {
-          "1": "Image flipped, saved to new temporary file"
-        },
         "Description": "Flips an image",
+        "Label": "Image Flip",
         "Fields": {
           "Format": "Format",
           "Format-Help": "The image format to convert to",
           "Vertical": "Vertical",
           "Vertical-Help": "If set the image will be flipped vertically, otherwise horizontally"
+        },
+        "Outputs": {
+          "1": "Image flipped, saved to new temporary file"
         }
       },
-      "ImageFile": {
-        "Outputs": {
-          "1": "Image file"
-        },
-        "Description": "An image file"
-      },
       "ImageFormat": {
-        "Outputs": {
-          "1": "Image converted, saved to new temporary file",
-          "2": "Image already in target format"
-        },
         "Description": "Converts an image to the specified format",
+        "Label": "Image Format",
         "Fields": {
           "Format": "Format",
           "Format-Help": "The image format to convert to"
+        },
+        "Outputs": {
+          "1": "Image converted, saved to new temporary file",
+          "2": "Image already in target format"
         }
       },
       "ImageIsLandscape": {
+        "Description": "Test if an image is landscape",
+        "Label": "Image Is Landscape",
         "Outputs": {
           "1": "Image is landscape",
           "2": "Image is not landscape"
-        },
-        "Description": "Test if an image is landscape"
+        }
       },
       "ImageIsPortrait": {
+        "Description": "Test if an image is portrait",
+        "Label": "Image Is Portrait",
         "Outputs": {
           "1": "Image is portrait",
           "2": "Image is not portrait"
-        },
-        "Description": "Test if an image is portrait"
+        }
       },
       "ImageResizer": {
-        "Outputs": {
-          "1": "Image resized, saved to new temporary file"
-        },
         "Description": "Resizes an image",
+        "Label": "Image Resizer",
         "Fields": {
           "Format": "Format",
           "Format-Help": "The image format to convert to",
-          "Width": "Width",
           "Height": "Height",
           "Mode": "Mode",
-          "Mode-Help": "The mode to use when resizing the image"
+          "Mode-Help": "The mode to use when resizing the image",
+          "Width": "Width"
+        },
+        "Outputs": {
+          "1": "Image resized, saved to new temporary file"
         }
       },
       "ImageRotate": {
+        "Description": "Rotates an image",
+        "Label": "Image Rotate",
+        "Fields": {
+          "Angle": "Angle",
+          "Angle-Help": "The rotation angle",
+          "Format": "Format",
+          "Format-Help": "The image format to convert to"
+        },
         "Outputs": {
           "1": "Image rotated, saved to new temporary file"
-        },
-        "Description": "Rotates an image",
-        "Fields": {
-          "Format": "Format",
-          "Format-Help": "The image format to convert to",
-          "Angle": "Angle",
-          "Angle-Help": "The rotation angle"
         }
       },
       "IsImage": {
         "Description": "Tests if a file is an image file.",
+        "Label": "Is Image",
+        "Fields": {
+          "File": "File",
+          "File-Help": "Optional path to the file to check, if left blank then the current working file will be checked.",
+          "File-Placeholder": "If blank current working file"
+        },
         "Outputs": {
           "1": "File is a recognized image file",
           "2": "File is not a recognized image file"
-        },
-        "Fields": {
-          "File": "File",
-          "File-Placeholder": "If blank current working file",
-          "File-Help": "Optional path to the file to check, if left blank then the current working file will be checked."
         }
       },
       "PixelCheck": {
         "Description": "This flow element verifies if an image's total pixel count exceeds the specified threshold.",
-        "Outputs": {
-          "1": "Image has greater or equal to the number of pixels specified",
-          "2": "Image has fewer pixels number than the required pixels specified"
-        },
+        "Label": "Pixel Check",
         "Fields": {
           "Pixels": "Pixels",
           "Pixels-Help": "The number of pixels an image should contain.  This is calculated by the width of the image multiplied by its height."
+        },
+        "Outputs": {
+          "1": "Image has greater or equal to the number of pixels specified",
+          "2": "Image has fewer pixels number than the required pixels specified"
         }
       }
+    }
+  },
+  "Plugins": {
+    "ImageNodes": {
+      "Description": "Flow elements for processing images files.  This plugin contains nodes to convert and manipulate images.",
+      "Label": "Image"
     }
   }
 }

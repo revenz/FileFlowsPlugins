@@ -18,6 +18,10 @@ public class VideoInfoHelper
     static Regex rgxMimeType = new Regex(@"(?<=((^[\s]+mimetype[\s]+:[\s])))(.*?)$", RegexOptions.Multiline);
 
     static int _ProbeSize = 25;
+    
+    /// <summary>
+    /// Gets or set the probe size
+    /// </summary>
     internal static int ProbeSize 
     { 
         get => _ProbeSize;
@@ -25,11 +29,20 @@ public class VideoInfoHelper
         {
             if (value < 5)
                 _ProbeSize = 5;
-            else if (value > 1000)
-                _ProbeSize = 1000;
             else
                 _ProbeSize = value;
         }
+    }
+
+    private static int _AnalyzeDuration = 5_000_000;
+
+    /// <summary>
+    /// Gets or sets the analyze duration
+    /// </summary>
+    public static int AnalyzeDuration
+    {
+        get => _AnalyzeDuration;
+        set => _AnalyzeDuration = Math.Max(32, value);
     }
 
     public VideoInfoHelper(string ffMpegExe, ILogger logger)
@@ -68,6 +81,7 @@ public class VideoInfoHelper
                 {
                     "-hide_banner",
                     "-probesize", ProbeSize + "M",
+                    "-analyzeduration", AnalyzeDuration.ToString(),
                     "-i",
                     filename,
                 })

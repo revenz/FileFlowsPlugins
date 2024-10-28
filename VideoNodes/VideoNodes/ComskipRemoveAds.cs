@@ -49,6 +49,7 @@ public class ComskipRemoveAds: EncodingNode
 
     }
 
+    /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
         VideoInfo videoInfo = GetVideoInfo(args);

@@ -1,0 +1,40 @@
+{
+  "Flow": {
+    "Parts": {
+      "MD5Checksum": {
+        "Description": "計算工作文件的MD5校驗和，並將其存儲在變量\"MD5\"和\"Checksum\"中。",
+        "Label": "MD5 校驗和",
+        "Outputs": {
+          "1": "校驗和存儲在變量\"MD5\"和\"Checksum\"中"
+        }
+      },
+      "SHA1Checksum": {
+        "Description": "計算工作文件的SHA1校驗和，並將其存儲在變量\"SHA1\"和\"Checksum\"中。",
+        "Label": "SHA1 校驗和",
+        "Outputs": {
+          "1": "校驗和存儲在變量\"SHA1\"和\"Checksum\"中"
+        }
+      },
+      "SHA256Checksum": {
+        "Description": "計算工作文件的SHA256校驗和，並將其存儲在變量\"SHA256\"和\"Checksum\"中。",
+        "Label": "SHA256 校驗和",
+        "Outputs": {
+          "1": "校驗和存儲在變量\"SHA256\"和\"Checksum\"中"
+        }
+      },
+      "SHA512Checksum": {
+        "Description": "計算工作文件的SHA512校驗和，並將其存儲在變量\"SHA512\"和\"Checksum\"中。",
+        "Label": "SHA512 校驗和",
+        "Outputs": {
+          "1": "校驗和存儲在變量\"SHA512\"和\"Checksum\"中"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "ChecksumNodes": {
+      "Description": "提供對文件運行校驗和的能力的流程元素。",
+      "Label": "校驗和"
+    }
+  }
+}

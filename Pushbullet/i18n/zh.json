@@ -1,0 +1,32 @@
+{
+  "Flow": {
+    "Parts": {
+      "Pushbullet": {
+        "Description": "通过Pushbullet发送消息。",
+        "Fields": {
+          "Message": "消息",
+          "Message-Help": "要发送到Pushbullet服务器的消息",
+          "Priority": "优先级",
+          "Priority-Help": "发送消息的优先级",
+          "Title": "标题"
+        },
+        "Outputs": {
+          "1": "Pushbullet消息已发送",
+          "2": "Pushbullet消息发送失败"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Pushbullet": {
+      "Description": "一个允许您向Pushbullet服务器发送消息的插件。",
+      "Label": "Pushbullet",
+      "Fields": {
+        "ApiToken": "API令牌",
+        "ApiToken-Help": "用于发送通知的应用程序API令牌。",
+        "UserKey": "用户密钥",
+        "UserKey-Help": "您用于接收通知的个人用户密钥。"
+      }
+    }
+  }
+}

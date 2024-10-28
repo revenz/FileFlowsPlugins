@@ -1,0 +1,61 @@
+{
+  "Flow": {
+    "Parts": {
+      "PlexAnalyze": {
+        "Description": "Verzendt een bericht naar een Plex-server om het werkbestand te analyseren. \nHet werkbestand moet al bekend zijn bij Plex om dit te laten werken.",
+        "Label": "Plex-analyse",
+        "Fields": {
+          "AccessToken": "Toegangstoken",
+          "AccessToken-Help": "De [toegangstoken](https://github.com/revenz/Fenrus/wiki/Plex-Token) die wordt gebruikt om te communiceren met de Plex-server.\nOpmerking: Stel dit alleen in als je de toegangstoken van de plugininstellingen wilt overschrijven.",
+          "Mapping": "Mapping",
+          "Mapping-Help": "Een lijst van vervangingen die worden gebruikt om paden in FileFlows te mappen naar de paden die in Plex worden gebruikt.\nOpmerking: Dit wordt niet gebruikt tenzij de server-URL hier ook is ingesteld, anders worden de mappen van de plugininstellingen gebruikt.",
+          "MappingKey": "FileFlows",
+          "MappingValue": "Plex",
+          "ServerUrl": "Server",
+          "ServerUrl-Help": "De URL van de Plex-server. Als leeg, wordt de server uit de plugininstellingen gebruikt.\nOpmerking: Stel dit alleen in als je de server-URL van de plugininstellingen wilt overschrijven.",
+          "ServerUrl-Placeholder": "http://localhost:32400/"
+        },
+        "Outputs": {
+          "1": "Plex-analyseverzoek verzonden",
+          "2": "Plex-analyseverzoek kon niet worden verzonden"
+        }
+      },
+      "PlexUpdater": {
+        "Description": "Verzendt een bericht naar een Plex-server om de bibliotheek bij te werken.",
+        "Label": "Plex-updater",
+        "Fields": {
+          "AccessToken": "Toegangstoken",
+          "AccessToken-Help": "De [toegangstoken](https://github.com/revenz/Fenrus/wiki/Plex-Token) die wordt gebruikt om te communiceren met de Plex-server.\nOpmerking: Stel dit alleen in als je de toegangstoken van de plugininstellingen wilt overschrijven.",
+          "Mapping": "Mapping",
+          "Mapping-Help": "Een lijst van vervangingen die worden gebruikt om paden in FileFlows te mappen naar de paden die in Plex worden gebruikt.\nOpmerking: Dit wordt niet gebruikt tenzij de server-URL hier ook is ingesteld, anders worden de mappen van de plugininstellingen gebruikt.",
+          "MappingKey": "FileFlows",
+          "MappingValue": "Plex",
+          "ServerUrl": "Server",
+          "ServerUrl-Help": "De URL van de Plex-server. Als leeg, wordt de server uit de plugininstellingen gebruikt.\nOpmerking: Stel dit alleen in als je de server-URL van de plugininstellingen wilt overschrijven.",
+          "ServerUrl-Placeholder": "http://localhost:32400/"
+        },
+        "Outputs": {
+          "1": "Plex-updateverzoek verzonden",
+          "2": "Plex-updateverzoek kon niet worden verzonden"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Plex": {
+      "Description": "Een plugin die je in staat stelt te communiceren met Plex.",
+      "Label": "Plex",
+      "Fields": {
+        "AccessToken": "Toegangstoken",
+        "AccessToken-Help": "De [toegangstoken](https://github.com/revenz/Fenrus/wiki/Plex-Token) die wordt gebruikt om te communiceren met de Plex-server.",
+        "Mapping": "Mapping",
+        "Mapping-Help": "Een lijst van vervangingen die worden gebruikt om paden in FileFlows te mappen naar de paden die in Plex worden gebruikt.",
+        "MappingKey": "FileFlows",
+        "MappingValue": "Plex",
+        "ServerUrl": "Server",
+        "ServerUrl-Help": "De URL van de Plex-server",
+        "ServerUrl-Placeholder": "http://localhost:32400/"
+      }
+    }
+  }
+}

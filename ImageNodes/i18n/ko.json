@@ -1,0 +1,127 @@
+{
+  "Flow": {
+    "Parts": {
+      "AutoCropImage": {
+        "Description": "이미지를 자동으로 자릅니다.",
+        "Label": "자동 이미지 자르기",
+        "Fields": {
+          "Format": "형식",
+          "Format-Help": "변환할 이미지 형식",
+          "Threshold": "임계값",
+          "Threshold-Help": "엔트로픽 밀도에 대한 임계값, 기본값은 50이며 0과 100 사이여야 합니다."
+        },
+        "Outputs": {
+          "1": "이미지가 잘림, 새로운 임시 파일에 저장됨",
+          "2": "이미지가 잘리지 않았습니다."
+        }
+      },
+      "ImageFile": {
+        "Description": "이미지 파일",
+        "Label": "이미지 파일",
+        "Outputs": {
+          "1": "이미지 파일"
+        }
+      },
+      "ImageFlip": {
+        "Description": "이미지를 뒤집습니다.",
+        "Label": "이미지 뒤집기",
+        "Fields": {
+          "Format": "형식",
+          "Format-Help": "변환할 이미지 형식",
+          "Vertical": "수직",
+          "Vertical-Help": "설정하면 이미지를 수직으로 뒤집고, 그렇지 않으면 수평으로 뒤집습니다."
+        },
+        "Outputs": {
+          "1": "이미지가 뒤집혔으며, 새로운 임시 파일에 저장됨"
+        }
+      },
+      "ImageFormat": {
+        "Description": "이미지를 지정된 형식으로 변환합니다.",
+        "Label": "이미지 형식",
+        "Fields": {
+          "Format": "형식",
+          "Format-Help": "변환할 이미지 형식"
+        },
+        "Outputs": {
+          "1": "이미지가 변환되었으며, 새로운 임시 파일에 저장됨",
+          "2": "이미지가 이미 목표 형식에 있습니다."
+        }
+      },
+      "ImageIsLandscape": {
+        "Description": "이미지가 가로 방향인지 테스트합니다.",
+        "Label": "이미지가 가로 방향입니다",
+        "Outputs": {
+          "1": "이미지가 가로 방향입니다.",
+          "2": "이미지가 세로 방향입니다."
+        }
+      },
+      "ImageIsPortrait": {
+        "Description": "이미지가 세로 방향인지 테스트합니다.",
+        "Label": "이미지가 세로 방향입니다",
+        "Outputs": {
+          "1": "이미지가 세로 방향입니다.",
+          "2": "이미지가 가로 방향입니다."
+        }
+      },
+      "ImageResizer": {
+        "Description": "이미지 크기를 조정합니다.",
+        "Label": "이미지 크기 조정",
+        "Fields": {
+          "Format": "형식",
+          "Format-Help": "변환할 이미지 형식",
+          "Height": "높이",
+          "Mode": "모드",
+          "Mode-Help": "이미지 크기를 조정할 때 사용할 모드",
+          "Width": "너비"
+        },
+        "Outputs": {
+          "1": "이미지 크기가 조정되었으며, 새로운 임시 파일에 저장됨"
+        }
+      },
+      "ImageRotate": {
+        "Description": "이미지를 회전합니다.",
+        "Label": "이미지 회전",
+        "Fields": {
+          "Angle": "각도",
+          "Angle-Help": "회전 각도",
+          "Format": "형식",
+          "Format-Help": "변환할 이미지 형식"
+        },
+        "Outputs": {
+          "1": "이미지가 회전되었으며, 새로운 임시 파일에 저장됨"
+        }
+      },
+      "IsImage": {
+        "Description": "파일이 이미지 파일인지 테스트합니다.",
+        "Label": "이미지 여부",
+        "Fields": {
+          "File": "파일",
+          "File-Help": "확인할 파일의 선택적 경로입니다. 비워두면 현재 작업 파일이 확인됩니다.",
+          "File-Placeholder": "비워두면 현재 작업 파일"
+        },
+        "Outputs": {
+          "1": "파일은 인식된 이미지 파일입니다.",
+          "2": "파일은 인식된 이미지 파일이 아닙니다."
+        }
+      },
+      "PixelCheck": {
+        "Description": "이 흐름 요소는 이미지의 총 픽셀 수가 지정된 임계값을 초과하는지 확인합니다.",
+        "Label": "픽셀 확인",
+        "Fields": {
+          "Pixels": "픽셀",
+          "Pixels-Help": "이미지가 포함해야 하는 픽셀 수입니다. 이는 이미지의 너비와 높이를 곱하여 계산됩니다."
+        },
+        "Outputs": {
+          "1": "이미지가 지정된 픽셀 수 이상입니다.",
+          "2": "이미지가 요구된 픽셀 수보다 적습니다."
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "ImageNodes": {
+      "Description": "이미지 파일을 처리하는 흐름 요소입니다. 이 플러그인은 이미지를 변환하고 조작하는 노드를 포함합니다.",
+      "Label": "이미지"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "Flow": {
+    "Parts": {
+      "SendEmail": {
+        "Description": "Envía un correo electrónico utilizando el servidor SMTP configurado",
+        "Label": "Enviar correo electrónico",
+        "Fields": {
+          "Body": "Cuerpo",
+          "Body-Help": "El contenido del mensaje de correo electrónico que se está enviando. Utiliza el lenguaje de plantillas [scriban](https://github.com/scriban/scriban)",
+          "Recipients": "Destinatarios",
+          "Recipients-Help": "Una lista de direcciones de correo electrónico a las que enviar el mensaje",
+          "Subject": "Asunto",
+          "Subject-Help": "El asunto del correo electrónico que se está configurando"
+        },
+        "Outputs": {
+          "1": "El correo electrónico ''{Subject}'' fue enviado",
+          "2": "Error al enviar el correo electrónico"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "EmailNodes": {
+      "Description": "Este complemento te permite enviar un correo electrónico mientras se ejecuta un flujo.",
+      "Label": "Correo electrónico",
+      "Fields": {
+        "Sender": "Remitente",
+        "Sender-Help": "La dirección de correo electrónico desde la cual se enviarán los correos",
+        "SmtpPassword": "Contraseña SMTP",
+        "SmtpPassword-Help": "La contraseña utilizada para autenticar contra el servidor SMTP",
+        "SmtpPort": "Puerto SMTP",
+        "SmtpPort-Help": "El puerto del servidor SMTP utilizado para enviar correos electrónicos, por defecto 25",
+        "SmtpServer": "Servidor SMTP",
+        "SmtpServer-Help": "La dirección del servidor SMTP utilizado para enviar correos electrónicos",
+        "SmtpUsername": "Nombre de usuario SMTP",
+        "SmtpUsername-Help": "El nombre de usuario utilizado para autenticar contra el servidor SMTP"
+      }
+    }
+  }
+}

@@ -1,0 +1,780 @@
+{
+  "Enums": {
+    "LogType": {
+      "Debug": "Debug",
+      "Error": "Errore",
+      "Info": "Informazione",
+      "Warning": "Avviso"
+    }
+  },
+  "Flow": {
+    "Parts": {
+      "BatchScript": {
+        "Description": "Ti consente di eseguire uno script batch (.bat) in un ambiente Windows.",
+        "Label": "Script Batch (.bat)",
+        "Fields": {
+          "Code": "Codice"
+        },
+        "Outputs": {
+          "1": "restituito 1",
+          "10": "restituito 10",
+          "2": "restituito 2",
+          "3": "restituito 3",
+          "4": "restituito 4",
+          "5": "restituito 5",
+          "6": "restituito 6",
+          "7": "restituito 7",
+          "8": "restituito 8",
+          "9": "restituito 9"
+        }
+      },
+      "CompleteFlow": {
+        "Description": "Completa/termina il flusso come riuscito",
+        "Label": "Completa Flow"
+      },
+      "CopyFile": {
+        "Description": "Copia un file nella cartella di destinazione",
+        "Label": "Copia File",
+        "Fields": {
+          "AdditionalFiles": "File Aggiuntivi",
+          "AdditionalFiles-Help": "File aggiuntivi da copiare dalla directory alla nuova directory.\nOgni valore può contenere una combinazione di percorso letterale valido e caratteri jolly (* e ?) ma non supporta le espressioni regolari.",
+          "AdditionalFilesFromOriginal": "Directory Originale",
+          "AdditionalFilesFromOriginal-Help": "Se i file aggiuntivi devono essere copiati dalla directory di lavoro o dalla directory originale. Attiva per la directory originale.",
+          "CopyFolder": "Copia Cartella",
+          "CopyFolder-Help": "Se anche la struttura della cartella della libreria relativa deve essere copiata",
+          "DestinationFile": "File di Destinazione",
+          "DestinationFile-Help": "Il nome del file a cui copiare il file. Se vuoto, verrà utilizzato il nome del file originale",
+          "DestinationPath": "Cartella di Destinazione",
+          "DestinationPath-Help": "La cartella in cui il file verrà copiato",
+          "InputFile": "File da Copiare",
+          "InputFile-Help": "Il file da copiare; se lasciato vuoto, verrà copiato il file di lavoro",
+          "InputFile-Placeholder": "File di Lavoro",
+          "PreserverOriginalDates": "Preserva Date",
+          "PreserverOriginalDates-Help": "Se il tempo di creazione originale e l'ultima ora di scrittura del file di input originale devono essere preservati."
+        },
+        "Outputs": {
+          "1": "File copiato"
+        }
+      },
+      "CSharpScript": {
+        "Description": "Consente di eseguire un codice C# all'interno del Flusso.",
+        "Label": "Funzione C#",
+        "Fields": {
+          "Code": "Codice"
+        },
+        "Outputs": {
+          "1": "restituito 1",
+          "10": "restituito 10",
+          "2": "restituito 2",
+          "3": "restituito 3",
+          "4": "restituito 4",
+          "5": "restituito 5",
+          "6": "restituito 6",
+          "7": "restituito 7",
+          "8": "restituito 8",
+          "9": "restituito 9"
+        }
+      },
+      "Delete": {
+        "Description": "Elimina un file o una cartella",
+        "Label": "Elimina",
+        "Fields": {
+          "FileName": "Percorso",
+          "FileName-Help": "Un percorso verso un file o una cartella da eliminare.\n\nSe lasciato vuoto, verrà eliminato il file di lavoro corrente."
+        },
+        "Outputs": {
+          "1": "File eliminato"
+        }
+      },
+      "DeleteSourceDirectory": {
+        "Description": "Elimina la cartella sorgente del file della libreria originale",
+        "Label": "Elimina la cartella sorgente",
+        "Fields": {
+          "IfEmpty": "Se vuota",
+          "IfEmpty-Help": "Elimina la cartella sorgente solo se è vuota",
+          "IncludePatterns": "Includi modelli",
+          "IncludePatterns-Help": "Facoltativo, se impostato solo i file che corrispondono a questi modelli verranno conteggiati per vedere se la cartella è vuota. Qualsiasi di questi modelli può corrispondere.",
+          "TopMostOnly": "Solo il livello superiore",
+          "TopMostOnly-Help": "Quando abilitato, verrà eliminata solo la cartella che contiene direttamente il file, lasciando intatte le cartelle di livello superiore."
+        },
+        "Outputs": {
+          "1": "Cartella sorgente eliminata",
+          "2": "La cartella NON è stata eliminata"
+        }
+      },
+      "Executor": {
+        "Description": "Esegue il seguente processo sul file.\nOutput 1: Il processo ha restituito il codice di uscita di successo\nOutput 2: Il processo ha restituito un codice di uscita non riuscito.",
+        "Label": "Esecutore",
+        "Fields": {
+          "Arguments": "Argomenti",
+          "Arguments-Help": "Gli argomenti da passare al processo da eseguire",
+          "FileName": "Nome File",
+          "FileName-Help": "Il nome del file da eseguire",
+          "OutputErrorVariable": "Variabile di Errore di Output",
+          "OutputErrorVariable-Help": "Un nome di variabile opzionale per memorizzare l'output di errore del processo",
+          "OutputVariable": "Variabile di Output",
+          "OutputVariable-Help": "Un nome di variabile opzionale per memorizzare l'output del processo",
+          "SuccessCode": "Codice di Successo",
+          "SuccessCode-Help": "Il codice di uscita del processo che indica che il processo è riuscito. Di solito questo dovrebbe essere 0.",
+          "Timeout": "Timeout",
+          "Timeout-Help": "Quanto a lungo il processo può essere eseguito prima di essere terminato. Usa 0 per nessun timeout.",
+          "Timeout-Suffix": "secondi",
+          "WorkingDirectory": "Cartella di Lavoro",
+          "WorkingDirectory-Help": "La cartella da cui verrà eseguito il processo"
+        },
+        "Outputs": {
+          "1": "Il processo ha restituito successo",
+          "2": "Il processo ha restituito un fallimento"
+        }
+      },
+      "FailFlow": {
+        "Description": "Fallisce un flusso immediatamente, utile se si desidera che un certo percorso fallisca.",
+        "Label": "Flow Fallito",
+        "Fields": {
+          "Reason": "Motivo",
+          "Reason-Help": "Un motivo opzionale per registrare il motivo per cui il flusso è fallito."
+        }
+      },
+      "FileDateCompare": {
+        "Description": "Controlla se la data di creazione del file o l'ultima ora di scrittura corrispondono al vincolo di data specificato.",
+        "Label": "Confronto Data File",
+        "Fields": {
+          "Date": "Data",
+          "DateComparision": "Confronto",
+          "FileName": "Nome File",
+          "FileName-Help": "Il file da controllare. Lascia vuoto per controllare il file di lavoro corrente."
+        },
+        "Outputs": {
+          "1": "Corrisponde al vincolo di data.",
+          "2": "Non corrisponde al vincolo di data."
+        }
+      },
+      "FileExists": {
+        "Description": "Controlla se un file esiste\n\nOutput 1: Il file esiste\nOutput 2: Il file non esiste",
+        "Label": "File Esiste",
+        "Fields": {
+          "FileName": "Nome File",
+          "FileName-Help": "Il file da controllare. Lascialo vuoto per controllare il file di lavoro attuale."
+        },
+        "Outputs": {
+          "1": "Il file esiste",
+          "2": "Il file non esiste"
+        }
+      },
+      "FileExtension": {
+        "Description": "Controlla se il file ha una delle estensioni configurate.\n\nOutput 1: Corrisponde\nOutput 2: Non corrisponde",
+        "Label": "Estensione File",
+        "Fields": {
+          "Extensions": "Estensioni",
+          "Extensions-Help": "Un elenco di estensioni di file senza distinzione tra maiuscole e minuscole con cui verrà effettuato il confronto.\nOutput 1: Corrisponde\nOutput 2: Non corrisponde"
+        },
+        "Outputs": {
+          "1": "Corrispondenza dell'estensione",
+          "2": "L'estensione non corrisponde"
+        }
+      },
+      "FileSize": {
+        "Description": "Controlla se la dimensione del file corrisponde ai parametri configurati. I valori sono in megabyte.\n\nOutput 1: Corrisponde\nOutput 2: Non corrisponde",
+        "Label": "Dimensione File",
+        "Fields": {
+          "Comparison": "Confronto",
+          "Lower": "Maggiore di",
+          "Lower-Help": "Il valore deve essere maggiore di questo numero di megabyte",
+          "Lower-Suffix": "MB",
+          "Upper": "Minore di",
+          "Upper-Help": "Il valore deve essere minore di questo numero di megabyte. Lascia 0 per non testare il limite superiore.",
+          "Upper-Suffix": "MB"
+        },
+        "Outputs": {
+          "1": "Dimensione del file entro il limite",
+          "2": "Dimensione del file non entro il limite"
+        }
+      },
+      "FileSizeCompare": {
+        "Description": "Controlla se la dimensione del file è cambiata rispetto al file originale.",
+        "Label": "Confronto Dimensione File",
+        "Outputs": {
+          "1": "Più piccolo dell'originale",
+          "2": "Stessa dimensione dell'originale",
+          "3": "Più grande dell'originale"
+        }
+      },
+      "FileSizeWithin": {
+        "Description": "Controlla se la nuova dimensione del file è all'interno dell'intervallo consentito rispetto alla dimensione del file originale.",
+        "Label": "Dimensione File Entro",
+        "Fields": {
+          "Value": "Valore",
+          "Value-Help": "La differenza consentita per la dimensione del file, questo valore può essere sia più che meno rispetto a questa differenza."
+        },
+        "Outputs": {
+          "1": "La dimensione del file è all'interno dell'intervallo consentito",
+          "2": "La dimensione del file non è all'interno dell'intervallo consentito"
+        }
+      },
+      "FolderDateCompare": {
+        "Description": "Controlla se la data di creazione o l'ultima data di scrittura della cartella corrisponde ai vincoli di data specificati.",
+        "Label": "Confronto Data Cartella",
+        "Fields": {
+          "Date": "Data",
+          "DateComparision": "Confronto",
+          "Path": "Percorso",
+          "Path-Help": "Il percorso della cartella da controllare. Lascialo vuoto per controllare il file di lavoro attuale.\nSe viene specificato un file, verrà controllata la cartella contenente il file."
+        },
+        "Outputs": {
+          "1": "Corrisponde ai vincoli di data.",
+          "2": "Non corrisponde ai vincoli di data."
+        }
+      },
+      "FolderIterator": {
+        "Description": "Esegue l'iterazione di tutti i file in una cartella specificata ed esegue questi file contro un sottoflusso.",
+        "Label": "Iteratore Cartella",
+        "Fields": {
+          "Flow": "Flusso",
+          "Flow-Help": "Il sottoflusso contro cui eseguire i file.",
+          "Folder": "Cartella",
+          "Folder-Help": "La cartella i cui file verranno iterati.",
+          "Pattern": "Modello",
+          "Pattern-Help": "Qualsiasi modello opzionale per limitare i file per l'iterazione, questo può essere un modello jolly che inizia con `*` o un'espressione regolare.",
+          "Recursive": "Ricorsivo",
+          "Recursive-Help": "Se i file in tutte le sottocartelle devono essere iterati o se devono essere iterati solo i file di primo livello."
+        },
+        "Outputs": {
+          "1": "File della cartella iterati"
+        }
+      },
+      "Function": {
+        "Label": "Funzione",
+        "Fields": {
+          "Code": "Codice",
+          "Code-Help": "restituire -1 per errore e interrompere il flusso. restituire 0 per completare il flusso. restituire 1 o più per chiamare l'output desiderato",
+          "Outputs": "Output",
+          "Template": "Modello",
+          "Template-Help": "ATTENZIONE: Questo sostituirà qualsiasi cosa nel blocco di codice con il modello selezionato."
+        },
+        "Outputs": {
+          "1": "restituito 1",
+          "10": "restituito 10",
+          "2": "restituito 2",
+          "3": "restituito 3",
+          "4": "restituito 4",
+          "5": "restituito 5",
+          "6": "restituito 6",
+          "7": "restituito 7",
+          "8": "restituito 8",
+          "9": "restituito 9"
+        }
+      },
+      "GotoFlow": {
+        "Description": "Questo ti consente di passare a un flusso diverso da elaborare. Questo flusso uscirà e i parametri e il file di lavoro verranno trasferiti nel nuovo Flusso",
+        "Label": "Vai a Flow",
+        "Fields": {
+          "Flow": "Flusso",
+          "UpdateFlowUsed": "Aggiorna Flusso",
+          "UpdateFlowUsed-Help": "Se il file `Flusso` deve essere aggiornato per fare riferimento a questo nuovo Flusso o lasciarlo come il Flusso originale."
+        }
+      },
+      "HasHardLinks": {
+        "Description": "Controlla se un file ha collegamenti rigidi o meno",
+        "Label": "Collegamenti Rigidi",
+        "Fields": {
+          "Count": "Conteggio",
+          "Count-Help": "Il numero di collegamenti rigidi richiesti per chiamare l'output 1.",
+          "FileName": "Nome File",
+          "FileName-Help": "Il file da controllare. Lascia vuoto per controllare il file di lavoro attuale."
+        },
+        "Outputs": {
+          "1": "Collegamenti rigidi rilevati",
+          "2": "Nessun collegamento rigido rilevato"
+        }
+      },
+      "IfBoolean": {
+        "Description": "Verifica se una variabile è vera o falsa",
+        "Label": "Se Booleano",
+        "Fields": {
+          "Variable": "Variabile",
+          "Variable-Help": "Il nome della variabile da controllare"
+        },
+        "Outputs": {
+          "1": "Vero",
+          "2": "Falso"
+        }
+      },
+      "IfString": {
+        "Description": "Verifica se una variabile corrisponde a una stringa",
+        "Label": "Se Stringa",
+        "Fields": {
+          "Options": "Opzioni",
+          "Options-Help": "La stringa da confrontare.",
+          "Outputs": "Output",
+          "Outputs-Help": "Questo dovrebbe corrispondere al numero di opzioni disponibili",
+          "Variable": "Variabile",
+          "Variable-Help": "Il nome della variabile da controllare"
+        },
+        "Outputs": {
+          "1": "Stringa corrispondente 1",
+          "10": "Stringa corrispondente 10",
+          "2": "Stringa corrispondente 2",
+          "3": "Stringa corrispondente 3",
+          "4": "Stringa corrispondente 4",
+          "5": "Stringa corrispondente 5",
+          "6": "Stringa corrispondente 6",
+          "7": "Stringa corrispondente 7",
+          "8": "Stringa corrispondente 8",
+          "9": "Stringa corrispondente 9"
+        }
+      },
+      "InputFile": {
+        "Description": "Un elemento di flusso in ingresso per un file. Questo è obbligatorio ed è il punto di partenza di un flusso. Può essere utilizzato qualsiasi elemento di flusso in ingresso, ma ne è richiesto almeno uno.",
+        "Label": "File di Input",
+        "Outputs": {
+          "1": "File della libreria"
+        }
+      },
+      "InputFolder": {
+        "Description": "Un elemento di flusso in ingresso per una cartella. Questo funzionerà solo se la libreria che utilizza questo flusso è configurata per le cartelle.",
+        "Label": "Cartella di Input",
+        "Outputs": {
+          "1": "Cartella della libreria"
+        }
+      },
+      "IsDocker": {
+        "Description": "Determina se questo flusso è in esecuzione su Docker",
+        "Label": "È Docker",
+        "Outputs": {
+          "1": "È in esecuzione su Docker",
+          "2": "Non è in esecuzione su Docker"
+        }
+      },
+      "IsFromLibrary": {
+        "Description": "Controlla se il file in elaborazione proviene dalla libreria specificata.",
+        "Label": "È Dalla Libreria",
+        "Fields": {
+          "Library": "Libreria",
+          "Library-Help": "La libreria da controllare."
+        },
+        "Outputs": {
+          "1": "Il file proviene dalla libreria specificata.",
+          "2": "Il file non proviene dalla libreria specificata."
+        }
+      },
+      "IsLinux": {
+        "Description": "Determina se questo flusso è in esecuzione su Linux",
+        "Label": "È Linux",
+        "Outputs": {
+          "1": "È in esecuzione su Linux",
+          "2": "Non è in esecuzione su Linux"
+        }
+      },
+      "IsMacOS": {
+        "Description": "Determina se questo flusso è in esecuzione su MacOS",
+        "Label": "È MacOS",
+        "Outputs": {
+          "1": "È in esecuzione su MacOS",
+          "2": "Non è in esecuzione su MacOS"
+        }
+      },
+      "IsProcessingOnNode": {
+        "Description": "Controlla se il flusso sta attualmente elaborando su un nodo di elaborazione specificato.",
+        "Label": "È in Elaborazione sul Nodo",
+        "Fields": {
+          "Node": "Nodo",
+          "Node-Help": "Il nodo di elaborazione da controllare."
+        },
+        "Outputs": {
+          "1": "È in elaborazione sul nodo",
+          "2": "Non è in elaborazione sul nodo"
+        }
+      },
+      "IsWindows": {
+        "Description": "Determina se questo flusso è in esecuzione su Windows",
+        "Label": "È Windows",
+        "Outputs": {
+          "1": "È in esecuzione su Windows",
+          "2": "Non è in esecuzione su Windows"
+        }
+      },
+      "ListIterator": {
+        "Description": "Itera tutte le stringhe in un elenco fornito ed esegue quelle stringhe contro un sottoflusso.",
+        "Label": "Iteratore Elenco",
+        "Fields": {
+          "Flow": "Flusso",
+          "Flow-Help": "Il sottoflusso contro cui eseguire le stringhe.",
+          "List": "Elenco",
+          "List-Help": "Un nome di variabile contenente l'elenco da iterare."
+        },
+        "Outputs": {
+          "1": "Elenco iterato"
+        }
+      },
+      "Log": {
+        "Description": "Registra un messaggio nel log del flusso",
+        "Label": "Log",
+        "Fields": {
+          "LogType": "Tipo",
+          "Message": "Messaggio"
+        },
+        "Outputs": {
+          "1": "Messaggio registrato"
+        }
+      },
+      "Matches": {
+        "Description": "Confronta un insieme di valori e abbina le condizioni per vedere quale output dovrebbe essere chiamato",
+        "Label": "Corrispondenze",
+        "Fields": {
+          "MatchConditions": "",
+          "MatchConditions-Help": "I confronti da testare per determinare quale output dovrebbe essere chiamato.",
+          "MatchConditionsKey": "Valore",
+          "MatchConditionsValue": "Espressione"
+        }
+      },
+      "MatchesAll": {
+        "Description": "Confronta un insieme di valori e verifica se tutte le condizioni corrispondono.",
+        "Label": "Corrispondenze Tutte",
+        "Fields": {
+          "MatchConditions": "",
+          "MatchConditionsHelp": "Le condizioni da testare, determinando quale output dovrebbe essere chiamato.",
+          "MatchConditionsKey": "Valore",
+          "MatchConditionsValue": "Espressione"
+        },
+        "Outputs": {
+          "1": "Tutte le condizioni corrispondono",
+          "2": "Non tutte le condizioni corrispondono"
+        }
+      },
+      "MoveFile": {
+        "Description": "Sposta un file nella cartella di destinazione",
+        "Label": "Sposta File",
+        "Fields": {
+          "AdditionalFiles": "File Aggiuntivi",
+          "AdditionalFiles-Help": "File aggiuntivi da spostare dalla directory alla nuova directory.\nOgni valore può contenere una combinazione di percorso letterale valido e caratteri jolly (* e ?) ma non supporta le espressioni regolari.",
+          "AdditionalFilesFromOriginal": "Directory Originale",
+          "AdditionalFilesFromOriginal-Help": "Se i file aggiuntivi devono essere spostati dalla directory di lavoro o dalla directory originale. Attivare per la directory originale.",
+          "DeleteOriginal": "Elimina Originale",
+          "DeleteOriginal-Help": "Se il file originale deve essere eliminato, ciò avverrà solo se il file di lavoro è diverso dal file originale.",
+          "DestinationFile": "File di Destinazione",
+          "DestinationFile-Help": "Il nome del file in cui spostare il file. Se vuoto, verrà utilizzato il nome del file originale.",
+          "DestinationPath": "Cartella di Destinazione",
+          "DestinationPath-Help": "La cartella in cui verrà spostato il file.",
+          "InputFile": "File da Spostare",
+          "InputFile-Help": "Il file da spostare, se lasciato vuoto verrà spostato il file di lavoro.",
+          "InputFile-Placeholder": "File di Lavoro",
+          "MoveFolder": "Copia Cartella",
+          "MoveFolder-Help": "Se anche la struttura della cartella della libreria relativa deve essere copiata.",
+          "PreserverOriginalDates": "Preserva Date",
+          "PreserverOriginalDates-Help": "Se l'ora di creazione originale e l'ultima ora di scrittura del file di input originale devono essere preservate."
+        },
+        "Outputs": {
+          "1": "File spostato",
+          "2": "File spostato, tuttavia il file originale non è stato eliminato"
+        }
+      },
+      "MoveFolder": {
+        "Description": "Sposta una cartella",
+        "Label": "Sposta Cartella",
+        "Fields": {
+          "CreateSubfolder": "Crea Sottocartella",
+          "CreateSubfolder-Help": "Se verrà creata una sottocartella con il nome della cartella sorgente nella cartella di destinazione.",
+          "DestinationPath": "Destinazione",
+          "DestinationPath-Help": "La cartella di destinazione in cui spostare la cartella sorgente.",
+          "SourcePath": "Sorgente",
+          "SourcePath-Help": "La cartella da spostare, se lasciata vuota verrà utilizzato il File di Lavoro, se non è una cartella, allora l'elemento del flusso fallirà."
+        },
+        "Outputs": {
+          "1": "Cartella spostata"
+        }
+      },
+      "OlderThan": {
+        "Description": "Controlla se una cartella è più vecchia rispetto all'intervallo specificato",
+        "Label": "Più Vecchio di",
+        "Fields": {
+          "Date": "Data",
+          "Number": "Numero",
+          "Unit": "Unità"
+        },
+        "Outputs": {
+          "1": "Il file è più vecchio",
+          "2": "Il file non è più vecchio"
+        }
+      },
+      "OriginalFile": {
+        "Description": "Imposta il file di lavoro corrente nel flusso sul file originale che ha avviato il flusso",
+        "Label": "File Originale",
+        "Outputs": {
+          "1": "File di lavoro impostato su file originale"
+        }
+      },
+      "PatternMatch": {
+        "Description": "Testa il file di lavoro e il file originale rispetto a un'espressione regolare.\n\nOutput 1: Corrisponde all'espressione\nOutput 2: Non corrisponde",
+        "Label": "Corrispondenza Modello",
+        "Fields": {
+          "Pattern": "Modello",
+          "Pattern-Help": "Un'espressione regolare, utilizzando la specifica C# per le espressioni regolari."
+        },
+        "Outputs": {
+          "1": "Corrisponde all'espressione",
+          "2": "NON corrisponde"
+        }
+      },
+      "PatternReplacer": {
+        "Description": "Ti consente di effettuare sostituzioni nel nome del file. Può utilizzare espressioni regolari per le sostituzioni o semplici sostituzioni di stringhe.\n\nOutput 1: Sostituzione completata\nOutput 2: Nessuna sostituzione effettuata",
+        "Label": "Sostituzione del Modello di Nome File",
+        "Fields": {
+          "Replacements": "Sostituzioni",
+          "ReplacementsKey": "Modello",
+          "ReplacementsValue": "Valore",
+          "UseWorkingFileName": "Usa Nome File di Lavoro",
+          "UseWorkingFileName-Help": "Se deve essere utilizzato il nome file di lavoro corrente, oppure se falso, verrà utilizzato il nome file originale del file in arrivo."
+        },
+        "Outputs": {
+          "1": "Sostituzione completata",
+          "2": "Nessuna sostituzione effettuata"
+        }
+      },
+      "PowerShellScript": {
+        "Description": "Consente di eseguire uno script PowerShell (.ps1) in un ambiente Windows.",
+        "Label": "Script PowerShell (.ps1)",
+        "Fields": {
+          "Code": "Codice"
+        },
+        "Outputs": {
+          "1": "restituito 1",
+          "10": "restituito 10",
+          "2": "restituito 2",
+          "3": "restituito 3",
+          "4": "restituito 4",
+          "5": "restituito 5",
+          "6": "restituito 6",
+          "7": "restituito 7",
+          "8": "restituito 8",
+          "9": "restituito 9"
+        }
+      },
+      "Random": {
+        "Description": "Sceglie un output casuale",
+        "Label": "Casuale",
+        "Fields": {
+          "Outputs": "Output",
+          "Outputs-Help": "Il numero di output che potrebbero essere chiamati."
+        }
+      },
+      "Renamer": {
+        "Description": "Rinomina il file di lavoro.\nLe variabili possono essere utilizzate inserendo la chiave '{' all'interno del campo Pattern.",
+        "Label": "Rinominatore",
+        "Fields": {
+          "CsvFile": "File CSV",
+          "CsvFile-Help": "Aggiungerà a questo file il nome originale e il nome rinominato. Utile quando si utilizza ''Solo Log'' per testare il rinominatore prima di modificare i file.",
+          "DestinationPath": "Cartella di Destinazione",
+          "DestinationPath-Help": "Se il file deve essere spostato in una cartella diversa.",
+          "LogOnly": "Solo Log",
+          "LogOnly-Help": "Attiva se vuoi solo testare questo elemento del flusso senza effettivamente rinominare il file",
+          "Pattern": "Nuovo Nome",
+          "Pattern-Help": "Il nuovo nome del file. Può utilizzare variabili. Tutti i vuoti () e '{}' verranno rimossi."
+        },
+        "Outputs": {
+          "1": "File rinominato"
+        }
+      },
+      "ReplaceOriginal": {
+        "Description": "Sostituisce il file originale con il file di lavoro.\n\nSe l'estensione del file di lavoro è diversa, il file originale verrà eliminato e il file di lavoro verrà spostato al file originale con la nuova estensione.\nAd esempio, da File.avi a File.mkv",
+        "Label": "Sostituisci Originale",
+        "Fields": {
+          "PreserverOriginalDates": "Preserva Date",
+          "PreserverOriginalDates-Help": "Se il tempo di creazione originale e il tempo di ultima scrittura del file di input originale devono essere preservati."
+        },
+        "Outputs": {
+          "1": "File originale sostituito"
+        }
+      },
+      "Reprocess": {
+        "Description": "L'elemento del flusso consente di rielaborare il file della libreria originale con un nodo di elaborazione diverso.\n\n Se viene selezionato lo stesso nodo di elaborazione di quello attualmente in elaborazione, il flusso non avrà successo.",
+        "Label": "Rielabora",
+        "Fields": {
+          "HoldMinutes": "Minuti di Attesa",
+          "HoldMinutes-Help": "Il numero di minuti per trattenere il file prima di elaborarlo nuovamente. Usa 0 per elaborarlo immediatamente.",
+          "Node": "Nodo",
+          "Node-Help": "Il nodo di elaborazione per elaborare questo file."
+        }
+      },
+      "SetVariable": {
+        "Description": "Imposta una variabile nel flusso.",
+        "Label": "Imposta Variabile",
+        "Fields": {
+          "Value": "Valore",
+          "Value-Help": "Il valore della variabile da impostare.",
+          "Variable": "Variabile",
+          "Variable-Help": "Il nome della variabile da impostare"
+        },
+        "Outputs": {
+          "1": "Variabile impostata"
+        }
+      },
+      "SetWorkingFile": {
+        "Description": "Aggiorna il file di lavoro corrente con quello specificato.",
+        "Label": "Imposta File di Lavoro",
+        "Fields": {
+          "DontDeletePrevious": "Non Eliminare Precedenti",
+          "DontDeletePrevious-Help": "Se il precedente file di lavoro *temporaneo* *non* deve essere eliminato.\nSolo i file temporanei verranno eliminati, i file creati da FileFlows nella directory temporanea degli esecutori.",
+          "File": "File",
+          "File-Description": "Il percorso del nuovo file o cartella di lavoro."
+        },
+        "Outputs": {
+          "1": "File di Lavoro Impostato"
+        }
+      },
+      "SevenZip": {
+        "Description": "Consente di comprimere l'input in formato 7zip",
+        "Label": "7-Zip",
+        "Fields": {
+          "CompressionLevel": "Livello di Compressione",
+          "CompressionLevel-Help": "Il livello di compressione da utilizzare durante la compressione.",
+          "CompressionMethod": "Metodo di Compressione",
+          "CompressionMethod-Help": "Il metodo di compressione utilizzato, si raccomanda LZMA2.",
+          "DestinationFile": "File di Destinazione",
+          "DestinationFile-Help": "Il nome del file del nuovo 7zip. Se lasciato vuoto, verrà utilizzato il nome dell'elemento come file 7zip.",
+          "DestinationPath": "Cartella di Destinazione",
+          "DestinationPath-Help": "La cartella di destinazione in cui posizionare il file 7zip. Se lasciata vuota, il 7zip verrà posizionato nella radice della libreria."
+        },
+        "Outputs": {
+          "1": "7zip creato"
+        }
+      },
+      "ShellScript": {
+        "Description": "Consente di eseguire uno script shell (.sh) in un ambiente simile a Unix.",
+        "Label": "Shell Script (.sh)",
+        "Fields": {
+          "Code": "Codice"
+        },
+        "Outputs": {
+          "1": "restituito 1",
+          "10": "restituito 10",
+          "2": "restituito 2",
+          "3": "restituito 3",
+          "4": "restituito 4",
+          "5": "restituito 5",
+          "6": "restituito 6",
+          "7": "restituito 7",
+          "8": "restituito 8",
+          "9": "restituito 9"
+        }
+      },
+      "Sleep": {
+        "Description": "Pausa il flusso",
+        "Label": "Pausa",
+        "Fields": {
+          "Milliseconds": "Millisecondi",
+          "Milliseconds-Help": "Per quanto tempo sospendere il flusso. Deve essere compreso tra 1 millisecondo e 1 ora."
+        },
+        "Outputs": {
+          "1": "Flusso ripreso"
+        }
+      },
+      "Tag": {
+        "Description": "Etichetta il file con i tag specificati",
+        "Label": "Etichetta",
+        "Fields": {
+          "Replace": "Sostituire",
+          "Replace-Help": "Se i tag devono essere sostituiti o aggiunti ai tag esistenti.",
+          "Tags": "Tag"
+        }
+      },
+      "Touch": {
+        "Description": "Modifica un file o una directory e imposta l'ultima ora di scrittura su ora.",
+        "Label": "Tocca",
+        "Fields": {
+          "FileName": "Nome File",
+          "FileName-Help": "Nome completo del file o della cartella da toccare.\nSe lasciato vuoto, verrà utilizzato il file di lavoro."
+        },
+        "Outputs": {
+          "1": "Elemento toccato con successo"
+        }
+      },
+      "Unpack": {
+        "Description": "Consente di estrarre un archivio (zip, rar, tar, ecc.)",
+        "Label": "Estrai",
+        "Fields": {
+          "DestinationPath": "Cartella di Destinazione",
+          "DestinationPath-Help": "La cartella di destinazione in cui estrarre il file.",
+          "File": "File",
+          "File-Help": "Il nome del file da estrarre. Può essere lasciato vuoto e, in tal caso, verrà utilizzato il file di lavoro corrente."
+        },
+        "Outputs": {
+          "1": "File Estratto"
+        }
+      },
+      "VariableMatch": {
+        "Description": "Controlla se un input corrisponde a una Variabile memorizzata.",
+        "Label": "Corrispondenza Variabile",
+        "Fields": {
+          "Input": "Valore",
+          "Input-Help": "Il valore da confrontare con la variabile.",
+          "Variable": "Variabile",
+          "Variable-Help": "La variabile con cui confrontare",
+          "VariableName": "Variabile",
+          "VariableName-Help": "La variabile con cui confrontare"
+        },
+        "Outputs": {
+          "1": "Input corrisponde alla variabile",
+          "2": "Input non corrisponde alla variabile"
+        }
+      },
+      "WebRequest": {
+        "Description": "Ti consente di inviare una richiesta web",
+        "Label": "Richiesta Web",
+        "Fields": {
+          "Body": "Corpo",
+          "Body-Help": "Il corpo della richiesta inviata. Le variabili possono essere utilizzate in questo campo.",
+          "ContentType": "Tipo di Contenuto",
+          "ContentType-Help": "Il Content-Type del messaggio da inviare",
+          "Headers": "Intestazioni",
+          "Headers-Help": "Intestazioni facoltative da inviare con la richiesta",
+          "HeadersKey": "Chiave",
+          "HeadersValue": "Valore",
+          "Method": "Metodo",
+          "Method-Help": "Il metodo web da utilizzare quando si invia questa richiesta",
+          "Url": "URL",
+          "Url-Help": "L'URL della richiesta"
+        },
+        "Outputs": {
+          "1": "Inviato con successo",
+          "2": "La richiesta ha restituito un codice di stato non riuscito"
+        }
+      },
+      "WriteText": {
+        "Description": "Scrive testo in un file",
+        "Label": "Scrivi Testo",
+        "Fields": {
+          "File": "File",
+          "File-Help": "Il file in cui scrivere il testo.",
+          "Text": "Testo",
+          "Text-Help": "Il testo da scrivere nel file. Se lasciato vuoto, verrà scritto il percorso completo del file di lavoro attuale."
+        },
+        "Outputs": {
+          "1": "Testo scritto nel file"
+        }
+      },
+      "Zip": {
+        "Description": "Ti consente di comprimere l'input",
+        "Label": "Zip",
+        "Fields": {
+          "DestinationFile": "File di Destinazione",
+          "DestinationFile-Help": "Il nome del file zip appena creato. Se lasciato vuoto, verrà utilizzato il nome dell'elemento come file zip.",
+          "DestinationPath": "Cartella di Destinazione",
+          "DestinationPath-Help": "La cartella di destinazione in cui mettere il file zip. Se lasciato vuoto, lo zip sarà posizionato nella radice della libreria.",
+          "Path": "Percorso",
+          "Path-Help": "Il percorso del file o della cartella da comprimere. Se lasciato vuoto, verrà compresso il file di lavoro.",
+          "SetWorkingFile": "Imposta File di Lavoro",
+          "SetWorkingFile-Help": "Se il nuovo file zip creato deve diventare il nuovo file di lavoro."
+        },
+        "Outputs": {
+          "1": "Zip creato"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "BasicNodes": {
+      "Description": "Elementi di flusso di base per FileFlows. Questo plugin contiene elementi di flusso di base e comuni per elaborare i file.\nQuesto plugin è necessario per il funzionamento di FileFlows.",
+      "Label": "Base"
+    }
+  }
+}

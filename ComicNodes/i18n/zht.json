@@ -1,0 +1,63 @@
+{
+  "Flow": {
+    "Parts": {
+      "ComicConverter": {
+        "Description": "將漫畫轉換為不同的漫畫書格式。\n\n支持從CBZ、CBR、CB7、PDF、GZ、BZ2轉換",
+        "Label": "漫畫轉換器",
+        "Fields": {
+          "Codec": "編解碼器",
+          "Codec-Help": "將圖像保存為的編解碼器",
+          "DeleteNonPageImages": "刪除非頁面圖像",
+          "DeleteNonPageImages-Help": "刪除不遵循頁面命名結構的圖像。即：它們不以數字結尾。",
+          "EnsureTopDirectory": "確保頂級目錄",
+          "EnsureTopDirectory-Help": "確保所有文件都位於漫畫書文件的頂級目錄中，並且不存在子目錄。",
+          "Format": "格式",
+          "Format-Help": "將漫畫轉換為的格式",
+          "MaxHeight": "最大高度",
+          "MaxHeight-Help": "頁面的最大高度，使用0表示不調整或保持寬度的質量",
+          "MaxWidth": "最大寬度",
+          "MaxWidth-Help": "頁面的最大寬度，使用0表示不調整或保持高度的質量",
+          "Quality": "質量",
+          "Quality-Help": "漫畫書頁面的質量，0為最多壓縮/最差質量，100為最佳質量"
+        },
+        "Outputs": {
+          "1": "漫畫已轉換並保存為臨時文件",
+          "2": "漫畫已經是所需格式"
+        }
+      },
+      "ComicExtractor": {
+        "Description": "從漫畫書格式中提取所有文件並將其保存到特定文件夾。\n\n支持提取CBZ、CBR、CB7、PDF、GZ、BZ2",
+        "Label": "漫畫提取器",
+        "Fields": {
+          "DestinationPath": "目的地路徑",
+          "DestinationPath-Help": "保存提取的漫畫書文件的文件夾"
+        },
+        "Outputs": {
+          "1": "漫畫已被提取"
+        }
+      },
+      "CreateComicInfo": {
+        "Description": "解析漫畫的路徑並在漫畫書壓縮包內創建comicinfo.xml文件。",
+        "Label": "創建漫畫信息",
+        "Fields": {
+          "IssueDigits": "期數位數",
+          "IssueDigits-Help": "將期號用前導零填充到最多這個數量。\n例如，對於期號1，如果填充為3，則期號將顯示為#001",
+          "Publisher": "出版商",
+          "Publisher-Help": "如果漫畫位於出版商目錄中，請參閱幫助以獲取更多信息。",
+          "RenameFile": "重命名文件",
+          "RenameFile-Help": "如果文件應該重命名為`系列 - 期數 - 標題.擴展名`"
+        },
+        "Outputs": {
+          "1": "ComicInfo已添加到漫畫壓縮包",
+          "2": "ComicInfo已在壓縮包中"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "ComicNodes": {
+      "Description": "處理漫畫書（cbr、cbz、pdf等）的流程元素",
+      "Label": "漫畫"
+    }
+  }
+}

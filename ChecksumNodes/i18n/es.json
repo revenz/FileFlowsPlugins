@@ -1,0 +1,40 @@
+{
+  "Flow": {
+    "Parts": {
+      "MD5Checksum": {
+        "Description": "Calcula una suma de verificación MD5 del archivo de trabajo y la almacena en la variable \"MD5\" y en \"Checksum\".",
+        "Label": "Suma de verificación MD5",
+        "Outputs": {
+          "1": "Suma de verificación almacenada en las variables \"MD5\" y \"Checksum\""
+        }
+      },
+      "SHA1Checksum": {
+        "Description": "Calcula una suma de verificación SHA1 del archivo de trabajo y la almacena en la variable \"SHA1\" y en \"Checksum\".",
+        "Label": "Suma de verificación SHA1",
+        "Outputs": {
+          "1": "Suma de verificación almacenada en las variables \"SHA1\" y \"Checksum\""
+        }
+      },
+      "SHA256Checksum": {
+        "Description": "Calcula una suma de verificación SHA256 del archivo de trabajo y la almacena en la variable \"SHA256\" y en \"Checksum\".",
+        "Label": "Suma de verificación SHA256",
+        "Outputs": {
+          "1": "Suma de verificación almacenada en las variables \"SHA256\" y \"Checksum\""
+        }
+      },
+      "SHA512Checksum": {
+        "Description": "Calcula una suma de verificación SHA512 del archivo de trabajo y la almacena en la variable \"SHA512\" y en \"Checksum\".",
+        "Label": "Suma de verificación SHA512",
+        "Outputs": {
+          "1": "Suma de verificación almacenada en las variables \"SHA512\" y \"Checksum\""
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "ChecksumNodes": {
+      "Description": "Elementos de flujo que proporcionan la capacidad de ejecutar una suma de verificación en un archivo.",
+      "Label": "Suma de verificación"
+    }
+  }
+}

@@ -192,7 +192,8 @@ public class FfmpegBuilderSetTrackTitles: FfmpegBuilderNode
                     fps: track.Stream?.FramesPerSecond ?? 0,
                     pixelFormat: track.Stream?.PixelFormat?.EmptyAsNull(),
                     resolution: track.Stream == null ? null : ResolutionHelper.GetResolution(track.Stream.Width, track.Stream.Height),
-                    dimensions: track.Stream == null ? null : track.Stream.Width + "x" + track.Stream.Height
+                    dimensions: track.Stream == null ? null : track.Stream.Width + "x" + track.Stream.Height,
+                    dynamicRange: track.Stream.HDR ? "HDR" : "SDR"
                 );
                 if (originalTitle == track.Title)
                     continue;
@@ -263,10 +264,11 @@ public class FfmpegBuilderSetTrackTitles: FfmpegBuilderNode
     /// <param name="dimensions">the tracks video dimensions</param>
     /// <param name="pixelFormat">the tracks video pixelFormat</param>
     /// <param name="fps">the tracks video FPS</param>
+    /// <param name="dynamicRange">the dynamic range</param>
     /// <returns>the formatted string</returns>
     internal static string FormatTitle(string formatter, string separator, string language, string codec, bool isDefault = false, float bitrate = 0,
         float channels = 0, int sampleRate = 0, bool isForced = false, bool sdh = false, bool cc = false, bool hi = false,
-        ResolutionHelper.Resolution? resolution = null, string? dimensions = null, string? pixelFormat = null, float? fps = null)
+        ResolutionHelper.Resolution? resolution = null, string? dimensions = null, string? pixelFormat = null, float? fps = null, string? dynamicRange = null)
     {
         if (string.IsNullOrWhiteSpace(formatter))
             return string.Empty;
@@ -300,6 +302,7 @@ public class FfmpegBuilderSetTrackTitles: FfmpegBuilderNode
         formatter = Replace(formatter, "hi", hi ? "HI" : string.Empty);
         formatter = Replace(formatter, "hearingimpared", hi ? "Hearing Impared" : string.Empty);
         formatter = Replace(formatter, "sdh", sdh ? "SDH" : string.Empty);
+        formatter = Replace(formatter, "numchannels", channels.ToString("N1"));
         formatter = Replace(formatter, "channels", Math.Abs(channels - 1) < 0.05f ? "Mono" :
             Math.Abs(channels - 2) < 0.05f ? "Stereo" :
             channels > 0 ? channels.ToString("0.0") : null);
@@ -335,6 +338,9 @@ public class FfmpegBuilderSetTrackTitles: FfmpegBuilderNode
         formatter = Replace(formatter, "!pixelformat!", pixelFormat ?? string.Empty);
         formatter = Replace(formatter, "!pixelformat", pixelFormat?.ToLowerInvariant() ?? string.Empty);
         formatter = Replace(formatter, "pixelformat", pixelFormat?.ToUpperInvariant() ?? string.Empty);
+        formatter = Replace(formatter, "!dynamicrange!", dynamicRange ?? string.Empty);
+        formatter = Replace(formatter, "!dynamicrange", dynamicRange?.ToLowerInvariant() ?? string.Empty);
+        formatter = Replace(formatter, "dynamicrange", dynamicRange?.ToUpperInvariant() ?? string.Empty);
         formatter = Replace(formatter, "dimensions", dimensions ?? string.Empty);
         
         // Remove standalone separators

@@ -2,8 +2,6 @@ using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
-using FileFlows.BasicNodes.Helpers;
-using FileFlows.Plugin.Helpers;
 
 namespace FileFlows.BasicNodes.Functions;
 
@@ -52,43 +50,19 @@ public class Matches : Node
                     value = varValue;
                 else
                     value = args.ReplaceVariables(match.Key, stripMissing: true);
-                string strValue = value?.ToString()?.Trim() ?? string.Empty;
-                
-                args.Logger?.ILog("Testing match value: " + strValue);
-                
-                if (GeneralHelper.IsRegex(match.Value))
-                {
-                    if (Regex.IsMatch(strValue, match.Value, RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
-                    {
-                        args.Logger?.ILog($"Match found '{match.Value}' = {strValue}");
-                        return output;
-                    }
-                }
-
-                if (Regex.IsMatch(match.Value ??string.Empty, "^(true|1)$", RegexOptions.IgnoreCase) &&
-                    Regex.IsMatch(strValue, "^(true|1)$", RegexOptions.IgnoreCase))
-                {
-                    args.Logger?.ILog($"Match found '{match.Value}' = {strValue}");
-                    return output;
-                }
-                if (Regex.IsMatch(match.Value ??string.Empty, "^(false|0)$", RegexOptions.IgnoreCase) &&
-                    Regex.IsMatch(strValue, "^(false|0)$", RegexOptions.IgnoreCase))
-                {
-                    args.Logger?.ILog($"Match found '{match.Value}' = {strValue}");
-                    return output;
-                }
-
-                if (args.StringHelper.Matches(strValue, match.Value))
-                    return output;
                 
                 if (args.MathHelper.IsMathOperation(match.Value))
                 {
+                    string strValue = value?.ToString()?.Trim() ?? string.Empty;
                     if (args.MathHelper.IsTrue(match.Value, strValue))
                     {
                         args.Logger?.ILog($"Match found '{match.Value}' = {strValue}");
                         return output;
                     }
                 }
+                
+                if (args.StringHelper.Matches(match.Value, value))
+                    return output;
             }
             catch (Exception)
             {

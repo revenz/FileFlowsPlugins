@@ -93,7 +93,7 @@ public class FfmpegBuilderAudioSetLanguage : FfmpegBuilderNode
             {
                 if (string.IsNullOrEmpty(at.Language))
                 {
-                    at.Language = Language.ToLower();
+                    at.Language = language;
                     at.ForcedChange = true; // this will ensure the language is set even if there are no changes anywhere else
                     changes = true;
                 }

@@ -1,0 +1,34 @@
+{
+  "Flow": {
+    "Parts": {
+      "UploadToNextcloud": {
+        "Description": "Nextcloudにファイルをアップロードします",
+        "Label": "Nextcloudにアップロード",
+        "Fields": {
+          "DestinationPath": "宛先",
+          "DestinationPath-Help": "Nextcloud内のファイルの場所とファイル名、すなわち完全なパス。",
+          "File": "ファイル",
+          "File-Help": "アップロードするファイル。現在の作業ファイルを使用するには空白のままにします。"
+        },
+        "Outputs": {
+          "1": "Nextcloudに正常にアップロードされました",
+          "2": "Nextcloudへのアップロードに失敗しました"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Nextcloud": {
+      "Description": "Nextcloudにファイルをアップロードするためのプラグインです。",
+      "Label": "Nextcloud",
+      "Fields": {
+        "Password": "パスワード",
+        "Password-Help": "このNextcloudユーザーのためにFileFlows用に作成したアプリケーション固有のパスワード。",
+        "Url": "URL",
+        "Url-Help": "NextcloudサーバーのURL",
+        "Username": "ユーザー名",
+        "Username-Help": "アップロードするユーザーのユーザー名。"
+      }
+    }
+  }
+}

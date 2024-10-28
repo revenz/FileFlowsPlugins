@@ -1,0 +1,34 @@
+{
+  "Flow": {
+    "Parts": {
+      "UploadToNextcloud": {
+        "Description": "Nextcloud에 파일을 업로드합니다.",
+        "Label": "Nextcloud에 업로드",
+        "Fields": {
+          "DestinationPath": "대상",
+          "DestinationPath-Help": "Nextcloud에서 파일의 전체 경로와 파일 이름입니다.",
+          "File": "파일",
+          "File-Help": "업로드할 파일로, 현재 작업 파일을 사용하려면 비워 두세요."
+        },
+        "Outputs": {
+          "1": "Nextcloud에 성공적으로 업로드되었습니다.",
+          "2": "Nextcloud에 업로드 실패"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Nextcloud": {
+      "Description": "Nextcloud에 파일을 업로드할 수 있는 플러그인입니다.",
+      "Label": "Nextcloud",
+      "Fields": {
+        "Password": "비밀번호",
+        "Password-Help": "이 Nextcloud 사용자에 대한 FileFlows를 위해 생성한 애플리케이션 전용 비밀번호입니다.",
+        "Url": "URL",
+        "Url-Help": "Nextcloud 서버의 URL입니다.",
+        "Username": "사용자 이름",
+        "Username-Help": "업로드할 사용자의 사용자 이름입니다."
+      }
+    }
+  }
+}

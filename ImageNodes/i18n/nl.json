@@ -1,0 +1,127 @@
+{
+  "Flow": {
+    "Parts": {
+      "AutoCropImage": {
+        "Description": "Snijdt automatisch een afbeelding bij",
+        "Label": "Automatisch bijsnijden van afbeelding",
+        "Fields": {
+          "Format": "Formaat",
+          "Format-Help": "Het afbeeldingsformaat om naar te converteren",
+          "Threshold": "Drempel",
+          "Threshold-Help": "Drempel voor entropische dichtheid, standaard is 50. Moet tussen 0 en 100 liggen."
+        },
+        "Outputs": {
+          "1": "Afbeelding bijgesneden, opgeslagen in een nieuw tijdelijk bestand",
+          "2": "Afbeelding is niet bijgesneden"
+        }
+      },
+      "ImageFile": {
+        "Description": "Een afbeeldingsbestand",
+        "Label": "Afbeeldingsbestand",
+        "Outputs": {
+          "1": "Afbeeldingsbestand"
+        }
+      },
+      "ImageFlip": {
+        "Description": "Draait een afbeelding om",
+        "Label": "Afbeelding omdraaien",
+        "Fields": {
+          "Format": "Formaat",
+          "Format-Help": "Het afbeeldingsformaat om naar te converteren",
+          "Vertical": "Verticaal",
+          "Vertical-Help": "Als ingesteld, wordt de afbeelding verticaal omgedraaid, anders horizontaal"
+        },
+        "Outputs": {
+          "1": "Afbeelding omgedraaid, opgeslagen in een nieuw tijdelijk bestand"
+        }
+      },
+      "ImageFormat": {
+        "Description": "Converteert een afbeelding naar het opgegeven formaat",
+        "Label": "Afbeelding converteren",
+        "Fields": {
+          "Format": "Formaat",
+          "Format-Help": "Het afbeeldingsformaat om naar te converteren"
+        },
+        "Outputs": {
+          "1": "Afbeelding geconverteerd, opgeslagen in een nieuw tijdelijk bestand",
+          "2": "Afbeelding is al in het doelformaat"
+        }
+      },
+      "ImageIsLandscape": {
+        "Description": "Test of een afbeelding liggend is",
+        "Label": "Afbeelding is liggend",
+        "Outputs": {
+          "1": "Afbeelding is liggend",
+          "2": "Afbeelding is niet liggend"
+        }
+      },
+      "ImageIsPortrait": {
+        "Description": "Test of een afbeelding staand is",
+        "Label": "Afbeelding is staand",
+        "Outputs": {
+          "1": "Afbeelding is staand",
+          "2": "Afbeelding is niet staand"
+        }
+      },
+      "ImageResizer": {
+        "Description": "Wijzigt de grootte van een afbeelding",
+        "Label": "Afbeelding resizen",
+        "Fields": {
+          "Format": "Formaat",
+          "Format-Help": "Het afbeeldingsformaat om naar te converteren",
+          "Height": "Hoogte",
+          "Mode": "Modus",
+          "Mode-Help": "De modus die gebruikt moet worden bij het wijzigen van de afbeelding",
+          "Width": "Breedte"
+        },
+        "Outputs": {
+          "1": "Afbeelding aangepast, opgeslagen in een nieuw tijdelijk bestand"
+        }
+      },
+      "ImageRotate": {
+        "Description": "Draait een afbeelding",
+        "Label": "Afbeelding draaien",
+        "Fields": {
+          "Angle": "Hoek",
+          "Angle-Help": "De rotatiehoek",
+          "Format": "Formaat",
+          "Format-Help": "Het afbeeldingsformaat om naar te converteren"
+        },
+        "Outputs": {
+          "1": "Afbeelding gedraaid, opgeslagen in een nieuw tijdelijk bestand"
+        }
+      },
+      "IsImage": {
+        "Description": "Test of een bestand een afbeeldingsbestand is.",
+        "Label": "Is afbeelding",
+        "Fields": {
+          "File": "Bestand",
+          "File-Help": "Optioneel pad naar het bestand om te controleren, als het leeg is, wordt het huidige werkbestand gecontroleerd.",
+          "File-Placeholder": "Als leeg, huidig werkbestand"
+        },
+        "Outputs": {
+          "1": "Bestand is een erkend afbeeldingsbestand",
+          "2": "Bestand is geen erkend afbeeldingsbestand"
+        }
+      },
+      "PixelCheck": {
+        "Description": "Dit stroomelement controleert of het totale aantal pixels van een afbeelding de opgegeven drempel overschrijdt.",
+        "Label": "Pixelcontrole",
+        "Fields": {
+          "Pixels": "Pixels",
+          "Pixels-Help": "Het aantal pixels dat een afbeelding moet bevatten. Dit wordt berekend door de breedte van de afbeelding te vermenigvuldigen met de hoogte."
+        },
+        "Outputs": {
+          "1": "Afbeelding heeft groter of gelijk aan het aantal gespecificeerde pixels",
+          "2": "Afbeelding heeft minder pixels dan het vereiste aantal gespecificeerde pixels"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "ImageNodes": {
+      "Description": "Stroomelementen voor het verwerken van afbeeldingsbestanden. Deze plugin bevat knooppunten om afbeeldingen te converteren en te manipuleren.",
+      "Label": "Afbeelding"
+    }
+  }
+}

@@ -1,0 +1,780 @@
+{
+  "Enums": {
+    "LogType": {
+      "Debug": "デバッグ",
+      "Error": "エラー",
+      "Info": "情報",
+      "Warning": "警告"
+    }
+  },
+  "Flow": {
+    "Parts": {
+      "BatchScript": {
+        "Description": "Windows環境でバッチ(.bat)スクリプトを実行できます。",
+        "Label": "バッチスクリプト(.bat)",
+        "Fields": {
+          "Code": "コード"
+        },
+        "Outputs": {
+          "1": "1を返しました",
+          "10": "10を返しました",
+          "2": "2を返しました",
+          "3": "3を返しました",
+          "4": "4を返しました",
+          "5": "5を返しました",
+          "6": "6を返しました",
+          "7": "7を返しました",
+          "8": "8を返しました",
+          "9": "9を返しました"
+        }
+      },
+      "CompleteFlow": {
+        "Description": "フローを成功として完了/終了します",
+        "Label": "フローを完了"
+      },
+      "CopyFile": {
+        "Description": "ファイルを宛先フォルダーにコピーします",
+        "Label": "ファイルをコピー",
+        "Fields": {
+          "AdditionalFiles": "追加ファイル",
+          "AdditionalFiles-Help": "ディレクトリから新しいディレクトリにコピーする追加ファイル。\n各値には、有効なリテラルパスとワイルドカード（*と？）の文字の組み合わせを含めることができますが、正規表現はサポートされていません。",
+          "AdditionalFilesFromOriginal": "元のディレクトリ",
+          "AdditionalFilesFromOriginal-Help": "追加ファイルを作業ディレクトリからコピーするか、元のディレクトリからコピーするかを指定します。元のディレクトリの場合はオンにします。",
+          "CopyFolder": "フォルダーをコピー",
+          "CopyFolder-Help": "相対ライブラリフォルダー構造もコピーする必要があるかどうか",
+          "DestinationFile": "宛先ファイル",
+          "DestinationFile-Help": "ファイルをコピーするためのファイル名。空の場合は、元のファイル名が使用されます。",
+          "DestinationPath": "宛先フォルダー",
+          "DestinationPath-Help": "ファイルがコピーされるフォルダー",
+          "InputFile": "コピーするファイル",
+          "InputFile-Help": "コピーするファイル。空にすると、作業ファイルがコピーされます。",
+          "InputFile-Placeholder": "作業ファイル",
+          "PreserverOriginalDates": "日付を保持",
+          "PreserverOriginalDates-Help": "元の入力ファイルの元の作成時刻と最終書き込み時刻を保持する必要があるかどうか。"
+        },
+        "Outputs": {
+          "1": "ファイルがコピーされました"
+        }
+      },
+      "CSharpScript": {
+        "Description": "フロー内でC#コードを実行することを許可します。",
+        "Label": "C#関数",
+        "Fields": {
+          "Code": "コード"
+        },
+        "Outputs": {
+          "1": "返された 1",
+          "10": "返された 10",
+          "2": "返された 2",
+          "3": "返された 3",
+          "4": "返された 4",
+          "5": "返された 5",
+          "6": "返された 6",
+          "7": "返された 7",
+          "8": "返された 8",
+          "9": "返された 9"
+        }
+      },
+      "Delete": {
+        "Description": "ファイルまたはフォルダを削除します",
+        "Label": "削除",
+        "Fields": {
+          "FileName": "パス",
+          "FileName-Help": "削除するファイルまたはフォルダへのパス。\n\n空白の場合は、現在の作業ファイルが削除されます。"
+        },
+        "Outputs": {
+          "1": "ファイルが削除されました"
+        }
+      },
+      "DeleteSourceDirectory": {
+        "Description": "元のライブラリファイルのソースフォルダを削除します",
+        "Label": "ソースフォルダを削除",
+        "Fields": {
+          "IfEmpty": "空の場合",
+          "IfEmpty-Help": "空の場合のみソースフォルダを削除します",
+          "IncludePatterns": "パターンを含める",
+          "IncludePatterns-Help": "オプション、設定されている場合は、これらのパターンに一致するファイルのみがフォルダが空かどうかを確認するためにカウントされます。これらのパターンのいずれかが一致する可能性があります。",
+          "TopMostOnly": "最上位のみ",
+          "TopMostOnly-Help": "有効にすると、ファイルを直接含むフォルダのみが削除され、上位のフォルダはそのまま残ります。"
+        },
+        "Outputs": {
+          "1": "ソースディレクトリが削除されました",
+          "2": "ディレクトリは削除されませんでした"
+        }
+      },
+      "Executor": {
+        "Description": "ファイルに対して次のプロセスを実行します。\n出力 1: プロセスが成功終了コードを返しました\n出力 2: プロセスが非成功終了コードを返しました。",
+        "Label": "実行",
+        "Fields": {
+          "Arguments": "引数",
+          "Arguments-Help": "実行するプロセスに渡す引数",
+          "FileName": "ファイル名",
+          "FileName-Help": "実行するファイルの名前",
+          "OutputErrorVariable": "エラー出力変数",
+          "OutputErrorVariable-Help": "プロセスのエラー出力を保存するためのオプションの変数名",
+          "OutputVariable": "出力変数",
+          "OutputVariable-Help": "プロセスの出力を保存するためのオプションの変数名",
+          "SuccessCode": "成功コード",
+          "SuccessCode-Help": "プロセスが成功したことを示す終了コード。通常は 0 であるべきです。",
+          "Timeout": "タイムアウト",
+          "Timeout-Help": "プロセスが終了される前に実行できる時間。タイムアウトなしの場合は 0 を使用。",
+          "Timeout-Suffix": "秒",
+          "WorkingDirectory": "作業フォルダ",
+          "WorkingDirectory-Help": "プロセスが実行されるフォルダ"
+        },
+        "Outputs": {
+          "1": "プロセスは成功しました",
+          "2": "プロセスは失敗しました"
+        }
+      },
+      "FailFlow": {
+        "Description": "フローを即座に失敗させます。特定のパスを単に失敗させたい場合に便利です。",
+        "Label": "フローを失敗",
+        "Fields": {
+          "Reason": "理由",
+          "Reason-Help": "フローが失敗した理由を記録するためのオプションの理由。"
+        }
+      },
+      "FileDateCompare": {
+        "Description": "ファイルの作成日時または最終更新日時が指定された日付制約に一致するかどうかをチェックします。",
+        "Label": "ファイル日付比較",
+        "Fields": {
+          "Date": "日付",
+          "DateComparision": "比較",
+          "FileName": "ファイル名",
+          "FileName-Help": "確認するファイル。空白の場合は現在の作業ファイルを確認します。"
+        },
+        "Outputs": {
+          "1": "日付制約に一致します。",
+          "2": "日付制約に一致しません。"
+        }
+      },
+      "FileExists": {
+        "Description": "ファイルが存在するか確認します\n\n出力 1: ファイルが存在します\n出力 2: ファイルが存在しません",
+        "Label": "ファイルが存在",
+        "Fields": {
+          "FileName": "ファイル名",
+          "FileName-Help": "確認するファイル。空白のままにすると、現在の作業ファイルが確認されます。"
+        },
+        "Outputs": {
+          "1": "ファイルが存在します",
+          "2": "ファイルが存在しません"
+        }
+      },
+      "FileExtension": {
+        "Description": "ファイルが設定された拡張子のいずれかを持っているか確認します。\n\n出力 1: 一致\n出力 2: 一致しません",
+        "Label": "ファイル拡張子",
+        "Fields": {
+          "Extensions": "拡張子",
+          "Extensions-Help": "一致するケースインセンシティブなファイル拡張子のリストです。\n出力 1: 一致\n出力 2: 一致しません"
+        },
+        "Outputs": {
+          "1": "拡張子が一致",
+          "2": "拡張子が一致しません"
+        }
+      },
+      "FileSize": {
+        "Description": "ファイルサイズが設定されたパラメータに一致するか確認します。値はメガバイト単位です。\n\n出力 1: 一致\n出力 2: 一致しません",
+        "Label": "ファイルサイズ",
+        "Fields": {
+          "Comparison": "比較",
+          "Lower": "より大きい",
+          "Lower-Help": "このメガバイト数より大きい必要があります",
+          "Lower-Suffix": "MB",
+          "Upper": "より小さい",
+          "Upper-Help": "このメガバイト数より小さい必要があります。上限をテストしない場合は0に設定してください。",
+          "Upper-Suffix": "MB"
+        },
+        "Outputs": {
+          "1": "ファイルサイズが範囲内",
+          "2": "ファイルサイズが範囲外"
+        }
+      },
+      "FileSizeCompare": {
+        "Description": "元のファイルからファイルサイズが変更されたかどうかを確認します。",
+        "Label": "ファイルサイズ比較",
+        "Outputs": {
+          "1": "元のファイルより小さい",
+          "2": "元のファイルと同じサイズ",
+          "3": "元のファイルより大きい"
+        }
+      },
+      "FileSizeWithin": {
+        "Description": "新しいファイルサイズが元のファイルサイズの許可範囲内かどうかを確認します。",
+        "Label": "ファイルサイズ範囲内",
+        "Fields": {
+          "Value": "値",
+          "Value-Help": "ファイルサイズに許可される差分、この値はこの差分のプラスまたはマイナスのいずれかになります。"
+        },
+        "Outputs": {
+          "1": "ファイルサイズは許可された範囲内です",
+          "2": "ファイルサイズは許可された範囲外です"
+        }
+      },
+      "FolderDateCompare": {
+        "Description": "フォルダーの作成日時または最終更新日時が指定された日付制約に一致するかどうかを確認します。",
+        "Label": "フォルダー日付比較",
+        "Fields": {
+          "Date": "日付",
+          "DateComparision": "比較",
+          "Path": "パス",
+          "Path-Help": "確認するフォルダーのパス。空白のままにすると、現在の作業ファイルが確認されます。\nファイルが指定された場合は、そのファイルを含むフォルダーが確認されます。"
+        },
+        "Outputs": {
+          "1": "日付制約に一致します。",
+          "2": "日付制約に一致しません。"
+        }
+      },
+      "FolderIterator": {
+        "Description": "指定されたフォルダー内のすべてのファイルを反復処理し、それらのファイルをサブフローに対して実行します。",
+        "Label": "フォルダー反復処理",
+        "Fields": {
+          "Flow": "フロー",
+          "Flow-Help": "ファイルを実行するサブフロー。",
+          "Folder": "フォルダー",
+          "Folder-Help": "反復処理されるファイルのあるフォルダー。",
+          "Pattern": "パターン",
+          "Pattern-Help": "反復処理するファイルを制限するための任意のパターン。このパターンは、`*`で始まるワイルドカードパターンまたは正規表現になります。",
+          "Recursive": "再帰的",
+          "Recursive-Help": "すべてのサブフォルダー内のファイルも反復処理されるべきか、または最上位レベルのファイルのみが反復処理されるべきかを指定します。"
+        },
+        "Outputs": {
+          "1": "フォルダーのファイルが反復処理されました"
+        }
+      },
+      "Function": {
+        "Label": "関数",
+        "Fields": {
+          "Code": "コード",
+          "Code-Help": "エラーの場合は-1を返し、フローを停止します。フローを完了させるには0を返します。望ましい出力を呼び出すには1以上を返します。",
+          "Outputs": "出力",
+          "Template": "テンプレート",
+          "Template-Help": "警告: これにより、コードブロック内の内容が選択したテンプレートで置き換えられます。"
+        },
+        "Outputs": {
+          "1": "1を返しました",
+          "10": "10を返しました",
+          "2": "2を返しました",
+          "3": "3を返しました",
+          "4": "4を返しました",
+          "5": "5を返しました",
+          "6": "6を返しました",
+          "7": "7を返しました",
+          "8": "8を返しました",
+          "9": "9を返しました"
+        }
+      },
+      "GotoFlow": {
+        "Description": "別のフローに切り替えて処理することができます。このフローは終了し、パラメータと作業ファイルが新しいフローに渡されます。",
+        "Label": "フローに移動",
+        "Fields": {
+          "Flow": "フロー",
+          "UpdateFlowUsed": "フローを更新",
+          "UpdateFlowUsed-Help": "ファイル`フロー`がこの新しいフローを参照するように更新するか、元のフローのままにするかを選択します。"
+        }
+      },
+      "HasHardLinks": {
+        "Description": "ファイルにハードリンクがあるかどうかを確認します。",
+        "Label": "ハードリンクがある",
+        "Fields": {
+          "Count": "カウント",
+          "Count-Help": "出力1を呼び出すために必要なハードリンクの数。",
+          "FileName": "ファイル名",
+          "FileName-Help": "確認するファイル。空白のままにすると、現在の作業ファイルが確認されます。"
+        },
+        "Outputs": {
+          "1": "ハードリンクが検出されました",
+          "2": "ハードリンクは検出されませんでした"
+        }
+      },
+      "IfBoolean": {
+        "Description": "変数が真か偽かをテストします。",
+        "Label": "ブール値",
+        "Fields": {
+          "Variable": "変数",
+          "Variable-Help": "確認する変数の名前"
+        },
+        "Outputs": {
+          "1": "真",
+          "2": "偽"
+        }
+      },
+      "IfString": {
+        "Description": "変数が文字列と一致するかどうかをテストします",
+        "Label": "文字列",
+        "Fields": {
+          "Options": "オプション",
+          "Options-Help": "一致させる文字列。",
+          "Outputs": "出力",
+          "Outputs-Help": "これが利用可能なオプションの数と一致する必要があります",
+          "Variable": "変数",
+          "Variable-Help": "チェックする変数の名前"
+        },
+        "Outputs": {
+          "1": "一致した文字列 1",
+          "10": "一致した文字列 10",
+          "2": "一致した文字列 2",
+          "3": "一致した文字列 3",
+          "4": "一致した文字列 4",
+          "5": "一致した文字列 5",
+          "6": "一致した文字列 6",
+          "7": "一致した文字列 7",
+          "8": "一致した文字列 8",
+          "9": "一致した文字列 9"
+        }
+      },
+      "InputFile": {
+        "Description": "ファイル用の入力フロー要素。この要素は必須であり、フローの出発点です。任意の入力フロー要素を使用できますが、少なくとも1つは必要です。",
+        "Label": "ファイル入力",
+        "Outputs": {
+          "1": "ライブラリファイル"
+        }
+      },
+      "InputFolder": {
+        "Description": "フォルダ用の入力フロー要素。これは、このフローを使用しているライブラリがフォルダ用に構成されている場合にのみ機能します。",
+        "Label": "フォルダ入力",
+        "Outputs": {
+          "1": "ライブラリフォルダ"
+        }
+      },
+      "IsDocker": {
+        "Description": "このフローがDockerで実行されているかどうかを判断します",
+        "Label": "Dockerかどうか",
+        "Outputs": {
+          "1": "Dockerで実行中",
+          "2": "Dockerで実行されていない"
+        }
+      },
+      "IsFromLibrary": {
+        "Description": "処理中のファイルが指定されたライブラリからのものであるかどうかをチェックします。",
+        "Label": "ライブラリから",
+        "Fields": {
+          "Library": "ライブラリ",
+          "Library-Help": "チェックするライブラリ。"
+        },
+        "Outputs": {
+          "1": "ファイルは指定されたライブラリからのものです。",
+          "2": "ファイルは指定されたライブラリからのものではありません。"
+        }
+      },
+      "IsLinux": {
+        "Description": "このフローがLinuxで実行されているかどうかを判断します",
+        "Label": "Linuxかどうか",
+        "Outputs": {
+          "1": "Linuxで実行中",
+          "2": "Linuxで実行されていない"
+        }
+      },
+      "IsMacOS": {
+        "Description": "このフローがMacOSで実行されているかどうかを判断します",
+        "Label": "MacOSかどうか",
+        "Outputs": {
+          "1": "MacOSで実行中",
+          "2": "MacOSで実行していない"
+        }
+      },
+      "IsProcessingOnNode": {
+        "Description": "指定された処理ノードで現在フローが処理中かどうかを確認します。",
+        "Label": "ノードで処理中",
+        "Fields": {
+          "Node": "ノード",
+          "Node-Help": "確認する処理ノード。"
+        },
+        "Outputs": {
+          "1": "ノードで処理中",
+          "2": "ノードで処理していない"
+        }
+      },
+      "IsWindows": {
+        "Description": "このフローがWindowsで実行されているかどうかを判断します",
+        "Label": "Windowsかどうか",
+        "Outputs": {
+          "1": "Windowsで実行中",
+          "2": "Windowsで実行していない"
+        }
+      },
+      "ListIterator": {
+        "Description": "指定されたリスト内のすべての文字列を反復処理し、それらの文字列をサブフローで実行します。",
+        "Label": "リスト反復処理",
+        "Fields": {
+          "Flow": "フロー",
+          "Flow-Help": "文字列を実行するサブフロー。",
+          "List": "リスト",
+          "List-Help": "反復処理するリストを含む変数の名前。"
+        },
+        "Outputs": {
+          "1": "リストを反復処理しました"
+        }
+      },
+      "Log": {
+        "Description": "フローログにメッセージを記録します",
+        "Label": "ログ",
+        "Fields": {
+          "LogType": "タイプ",
+          "Message": "メッセージ"
+        },
+        "Outputs": {
+          "1": "メッセージが記録されました"
+        }
+      },
+      "Matches": {
+        "Description": "値のセットを比較し、条件が一致するかを確認して、どの出力を呼び出すべきかを判断します",
+        "Label": "一致",
+        "Fields": {
+          "MatchConditions": "",
+          "MatchConditions-Help": "どの出力を呼び出すべきかをテストするための一致。",
+          "MatchConditionsKey": "値",
+          "MatchConditionsValue": "式"
+        }
+      },
+      "MatchesAll": {
+        "Description": "値のセットを比較し、すべての条件が一致するかを確認します。",
+        "Label": "すべて一致",
+        "Fields": {
+          "MatchConditions": "",
+          "MatchConditionsHelp": "どの出力を呼び出すべきかを決定するためにテストする条件。",
+          "MatchConditionsKey": "値",
+          "MatchConditionsValue": "式"
+        },
+        "Outputs": {
+          "1": "すべての条件が一致します",
+          "2": "すべての条件は一致しません"
+        }
+      },
+      "MoveFile": {
+        "Description": "ファイルを宛先フォルダーに移動します",
+        "Label": "ファイルを移動",
+        "Fields": {
+          "AdditionalFiles": "追加ファイル",
+          "AdditionalFiles-Help": "ディレクトリから新しいディレクトリに移動する追加ファイル。\n各値には、有効なリテラルパスとワイルドカード（* および ?）の組み合わせを含めることができますが、正規表現はサポートされていません。",
+          "AdditionalFilesFromOriginal": "元のディレクトリ",
+          "AdditionalFilesFromOriginal-Help": "追加ファイルを作業ディレクトリから移動するか、元のディレクトリから移動するかを指定します。元のディレクトリの場合はオンにします。",
+          "DeleteOriginal": "元のファイルを削除",
+          "DeleteOriginal-Help": "元のファイルを削除する必要がある場合、作業ファイルが元のファイルと異なる場合のみ削除されます。",
+          "DestinationFile": "宛先ファイル",
+          "DestinationFile-Help": "ファイルを移動する宛先ファイル名。空の場合は元のファイル名が使用されます。",
+          "DestinationPath": "宛先フォルダー",
+          "DestinationPath-Help": "ファイルが移動されるフォルダー。",
+          "InputFile": "移動するファイル",
+          "InputFile-Help": "移動するファイル。空の場合は作業ファイルが移動されます。",
+          "InputFile-Placeholder": "作業ファイル",
+          "MoveFolder": "フォルダーをコピー",
+          "MoveFolder-Help": "相対ライブラリフォルダー構造もコピーするかどうか。",
+          "PreserverOriginalDates": "日付を保持",
+          "PreserverOriginalDates-Help": "元の入力ファイルの元の作成日時と最終書き込み日時を保持するかどうか。"
+        },
+        "Outputs": {
+          "1": "ファイルが移動されました",
+          "2": "ファイルが移動されましたが、元のファイルは削除できませんでした"
+        }
+      },
+      "MoveFolder": {
+        "Description": "フォルダーを移動します",
+        "Label": "フォルダーを移動",
+        "Fields": {
+          "CreateSubfolder": "サブフォルダーを作成",
+          "CreateSubfolder-Help": "宛先フォルダーにソースフォルダーの名前のサブフォルダーが作成されるかどうか。",
+          "DestinationPath": "宛先",
+          "DestinationPath-Help": "ソースフォルダーを移動する宛先フォルダー。",
+          "SourcePath": "ソース",
+          "SourcePath-Help": "移動するフォルダー。空の場合は作業ファイルが使用されます。これはフォルダーでない場合、フロー要素は失敗します。"
+        },
+        "Outputs": {
+          "1": "フォルダーが移動されました"
+        }
+      },
+      "OlderThan": {
+        "Description": "指定された範囲よりも古いフォルダーかどうかを確認します",
+        "Label": "古い",
+        "Fields": {
+          "Date": "日付",
+          "Number": "数",
+          "Unit": "単位"
+        },
+        "Outputs": {
+          "1": "ファイルは古い",
+          "2": "ファイルは古くない"
+        }
+      },
+      "OriginalFile": {
+        "Description": "フロー内の現在の作業ファイルを、フローを開始した元のファイルに設定します",
+        "Label": "元のファイル",
+        "Outputs": {
+          "1": "作業ファイルが元のファイルに設定されました"
+        }
+      },
+      "PatternMatch": {
+        "Description": "作業ファイルと元のファイルを正規表現に対してテストします。\n\n出力 1: 表現に一致\n出力 2: 一致しない",
+        "Label": "パターン一致",
+        "Fields": {
+          "Pattern": "パターン",
+          "Pattern-Help": "C# の正規表現仕様を使用した正規表現。"
+        },
+        "Outputs": {
+          "1": "表現に一致",
+          "2": "一致しない"
+        }
+      },
+      "PatternReplacer": {
+        "Description": "ファイル名内で置き換えを行うことができます。置き換えには正規表現や単純な文字列置き換えを使用できます。\n\n出力 1: 置き換え完了\n出力 2: 置き換えなし",
+        "Label": "ファイル名パターン置き換え",
+        "Fields": {
+          "Replacements": "置き換え",
+          "ReplacementsKey": "パターン",
+          "ReplacementsValue": "値",
+          "UseWorkingFileName": "作業ファイル名を使用",
+          "UseWorkingFileName-Help": "現在の作業ファイル名を使用するかどうか。falseの場合、受信ファイルの元のファイル名が使用されます。"
+        },
+        "Outputs": {
+          "1": "置き換え完了",
+          "2": "置き換えなし"
+        }
+      },
+      "PowerShellScript": {
+        "Description": "Windows環境でPowerShell（.ps1）スクリプトを実行できます。",
+        "Label": "PowerShellスクリプト（.ps1）",
+        "Fields": {
+          "Code": "コード"
+        },
+        "Outputs": {
+          "1": "1を返しました",
+          "10": "10を返しました",
+          "2": "2を返しました",
+          "3": "3を返しました",
+          "4": "4を返しました",
+          "5": "5を返しました",
+          "6": "6を返しました",
+          "7": "7を返しました",
+          "8": "8を返しました",
+          "9": "9を返しました"
+        }
+      },
+      "Random": {
+        "Description": "ランダムな出力を選択します",
+        "Label": "ランダム",
+        "Fields": {
+          "Outputs": "出力",
+          "Outputs-Help": "呼び出す可能性のある出力の数。"
+        }
+      },
+      "Renamer": {
+        "Description": "作業ファイルの名前を変更します。\nパターンフィールドに '{' を入力することで変数を使用できます。",
+        "Label": "リネーマー",
+        "Fields": {
+          "CsvFile": "CSVファイル",
+          "CsvFile-Help": "このファイルに元の名前と名前変更されたファイルを追加します。ファイルを変更する前に、''ログのみ''を使用してリネーマーをテストするのに便利です。",
+          "DestinationPath": "宛先フォルダー",
+          "DestinationPath-Help": "ファイルを別のフォルダーに移動する必要があるかどうか。",
+          "LogOnly": "ログのみ",
+          "LogOnly-Help": "ファイルの名前を実際に変更せずに、このフロー要素をテストしたい場合はオンにします。",
+          "Pattern": "新しい名前",
+          "Pattern-Help": "ファイルの新しい名前。変数を使用できます。空の () と '{}' は削除されます。"
+        },
+        "Outputs": {
+          "1": "ファイルの名前が変更されました"
+        }
+      },
+      "ReplaceOriginal": {
+        "Description": "作業ファイルで元のファイルを置き換えます。\n\n作業ファイルの拡張子が異なる場合、元のファイルは削除され、作業ファイルが新しい拡張子で元のファイルに移動されます。\n例：File.avi から File.mkv へ",
+        "Label": "元のファイルを置き換え",
+        "Fields": {
+          "PreserverOriginalDates": "日付を保持",
+          "PreserverOriginalDates-Help": "元の入力ファイルの元の作成時間と最終更新時間を保持する必要があるかどうか。"
+        },
+        "Outputs": {
+          "1": "元のファイルが置き換えられました"
+        }
+      },
+      "Reprocess": {
+        "Description": "このフロー要素は、別の処理ノードを使用して元のライブラリファイルを再処理することを許可します。\n\n現在ファイルを処理しているのと同じ処理ノードが選択されている場合、フローは失敗します。",
+        "Label": "再処理",
+        "Fields": {
+          "HoldMinutes": "保留時間 (分)",
+          "HoldMinutes-Help": "ファイルを再処理するまでの時間 (分)。 0 を入力すると即座に処理されます。",
+          "Node": "ノード",
+          "Node-Help": "このファイルを処理するための処理ノード。"
+        }
+      },
+      "SetVariable": {
+        "Description": "フロー内で変数を設定します。",
+        "Label": "変数を設定",
+        "Fields": {
+          "Value": "値",
+          "Value-Help": "設定する変数の値。",
+          "Variable": "変数",
+          "Variable-Help": "設定する変数の名前"
+        },
+        "Outputs": {
+          "1": "変数が設定されました"
+        }
+      },
+      "SetWorkingFile": {
+        "Description": "現在の作業ファイルを指定されたファイルに更新します。",
+        "Label": "作業ファイルを設定",
+        "Fields": {
+          "DontDeletePrevious": "前のファイルを削除しない",
+          "DontDeletePrevious-Help": "前の*一時的*な作業ファイルを*削除しない*場合。\n削除されるのは一時ファイルのみで、FileFlows によってランナーの一時ディレクトリに作成されたファイルです。",
+          "File": "ファイル",
+          "File-Description": "新しい作業ファイルまたはフォルダへのパス。"
+        },
+        "Outputs": {
+          "1": "作業ファイルが設定されました"
+        }
+      },
+      "SevenZip": {
+        "Description": "入力を 7zip することを許可します。",
+        "Label": "7-Zip",
+        "Fields": {
+          "CompressionLevel": "圧縮レベル",
+          "CompressionLevel-Help": "圧縮する際に使用する圧縮レベル。",
+          "CompressionMethod": "圧縮方法",
+          "CompressionMethod-Help": "圧縮に使用される圧縮方法で、LZMA2 が推奨されます。",
+          "DestinationFile": "出力ファイル",
+          "DestinationFile-Help": "新しく作成された 7zip のファイル名。空白の場合、アイテムの名前が 7zip ファイルとして使用されます。",
+          "DestinationPath": "出力フォルダ",
+          "DestinationPath-Help": "7zip ファイルを配置する目的のフォルダ。空白の場合、7zip はライブラリのルートに配置されます。"
+        },
+        "Outputs": {
+          "1": "7zip が作成されました"
+        }
+      },
+      "ShellScript": {
+        "Description": "Unix系環境でシェル（.sh）スクリプトを実行することを許可します。",
+        "Label": "シェルスクリプト（.sh）",
+        "Fields": {
+          "Code": "コード"
+        },
+        "Outputs": {
+          "1": "1を返しました",
+          "10": "10を返しました",
+          "2": "2を返しました",
+          "3": "3を返しました",
+          "4": "4を返しました",
+          "5": "5を返しました",
+          "6": "6を返しました",
+          "7": "7を返しました",
+          "8": "8を返しました",
+          "9": "9を返しました"
+        }
+      },
+      "Sleep": {
+        "Description": "フローを一時停止します。",
+        "Label": "スリープ",
+        "Fields": {
+          "Milliseconds": "ミリ秒",
+          "Milliseconds-Help": "フローを一時停止する時間。 1ミリ秒から1時間の間でなければなりません"
+        },
+        "Outputs": {
+          "1": "フローが再開されました"
+        }
+      },
+      "Tag": {
+        "Description": "指定されたタグでファイルにタグを付けます",
+        "Label": "タグ",
+        "Fields": {
+          "Replace": "置き換える",
+          "Replace-Help": "タグを置き換えるか、既存のタグに追加するか。",
+          "Tags": "タグ"
+        }
+      },
+      "Touch": {
+        "Description": "ファイルまたはディレクトリを更新し、最終書き込み時間を現在に設定します。",
+        "Label": "タッチ",
+        "Fields": {
+          "FileName": "ファイル名",
+          "FileName-Help": "タッチするファイルまたはフォルダーの完全なファイル名。\n空白のままにすると、作業ファイルが使用されます。"
+        },
+        "Outputs": {
+          "1": "アイテムが正常にタッチされました"
+        }
+      },
+      "Unpack": {
+        "Description": "アーカイブ（zip、rar、tarなど）を解凍します。",
+        "Label": "解凍",
+        "Fields": {
+          "DestinationPath": "宛先フォルダー",
+          "DestinationPath-Help": "ファイルを解凍する宛先フォルダー。",
+          "File": "ファイル",
+          "File-Help": "解凍するファイルの名前。空白のままにすると、現在の作業ファイルが使用されます。"
+        },
+        "Outputs": {
+          "1": "ファイルが解凍されました"
+        }
+      },
+      "VariableMatch": {
+        "Description": "入力が保存された変数と一致するかどうかをテストします。",
+        "Label": "変数一致",
+        "Fields": {
+          "Input": "値",
+          "Input-Help": "変数と一致させる値。",
+          "Variable": "変数",
+          "Variable-Help": "一致させる変数",
+          "VariableName": "変数",
+          "VariableName-Help": "一致させる変数"
+        },
+        "Outputs": {
+          "1": "入力が変数と一致しました",
+          "2": "入力は変数と一致しませんでした"
+        }
+      },
+      "WebRequest": {
+        "Description": "ウェブリクエストを送信することを許可します",
+        "Label": "ウェブリクエスト",
+        "Fields": {
+          "Body": "ボディ",
+          "Body-Help": "送信されるリクエストのボディ。 このフィールドでは変数を使用できます。",
+          "ContentType": "コンテンツタイプ",
+          "ContentType-Help": "送信するメッセージのContent-Type",
+          "Headers": "ヘッダー",
+          "Headers-Help": "リクエストと一緒に送信するオプションのヘッダー",
+          "HeadersKey": "キー",
+          "HeadersValue": "値",
+          "Method": "メソッド",
+          "Method-Help": "このリクエストを送信するときに使用するウェブメソッド",
+          "Url": "URL",
+          "Url-Help": "リクエストのURL"
+        },
+        "Outputs": {
+          "1": "正常に送信されました",
+          "2": "リクエストは成功しないステータスコードを返しました"
+        }
+      },
+      "WriteText": {
+        "Description": "ファイルにテキストを書き込みます",
+        "Label": "テキストを書く",
+        "Fields": {
+          "File": "ファイル",
+          "File-Help": "テキストを書き込むファイル。",
+          "Text": "テキスト",
+          "Text-Help": "ファイルに書き込むテキスト。空白の場合は、現在の作業ファイルのフルパスが書き込まれます。"
+        },
+        "Outputs": {
+          "1": "テキストがファイルに書き込まれました"
+        }
+      },
+      "Zip": {
+        "Description": "入力を圧縮することを許可します",
+        "Label": "Zip",
+        "Fields": {
+          "DestinationFile": "宛先ファイル",
+          "DestinationFile-Help": "新しく作成されたzipのファイル名。空白の場合、アイテムの名前がzipファイルとして使用されます。",
+          "DestinationPath": "宛先フォルダー",
+          "DestinationPath-Help": "zipファイルを置く宛先フォルダー。空白の場合、zipはライブラリのルートに配置されます。",
+          "Path": "パス",
+          "Path-Help": "圧縮するファイルまたはフォルダーへのパス。空白の場合、作業ファイルが圧縮されます。",
+          "SetWorkingFile": "作業ファイルを設定",
+          "SetWorkingFile-Help": "新しく作成されたzipが新しい作業ファイルになるべきかどうか。"
+        },
+        "Outputs": {
+          "1": "Zipが作成されました"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "BasicNodes": {
+      "Description": "FileFlowsの基本フロー要素。このプラグインには、ファイル処理のための基本的で共通のフロー要素が含まれています。\nFileFlowsが機能するには、このプラグインが必要です。",
+      "Label": "基本"
+    }
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "Flow": {
+    "Parts": {
+      "AnimeShowLookup": {
+        "Description": "Esegue una ricerca su AniList.co per uno spettacolo di anime.",
+        "Label": "Ricerca Spettacolo Anime",
+        "Fields": {
+          "UseFolderName": "Usa Nome Cartella",
+          "UseFolderName-Help": "Se il nome della cartella deve essere utilizzato invece del nome del file."
+        },
+        "Outputs": {
+          "1": "Spettacolo di anime trovato",
+          "2": "Spettacolo di anime NON trovato"
+        }
+      },
+      "GenreMatches": {
+        "Description": "Confronta i metadati del genere con il/i genere/i specificato/i.",
+        "Label": "Corrispondenza Genere",
+        "Fields": {
+          "Genres": "Generi",
+          "MatchAll": "Confronta Tutto",
+          "MatchAll-Help": "Se tutti i generi selezionati devono apparire nei metadati, altrimenti deve apparire almeno uno."
+        },
+        "Outputs": {
+          "1": "Corrispondenza del genere",
+          "2": "Il genere non corrisponde"
+        }
+      },
+      "MovieLookup": {
+        "Description": "Esegue una ricerca su TheMovieDB.org per un film.\nMemorizza i metadati nella variabile 'MovieInfo'.",
+        "Label": "Ricerca Film",
+        "Fields": {
+          "UseFolderName": "Usa Nome Cartella",
+          "UseFolderName-Help": "Se il nome della cartella deve essere usato al posto del nome del file."
+        },
+        "Outputs": {
+          "1": "Film trovato",
+          "2": "Film NON trovato"
+        }
+      },
+      "MovieRenamer": {
+        "Description": "Rinomina il file di lavoro utilizzando i metadati memorizzati in 'MovieInfo'.\nNota: MovieLookup deve essere eseguito nel flusso prima di questo elemento del flusso per funzionare.\n\nOutput 1: Il file è stato rinominato\nOutput 2: Il file non è riuscito a essere rinominato",
+        "Label": "Rinomina Film",
+        "Fields": {
+          "DestinationPath": "Percorso di Destinazione",
+          "DestinationPath-Help": "Se il file deve essere spostato in una directory diversa.",
+          "LogOnly": "Solo Log",
+          "LogOnly-Help": "Attiva se vuoi solo testare questo elemento del flusso senza effettivamente rinominare il file",
+          "Pattern": "Pattern",
+          "Pattern-Help": "Il modello da utilizzare per rinominare la cartella. '{Title}', '{Year}', '{Extension}'."
+        }
+      },
+      "MusicMeta": {
+        "Description": "Carica i metadati di un file musicale nelle variabili del flusso.",
+        "Label": "Metadati Musica"
+      },
+      "NfoFileCreator": {
+        "Description": "Crea un file NFO per Kodi dai metadati precedentemente caricati.",
+        "Label": "Crea File NFO",
+        "Fields": {
+          "DestinationFile": "File di Destinazione",
+          "DestinationFile-Help": "Il nome del nuovo file NFO. Se vuoto, verrà utilizzato il nome originale con l'estensione cambiata in `.nfo`",
+          "DestinationPath": "Cartella di Destinazione",
+          "DestinationPath-Help": "La cartella in cui verrà creato il file NFO.\nSe vuoto, verrà creato nella stessa directory del file originale."
+        },
+        "Outputs": {
+          "1": "File NFO creato",
+          "2": "Creazione NFO non riuscita"
+        }
+      },
+      "TVEpisodeLookup": {
+        "Description": "Esegue una ricerca su TheMovieDB.org per un episodio TV.",
+        "Label": "Ricerca Episodio TV",
+        "Fields": {
+          "UseFolderName": "Usa Nome Cartella",
+          "UseFolderName-Help": "Se il nome della cartella deve essere usato al posto del nome del file.\n\nNota: se la cartella inizia con Stagione, Staffel, Saison o Speciali, verrà utilizzata la cartella principale."
+        },
+        "Outputs": {
+          "1": "Episodio TV trovato",
+          "2": "Episodio TV NON trovato"
+        }
+      },
+      "TVShowLookup": {
+        "Description": "Esegue una ricerca su TheMovieDB.org per uno show TV.\nMemorizza i metadati nella variabile 'TVShowInfo'.",
+        "Label": "Ricerca Show TV",
+        "Fields": {
+          "UseFolderName": "Usa Nome Cartella",
+          "UseFolderName-Help": "Se il nome della cartella deve essere usato al posto del nome del file.\n\nNota: se la cartella inizia con Stagione, Staffel, Saison o Speciali, verrà utilizzata la cartella principale."
+        },
+        "Outputs": {
+          "1": "Show TV trovato",
+          "2": "Show TV NON trovato"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "MetaNodes": {
+      "Description": "Un plugin che contiene elementi di flusso di informazioni meta utilizzati per cercare informazioni meta sui file.\n\nContiene elementi di flusso per cercare informazioni sui film da TheMovieDB e informazioni musicali dai tag ID3 all'interno del file.",
+      "Label": "Meta"
+    }
+  }
+}

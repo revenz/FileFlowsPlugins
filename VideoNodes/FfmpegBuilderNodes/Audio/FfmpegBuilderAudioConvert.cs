@@ -180,8 +180,6 @@ public class FfmpegBuilderAudioConvert : TrackSelectorFlowElement<FfmpegBuilderA
     public override int Execute(NodeParameters args)
     {
         bool converting = false;
-        Regex? regex = null;
-        
         
         foreach (var track in Model.AudioStreams)
         {

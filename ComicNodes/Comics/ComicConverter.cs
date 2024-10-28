@@ -50,7 +50,7 @@ public class ComicConverter: Node
     }
 
     /// <summary>
-    /// Gets or sets if the archive should only have images in the top directgory
+    /// Gets or sets if the archive should only have images in the top directory
     /// </summary>
     [Boolean(2)]
     [ConditionEquals(nameof(Format), "PDF", inverse:true)]
@@ -347,12 +347,12 @@ public class ComicConverter: Node
         args.Logger?.ILog("Creating comic: " + file);
         int? pageCount = null;
         if (format == "CBZ")
-            args.ArchiveHelper.Compress(directory, file);
+            args.ArchiveHelper.Compress(directory, file, allDirectories: true);
         //else if (format == "CB7")
         //    Helpers.SevenZipHelper.Compress(args, directory, file + ".7z");
         else if (format == "PDF")
         {
-            var images = new DirectoryInfo(directory).GetFiles("*.*")
+            var images = new DirectoryInfo(directory).GetFiles("*.*", SearchOption.AllDirectories)
                 .Where(x => Regex.IsMatch(x.Extension, @"\.(jpeg|jpe|jpg|webp|png)$",
                     RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
                 .OrderBy(x => x.Name)
@@ -367,6 +367,8 @@ public class ComicConverter: Node
             return Result<string>.Fail("Unknown format:" + format);
         Directory.Delete(directory, true);
         args.Logger?.ILog("Created comic: " + file);
+        if(pageCount != null)
+            args.Logger?.ILog("Page Count: " + pageCount);
         args.Logger?.ILog("Deleted temporary extraction directory: " + directory);
 
 

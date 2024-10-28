@@ -1,0 +1,103 @@
+{
+  "Flow": {
+    "Parts": {
+      "AnimeShowLookup": {
+        "Description": "AniList.co에서 애니메이션 프로그램을 검색합니다.",
+        "Label": "애니메이션 프로그램 검색",
+        "Fields": {
+          "UseFolderName": "폴더 이름 사용",
+          "UseFolderName-Help": "파일 이름 대신 폴더 이름을 사용해야 하는지 여부."
+        },
+        "Outputs": {
+          "1": "애니메이션 프로그램을 찾았습니다",
+          "2": "애니메이션 프로그램을 찾지 못했습니다"
+        }
+      },
+      "GenreMatches": {
+        "Description": "지정된 장르 메타데이터와 장르를 일치시킵니다.",
+        "Label": "장르 일치",
+        "Fields": {
+          "Genres": "장르",
+          "MatchAll": "모두 일치",
+          "MatchAll-Help": "모든 선택된 장르가 메타데이터에 나타나야 하는 경우, 그렇지 않으면 아무거나 나타나야 합니다."
+        },
+        "Outputs": {
+          "1": "장르 일치",
+          "2": "장르 불일치"
+        }
+      },
+      "MovieLookup": {
+        "Description": "TheMovieDB.org에서 영화를 검색합니다.\n메타데이터를 'MovieInfo' 변수에 저장합니다.",
+        "Label": "영화 검색",
+        "Fields": {
+          "UseFolderName": "폴더 이름 사용",
+          "UseFolderName-Help": "파일 이름 대신 폴더 이름을 사용해야 하는 경우."
+        },
+        "Outputs": {
+          "1": "영화 발견",
+          "2": "영화 발견되지 않음"
+        }
+      },
+      "MovieRenamer": {
+        "Description": "'MovieInfo'에 저장된 메타데이터를 사용하여 작업 파일의 이름을 바꿉니다.\n주의: 이 흐름 요소가 작동하려면 MovieLookup을 흐름에서 먼저 실행해야 합니다.\n\n출력 1: 파일 이름 변경됨\n출력 2: 파일 이름 변경 실패",
+        "Label": "영화 이름 변경",
+        "Fields": {
+          "DestinationPath": "대상 경로",
+          "DestinationPath-Help": "파일을 다른 디렉토리로 이동해야 하는 경우.",
+          "LogOnly": "로그만",
+          "LogOnly-Help": "파일의 이름을 실제로 변경하지 않고 이 흐름 요소를 테스트하려는 경우 켭니다.",
+          "Pattern": "패턴",
+          "Pattern-Help": "폴더 이름을 변경하는 데 사용할 패턴입니다. '{Title}', '{Year}', '{Extension}'."
+        }
+      },
+      "MusicMeta": {
+        "Description": "음악 파일의 메타데이터를 흐름 변수에 로드합니다.",
+        "Label": "음악 메타데이터"
+      },
+      "NfoFileCreator": {
+        "Description": "이전에 로드된 메타데이터에서 Kodi NFO 파일을 생성합니다.",
+        "Label": "NFO 파일 생성기",
+        "Fields": {
+          "DestinationFile": "대상 파일",
+          "DestinationFile-Help": "새 NFO 파일의 파일 이름입니다. 비어 있으면 원래 파일 이름을 사용하고 확장자는 '.nfo'로 변경됩니다.",
+          "DestinationPath": "대상 폴더",
+          "DestinationPath-Help": "NFO 파일이 생성될 폴더입니다.\n비어 있으면 원본 파일과 동일한 디렉토리에 생성됩니다."
+        },
+        "Outputs": {
+          "1": "NFO 파일 생성됨",
+          "2": "NFO 생성 실패"
+        }
+      },
+      "TVEpisodeLookup": {
+        "Description": "TheMovieDB.org에서 TV 에피소드를 검색합니다.",
+        "Label": "TV 에피소드 검색",
+        "Fields": {
+          "UseFolderName": "폴더 이름 사용",
+          "UseFolderName-Help": "파일 이름 대신 폴더 이름을 사용해야 하는 경우.\n\n폴더가 Season, Staffel, Saison 또는 Specials로 시작하면 상위 폴더가 사용됩니다."
+        },
+        "Outputs": {
+          "1": "TV 에피소드 발견",
+          "2": "TV 에피소드 발견되지 않음"
+        }
+      },
+      "TVShowLookup": {
+        "Description": "TheMovieDB.org에서 TV 쇼를 검색합니다.\n메타데이터를 'TVShowInfo' 변수에 저장합니다.",
+        "Label": "TV 쇼 검색",
+        "Fields": {
+          "UseFolderName": "폴더 이름 사용",
+          "UseFolderName-Help": "파일 이름 대신 폴더 이름을 사용해야 하는 경우.\n\n폴더가 Season, Staffel, Saison 또는 Specials로 시작하면 상위 폴더가 사용됩니다."
+        },
+        "Outputs": {
+          "1": "TV 쇼 발견",
+          "2": "TV 쇼 발견되지 않음"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "MetaNodes": {
+      "Description": "파일의 메타 정보를 조회하는 데 사용되는 메타 정보 흐름 요소가 포함된 플러그인입니다.\n\nTheMovieDB에서 영화 정보를 조회하는 흐름 요소와 파일 내 ID3 태그에서 음악 정보를 조회하는 흐름 요소가 포함되어 있습니다.",
+      "Label": "메타"
+    }
+  }
+}

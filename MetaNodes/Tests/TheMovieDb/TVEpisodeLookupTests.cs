@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using DM.MovieApi.MovieDb.Movies;
 using DM.MovieApi.MovieDb.TV;
 using FileFlows.Plugin;
+using MetaNodes.Helpers;
 using MetaNodes.TheMovieDb;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PluginTestLibrary;
@@ -32,6 +33,23 @@ public class TVEpisodeLookupTests : TestBase
         Assert.IsFalse(string.IsNullOrWhiteSpace(args.Variables["tvepisode.Overview"] as string));
     }
     
+
+    [TestMethod]
+    public void TheBatman_s02space01()
+    {
+        var args = GetNodeParameters("The Batman/Season 2/The Batman s02 e01.mkv");
+
+        var element = new TVEpisodeLookup();
+
+        var result = element.Execute(args);
+        Assert.AreEqual(1, result);
+        
+        Assert.AreEqual("The Batman", args.Variables["tvepisode.Title"]);
+        Assert.AreEqual(2, args.Variables["tvepisode.Season"]);
+        Assert.AreEqual(1, args.Variables["tvepisode.Episode"]);
+        Assert.AreEqual("The Cat, the Bat and the Very Ugly", args.Variables["tvepisode.Subtitle"]);
+        Assert.IsFalse(string.IsNullOrWhiteSpace(args.Variables["tvepisode.Overview"] as string));
+    } 
     [TestMethod]
     public void TheBatman_2x03()
     {
@@ -181,7 +199,9 @@ public class TVEpisodeLookupTests : TestBase
                      new("Phantom 2040", "/media/tv/Phantom 2040 (1992)/Phantom 2040.1x03.mkv"),
                  })
         {
-            (string lookupName, string year) = TVShowLookup.GetLookupName(test.Path, true);
+            var helper = new TVShowHelper(null);
+            
+            (string lookupName, string year) = helper.GetLookupName(test.Path, true);
             Assert.AreEqual(test.Show, lookupName);
             //
             // var args = GetNodeParameters(test.Path);
@@ -197,6 +217,29 @@ public class TVEpisodeLookupTests : TestBase
     }
 
     private record TVLookupTestData(string Show, string Path);
+    
+    
+
+    
+    [TestMethod]
+    public void Apostrophe()
+    {
+        var args = GetNodeParameters("data/media/tv/JoJo's Bizarre Adventure (2012)/Season 2/JoJo's Bizarre Adventure (2012) - S02E38 - The Gatekeeper of Hell, Pet Shop, Part 1.mkv");
+
+        var element = new TVEpisodeLookup();
+        element.UseFolderName = false;
+
+        var result = element.Execute(args);
+        Assert.AreEqual(1, result);
+        Assert.IsTrue(args.Parameters.ContainsKey(Globals.TV_SHOW_INFO));
+
+        var info = args.Parameters[Globals.TV_SHOW_INFO] as TVShowInfo;
+        Assert.IsNotNull(info);
+
+        Assert.AreEqual("JoJo's Bizarre Adventure", info.Name);
+        Assert.AreEqual(2012, info.FirstAirDate.Year);
+        Assert.AreEqual("ja", info.OriginalLanguage);
+    }
 }
 
 #endif

@@ -11,10 +11,21 @@ public class VideoFile : VideoNode
 
     public override bool NoEditorOnAdd => true;
 
+    /// <summary>
+    /// Gets or sets the probe size in MegaBytes
+    /// </summary>
     [DefaultValue(25)]
     [NumberInt(1)]
-    [Range(5, 1000)]
+    [Range(5, 5000)]
     public int ProbeSize { get; set; }
+
+    /// <summary>
+    /// Gets or sets how many seconds are analyzed to probe the input
+    /// </summary>
+    [DefaultValue(5)]
+    [NumberInt(1)]
+    [Range(1, 600)]
+    public int AnalyzeDuration { get; set; }
 
     private Dictionary<string, object> _Variables;
     public override Dictionary<string, object> Variables => _Variables;
@@ -22,14 +33,14 @@ public class VideoFile : VideoNode
     {
         _Variables = new Dictionary<string, object>()
         {
-            { "vi.Video.Codec", "hevc" },
-            { "vi.Audio.Codec", "ac3" },
-            { "vi.Audio.Codecs", "ac3,aac"},
-            { "vi.Audio.Language", "eng" },
-            { "vi.Audio.Languages", "eng, mao" },
-            { "vi.Resolution", "1080p" },
-            { "vi.Duration", 1800 },
-            { "vi.VideoInfo", new VideoInfo() 
+            { "video.Codec", "hevc" },
+            { "video.Audio.Codec", "ac3" },
+            { "video.Audio.Codecs", "ac3,aac"},
+            { "video.Audio.Language", "eng" },
+            { "video.Audio.Languages", "eng, mao" },
+            { "video.Resolution", "1080p" },
+            { "video.Duration", 1800 },
+            { "video.VideoInfo", new VideoInfo() 
                 {
                     Bitrate = 10_000_000,
                     VideoStreams = new List<VideoStream> {
@@ -44,8 +55,12 @@ public class VideoFile : VideoNode
                     }
                 } 
             },
-            { "vi.Width", 1920 },
-            { "vi.Height", 1080 },
+            { "video.Width", 1920 },
+            { "video.Height", 1080 },
+            { "video.FPS", 29.97f },
+            { "video.HDR", true },
+            { nameof(ProbeSize), 5_000_000 },
+            { nameof(AnalyzeDuration), 25}
         };
     }
 
@@ -53,6 +68,7 @@ public class VideoFile : VideoNode
     {
         PrintFFmpegVersion(args);
         VideoInfoHelper.ProbeSize = this.ProbeSize;
+        VideoInfoHelper.AnalyzeDuration = (this.AnalyzeDuration > 1 ? AnalyzeDuration : 5) * 1_000_000;
 
         try
         {

@@ -52,12 +52,16 @@ public class ComskipHelper
     }
 
 
-    private static string GetComskipIniFile(NodeParameters args, string file)
+    internal static string GetComskipIniFile(NodeParameters args, string file)
     {
-        var csIni = args.GetToolPath("comskip.ini");
+        var csIniFile =
+            args.Variables.FirstOrDefault(x => x.Key.Equals("comskipini", StringComparison.InvariantCultureIgnoreCase))
+                .Value?.ToString();
+        
+        var csIni = csIniFile?.EmptyAsNull() ?? args.GetToolPath("comskipini")?.EmptyAsNull() ?? args.GetToolPath("comskip.ini");
         if (string.IsNullOrWhiteSpace(csIni) == false)
         {
-            if (csIni.IndexOf("\n") > 0)
+            if (csIni.IndexOf('\n') > 0)
             {
                 // csini is the contents of the csini, make a file
                 args.Logger?.ILog("Using comskip.ini variable contents");

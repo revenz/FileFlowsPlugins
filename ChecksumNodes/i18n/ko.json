@@ -1,0 +1,40 @@
+{
+  "Flow": {
+    "Parts": {
+      "MD5Checksum": {
+        "Description": "작업 파일의 MD5 체크섬을 계산하고 이를 변수 \"MD5\"와 \"Checksum\"에 저장합니다.",
+        "Label": "MD5 체크섬",
+        "Outputs": {
+          "1": "체크섬이 변수 \"MD5\"와 \"Checksum\"에 저장됨"
+        }
+      },
+      "SHA1Checksum": {
+        "Description": "작업 파일의 SHA1 체크섬을 계산하고 이를 변수 \"SHA1\"와 \"Checksum\"에 저장합니다.",
+        "Label": "SHA1 체크섬",
+        "Outputs": {
+          "1": "체크섬이 변수 \"SHA1\"과 \"Checksum\"에 저장됨"
+        }
+      },
+      "SHA256Checksum": {
+        "Description": "작업 파일의 SHA256 체크섬을 계산하고 이를 변수 \"SHA256\"와 \"Checksum\"에 저장합니다.",
+        "Label": "SHA256 체크섬",
+        "Outputs": {
+          "1": "체크섬이 변수 \"SHA256\"과 \"Checksum\"에 저장됨"
+        }
+      },
+      "SHA512Checksum": {
+        "Description": "작업 파일의 SHA512 체크섬을 계산하고 이를 변수 \"SHA512\"와 \"Checksum\"에 저장합니다.",
+        "Label": "SHA512 체크섬",
+        "Outputs": {
+          "1": "체크섬이 변수 \"SHA512\"과 \"Checksum\"에 저장됨"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "ChecksumNodes": {
+      "Description": "파일에 대해 체크섬을 실행할 수 있는 흐름 요소입니다.",
+      "Label": "체크섬"
+    }
+  }
+}

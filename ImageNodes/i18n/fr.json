@@ -1,0 +1,127 @@
+{
+  "Flow": {
+    "Parts": {
+      "AutoCropImage": {
+        "Description": "Recadre automatiquement une image",
+        "Label": "Rogner l'Image Automatiquement",
+        "Fields": {
+          "Format": "Format",
+          "Format-Help": "Le format d'image dans lequel convertir",
+          "Threshold": "Seuil",
+          "Threshold-Help": "Seuil pour la densité d'entropie, la valeur par défaut est 50. Doit être entre 0 et 100."
+        },
+        "Outputs": {
+          "1": "Image recadrée, enregistrée dans un nouveau fichier temporaire",
+          "2": "L'image n'a pas été recadrée"
+        }
+      },
+      "ImageFile": {
+        "Description": "Un fichier image",
+        "Label": "Fichier Image",
+        "Outputs": {
+          "1": "Fichier image"
+        }
+      },
+      "ImageFlip": {
+        "Description": "Retourne une image",
+        "Label": "Retourner l'Image",
+        "Fields": {
+          "Format": "Format",
+          "Format-Help": "Le format d'image dans lequel convertir",
+          "Vertical": "Vertical",
+          "Vertical-Help": "Si activé, l'image sera retournée verticalement, sinon horizontalement"
+        },
+        "Outputs": {
+          "1": "Image retournée, enregistrée dans un nouveau fichier temporaire"
+        }
+      },
+      "ImageFormat": {
+        "Description": "Convertit une image au format spécifié",
+        "Label": "Convertir l'Image",
+        "Fields": {
+          "Format": "Format",
+          "Format-Help": "Le format d'image dans lequel convertir"
+        },
+        "Outputs": {
+          "1": "Image convertie, enregistrée dans un nouveau fichier temporaire",
+          "2": "L'image est déjà au format cible"
+        }
+      },
+      "ImageIsLandscape": {
+        "Description": "Teste si une image est en paysage",
+        "Label": "Image en Paysage",
+        "Outputs": {
+          "1": "L'image est en paysage",
+          "2": "L'image n'est pas en paysage"
+        }
+      },
+      "ImageIsPortrait": {
+        "Description": "Teste si une image est en portrait",
+        "Label": "Image en Portrait",
+        "Outputs": {
+          "1": "L'image est en portrait",
+          "2": "L'image n'est pas en portrait"
+        }
+      },
+      "ImageResizer": {
+        "Description": "Redimensionne une image",
+        "Label": "Redimensionner l'Image",
+        "Fields": {
+          "Format": "Format",
+          "Format-Help": "Le format d'image dans lequel convertir",
+          "Height": "Hauteur",
+          "Mode": "Mode",
+          "Mode-Help": "Le mode à utiliser lors du redimensionnement de l'image",
+          "Width": "Largeur"
+        },
+        "Outputs": {
+          "1": "Image redimensionnée, enregistrée dans un nouveau fichier temporaire"
+        }
+      },
+      "ImageRotate": {
+        "Description": "Tourne une image",
+        "Label": "Tourner l'Image",
+        "Fields": {
+          "Angle": "Angle",
+          "Angle-Help": "L'angle de rotation",
+          "Format": "Format",
+          "Format-Help": "Le format d'image dans lequel convertir"
+        },
+        "Outputs": {
+          "1": "Image tournée, enregistrée dans un nouveau fichier temporaire"
+        }
+      },
+      "IsImage": {
+        "Description": "Teste si un fichier est un fichier image.",
+        "Label": "Est une Image",
+        "Fields": {
+          "File": "Fichier",
+          "File-Help": "Chemin optionnel vers le fichier à vérifier ; s'il est laissé vide, le fichier de travail actuel sera vérifié.",
+          "File-Placeholder": "Si vide, fichier de travail actuel"
+        },
+        "Outputs": {
+          "1": "Le fichier est un fichier image reconnu",
+          "2": "Le fichier n'est pas un fichier image reconnu"
+        }
+      },
+      "PixelCheck": {
+        "Description": "Cet élément de flux vérifie si le nombre total de pixels d'une image dépasse le seuil spécifié.",
+        "Label": "Vérification des Pixels",
+        "Fields": {
+          "Pixels": "Pixels",
+          "Pixels-Help": "Le nombre de pixels qu'une image doit contenir. Cela est calculé en multipliant la largeur de l'image par sa hauteur."
+        },
+        "Outputs": {
+          "1": "L'image a autant ou plus de pixels que spécifié",
+          "2": "L'image a moins de pixels que requis"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "ImageNodes": {
+      "Description": "Éléments de flux pour traiter les fichiers image. Ce plugin contient des nœuds pour convertir et manipuler des images.",
+      "Label": "Image"
+    }
+  }
+}

@@ -8,10 +8,11 @@ using System.Linq;
 
 public class VideoExtractAudio : AudioSelectionEncodingNode
 {
+    /// <inheritdoc />
     public override int Outputs => 2;
-
+    /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/video-extract-audio";
-
+    /// <inheritdoc />
     public override string Icon => "fas fa-file-audio";
 
     [File(1)]

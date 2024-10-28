@@ -1,0 +1,32 @@
+{
+  "Flow": {
+    "Parts": {
+      "Pushbullet": {
+        "Description": "Verstuur een bericht via Pushbullet.",
+        "Fields": {
+          "Message": "Bericht",
+          "Message-Help": "Het bericht dat naar de Pushbullet-server moet worden verzonden",
+          "Priority": "Prioriteit",
+          "Priority-Help": "De prioriteit van het verzonden bericht",
+          "Title": "Titel"
+        },
+        "Outputs": {
+          "1": "Pushbullet-bericht verzonden",
+          "2": "Verzenden van Pushbullet-bericht mislukt"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Pushbullet": {
+      "Description": "Een plugin die je in staat stelt om berichten naar een Pushbullet-server te verzenden.",
+      "Label": "Pushbullet",
+      "Fields": {
+        "ApiToken": "API-token",
+        "ApiToken-Help": "De applicatie-API-token die wordt gebruikt om meldingen te verzenden.",
+        "UserKey": "Gebruikerssleutel",
+        "UserKey-Help": "Je persoonlijke gebruikerssleutel voor het ontvangen van meldingen."
+      }
+    }
+  }
+}

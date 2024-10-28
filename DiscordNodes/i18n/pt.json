@@ -1,0 +1,31 @@
+{
+  "Flow": {
+    "Parts": {
+      "Discord": {
+        "Description": "Envia uma mensagem para um servidor Discord.",
+        "Fields": {
+          "Message": "Mensagem",
+          "Message-Help": "A mensagem a ser enviada para o servidor Discord",
+          "MessageType": "Tipo",
+          "MessageType-Help": "O tipo de mensagem a ser enviada. O tipo básico será apenas a mensagem sem um título e sem coloração.",
+          "Title": "Título",
+          "Title-Help": "Um título opcional a ser enviado; se não definido, o tipo de mensagem será o título."
+        },
+        "Outputs": {
+          "1": "Mensagem do Discord enviada",
+          "2": "Falha ao enviar a mensagem do Discord"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "DiscordNodes": {
+      "Description": "Um plugin que permite enviar mensagens para um servidor Discord.\n\nO ID do Webhook e o token podem ser obtidos a partir da URL do webhook\n https://discord.com/api/webhooks/[webhookid]/[webhooktoken]",
+      "Label": "Discord",
+      "Fields": {
+        "WebhookId": "ID do Webhook",
+        "WebhookToken": "Token do Webhook"
+      }
+    }
+  }
+}

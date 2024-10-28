@@ -1,0 +1,202 @@
+{
+  "Flow": {
+    "Parts": {
+      "AudioBitrateMatches": {
+        "Description": "Controleer of een audiobitrate voldoet aan de beperkingen.",
+        "Label": "Audiobitrate komt overeen",
+        "Fields": {
+          "BitrateKilobytes": "Bitrate",
+          "BitrateKilobytes-Help": "De bitrate in kilobytes om de overeenkomst mee te controleren.",
+          "BitrateKilobytes-Suffix": "Kilobytes",
+          "Match": "Overeenkomst"
+        },
+        "Outputs": {
+          "1": "Komt overeen",
+          "2": "Komt niet overeen"
+        }
+      },
+      "AudioFile": {
+        "Description": "Een invoer audiobestand waarvan de audio-informatie is gelezen en dat kan worden verwerkt.",
+        "Label": "Audiobestand",
+        "Outputs": {
+          "1": "Audiobestand uit bibliotheek"
+        }
+      },
+      "AudioFileNormalization": {
+        "Description": "Normaliseert een audiobestand met behulp van twee passes van de loudnorm-filter van FFMPEG.",
+        "Label": "Audiobestand normaliseren",
+        "Outputs": {
+          "1": "Audiobestand genormaliseerd en opgeslagen in tijdelijk bestand"
+        }
+      },
+      "ConvertAudio": {
+        "Description": "Converteer een audiobestand naar de opgegeven audio-codec",
+        "Label": "Converteer audio",
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "De bitrate voor het nieuwe bestand; hoe hoger de bitrate, hoe beter de kwaliteit, maar groter het bestand.",
+          "Channels": "Kanalen",
+          "Channels-Help": "Het aantal kanalen dat het geconverteerde bestand zal hebben.\nAls je meer kanalen specificeert dan de bron, zal FFmpeg het automatisch upmixen.\nAls je minder kanalen specificeert dan de bron, zal FFmpeg het automatisch downmixen.",
+          "Codec": "Codec",
+          "Codec-Help": "De audio-codec waarnaar het bestand moet worden geconverteerd.",
+          "CustomExtension": "Extensie",
+          "CustomExtension-Help": "Stelt je in staat om een aangepaste bestandsextensie in te stellen in plaats van de automatische die door de codec is bepaald.",
+          "HighEfficiency": "Hoge efficiëntie",
+          "HighEfficiency-Help": "Zal de modus voor hoge efficiëntie gebruiken; dit zal de extensie wijzigen in m4a en het aantal ondersteunde afspeelapparaten verminderen, maar kan de bestandsgrootte verkleinen.",
+          "Normalize": "Normaliseren",
+          "Normalize-Help": "Of de audio genormaliseerd moet worden met twee-pass audio-normalisatie.",
+          "SampleRate": "Monstersnelheid",
+          "SampleRate-Help": "De te gebruiken monstersnelheid",
+          "SkipIfCodecMatches": "Overslaan als codec overeenkomt",
+          "SkipIfCodecMatches-Help": "Als de bestaande audio-codec overeenkomt, zal dit bestand niet worden verwerkt, ongeacht de bitrate. Als het uit staat, moet de bitrate kleiner dan of gelijk zijn om over te slaan."
+        },
+        "Outputs": {
+          "1": "Audio geconverteerd en opgeslagen in tijdelijk bestand",
+          "2": "Audio al in codec, geen conversie uitgevoerd"
+        }
+      },
+      "ConvertToAAC": {
+        "Description": "Converteer een audiobestand naar AAC",
+        "Label": "Converteer naar AAC",
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "De bitrate voor het nieuwe AAC-bestand; hoe hoger de bitrate, hoe beter de kwaliteit, maar groter het bestand.  192 Kbps is de aanbevolen waarde.",
+          "Channels": "Kanalen",
+          "Channels-Help": "Het aantal kanalen dat het geconverteerde bestand zal hebben.\nAls je meer kanalen specificeert dan de bron, zal FFmpeg het automatisch upmixen.\nAls je minder kanalen specificeert dan de bron, zal FFmpeg het automatisch downmixen.",
+          "CustomExtension": "Extensie",
+          "CustomExtension-Help": "Stelt je in staat om een aangepaste bestandsextensie in te stellen in plaats van de automatische die door de codec is bepaald.",
+          "HighEfficiency": "Hoge efficiëntie",
+          "HighEfficiency-Help": "Zal de modus voor hoge efficiëntie gebruiken; dit zal de extensie wijzigen in m4a en het aantal ondersteunde afspeelapparaten verminderen, maar kan de bestandsgrootte verkleinen.",
+          "Normalize": "Normaliseren",
+          "Normalize-Help": "Of de audio genormaliseerd moet worden met twee-pass audio-normalisatie.",
+          "SampleRate": "Monstersnelheid",
+          "SampleRate-Help": "De te gebruiken monstersnelheid",
+          "SkipIfCodecMatches": "Overslaan als codec overeenkomt",
+          "SkipIfCodecMatches-Help": "Als de bestaande audio-codec overeenkomt, zal dit bestand niet worden verwerkt, ongeacht de bitrate. Als het uit staat, moet de bitrate kleiner dan of gelijk zijn om over te slaan."
+        },
+        "Outputs": {
+          "1": "Audio geconverteerd en opgeslagen in tijdelijk bestand",
+          "2": "Audio al in codec, geen conversie uitgevoerd"
+        }
+      },
+      "ConvertToFLAC": {
+        "Description": "Converteer een audiobestand naar FLAC",
+        "Label": "Converteer naar FLAC",
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "De bitrate voor het nieuwe FLAC-bestand, hoe hoger de bitrate, hoe beter de kwaliteit maar ook groter het bestand. 128 Kbps is de aanbevolen waarde.",
+          "Channels": "Kanalen",
+          "Channels-Help": "Het aantal kanalen dat het geconverteerde bestand zal hebben.\nAls je meer kanalen opgeeft dan de bron, zal FFmpeg het automatisch upmixen.\nAls je minder kanalen opgeeft dan de bron, zal FFmpeg het automatisch downmixen.",
+          "CustomExtension": "Extensie",
+          "CustomExtension-Help": "Stelt je in staat om een aangepaste bestands extensie in te stellen in plaats van de automatische die door de codec wordt bepaald.",
+          "Normalize": "Normaliseren",
+          "Normalize-Help": "Als de audio genormaliseerd moet worden met twee-pass audio normalisatie.",
+          "SampleRate": "Monsterfrequentie",
+          "SampleRate-Help": "De monsterfrequentie die gebruikt moet worden.",
+          "SkipIfCodecMatches": "Overslaan als Codec Overeenkomt",
+          "SkipIfCodecMatches-Help": "Als de bestaande audiocodec overeenkomt, zal dit bestand niet worden verwerkt ongeacht de bitrate. Anders, als het uit staat, moet de bitrate kleiner dan of gelijk aan zijn om over te slaan."
+        },
+        "Outputs": {
+          "1": "Audio geconverteerd en opgeslagen in tijdelijk bestand",
+          "2": "Audio al in codec, geen conversie uitgevoerd"
+        }
+      },
+      "ConvertToMP3": {
+        "Description": "Converteer een audiobestand naar MP3",
+        "Label": "Converteer naar MP3",
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "De bitrate voor het nieuwe MP3-bestand, hoe hoger de bitrate, hoe beter de kwaliteit maar ook groter het bestand. 192 Kbps is de aanbevolen waarde.",
+          "Channels": "Kanalen",
+          "Channels-Help": "Het aantal kanalen dat het geconverteerde bestand zal hebben.\nAls je meer kanalen opgeeft dan de bron, zal FFmpeg het automatisch upmixen.\nAls je minder kanalen opgeeft dan de bron, zal FFmpeg het automatisch downmixen.",
+          "CustomExtension": "Extensie",
+          "CustomExtension-Help": "Stelt je in staat om een aangepaste bestands extensie in te stellen in plaats van de automatische die door de codec wordt bepaald.",
+          "Normalize": "Normaliseren",
+          "Normalize-Help": "Als de audio genormaliseerd moet worden met twee-pass audio normalisatie.",
+          "SampleRate": "Monsterfrequentie",
+          "SampleRate-Help": "De monsterfrequentie die gebruikt moet worden.",
+          "SkipIfCodecMatches": "Overslaan als Codec Overeenkomt",
+          "SkipIfCodecMatches-Help": "Als de bestaande audiocodec overeenkomt, zal dit bestand niet worden verwerkt ongeacht de bitrate. Anders, als het uit staat, moet de bitrate kleiner dan of gelijk aan zijn om over te slaan."
+        },
+        "Outputs": {
+          "1": "Audio geconverteerd en opgeslagen in tijdelijk bestand",
+          "2": "Audio al in codec, geen conversie uitgevoerd"
+        }
+      },
+      "ConvertToOGG": {
+        "Description": "Converteer een audiobestand naar OGG",
+        "Label": "Converteer naar OGG",
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "De bitrate voor het nieuwe OGG-bestand, hoe hoger de bitrate, hoe beter de kwaliteit maar ook groter het bestand. 128 Kbps is de aanbevolen waarde.",
+          "Channels": "Kanalen",
+          "Channels-Help": "Het aantal kanalen dat het geconverteerde bestand zal hebben.\nAls je meer kanalen opgeeft dan de bron, zal FFmpeg het automatisch upmixen.\nAls je minder kanalen opgeeft dan de bron, zal FFmpeg het automatisch downmixen.",
+          "CustomExtension": "Extensie",
+          "CustomExtension-Help": "Stelt je in staat om een aangepaste bestands extensie in te stellen in plaats van de automatische die door de codec wordt bepaald.",
+          "Normalize": "Normaliseren",
+          "Normalize-Help": "Als de audio genormaliseerd moet worden met twee-pass audio normalisatie.",
+          "SampleRate": "Monsterfrequentie",
+          "SampleRate-Help": "De monsterfrequentie die gebruikt moet worden.",
+          "SkipIfCodecMatches": "Overslaan als Codec Overeenkomt",
+          "SkipIfCodecMatches-Help": "Als de bestaande audiocodec overeenkomt, zal dit bestand niet worden verwerkt ongeacht de bitrate. Anders, als het uit staat, moet de bitrate kleiner dan of gelijk aan zijn om over te slaan."
+        },
+        "Outputs": {
+          "1": "Audio geconverteerd en opgeslagen in tijdelijk bestand",
+          "2": "Audio al in codec, geen conversie uitgevoerd"
+        }
+      },
+      "ConvertToWAV": {
+        "Description": "Converteer een audiobestand naar WAV",
+        "Label": "Converteer naar WAV",
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "De bitrate voor het nieuwe WAV-bestand, hoe hoger de bitrate, hoe beter de kwaliteit maar ook groter het bestand. 128 Kbps is de aanbevolen waarde.",
+          "Channels": "Kanalen",
+          "Channels-Help": "Het aantal kanalen dat het geconverteerde bestand zal hebben.\nAls je meer kanalen opgeeft dan de bron, zal FFmpeg het automatisch upmixen.\nAls je minder kanalen opgeeft dan de bron, zal FFmpeg het automatisch downmixen.",
+          "CustomExtension": "Extensie",
+          "CustomExtension-Help": "Stelt je in staat om een aangepaste bestands extensie in te stellen in plaats van de automatische die door de codec wordt bepaald.",
+          "Normalize": "Normaliseren",
+          "Normalize-Help": "Als de audio genormaliseerd moet worden met twee-pass audio normalisatie.",
+          "SampleRate": "Monsterfrequentie",
+          "SampleRate-Help": "De monsterfrequentie die gebruikt moet worden.",
+          "SkipIfCodecMatches": "Overslaan als Codec Overeenkomt",
+          "SkipIfCodecMatches-Help": "Als de bestaande audiocodec overeenkomt, zal dit bestand niet worden verwerkt ongeacht de bitrate. Anders, als het uit staat, moet de bitrate kleiner dan of gelijk aan zijn om over te slaan."
+        },
+        "Outputs": {
+          "1": "Audio geconverteerd en opgeslagen in tijdelijk bestand",
+          "2": "Audio al in codec, geen conversie uitgevoerd"
+        }
+      },
+      "CreateAudioBook": {
+        "Description": "Maakt een audioboek van audiobestanden die in de invoermap zijn gevonden",
+        "Label": "Audioboek maken",
+        "Fields": {
+          "DeleteSourceFiles": "Bronbestanden Verwijderen",
+          "DeleteSourceFiles-Help": "Wanneer ingeschakeld, worden de bronbestanden die het nieuw gemaakte m4b-bestand vormen, verwijderd; anders blijven ze intact.",
+          "DestinationPath": "Bestemmingspad",
+          "DestinationPath-Help": "De bestemming waar het nieuw gemaakte bestand moet worden opgeslagen. Als leeg gelaten, wordt het bestand gemaakt in de tijdelijke map en zal het worden verwijderd als het niet daarna wordt verplaatst.",
+          "UpdateWorkingFile": "Werkbestand Bijwerken",
+          "UpdateWorkingFile-Help": "Wanneer ingeschakeld, wordt het werkbestand bijgewerkt naar het nieuw gemaakte bestand."
+        },
+        "Outputs": {
+          "1": "Audioboek gemaakt",
+          "2": "Audioboek niet gemaakt"
+        }
+      },
+      "EmbedArtwork": {
+        "Description": "Voegt artwork toe aan een audiobestand",
+        "Label": "Artwork insluiten",
+        "Outputs": {
+          "1": "Artwork gevonden en toegevoegd aan het audiobestand",
+          "2": "Geen artwork gevonden om toe te voegen"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "AudioNodes": {
+      "Description": "Een verzameling van audio-gerelateerde stroomelementen om te helpen bij het verwerken van audiobestanden.",
+      "Label": "Audio"
+    }
+  }
+}

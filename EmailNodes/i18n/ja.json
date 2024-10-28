@@ -1,0 +1,40 @@
+{
+  "Flow": {
+    "Parts": {
+      "SendEmail": {
+        "Description": "構成されたSMTPサーバーを使用してメールを送信します。",
+        "Label": "メールを送信",
+        "Fields": {
+          "Body": "本文",
+          "Body-Help": "送信されるメールメッセージの内容。 [scriban](https://github.com/scriban/scriban) テンプレート言語を使用します。",
+          "Recipients": "受取人",
+          "Recipients-Help": "メッセージを送信するメールアドレスのリスト",
+          "Subject": "件名",
+          "Subject-Help": "設定中のメールの件名"
+        },
+        "Outputs": {
+          "1": "メール ''{Subject}'' が送信されました",
+          "2": "メールの送信に失敗しました"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "EmailNodes": {
+      "Description": "このプラグインを使用すると、フローを実行している間にメールを送信できます。",
+      "Label": "メール",
+      "Fields": {
+        "Sender": "送信者",
+        "Sender-Help": "メールが送信されるメールアドレス",
+        "SmtpPassword": "SMTP パスワード",
+        "SmtpPassword-Help": "SMTPサーバーに対して認証するために使用されるパスワード",
+        "SmtpPort": "SMTP ポート",
+        "SmtpPort-Help": "メール送信に使用されるSMTPサーバーのポート、デフォルトは25",
+        "SmtpServer": "SMTP サーバー",
+        "SmtpServer-Help": "メール送信に使用されるSMTPサーバーのアドレス",
+        "SmtpUsername": "SMTP ユーザー名",
+        "SmtpUsername-Help": "SMTPサーバーに対して認証するために使用されるユーザー名"
+      }
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "Flow": {
+    "Parts": {
+      "EmbyUpdater": {
+        "Description": "Embyサーバーにメッセージを送信してライブラリを更新します。",
+        "Label": "Emby Updater",
+        "Fields": {
+          "AccessToken": "アクセストークン",
+          "AccessToken-Help": "Emby APIアクセストークンです。\n注意：プラグイン設定のアクセストークンを上書きする場合のみ設定してください。",
+          "Mapping": "マッピング",
+          "Mapping-Help": "FileFlows内のパスとEmbyで使用されるパスの置換マッピングのリストです。\n注意：サーバーURLもここに設定されていない限り、使用されません。さもなければ、プラグイン設定のマッピングが使用されます。",
+          "MappingKey": "FileFlows",
+          "MappingValue": "Emby",
+          "ServerUrl": "サーバー",
+          "ServerUrl-Help": "EmbyサーバーのURLです。\n注意：プラグイン設定のサーバーURLを上書きする場合のみ設定してください。",
+          "ServerUrl-Placeholder": "http://localhost:8096/"
+        },
+        "Outputs": {
+          "1": "Emby更新リクエストが送信されました",
+          "2": "Emby更新リクエストの送信に失敗しました"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Emby": {
+      "Description": "Embyと通信するためのプラグインです。",
+      "Label": "Emby",
+      "Fields": {
+        "AccessToken": "アクセストークン",
+        "AccessToken-Help": "Emby APIアクセストークン",
+        "Mapping": "マッピング",
+        "Mapping-Help": "FileFlows内のパスとEmbyで使用されるパスの置換マッピングのリストです。",
+        "MappingKey": "FileFlows",
+        "MappingValue": "Emby",
+        "ServerUrl": "サーバー",
+        "ServerUrl-Help": "EmbyサーバーのURLです。",
+        "ServerUrl-Placeholder": "http://localhost:8096/"
+      }
+    }
+  }
+}

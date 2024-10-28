@@ -1,186 +1,202 @@
 {
-  "Flow":{
+  "Flow": {
     "Parts": {
-      "AudioFile": {
-        "Description": "An input Audio file that has had its Audio Information read and can be processed",
-        "Outputs": {
-          "1": "Audio file from library"
-        }
-      },
       "AudioBitrateMatches": {
-        "Label": "Audio Bitrate Matches",
         "Description": "Check if an audio bitrate matches the constraints.",
+        "Label": "Audio Bitrate Matches",
         "Fields": {
-          "Match": "Match",
           "BitrateKilobytes": "Bitrate",
+          "BitrateKilobytes-Help": "The bitrate in kilobytes to run the match against.",
           "BitrateKilobytes-Suffix": "Kilobytes",
-          "BitrateKilobytes-Help": "The bitrate in kilobytes to run the match against."
+          "Match": "Match"
         },
         "Outputs": {
           "1": "Does match",
           "2": "Does not match"
         }
       },
+      "AudioFile": {
+        "Description": "An input Audio file that has had its Audio Information read and can be processed",
+        "Label": "Audio File",
+        "Outputs": {
+          "1": "Audio file from library"
+        }
+      },
       "AudioFileNormalization": {
         "Description": "Normalizes an audio file using two passes of FFMPEGs loudnorm filter",
+        "Label": "Audio File Normalization",
         "Outputs": {
           "1": "Audio file normalized and saved to temporary file"
         }
       },
       "ConvertAudio": {
         "Description": "Convert a Audio file to the specified audio codec",
-        "Outputs": {
-          "1": "Audio converted and saved to temporary file",
-          "2": "Audio already in codec, no conversion done"
-        },
+        "Label": "Convert Audio",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "The bitrate for the new file, the higher the bitrate the better the quality but larger the file.",
-          "Codec": "Codec",
-          "Codec-Help": "The audio codec to convert the file into.",
-          "SampleRate": "Sample Rate",
-          "SampleRate-Help": "The sample rate to use",
           "Channels": "Channels",
           "Channels-Help": "The number of channels the converted file will have.\nIf you specify more channels than the source, FFmpeg will automatically up-mix it.\nIf you specify fewer channels than the source, FFmpeg will automatically down-mix it.",
+          "Codec": "Codec",
+          "Codec-Help": "The audio codec to convert the file into.",
           "CustomExtension": "Extension",
           "CustomExtension-Help": "Allows you to set a custom file extension to use instead of the automatic one determined by the codec.",
+          "HighEfficiency": "High Efficiency",
+          "HighEfficiency-Help": "Will use high efficiency mode, this will change the extension to m4a and will reduce supported playback devices, but may reduce the size of the file.",
           "Normalize": "Normalize",
           "Normalize-Help": "If the audio should be normalized with two pass audio normalization",
+          "SampleRate": "Sample Rate",
+          "SampleRate-Help": "The sample rate to use",
           "SkipIfCodecMatches": "Skip If Codec Matches",
-          "SkipIfCodecMatches-Help": "If the existing audio codec matches, this file will not be processed regardless of the bitrate.  Otherwise if off, the bitrate must be less than or equal to for it to skip.",
-          "HighEfficiency": "High Efficiency",
-          "HighEfficiency-Help": "Will use high efficiency mode, this will change the extension to m4a and will reduce supported playback devices, but may reduce the size of the file."
+          "SkipIfCodecMatches-Help": "If the existing audio codec matches, this file will not be processed regardless of the bitrate.  Otherwise if off, the bitrate must be less than or equal to for it to skip."
+        },
+        "Outputs": {
+          "1": "Audio converted and saved to temporary file",
+          "2": "Audio already in codec, no conversion done"
         }
       },
       "ConvertToAAC": {
         "Description": "Convert a Audio file to AAC",
-        "Outputs": {
-          "1": "Audio converted and saved to temporary file",
-          "2": "Audio already in codec, no conversion done"
-        },
+        "Label": "Convert To AAC",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "The bitrate for the new AAC file, the higher the bitrate the better the quality but larger the file.  192 Kbps is the recommended rate.",
-          "Normalize": "Normalize",
-          "Normalize-Help": "If the audio should be normalized with two pass audio normalization",
-          "SampleRate": "Sample Rate",
-          "SampleRate-Help": "The sample rate to use",
           "Channels": "Channels",
           "Channels-Help": "The number of channels the converted file will have.\nIf you specify more channels than the source, FFmpeg will automatically up-mix it.\nIf you specify fewer channels than the source, FFmpeg will automatically down-mix it.",
           "CustomExtension": "Extension",
           "CustomExtension-Help": "Allows you to set a custom file extension to use instead of the automatic one determined by the codec.",
-          "SkipIfCodecMatches": "Skip If Codec Matches",
-          "SkipIfCodecMatches-Help": "If the existing audio codec matches, this file will not be processed regardless of the bitrate.  Otherwise if off, the bitrate must be less than or equal to for it to skip.",
           "HighEfficiency": "High Efficiency",
-          "HighEfficiency-Help": "Will use high efficiency mode, this will change the extension to m4a and will reduce supported playback devices, but may reduce the size of the file."
+          "HighEfficiency-Help": "Will use high efficiency mode, this will change the extension to m4a and will reduce supported playback devices, but may reduce the size of the file.",
+          "Normalize": "Normalize",
+          "Normalize-Help": "If the audio should be normalized with two pass audio normalization",
+          "SampleRate": "Sample Rate",
+          "SampleRate-Help": "The sample rate to use",
+          "SkipIfCodecMatches": "Skip If Codec Matches",
+          "SkipIfCodecMatches-Help": "If the existing audio codec matches, this file will not be processed regardless of the bitrate.  Otherwise if off, the bitrate must be less than or equal to for it to skip."
+        },
+        "Outputs": {
+          "1": "Audio converted and saved to temporary file",
+          "2": "Audio already in codec, no conversion done"
         }
       },
       "ConvertToFLAC": {
         "Description": "Convert a Audio file to FLAC",
-        "Outputs": {
-          "1": "Audio converted and saved to temporary file",
-          "2": "Audio already in codec, no conversion done"
-        },
+        "Label": "Convert To FLAC",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "The bitrate for the new FLAC file, the higher the bitrate the better the quality but larger the file.  128 Kbps is the recommended rate.",
-          "SampleRate": "Sample Rate",
-          "SampleRate-Help": "The sample rate to use",
           "Channels": "Channels",
           "Channels-Help": "The number of channels the converted file will have.\nIf you specify more channels than the source, FFmpeg will automatically up-mix it.\nIf you specify fewer channels than the source, FFmpeg will automatically down-mix it.",
           "CustomExtension": "Extension",
           "CustomExtension-Help": "Allows you to set a custom file extension to use instead of the automatic one determined by the codec.",
           "Normalize": "Normalize",
           "Normalize-Help": "If the audio should be normalized with two pass audio normalization",
+          "SampleRate": "Sample Rate",
+          "SampleRate-Help": "The sample rate to use",
           "SkipIfCodecMatches": "Skip If Codec Matches",
           "SkipIfCodecMatches-Help": "If the existing audio codec matches, this file will not be processed regardless of the bitrate.  Otherwise if off, the bitrate must be less than or equal to for it to skip."
+        },
+        "Outputs": {
+          "1": "Audio converted and saved to temporary file",
+          "2": "Audio already in codec, no conversion done"
         }
       },
       "ConvertToMP3": {
         "Description": "Convert a Audio file to MP3",
-        "Outputs": {
-          "1": "Audio converted and saved to temporary file",
-          "2": "Audio already in codec, no conversion done"
-        },
+        "Label": "Convert To MP3",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "The bitrate for the new MP3 file, the higher the bitrate the better the quality but larger the file.  192 Kbps is the recommended rate.",
-          "SampleRate": "Sample Rate",
-          "SampleRate-Help": "The sample rate to use",
           "Channels": "Channels",
           "Channels-Help": "The number of channels the converted file will have.\nIf you specify more channels than the source, FFmpeg will automatically up-mix it.\nIf you specify fewer channels than the source, FFmpeg will automatically down-mix it.",
           "CustomExtension": "Extension",
           "CustomExtension-Help": "Allows you to set a custom file extension to use instead of the automatic one determined by the codec.",
           "Normalize": "Normalize",
           "Normalize-Help": "If the audio should be normalized with two pass audio normalization",
+          "SampleRate": "Sample Rate",
+          "SampleRate-Help": "The sample rate to use",
           "SkipIfCodecMatches": "Skip If Codec Matches",
           "SkipIfCodecMatches-Help": "If the existing audio codec matches, this file will not be processed regardless of the bitrate.  Otherwise if off, the bitrate must be less than or equal to for it to skip."
+        },
+        "Outputs": {
+          "1": "Audio converted and saved to temporary file",
+          "2": "Audio already in codec, no conversion done"
         }
       },
       "ConvertToOGG": {
         "Description": "Convert a Audio file to OGG",
-        "Outputs": {
-          "1": "Audio converted and saved to temporary file",
-          "2": "Audio already in codec, no conversion done"
-        },
+        "Label": "Convert To OGG",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "The bitrate for the new OGG file, the higher the bitrate the better the quality but larger the file.  128 Kbps is the recommended rate.",
-          "SampleRate": "Sample Rate",
-          "SampleRate-Help": "The sample rate to use",
           "Channels": "Channels",
           "Channels-Help": "The number of channels the converted file will have.\nIf you specify more channels than the source, FFmpeg will automatically up-mix it.\nIf you specify fewer channels than the source, FFmpeg will automatically down-mix it.",
           "CustomExtension": "Extension",
           "CustomExtension-Help": "Allows you to set a custom file extension to use instead of the automatic one determined by the codec.",
           "Normalize": "Normalize",
           "Normalize-Help": "If the audio should be normalized with two pass audio normalization",
+          "SampleRate": "Sample Rate",
+          "SampleRate-Help": "The sample rate to use",
           "SkipIfCodecMatches": "Skip If Codec Matches",
           "SkipIfCodecMatches-Help": "If the existing audio codec matches, this file will not be processed regardless of the bitrate.  Otherwise if off, the bitrate must be less than or equal to for it to skip."
+        },
+        "Outputs": {
+          "1": "Audio converted and saved to temporary file",
+          "2": "Audio already in codec, no conversion done"
         }
       },
       "ConvertToWAV": {
         "Description": "Convert a Audio file to WAV",
-        "Outputs": {
-          "1": "Audio converted and saved to temporary file",
-          "2": "Audio already in codec, no conversion done"
-        },
+        "Label": "Convert To WAV",
         "Fields": {
           "Bitrate": "Bitrate",
           "Bitrate-Help": "The bitrate for the new WAV file, the higher the bitrate the better the quality but larger the file.  128 Kbps is the recommended rate.",
-          "SampleRate": "Sample Rate",
-          "SampleRate-Help": "The sample rate to use",
           "Channels": "Channels",
           "Channels-Help": "The number of channels the converted file will have.\nIf you specify more channels than the source, FFmpeg will automatically up-mix it.\nIf you specify fewer channels than the source, FFmpeg will automatically down-mix it.",
           "CustomExtension": "Extension",
           "CustomExtension-Help": "Allows you to set a custom file extension to use instead of the automatic one determined by the codec.",
           "Normalize": "Normalize",
           "Normalize-Help": "If the audio should be normalized with two pass audio normalization",
+          "SampleRate": "Sample Rate",
+          "SampleRate-Help": "The sample rate to use",
           "SkipIfCodecMatches": "Skip If Codec Matches",
           "SkipIfCodecMatches-Help": "If the existing audio codec matches, this file will not be processed regardless of the bitrate.  Otherwise if off, the bitrate must be less than or equal to for it to skip."
+        },
+        "Outputs": {
+          "1": "Audio converted and saved to temporary file",
+          "2": "Audio already in codec, no conversion done"
         }
       },
       "CreateAudioBook": {
         "Description": "Creates a audio book from audio files found in input directory",
-        "Outputs": {
-          "1": "Audio book created",
-          "2": "Audio book not created"          
-        },
+        "Label": "Create Audio Book",
         "Fields": {
           "DeleteSourceFiles": "Delete Source Files",
           "DeleteSourceFiles-Help": "When enabled the source files that make up the newly created m4b file will be deleted, otherwise they will be left alone.",
-          "UpdateWorkingFile": "Update Working File",
-          "UpdateWorkingFile-Help": "When enabled the working file will be updated to the newly created file.",
           "DestinationPath": "Destination Path",
-          "DestinationPath-Help": "The destination where to save the newly created file.  If left empty the file will be created in the temporary directory and will be deleted if not moved afterwards."
+          "DestinationPath-Help": "The destination where to save the newly created file.  If left empty the file will be created in the temporary directory and will be deleted if not moved afterwards.",
+          "UpdateWorkingFile": "Update Working File",
+          "UpdateWorkingFile-Help": "When enabled the working file will be updated to the newly created file."
+        },
+        "Outputs": {
+          "1": "Audio book created",
+          "2": "Audio book not created"
         }
       },
       "EmbedArtwork": {
         "Description": "Embeds artwork into an audio file",
+        "Label": "Embed Artwork",
         "Outputs": {
           "1": "Artwork found and embedded into the audio file",
-          "2": "No artwork found to embed"          
-        }        
+          "2": "No artwork found to embed"
+        }
       }
+    }
+  },
+  "Plugins": {
+    "AudioNodes": {
+      "Description": "A collection of audio related flow elements to help process audio files.",
+      "Label": "Audio"
     }
   }
 }
