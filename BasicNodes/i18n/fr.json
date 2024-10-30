@@ -417,6 +417,18 @@
           "1": "Message enregistré"
         }
       },
+      "LogImage": {
+        "Description": "Enregistre une image dans le fichier de log",
+        "Label": "Enregistrer l'image",
+        "Fields": {
+          "ImageFile": "Image",
+          "ImageFile-Help": "Le fichier image à enregistrer"
+        },
+        "Outputs": {
+          "1": "Image enregistrée",
+          "2": "Échec de l'enregistrement de l'image"
+        }
+      },
       "Matches": {
         "Description": "Compare un ensemble de valeurs et des conditions de correspondance pour voir quelle sortie doit être appelée",
         "Label": "Correspondances",

@@ -417,6 +417,18 @@
           "1": "Meddelande loggat"
         }
       },
+      "LogImage": {
+        "Description": "Loggar en bild i loggfilen",
+        "Label": "Logga Bild",
+        "Fields": {
+          "ImageFile": "Bild",
+          "ImageFile-Help": "Bildfilen som ska loggas"
+        },
+        "Outputs": {
+          "1": "Bild loggades",
+          "2": "Kunde inte logga bilden"
+        }
+      },
       "Matches": {
         "Description": "Jämför en uppsättning värden och matchar villkor för att se vilken utdata som ska anropas",
         "Label": "Matcher",

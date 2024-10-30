@@ -417,6 +417,18 @@
           "1": "Message logged"
         }
       },
+      "LogImage": {
+        "Description": "Logs an image to the file log",
+        "Label": "Log Image",
+        "Fields": {
+          "ImageFile": "Image",
+          "ImageFile-Help": "The image file to be logged"
+        },
+        "Outputs": {
+          "1": "Image was logged",
+          "2": "Image failed to be logged"
+        }
+      },
       "Matches": {
         "Description": "Compares a set of values and matches conditions to see which output should be called",
         "Label": "Matches",

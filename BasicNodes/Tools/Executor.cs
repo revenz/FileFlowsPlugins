@@ -99,7 +99,7 @@ public class Executor : Node
             return 1;
         else
         {
-            args.Logger?.ILog("Unsuccesful exit code returned: " + task.Result.ExitCode);
+            args.Logger?.ILog("Unsuccessful exit code returned: " + task.Result.ExitCode);
             return 2;
         }
     }

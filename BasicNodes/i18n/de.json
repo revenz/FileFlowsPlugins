@@ -417,6 +417,18 @@
           "1": "Nachricht eingetragen"
         }
       },
+      "LogImage": {
+        "Description": "Protokolliert ein Bild in der Datei",
+        "Label": "Bild protokollieren",
+        "Fields": {
+          "ImageFile": "Bild",
+          "ImageFile-Help": "Die Bilddatei, die protokolliert werden soll"
+        },
+        "Outputs": {
+          "1": "Bild wurde protokolliert",
+          "2": "Bild konnte nicht protokolliert werden"
+        }
+      },
       "Matches": {
         "Description": "Vergleicht eine Menge von Werten und prüft die Bedingungen, um zu sehen, welche Ausgabe aufgerufen werden soll.",
         "Label": "Übereinstimmungen",

@@ -417,6 +417,18 @@
           "1": "消息已记录"
         }
       },
+      "LogImage": {
+        "Description": "将图像记录到日志文件中",
+        "Label": "日志图像",
+        "Fields": {
+          "ImageFile": "图像",
+          "ImageFile-Help": "要记录的图像文件"
+        },
+        "Outputs": {
+          "1": "图像已记录",
+          "2": "图像记录失败"
+        }
+      },
       "Matches": {
         "Description": "比较一组值并匹配条件，以查看应该调用哪个输出",
         "Label": "匹配",

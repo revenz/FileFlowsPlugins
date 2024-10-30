@@ -417,6 +417,18 @@
           "1": "Messaggio registrato"
         }
       },
+      "LogImage": {
+        "Description": "Registra un'immagine nel file di log",
+        "Label": "Logga immagine",
+        "Fields": {
+          "ImageFile": "Immagine",
+          "ImageFile-Help": "Il file immagine da registrare"
+        },
+        "Outputs": {
+          "1": "L'immagine è stata registrata",
+          "2": "Impossibile registrare l'immagine"
+        }
+      },
       "Matches": {
         "Description": "Confronta un insieme di valori e abbina le condizioni per vedere quale output dovrebbe essere chiamato",
         "Label": "Corrispondenze",
