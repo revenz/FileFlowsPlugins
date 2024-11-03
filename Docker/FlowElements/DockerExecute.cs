@@ -42,14 +42,13 @@ public class DockerExecute: Node
     /// Gets or sets additional outputs
     /// </summary>
     [StringArray(3)]
-    [Required]
     public List<string> AdditionalOutputs { get; set; } = [];
 
     /// <summary>
     /// Gets or sets the docker command
     /// </summary>
     [Required]
-    [TextVariable(3)]
+    [TextArea(3, true)]
     public string Command { get; set; } = string.Empty;
 
     /// <inheritdoc />

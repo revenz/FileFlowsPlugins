@@ -13,7 +13,7 @@ public class Plugin : FileFlows.Plugin.IPlugin
     public string MinimumVersion => "1.0.4.2019";
 
     /// <inheritdoc />
-    public string Icon => "fab fa-docker";
+    public string Icon => "svg:docker";
 
     /// <inheritdoc />
     public void Init() { }
