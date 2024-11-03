@@ -41,7 +41,7 @@ public class DockerExecute: Node
     /// <summary>
     /// Gets or sets additional outputs
     /// </summary>
-    [KeyValue(3, null)]
+    [StringArray(3)]
     [Required]
     public List<string> AdditionalOutputs { get; set; } = [];
 

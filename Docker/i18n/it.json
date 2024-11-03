@@ -11,6 +11,8 @@
           "Image-Help": "Il nome dell'immagine Docker da eseguire. Questa immagine verrà scaricata se non è già disponibile localmente.",
           "Message": "Immagine Docker",
           "Volumes": "Mappatura Volumi",
+          "VolumesKey": "Host",
+          "VolumesValue": "Contenitore",
           "Volumes-Help": "Specifica i volumi da mappare nel contenitore. Il percorso temporaneo verrà automaticamente mappato su `/temp` all'interno del contenitore."
         },
         "Outputs": {

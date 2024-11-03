@@ -11,6 +11,8 @@
           "Image-Help": "Namnet på Docker-bilden som ska köras. Denna bild kommer att hämtas om den inte redan finns lokalt.",
           "Message": "Dockerbild",
           "Volumes": "Volymkartläggningar",
+          "VolumesKey": "Värd",
+          "VolumesValue": "Behållare",
           "Volumes-Help": "Ange volymer som ska mappas till containern. Den temporära sökvägen kommer automatiskt att mappas till `/temp` inuti containern."
         },
         "Outputs": {

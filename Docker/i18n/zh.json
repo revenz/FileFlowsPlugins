@@ -11,6 +11,8 @@
           "Image-Help": "要执行的Docker镜像的名称。如果该镜像在本地不存在，将自动下载该镜像。",
           "Message": "Docker镜像",
           "Volumes": "卷映射",
+          "VolumesKey": "主机",
+          "VolumesValue": "容器",
           "Volumes-Help": "指定要映射到容器的卷。临时路径将自动映射到容器内部的`/temp`。"
         },
         "Outputs": {

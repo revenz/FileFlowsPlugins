@@ -11,6 +11,8 @@
           "Image-Help": "The name of the Docker image to execute. This image will be pulled if not already available locally.",
           "Message": "Docker Image",
           "Volumes": "Volume Mappings",
+          "VolumesKey": "Host",
+          "VolumesValue": "Container",
           "Volumes-Help": "Specify volumes to map into the container. The temporary path will automatically map to `/temp` inside the container."
         },
         "Outputs": {

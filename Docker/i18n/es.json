@@ -11,6 +11,8 @@
           "Image-Help": "El nombre de la imagen de Docker a ejecutar. Esta imagen se descargará si no está disponible localmente.",
           "Message": "Imagen de Docker",
           "Volumes": "Mapeo de Volúmenes",
+          "VolumesKey": "Host",
+          "VolumesValue": "Contenedor",
           "Volumes-Help": "Especifique volúmenes para mapear en el contenedor. La ruta temporal se asignará automáticamente a `/temp` dentro del contenedor."
         },
         "Outputs": {

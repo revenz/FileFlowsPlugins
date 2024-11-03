@@ -11,6 +11,8 @@
           "Image-Help": "Der Name des Docker-Images, das ausgeführt werden soll. Dieses Image wird heruntergeladen, falls es lokal noch nicht verfügbar ist.",
           "Message": "Docker-Image",
           "Volumes": "Volume-Zuordnungen",
+          "VolumesKey": "Host",
+          "VolumesValue": "Container",
           "Volumes-Help": "Geben Sie Volumes an, die in den Container gemappt werden sollen. Der temporäre Pfad wird automatisch zu `/temp` im Container gemappt."
         },
         "Outputs": {
