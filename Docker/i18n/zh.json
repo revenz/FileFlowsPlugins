@@ -1,0 +1,37 @@
+{
+  "Flow": {
+    "Parts": {
+      "DockerExecute": {
+        "Description": "从镜像启动Docker容器，并在其中执行指定的命令。",
+        "Fields": {
+          "Message": "Docker镜像",
+          "Image-Help": "要执行的Docker镜像的名称。如果该镜像在本地不存在，将自动下载该镜像。",
+          "Volumes": "卷映射",
+          "Volumes-Help": "指定要映射到容器的卷。临时路径将自动映射到容器内部的`/temp`。",
+          "AdditionalOutputs": "额外输出",
+          "AdditionalOutputs-Help": "命令执行的额外预期输出的索引列表，以便与输出匹配以进行自定义处理。",
+          "Command": "命令",
+          "Command-Help": "要在Docker容器内运行的具体命令。"
+        },
+        "Outputs": {
+          "1": "命令成功执行",
+          "2": "自定义输出 1",
+          "3": "自定义输出 2",
+          "4": "自定义输出 3",
+          "5": "自定义输出 4",
+          "6": "自定义输出 5",
+          "7": "自定义输出 6",
+          "8": "自定义输出 7",
+          "9": "自定义输出 8",
+          "10": "自定义输出 9"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Docker": {
+      "Description": "一个与Docker交互的插件，以实现Docker资源和过程的灵活集成、交互和管理。",
+      "Label": "Docker"
+    }
+  }
+}
