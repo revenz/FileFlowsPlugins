@@ -35,7 +35,6 @@ public class DockerExecute: Node
     /// Gets or sets volumes
     /// </summary>
     [KeyValue(2, null)]
-    [Required]
     public List<KeyValuePair<string, string>> Volumes { get; set; } = [];
     
     /// <summary>
