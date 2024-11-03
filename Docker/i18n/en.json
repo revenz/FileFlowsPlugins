@@ -4,17 +4,18 @@
       "DockerExecute": {
         "Description": "Launches a Docker container from an image and executes a specified command inside it.",
         "Fields": {
-          "Message": "Docker Image",
-          "Image-Help": "The name of the Docker image to execute. This image will be pulled if not already available locally.",
-          "Volumes": "Volume Mappings",
-          "Volumes-Help": "Specify volumes to map into the container. The temporary path will automatically map to `/temp` inside the container.",
           "AdditionalOutputs": "Additional Outputs",
           "AdditionalOutputs-Help": "An indexed list of additional expected outputs from the command execution, to match against output for custom processing.",
           "Command": "Command",
-          "Command-Help": "The specific command to run within the Docker container."
+          "Command-Help": "The specific command to run within the Docker container.",
+          "Image-Help": "The name of the Docker image to execute. This image will be pulled if not already available locally.",
+          "Message": "Docker Image",
+          "Volumes": "Volume Mappings",
+          "Volumes-Help": "Specify volumes to map into the container. The temporary path will automatically map to `/temp` inside the container."
         },
         "Outputs": {
           "1": "Command executed successfully",
+          "10": "Custom Output 9",
           "2": "Custom Output 1",
           "3": "Custom Output 2",
           "4": "Custom Output 3",
@@ -22,8 +23,7 @@
           "6": "Custom Output 5",
           "7": "Custom Output 6",
           "8": "Custom Output 7",
-          "9": "Custom Output 8",
-          "10": "Custom Output 9"
+          "9": "Custom Output 8"
         }
       }
     }

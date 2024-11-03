@@ -11,6 +11,9 @@ namespace FileFlows.Docker.FlowElements;
 public class DockerExecute: Node
 {
     /// <inheritdoc />
+    public override string Group => "Docker";
+
+    /// <inheritdoc />
     public override int Inputs => 1;
     /// <inheritdoc />
     public override int Outputs => AdditionalOutputs?.Any() == true ? (1 + AdditionalOutputs.Count) : 1;

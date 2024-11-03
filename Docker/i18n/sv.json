@@ -4,17 +4,18 @@
       "DockerExecute": {
         "Description": "Startar en Docker-container från en bild och kör ett specificerat kommando inuti den.",
         "Fields": {
-          "Message": "Dockerbild",
-          "Image-Help": "Namnet på Docker-bilden som ska köras. Denna bild kommer att hämtas om den inte redan finns lokalt.",
-          "Volumes": "Volymkartläggningar",
-          "Volumes-Help": "Ange volymer som ska mappas till containern. Den temporära sökvägen kommer automatiskt att mappas till `/temp` inuti containern.",
           "AdditionalOutputs": "Ytterligare utdata",
           "AdditionalOutputs-Help": "En indexerad lista över ytterligare förväntade utdata från kommandokörningen, för att matcha mot utdata för anpassad bearbetning.",
           "Command": "Kommando",
-          "Command-Help": "Det specifika kommandot som ska köras i Docker-containern."
+          "Command-Help": "Det specifika kommandot som ska köras i Docker-containern.",
+          "Image-Help": "Namnet på Docker-bilden som ska köras. Denna bild kommer att hämtas om den inte redan finns lokalt.",
+          "Message": "Dockerbild",
+          "Volumes": "Volymkartläggningar",
+          "Volumes-Help": "Ange volymer som ska mappas till containern. Den temporära sökvägen kommer automatiskt att mappas till `/temp` inuti containern."
         },
         "Outputs": {
           "1": "Kommandot utfördes framgångsrikt",
+          "10": "Anpassad utdata 9",
           "2": "Anpassad utdata 1",
           "3": "Anpassad utdata 2",
           "4": "Anpassad utdata 3",
@@ -22,8 +23,7 @@
           "6": "Anpassad utdata 5",
           "7": "Anpassad utdata 6",
           "8": "Anpassad utdata 7",
-          "9": "Anpassad utdata 8",
-          "10": "Anpassad utdata 9"
+          "9": "Anpassad utdata 8"
         }
       }
     }

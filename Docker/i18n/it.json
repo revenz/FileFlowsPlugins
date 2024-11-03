@@ -4,17 +4,18 @@
       "DockerExecute": {
         "Description": "Avvia un contenitore Docker da un'immagine ed esegue un comando specificato al suo interno.",
         "Fields": {
-          "Message": "Immagine Docker",
-          "Image-Help": "Il nome dell'immagine Docker da eseguire. Questa immagine verrà scaricata se non è già disponibile localmente.",
-          "Volumes": "Mappatura Volumi",
-          "Volumes-Help": "Specifica i volumi da mappare nel contenitore. Il percorso temporaneo verrà automaticamente mappato su `/temp` all'interno del contenitore.",
           "AdditionalOutputs": "Output Aggiuntivi",
           "AdditionalOutputs-Help": "Un elenco indicizzato di output aggiuntivi attesi dall'esecuzione del comando, per corrispondere all'output per l'elaborazione personalizzata.",
           "Command": "Comando",
-          "Command-Help": "Il comando specifico da eseguire all'interno del contenitore Docker."
+          "Command-Help": "Il comando specifico da eseguire all'interno del contenitore Docker.",
+          "Image-Help": "Il nome dell'immagine Docker da eseguire. Questa immagine verrà scaricata se non è già disponibile localmente.",
+          "Message": "Immagine Docker",
+          "Volumes": "Mappatura Volumi",
+          "Volumes-Help": "Specifica i volumi da mappare nel contenitore. Il percorso temporaneo verrà automaticamente mappato su `/temp` all'interno del contenitore."
         },
         "Outputs": {
           "1": "Comando eseguito con successo",
+          "10": "Output Personalizzato 9",
           "2": "Output Personalizzato 1",
           "3": "Output Personalizzato 2",
           "4": "Output Personalizzato 3",
@@ -22,8 +23,7 @@
           "6": "Output Personalizzato 5",
           "7": "Output Personalizzato 6",
           "8": "Output Personalizzato 7",
-          "9": "Output Personalizzato 8",
-          "10": "Output Personalizzato 9"
+          "9": "Output Personalizzato 8"
         }
       }
     }

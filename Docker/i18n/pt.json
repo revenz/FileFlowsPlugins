@@ -4,17 +4,18 @@
       "DockerExecute": {
         "Description": "Inicia um contêiner Docker a partir de uma imagem e executa um comando especificado dentro dele.",
         "Fields": {
-          "Message": "Imagem Docker",
-          "Image-Help": "O nome da imagem Docker a ser executada. Esta imagem será baixada se não estiver disponível localmente.",
-          "Volumes": "Mapeamento de Volumes",
-          "Volumes-Help": "Especifique volumes a serem mapeados para o contêiner. O caminho temporário será mapeado automaticamente para `/temp` dentro do contêiner.",
           "AdditionalOutputs": "Saídas Adicionais",
           "AdditionalOutputs-Help": "Uma lista indexada de saídas adicionais esperadas da execução do comando, para correspondência de saída para processamento personalizado.",
           "Command": "Comando",
-          "Command-Help": "O comando específico a ser executado dentro do contêiner Docker."
+          "Command-Help": "O comando específico a ser executado dentro do contêiner Docker.",
+          "Image-Help": "O nome da imagem Docker a ser executada. Esta imagem será baixada se não estiver disponível localmente.",
+          "Message": "Imagem Docker",
+          "Volumes": "Mapeamento de Volumes",
+          "Volumes-Help": "Especifique volumes a serem mapeados para o contêiner. O caminho temporário será mapeado automaticamente para `/temp` dentro do contêiner."
         },
         "Outputs": {
           "1": "Comando executado com sucesso",
+          "10": "Saída personalizada 9",
           "2": "Saída personalizada 1",
           "3": "Saída personalizada 2",
           "4": "Saída personalizada 3",
@@ -22,8 +23,7 @@
           "6": "Saída personalizada 5",
           "7": "Saída personalizada 6",
           "8": "Saída personalizada 7",
-          "9": "Saída personalizada 8",
-          "10": "Saída personalizada 9"
+          "9": "Saída personalizada 8"
         }
       }
     }
