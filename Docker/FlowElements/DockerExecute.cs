@@ -85,9 +85,11 @@ public class DockerExecute: Node
 
         var result = args.Execute(new()
         {
-            Command = command,
-            ArgumentList = arguments.ToArray()
+            Command = "docker",
+            ArgumentList = arguments.ToArray(),
+            Silent = false
         });
+        
 
         if (AdditionalOutputs?.Any() == true)
         {
