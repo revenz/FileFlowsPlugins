@@ -11,9 +11,9 @@
           "Image-Help": "De naam van de Docker-afbeelding om uit te voeren. Deze afbeelding wordt gedownload als deze niet lokaal beschikbaar is.",
           "Message": "Docker-afbeelding",
           "Volumes": "Volume-mapping",
+          "Volumes-Help": "Geef volumes op die in de container moeten worden gemapt. Het tijdelijke pad wordt automatisch naar `/temp` in de container gemapt.",
           "VolumesKey": "Host",
-          "VolumesValue": "Container",
-          "Volumes-Help": "Geef volumes op die in de container moeten worden gemapt. Het tijdelijke pad wordt automatisch naar `/temp` in de container gemapt."
+          "VolumesValue": "Container"
         },
         "Outputs": {
           "1": "Opdracht succesvol uitgevoerd",

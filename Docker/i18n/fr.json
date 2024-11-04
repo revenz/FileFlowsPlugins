@@ -11,9 +11,9 @@
           "Image-Help": "Le nom de l'image Docker à exécuter. Cette image sera téléchargée si elle n'est pas déjà disponible localement.",
           "Message": "Image Docker",
           "Volumes": "Mappages de Volumes",
+          "Volumes-Help": "Spécifiez les volumes à mapper dans le conteneur. Le chemin temporaire sera automatiquement mappé à `/temp` dans le conteneur.",
           "VolumesKey": "Hôte",
-          "VolumesValue": "Conteneur",
-          "Volumes-Help": "Spécifiez les volumes à mapper dans le conteneur. Le chemin temporaire sera automatiquement mappé à `/temp` dans le conteneur."
+          "VolumesValue": "Conteneur"
         },
         "Outputs": {
           "1": "Commande exécutée avec succès",

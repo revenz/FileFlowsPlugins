@@ -11,9 +11,9 @@
           "Image-Help": "要執行的Docker映像的名稱。如果該映像在本地不存在，將自動下載該映像。",
           "Message": "Docker映像",
           "Volumes": "卷映射",
+          "Volumes-Help": "指定要映射到容器的卷。臨時路徑將自動映射到容器內部的`/temp`。",
           "VolumesKey": "主機",
-          "VolumesValue": "容器",
-          "Volumes-Help": "指定要映射到容器的卷。臨時路徑將自動映射到容器內部的`/temp`。"
+          "VolumesValue": "容器"
         },
         "Outputs": {
           "1": "命令成功執行",

@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using FileFlows.Web.Helpers;
 
 namespace FileFlows.Web.FlowElements;
@@ -29,7 +30,7 @@ public class InputUrl : Node
     {
         string url = args.WorkingFile;
         args.Variables["Url"] = url;
-        if (Download == false)
+        if (Download == false || Regex.IsMatch(url, "^http(s)?://", RegexOptions.IgnoreCase) == false)
             return 1;
         
         var result = DownloadHelper.Download(args.Logger!, url, args.TempPath, (percent) =>
