@@ -8,7 +8,9 @@
           "DestinationPath": "Destination",
           "DestinationPath-Help": "The location and filename, i.e. the full path, of the file in Nextcloud.",
           "File": "File",
-          "File-Help": "The file to upload, leave empty to use the current working file."
+          "File-Help": "The file to upload, leave empty to use the current working file.",
+          "SetWorkingFile": "Set Working File",
+          "SetWorkingFile-Help": "Sets the uploaded Nextcloud path as the working file. Use this only at the end of a flow, as this file will be marked as the final output. Any subsequent flow elements requiring the working file will not function as expected."
         },
         "Outputs": {
           "1": "Was successfully uploaded to Nextcloud",

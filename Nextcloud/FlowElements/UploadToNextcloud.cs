@@ -28,7 +28,7 @@ public class UploadToNextcloud : Node
     /// <summary>
     /// Gets or sets the destination path
     /// </summary>
-    [Folder(1)]
+    [TextVariable(1)]
     public string DestinationPath { get; set; } = null!;
 
     /// <summary>
@@ -36,6 +36,12 @@ public class UploadToNextcloud : Node
     /// </summary>
     [TextVariable(2)]
     public string File { get; set; } = null!;
+    
+    /// <summary>
+    /// Gets or sets if the working file should be updated to the nextcloud file
+    /// </summary>
+    [Boolean(3)]
+    public bool SetWorkingFile { get; set; }
 
     public override int Execute(NodeParameters args)
     {
@@ -92,6 +98,12 @@ public class UploadToNextcloud : Node
         }
         
         args.Logger?.ILog("File successfully uploaded");
+        if (SetWorkingFile)
+        {
+            args.Logger?.ILog("Setting working file to: nc:" + destination);
+            args.SetWorkingFile("nc:" + destination);
+        }
+
         return 1;
     }
     /// <summary>

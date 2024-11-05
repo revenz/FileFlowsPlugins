@@ -8,7 +8,9 @@
           "DestinationPath": "Ziel",
           "DestinationPath-Help": "Der Speicherort und der Dateiname, d.h. der vollständige Pfad, der Datei in Nextcloud.",
           "File": "Datei",
-          "File-Help": "Die Datei, die hochgeladen werden soll. Leer lassen, um die aktuelle Arbeitsdatei zu verwenden."
+          "File-Help": "Die Datei, die hochgeladen werden soll. Leer lassen, um die aktuelle Arbeitsdatei zu verwenden.",
+          "SetWorkingFile": "Arbeitsdatei festlegen",
+          "SetWorkingFile-Help": "Legt den hochgeladenen Nextcloud-Pfad als Arbeitsdatei fest. Verwenden Sie dies nur am Ende eines Flusses, da diese Datei als endgültige Ausgabe markiert wird. Nachfolgende Flusselemente, die die Arbeitsdatei benötigen, funktionieren dann nicht wie erwartet."
         },
         "Outputs": {
           "1": "Wurde erfolgreich nach Nextcloud hochgeladen",

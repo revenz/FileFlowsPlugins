@@ -8,7 +8,9 @@
           "DestinationPath": "Destino",
           "DestinationPath-Help": "La ubicación y el nombre del archivo, es decir, la ruta completa, del archivo en Nextcloud.",
           "File": "Archivo",
-          "File-Help": "El archivo a subir, deja vacío para usar el archivo de trabajo actual."
+          "File-Help": "El archivo a subir, deja vacío para usar el archivo de trabajo actual.",
+          "SetWorkingFile": "Establecer archivo de trabajo",
+          "SetWorkingFile-Help": "Establece la ruta de Nextcloud subida como archivo de trabajo. Úselo solo al final de un flujo, ya que este archivo se marcará como el resultado final. Los elementos de flujo subsiguientes que necesiten el archivo de trabajo no funcionarán como se espera."
         },
         "Outputs": {
           "1": "Se subió correctamente a Nextcloud",

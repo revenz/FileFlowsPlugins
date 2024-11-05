@@ -8,7 +8,9 @@
           "DestinationPath": "Bestemming",
           "DestinationPath-Help": "De locatie en bestandsnaam, d.w.z. het volledige pad, van het bestand in Nextcloud.",
           "File": "Bestand",
-          "File-Help": "Het bestand dat geüpload moet worden, laat leeg om het huidige werkbestand te gebruiken."
+          "File-Help": "Het bestand dat geüpload moet worden, laat leeg om het huidige werkbestand te gebruiken.",
+          "SetWorkingFile": "Werkbestand instellen",
+          "SetWorkingFile-Help": "Stelt het geüploade Nextcloud-pad in als werkbestand. Gebruik dit alleen aan het einde van een stroom, aangezien dit bestand als eindresultaat wordt gemarkeerd. De daaropvolgende stroomelementen die het werkbestand nodig hebben, werken dan niet zoals verwacht."
         },
         "Outputs": {
           "1": "Met succes geüpload naar Nextcloud",

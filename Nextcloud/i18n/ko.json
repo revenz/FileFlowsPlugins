@@ -8,7 +8,9 @@
           "DestinationPath": "대상",
           "DestinationPath-Help": "Nextcloud에서 파일의 전체 경로와 파일 이름입니다.",
           "File": "파일",
-          "File-Help": "업로드할 파일로, 현재 작업 파일을 사용하려면 비워 두세요."
+          "File-Help": "업로드할 파일로, 현재 작업 파일을 사용하려면 비워 두세요.",
+          "SetWorkingFile": "작업 파일 설정",
+          "SetWorkingFile-Help": "업로드된 넥스트클라우드 경로를 작업 파일로 설정합니다. 이 파일은 최종 출력으로 표시되므로 흐름의 끝에서만 사용하십시오. 작업 파일이 필요한 후속 흐름 요소는 예상대로 작동하지 않습니다."
         },
         "Outputs": {
           "1": "Nextcloud에 성공적으로 업로드되었습니다.",
