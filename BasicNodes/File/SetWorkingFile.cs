@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
 
@@ -40,6 +41,13 @@ public class SetWorkingFile : Node
             args.FailureReason = "No file set";
             args.Logger?.ELog(args.FailureReason);
             return -1;
+        }
+
+        if (Regex.IsMatch(file, @"^[\w\d]{2,}:"))
+        {
+            // special case eg nc: for next cloud, where the file wont be accessible so we just set it so it appears nicely in the UI but its gone
+            args.SetWorkingFile(file);
+            return 1;
         }
         
         if (args.FileService.FileExists(file))
