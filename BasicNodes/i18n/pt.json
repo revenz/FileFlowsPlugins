@@ -173,6 +173,18 @@
           "2": "A extensão não corresponde"
         }
       },
+      "FileNameMatches": {
+        "Description": "Verifica se o nome do arquivo original (incluindo o caminho completo) corresponde ao valor especificado usando operações de string.",
+        "Label": "Nome do arquivo corresponde",
+        "Fields": {
+          "Value": "Valor de correspondência",
+          "Value-Help": "Especifique o valor para comparar. Variáveis são suportadas, e a correspondência é feita usando operações de string."
+        },
+        "Outputs": {
+          "1": "Corresponde",
+          "2": "Não corresponde"
+        }
+      },
       "FileSize": {
         "Description": "Verifica se o tamanho do arquivo corresponde aos parâmetros configurados. Os valores estão em megabytes.\n\nSaída 1: Corresponde\nSaída 2: Não corresponde",
         "Label": "Tamanho do arquivo",

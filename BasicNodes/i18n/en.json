@@ -173,6 +173,18 @@
           "2": "Extension did not match"
         }
       },
+      "FileNameMatches": {
+        "Description": "Checks if the original file name (including the full path) matches the specified value using string operations.",
+        "Label": "File Name Matches",
+        "Fields": {
+          "Value": "Match Value",
+          "Value-Help": "Specify the value to match against. Variables are supported, and matching uses string operations."
+        },
+        "Outputs": {
+          "1": "Matches",
+          "2": "Does Not Match"
+        }
+      },
       "FileSize": {
         "Description": "Checks if the file size matches the configured parameters. The values are in megabytes.\n\nOutput 1: Matches\nOutput 2: Does not match",
         "Label": "File Size",

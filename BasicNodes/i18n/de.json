@@ -173,6 +173,18 @@
           "2": "Endung trifft nicht zu"
         }
       },
+      "FileNameMatches": {
+        "Description": "Prüft, ob der ursprüngliche Dateiname (einschließlich des vollständigen Pfads) mit dem angegebenen Wert übereinstimmt, indem String-Operationen verwendet werden.",
+        "Label": "Dateiname stimmt überein",
+        "Fields": {
+          "Value": "Übereinstimmungswert",
+          "Value-Help": "Geben Sie den Wert an, mit dem abgeglichen werden soll. Variablen werden unterstützt und die Übereinstimmung erfolgt mit String-Operationen."
+        },
+        "Outputs": {
+          "1": "Stimmt überein",
+          "2": "Stimmt nicht überein"
+        }
+      },
       "FileSize": {
         "Description": "Überprüft, ob die Dateigröße mit den konfigurierten Parametern übereinstimmt. Die Werte sind in Megabyte angegeben.\n\nAusgang 1: Trifft zu\nAusgang 2: Trifft nicht zu",
         "Label": "Dateigröße",

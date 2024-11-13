@@ -173,6 +173,18 @@
           "2": "La extensión no coincide"
         }
       },
+      "FileNameMatches": {
+        "Description": "Verifica si el nombre del archivo original (incluido el camino completo) coincide con el valor especificado utilizando operaciones con cadenas.",
+        "Label": "El nombre del archivo coincide",
+        "Fields": {
+          "Value": "Valor de coincidencia",
+          "Value-Help": "Especifica el valor con el que comparar. Se admiten variables y la coincidencia se realiza mediante operaciones con cadenas."
+        },
+        "Outputs": {
+          "1": "Coincide",
+          "2": "No coincide"
+        }
+      },
       "FileSize": {
         "Description": "Verifica si el tamaño del archivo coincide con los parámetros configurados. Los valores están en megabytes.\n\nSalida 1: Coincide\nSalida 2: No coincide",
         "Label": "Tamaño de archivo",
