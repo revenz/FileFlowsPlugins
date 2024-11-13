@@ -92,7 +92,7 @@ public class PatternReplacer : Node
         string updated = filename;
         foreach(var replacement in Replacements)
         {
-            var value = replacement.Value ?? string.Empty;
+            var value = args.ReplaceVariables(replacement.Value ?? string.Empty, stripMissing: true);
             if (value == "EMPTY")
             {
                 args?.Logger?.ILog("Using an EMPTY replacement");
