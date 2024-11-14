@@ -303,9 +303,7 @@ public class FfmpegBuilderSetTrackTitles: FfmpegBuilderNode
         formatter = Replace(formatter, "hearingimpared", hi ? "Hearing Impared" : string.Empty);
         formatter = Replace(formatter, "sdh", sdh ? "SDH" : string.Empty);
         formatter = Replace(formatter, "numchannels", channels.ToString("N1"));
-        formatter = Replace(formatter, "channels", Math.Abs(channels - 1) < 0.05f ? "Mono" :
-            Math.Abs(channels - 2) < 0.05f ? "Stereo" :
-            channels > 0 ? channels.ToString("0.0") : null);
+        formatter = Replace(formatter, "channels", GetChannelString(channels));
         
         formatter = Replace(formatter, "bitrate", bitrate < 1 ? null : ((bitrate / 1000f).ToString("0.0").Replace(".0", string.Empty) + "Kbps"));
         formatter = Replace(formatter, "samplerate", sampleRate < 1 ? null : ((sampleRate / 1000f).ToString("0.0").Replace(".0", string.Empty) + "kHz"));
@@ -413,6 +411,25 @@ public class FfmpegBuilderSetTrackTitles: FfmpegBuilderNode
             return input;
         }
     }
+
+    /// <summary>
+    /// Gets the channel string
+    /// </summary>
+    /// <param name="channels">the number of channels</param>
+    /// <returns>the channels string</returns>
+    private static string GetChannelString(float channels)
+    {
+        if (Math.Abs(channels - 1) < 0.05f)
+            return "Mono";
+        if(Math.Abs(channels - 2) < 0.05f)
+            return "Stereo";
+        if (Math.Abs(channels - 6) < 0.05f)
+            return "5.1";
+        if (Math.Abs(channels - 8) < 0.05f)
+            return "7.1";
+        return channels > 0 ? channels.ToString("0.0") : null;
+    }
+
     /// <summary>
     /// Gets the commercial name for a codec.
     /// </summary>
