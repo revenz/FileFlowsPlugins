@@ -3,6 +3,7 @@
     "Parts": {
       "DockerExecute": {
         "Description": "Start een Docker-container vanuit een image en voert een opgegeven opdracht uit.",
+        "Label": "Docker Uitvoeren",
         "Fields": {
           "AdditionalOutputs": "Aanvullende uitvoer",
           "AdditionalOutputs-Help": "Een geïndexeerde lijst van extra verwachte uitvoer van de opdrachtuitvoering, om te koppelen aan uitvoer voor aangepaste verwerking.",

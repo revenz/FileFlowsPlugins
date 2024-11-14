@@ -3,6 +3,7 @@
     "Parts": {
       "DockerExecute": {
         "Description": "Startar en Docker-container från en bild och kör ett specificerat kommando inuti den.",
+        "Label": "Kör Docker",
         "Fields": {
           "AdditionalOutputs": "Ytterligare utdata",
           "AdditionalOutputs-Help": "En indexerad lista över ytterligare förväntade utdata från kommandokörningen, för att matcha mot utdata för anpassad bearbetning.",

@@ -3,6 +3,7 @@
     "Parts": {
       "DockerExecute": {
         "Description": "Launches a Docker container from an image and executes a specified command inside it.",
+        "Label": "Docker Execute",
         "Fields": {
           "AdditionalOutputs": "Additional Outputs",
           "AdditionalOutputs-Help": "An indexed list of additional expected outputs from the command execution, to match against output for custom processing.",

@@ -3,6 +3,7 @@
     "Parts": {
       "DockerExecute": {
         "Description": "从镜像启动Docker容器，并在其中执行指定的命令。",
+        "Label": "执行 Docker",
         "Fields": {
           "AdditionalOutputs": "额外输出",
           "AdditionalOutputs-Help": "命令执行的额外预期输出的索引列表，以便与输出匹配以进行自定义处理。",

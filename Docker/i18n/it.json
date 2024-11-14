@@ -3,6 +3,7 @@
     "Parts": {
       "DockerExecute": {
         "Description": "Avvia un contenitore Docker da un'immagine ed esegue un comando specificato al suo interno.",
+        "Label": "Esegui Docker",
         "Fields": {
           "AdditionalOutputs": "Output Aggiuntivi",
           "AdditionalOutputs-Help": "Un elenco indicizzato di output aggiuntivi attesi dall'esecuzione del comando, per corrispondere all'output per l'elaborazione personalizzata.",

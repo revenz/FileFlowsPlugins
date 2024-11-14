@@ -3,6 +3,7 @@
     "Parts": {
       "DockerExecute": {
         "Description": "イメージからDockerコンテナを起動し、指定されたコマンドを実行します。",
+        "Label": "Docker 実行",
         "Fields": {
           "AdditionalOutputs": "追加出力",
           "AdditionalOutputs-Help": "コマンド実行から期待される追加出力のインデックス付きリストで、カスタム処理のために出力と一致させます。",

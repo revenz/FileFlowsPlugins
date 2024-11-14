@@ -3,6 +3,7 @@
     "Parts": {
       "DockerExecute": {
         "Description": "이미지에서 Docker 컨테이너를 시작하고 지정된 명령을 실행합니다.",
+        "Label": "Docker 실행",
         "Fields": {
           "AdditionalOutputs": "추가 출력",
           "AdditionalOutputs-Help": "명령 실행의 추가 예상 출력을 위한 인덱스 리스트로, 출력과 일치시켜 사용자 지정 처리를 수행합니다.",

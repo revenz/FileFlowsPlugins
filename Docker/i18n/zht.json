@@ -3,6 +3,7 @@
     "Parts": {
       "DockerExecute": {
         "Description": "從映像啟動Docker容器，並在其中執行指定的命令。",
+        "Label": "執行 Docker",
         "Fields": {
           "AdditionalOutputs": "額外輸出",
           "AdditionalOutputs-Help": "命令執行的額外預期輸出的索引列表，以便與輸出匹配以進行自定義處理。",
