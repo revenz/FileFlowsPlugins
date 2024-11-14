@@ -144,6 +144,8 @@
           "Codec": "Códec",
           "Codec-Help": "El códec a utilizar para codificar el audio",
           "CustomTrackSelection": "Selección de Pista de Origen",
+          "Filter": "Filtro",
+          "Filter-Help": "Especifica un filtro personalizado para aplicar a esta nueva pista de audio.",
           "Index": "Índice",
           "Index-Help": "El índice donde insertar la nueva pista de audio. Basado en 0, así que para insertar la nueva pista de audio como la primera pista, establezca esto en 0.",
           "Language": "Idioma",

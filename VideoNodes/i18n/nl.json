@@ -144,6 +144,8 @@
           "Codec": "Codec",
           "Codec-Help": "De codec die moet worden gebruikt om de audio te coderen",
           "CustomTrackSelection": "Bron Track Selectie",
+          "Filter": "Filter",
+          "Filter-Help": "Geeft een aangepast filter op om toe te passen op dit nieuwe audiotrack.",
           "Index": "Index",
           "Index-Help": "De index waar de nieuwe audiotrack moet worden ingevoegd. 0-gebaseerd, dus om de nieuwe audiotrack als de eerste track in te voegen, stelt u dit in op 0.",
           "Language": "Taal",

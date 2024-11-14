@@ -144,6 +144,8 @@
           "Codec": "编码器",
           "Codec-Help": "用于编码音频的编码器",
           "CustomTrackSelection": "源轨道选择",
+          "Filter": "过滤器",
+          "Filter-Help": "指定要应用于此新音轨的自定义过滤器。",
           "Index": "索引",
           "Index-Help": "插入新音频轨道的位置。 基于0，所以要将新音频轨道插入为第一轨道，请将其设置为0。",
           "Language": "语言",

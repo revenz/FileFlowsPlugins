@@ -144,6 +144,8 @@
           "Codec": "編解碼器",
           "Codec-Help": "用於編碼音頻的編解碼器",
           "CustomTrackSelection": "源音軌選擇",
+          "Filter": "過濾器",
+          "Filter-Help": "指定要應用於此新音軌的自訂過濾器。",
           "Index": "索引",
           "Index-Help": "插入新音軌的位置索引。基於 0，因此要將新音軌作為第一個音軌插入，請將此設置為 0。",
           "Language": "語言",

@@ -144,6 +144,8 @@
           "Codec": "Codec",
           "Codec-Help": "Den codec som ska användas för att koda ljudet",
           "CustomTrackSelection": "Källspårval",
+          "Filter": "Filter",
+          "Filter-Help": "Anger ett anpassat filter att tillämpa på detta nya ljudspår.",
           "Index": "Index",
           "Index-Help": "Index där det nya ljudspåret ska infogas.  0-baserat, så för att infoga det nya ljudspåret som det första spåret, sätt detta till 0.",
           "Language": "Språk",

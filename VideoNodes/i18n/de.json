@@ -144,6 +144,8 @@
           "Codec": "Codec",
           "Codec-Help": "Der Codec, der für die Audiokodierung verwendet wird.",
           "CustomTrackSelection": "Quellspur-Auswahl",
+          "Filter": "Filter",
+          "Filter-Help": "Gibt einen benutzerdefinierten Filter an, der auf diese neue Audiospur angewendet wird.",
           "Index": "Index",
           "Index-Help": "Der Index, an dem die neue Tonspur eingefügt werden soll.  Um die neue Audiospur als erste Spur einzufügen, setzen Sie diesen Wert auf 0.",
           "Language": "Sprache",

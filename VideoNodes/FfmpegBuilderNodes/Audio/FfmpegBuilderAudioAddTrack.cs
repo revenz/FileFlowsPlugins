@@ -20,7 +20,6 @@ public class FfmpegBuilderAudioAddTrack : TrackSelectorFlowElement<FfmpegBuilder
     /// <inheritdoc />
     public override int Outputs => 2;
 
-
     /// <summary>
     /// Gets or sets the index to insert this track
     /// </summary>
@@ -164,14 +163,19 @@ public class FfmpegBuilderAudioAddTrack : TrackSelectorFlowElement<FfmpegBuilder
     [TextVariable(9)]
     public string Language { get; set; }
     /// <summary>
+    /// Gets or sets an optional filter for the new track
+    /// </summary>
+    [TextVariable(10)]
+    public string Filter { get; set; }
+    /// <summary>
     /// Gets or sets if the title of the new track should be removed
     /// </summary>
-    [Boolean(10)]
+    [Boolean(11)]
     public bool RemoveTitle { get; set; }
     /// <summary>
     /// Gets or sets the title of the new track
     /// </summary>
-    [TextVariable(11)]
+    [TextVariable(12)]
     [ConditionEquals(nameof(RemoveTitle), false)]
     public string NewTitle { get; set; }
     
@@ -195,6 +199,7 @@ public class FfmpegBuilderAudioAddTrack : TrackSelectorFlowElement<FfmpegBuilder
             args.Logger.WLog("No source audio track found");
             return 2;
         }
+        
 
         audio.Stream = sourceAudio;
         audio.Channels = audio.Stream.Channels;
@@ -206,6 +211,13 @@ public class FfmpegBuilderAudioAddTrack : TrackSelectorFlowElement<FfmpegBuilder
             {
                 directCopy = true;
             }
+        }
+        string filter=  args.ReplaceVariables(Filter ?? string.Empty, stripMissing: true);
+        if (string.IsNullOrWhiteSpace(filter) == false)
+        {
+            directCopy = false;
+            args.Logger?.ILog("Filter: " + filter);
+            audio.Filter = [filter];
         }
 
         if (directCopy)

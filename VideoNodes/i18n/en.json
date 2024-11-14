@@ -144,6 +144,8 @@
           "Codec": "Codec",
           "Codec-Help": "The codec to use to encode the audio",
           "CustomTrackSelection": "Source Track Selection",
+          "Filter": "Filter",
+          "Filter-Help": "Specifies a custom filter to apply to this new audio track.",
           "Index": "Index",
           "Index-Help": "The index where to insert the new audio track.  0 based, so to insert the new audio track as the first track set this to 0.",
           "Language": "Language",

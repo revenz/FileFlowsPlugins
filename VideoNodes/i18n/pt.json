@@ -144,6 +144,8 @@
           "Codec": "Codec",
           "Codec-Help": "O codec a ser utilizado para codificar o áudio",
           "CustomTrackSelection": "Seleção de Faixa de Origem",
+          "Filter": "Filtro",
+          "Filter-Help": "Especifica um filtro personalizado para aplicar a esta nova faixa de áudio.",
           "Index": "Índice",
           "Index-Help": "O índice onde inserir a nova faixa de áudio. Baseado em 0, portanto, para inserir a nova faixa de áudio como a primeira faixa, defina isso como 0.",
           "Language": "Idioma",
