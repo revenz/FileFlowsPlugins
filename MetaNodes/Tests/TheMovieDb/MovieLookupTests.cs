@@ -236,6 +236,29 @@ public class MovieLookupTests : TestBase
         Assert.AreEqual("Adam's Apples", mi.Title);
         Assert.AreEqual(2005, mi.ReleaseDate.Year);
     }
+    
+    
+    /// <summary>
+    /// Year is wrong here in the movie db
+    /// </summary>
+    [TestMethod]
+    public void MovieLookupTests_File_WomanOfTheHour2023()
+    {
+        var args = GetNodeParameters("/video/.Temp/Downloads/Completed/movies-radarr/Woman.of.the.Hour.2023.1080p.NF.WEB-DL.DDP5.1.Atmos.H.264-FLUX/Woman.of.the.Hour.2023.1080p.NF.WEB-DL.DDP5.1.Atmos.H.264-FLUX.mkv");
+
+        MovieLookup ml = new MovieLookup();
+        ml.UseFolderName = false;
+
+        var result = ml.Execute(args);
+        Assert.AreEqual(1, result);
+        Assert.IsTrue(args.Parameters.ContainsKey(Globals.MOVIE_INFO));
+
+        var mi = args.Parameters[Globals.MOVIE_INFO] as MovieInfo;
+        Assert.IsNotNull(mi);
+
+        Assert.AreEqual("Woman of the Hour", mi.Title);
+        Assert.AreEqual(2024, mi.ReleaseDate.Year);
+    }
 }
 
 #endif
