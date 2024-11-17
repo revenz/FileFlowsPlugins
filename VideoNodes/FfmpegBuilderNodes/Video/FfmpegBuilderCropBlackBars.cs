@@ -63,20 +63,22 @@ public class FfmpegBuilderCropBlackBars : FfmpegBuilderNode
     private int[] GetTimeIntervals(int seconds)
     {
         if (seconds < 2)
-            return new int[] { };
+            return [];
         if (seconds < 10)
-            return new int[] { 1 };
+            return [1];
+        if (seconds > 1200)
+            return [60, 240, 360, 500, 800, 1200];
         if (seconds > 360)
-            return new int[] { 60, 120, 240, 360 };
+            return [60, 120, 240, 360];
 
         int increment = seconds / 5;
-        return new int[]
-        {
+        return
+        [
             increment,
             increment + increment,
             increment + increment + increment,
-            increment + increment + increment + increment,
-        };            
+            increment + increment + increment + increment
+        ];            
     }
 
     string Execute(string ffmpeg, string file, NodeParameters args, int vidWidth, int vidHeight, int threshold, int seconds)
