@@ -82,8 +82,17 @@ public abstract class VideoTestBase : TestBase
         };
         args.InitFile(filename);
 
-        FFmpeg = File.Exists("/tools/ffmpeg/ffmpeg") ? "/tools/ffmpeg/ffmpeg" : File.Exists("/usr/local/bin/ffmpeg") ? "/usr/local/bin/ffmpeg" : "ffmpeg";
-        FFprobe = File.Exists("/tools/ffmpeg/ffprobe") ? "/tools/ffmpeg/ffprobe" : File.Exists("/usr/local/bin/ffprobe") ? "/usr/local/bin/ffprobe" : "ffprobe";
+        FFmpeg = "ffmpeg";
+        FFprobe = "ffprobe";
+        foreach (var ffmpegLoc in new string[] { "/tools/ffmpeg/", "/usr/local/bin/", "/usr/bin/" })
+        {
+            if (File.Exists(ffmpegLoc + "ffmpeg"))
+            {
+                FFmpeg = ffmpegLoc + "ffmpeg";
+                FFprobe = ffmpegLoc + "ffprobe";
+                break;
+            }
+        }
         
         args.GetToolPathActual = (tool) =>
         {
