@@ -874,6 +874,8 @@
         "Fields": {
           "ExtractAll": "모두 추출",
           "ExtractAll-Help": "일치하는 모든 자막을 추출해야 하는지 여부.",
+          "ExtractAsSrtAndSup": "SRT/SUP로 추출",
+          "ExtractAsSrtAndSup-Help": "추출된 자막을 텍스트 자막은 .srt, 이미지 자막은 .sup로 저장하도록 강제합니다.",
           "ForcedOnly": "강제 자막만",
           "ForcedOnly-Help": "강제 자막만 추출해야 하는지 여부.",
           "Language": "언어",

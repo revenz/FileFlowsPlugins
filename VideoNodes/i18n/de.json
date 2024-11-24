@@ -874,6 +874,8 @@
         "Fields": {
           "ExtractAll": "Alle Entpacken",
           "ExtractAll-Help": "Wenn alle passenden Untertitel extrahiert werden sollen.",
+          "ExtractAsSrtAndSup": "Extrahieren als SRT/SUP",
+          "ExtractAsSrtAndSup-Help": "Erzwingt das Speichern der extrahierten Untertitel als .srt für Text-Untertitel und .sup für Bild-Untertitel.",
           "ForcedOnly": "Nur erzwungene",
           "ForcedOnly-Help": "Wenn nur Zwangsuntertitel extrahiert werden sollen.",
           "Language": "Sprache",

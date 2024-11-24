@@ -874,6 +874,8 @@
         "Fields": {
           "ExtractAll": "提取全部",
           "ExtractAll-Help": "是否應提取所有匹配的字幕。",
+          "ExtractAsSrtAndSup": "提取為 SRT/SUP",
+          "ExtractAsSrtAndSup-Help": "強制將提取的字幕保存為 .srt（文字字幕）和 .sup（圖片字幕）。",
           "ForcedOnly": "僅強制提取",
           "ForcedOnly-Help": "是否僅提取強制字幕。",
           "Language": "語言",

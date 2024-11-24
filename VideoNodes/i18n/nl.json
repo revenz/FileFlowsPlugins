@@ -874,6 +874,8 @@
         "Fields": {
           "ExtractAll": "Alle Extraheren",
           "ExtractAll-Help": "Als alle overeenkomende ondertitels moeten worden geëxtraheerd.",
+          "ExtractAsSrtAndSup": "Extraheer als SRT/SUP",
+          "ExtractAsSrtAndSup-Help": "Dwingt de geëxtraheerde ondertitels op te slaan als .srt voor tekstondertitels en .sup voor afbeeldingsondertitels.",
           "ForcedOnly": "Alleen Geforceerd",
           "ForcedOnly-Help": "Als alleen geforceerde ondertitels moeten worden geëxtraheerd.",
           "Language": "Taal",

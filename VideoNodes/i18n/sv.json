@@ -874,6 +874,8 @@
         "Fields": {
           "ExtractAll": "Extrahera alla",
           "ExtractAll-Help": "Om alla matchande undertexter ska extraheras.",
+          "ExtractAsSrtAndSup": "Extrahera som SRT/SUP",
+          "ExtractAsSrtAndSup-Help": "Tvingar att extraherade undertexter sparas som .srt för textbaserade undertexter och .sup för bildbaserade undertexter.",
           "ForcedOnly": "Endast tvångsundertexter",
           "ForcedOnly-Help": "Om endast tvångsundertexter ska extraheras.",
           "Language": "Språk",

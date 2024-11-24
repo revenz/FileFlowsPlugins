@@ -58,6 +58,11 @@ public class SubtitleExtractor : EncodingNode
     /// </summary>
     [Boolean(6)]
     public bool OnlyTextSubtitles { get; set; }
+    /// <summary>
+    /// Gets or sets if subtitles should be forced as srt or sup depending on type
+    /// </summary>
+    [Boolean(7)]
+    public bool ExtractAsSrtAndSup { get; set; }
     
     private Dictionary<string, object> _Variables;
     /// <summary>
@@ -240,14 +245,21 @@ public class SubtitleExtractor : EncodingNode
     /// <returns>the extension</returns>
     private string GetSubtitleWithExtension(string output, SubtitleStream subtitle)
     {
-        if (output.ToLower().EndsWith(".srt") || output.ToLower().EndsWith(".sup")|| output.ToLower().EndsWith(".sup"))
+        if (output.ToLower().EndsWith(".srt") || output.ToLower().EndsWith(".sup") || output.ToLower().EndsWith(".ass"))
+        {
             output = output[0..^4];
+        }
 
         output = output.TrimEnd('.');
         
         string codec = subtitle.Codec.ToLowerInvariant();
         string extension;
-        if (codec == "ass")
+
+        if (ExtractAsSrtAndSup && subtitle.IsImage)
+            extension = ".sup";
+        else if (ExtractAsSrtAndSup && subtitle.IsImage == false)
+            extension = ".srt";
+        else if (codec == "ass")
             extension = ".ass";
         else if (codec == "srt")
             extension = ".srt";

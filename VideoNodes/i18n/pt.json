@@ -874,6 +874,8 @@
         "Fields": {
           "ExtractAll": "Extrair Todos",
           "ExtractAll-Help": "Se todos os subtítulos correspondentes devem ser extraídos.",
+          "ExtractAsSrtAndSup": "Extrair como SRT/SUP",
+          "ExtractAsSrtAndSup-Help": "Força os subtítulos extraídos a serem salvos como .srt para subtítulos de texto e .sup para subtítulos de imagem.",
           "ForcedOnly": "Apenas Forçados",
           "ForcedOnly-Help": "Se apenas os subtítulos forçados devem ser extraídos.",
           "Language": "Idioma",

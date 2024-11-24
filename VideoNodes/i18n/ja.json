@@ -874,6 +874,8 @@
         "Fields": {
           "ExtractAll": "すべて抽出",
           "ExtractAll-Help": "すべての一致する字幕を抽出する必要があるかどうか。",
+          "ExtractAsSrtAndSup": "SRT/SUPとして抽出",
+          "ExtractAsSrtAndSup-Help": "抽出された字幕を、テキスト字幕は.srt、画像字幕は.supとして保存します。",
           "ForcedOnly": "強制のみ",
           "ForcedOnly-Help": "強制字幕のみを抽出する必要があるかどうか。",
           "Language": "言語",
