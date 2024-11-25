@@ -637,6 +637,20 @@
           "1": "FFMPEG Builder creado y listo para agregar elementos de flujo de FFMPEG Builder"
         }
       },
+      "FfmpegBuilderSubtitleBurnIn": {
+        "Description": "Quema subtítulos en el archivo de video.",
+        "Label": "FFMPEG Builder: Subtitle Burn-In",
+        "Fields": {
+          "CustomTrackSelection": "Selección de pista personalizada",
+          "TrackSelectionOptions": "",
+          "TrackSelectionOptionsKey": "Propiedad",
+          "TrackSelectionOptionsValue": "Valor"
+        },
+        "Outputs": {
+          "1": "Subtítulo encontrado y quemado en el video",
+          "2": "No se encontró ningún subtítulo para quemar"
+        }
+      },
       "FfmpegBuilderSubtitleClearDefault": {
         "Description": "Este elemento de flujo eliminará la bandera predeterminada de los subtítulos.",
         "Label": "FFMPEG Builder: Limpiar Predeterminado de Subtítulos",

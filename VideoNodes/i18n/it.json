@@ -637,6 +637,20 @@
           "1": "FFMPEG Builder creato e pronto per aggiungere elementi del flusso FFMPEG Builder"
         }
       },
+      "FfmpegBuilderSubtitleBurnIn": {
+        "Description": "Masterizza i sottotitoli nel file video.",
+        "Label": "FFMPEG Builder: Subtitle Burn-In",
+        "Fields": {
+          "CustomTrackSelection": "Selezione traccia personalizzata",
+          "TrackSelectionOptions": "",
+          "TrackSelectionOptionsKey": "Proprietà",
+          "TrackSelectionOptionsValue": "Valore"
+        },
+        "Outputs": {
+          "1": "Sottotitolo trovato e incorporato nel video",
+          "2": "Nessun sottotitolo trovato da incorporare"
+        }
+      },
       "FfmpegBuilderSubtitleClearDefault": {
         "Description": "Questo elemento del flusso rimuoverà il flag predefinito dai sottotitoli.",
         "Label": "FFMPEG Builder: Rimuovi Predefinito Sottotitoli",

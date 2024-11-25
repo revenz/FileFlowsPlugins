@@ -637,6 +637,20 @@
           "1": "FFMPEG Builder skapad och redo att lägga till FFMPEG Builder-flödeselement"
         }
       },
+      "FfmpegBuilderSubtitleBurnIn": {
+        "Description": "Bränner in undertexter i videofilen.",
+        "Label": "FFMPEG Builder: Subtitle Burn-In",
+        "Fields": {
+          "CustomTrackSelection": "Anpassat spårval",
+          "TrackSelectionOptions": "",
+          "TrackSelectionOptionsKey": "Egenskap",
+          "TrackSelectionOptionsValue": "Värde"
+        },
+        "Outputs": {
+          "1": "Undertext hittades och brändes in i videon",
+          "2": "Ingen undertext hittades att bränna in"
+        }
+      },
       "FfmpegBuilderSubtitleClearDefault": {
         "Description": "Detta flödeselement kommer att rensa standardflaggan från undertexter.",
         "Label": "FFMPEG Builder: Rensa standardundertext",

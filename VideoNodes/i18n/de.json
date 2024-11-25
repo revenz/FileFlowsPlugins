@@ -637,6 +637,20 @@
           "1": "FFMPEG Builder erstellt und bereit zum Hinzufügen von FFMPEG Builder-Nodes zu"
         }
       },
+      "FfmpegBuilderSubtitleBurnIn": {
+        "Description": "Brennt Untertitel in die Videodatei ein.",
+        "Label": "FFMPEG Builder: Subtitle Burn-In",
+        "Fields": {
+          "CustomTrackSelection": "Benutzerdefinierte Spurauswahl",
+          "TrackSelectionOptions": "",
+          "TrackSelectionOptionsKey": "Eigenschaft",
+          "TrackSelectionOptionsValue": "Wert"
+        },
+        "Outputs": {
+          "1": "Untertitel gefunden und in das Video eingebrannt",
+          "2": "Kein Untertitel gefunden, der eingebrannt werden kann"
+        }
+      },
       "FfmpegBuilderSubtitleClearDefault": {
         "Description": "Mit dieser Funktion wird die Standardmarkierung von Untertiteln gelöscht.",
         "Label": "FFMPEG Builder: Untertitel löschen Standard",

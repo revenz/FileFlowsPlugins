@@ -637,6 +637,20 @@
           "1": "FFMPEG 建構器已創建並準備添加 FFMPEG 建構器流元素"
         }
       },
+      "FfmpegBuilderSubtitleBurnIn": {
+        "Description": "將字幕燒錄到影片文件中。",
+        "Label": "FFMPEG Builder: Subtitle Burn-In",
+        "Fields": {
+          "CustomTrackSelection": "自訂軌道選擇",
+          "TrackSelectionOptions": "",
+          "TrackSelectionOptionsKey": "屬性",
+          "TrackSelectionOptionsValue": "值"
+        },
+        "Outputs": {
+          "1": "找到字幕並已燒錄到影片中",
+          "2": "未找到可燒錄的字幕"
+        }
+      },
       "FfmpegBuilderSubtitleClearDefault": {
         "Description": "此流元素將從字幕中清除默認標記。",
         "Label": "FFMPEG Builder: 字幕清除默認",

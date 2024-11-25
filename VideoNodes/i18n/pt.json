@@ -637,6 +637,20 @@
           "1": "Construtor FFMPEG criado e pronto para adicionar elementos de fluxo do construtor FFMPEG"
         }
       },
+      "FfmpegBuilderSubtitleBurnIn": {
+        "Description": "Grava legendas no arquivo de vídeo.",
+        "Label": "FFMPEG Builder: Subtitle Burn-In",
+        "Fields": {
+          "CustomTrackSelection": "Seleção de faixa personalizada",
+          "TrackSelectionOptions": "",
+          "TrackSelectionOptionsKey": "Propriedade",
+          "TrackSelectionOptionsValue": "Valor"
+        },
+        "Outputs": {
+          "1": "Legenda encontrada e gravada no vídeo",
+          "2": "Nenhuma legenda encontrada para gravar"
+        }
+      },
       "FfmpegBuilderSubtitleClearDefault": {
         "Description": "Este elemento de fluxo limpará a bandeira padrão das legendas.",
         "Label": "Construtor FFMPEG: Limpar Padrão de Legendas",

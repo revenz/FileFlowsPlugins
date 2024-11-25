@@ -637,6 +637,20 @@
           "1": "FFMPEG Builder создан и готов к добавлению элементов потока FFMPEG Builder"
         }
       },
+      "FfmpegBuilderSubtitleBurnIn": {
+        "Description": "Встраивает субтитры в видеофайл.",
+        "Label": "FFMPEG Builder: Subtitle Burn-In",
+        "Fields": {
+          "CustomTrackSelection": "Пользовательский выбор дорожки",
+          "TrackSelectionOptions": "",
+          "TrackSelectionOptionsKey": "Свойство",
+          "TrackSelectionOptionsValue": "Значение"
+        },
+        "Outputs": {
+          "1": "Субтитры найдены и встроены в видео",
+          "2": "Субтитры для встраивания не найдены"
+        }
+      },
       "FfmpegBuilderSubtitleClearDefault": {
         "Description": "Этот элемент потока очистит флаг по умолчанию у субтитров.",
         "Label": "FFMPEG Builder: Очистить субтитры по умолчанию",

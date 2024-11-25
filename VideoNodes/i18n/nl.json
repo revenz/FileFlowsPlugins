@@ -637,6 +637,20 @@
           "1": "FFMPEG Builder gemaakt en klaar om FFMPEG Builder flow-elementen toe te voegen"
         }
       },
+      "FfmpegBuilderSubtitleBurnIn": {
+        "Description": "Brandt ondertitels in het videobestand.",
+        "Label": "FFMPEG Builder: Subtitle Burn-In",
+        "Fields": {
+          "CustomTrackSelection": "Aangepaste trackselectie",
+          "TrackSelectionOptions": "",
+          "TrackSelectionOptionsKey": "Eigenschap",
+          "TrackSelectionOptionsValue": "Waarde"
+        },
+        "Outputs": {
+          "1": "Ondertitel gevonden en in de video gebrand",
+          "2": "Geen ondertitel gevonden om in te branden"
+        }
+      },
       "FfmpegBuilderSubtitleClearDefault": {
         "Description": "Dit flow-element verwijdert de standaardvlag van ondertitels.",
         "Label": "FFMPEG Builder: Ondertitel Verwijder Standaard",

@@ -637,6 +637,20 @@
           "1": "FFMPEG Builder가 생성되어 FFMPEG Builder 플로우 요소 추가 준비 완료"
         }
       },
+      "FfmpegBuilderSubtitleBurnIn": {
+        "Description": "자막을 비디오 파일에 구워 넣습니다.",
+        "Label": "FFMPEG Builder: Subtitle Burn-In",
+        "Fields": {
+          "CustomTrackSelection": "사용자 정의 트랙 선택",
+          "TrackSelectionOptions": "",
+          "TrackSelectionOptionsKey": "속성",
+          "TrackSelectionOptionsValue": "값"
+        },
+        "Outputs": {
+          "1": "자막이 발견되어 비디오에 삽입되었습니다",
+          "2": "삽입할 자막을 찾을 수 없습니다"
+        }
+      },
       "FfmpegBuilderSubtitleClearDefault": {
         "Description": "이 플로우 요소는 자막에서 기본 플래그를 제거합니다.",
         "Label": "FFMPEG Builder: 자막 기본값 삭제",

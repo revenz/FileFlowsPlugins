@@ -637,6 +637,20 @@
           "1": "FFMPEG Builder créé et prêt à ajouter des éléments de flux de FFMPEG Builder"
         }
       },
+      "FfmpegBuilderSubtitleBurnIn": {
+        "Description": "Incruste les sous-titres dans le fichier vidéo.",
+        "Label": "FFMPEG Builder: Subtitle Burn-In",
+        "Fields": {
+          "CustomTrackSelection": "Sélection de piste personnalisée",
+          "TrackSelectionOptions": "",
+          "TrackSelectionOptionsKey": "Propriété",
+          "TrackSelectionOptionsValue": "Valeur"
+        },
+        "Outputs": {
+          "1": "Sous-titre trouvé et incrusté dans la vidéo",
+          "2": "Aucun sous-titre trouvé à incruster"
+        }
+      },
       "FfmpegBuilderSubtitleClearDefault": {
         "Description": "Cet élément de flux effacera le drapeau par défaut des sous-titres.",
         "Label": "FFMPEG Builder : Effacer le Défaut des Sous-titres",
