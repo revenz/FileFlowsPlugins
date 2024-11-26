@@ -641,7 +641,7 @@
         "Description": "将字幕烧录到视频文件中。",
         "Label": "FFMPEG Builder: Subtitle Burn-In",
         "Fields": {
-          "CustomTrackSelection": "自定义轨道选择",
+          "CustomTrackSelection": "轨道选择",
           "TrackSelectionOptions": "",
           "TrackSelectionOptionsKey": "属性",
           "TrackSelectionOptionsValue": "值"

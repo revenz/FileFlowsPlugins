@@ -641,7 +641,7 @@
         "Description": "Quema subtítulos en el archivo de video.",
         "Label": "FFMPEG Builder: Subtitle Burn-In",
         "Fields": {
-          "CustomTrackSelection": "Selección de pista personalizada",
+          "CustomTrackSelection": "Selección de pista",
           "TrackSelectionOptions": "",
           "TrackSelectionOptionsKey": "Propiedad",
           "TrackSelectionOptionsValue": "Valor"

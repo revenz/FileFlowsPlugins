@@ -641,7 +641,7 @@
         "Description": "자막을 비디오 파일에 구워 넣습니다.",
         "Label": "FFMPEG Builder: Subtitle Burn-In",
         "Fields": {
-          "CustomTrackSelection": "사용자 정의 트랙 선택",
+          "CustomTrackSelection": "트랙 선택",
           "TrackSelectionOptions": "",
           "TrackSelectionOptionsKey": "속성",
           "TrackSelectionOptionsValue": "값"

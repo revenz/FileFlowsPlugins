@@ -6,5 +6,8 @@
     &lt;TestId&gt;MSTest::CF96D3D1-1D8B-47F7-BEA7-BB238F7A566A::net8.0::FileFlows.VideoNodes.Tests.FfmpegBuilderTests.FFmpegBuilder_SubtitleBurnInTests.BurnIn&lt;/TestId&gt;
     &lt;TestId&gt;MSTest::CF96D3D1-1D8B-47F7-BEA7-BB238F7A566A::net8.0::VideoNodes.Tests.SubtitleExtractorTests.SubtitleExtractor_Extension_Test&lt;/TestId&gt;
     &lt;TestId&gt;MSTest::CF96D3D1-1D8B-47F7-BEA7-BB238F7A566A::net8.0::VideoNodes.Tests.SubtitleExtractorTests&lt;/TestId&gt;
+    &lt;TestId&gt;MSTest::CF96D3D1-1D8B-47F7-BEA7-BB238F7A566A::net8.0::FileFlows.VideoNodes.Tests.FfmpegBuilderTests.FfmpegBuilder_LanguageRemoverTests.KeepOnlyGerman&lt;/TestId&gt;
+    &lt;TestId&gt;MSTest::CF96D3D1-1D8B-47F7-BEA7-BB238F7A566A::net8.0::FileFlows.VideoNodes.Tests.FfmpegBuilderTests.FfmpegBuilder_LanguageRemoverTests.RemoveEnglishAudio&lt;/TestId&gt;
+    &lt;TestId&gt;MSTest::CF96D3D1-1D8B-47F7-BEA7-BB238F7A566A::net8.0::FileFlows.VideoNodes.Tests.FfmpegBuilderTests.FfmpegBuilder_LanguageRemoverTests&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

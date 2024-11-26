@@ -641,7 +641,7 @@
         "Description": "Brandt ondertitels in het videobestand.",
         "Label": "FFMPEG Builder: Subtitle Burn-In",
         "Fields": {
-          "CustomTrackSelection": "Aangepaste trackselectie",
+          "CustomTrackSelection": "Trackselectie",
           "TrackSelectionOptions": "",
           "TrackSelectionOptionsKey": "Eigenschap",
           "TrackSelectionOptionsValue": "Waarde"

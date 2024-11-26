@@ -641,7 +641,7 @@
         "Description": "Bränner in undertexter i videofilen.",
         "Label": "FFMPEG Builder: Subtitle Burn-In",
         "Fields": {
-          "CustomTrackSelection": "Anpassat spårval",
+          "CustomTrackSelection": "Spårval",
           "TrackSelectionOptions": "",
           "TrackSelectionOptionsKey": "Egenskap",
           "TrackSelectionOptionsValue": "Värde"

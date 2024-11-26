@@ -641,7 +641,7 @@
         "Description": "Встраивает субтитры в видеофайл.",
         "Label": "FFMPEG Builder: Subtitle Burn-In",
         "Fields": {
-          "CustomTrackSelection": "Пользовательский выбор дорожки",
+          "CustomTrackSelection": "Выбор дорожки",
           "TrackSelectionOptions": "",
           "TrackSelectionOptionsKey": "Свойство",
           "TrackSelectionOptionsValue": "Значение"

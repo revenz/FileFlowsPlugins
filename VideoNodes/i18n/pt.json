@@ -641,7 +641,7 @@
         "Description": "Grava legendas no arquivo de vídeo.",
         "Label": "FFMPEG Builder: Subtitle Burn-In",
         "Fields": {
-          "CustomTrackSelection": "Seleção de faixa personalizada",
+          "CustomTrackSelection": "Seleção de faixa",
           "TrackSelectionOptions": "",
           "TrackSelectionOptionsKey": "Propriedade",
           "TrackSelectionOptionsValue": "Valor"

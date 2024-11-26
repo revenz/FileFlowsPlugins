@@ -641,7 +641,7 @@
         "Description": "Burns subtitles into the video file.",
         "Label": "FFMPEG Builder: Subtitle Burn-In",
         "Fields": {
-          "CustomTrackSelection": "Custom Track Selection",
+          "CustomTrackSelection": "Track Selection",
           "TrackSelectionOptions": "",
           "TrackSelectionOptionsKey": "Property",
           "TrackSelectionOptionsValue": "Value"

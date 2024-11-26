@@ -641,7 +641,7 @@
         "Description": "Masterizza i sottotitoli nel file video.",
         "Label": "FFMPEG Builder: Subtitle Burn-In",
         "Fields": {
-          "CustomTrackSelection": "Selezione traccia personalizzata",
+          "CustomTrackSelection": "Selezione traccia",
           "TrackSelectionOptions": "",
           "TrackSelectionOptionsKey": "Proprietà",
           "TrackSelectionOptionsValue": "Valore"

@@ -641,7 +641,7 @@
         "Description": "字幕をビデオファイルに焼き付けます。",
         "Label": "FFMPEG Builder: Subtitle Burn-In",
         "Fields": {
-          "CustomTrackSelection": "カスタムトラック選択",
+          "CustomTrackSelection": "トラック選択",
           "TrackSelectionOptions": "",
           "TrackSelectionOptionsKey": "プロパティ",
           "TrackSelectionOptionsValue": "値"

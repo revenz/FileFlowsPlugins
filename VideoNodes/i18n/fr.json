@@ -641,7 +641,7 @@
         "Description": "Incruste les sous-titres dans le fichier vidéo.",
         "Label": "FFMPEG Builder: Subtitle Burn-In",
         "Fields": {
-          "CustomTrackSelection": "Sélection de piste personnalisée",
+          "CustomTrackSelection": "Sélection de piste",
           "TrackSelectionOptions": "",
           "TrackSelectionOptionsKey": "Propriété",
           "TrackSelectionOptionsValue": "Valeur"
