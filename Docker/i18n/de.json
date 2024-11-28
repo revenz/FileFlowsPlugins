@@ -1,0 +1,40 @@
+{
+  "Flow": {
+    "Parts": {
+      "DockerExecute": {
+        "Description": "Startet einen Docker-Container aus einem Image und führt darin einen angegebenen Befehl aus.",
+        "Label": "Docker Ausführen",
+        "Fields": {
+          "AdditionalOutputs": "Zusätzliche Ausgaben",
+          "AdditionalOutputs-Help": "Eine indizierte Liste zusätzlicher erwarteter Ausgaben der Befehlsausführung, um sie mit der Ausgabe für benutzerdefinierte Verarbeitung abzugleichen.",
+          "Command": "Befehl",
+          "Command-Help": "Der spezifische Befehl, der im Docker-Container ausgeführt werden soll.",
+          "Image-Help": "Der Name des Docker-Images, das ausgeführt werden soll. Dieses Image wird heruntergeladen, falls es lokal noch nicht verfügbar ist.",
+          "Message": "Docker-Image",
+          "Volumes": "Volume-Zuordnungen",
+          "Volumes-Help": "Geben Sie Volumes an, die in den Container gemappt werden sollen. Der temporäre Pfad wird automatisch zu `/temp` im Container gemappt.",
+          "VolumesKey": "Host",
+          "VolumesValue": "Container"
+        },
+        "Outputs": {
+          "1": "Befehl erfolgreich ausgeführt",
+          "10": "Benutzerdefinierte Ausgabe 9",
+          "2": "Benutzerdefinierte Ausgabe 1",
+          "3": "Benutzerdefinierte Ausgabe 2",
+          "4": "Benutzerdefinierte Ausgabe 3",
+          "5": "Benutzerdefinierte Ausgabe 4",
+          "6": "Benutzerdefinierte Ausgabe 5",
+          "7": "Benutzerdefinierte Ausgabe 6",
+          "8": "Benutzerdefinierte Ausgabe 7",
+          "9": "Benutzerdefinierte Ausgabe 8"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Docker": {
+      "Description": "Ein Plugin, das mit Docker interagiert, um flexible Integration, Interaktion und Verwaltung von Docker-Ressourcen und -Prozessen zu ermöglichen.",
+      "Label": "Docker"
+    }
+  }
+}

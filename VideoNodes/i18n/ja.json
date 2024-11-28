@@ -144,6 +144,8 @@
           "Codec": "コーデック",
           "Codec-Help": "オーディオをエンコードするために使用するコーデック",
           "CustomTrackSelection": "ソーストラック選択",
+          "Filter": "フィルター",
+          "Filter-Help": "この新しいオーディオトラックに適用するカスタムフィルターを指定します。",
           "Index": "インデックス",
           "Index-Help": "新しいオーディオトラックを挿入するインデックス。0から始まるので、新しいオーディオトラックを最初のトラックとして挿入するには、0に設定します。",
           "Language": "言語",
@@ -635,6 +637,20 @@
           "1": "FFMPEG Builderが作成され、FFMPEG Builderフローハンドルを追加する準備ができました"
         }
       },
+      "FfmpegBuilderSubtitleBurnIn": {
+        "Description": "字幕をビデオファイルに焼き付けます。",
+        "Label": "FFMPEG Builder: Subtitle Burn-In",
+        "Fields": {
+          "CustomTrackSelection": "トラック選択",
+          "TrackSelectionOptions": "",
+          "TrackSelectionOptionsKey": "プロパティ",
+          "TrackSelectionOptionsValue": "値"
+        },
+        "Outputs": {
+          "1": "字幕が見つかり、ビデオに焼き付けられました",
+          "2": "焼き付ける字幕が見つかりませんでした"
+        }
+      },
       "FfmpegBuilderSubtitleClearDefault": {
         "Description": "このフロー要素は、字幕からデフォルトフラグをクリアします。",
         "Label": "FFMPEG Builder: 字幕デフォルトクリア",
@@ -872,6 +888,8 @@
         "Fields": {
           "ExtractAll": "すべて抽出",
           "ExtractAll-Help": "すべての一致する字幕を抽出する必要があるかどうか。",
+          "ExtractAsSrtAndSup": "SRT/SUPとして抽出",
+          "ExtractAsSrtAndSup-Help": "抽出された字幕を、テキスト字幕は.srt、画像字幕は.supとして保存します。",
           "ForcedOnly": "強制のみ",
           "ForcedOnly-Help": "強制字幕のみを抽出する必要があるかどうか。",
           "Language": "言語",

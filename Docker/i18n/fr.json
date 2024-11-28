@@ -1,0 +1,40 @@
+{
+  "Flow": {
+    "Parts": {
+      "DockerExecute": {
+        "Description": "Lance un conteneur Docker à partir d'une image et exécute une commande spécifiée à l'intérieur.",
+        "Label": "Exécuter Docker",
+        "Fields": {
+          "AdditionalOutputs": "Sorties Additionnelles",
+          "AdditionalOutputs-Help": "Une liste indexée de sorties supplémentaires attendues de l'exécution de la commande, pour faire correspondre avec la sortie pour un traitement personnalisé.",
+          "Command": "Commande",
+          "Command-Help": "La commande spécifique à exécuter dans le conteneur Docker.",
+          "Image-Help": "Le nom de l'image Docker à exécuter. Cette image sera téléchargée si elle n'est pas déjà disponible localement.",
+          "Message": "Image Docker",
+          "Volumes": "Mappages de Volumes",
+          "Volumes-Help": "Spécifiez les volumes à mapper dans le conteneur. Le chemin temporaire sera automatiquement mappé à `/temp` dans le conteneur.",
+          "VolumesKey": "Hôte",
+          "VolumesValue": "Conteneur"
+        },
+        "Outputs": {
+          "1": "Commande exécutée avec succès",
+          "10": "Sortie Personnalisée 9",
+          "2": "Sortie Personnalisée 1",
+          "3": "Sortie Personnalisée 2",
+          "4": "Sortie Personnalisée 3",
+          "5": "Sortie Personnalisée 4",
+          "6": "Sortie Personnalisée 5",
+          "7": "Sortie Personnalisée 6",
+          "8": "Sortie Personnalisée 7",
+          "9": "Sortie Personnalisée 8"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Docker": {
+      "Description": "Un plugin qui interagit avec Docker pour permettre une intégration, une interaction et une gestion flexibles des ressources et des processus Docker.",
+      "Label": "Docker"
+    }
+  }
+}

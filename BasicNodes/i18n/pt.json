@@ -173,6 +173,18 @@
           "2": "A extensão não corresponde"
         }
       },
+      "FileNameMatches": {
+        "Description": "Verifica se o nome do arquivo original (incluindo o caminho completo) corresponde ao valor especificado usando operações de string.",
+        "Label": "Nome do arquivo corresponde",
+        "Fields": {
+          "Value": "Valor de correspondência",
+          "Value-Help": "Especifique o valor para comparar. Variáveis são suportadas, e a correspondência é feita usando operações de string."
+        },
+        "Outputs": {
+          "1": "Corresponde",
+          "2": "Não corresponde"
+        }
+      },
       "FileSize": {
         "Description": "Verifica se o tamanho do arquivo corresponde aos parâmetros configurados. Os valores estão em megabytes.\n\nSaída 1: Corresponde\nSaída 2: Não corresponde",
         "Label": "Tamanho do arquivo",
@@ -415,6 +427,18 @@
         },
         "Outputs": {
           "1": "Mensagem registrada"
+        }
+      },
+      "LogImage": {
+        "Description": "Registra uma imagem no arquivo de log",
+        "Label": "Registrar Imagem",
+        "Fields": {
+          "ImageFile": "Imagem",
+          "ImageFile-Help": "O arquivo de imagem a ser registrado"
+        },
+        "Outputs": {
+          "1": "Imagem foi registrada",
+          "2": "Falha ao registrar a imagem"
         }
       },
       "Matches": {

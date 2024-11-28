@@ -144,6 +144,8 @@
           "Codec": "Codec",
           "Codec-Help": "O codec a ser utilizado para codificar o áudio",
           "CustomTrackSelection": "Seleção de Faixa de Origem",
+          "Filter": "Filtro",
+          "Filter-Help": "Especifica um filtro personalizado para aplicar a esta nova faixa de áudio.",
           "Index": "Índice",
           "Index-Help": "O índice onde inserir a nova faixa de áudio. Baseado em 0, portanto, para inserir a nova faixa de áudio como a primeira faixa, defina isso como 0.",
           "Language": "Idioma",
@@ -635,6 +637,20 @@
           "1": "Construtor FFMPEG criado e pronto para adicionar elementos de fluxo do construtor FFMPEG"
         }
       },
+      "FfmpegBuilderSubtitleBurnIn": {
+        "Description": "Grava legendas no arquivo de vídeo.",
+        "Label": "FFMPEG Builder: Subtitle Burn-In",
+        "Fields": {
+          "CustomTrackSelection": "Seleção de faixa",
+          "TrackSelectionOptions": "",
+          "TrackSelectionOptionsKey": "Propriedade",
+          "TrackSelectionOptionsValue": "Valor"
+        },
+        "Outputs": {
+          "1": "Legenda encontrada e gravada no vídeo",
+          "2": "Nenhuma legenda encontrada para gravar"
+        }
+      },
       "FfmpegBuilderSubtitleClearDefault": {
         "Description": "Este elemento de fluxo limpará a bandeira padrão das legendas.",
         "Label": "Construtor FFMPEG: Limpar Padrão de Legendas",
@@ -872,6 +888,8 @@
         "Fields": {
           "ExtractAll": "Extrair Todos",
           "ExtractAll-Help": "Se todos os subtítulos correspondentes devem ser extraídos.",
+          "ExtractAsSrtAndSup": "Extrair como SRT/SUP",
+          "ExtractAsSrtAndSup-Help": "Força os subtítulos extraídos a serem salvos como .srt para subtítulos de texto e .sup para subtítulos de imagem.",
           "ForcedOnly": "Apenas Forçados",
           "ForcedOnly-Help": "Se apenas os subtítulos forçados devem ser extraídos.",
           "Language": "Idioma",

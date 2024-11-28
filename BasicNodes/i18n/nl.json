@@ -173,6 +173,18 @@
           "2": "Extensie komt niet overeen"
         }
       },
+      "FileNameMatches": {
+        "Description": "Controleert of de oorspronkelijke bestandsnaam (inclusief het volledige pad) overeenkomt met de opgegeven waarde door middel van stringbewerkingen.",
+        "Label": "Bestandsnaam komt overeen",
+        "Fields": {
+          "Value": "Overeenstemmingswaarde",
+          "Value-Help": "Geef de waarde op waarmee vergeleken moet worden. Variabelen worden ondersteund en de vergelijking gebeurt via stringbewerkingen."
+        },
+        "Outputs": {
+          "1": "Komt overeen",
+          "2": "Komt niet overeen"
+        }
+      },
       "FileSize": {
         "Description": "Controleert of de bestandsgrootte overeenkomt met de geconfigureerde parameters. De waarden zijn in megabytes.\n\nOutput 1: Komt overeen\nOutput 2: Komt niet overeen",
         "Label": "Bestandsgrootte",
@@ -415,6 +427,18 @@
         },
         "Outputs": {
           "1": "Bericht gelogd"
+        }
+      },
+      "LogImage": {
+        "Description": "Logt een afbeelding in het logbestand",
+        "Label": "Log Afbeelding",
+        "Fields": {
+          "ImageFile": "Afbeelding",
+          "ImageFile-Help": "Het afbeeldingsbestand om te loggen"
+        },
+        "Outputs": {
+          "1": "Afbeelding is gelogd",
+          "2": "Afbeelding kon niet worden gelogd"
         }
       },
       "Matches": {

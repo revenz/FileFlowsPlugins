@@ -8,7 +8,9 @@
           "DestinationPath": "Destino",
           "DestinationPath-Help": "A localização e o nome do arquivo, ou seja, o caminho completo do arquivo no Nextcloud.",
           "File": "Arquivo",
-          "File-Help": "O arquivo a ser enviado, deixe em branco para usar o arquivo de trabalho atual."
+          "File-Help": "O arquivo a ser enviado, deixe em branco para usar o arquivo de trabalho atual.",
+          "SetWorkingFile": "Definir Arquivo de Trabalho",
+          "SetWorkingFile-Help": "Define o caminho do Nextcloud carregado como o arquivo de trabalho. Use isso apenas no final de um fluxo, pois este arquivo será marcado como o resultado final. Elementos de fluxo subsequentes que precisem do arquivo de trabalho não funcionarão conforme esperado."
         },
         "Outputs": {
           "1": "Foi enviado com sucesso para o Nextcloud",

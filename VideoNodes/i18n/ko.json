@@ -144,6 +144,8 @@
           "Codec": "코덱",
           "Codec-Help": "오디오 인코딩에 사용할 코덱",
           "CustomTrackSelection": "소스 트랙 선택",
+          "Filter": "필터",
+          "Filter-Help": "이 새로운 오디오 트랙에 적용할 사용자 정의 필터를 지정합니다.",
           "Index": "인덱스",
           "Index-Help": "새 오디오 트랙을 삽입할 인덱스입니다. 0 기반이므로, 새 오디오 트랙을 첫 번째 트랙으로 삽입하려면 0으로 설정합니다.",
           "Language": "언어",
@@ -635,6 +637,20 @@
           "1": "FFMPEG Builder가 생성되어 FFMPEG Builder 플로우 요소 추가 준비 완료"
         }
       },
+      "FfmpegBuilderSubtitleBurnIn": {
+        "Description": "자막을 비디오 파일에 구워 넣습니다.",
+        "Label": "FFMPEG Builder: Subtitle Burn-In",
+        "Fields": {
+          "CustomTrackSelection": "트랙 선택",
+          "TrackSelectionOptions": "",
+          "TrackSelectionOptionsKey": "속성",
+          "TrackSelectionOptionsValue": "값"
+        },
+        "Outputs": {
+          "1": "자막이 발견되어 비디오에 삽입되었습니다",
+          "2": "삽입할 자막을 찾을 수 없습니다"
+        }
+      },
       "FfmpegBuilderSubtitleClearDefault": {
         "Description": "이 플로우 요소는 자막에서 기본 플래그를 제거합니다.",
         "Label": "FFMPEG Builder: 자막 기본값 삭제",
@@ -872,6 +888,8 @@
         "Fields": {
           "ExtractAll": "모두 추출",
           "ExtractAll-Help": "일치하는 모든 자막을 추출해야 하는지 여부.",
+          "ExtractAsSrtAndSup": "SRT/SUP로 추출",
+          "ExtractAsSrtAndSup-Help": "추출된 자막을 텍스트 자막은 .srt, 이미지 자막은 .sup로 저장하도록 강제합니다.",
           "ForcedOnly": "강제 자막만",
           "ForcedOnly-Help": "강제 자막만 추출해야 하는지 여부.",
           "Language": "언어",

@@ -144,6 +144,8 @@
           "Codec": "Codec",
           "Codec-Help": "Le codec à utiliser pour encoder l'audio",
           "CustomTrackSelection": "Sélection de Piste Source",
+          "Filter": "Filtre",
+          "Filter-Help": "Spécifie un filtre personnalisé à appliquer à cette nouvelle piste audio.",
           "Index": "Index",
           "Index-Help": "L'index où insérer la nouvelle piste audio. Basé sur 0, donc pour insérer la nouvelle piste audio comme la première piste, réglez ceci sur 0.",
           "Language": "Langue",
@@ -635,6 +637,20 @@
           "1": "FFMPEG Builder créé et prêt à ajouter des éléments de flux de FFMPEG Builder"
         }
       },
+      "FfmpegBuilderSubtitleBurnIn": {
+        "Description": "Incruste les sous-titres dans le fichier vidéo.",
+        "Label": "FFMPEG Builder: Subtitle Burn-In",
+        "Fields": {
+          "CustomTrackSelection": "Sélection de piste",
+          "TrackSelectionOptions": "",
+          "TrackSelectionOptionsKey": "Propriété",
+          "TrackSelectionOptionsValue": "Valeur"
+        },
+        "Outputs": {
+          "1": "Sous-titre trouvé et incrusté dans la vidéo",
+          "2": "Aucun sous-titre trouvé à incruster"
+        }
+      },
       "FfmpegBuilderSubtitleClearDefault": {
         "Description": "Cet élément de flux effacera le drapeau par défaut des sous-titres.",
         "Label": "FFMPEG Builder : Effacer le Défaut des Sous-titres",
@@ -872,6 +888,8 @@
         "Fields": {
           "ExtractAll": "Extraire Tout",
           "ExtractAll-Help": "Si tous les sous-titres correspondants doivent être extraits.",
+          "ExtractAsSrtAndSup": "Extraire en SRT/SUP",
+          "ExtractAsSrtAndSup-Help": "Force les sous-titres extraits à être enregistrés en .srt pour les sous-titres textuels et en .sup pour les sous-titres d'image.",
           "ForcedOnly": "Uniquement Forcés",
           "ForcedOnly-Help": "Si seuls les sous-titres forcés doivent être extraits.",
           "Language": "Langue",

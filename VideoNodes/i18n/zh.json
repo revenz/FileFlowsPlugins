@@ -144,6 +144,8 @@
           "Codec": "编码器",
           "Codec-Help": "用于编码音频的编码器",
           "CustomTrackSelection": "源轨道选择",
+          "Filter": "过滤器",
+          "Filter-Help": "指定要应用于此新音轨的自定义过滤器。",
           "Index": "索引",
           "Index-Help": "插入新音频轨道的位置。 基于0，所以要将新音频轨道插入为第一轨道，请将其设置为0。",
           "Language": "语言",
@@ -635,6 +637,20 @@
           "1": "FFMPEG Builder已创建并准备添加FFMPEG Builder流元素"
         }
       },
+      "FfmpegBuilderSubtitleBurnIn": {
+        "Description": "将字幕烧录到视频文件中。",
+        "Label": "FFMPEG Builder: Subtitle Burn-In",
+        "Fields": {
+          "CustomTrackSelection": "轨道选择",
+          "TrackSelectionOptions": "",
+          "TrackSelectionOptionsKey": "属性",
+          "TrackSelectionOptionsValue": "值"
+        },
+        "Outputs": {
+          "1": "找到字幕并已烧录到视频中",
+          "2": "未找到可烧录的字幕"
+        }
+      },
       "FfmpegBuilderSubtitleClearDefault": {
         "Description": "此流元素将清除字幕的默认标志。",
         "Label": "FFMPEG Builder: 字幕清除默认",
@@ -872,6 +888,8 @@
         "Fields": {
           "ExtractAll": "提取所有",
           "ExtractAll-Help": "是否提取所有匹配的字幕。",
+          "ExtractAsSrtAndSup": "提取为 SRT/SUP",
+          "ExtractAsSrtAndSup-Help": "强制将提取的字幕保存为 .srt（文本字幕）和 .sup（图像字幕）。",
           "ForcedOnly": "仅强制",
           "ForcedOnly-Help": "是否仅提取强制字幕。",
           "Language": "语言",

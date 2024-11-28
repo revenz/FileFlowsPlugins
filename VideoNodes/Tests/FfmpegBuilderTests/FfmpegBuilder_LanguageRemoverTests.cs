@@ -28,6 +28,88 @@ public class FfmpegBuilder_LanguageRemoverTests : VideoTestBase
         Model = ffStart.GetModel();
     }
     
+    private void Prepare(string german = "deu")
+    {
+        args = GetVideoNodeParameters();
+        VideoFile vf = new VideoFile();
+        vf.PreExecute(args);
+        vf.Execute(args);
+        vii = (VideoInfo)args.Parameters["VideoInfo"];
+        
+        vii.AudioStreams = new List<AudioStream>
+        {
+            new AudioStream
+            {
+                Index = 2,
+                IndexString = "0:a:0",
+                Language = "en",
+                Codec = "AC3",
+                Channels = 5.1f
+            },
+            new AudioStream
+            {
+                Index = 3,
+                IndexString = "0:a:1",
+                Language = "en",
+                Codec = "AAC",
+                Channels = 2
+            },
+            new AudioStream
+            {
+                Index = 4,
+                IndexString = "0:a:3",
+                Language = "fre",
+                Codec = "AAC",
+                Channels = 2
+            },
+            new AudioStream
+            {
+                Index = 5,
+                IndexString = "0:a:4",
+                Language = german,
+                Codec = "AAC",
+                Channels = 5.1f
+            }
+        };
+        
+        vii.SubtitleStreams = new List<SubtitleStream>
+        {
+            new()
+            {
+                Index = 5,
+                IndexString = "0:s:4",
+                Language = german,
+                Codec = "SRT"
+            },
+            new()
+            {
+                Index = 2,
+                IndexString = "0:s:0",
+                Language = "en",
+                Codec = "SRT"
+            },
+            new()
+            {
+                Index = 3,
+                IndexString = "0:s:1",
+                Language = "en",
+                Codec = "SRT"
+            },
+            new()
+            {
+                Index = 4,
+                IndexString = "0:s:3",
+                Language = "fre",
+                Codec = "SUP",
+            }
+        };
+
+        FfmpegBuilderStart ffStart = new();
+        ffStart.PreExecute(args);
+        Assert.AreEqual(1, ffStart.Execute(args));
+        Model = ffStart.GetModel();
+    }
+    
     /// <summary>
     /// Test German is matched and removed
     /// </summary>
@@ -154,6 +236,38 @@ public class FfmpegBuilder_LanguageRemoverTests : VideoTestBase
         Assert.AreEqual(nonDeleted.Count, originaalNondDeleted - 1);
         Assert.IsFalse(nonDeleted.Any(x =>
             x.Language.Contains("en", StringComparison.InvariantCultureIgnoreCase)));
+    }
+    
+    /// <summary>
+    /// Test German is matched and removed
+    /// </summary>
+    [TestMethod]
+    public void KeepOnlyGerman()
+    {
+        Prepare("ger");
+        int originaluNonDeletedSubtitles = Model.SubtitleStreams.Count(x => x.Deleted == false);
+        FFmpegBuilderLanguageRemover ffLangRemover = new();
+        ffLangRemover.Languages = [ "deu"];
+        ffLangRemover.NotMatching = true;
+        ffLangRemover.StreamType = "Subtitle";
+        ffLangRemover.PreExecute(args);
+        Assert.AreEqual(1, ffLangRemover.Execute(args));
+        List<FfmpegSubtitleStream> nonDeletedSubtitles = new();
+
+        Logger.ILog(new string('-', 100));
+        foreach (var sub in Model.SubtitleStreams.Where(x => x.Deleted))
+        {
+            Logger.ILog("Deleted subtitle: " + sub);
+        }
+        Logger.ILog(new string('-', 100));
+        foreach (var sub in Model.SubtitleStreams.Where(x => x.Deleted == false))
+        {
+            Logger.ILog("Non deleted subtitle: " + sub);
+            nonDeletedSubtitles.Add(sub);
+        }
+        Assert.AreNotEqual(originaluNonDeletedSubtitles, nonDeletedSubtitles.Count);
+        Assert.AreEqual(nonDeletedSubtitles.Count, 1);
+        Assert.AreEqual("ger", nonDeletedSubtitles[0].Language);
     }
 }
 

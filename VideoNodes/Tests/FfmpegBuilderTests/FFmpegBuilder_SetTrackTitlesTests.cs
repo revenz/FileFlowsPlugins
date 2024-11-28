@@ -206,6 +206,132 @@ public class FFmpegBuilder_SetTrackTitlesTests : VideoTestBase
         Assert.AreEqual("Track: English / Stereo / AAC", result);
     }
 
+
+    [TestMethod]
+    public void FormatTitle_5dot1Channel_Success()
+    {
+        // Arrange
+        string formatter = "Track: lang / channels / codec";
+        string separator = " / ";
+        string language = "English";
+        string codec = "AAC";
+        bool isDefault = true;
+        float bitrate = 128_000;
+        float channels = 6.0f; // 5.1
+        int sampleRate = 44_100;
+        bool isForced = false;
+
+        // Act
+        string result = FfmpegBuilderSetTrackTitles.FormatTitle(formatter, separator, language, codec, isDefault, bitrate, channels, sampleRate, isForced);
+
+        // Assert
+        Assert.AreEqual("Track: English / 5.1 / AAC", result);
+    }
+
+    [TestMethod]
+    public void FormatTitle_5dot1Channel2_Success()
+    {
+        // Arrange
+        string formatter = "Track: lang / channels / codec";
+        string separator = " / ";
+        string language = "English";
+        string codec = "AAC";
+        bool isDefault = true;
+        float bitrate = 128_000;
+        float channels = 5.1f; // 5.1
+        int sampleRate = 44_100;
+        bool isForced = false;
+
+        // Act
+        string result = FfmpegBuilderSetTrackTitles.FormatTitle(formatter, separator, language, codec, isDefault, bitrate, channels, sampleRate, isForced);
+
+        // Assert
+        Assert.AreEqual("Track: English / 5.1 / AAC", result);
+    }
+    [TestMethod]
+    public void FormatTitle_7dot1Channel_Success()
+    {
+        // Arrange
+        string formatter = "Track: lang / channels / codec";
+        string separator = " / ";
+        string language = "English";
+        string codec = "AAC";
+        bool isDefault = true;
+        float bitrate = 128_000;
+        float channels = 8.0f; // 7.1
+        int sampleRate = 44_100;
+        bool isForced = false;
+
+        // Act
+        string result = FfmpegBuilderSetTrackTitles.FormatTitle(formatter, separator, language, codec, isDefault, bitrate, channels, sampleRate, isForced);
+
+        // Assert
+        Assert.AreEqual("Track: English / 7.1 / AAC", result);
+    }
+    
+    [TestMethod]
+    public void FormatTitle_7dot1Channel2_Success()
+    {
+        // Arrange
+        string formatter = "Track: lang / channels / codec";
+        string separator = " / ";
+        string language = "English";
+        string codec = "AAC";
+        bool isDefault = true;
+        float bitrate = 128_000;
+        float channels = 7.1f; // 7.1
+        int sampleRate = 44_100;
+        bool isForced = false;
+
+        // Act
+        string result = FfmpegBuilderSetTrackTitles.FormatTitle(formatter, separator, language, codec, isDefault, bitrate, channels, sampleRate, isForced);
+
+        // Assert
+        Assert.AreEqual("Track: English / 7.1 / AAC", result);
+    }
+    
+    [TestMethod]
+    public void FormatTitle_7dot0Channel_Success()
+    {
+        // Arrange
+        string formatter = "Track: lang / channels / codec";
+        string separator = " / ";
+        string language = "English";
+        string codec = "AAC";
+        bool isDefault = true;
+        float bitrate = 128_000;
+        float channels = 7.0f;
+        int sampleRate = 44_100;
+        bool isForced = false;
+
+        // Act
+        string result = FfmpegBuilderSetTrackTitles.FormatTitle(formatter, separator, language, codec, isDefault, bitrate, channels, sampleRate, isForced);
+
+        // Assert
+        Assert.AreEqual("Track: English / 7.0 / AAC", result);
+    }
+    
+    [TestMethod]
+    public void FormatTitle_5dot0Channel_Success()
+    {
+        // Arrange
+        string formatter = "Track: lang / channels / codec";
+        string separator = " / ";
+        string language = "English";
+        string codec = "AAC";
+        bool isDefault = true;
+        float bitrate = 128_000;
+        float channels = 5.0f;
+        int sampleRate = 44_100;
+        bool isForced = false;
+
+        // Act
+        string result = FfmpegBuilderSetTrackTitles.FormatTitle(formatter, separator, language, codec, isDefault, bitrate, channels, sampleRate, isForced);
+
+        // Assert
+        Assert.AreEqual("Track: English / 5.0 / AAC", result);
+    }
+    
     [TestMethod]
     public void FormatTitle_ZeroBitrateAndSampleRate_Success()
     {

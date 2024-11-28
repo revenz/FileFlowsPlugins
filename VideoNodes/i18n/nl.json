@@ -144,6 +144,8 @@
           "Codec": "Codec",
           "Codec-Help": "De codec die moet worden gebruikt om de audio te coderen",
           "CustomTrackSelection": "Bron Track Selectie",
+          "Filter": "Filter",
+          "Filter-Help": "Geeft een aangepast filter op om toe te passen op dit nieuwe audiotrack.",
           "Index": "Index",
           "Index-Help": "De index waar de nieuwe audiotrack moet worden ingevoegd. 0-gebaseerd, dus om de nieuwe audiotrack als de eerste track in te voegen, stelt u dit in op 0.",
           "Language": "Taal",
@@ -635,6 +637,20 @@
           "1": "FFMPEG Builder gemaakt en klaar om FFMPEG Builder flow-elementen toe te voegen"
         }
       },
+      "FfmpegBuilderSubtitleBurnIn": {
+        "Description": "Brandt ondertitels in het videobestand.",
+        "Label": "FFMPEG Builder: Subtitle Burn-In",
+        "Fields": {
+          "CustomTrackSelection": "Trackselectie",
+          "TrackSelectionOptions": "",
+          "TrackSelectionOptionsKey": "Eigenschap",
+          "TrackSelectionOptionsValue": "Waarde"
+        },
+        "Outputs": {
+          "1": "Ondertitel gevonden en in de video gebrand",
+          "2": "Geen ondertitel gevonden om in te branden"
+        }
+      },
       "FfmpegBuilderSubtitleClearDefault": {
         "Description": "Dit flow-element verwijdert de standaardvlag van ondertitels.",
         "Label": "FFMPEG Builder: Ondertitel Verwijder Standaard",
@@ -872,6 +888,8 @@
         "Fields": {
           "ExtractAll": "Alle Extraheren",
           "ExtractAll-Help": "Als alle overeenkomende ondertitels moeten worden geëxtraheerd.",
+          "ExtractAsSrtAndSup": "Extraheer als SRT/SUP",
+          "ExtractAsSrtAndSup-Help": "Dwingt de geëxtraheerde ondertitels op te slaan als .srt voor tekstondertitels en .sup voor afbeeldingsondertitels.",
           "ForcedOnly": "Alleen Geforceerd",
           "ForcedOnly-Help": "Als alleen geforceerde ondertitels moeten worden geëxtraheerd.",
           "Language": "Taal",

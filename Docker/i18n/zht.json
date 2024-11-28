@@ -1,0 +1,40 @@
+{
+  "Flow": {
+    "Parts": {
+      "DockerExecute": {
+        "Description": "從映像啟動Docker容器，並在其中執行指定的命令。",
+        "Label": "執行 Docker",
+        "Fields": {
+          "AdditionalOutputs": "額外輸出",
+          "AdditionalOutputs-Help": "命令執行的額外預期輸出的索引列表，以便與輸出匹配以進行自定義處理。",
+          "Command": "命令",
+          "Command-Help": "要在Docker容器內運行的具體命令。",
+          "Image-Help": "要執行的Docker映像的名稱。如果該映像在本地不存在，將自動下載該映像。",
+          "Message": "Docker映像",
+          "Volumes": "卷映射",
+          "Volumes-Help": "指定要映射到容器的卷。臨時路徑將自動映射到容器內部的`/temp`。",
+          "VolumesKey": "主機",
+          "VolumesValue": "容器"
+        },
+        "Outputs": {
+          "1": "命令成功執行",
+          "10": "自定義輸出 9",
+          "2": "自定義輸出 1",
+          "3": "自定義輸出 2",
+          "4": "自定義輸出 3",
+          "5": "自定義輸出 4",
+          "6": "自定義輸出 5",
+          "7": "自定義輸出 6",
+          "8": "自定義輸出 7",
+          "9": "自定義輸出 8"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Docker": {
+      "Description": "一個與Docker互動的插件，以實現Docker資源和過程的靈活整合、互動和管理。",
+      "Label": "Docker"
+    }
+  }
+}

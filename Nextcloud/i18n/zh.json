@@ -8,7 +8,9 @@
           "DestinationPath": "目的地",
           "DestinationPath-Help": "文件在Nextcloud中的位置和文件名，即完整路径。",
           "File": "文件",
-          "File-Help": "要上传的文件，留空以使用当前工作文件。"
+          "File-Help": "要上传的文件，留空以使用当前工作文件。",
+          "SetWorkingFile": "设置工作文件",
+          "SetWorkingFile-Help": "将上传的Nextcloud路径设置为工作文件。仅在流程结束时使用此设置，因为该文件将被标记为最终输出。任何需要工作文件的后续流程元素将无法正常运行。"
         },
         "Outputs": {
           "1": "已成功上传到Nextcloud",

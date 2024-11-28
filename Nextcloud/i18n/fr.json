@@ -8,7 +8,9 @@
           "DestinationPath": "Destination",
           "DestinationPath-Help": "L'emplacement et le nom de fichier, c'est-à-dire le chemin complet, du fichier dans Nextcloud.",
           "File": "Fichier",
-          "File-Help": "Le fichier à télécharger, laissez vide pour utiliser le fichier de travail actuel."
+          "File-Help": "Le fichier à télécharger, laissez vide pour utiliser le fichier de travail actuel.",
+          "SetWorkingFile": "Définir le fichier de travail",
+          "SetWorkingFile-Help": "Définit le chemin Nextcloud téléchargé comme fichier de travail. Utilisez cette option uniquement à la fin d'un flux, car ce fichier sera marqué comme résultat final. Les éléments de flux suivants nécessitant le fichier de travail ne fonctionneront pas comme prévu."
         },
         "Outputs": {
           "1": "A été téléchargé avec succès sur Nextcloud",

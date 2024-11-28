@@ -8,7 +8,9 @@
           "DestinationPath": "Destinazione",
           "DestinationPath-Help": "La posizione e il nome del file, ossia il percorso completo, del file in Nextcloud.",
           "File": "File",
-          "File-Help": "Il file da caricare, lascia vuoto per utilizzare il file di lavoro corrente."
+          "File-Help": "Il file da caricare, lascia vuoto per utilizzare il file di lavoro corrente.",
+          "SetWorkingFile": "Imposta file di lavoro",
+          "SetWorkingFile-Help": "Imposta il percorso Nextcloud caricato come file di lavoro. Utilizzalo solo alla fine di un flusso, poiché questo file verrà contrassegnato come output finale. Gli elementi di flusso successivi che richiedono il file di lavoro non funzioneranno come previsto."
         },
         "Outputs": {
           "1": "È stato caricato con successo su Nextcloud",

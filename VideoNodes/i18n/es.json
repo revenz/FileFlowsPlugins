@@ -144,6 +144,8 @@
           "Codec": "Códec",
           "Codec-Help": "El códec a utilizar para codificar el audio",
           "CustomTrackSelection": "Selección de Pista de Origen",
+          "Filter": "Filtro",
+          "Filter-Help": "Especifica un filtro personalizado para aplicar a esta nueva pista de audio.",
           "Index": "Índice",
           "Index-Help": "El índice donde insertar la nueva pista de audio. Basado en 0, así que para insertar la nueva pista de audio como la primera pista, establezca esto en 0.",
           "Language": "Idioma",
@@ -635,6 +637,20 @@
           "1": "FFMPEG Builder creado y listo para agregar elementos de flujo de FFMPEG Builder"
         }
       },
+      "FfmpegBuilderSubtitleBurnIn": {
+        "Description": "Quema subtítulos en el archivo de video.",
+        "Label": "FFMPEG Builder: Subtitle Burn-In",
+        "Fields": {
+          "CustomTrackSelection": "Selección de pista",
+          "TrackSelectionOptions": "",
+          "TrackSelectionOptionsKey": "Propiedad",
+          "TrackSelectionOptionsValue": "Valor"
+        },
+        "Outputs": {
+          "1": "Subtítulo encontrado y quemado en el video",
+          "2": "No se encontró ningún subtítulo para quemar"
+        }
+      },
       "FfmpegBuilderSubtitleClearDefault": {
         "Description": "Este elemento de flujo eliminará la bandera predeterminada de los subtítulos.",
         "Label": "FFMPEG Builder: Limpiar Predeterminado de Subtítulos",
@@ -872,6 +888,8 @@
         "Fields": {
           "ExtractAll": "Extraer Todos",
           "ExtractAll-Help": "Si se deben extraer todos los subtítulos coincidentes.",
+          "ExtractAsSrtAndSup": "Extraer como SRT/SUP",
+          "ExtractAsSrtAndSup-Help": "Fuerza que los subtítulos extraídos se guarden como .srt para subtítulos de texto y .sup para subtítulos de imagen.",
           "ForcedOnly": "Solo Forzados",
           "ForcedOnly-Help": "Si solo se deben extraer subtítulos forzados.",
           "Language": "Idioma",

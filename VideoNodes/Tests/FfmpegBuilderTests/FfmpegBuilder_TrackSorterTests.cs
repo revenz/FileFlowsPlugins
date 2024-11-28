@@ -189,7 +189,7 @@ public class FfmpegBuilder_TrackSorterTests : VideoTestBase
         trackSorter.Sorters = new List<KeyValuePair<string, string>>
         {
             new("Language", "en"),
-            new("Codec", "ac3"),
+            new("Codec", "=ac3"),
         };
 
         // Act
@@ -286,7 +286,7 @@ public class FfmpegBuilder_TrackSorterTests : VideoTestBase
         // Mock sorters by different properties
         trackSorter.Sorters = new List<KeyValuePair<string, string>>
         {
-            new ("Codec", "ac3"),
+            new ("Codec", "=ac3"),
         };
 
         // Act
@@ -327,7 +327,7 @@ public class FfmpegBuilder_TrackSorterTests : VideoTestBase
         {
             new("Language", "en"),
             new("Channels", ">4.0"),
-            new("Codec", "ac3")
+            new("Codec", "=ac3")
         };
 
         // Act

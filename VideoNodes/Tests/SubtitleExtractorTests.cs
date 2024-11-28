@@ -27,11 +27,34 @@ public class SubtitleExtractorTests: VideoTestBase
 
             element.PreExecute(args);
             int output = element.Execute(args);
+            var extracted = element.ExtractedSubtitles;
 
             Assert.AreEqual(1, output);
         }
     }
     
+    [TestMethod]
+    public void SubtitleExtractor_Extension_Test2()
+    {
+        var args = GetVideoNodeParameters(VideoSubtitles);
+        var vf = new VideoFile();
+        vf.PreExecute(args);
+        Assert.AreEqual(1, vf.Execute(args));
+        
+        foreach (string ext in new[] { string.Empty, ".srt", ".sup", ".ass" })
+        {
+            Logger.ILog("Extracting Extension: " + ext);
+            SubtitleExtractor element = new();
+            element.OutputFile = Path.Combine(TempPath, "subtitle.en" + ext);
+            element.Language = "eng";
+
+            element.PreExecute(args);
+            int output = element.Execute(args);
+            var extracted = element.ExtractedSubtitles;
+
+            Assert.AreEqual(1, output);
+        }
+    }
     
     [TestMethod]
     public void French_Not_Canda()

@@ -58,6 +58,11 @@ public class SubtitleExtractor : EncodingNode
     /// </summary>
     [Boolean(6)]
     public bool OnlyTextSubtitles { get; set; }
+    /// <summary>
+    /// Gets or sets if subtitles should be forced as srt or sup depending on type
+    /// </summary>
+    [Boolean(7)]
+    public bool ExtractAsSrtAndSup { get; set; }
     
     private Dictionary<string, object> _Variables;
     /// <summary>
@@ -75,6 +80,10 @@ public class SubtitleExtractor : EncodingNode
             { "sub.FileName", "/path/to/subtitle.sub" }
         };
     }
+    
+    #if(DEBUG)
+    internal List<string> ExtractedSubtitles = new();
+    #endif
 
     /// <summary>
     /// Executes the subtitle extractor
@@ -188,16 +197,20 @@ public class SubtitleExtractor : EncodingNode
                 }
 
 
-                if (output.ToLower().EndsWith(".srt") || output.ToLower().EndsWith(".sup"))
-                    output = output[0..^4];
-
-                output = output.TrimEnd('.') + (subTrack.IsImage ? ".sup" : ".srt");
+                output = GetSubtitleWithExtension(output, subTrack);
                 
                 args.Logger?.ILog($"Extracting subtitle codec '{subTrack.Codec}' to '{output}'");
 
                 var extracted = ExtractSubtitle(args, FFMPEG, "0:s:" + subTrack.TypeIndex, output, localFile);
                 if (extracted)
+                {
                     ++extractedCount;
+                    
+#if(DEBUG)
+                    ExtractedSubtitles.Add(output);
+#endif
+                }
+
                 if (extracted && ExtractAll == false)
                 {
                     args.UpdateVariables(new Dictionary<string, object>
@@ -222,6 +235,42 @@ public class SubtitleExtractor : EncodingNode
             args.Logger?.ELog("Failed processing VideoFile: " + ex.Message + Environment.NewLine + ex.StackTrace);
             return -1;
         }
+    }
+
+    /// <summary>
+    /// Gets the extension for the extracted subtitle
+    /// </summary>
+    /// <param name="output">the output path</param>
+    /// <param name="subtitle">the subtitle to extract</param>
+    /// <returns>the extension</returns>
+    private string GetSubtitleWithExtension(string output, SubtitleStream subtitle)
+    {
+        if (output.ToLower().EndsWith(".srt") || output.ToLower().EndsWith(".sup") || output.ToLower().EndsWith(".ass"))
+        {
+            output = output[0..^4];
+        }
+
+        output = output.TrimEnd('.');
+        
+        string codec = subtitle.Codec.ToLowerInvariant();
+        string extension;
+
+        if (ExtractAsSrtAndSup && subtitle.IsImage)
+            extension = ".sup";
+        else if (ExtractAsSrtAndSup && subtitle.IsImage == false)
+            extension = ".srt";
+        else if (codec == "ass")
+            extension = ".ass";
+        else if (codec == "srt")
+            extension = ".srt";
+        else if (codec == "sup")
+            extension = ".sup";
+        else if(subtitle.IsImage)
+            extension = ".sup";
+        else 
+            extension = ".srt";
+
+        return output + extension;
     }
 
     /// <summary>

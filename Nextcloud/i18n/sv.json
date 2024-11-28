@@ -8,7 +8,9 @@
           "DestinationPath": "Mål",
           "DestinationPath-Help": "Platsen och filnamnet, dvs. den fullständiga sökvägen, för filen i Nextcloud.",
           "File": "Fil",
-          "File-Help": "Fil som ska laddas upp, lämna tomt för att använda den aktuella arbetsfilen."
+          "File-Help": "Fil som ska laddas upp, lämna tomt för att använda den aktuella arbetsfilen.",
+          "SetWorkingFile": "Ställ in arbetsfil",
+          "SetWorkingFile-Help": "Ställer in den uppladdade Nextcloud-sökvägen som arbetsfil. Använd detta endast i slutet av ett flöde, eftersom denna fil markeras som slutgiltig utdata. Efterföljande flödeselement som behöver arbetsfilen kommer inte att fungera som förväntat."
         },
         "Outputs": {
           "1": "Har framgångsrikt laddats upp till Nextcloud",

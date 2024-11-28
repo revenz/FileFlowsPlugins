@@ -113,7 +113,7 @@ public class FFmpegBuilderLanguageRemover: FfmpegBuilderNode
                 if (string.IsNullOrWhiteSpace(language))
                     continue;
                 
-                matches = LanguageHelper.Matches(args, stream.Language, language);
+                matches = LanguageHelper.Matches(args, language, stream.Language);
                 if (matches)
                     break;
             }

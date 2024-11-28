@@ -71,12 +71,12 @@ public class MovieLookup : Node
         lookupName = lookupName.Replace(".", " ").Replace("_", " ");
 
         // look for year
-        string year = string.Empty;
+        int year = 0;
         var match = Regex.Matches(lookupName, @"((19[2-9][0-9])|(20[0-9]{2}))(?=([\.\s_\-\)\]]|$))").LastOrDefault();
         if (match != null)
         {
-            year = match.Value;
-            lookupName = lookupName[..lookupName.IndexOf(year, StringComparison.Ordinal)].TrimEnd('(');
+            int.TryParse(match.Value, out year);
+            lookupName = lookupName[..lookupName.IndexOf(match.Value, StringComparison.Ordinal)].TrimEnd('(');
         }
 
         // remove double spaces in case they were added when removing the year
@@ -104,9 +104,10 @@ public class MovieLookup : Node
         // try find an exact match
         var results = response.Results.OrderBy(x =>
             {
-                if (string.IsNullOrEmpty(year) == false)
+                if (year > 0)
                 {
-                    return year == x.ReleaseDate.Year.ToString() ? 0 : 1;
+                    // sometimes a year can be off by 1, if a movie was released late in the year but recorded in the next year
+                    return Math.Abs(year - x.ReleaseDate.Year) < 2 ? 0 : 1;
                 }
                 return 0;
             })

@@ -144,6 +144,8 @@
           "Codec": "Codec",
           "Codec-Help": "Il codec da utilizzare per codificare l'audio",
           "CustomTrackSelection": "Selezione traccia sorgente",
+          "Filter": "Filtro",
+          "Filter-Help": "Specifica un filtro personalizzato da applicare a questa nuova traccia audio.",
           "Index": "Indice",
           "Index-Help": "L'indice dove inserire la nuova traccia audio.  Basato su 0, quindi per inserire la nuova traccia audio come prima traccia impostare questo a 0.",
           "Language": "Lingua",
@@ -635,6 +637,20 @@
           "1": "FFMPEG Builder creato e pronto per aggiungere elementi del flusso FFMPEG Builder"
         }
       },
+      "FfmpegBuilderSubtitleBurnIn": {
+        "Description": "Masterizza i sottotitoli nel file video.",
+        "Label": "FFMPEG Builder: Subtitle Burn-In",
+        "Fields": {
+          "CustomTrackSelection": "Selezione traccia",
+          "TrackSelectionOptions": "",
+          "TrackSelectionOptionsKey": "Proprietà",
+          "TrackSelectionOptionsValue": "Valore"
+        },
+        "Outputs": {
+          "1": "Sottotitolo trovato e incorporato nel video",
+          "2": "Nessun sottotitolo trovato da incorporare"
+        }
+      },
       "FfmpegBuilderSubtitleClearDefault": {
         "Description": "Questo elemento del flusso rimuoverà il flag predefinito dai sottotitoli.",
         "Label": "FFMPEG Builder: Rimuovi Predefinito Sottotitoli",
@@ -872,6 +888,8 @@
         "Fields": {
           "ExtractAll": "Estrai Tutto",
           "ExtractAll-Help": "Se tutti i sottotitoli corrispondenti devono essere estratti.",
+          "ExtractAsSrtAndSup": "Estrai come SRT/SUP",
+          "ExtractAsSrtAndSup-Help": "Forza i sottotitoli estratti a essere salvati come .srt per i sottotitoli testuali e .sup per i sottotitoli basati su immagini.",
           "ForcedOnly": "Solo Forzati",
           "ForcedOnly-Help": "Se devono essere estratti solo i sottotitoli forzati.",
           "Language": "Lingua",

@@ -144,6 +144,8 @@
           "Codec": "Codec",
           "Codec-Help": "The codec to use to encode the audio",
           "CustomTrackSelection": "Source Track Selection",
+          "Filter": "Filter",
+          "Filter-Help": "Specifies a custom filter to apply to this new audio track.",
           "Index": "Index",
           "Index-Help": "The index where to insert the new audio track.  0 based, so to insert the new audio track as the first track set this to 0.",
           "Language": "Language",
@@ -635,6 +637,20 @@
           "1": "FFMPEG Builder created and ready to add FFMPEG Builder flow elements to"
         }
       },
+      "FfmpegBuilderSubtitleBurnIn": {
+        "Description": "Burns subtitles into the video file.",
+        "Label": "FFMPEG Builder: Subtitle Burn-In",
+        "Fields": {
+          "CustomTrackSelection": "Track Selection",
+          "TrackSelectionOptions": "",
+          "TrackSelectionOptionsKey": "Property",
+          "TrackSelectionOptionsValue": "Value"
+        },
+        "Outputs": {
+          "1": "Subtitle found and burned into the video",
+          "2": "No subtitle found to burn in"
+        }
+      },
       "FfmpegBuilderSubtitleClearDefault": {
         "Description": "This flow element will clear the default flag from subtitles.",
         "Label": "FFMPEG Builder: Subtitle Clear Default",
@@ -872,6 +888,8 @@
         "Fields": {
           "ExtractAll": "Extract All",
           "ExtractAll-Help": "Whether to extract all matching subtitles.",
+          "ExtractAsSrtAndSup": "Extract as SRT/SUP",
+          "ExtractAsSrtAndSup-Help": "Forces extracted subtitles to be saved as .srt for text-based subtitles and .sup for image-based subtitles.",
           "ForcedOnly": "Forced Only",
           "ForcedOnly-Help": "Whether to extract only forced subtitles.",
           "Language": "Language",

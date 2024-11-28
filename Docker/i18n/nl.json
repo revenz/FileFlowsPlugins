@@ -1,0 +1,40 @@
+{
+  "Flow": {
+    "Parts": {
+      "DockerExecute": {
+        "Description": "Start een Docker-container vanuit een image en voert een opgegeven opdracht uit.",
+        "Label": "Docker Uitvoeren",
+        "Fields": {
+          "AdditionalOutputs": "Aanvullende uitvoer",
+          "AdditionalOutputs-Help": "Een geïndexeerde lijst van extra verwachte uitvoer van de opdrachtuitvoering, om te koppelen aan uitvoer voor aangepaste verwerking.",
+          "Command": "Opdracht",
+          "Command-Help": "De specifieke opdracht die in de Docker-container moet worden uitgevoerd.",
+          "Image-Help": "De naam van de Docker-afbeelding om uit te voeren. Deze afbeelding wordt gedownload als deze niet lokaal beschikbaar is.",
+          "Message": "Docker-afbeelding",
+          "Volumes": "Volume-mapping",
+          "Volumes-Help": "Geef volumes op die in de container moeten worden gemapt. Het tijdelijke pad wordt automatisch naar `/temp` in de container gemapt.",
+          "VolumesKey": "Host",
+          "VolumesValue": "Container"
+        },
+        "Outputs": {
+          "1": "Opdracht succesvol uitgevoerd",
+          "10": "Aangepaste uitvoer 9",
+          "2": "Aangepaste uitvoer 1",
+          "3": "Aangepaste uitvoer 2",
+          "4": "Aangepaste uitvoer 3",
+          "5": "Aangepaste uitvoer 4",
+          "6": "Aangepaste uitvoer 5",
+          "7": "Aangepaste uitvoer 6",
+          "8": "Aangepaste uitvoer 7",
+          "9": "Aangepaste uitvoer 8"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Docker": {
+      "Description": "Een plug-in die interactie met Docker mogelijk maakt voor flexibele integratie, interactie en beheer van Docker-bronnen en processen.",
+      "Label": "Docker"
+    }
+  }
+}

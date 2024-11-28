@@ -144,6 +144,8 @@
           "Codec": "Codec",
           "Codec-Help": "Der Codec, der für die Audiokodierung verwendet wird.",
           "CustomTrackSelection": "Quellspur-Auswahl",
+          "Filter": "Filter",
+          "Filter-Help": "Gibt einen benutzerdefinierten Filter an, der auf diese neue Audiospur angewendet wird.",
           "Index": "Index",
           "Index-Help": "Der Index, an dem die neue Tonspur eingefügt werden soll.  Um die neue Audiospur als erste Spur einzufügen, setzen Sie diesen Wert auf 0.",
           "Language": "Sprache",
@@ -635,6 +637,20 @@
           "1": "FFMPEG Builder erstellt und bereit zum Hinzufügen von FFMPEG Builder-Nodes zu"
         }
       },
+      "FfmpegBuilderSubtitleBurnIn": {
+        "Description": "Brennt Untertitel in die Videodatei ein.",
+        "Label": "FFMPEG Builder: Subtitle Burn-In",
+        "Fields": {
+          "CustomTrackSelection": "Spurauswahl",
+          "TrackSelectionOptions": "",
+          "TrackSelectionOptionsKey": "Eigenschaft",
+          "TrackSelectionOptionsValue": "Wert"
+        },
+        "Outputs": {
+          "1": "Untertitel gefunden und in das Video eingebrannt",
+          "2": "Kein Untertitel gefunden, der eingebrannt werden kann"
+        }
+      },
       "FfmpegBuilderSubtitleClearDefault": {
         "Description": "Mit dieser Funktion wird die Standardmarkierung von Untertiteln gelöscht.",
         "Label": "FFMPEG Builder: Untertitel löschen Standard",
@@ -872,6 +888,8 @@
         "Fields": {
           "ExtractAll": "Alle Entpacken",
           "ExtractAll-Help": "Wenn alle passenden Untertitel extrahiert werden sollen.",
+          "ExtractAsSrtAndSup": "Extrahieren als SRT/SUP",
+          "ExtractAsSrtAndSup-Help": "Erzwingt das Speichern der extrahierten Untertitel als .srt für Text-Untertitel und .sup für Bild-Untertitel.",
           "ForcedOnly": "Nur erzwungene",
           "ForcedOnly-Help": "Wenn nur Zwangsuntertitel extrahiert werden sollen.",
           "Language": "Sprache",

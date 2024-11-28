@@ -11,6 +11,7 @@ namespace MetaNodes.Tests.AniList;
 /// AniList Anime Show Lookup Integration Tests
 /// </summary>
 [TestClass]
+[TestCategory("Slow")]
 public class AnimeShowLookupIntegrationTests : TestBase
 {
     /// <summary>

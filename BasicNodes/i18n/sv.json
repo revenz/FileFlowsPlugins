@@ -173,6 +173,18 @@
           "2": "Filändelsen matchar inte"
         }
       },
+      "FileNameMatches": {
+        "Description": "Kontrollerar om det ursprungliga filnamnet (inklusive fullständig sökväg) matchar det angivna värdet med hjälp av strängoperationer.",
+        "Label": "Filnamnet matchar",
+        "Fields": {
+          "Value": "Matchningsvärde",
+          "Value-Help": "Ange värdet att jämföra med. Variabler stöds och matchningen sker genom strängoperationer."
+        },
+        "Outputs": {
+          "1": "Matchar",
+          "2": "Matchar inte"
+        }
+      },
       "FileSize": {
         "Description": "Kontrollerar om filstorleken matchar de konfigurerade parametrarna. Värdena är i megabyte.\n\nOutput 1: Matchar\nOutput 2: Matchar inte",
         "Label": "Filstorlek",
@@ -415,6 +427,18 @@
         },
         "Outputs": {
           "1": "Meddelande loggat"
+        }
+      },
+      "LogImage": {
+        "Description": "Loggar en bild i loggfilen",
+        "Label": "Logga Bild",
+        "Fields": {
+          "ImageFile": "Bild",
+          "ImageFile-Help": "Bildfilen som ska loggas"
+        },
+        "Outputs": {
+          "1": "Bild loggades",
+          "2": "Kunde inte logga bilden"
         }
       },
       "Matches": {

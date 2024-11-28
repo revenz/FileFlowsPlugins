@@ -21,7 +21,10 @@ public class Log : Node
     public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/log"; 
     /// <inheritdoc />
     public override bool FailureNode => true;
-    
+
+    /// <inheritdoc />
+    public override string Group => "Logging";
+
     /// <summary>
     /// Gets or sets teh log type
     /// </summary>

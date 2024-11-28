@@ -18,6 +18,10 @@ public class TestLogger : ILogger
     public void ILog(params object[] args)
         => Log(LogType.Info, args);
 
+    /// <inheritdoc />
+    public void Raw(params object[] args)
+        => Log(LogType.Raw, args);
+
     /// <summary>
     /// Writes an debug log message
     /// </summary>
@@ -57,7 +61,8 @@ public class TestLogger : ILogger
     /// <param name="args">the arguments of the message</param>
     private void Log(LogType type, params object[] args)
     {
-        string message = type + " -> " + string.Join(", ", args.Select(x =>
+        string prefix = type == LogType.Raw ? string.Empty : type + " -> ";
+        string message = prefix + string.Join(", ", args.Select(x =>
             x == null ? "null" :
             x.GetType().IsPrimitive ? x.ToString() :
             x is string ? x.ToString() :
