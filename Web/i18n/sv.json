@@ -58,6 +58,8 @@
           "HeadersValue": "Värde",
           "Method": "Metod",
           "Method-Help": "Webbmetoden att använda när denna förfrågan skickas",
+          "ResponseVariable": "Svarvariabel",
+          "ResponseVariable-Help": "Namnet på variabeln där JSON-svaret sparas. Om svaret inte är giltig JSON kommer denna variabel inte att sättas.",
           "Url": "URL",
           "Url-Help": "URL:en för förfrågan"
         },

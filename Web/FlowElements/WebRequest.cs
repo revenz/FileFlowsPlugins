@@ -1,4 +1,7 @@
-﻿namespace FileFlows.Web.FlowElements;
+﻿using System.Text.RegularExpressions;
+using FileFlows.Web.Helpers;
+
+namespace FileFlows.Web.FlowElements;
 
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
@@ -99,6 +102,12 @@ public class WebRequest : Node
     /// </summary>
     [TextArea(5, variables: true)]
     public string Body { get; set; } = null!;
+    
+    /// <summary>
+    /// Gets or sets the variable to save the response object in
+    /// </summary>
+    [TextVariable(6)]
+    public string ResponseVariable { get; set; } = null!;
 
 
     private Dictionary<string, object>? _Variables;
@@ -160,6 +169,23 @@ public class WebRequest : Node
             var result = client.Send(message);
 
             string stringBody = result.Content.ReadAsStringAsync().Result ?? string.Empty;
+            
+            // Try to parse the JSON response and add it to the dictionary
+            var responseVariable = args.ReplaceVariables(ResponseVariable ?? string.Empty, stripMissing: true);
+            if (string.IsNullOrEmpty(responseVariable) == false &&
+                Regex.IsMatch(responseVariable, @"^[a-zA-Z_][a-zA-Z_0-9]*$"))
+            {
+                try
+                {
+                    var jsonResult = JsonUtils.DeserializeToDictionary(stringBody);
+                    if (jsonResult != null)
+                        args.Variables[responseVariable] = jsonResult;
+                }
+                catch (System.Text.Json.JsonException ex)
+                {
+                    args.Logger?.WLog("Failed to parse JSON response: " + ex.Message);
+                }
+            }
 
             args.UpdateVariables(new Dictionary<string, object>{
                 { "web.StatusCode", (int)result.StatusCode },

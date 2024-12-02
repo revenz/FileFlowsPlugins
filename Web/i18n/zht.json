@@ -58,6 +58,8 @@
           "HeadersValue": "值",
           "Method": "方法",
           "Method-Help": "發送此請求時使用的網絡方法",
+          "ResponseVariable": "回應變數",
+          "ResponseVariable-Help": "保存JSON回應的變數名稱。如果回應不是有效的JSON，則不會設置此變數。",
           "Url": "URL",
           "Url-Help": "請求的URL"
         },
