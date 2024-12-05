@@ -39,18 +39,14 @@ public class VariableExists: Node
             return -1;
         }
 
-        if (args.Variables.TryGetValue(variable, out var value) == false)
+        var value = VariablesHelper.ResolveVariable(args.Variables, variable);
+        if (value == null)
         {
             args.Logger?.ILog($"Variable '{variable}' does not exist");
             return 2;
         }
-        if (value == null)
-        {
-            args.Logger?.ILog($"Variable '{variable}' exists but is null");
-            return 2;
-        }
         
-        args.Logger?.ILog($"Variable '{variable}' exists and is not null");
+        args.Logger?.ILog($"Variable '{variable}' exists");
         return 1;
     }
 }

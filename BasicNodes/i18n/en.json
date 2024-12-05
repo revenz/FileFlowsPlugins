@@ -9,17 +9,6 @@
   },
   "Flow": {
     "Parts": {
-      "LogVariables": {
-        "Description": "Logs all the variables in the flow to the file log for debugging purposes.",
-        "Label": "Log Variables",
-        "Fields": {
-          "Recursive": "Detailed Logging",
-          "Recursive-Help": "When enabled, complex variables will include all their nested properties in the log."
-        },
-        "Outputs": {
-          "1": "Variables have been logged successfully."
-        }
-      },
       "BatchScript": {
         "Description": "Allows you to execute a batch (.bat) script in a Windows environment.",
         "Label": "Batch Script (.bat)",
@@ -450,6 +439,17 @@
         "Outputs": {
           "1": "Image was logged",
           "2": "Image failed to be logged"
+        }
+      },
+      "LogVariables": {
+        "Description": "Logs all the variables in the flow to the file log for debugging purposes.",
+        "Label": "Log Variables",
+        "Fields": {
+          "Recursive": "Detailed Logging",
+          "Recursive-Help": "When enabled, complex variables will include all their nested properties in the log."
+        },
+        "Outputs": {
+          "1": "Variables have been logged successfully."
         }
       },
       "Matches": {

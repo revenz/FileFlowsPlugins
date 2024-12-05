@@ -8,18 +8,7 @@
     }
   },
   "Flow": {
-    "Parts": {"LogVariables": {
-      "Description": "Registra todas as variáveis do fluxo no arquivo de log para depuração.",
-      "Label": "Registrar Variáveis",
-      "Fields": {
-        "Recursive": "Registro Detalhado",
-        "Recursive-Help": "Quando ativado, as variáveis complexas incluirão todas as suas propriedades aninhadas no log."
-      },
-      "Outputs": {
-        "1": "As variáveis foram registradas com sucesso."
-      }
-    },
-
+    "Parts": {
       "BatchScript": {
         "Description": "Permite que você execute um script em lote (.bat) em um ambiente Windows.",
         "Label": "Script em lote (.bat)",
@@ -450,6 +439,17 @@
         "Outputs": {
           "1": "Imagem foi registrada",
           "2": "Falha ao registrar a imagem"
+        }
+      },
+      "LogVariables": {
+        "Description": "Registra todas as variáveis do fluxo no arquivo de log para depuração.",
+        "Label": "Registrar Variáveis",
+        "Fields": {
+          "Recursive": "Registro Detalhado",
+          "Recursive-Help": "Quando ativado, as variáveis complexas incluirão todas as suas propriedades aninhadas no log."
+        },
+        "Outputs": {
+          "1": "As variáveis foram registradas com sucesso."
         }
       },
       "Matches": {

@@ -8,18 +8,7 @@
     }
   },
   "Flow": {
-    "Parts": {"LogVariables": {
-      "Description": "Registra tutte le variabili del flusso nel file di log per il debug.",
-      "Label": "Registra Variabili",
-      "Fields": {
-        "Recursive": "Registrazione Dettagliata",
-        "Recursive-Help": "Se abilitato, le variabili complesse includeranno tutte le loro proprietà nidificate nel log."
-      },
-      "Outputs": {
-        "1": "Le variabili sono state registrate con successo."
-      }
-    },
-
+    "Parts": {
       "BatchScript": {
         "Description": "Ti consente di eseguire uno script batch (.bat) in un ambiente Windows.",
         "Label": "Script Batch (.bat)",
@@ -450,6 +439,17 @@
         "Outputs": {
           "1": "L'immagine è stata registrata",
           "2": "Impossibile registrare l'immagine"
+        }
+      },
+      "LogVariables": {
+        "Description": "Registra tutte le variabili del flusso nel file di log per il debug.",
+        "Label": "Registra Variabili",
+        "Fields": {
+          "Recursive": "Registrazione Dettagliata",
+          "Recursive-Help": "Se abilitato, le variabili complesse includeranno tutte le loro proprietà nidificate nel log."
+        },
+        "Outputs": {
+          "1": "Le variabili sono state registrate con successo."
         }
       },
       "Matches": {

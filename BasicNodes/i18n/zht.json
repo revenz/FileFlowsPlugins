@@ -8,18 +8,7 @@
     }
   },
   "Flow": {
-    "Parts": {"LogVariables": {
-      "Description": "將流程中的所有變量記錄到日誌文件中以進行調試。",
-      "Label": "記錄變量",
-      "Fields": {
-        "Recursive": "詳細日誌",
-        "Recursive-Help": "啟用後，複雜變量的所有嵌套屬性都將記錄在日誌中。"
-      },
-      "Outputs": {
-        "1": "變量已成功記錄。"
-      }
-    },
-
+    "Parts": {
       "BatchScript": {
         "Description": "允許您在 Windows 環境中執行批次 (.bat) 腳本。",
         "Label": "批次腳本 (.bat)",
@@ -450,6 +439,17 @@
         "Outputs": {
           "1": "圖像已記錄",
           "2": "圖像記錄失敗"
+        }
+      },
+      "LogVariables": {
+        "Description": "將流程中的所有變量記錄到日誌文件中以進行調試。",
+        "Label": "記錄變量",
+        "Fields": {
+          "Recursive": "詳細日誌",
+          "Recursive-Help": "啟用後，複雜變量的所有嵌套屬性都將記錄在日誌中。"
+        },
+        "Outputs": {
+          "1": "變量已成功記錄。"
         }
       },
       "Matches": {

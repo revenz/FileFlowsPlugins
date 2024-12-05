@@ -8,18 +8,7 @@
     }
   },
   "Flow": {
-    "Parts": {"LogVariables": {
-      "Description": "Protokolliert alle Variablen im Ablauf zur Fehlersuche in der Protokolldatei.",
-      "Label": "Variablen protokollieren",
-      "Fields": {
-        "Recursive": "Detailliertes Protokoll",
-        "Recursive-Help": "Wenn aktiviert, werden komplexe Variablen mit all ihren verschachtelten Eigenschaften protokolliert."
-      },
-      "Outputs": {
-        "1": "Variablen wurden erfolgreich protokolliert."
-      }
-    },
-
+    "Parts": {
       "BatchScript": {
         "Description": "Ermöglicht das Ausführen eines Batch (.bat) Skripts in einer Windows-Umgebung.",
         "Label": "Batch-Skript (.bat)",
@@ -450,6 +439,17 @@
         "Outputs": {
           "1": "Bild wurde protokolliert",
           "2": "Bild konnte nicht protokolliert werden"
+        }
+      },
+      "LogVariables": {
+        "Description": "Protokolliert alle Variablen im Ablauf zur Fehlersuche in der Protokolldatei.",
+        "Label": "Variablen protokollieren",
+        "Fields": {
+          "Recursive": "Detailliertes Protokoll",
+          "Recursive-Help": "Wenn aktiviert, werden komplexe Variablen mit all ihren verschachtelten Eigenschaften protokolliert."
+        },
+        "Outputs": {
+          "1": "Variablen wurden erfolgreich protokolliert."
         }
       },
       "Matches": {
