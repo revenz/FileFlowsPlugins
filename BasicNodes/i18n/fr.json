@@ -8,7 +8,18 @@
     }
   },
   "Flow": {
-    "Parts": {
+    "Parts": {"LogVariables": {
+      "Description": "Enregistre toutes les variables du flux dans le fichier journal pour le débogage.",
+      "Label": "Enregistrer les Variables",
+      "Fields": {
+        "Recursive": "Journalisation Détaillée",
+        "Recursive-Help": "Lorsqu'elle est activée, les variables complexes incluront toutes leurs propriétés imbriquées dans le journal."
+      },
+      "Outputs": {
+        "1": "Les variables ont été enregistrées avec succès."
+      }
+    },
+
       "BatchScript": {
         "Description": "Vous permet d'exécuter un script par lots (.bat) dans un environnement Windows.",
         "Label": "Script par lots (.bat)",

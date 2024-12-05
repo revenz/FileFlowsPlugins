@@ -8,7 +8,18 @@
     }
   },
   "Flow": {
-    "Parts": {
+    "Parts": {"LogVariables": {
+      "Description": "Registra todas las variables del flujo en el archivo de registro para depuración.",
+      "Label": "Registrar Variables",
+      "Fields": {
+        "Recursive": "Registro Detallado",
+        "Recursive-Help": "Si está habilitado, las variables complejas incluirán todas sus propiedades anidadas en el registro."
+      },
+      "Outputs": {
+        "1": "Las variables se han registrado con éxito."
+      }
+    },
+
       "BatchScript": {
         "Description": "Te permite ejecutar un script por lotes (.bat) en un entorno de Windows.",
         "Label": "Script por lotes (.bat)",

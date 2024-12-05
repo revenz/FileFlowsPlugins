@@ -8,7 +8,18 @@
     }
   },
   "Flow": {
-    "Parts": {
+    "Parts": {"LogVariables": {
+      "Description": "将流程中的所有变量记录到日志文件中以进行调试。",
+      "Label": "记录变量",
+      "Fields": {
+        "Recursive": "详细日志",
+        "Recursive-Help": "启用后，复杂变量的所有嵌套属性都将记录在日志中。"
+      },
+      "Outputs": {
+        "1": "变量已成功记录。"
+      }
+    },
+
       "BatchScript": {
         "Description": "允许您在 Windows 环境中执行批处理 (.bat) 脚本。",
         "Label": "批处理脚本 (.bat)",

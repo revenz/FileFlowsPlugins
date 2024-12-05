@@ -8,7 +8,18 @@
     }
   },
   "Flow": {
-    "Parts": {
+    "Parts": {"LogVariables": {
+      "Description": "Logt alle variabelen in de flow naar het logbestand voor foutopsporing.",
+      "Label": "Log Variabelen",
+      "Fields": {
+        "Recursive": "Gedetailleerd Loggen",
+        "Recursive-Help": "Als ingeschakeld, worden complexe variabelen met al hun geneste eigenschappen in het logbestand opgenomen."
+      },
+      "Outputs": {
+        "1": "Variabelen zijn succesvol gelogd."
+      }
+    },
+
       "BatchScript": {
         "Description": "Staat je toe om een batch (.bat) script uit te voeren in een Windows omgeving.",
         "Label": "Batch Script (.bat)",

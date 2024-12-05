@@ -8,7 +8,18 @@
     }
   },
   "Flow": {
-    "Parts": {
+    "Parts": {"LogVariables": {
+      "Description": "디버깅을 위해 흐름의 모든 변수를 로그 파일에 기록합니다.",
+      "Label": "변수 로그 기록",
+      "Fields": {
+        "Recursive": "상세 로그",
+        "Recursive-Help": "활성화되면 복잡한 변수의 모든 중첩된 속성이 로그에 포함됩니다."
+      },
+      "Outputs": {
+        "1": "변수가 성공적으로 기록되었습니다."
+      }
+    },
+
       "BatchScript": {
         "Description": "Windows 환경에서 배치(.bat) 스크립트를 실행할 수 있습니다.",
         "Label": "배치 스크립트 (.bat)",
