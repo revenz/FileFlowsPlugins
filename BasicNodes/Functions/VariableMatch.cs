@@ -57,11 +57,7 @@ public class VariableMatch : Node
         args.Logger.ILog("Variable: " + variableName);
         args.Logger.ILog("Test Value: " + test);
 
-        if (args.Variables.TryGetValue(variableName, out object variable) == false)
-        {
-            args.Logger?.ILog("Variable not found");
-            return 2;
-        }
+        var variable = VariablesHelper.ResolveVariable(args.Variables, variableName);
         
         var variableString = variable?.ToString();
         args.Logger.ILog($"Variables[{variableName}]: " + variableString);

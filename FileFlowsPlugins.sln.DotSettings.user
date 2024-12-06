@@ -10,5 +10,6 @@
     &lt;TestId&gt;MSTest::CF96D3D1-1D8B-47F7-BEA7-BB238F7A566A::net8.0::FileFlows.VideoNodes.Tests.FfmpegBuilderTests.FfmpegBuilder_LanguageRemoverTests.RemoveEnglishAudio&lt;/TestId&gt;
     &lt;TestId&gt;MSTest::CF96D3D1-1D8B-47F7-BEA7-BB238F7A566A::net8.0::FileFlows.VideoNodes.Tests.FfmpegBuilderTests.FfmpegBuilder_LanguageRemoverTests&lt;/TestId&gt;
     &lt;TestId&gt;MSTest::7AE24315-9FE7-429F-83D9-C989CFF5420D::net8.0::BasicNodes.Tests.LogVariablesTests&lt;/TestId&gt;
+    &lt;TestId&gt;MSTest::7AE24315-9FE7-429F-83D9-C989CFF5420D::net8.0::BasicNodes.Tests.VariableMatchTests&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
