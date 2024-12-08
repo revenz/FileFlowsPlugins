@@ -593,6 +593,27 @@ public class FfmpegBuilder_BasicTests : VideoTestBase
     }
 
     [TestMethod]
+    public void FfmpegBuilder_SubtitleTrackMerge_FileMatchesTests_WithNumber()
+    {
+        FfmpegBuilderSubtitleTrackMerge ffSubMerge = new();
+        
+        foreach (var item in new[] { 
+
+                     (File: "The Big Bang Theory_S01E01_Pilot.1.en.closedcaptions.srt", Language: "English (CC)", IsMatch: true, Forced: false),
+                     (File: "The Big Bang Theory_S01E01_Pilot.2.en.closedcaptions.srt", Language: "English (CC)", IsMatch: true, Forced: false),
+                     (File: "The Big Bang Theory_S01E01_Pilot.1.en.srt", Language: "English", IsMatch: true, Forced: false),
+                     (File: "The Big Bang Theory_S01E01_Pilot.1.it.closedcaptions.srt", Language: "Italian (CC)", IsMatch: true, Forced: false),
+                     (File: "The Big Bang Theory_S01E01_Pilot.1.it.forced.srt", Language: "Italian", IsMatch: true, Forced: true),
+                 })
+        {
+            bool isMatch = ffSubMerge.FilenameMatches("The Big Bang Theory_S01E01_Pilot.mp4", item.File, out string lang, out bool forced);
+            Assert.AreEqual(item.IsMatch, isMatch, "Not match: " + item.File);
+            Assert.AreEqual(item.Forced, forced);
+            Assert.AreEqual(item.Language, lang, "Language not matching in: " + item.Language);
+        }
+    }
+    
+    [TestMethod]
     public void FfmpegBuilder_Scale()
     {
         FfmpegBuilderVideoCodec ffCodec = new();

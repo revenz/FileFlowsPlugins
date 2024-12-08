@@ -160,7 +160,6 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
 
             language = language?.EmptyAsNull() ?? args.ReplaceVariables(Language ?? string.Empty, stripMissing: true);
             forced |= Forced;
-            
 
             string subTitle = args.ReplaceVariables(Title ?? string.Empty, stripMissing: true)?.EmptyAsNull() ?? language ?? string.Empty;
             
@@ -270,6 +269,9 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
             if (inputName.ToLowerInvariant().Equals(stripLang.ToLowerInvariant()))
                 return true;
         }
+
+        if (otherName.StartsWith(inputName, StringComparison.InvariantCultureIgnoreCase))
+            return true;
 
         return false;
 
