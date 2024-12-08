@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using FileFlows.Web.Helpers;
+using Microsoft.VisualStudio.TestTools.UnitTesting.Logging;
 
 namespace FileFlows.Web.FlowElements;
 
@@ -156,7 +157,14 @@ public class WebRequest : Node
                     if (string.IsNullOrEmpty(header.Key) || string.IsNullOrEmpty(header.Value))
                         continue;
 
-                    message.Headers.Add(header.Key, header.Value);
+                    var headerKey = args.ReplaceVariables(header.Key, stripMissing: true);
+                    var headerValue = args.ReplaceVariables(header.Value, stripMissing:true);
+                    
+                    if (string.IsNullOrEmpty(headerKey) || string.IsNullOrEmpty(headerValue))
+                        continue;
+                    
+                    args.Logger?.ILog($"Header: {headerKey} = {headerValue}");
+                    message.Headers.Add(headerKey, headerValue);
                 }
             }
 
