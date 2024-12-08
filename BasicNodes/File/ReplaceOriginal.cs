@@ -83,6 +83,7 @@ public class ReplaceOriginal : Node
                 args.Logger?.ELog("Failed to move file to: " + dest + Environment.NewLine + error);
                 return -1;
             }
+            args.SetWorkingFile(dest);
 
             if (string.Equals(dest, args.FileName, StringComparison.CurrentCultureIgnoreCase) == false)
             {
