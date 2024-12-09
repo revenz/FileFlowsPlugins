@@ -1,13 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using FileFlows.Web.Helpers;
-using Microsoft.VisualStudio.TestTools.UnitTesting.Logging;
 
 namespace FileFlows.Web.FlowElements;
-
-using FileFlows.Plugin;
-using FileFlows.Plugin.Attributes;
-using System;
-using System.Text;
 
 /// <summary>
 /// Flow element that makes a web request
