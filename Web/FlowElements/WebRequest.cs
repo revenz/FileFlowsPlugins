@@ -69,6 +69,8 @@ public class WebRequest : Node
     /// </summary>
     [Select(nameof(ContentTypeOptions), 3)]
     public string ContentType { get; set; } = null!;
+    
+    const string CONTENT_TYPE_FORMDATA = "application/x-www-form-urlencoded";
 
     private static List<ListOption>? _ContentTypeOptions;
     /// <summary>
@@ -84,7 +86,7 @@ public class WebRequest : Node
                 {
                     new () { Label = "None", Value = ""},
                     new () { Label = "JSON", Value = "application/json"},
-                    new () { Label = "Form Data", Value = "application/x-www-form-urlencoded"},
+                    new () { Label = "Form Data", Value = CONTENT_TYPE_FORMDATA},
                 };
             }
             return _ContentTypeOptions;
@@ -171,7 +173,30 @@ public class WebRequest : Node
             if (string.IsNullOrEmpty(this.ContentType) == false && method != HttpMethod.Get && string.IsNullOrWhiteSpace(this.Body) == false)
             {
                 string body = args.ReplaceVariables(this.Body, stripMissing: false);
-                message.Content = new StringContent(body, Encoding.UTF8, this.ContentType?.EmptyAsNull() ?? "application/json");
+                if (this.ContentType.Equals(CONTENT_TYPE_FORMDATA, StringComparison.OrdinalIgnoreCase))
+                {
+                    // Create a MultipartFormDataContent for form-data
+                    var multipartContent = new MultipartFormDataContent();
+
+                    // Add content to the form-data. Parse `Body` if it contains multiple fields.
+                    // Example: Body = "field1=value1&field2=value2"
+                    var keyValuePairs = body.Split('&')
+                        .Select(p => p.Split('='))
+                        .Where(parts => parts.Length == 2)
+                        .Select(parts => new KeyValuePair<string, string>(parts[0], parts[1]));
+
+                    foreach (var kvp in keyValuePairs)
+                    {
+                        args.Logger?.ILog($"Form Data: {kvp.Key} = {kvp.Value}");
+                        multipartContent.Add(new StringContent(kvp.Value), kvp.Key);
+                    }
+
+                    message.Content = multipartContent;
+                }
+                else
+                {
+                    message.Content = new StringContent(body, Encoding.UTF8, this.ContentType?.EmptyAsNull() ?? "application/json");
+                }
             }
 
             var result = client.Send(message);
