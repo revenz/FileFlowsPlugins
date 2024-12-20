@@ -47,6 +47,9 @@
     <Reference Include="FileFlows.Plugin">
       <HintPath>..\FileFlows.Plugin.dll</HintPath>
     </Reference>
+      <Reference Include="FileFlows.Common">
+          <HintPath>..\FileFlows.Common.dll</HintPath>
+      </Reference>
   </ItemGroup>
 
 

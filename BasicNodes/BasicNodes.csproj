@@ -34,6 +34,10 @@ This plugin is required for FileFlows to work.</Description>
       <HintPath>..\FileFlows.Plugin.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="Common">
+      <HintPath>..\FileFlows.Common.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Update="i18n\*.json">

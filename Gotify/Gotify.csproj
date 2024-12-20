@@ -18,6 +18,10 @@
     <Reference Include="FileFlows.Plugin">
       <HintPath>..\FileFlows.Plugin.dll</HintPath>
     </Reference>
+    <Reference Include="Common">
+      <HintPath>..\FileFlows.Common.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
   </ItemGroup>
   <ItemGroup Condition=" '$(Configuration)' == 'Debug'">
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
