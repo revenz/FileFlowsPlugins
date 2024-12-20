@@ -34,7 +34,7 @@ public class FileNameMatches: Node
     public override int Execute(NodeParameters args)
     {
         var value = args.ReplaceVariables(Value, stripMissing: true);
-        var matches = args.StringHelper.Matches(args.LibraryFileName, Value);
+        var matches = args.StringHelper.Matches(args.LibraryFileName, value);
         if (matches)
         {
             args.Logger?.ILog("Matches");
