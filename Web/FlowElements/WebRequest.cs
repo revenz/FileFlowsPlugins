@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using FileFlows.Web.Helpers;
+using HttpMethod = System.Net.Http.HttpMethod;
 
 namespace FileFlows.Web.FlowElements;
 
