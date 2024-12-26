@@ -7,22 +7,19 @@ namespace FileFlows.ResellerPlugin.FlowElements;
 /// </summary>
 public class MoveToUserFolder: Node
 {
-    /// <summary>
-    /// Gets the number of inputs
-    /// </summary>
+    /// <inheritdoc />
     public override int Inputs => 1;
-    /// <summary>
-    /// Gets the type of flow element
-    /// </summary>
+    /// <inheritdoc />
+    public override int Outputs => 1;
+    /// <inheritdoc />
     public override FlowElementType Type => FlowElementType.Process;
-    /// <summary>
-    /// Gets the icon for the flow element
-    /// </summary>
+    /// <inheritdoc />
     public override string Icon => "fas fa-file-export";
-    /// <summary>
-    /// Gets the help URL
-    /// </summary>
+    /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/reseller/move-to-user-folder";
+    
+    /// <inheritdoc />
+    public override string Group => "Reseller";
 
     /// <inheritdoc />
     public override int Execute(NodeParameters args)
