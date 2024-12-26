@@ -43,6 +43,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginTestLibrary", "Plugin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Docker", "Docker\Docker.csproj", "{2E26B8A7-269B-4E0C-A4D6-936B6FEC01F5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reseller", "Reseller\Reseller.csproj", "{AB24139B-9B44-47EA-829A-954CFFC23A65}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -129,6 +131,10 @@ Global
 		{2E26B8A7-269B-4E0C-A4D6-936B6FEC01F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E26B8A7-269B-4E0C-A4D6-936B6FEC01F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E26B8A7-269B-4E0C-A4D6-936B6FEC01F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB24139B-9B44-47EA-829A-954CFFC23A65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB24139B-9B44-47EA-829A-954CFFC23A65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB24139B-9B44-47EA-829A-954CFFC23A65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB24139B-9B44-47EA-829A-954CFFC23A65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

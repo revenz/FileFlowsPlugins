@@ -1,0 +1,19 @@
+{
+  "Flow": {
+    "Parts": {
+      "MoveToUserFolder": {
+        "Description": "Flyttar arbetsfilen till användarens utmatningskatalog.",
+        "Label": "Flytta till Användarmapp",
+        "Outputs": {
+          "1": "Filen flyttades framgångsrikt"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Web": {
+      "Description": "Plugin som tillhandahåller flödesrelaterade element för återförsäljare",
+      "Label": "Återförsäljare"
+    }
+  }
+}

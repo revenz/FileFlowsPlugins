@@ -1,0 +1,19 @@
+{
+  "Flow": {
+    "Parts": {
+      "MoveToUserFolder": {
+        "Description": "Verplaatst het werkbestand naar de uitvoermap van de gebruiker.",
+        "Label": "Verplaats naar Gebruikersmap",
+        "Outputs": {
+          "1": "Bestand is succesvol verplaatst"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Web": {
+      "Description": "Plugin die reseller-gerelateerde flow-elementen biedt",
+      "Label": "Reseller"
+    }
+  }
+}

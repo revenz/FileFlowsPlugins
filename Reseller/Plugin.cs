@@ -1,4 +1,4 @@
-namespace FileFlows.Web;
+namespace FileFlows.ResellerPlugin;
 
 /// <summary>
 /// Plugin Information
@@ -6,13 +6,13 @@ namespace FileFlows.Web;
 public class Plugin : FileFlows.Plugin.IPlugin
 {
     /// <inheritdoc />
-    public Guid Uid => new Guid("162b4ed0-da61-42de-85e1-576b9d7a2f82");
+    public Guid Uid => new Guid("ba8cfaa3-4ac0-4a39-9e1b-a48def94eb3d");
     /// <inheritdoc />
-    public string Name => "Web";
+    public string Name => "Reseller";
     /// <inheritdoc />
-    public string MinimumVersion => "24.8.1.3444";
+    public string MinimumVersion => "24.12.4.4168";
     /// <inheritdoc />
-    public string Icon => "fas fa-globe";
+    public string Icon => "fas fa-people-carry";
     
     /// <inheritdoc />
     public void Init()

@@ -1,0 +1,19 @@
+{
+  "Flow": {
+    "Parts": {
+      "MoveToUserFolder": {
+        "Description": "Déplace le fichier de travail dans le répertoire de sortie de l'utilisateur.",
+        "Label": "Déplacer vers le Dossier Utilisateur",
+        "Outputs": {
+          "1": "Le fichier a été déplacé avec succès"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Web": {
+      "Description": "Plugin qui fournit des éléments de flux liés aux revendeurs",
+      "Label": "Revendeur"
+    }
+  }
+}

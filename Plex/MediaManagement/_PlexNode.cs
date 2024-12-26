@@ -50,7 +50,7 @@ public abstract class PlexNode:Node
         args.Logger?.ILog("Working File (Unmapped): " + path);
         if (args.IsDirectory == false)
         {
-            // juse use /
+            // just use /
             path = path.Replace("\\", "/");
             path = path[..path.LastIndexOf("/", StringComparison.Ordinal)];
         }

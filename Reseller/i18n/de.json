@@ -1,0 +1,19 @@
+{
+  "Flow": {
+    "Parts": {
+      "MoveToUserFolder": {
+        "Description": "Verschiebt die Arbeitsdatei in das Ausgabeverzeichnis des Benutzers.",
+        "Label": "In Benutzerordner verschieben",
+        "Outputs": {
+          "1": "Datei wurde erfolgreich verschoben"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Web": {
+      "Description": "Plugin, das flow-bezogene Elemente für Reseller bereitstellt",
+      "Label": "Reseller"
+    }
+  }
+}
