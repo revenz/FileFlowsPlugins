@@ -124,7 +124,7 @@ public abstract class ImageBaseNode:Node
         else
             args.Variables.Remove("img.DateTaken");
         
-        
+        args.Logger?.ILog("About to set image mime/type: " + imageInfo.Type + " = " + imageInfo.Format);
         switch (imageInfo.Type)
         {
             case ImageType.Bmp:
