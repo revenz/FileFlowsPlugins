@@ -91,7 +91,7 @@ public class AudioInfoTests: AudioTestBase
         Assert.AreEqual(192 * 1024, audio.Bitrate);
 
         var md = new Dictionary<string, object>();
-        convert.SetAudioInfo(args, audio, md);
+        convert.SetAudioInfo(args, audio, md, args.WorkingFile);
         
         Assert.AreEqual((192 * 1024).ToString(), md["audio.Bitrate"].ToString());
         

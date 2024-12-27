@@ -163,10 +163,13 @@ public class Zip : Node
                 args.Logger?.ELog(args.FailureReason);
                 return -1;
             }
-            
-            if(SetWorkingFile)
+
+            if (SetWorkingFile)
+            {
                 args.SetWorkingFile(destFile);
-            
+                args.SetMimeType("application/zip");
+            }
+
             args.Logger?.ILog("Zip created at: " + destFile);
             return 1;
         }

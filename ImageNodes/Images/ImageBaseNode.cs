@@ -124,6 +124,38 @@ public abstract class ImageBaseNode:Node
         else
             args.Variables.Remove("img.DateTaken");
         
+        
+        switch (imageInfo.Type)
+        {
+            case ImageType.Bmp:
+                args.SetMimeType("image/bmp");
+                break;
+            case ImageType.Jpeg:
+                args.SetMimeType("image/jpeg");
+                break;
+            case ImageType.Png:
+                args.SetMimeType("image/png");
+                break;
+            case ImageType.Gif:
+                args.SetMimeType("image/gif");
+                break;
+            case ImageType.Tiff:
+                args.SetMimeType("image/tiff");
+                break;
+            case ImageType.Webp:
+                args.SetMimeType("image/webp");
+                break;
+            case ImageType.Pbm:
+                args.SetMimeType("image/pbm");
+                break;
+            case ImageType.Tga:
+                args.SetMimeType("image/tga");
+                break;
+            case ImageType.Heic:
+                args.SetMimeType("image/heic");
+                break;
+        }
+        
         args.SetMetadata(metadata);
     }
     
