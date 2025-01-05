@@ -73,7 +73,7 @@
         "Label": "電視劇集查找",
         "Fields": {
           "UseFolderName": "使用資料夾名稱",
-          "UseFolderName-Help": "如果應使用資料夾名稱而不是文件名。\n\n注意：如果資料夾以Season、Staffel、Saison或Specials開頭，將使用父資料夾。"
+          "UseFolderName-Help": "如果應使用資料夾名稱而不是文件名。\n\n注意：如果資料夾以 Season/Staffel/Saison/Specials/S[0-9]+ 開頭，將使用父資料夾。"
         },
         "Outputs": {
           "1": "找到電視劇集",
@@ -85,7 +85,7 @@
         "Label": "電視節目查找",
         "Fields": {
           "UseFolderName": "使用資料夾名稱",
-          "UseFolderName-Help": "如果應使用資料夾名稱而不是文件名。\n\n注意：如果資料夾以Season、Staffel、Saison或Specials開頭，將使用父資料夾。"
+          "UseFolderName-Help": "如果應使用資料夾名稱而不是文件名。\n\n注意：如果資料夾以 Season/Staffel/Saison/Specials/S[0-9]+ 開頭，將使用父資料夾。"
         },
         "Outputs": {
           "1": "找到電視節目",
