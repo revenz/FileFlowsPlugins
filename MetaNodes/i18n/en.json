@@ -73,7 +73,7 @@
         "Label": "TV Episode Lookup",
         "Fields": {
           "UseFolderName": "Use Folder Name",
-          "UseFolderName-Help": "If the folder name should be used instead of the filename.\n\nNote if the folder starts with Season or Staffel or Saison or Specials the parent folder will be used."
+          "UseFolderName-Help": "If the folder name should be used instead of the filename.\n\nNote if the folder starts with Season or Staffel or Saison or Specials or regex S[0-9]+ the parent folder will be used."
         },
         "Outputs": {
           "1": "TV Episode found",
@@ -85,7 +85,7 @@
         "Label": "TV Show Lookup",
         "Fields": {
           "UseFolderName": "Use Folder Name",
-          "UseFolderName-Help": "If the folder name should be used instead of the filename.\n\nNote if the folder starts with Season or Staffel or Saison or Specials the parent folder will be used."
+          "UseFolderName-Help": "If the folder name should be used instead of the filename.\n\nNote if the folder starts with Season or Staffel or Saison or Specials or regex S[0-9]+ the parent folder will be used."
         },
         "Outputs": {
           "1": "TV Show found",
