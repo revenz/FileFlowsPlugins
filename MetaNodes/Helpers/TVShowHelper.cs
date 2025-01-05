@@ -12,7 +12,7 @@ public class TVShowHelper(NodeParameters args)
         if (useFolderName)
         {
             lookupName = FileHelper.GetDirectoryName(filename);
-            if (Regex.IsMatch(lookupName, "^(Season|Staffel|Saison|Specials)", RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(lookupName, "^(Season|Staffel|Saison|Specials|S[0-9]+)", RegexOptions.IgnoreCase))
                 lookupName = FileHelper.GetDirectoryName(FileHelper.GetDirectory(filename));
         }
         else
