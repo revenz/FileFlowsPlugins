@@ -73,7 +73,7 @@
         "Label": "TV 에피소드 검색",
         "Fields": {
           "UseFolderName": "폴더 이름 사용",
-          "UseFolderName-Help": "파일 이름 대신 폴더 이름을 사용해야 하는 경우.\n\n폴더가 Season, Staffel, Saison 또는 Specials로 시작하면 상위 폴더가 사용됩니다."
+          "UseFolderName-Help": "파일 이름 대신 폴더 이름을 사용해야 하는 경우.\n\n참고: 폴더가 Season/Staffel/Saison/Specials/S[0-9]+로 시작하는 경우 상위 폴더가 사용됩니다."
         },
         "Outputs": {
           "1": "TV 에피소드 발견",
@@ -85,7 +85,7 @@
         "Label": "TV 쇼 검색",
         "Fields": {
           "UseFolderName": "폴더 이름 사용",
-          "UseFolderName-Help": "파일 이름 대신 폴더 이름을 사용해야 하는 경우.\n\n폴더가 Season, Staffel, Saison 또는 Specials로 시작하면 상위 폴더가 사용됩니다."
+          "UseFolderName-Help": "파일 이름 대신 폴더 이름을 사용해야 하는 경우.\n\n참고: 폴더가 Season/Staffel/Saison/Specials/S[0-9]+로 시작하는 경우 상위 폴더가 사용됩니다."
         },
         "Outputs": {
           "1": "TV 쇼 발견",
