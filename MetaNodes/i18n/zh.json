@@ -73,7 +73,7 @@
         "Label": "电视集搜索",
         "Fields": {
           "UseFolderName": "使用文件夹名称",
-          "UseFolderName-Help": "如果应使用文件夹名称而不是文件名。\n\n注意，如果文件夹以季节、Staffel、Saison 或 Specials 开头，将使用父文件夹。"
+          "UseFolderName-Help": "如果应使用文件夹名称而不是文件名。\n\n注意，如果文件夹以季节、Season/Staffel/Saison/Specials/S[0-9]+ 开头，将使用父文件夹。"
         },
         "Outputs": {
           "1": "找到电视集",
@@ -85,7 +85,7 @@
         "Label": "电视节目搜索",
         "Fields": {
           "UseFolderName": "使用文件夹名称",
-          "UseFolderName-Help": "如果应使用文件夹名称而不是文件名。\n\n注意，如果文件夹以季节、Staffel、Saison 或 Specials 开头，将使用父文件夹。"
+          "UseFolderName-Help": "如果应使用文件夹名称而不是文件名。\n\n注意，如果文件夹以季节、Season/Staffel/Saison/Specials/S[0-9]+ 开头，将使用父文件夹。"
         },
         "Outputs": {
           "1": "找到电视节目",
