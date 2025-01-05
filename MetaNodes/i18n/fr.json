@@ -73,7 +73,7 @@
         "Label": "Recherche d'Épisode de Télévision",
         "Fields": {
           "UseFolderName": "Utiliser le nom du dossier",
-          "UseFolderName-Help": "Si le nom du dossier doit être utilisé au lieu du nom de fichier.\n\nRemarque : si le dossier commence par Saison ou Spéciaux, le dossier parent sera utilisé."
+          "UseFolderName-Help": "Si le nom du dossier doit être utilisé au lieu du nom de fichier.\n\nRemarque : si le dossier commence par Season/Staffel/Saison/Specials/S[0-9]+, le dossier parent sera utilisé."
         },
         "Outputs": {
           "1": "Épisode de télévision trouvé",
@@ -85,7 +85,7 @@
         "Label": "Recherche d'Émission de Télévision",
         "Fields": {
           "UseFolderName": "Utiliser le nom du dossier",
-          "UseFolderName-Help": "Si le nom du dossier doit être utilisé au lieu du nom de fichier.\n\nRemarque : si le dossier commence par Saison ou Spéciaux, le dossier parent sera utilisé."
+          "UseFolderName-Help": "Si le nom du dossier doit être utilisé au lieu du nom de fichier.\n\nRemarque : si le dossier commence par Season/Staffel/Saison/Specials/S[0-9]+, le dossier parent sera utilisé."
         },
         "Outputs": {
           "1": "Émission de télévision trouvée",
