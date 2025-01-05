@@ -73,7 +73,7 @@
         "Label": "TV-avsnittssökning",
         "Fields": {
           "UseFolderName": "Använd mappnamn",
-          "UseFolderName-Help": "Om mappnamnet ska användas istället för filnamnet.\n\nObservera om mappen börjar med Säsong eller Staffel eller Saison eller Specials kommer den överordnade mappen att användas."
+          "UseFolderName-Help": "Om mappnamnet ska användas istället för filnamnet.\n\nObservera om mappen börjar med Season/Staffel/Saison/Specials/S[0-9]+ kommer den överordnade mappen att användas."
         },
         "Outputs": {
           "1": "TV-avsnitt hittat",
@@ -85,7 +85,7 @@
         "Label": "TV-showsökning",
         "Fields": {
           "UseFolderName": "Använd mappnamn",
-          "UseFolderName-Help": "Om mappnamnet ska användas istället för filnamnet.\n\nObservera om mappen börjar med Säsong eller Staffel eller Saison eller Specials kommer den överordnade mappen att användas."
+          "UseFolderName-Help": "Om mappnamnet ska användas istället för filnamnet.\n\nObservera om mappen börjar med Season/Staffel/Saison/Specials/S[0-9]+ kommer den överordnade mappen att användas."
         },
         "Outputs": {
           "1": "TV-show hittad",
