@@ -48,19 +48,19 @@ public class VideoResolution: VideoNode
             return -1; // no video streams detected
         }
 
-        if (video.Width > 3700)
+        if (video.Width >= 3700 || video.Height >= 2160)
         {
             args.Logger?.ILog($"4k Video Detected: {video.Width}x{video.Height}");
             return 1; // 4k 
         }
 
-        if (video.Width > 1800)
+        if (video.Width >= 1800 || video.Height >= 1080)
         {
             args.Logger?.ILog($"1080p Video Detected: {video.Width}x{video.Height}");
             return 2; // 1080p
         }
 
-        if (video.Width > 1200)
+        if (video.Width >= 1200 || video.Height >= 720)
         {
             args.Logger?.ILog($"720p Video Detected: {video.Width}x{video.Height}");
             return 3; // 720p
