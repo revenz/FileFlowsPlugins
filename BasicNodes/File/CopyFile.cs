@@ -115,8 +115,9 @@ public class CopyFile : Node
         //    return -1;
         args.Logger?.ILog("File to copy: " + inputFile);
         args.Logger?.ILog("Destination: " + dest);
+        
 
-        if (args.FileService.FileCopy(inputFile, dest, true).Failed(out string error))
+        if (args.CopyFile(inputFile, dest).Failed(out string error))
         {
             args.FailureReason = "Failed to copy file: " + error;
             args.Logger?.ELog(args.FailureReason);
