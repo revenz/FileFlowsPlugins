@@ -30,7 +30,7 @@
         "Label": "PDF a File di Testo",
         "Fields": {
           "File": "File",
-          "File-Description": "Il file in cui verrà scritto il contenuto del PDF. Se il file esiste già, verrà sovrascritto."
+          "File-Help": "Il file in cui verrà scritto il contenuto del PDF. Se il file esiste già, verrà sovrascritto."
         },
         "Outputs": {
           "1": "PDF salvato con successo in un file di testo.",

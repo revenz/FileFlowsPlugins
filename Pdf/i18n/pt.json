@@ -30,7 +30,7 @@
         "Label": "PDF Para Arquivo de Texto",
         "Fields": {
           "File": "Arquivo",
-          "File-Description": "O arquivo para salvar o conteúdo do PDF. Se este arquivo já existir, ele será substituído."
+          "File-Help": "O arquivo para salvar o conteúdo do PDF. Se este arquivo já existir, ele será substituído."
         },
         "Outputs": {
           "1": "O PDF foi salvo com sucesso no arquivo de texto.",

@@ -30,7 +30,7 @@
         "Label": "PDF 转文本文件",
         "Fields": {
           "File": "文件",
-          "File-Description": "要将 PDF 内容写入的文件。如果此文件已存在，将被替换。"
+          "File-Help": "要将 PDF 内容写入的文件。如果此文件已存在，将被替换。"
         },
         "Outputs": {
           "1": "PDF 成功保存到文本文件。",

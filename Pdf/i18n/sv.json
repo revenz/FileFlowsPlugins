@@ -30,7 +30,7 @@
         "Label": "PDF Till Textfil",
         "Fields": {
           "File": "Fil",
-          "File-Description": "Filen där innehållet från PDF:en ska sparas. Om denna fil redan finns kommer den att ersättas."
+          "File-Help": "Filen där innehållet från PDF:en ska sparas. Om denna fil redan finns kommer den att ersättas."
         },
         "Outputs": {
           "1": "PDF sparades framgångsrikt till textfil.",

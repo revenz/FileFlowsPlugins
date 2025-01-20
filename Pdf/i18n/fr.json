@@ -30,7 +30,7 @@
         "Label": "PDF vers Fichier Texte",
         "Fields": {
           "File": "Fichier",
-          "File-Description": "Le fichier dans lequel le contenu du PDF sera écrit. Si ce fichier existe déjà, il sera remplacé."
+          "File-Help": "Le fichier dans lequel le contenu du PDF sera écrit. Si ce fichier existe déjà, il sera remplacé."
         },
         "Outputs": {
           "1": "PDF enregistré avec succès dans un fichier texte.",

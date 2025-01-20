@@ -30,7 +30,7 @@
         "Label": "PDF zu Textdatei",
         "Fields": {
           "File": "Datei",
-          "File-Description": "Die Datei, in die der PDF-Inhalt geschrieben werden soll. Wenn diese Datei bereits existiert, wird sie überschrieben."
+          "File-Help": "Die Datei, in die der PDF-Inhalt geschrieben werden soll. Wenn diese Datei bereits existiert, wird sie überschrieben."
         },
         "Outputs": {
           "1": "PDF erfolgreich in Textdatei gespeichert.",

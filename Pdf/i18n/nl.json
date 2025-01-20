@@ -30,7 +30,7 @@
         "Label": "PDF Naar Tekstbestand",
         "Fields": {
           "File": "Bestand",
-          "File-Description": "Het bestand om de inhoud van de PDF naar te schrijven. Als dit bestand al bestaat, wordt het overschreven."
+          "File-Help": "Het bestand om de inhoud van de PDF naar te schrijven. Als dit bestand al bestaat, wordt het overschreven."
         },
         "Outputs": {
           "1": "PDF succesvol opgeslagen in tekstbestand.",

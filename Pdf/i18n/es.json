@@ -30,7 +30,7 @@
         "Label": "PDF a Archivo de Texto",
         "Fields": {
           "File": "Archivo",
-          "File-Description": "El archivo donde se guardará el contenido del PDF. Si este archivo ya existe, será reemplazado."
+          "File-Help": "El archivo donde se guardará el contenido del PDF. Si este archivo ya existe, será reemplazado."
         },
         "Outputs": {
           "1": "PDF guardado correctamente en un archivo de texto.",

@@ -30,7 +30,7 @@
         "Label": "PDF To Text File",
         "Fields": {
           "File": "File",
-          "File-Description": "The file to write the PDF contents to. If this file already exists, it will be replaced."
+          "File-Help": "The file to write the PDF contents to. If this file already exists, it will be replaced."
         },
         "Outputs": {
           "1": "PDF successfully saved to text file.",
