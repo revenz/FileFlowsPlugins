@@ -10,7 +10,7 @@ public class PdfToTextFile : Node
     /// <inheritdoc />
     public override int Outputs => 2;
     /// <inheritdoc />
-    public override FlowElementType Type => FlowElementType.Logic;
+    public override FlowElementType Type => FlowElementType.Process;
     /// <inheritdoc />
     public override string Icon => "fas fa-file-pdf";
     /// <inheritdoc />
