@@ -1,0 +1,48 @@
+{
+  "Flow": {
+    "Parts": {
+      "PdfContainsText": {
+        "Description": "Vérifie si un PDF contient le texte spécifié.",
+        "Label": "PDF Contient Texte",
+        "Fields": {
+          "Text": "Texte",
+          "Text-Help": "Le texte à rechercher dans le fichier PDF."
+        },
+        "Outputs": {
+          "1": "Le PDF contient le texte spécifié.",
+          "2": "Le PDF ne contient pas le texte spécifié."
+        }
+      },
+      "PdfMatchesText": {
+        "Description": "Vérifie si un PDF correspond au texte spécifié en utilisant des options avancées.",
+        "Label": "PDF Correspond au Texte",
+        "Fields": {
+          "Text": "Texte",
+          "Text-Help": "Le texte à faire correspondre dans le fichier PDF. Prend en charge des options avancées telles que les expressions régulières, commence par, se termine par, etc."
+        },
+        "Outputs": {
+          "1": "Le PDF correspond au texte spécifié.",
+          "2": "Le PDF ne correspond pas au texte spécifié."
+        }
+      },
+      "PdfToTextFile": {
+        "Description": "Extrait le contenu du fichier PDF dans un fichier texte et met à jour le fichier de travail avec le fichier texte extrait.",
+        "Label": "PDF vers Fichier Texte",
+        "Fields": {
+          "File": "Fichier",
+          "File-Description": "Le fichier dans lequel le contenu du PDF sera écrit. Si ce fichier existe déjà, il sera remplacé."
+        },
+        "Outputs": {
+          "1": "PDF enregistré avec succès dans un fichier texte.",
+          "2": "Aucun contenu texte trouvé à extraire."
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Pdf": {
+      "Description": "Plugin qui fournit des éléments de flux liés aux PDF.",
+      "Label": "PDF"
+    }
+  }
+}

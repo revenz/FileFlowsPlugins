@@ -1,0 +1,48 @@
+{
+  "Flow": {
+    "Parts": {
+      "PdfContainsText": {
+        "Description": "Checks if a PDF contains the specified text.",
+        "Label": "PDF Contains Text",
+        "Fields": {
+          "Text": "Text",
+          "Text-Help": "The text to check for in the PDF file."
+        },
+        "Outputs": {
+          "1": "PDF contains the specified text.",
+          "2": "PDF does not contain the specified text."
+        }
+      },
+      "PdfMatchesText": {
+        "Description": "Tests if a PDF matches the specified text using advanced matching options.",
+        "Label": "PDF Matches Text",
+        "Fields": {
+          "Text": "Text",
+          "Text-Help": "The text to match against in the PDF file. Supports advanced options such as regex, starts with, ends with, etc."
+        },
+        "Outputs": {
+          "1": "PDF matches the specified text.",
+          "2": "PDF does not match the specified text."
+        }
+      },
+      "PdfToTextFile": {
+        "Description": "Extracts the contents of the PDF file to a text file and updates the working file to the extracted text file.",
+        "Label": "PDF To Text File",
+        "Fields": {
+          "File": "File",
+          "File-Description": "The file to write the PDF contents to. If this file already exists, it will be replaced."
+        },
+        "Outputs": {
+          "1": "PDF successfully saved to text file.",
+          "2": "No text content found to extract."
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Pdf": {
+      "Description": "Plugin that provides PDF-related flow elements.",
+      "Label": "PDF"
+    }
+  }
+}

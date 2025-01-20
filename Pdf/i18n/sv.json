@@ -1,0 +1,48 @@
+{
+  "Flow": {
+    "Parts": {
+      "PdfContainsText": {
+        "Description": "Kontrollerar om en PDF innehåller den angivna texten.",
+        "Label": "PDF Innehåller Text",
+        "Fields": {
+          "Text": "Text",
+          "Text-Help": "Texten att söka efter i PDF-filen."
+        },
+        "Outputs": {
+          "1": "PDF innehåller den angivna texten.",
+          "2": "PDF innehåller inte den angivna texten."
+        }
+      },
+      "PdfMatchesText": {
+        "Description": "Testar om en PDF matchar den angivna texten med avancerade matchningsalternativ.",
+        "Label": "PDF Matchar Text",
+        "Fields": {
+          "Text": "Text",
+          "Text-Help": "Texten att matcha mot i PDF-filen. Stödjer avancerade alternativ som regex, börjar med, slutar med, etc."
+        },
+        "Outputs": {
+          "1": "PDF matchar den angivna texten.",
+          "2": "PDF matchar inte den angivna texten."
+        }
+      },
+      "PdfToTextFile": {
+        "Description": "Extraherar innehållet från PDF-filen till en textfil och uppdaterar arbetsfilen till den extraherade textfilen.",
+        "Label": "PDF Till Textfil",
+        "Fields": {
+          "File": "Fil",
+          "File-Description": "Filen där innehållet från PDF:en ska sparas. Om denna fil redan finns kommer den att ersättas."
+        },
+        "Outputs": {
+          "1": "PDF sparades framgångsrikt till textfil.",
+          "2": "Inget textinnehåll hittades att extrahera."
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Pdf": {
+      "Description": "Plugin som tillhandahåller PDF-relaterade flödeselement.",
+      "Label": "PDF"
+    }
+  }
+}

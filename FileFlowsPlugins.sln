@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Docker", "Docker\Docker.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reseller", "Reseller\Reseller.csproj", "{AB24139B-9B44-47EA-829A-954CFFC23A65}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pdf", "Pdf\Pdf.csproj", "{4E968B9E-7B02-4F2B-BA99-F671C9336F0D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -135,6 +137,10 @@ Global
 		{AB24139B-9B44-47EA-829A-954CFFC23A65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB24139B-9B44-47EA-829A-954CFFC23A65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB24139B-9B44-47EA-829A-954CFFC23A65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E968B9E-7B02-4F2B-BA99-F671C9336F0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E968B9E-7B02-4F2B-BA99-F671C9336F0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E968B9E-7B02-4F2B-BA99-F671C9336F0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E968B9E-7B02-4F2B-BA99-F671C9336F0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

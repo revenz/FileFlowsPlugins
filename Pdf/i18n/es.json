@@ -1,0 +1,48 @@
+{
+  "Flow": {
+    "Parts": {
+      "PdfContainsText": {
+        "Description": "Comprueba si un PDF contiene el texto especificado.",
+        "Label": "PDF Contiene Texto",
+        "Fields": {
+          "Text": "Texto",
+          "Text-Help": "El texto a buscar en el archivo PDF."
+        },
+        "Outputs": {
+          "1": "El PDF contiene el texto especificado.",
+          "2": "El PDF no contiene el texto especificado."
+        }
+      },
+      "PdfMatchesText": {
+        "Description": "Comprueba si un PDF coincide con el texto especificado utilizando opciones avanzadas.",
+        "Label": "PDF Coincide con Texto",
+        "Fields": {
+          "Text": "Texto",
+          "Text-Help": "El texto con el que coincidir en el archivo PDF. Admite opciones avanzadas como expresiones regulares, comienza con, termina con, etc."
+        },
+        "Outputs": {
+          "1": "El PDF coincide con el texto especificado.",
+          "2": "El PDF no coincide con el texto especificado."
+        }
+      },
+      "PdfToTextFile": {
+        "Description": "Extrae el contenido del archivo PDF a un archivo de texto y actualiza el archivo de trabajo al archivo de texto extraído.",
+        "Label": "PDF a Archivo de Texto",
+        "Fields": {
+          "File": "Archivo",
+          "File-Description": "El archivo donde se guardará el contenido del PDF. Si este archivo ya existe, será reemplazado."
+        },
+        "Outputs": {
+          "1": "PDF guardado correctamente en un archivo de texto.",
+          "2": "No se encontró contenido de texto para extraer."
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Pdf": {
+      "Description": "Complemento que proporciona elementos de flujo relacionados con PDF.",
+      "Label": "PDF"
+    }
+  }
+}

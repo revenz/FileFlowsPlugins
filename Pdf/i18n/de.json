@@ -1,0 +1,48 @@
+{
+  "Flow": {
+    "Parts": {
+      "PdfContainsText": {
+        "Description": "Überprüft, ob eine PDF-Datei den angegebenen Text enthält.",
+        "Label": "PDF enthält Text",
+        "Fields": {
+          "Text": "Text",
+          "Text-Help": "Der Text, nach dem in der PDF-Datei gesucht werden soll."
+        },
+        "Outputs": {
+          "1": "PDF enthält den angegebenen Text.",
+          "2": "PDF enthält den angegebenen Text nicht."
+        }
+      },
+      "PdfMatchesText": {
+        "Description": "Prüft, ob eine PDF-Datei mit dem angegebenen Text übereinstimmt, indem erweiterte Optionen verwendet werden.",
+        "Label": "PDF stimmt mit Text überein",
+        "Fields": {
+          "Text": "Text",
+          "Text-Help": "Der Text, der mit der PDF-Datei abgeglichen werden soll. Unterstützt erweiterte Optionen wie Regex, beginnt mit, endet mit, usw."
+        },
+        "Outputs": {
+          "1": "PDF stimmt mit dem angegebenen Text überein.",
+          "2": "PDF stimmt nicht mit dem angegebenen Text überein."
+        }
+      },
+      "PdfToTextFile": {
+        "Description": "Extrahiert den Inhalt der PDF-Datei in eine Textdatei und aktualisiert die Arbeitsdatei auf die extrahierte Textdatei.",
+        "Label": "PDF zu Textdatei",
+        "Fields": {
+          "File": "Datei",
+          "File-Description": "Die Datei, in die der PDF-Inhalt geschrieben werden soll. Wenn diese Datei bereits existiert, wird sie überschrieben."
+        },
+        "Outputs": {
+          "1": "PDF erfolgreich in Textdatei gespeichert.",
+          "2": "Kein Textinhalt zum Extrahieren gefunden."
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Pdf": {
+      "Description": "Plugin, das PDF-bezogene Flow-Elemente bereitstellt.",
+      "Label": "PDF"
+    }
+  }
+}

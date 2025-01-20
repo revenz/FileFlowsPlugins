@@ -1,0 +1,48 @@
+{
+  "Flow": {
+    "Parts": {
+      "PdfContainsText": {
+        "Description": "Controleert of een PDF de opgegeven tekst bevat.",
+        "Label": "PDF Bevat Tekst",
+        "Fields": {
+          "Text": "Tekst",
+          "Text-Help": "De tekst om te controleren in het PDF-bestand."
+        },
+        "Outputs": {
+          "1": "PDF bevat de opgegeven tekst.",
+          "2": "PDF bevat de opgegeven tekst niet."
+        }
+      },
+      "PdfMatchesText": {
+        "Description": "Controleert of een PDF overeenkomt met de opgegeven tekst met behulp van geavanceerde opties.",
+        "Label": "PDF Komt Overeen Met Tekst",
+        "Fields": {
+          "Text": "Tekst",
+          "Text-Help": "De tekst om te vergelijken in het PDF-bestand. Ondersteunt geavanceerde opties zoals regex, begint met, eindigt met, enz."
+        },
+        "Outputs": {
+          "1": "PDF komt overeen met de opgegeven tekst.",
+          "2": "PDF komt niet overeen met de opgegeven tekst."
+        }
+      },
+      "PdfToTextFile": {
+        "Description": "Extraheert de inhoud van het PDF-bestand naar een tekstbestand en wijzigt het werkbestand naar het geëxtraheerde tekstbestand.",
+        "Label": "PDF Naar Tekstbestand",
+        "Fields": {
+          "File": "Bestand",
+          "File-Description": "Het bestand om de inhoud van de PDF naar te schrijven. Als dit bestand al bestaat, wordt het overschreven."
+        },
+        "Outputs": {
+          "1": "PDF succesvol opgeslagen in tekstbestand.",
+          "2": "Geen tekstinhoud gevonden om te extraheren."
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Pdf": {
+      "Description": "Plugin die PDF-gerelateerde stroomelementen biedt.",
+      "Label": "PDF"
+    }
+  }
+}
