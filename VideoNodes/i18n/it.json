@@ -235,6 +235,26 @@
           "2": "Nessuna traccia da convertire"
         }
       },
+      "FfmpegBuilderAudioLanguageConverter": {
+        "Description": "Aggiunge nuove tracce audio per le lingue specificate nel formato, bitrate e configurazione dei canali desiderati. Se una traccia corrispondente è già nel formato corretto, verrà copiata invece di essere ricodificata. Facoltativamente, è possibile rimuovere altre tracce audio.",
+        "Label": "FFMPEG Builder: Convertitore lingua audio",
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "Il bitrate target per le nuove tracce audio. Scegli un valore che equilibri qualità audio e dimensione del file.",
+          "Channels": "Canali",
+          "Channels-Help": "Il numero di canali per le nuove tracce audio. Se specifichi meno canali rispetto alla sorgente, FFMPEG effettuerà automaticamente un downmix per adattarsi al numero di canali desiderato.",
+          "Codec": "Codec",
+          "Codec-Help": "Il codec da utilizzare per codificare le nuove tracce audio.",
+          "Languages": "Lingue",
+          "Languages-Help": "L'elenco delle lingue per le quali aggiungere nuove tracce audio.",
+          "RemoveOthers": "Rimuovi altri",
+          "RemoveOthers-Help": "Rimuove tutte le altre tracce audio lasciando solo quelle create qui. Se non è possibile aggiungere tracce, la configurazione originale rimarrà invariata."
+        },
+        "Outputs": {
+          "1": "Tracce audio aggiunte al modello FFmpeg",
+          "2": "Nessuna traccia audio aggiunta"
+        }
+      },
       "FfmpegBuilderAudioNormalization": {
         "Description": "Normalizza tutte le tracce audio in un file video utilizzando il filtro loudnorm di FFMPEG",
         "Label": "FFMPEG Builder: Normalizzazione Audio",

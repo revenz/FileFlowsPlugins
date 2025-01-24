@@ -235,6 +235,26 @@
           "2": "Aucune piste à convertir"
         }
       },
+      "FfmpegBuilderAudioLanguageConverter": {
+        "Description": "Ajoute de nouvelles pistes audio pour les langues spécifiées dans le format, le débit et la configuration des canaux souhaités. Si une piste correspondante existe déjà au bon format, elle sera copiée au lieu d'être réencodée. Les autres pistes audio peuvent être supprimées en option.",
+        "Label": "FFMPEG Builder : Convertisseur de langue audio",
+        "Fields": {
+          "Bitrate": "Débit",
+          "Bitrate-Help": "Le débit cible pour les nouvelles pistes audio. Choisissez une valeur qui équilibre la qualité audio et la taille du fichier.",
+          "Channels": "Canaux",
+          "Channels-Help": "Le nombre de canaux pour les nouvelles pistes audio. Si vous spécifiez moins de canaux que la source, FFMPEG réduira automatiquement le mixage audio pour correspondre au nombre de canaux souhaité.",
+          "Codec": "Codec",
+          "Codec-Help": "Le codec à utiliser pour encoder les nouvelles pistes audio.",
+          "Languages": "Langues",
+          "Languages-Help": "La liste des langues pour lesquelles de nouvelles pistes audio doivent être ajoutées.",
+          "RemoveOthers": "Supprimer les autres",
+          "RemoveOthers-Help": "Supprime toutes les autres pistes audio, ne laissant que celles créées ici. Si aucune piste ne peut être ajoutée, la configuration d'origine restera inchangée."
+        },
+        "Outputs": {
+          "1": "Pistes audio ajoutées au modèle FFmpeg",
+          "2": "Aucune piste audio n'a été ajoutée"
+        }
+      },
       "FfmpegBuilderAudioNormalization": {
         "Description": "Normalise toutes les pistes audio d'un fichier vidéo à l'aide du filtre loudnorm de FFMPEG",
         "Label": "FFMPEG Builder: Normalisation Audio",

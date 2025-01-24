@@ -235,6 +235,26 @@
           "2": "Keine zu konvertierenden Spuren"
         }
       },
+      "FfmpegBuilderAudioLanguageConverter": {
+        "Description": "Fügt neue Audiospuren für die angegebenen Sprachen im gewünschten Format, mit Bitrate und Kanalkonfiguration hinzu. Wenn eine passende Spur bereits im korrekten Format existiert, wird sie kopiert, anstatt neu kodiert zu werden. Optional können andere Audiospuren entfernt werden.",
+        "Label": "FFMPEG Builder: Audio-Sprachkonverter",
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "Die Zielbitrate für die neu hinzugefügten Audiospuren. Wählen Sie einen Wert, der eine Balance zwischen Audioqualität und Dateigröße bietet.",
+          "Channels": "Kanäle",
+          "Channels-Help": "Die Anzahl der Kanäle für die neuen Audiospuren. Wenn Sie weniger Kanäle als die Quelle angeben, mischt FFMPEG das Audio automatisch herunter, um die gewünschte Kanalanzahl zu erreichen.",
+          "Codec": "Codec",
+          "Codec-Help": "Der Codec, der zur Kodierung der neuen Audiospuren verwendet werden soll.",
+          "Languages": "Sprachen",
+          "Languages-Help": "Die Liste der Sprachen, für die neue Audiospuren hinzugefügt werden sollen.",
+          "RemoveOthers": "Andere entfernen",
+          "RemoveOthers-Help": "Entfernt alle anderen Audiospuren und lässt nur die hier erstellten übrig. Wenn keine Spuren hinzugefügt werden können, bleibt die ursprüngliche Konfiguration unverändert."
+        },
+        "Outputs": {
+          "1": "Audiospuren wurden zum FFmpeg-Modell hinzugefügt",
+          "2": "Es wurden keine Audiospuren hinzugefügt"
+        }
+      },
       "FfmpegBuilderAudioNormalization": {
         "Description": "Normalisiert alle Audiospuren in einer Videodatei mit FFMPEGs loudnorm-Filter.",
         "Label": "FFMPEG Builder: Audio-Normalisierung",

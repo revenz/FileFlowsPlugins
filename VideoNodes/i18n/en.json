@@ -235,6 +235,26 @@
           "2": "No tracks to be converted"
         }
       },
+      "FfmpegBuilderAudioLanguageConverter": {
+        "Description": "Adds new audio tracks for the specified languages in the desired format, bitrate, and channel configuration. If a matching track already exists in the correct format, it will be copied instead of re-encoded. Optionally, other audio tracks can be removed.",
+        "Label": "FFMPEG Builder: Audio Language Converter",
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "The target bitrate for the newly added audio tracks. Choose a value that provides a balance between audio quality and file size.",
+          "Channels": "Channels",
+          "Channels-Help": "The number of channels for the new audio tracks. If you specify fewer channels than the source, FFMPEG will automatically downmix the audio to match the desired channel count.",
+          "Codec": "Codec",
+          "Codec-Help": "The codec to use when encoding the new audio tracks.",
+          "Languages": "Languages",
+          "Languages-Help": "The list of languages for which new audio tracks should be added.",
+          "RemoveOthers": "Remove Others",
+          "RemoveOthers-Help": "Removes all other audio tracks, leaving only the ones created here. If no tracks can be added, the operation will not run, and the original tracks will remain untouched."
+        },
+        "Outputs": {
+          "1": "Audio tracks added to FFmpeg model",
+          "2": "No audio tracks were added"
+        }
+      },
       "FfmpegBuilderAudioNormalization": {
         "Description": "Normalizes all audio tracks in a video file using FFMPEGs loudnorm filter",
         "Label": "FFMPEG Builder: Audio Normalization",

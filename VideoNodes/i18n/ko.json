@@ -235,6 +235,26 @@
           "2": "변환할 트랙이 없습니다."
         }
       },
+      "FfmpegBuilderAudioLanguageConverter": {
+        "Description": "지정된 언어의 새 오디오 트랙을 원하는 형식, 비트레이트 및 채널 구성으로 추가합니다. 올바른 형식으로 일치하는 트랙이 이미 있는 경우 복사되며 다시 인코딩되지 않습니다. 선택적으로 다른 오디오 트랙을 제거할 수 있습니다.",
+        "Label": "FFMPEG Builder: 오디오 언어 변환기",
+        "Fields": {
+          "Bitrate": "비트레이트",
+          "Bitrate-Help": "새로 추가되는 오디오 트랙의 목표 비트레이트입니다. 음질과 파일 크기의 균형을 유지할 수 있는 값을 선택하세요.",
+          "Channels": "채널",
+          "Channels-Help": "새 오디오 트랙의 채널 수입니다. 소스보다 적은 채널 수를 지정하면, FFMPEG가 자동으로 오디오를 다운믹스하여 원하는 채널 수에 맞춥니다.",
+          "Codec": "코덱",
+          "Codec-Help": "새 오디오 트랙을 인코딩할 때 사용할 코덱입니다.",
+          "Languages": "언어",
+          "Languages-Help": "새 오디오 트랙을 추가할 언어 목록입니다.",
+          "RemoveOthers": "기타 제거",
+          "RemoveOthers-Help": "다른 오디오 트랙을 모두 제거하고, 여기에서 생성된 트랙만 남깁니다. 추가할 수 있는 트랙이 없으면 원래 구성이 변경되지 않습니다."
+        },
+        "Outputs": {
+          "1": "FFmpeg 모델에 오디오 트랙이 추가되었습니다.",
+          "2": "추가된 오디오 트랙이 없습니다."
+        }
+      },
       "FfmpegBuilderAudioNormalization": {
         "Description": "FFMPEG의 loudnorm 필터를 사용하여 비디오 파일의 모든 오디오 트랙을 정규화합니다.",
         "Label": "FFMPEG 빌더: 오디오 정규화",

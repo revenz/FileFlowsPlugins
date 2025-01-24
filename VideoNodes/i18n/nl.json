@@ -235,6 +235,26 @@
           "2": "Geen tracks om te converteren"
         }
       },
+      "FfmpegBuilderAudioLanguageConverter": {
+        "Description": "Voegt nieuwe audiotracks toe voor de opgegeven talen in het gewenste formaat, met bitrate en kanaalconfiguratie. Als er al een bijpassende track in het juiste formaat bestaat, wordt deze gekopieerd in plaats van opnieuw gecodeerd. Optioneel kunnen andere audiotracks worden verwijderd.",
+        "Label": "FFMPEG Builder: Audio Taal Converter",
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "De doelbitrate voor de nieuwe audiotracks. Kies een waarde die balans biedt tussen geluidskwaliteit en bestandsgrootte.",
+          "Channels": "Kanalen",
+          "Channels-Help": "Het aantal kanalen voor de nieuwe audiotracks. Als u minder kanalen dan de bron specificeert, zal FFMPEG het geluid automatisch dowmixen naar het gewenste aantal kanalen.",
+          "Codec": "Codec",
+          "Codec-Help": "De codec die wordt gebruikt voor het coderen van de nieuwe audiotracks.",
+          "Languages": "Talen",
+          "Languages-Help": "De lijst met talen waarvoor nieuwe audiotracks moeten worden toegevoegd.",
+          "RemoveOthers": "Andere verwijderen",
+          "RemoveOthers-Help": "Verwijdert alle andere audiotracks en laat alleen de hier gemaakte over. Als er geen tracks kunnen worden toegevoegd, blijft de originele configuratie ongewijzigd."
+        },
+        "Outputs": {
+          "1": "Audiotracks toegevoegd aan het FFmpeg-model.",
+          "2": "Er zijn geen audiotracks toegevoegd."
+        }
+      },
       "FfmpegBuilderAudioNormalization": {
         "Description": "Normaliseert alle audiotracks in een videobestand met behulp van FFMPEG's loudnorm-filter",
         "Label": "FFMPEG Builder: Audio Normalisatie",

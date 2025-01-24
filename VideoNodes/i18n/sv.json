@@ -235,6 +235,26 @@
           "2": "Inga spår att konvertera"
         }
       },
+      "FfmpegBuilderAudioLanguageConverter": {
+        "Description": "Lägger till nya ljudspår för de specificerade språken i önskat format, med bithastighet och kanalinställning. Om ett matchande spår redan finns i rätt format, kopieras det istället för att omkodas. Alternativt kan andra ljudspår tas bort.",
+        "Label": "FFMPEG Builder: Ljudspråksomvandlare",
+        "Fields": {
+          "Bitrate": "Bithastighet",
+          "Bitrate-Help": "Den målsatta bithastigheten för de nya ljudspåren. Välj ett värde som balanserar ljudkvalitet och filstorlek.",
+          "Channels": "Kanaler",
+          "Channels-Help": "Antalet kanaler för de nya ljudspåren. Om färre kanaler anges än källan, kommer FFMPEG automatiskt att mixa ned ljudet till önskat antal kanaler.",
+          "Codec": "Codec",
+          "Codec-Help": "Den codec som ska användas för att koda de nya ljudspåren.",
+          "Languages": "Språk",
+          "Languages-Help": "Listan över språk som nya ljudspår ska läggas till för.",
+          "RemoveOthers": "Ta bort andra",
+          "RemoveOthers-Help": "Tar bort alla andra ljudspår och lämnar endast de som skapats här. Om inga spår kan läggas till, förblir originalkonfigurationen oförändrad."
+        },
+        "Outputs": {
+          "1": "Ljudspår har lagts till i FFmpeg-modellen.",
+          "2": "Inga ljudspår har lagts till."
+        }
+      },
       "FfmpegBuilderAudioNormalization": {
         "Description": "Normaliserar alla ljudspår i en videofil med FFMPEG:s loudnorm-filter",
         "Label": "FFMPEG Builder: Ljudnormalisering",

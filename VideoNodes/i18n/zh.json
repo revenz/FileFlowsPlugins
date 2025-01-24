@@ -235,6 +235,26 @@
           "2": "没有轨道待转换"
         }
       },
+      "FfmpegBuilderAudioLanguageConverter": {
+        "Description": "为指定语言添加新的音轨，使用所需格式、比特率和声道配置。如果已有匹配的音轨且格式正确，则直接复制而不是重新编码。可选地，可以删除其他音轨。",
+        "Label": "FFMPEG Builder：音频语言转换器",
+        "Fields": {
+          "Bitrate": "比特率",
+          "Bitrate-Help": "新音轨的目标比特率。选择一个平衡音质和文件大小的值。",
+          "Channels": "声道",
+          "Channels-Help": "新音轨的声道数量。如果指定的声道少于来源，FFMPEG 将自动混音以匹配所需声道数量。",
+          "Codec": "编码器",
+          "Codec-Help": "用于编码新音轨的编码器。",
+          "Languages": "语言",
+          "Languages-Help": "需要添加新音轨的语言列表。",
+          "RemoveOthers": "删除其他",
+          "RemoveOthers-Help": "删除所有其他音轨，仅保留此处创建的音轨。如果无法添加音轨，原始配置将保持不变。"
+        },
+        "Outputs": {
+          "1": "音轨已添加到 FFmpeg 模型。",
+          "2": "未添加任何音轨。"
+        }
+      },
       "FfmpegBuilderAudioNormalization": {
         "Description": "使用FFMPEG的loudnorm过滤器规范化视频文件中的所有音轨",
         "Label": "FFMPEG构建器：音频规范化",
