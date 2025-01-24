@@ -10,7 +10,7 @@ public class FfmpegBuilderAudioLanguageConverter : FfmpegBuilderNode
     /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/audio-language-converter";
     /// <inheritdoc />
-    public override string Icon => "fas fa-comment-dot";
+    public override string Icon => "fas fa-comment-dots";
     /// <inheritdoc />
     public override int Outputs => 2;
     
@@ -231,8 +231,8 @@ public class FfmpegBuilderAudioLanguageConverter : FfmpegBuilderNode
             < 1.9f => " (Mono)",
             < 2.1f => " (Stereo)",
             < 3f => " (2.1)",
-            < 5.3f => " (5.1)",
-            < 7.3f => " (7.1)",
+            < 6.1f => " (5.1)",
+            < 8.1f => " (7.1)",
             _ => $" ({Math.Round(Channels, 1)})"
         });
 
@@ -248,11 +248,17 @@ public class FfmpegBuilderAudioLanguageConverter : FfmpegBuilderNode
     /// <returns>the best stream</returns>
     internal AudioStream GetBestAudioTrack(NodeParameters args, IEnumerable<AudioStream> streams, string language)
     {
+        float comparingChannels = Channels switch
+        {
+            8 => 7.1f,
+            6 => 5.1f,
+            _ => Channels
+        };
         var bestAudio = streams
             // only search tracks of the same language 
             .Where(x => LanguageHelper.Matches(args, language, x.Language))
             // only get a track that has more or equal number of channels
-            .Where(x => Math.Abs(x.Channels - this.Channels) < 0.1f || x.Channels >= this.Channels)
+            .Where(x => Math.Abs(x.Channels - comparingChannels) < 0.1f || x.Channels >= comparingChannels)
             // remove any commentary tracks
             .Where(x => System.Text.Json.JsonSerializer.Serialize(x).ToLower().Contains("comment") == false)
             .OrderBy(x =>
