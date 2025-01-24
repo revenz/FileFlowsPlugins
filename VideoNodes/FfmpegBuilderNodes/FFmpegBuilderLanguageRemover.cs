@@ -3,7 +3,7 @@ using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 
 /// <summary>
-/// Flow elmenet that just removes languages
+/// Flow element that just removes languages
 /// </summary>
 public class FFmpegBuilderLanguageRemover: FfmpegBuilderNode
 {
