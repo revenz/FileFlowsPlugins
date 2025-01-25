@@ -239,8 +239,8 @@
         "Description": "Adiciona novas faixas de áudio para os idiomas especificados no formato desejado, com taxa de bits e configuração de canais. Se uma faixa correspondente já existir no formato correto, será copiada em vez de reencodificada. Opcionalmente, outras faixas de áudio podem ser removidas.",
         "Label": "FFMPEG Builder: Conversor de Idiomas de Áudio",
         "Fields": {
-          "Bitrate": "Taxa de Bits",
-          "Bitrate-Help": "A taxa de bits desejada para as novas faixas de áudio. Escolha um valor que equilibre qualidade de áudio e tamanho do arquivo.",
+          "Bitrate": "Taxa de bits por canal",
+          "Bitrate-Help": "A taxa de bits alvo por canal para as novas faixas de áudio adicionadas. Escolha um valor que ofereça um equilíbrio entre qualidade de áudio e tamanho do arquivo.",
           "Channels": "Canais",
           "Channels-Help": "O número de canais para as novas faixas de áudio. Caso especifique menos canais que a fonte, o FFMPEG fará automaticamente o downmix do áudio para o número desejado de canais.",
           "Codec": "Codec",

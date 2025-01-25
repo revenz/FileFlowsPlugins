@@ -239,8 +239,8 @@
         "Description": "Agrega nuevas pistas de audio para los idiomas especificados en el formato, tasa de bits y configuración de canales deseados. Si ya existe una pista coincidente en el formato correcto, se copiará en lugar de volver a codificarse. Opcionalmente, se pueden eliminar otras pistas de audio.",
         "Label": "FFMPEG Builder: Convertidor de idioma de audio",
         "Fields": {
-          "Bitrate": "Tasa de bits",
-          "Bitrate-Help": "La tasa de bits objetivo para las nuevas pistas de audio. Elige un valor que equilibre la calidad del audio y el tamaño del archivo.",
+          "Bitrate": "Bitrate por canal",
+          "Bitrate-Help": "La tasa de bits objetivo por canal para las pistas de audio recién agregadas. Elija un valor que proporcione un equilibrio entre calidad de audio y tamaño del archivo.",
           "Channels": "Canales",
           "Channels-Help": "El número de canales para las nuevas pistas de audio. Si especificas menos canales que la fuente, FFMPEG mezclará el audio automáticamente para coincidir con la cantidad de canales deseada.",
           "Codec": "Códec",

@@ -239,8 +239,8 @@
         "Description": "Ajoute de nouvelles pistes audio pour les langues spécifiées dans le format, le débit et la configuration des canaux souhaités. Si une piste correspondante existe déjà au bon format, elle sera copiée au lieu d'être réencodée. Les autres pistes audio peuvent être supprimées en option.",
         "Label": "FFMPEG Builder : Convertisseur de langue audio",
         "Fields": {
-          "Bitrate": "Débit",
-          "Bitrate-Help": "Le débit cible pour les nouvelles pistes audio. Choisissez une valeur qui équilibre la qualité audio et la taille du fichier.",
+          "Bitrate": "Débit par canal",
+          "Bitrate-Help": "Le débit cible par canal pour les pistes audio nouvellement ajoutées. Choisissez une valeur qui offre un équilibre entre qualité audio et taille du fichier.",
           "Channels": "Canaux",
           "Channels-Help": "Le nombre de canaux pour les nouvelles pistes audio. Si vous spécifiez moins de canaux que la source, FFMPEG réduira automatiquement le mixage audio pour correspondre au nombre de canaux souhaité.",
           "Codec": "Codec",

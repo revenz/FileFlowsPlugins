@@ -239,8 +239,8 @@
         "Description": "Adds new audio tracks for the specified languages in the desired format, bitrate, and channel configuration. If a matching track already exists in the correct format, it will be copied instead of re-encoded. Optionally, other audio tracks can be removed.",
         "Label": "FFMPEG Builder: Audio Language Converter",
         "Fields": {
-          "Bitrate": "Bitrate",
-          "Bitrate-Help": "The target bitrate for the newly added audio tracks. Choose a value that provides a balance between audio quality and file size.",
+          "Bitrate": "Bitrate Per Channel",
+          "Bitrate-Help": "The target bitrate per channel for the newly added audio tracks. Choose a value that provides a balance between audio quality and file size.",
           "Channels": "Channels",
           "Channels-Help": "The number of channels for the new audio tracks. If you specify fewer channels than the source, FFMPEG will automatically downmix the audio to match the desired channel count.",
           "Codec": "Codec",

@@ -239,8 +239,8 @@
         "Description": "Aggiunge nuove tracce audio per le lingue specificate nel formato, bitrate e configurazione dei canali desiderati. Se una traccia corrispondente è già nel formato corretto, verrà copiata invece di essere ricodificata. Facoltativamente, è possibile rimuovere altre tracce audio.",
         "Label": "FFMPEG Builder: Convertitore lingua audio",
         "Fields": {
-          "Bitrate": "Bitrate",
-          "Bitrate-Help": "Il bitrate target per le nuove tracce audio. Scegli un valore che equilibri qualità audio e dimensione del file.",
+          "Bitrate": "Bitrate per canale",
+          "Bitrate-Help": "Il bitrate target per canale per le nuove tracce audio aggiunte. Scegli un valore che offra un equilibrio tra qualità audio e dimensione del file.",
           "Channels": "Canali",
           "Channels-Help": "Il numero di canali per le nuove tracce audio. Se specifichi meno canali rispetto alla sorgente, FFMPEG effettuerà automaticamente un downmix per adattarsi al numero di canali desiderato.",
           "Codec": "Codec",

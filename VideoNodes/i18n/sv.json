@@ -239,8 +239,8 @@
         "Description": "Lägger till nya ljudspår för de specificerade språken i önskat format, med bithastighet och kanalinställning. Om ett matchande spår redan finns i rätt format, kopieras det istället för att omkodas. Alternativt kan andra ljudspår tas bort.",
         "Label": "FFMPEG Builder: Ljudspråksomvandlare",
         "Fields": {
-          "Bitrate": "Bithastighet",
-          "Bitrate-Help": "Den målsatta bithastigheten för de nya ljudspåren. Välj ett värde som balanserar ljudkvalitet och filstorlek.",
+          "Bitrate": "Bithastighet per kanal",
+          "Bitrate-Help": "Den målsatta bithastigheten per kanal för de nyligen tillagda ljudspåren. Välj ett värde som ger en balans mellan ljudkvalitet och filstorlek.",
           "Channels": "Kanaler",
           "Channels-Help": "Antalet kanaler för de nya ljudspåren. Om färre kanaler anges än källan, kommer FFMPEG automatiskt att mixa ned ljudet till önskat antal kanaler.",
           "Codec": "Codec",

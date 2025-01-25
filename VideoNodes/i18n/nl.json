@@ -239,8 +239,8 @@
         "Description": "Voegt nieuwe audiotracks toe voor de opgegeven talen in het gewenste formaat, met bitrate en kanaalconfiguratie. Als er al een bijpassende track in het juiste formaat bestaat, wordt deze gekopieerd in plaats van opnieuw gecodeerd. Optioneel kunnen andere audiotracks worden verwijderd.",
         "Label": "FFMPEG Builder: Audio Taal Converter",
         "Fields": {
-          "Bitrate": "Bitrate",
-          "Bitrate-Help": "De doelbitrate voor de nieuwe audiotracks. Kies een waarde die balans biedt tussen geluidskwaliteit en bestandsgrootte.",
+          "Bitrate": "Bitrate per kanaal",
+          "Bitrate-Help": "De doelbitrate per kanaal voor de nieuw toegevoegde audiotracks. Kies een waarde die een balans biedt tussen geluidskwaliteit en bestandsgrootte.",
           "Channels": "Kanalen",
           "Channels-Help": "Het aantal kanalen voor de nieuwe audiotracks. Als u minder kanalen dan de bron specificeert, zal FFMPEG het geluid automatisch dowmixen naar het gewenste aantal kanalen.",
           "Codec": "Codec",
