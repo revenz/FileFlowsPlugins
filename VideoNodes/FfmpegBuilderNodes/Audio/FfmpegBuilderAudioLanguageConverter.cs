@@ -214,7 +214,7 @@ public class FfmpegBuilderAudioLanguageConverter : FfmpegBuilderNode
 
             int bitrate = totalChannels * Bitrate;
             args.Logger?.ILog("Total channels: " + totalChannels);
-            args.Logger?.ILog("Bitrate Per Channel: " + bitrate);
+            args.Logger?.ILog("Bitrate Per Channel: " + Bitrate);
             
             args.Logger?.ILog("Total Bitrate: " + bitrate);
 
