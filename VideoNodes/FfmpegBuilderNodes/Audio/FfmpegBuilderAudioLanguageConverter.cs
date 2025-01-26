@@ -1,4 +1,5 @@
 using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
+using FileFlows.VideoNodes.Helpers;
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 
@@ -163,6 +164,28 @@ public class FfmpegBuilderAudioLanguageConverter : FfmpegBuilderNode
             foreach (var audioStream in Model.AudioStreams)
             {
                 audioStream.Deleted = true;
+            }
+        }
+        else
+        {
+            foreach (var newAudioStream in newAudioStreams)
+            {
+                int newAudioChannels = ChannelHelper.GetNumberOfChannels(newAudioStream.Channels);
+                args.Logger?.ILog($"New Audio '{newAudioStream} channels: {newAudioChannels}");
+                // see if the new audio stream is basically the same as the old one
+                var existing = Model.AudioStreams.Where(x => x.Stream == newAudioStream.Stream);
+                foreach (var ex in existing)
+                {
+                    int existingChannels = ChannelHelper.GetNumberOfChannels(ex.Channels);
+                    args.Logger?.ILog($"Existing Audio '{ex} channels: {existingChannels}");
+                    if (existingChannels != newAudioChannels)
+                        continue;
+                    if (ex.Codec != newAudioStream.Codec && 
+                        Regex.IsMatch(ex.Codec ?? string.Empty, "/^(ac3|aac|opus)$", RegexOptions.IgnoreCase))
+                        continue;
+                    args.Logger?.ILog("Deleting similar audio to newly created one: " + ex);
+                    ex.Deleted = true;
+                }
             }
         }
 
