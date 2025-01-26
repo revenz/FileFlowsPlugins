@@ -235,11 +235,16 @@ public class FfmpegBuilderAudioLanguageConverter : FfmpegBuilderNode
             int totalChannels = FfmpegBuilderAudioAddTrack.GetAudioBitrateChannels(args.Logger, Channels < 1 ? audio.Channels : Channels, Codec);
             int channels = Channels < 1 ? 0 : totalChannels;
 
-            int bitrate = totalChannels * Bitrate;
-            args.Logger?.ILog("Total channels: " + totalChannels);
-            args.Logger?.ILog("Bitrate Per Channel: " + Bitrate);
+            int bitrate = Bitrate == 1 ? (int)Math.Round(audio.Stream.Bitrate / Math.Max(1, audio.Stream.Channels)) :
+                Bitrate == 2 ? totalChannels * Bitrate :
+                0;
             
-            args.Logger?.ILog("Total Bitrate: " + bitrate);
+            if (bitrate > 0)
+            {
+                args.Logger?.ILog("Total channels: " + totalChannels);
+                args.Logger?.ILog("Bitrate Per Channel: " + Bitrate);
+                args.Logger?.ILog("Total Bitrate: " + bitrate);
+            }
 
             audio.EncodingParameters.AddRange(FfmpegBuilderAudioAddTrack.GetNewAudioTrackParameters(args, audio, Codec, channels, bitrate, 0));
             if (channels > 0)
