@@ -61,7 +61,7 @@ public class VideoBitCheck : VideoNode
             args.Logger?.ILog("Video is 12 bit");
             return 3;
         }
-        args.Logger?.ILog("Video Bits unknonw");
+        args.Logger?.ILog("Video Bits unknown");
         return 4;
     }
 }
