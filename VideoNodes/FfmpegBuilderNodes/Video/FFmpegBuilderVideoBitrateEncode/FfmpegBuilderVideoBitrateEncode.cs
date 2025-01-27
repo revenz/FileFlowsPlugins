@@ -113,42 +113,6 @@ public partial class FfmpegBuilderVideoBitrateEncode:VideoEncodeBase
         return 1;
     }
 
-    /// <summary>
-    /// Adjust the parameters to use a constant bitrate
-    /// </summary>
-    /// <param name="args">the node parameters</param>
-    /// <param name="parameters">the parameters to alter</param>
-    /// <returns>the adjusted parmaters</returns>
-    private string[] AdjustForBitrate(NodeParameters args, string[] parameters)
-    {
-        var toRemove = new [] { "-rc", "-qp", "-preset", "-spatial-aq", "-g", "-global_quality:v" };
-        int index = Array.FindIndex(parameters, p => toRemove.Contains(p));
-        var modified = new List<string>();
-        for (int i = 0; i < parameters.Length - 1; i++)
-        {
-            if (toRemove.Contains(parameters[i]))
-            {
-                i++;
-                continue;
-            }
-            modified.Add(parameters[i]);
-        }
-        modified.Insert(index, "-b:v:{index}");
-        modified.Insert(index + 1, Bitrate + "k");
-        return modified.ToArray();
-    }
-
-    internal static IEnumerable<string> GetEncodingParameters(NodeParameters args, string codec, int bitrate, string encoder, float fps, string device)
-    {
-        if (codec == CODEC_H264)
-            return H264(args, false, encoder, bitrate).Select(x => x.Replace("{index}", "0")); 
-        if (codec == CODEC_H265 || codec == CODEC_H265_10BIT)
-            return H265(null, args, codec == CODEC_H265_10BIT, bitrate, encoder, fps).Select(x => x.Replace("{index}", "0"));
-        if(codec == CODEC_AV1)
-            return AV1(args, codec == CODEC_AV1_10BIT, bitrate, encoder, device).Select(x => x.Replace("{index}", "0")); 
-            
-        throw new Exception("Unsupported codec: " + codec);
-    }
 
     private static readonly bool IsMac = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
 
