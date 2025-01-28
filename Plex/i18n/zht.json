@@ -48,8 +48,8 @@
       "Fields": {
         "AccessToken": "訪問令牌",
         "AccessToken-Help": "用於與Plex伺服器通信的[訪問令牌](https://github.com/revenz/Fenrus/wiki/Plex-Token)。",
-        "IgnoreCertificateErrors": "",
-        "IgnoreCertificateErrors-Help": "",
+        "IgnoreCertificateErrors": "忽略證書錯誤",
+        "IgnoreCertificateErrors-Help": "啟用此選項以繞過證書錯誤，並允許在 Plex 中使用自簽名證書。",
         "Mapping": "映射",
         "Mapping-Help": "用於FileFlows中的路徑與Plex中使用的路徑的映射列表。",
         "MappingKey": "FileFlows",

@@ -48,8 +48,8 @@
       "Fields": {
         "AccessToken": "Токен доступа",
         "AccessToken-Help": "Токен доступа, используемый для связи с сервером Plex. [Токен доступа](https://github.com/revenz/Fenrus/wiki/Plex-Token).",
-        "IgnoreCertificateErrors": "",
-        "IgnoreCertificateErrors-Help": "",
+        "IgnoreCertificateErrors": "Игнорировать ошибки сертификата",
+        "IgnoreCertificateErrors-Help": "Включите эту опцию, чтобы игнорировать ошибки сертификатов и разрешить использование самоподписанных сертификатов в Plex.",
         "Mapping": "Сопоставление",
         "Mapping-Help": "Список замен сопоставления, используемый для путей в FileFlows с путями, используемыми в Plex.",
         "MappingKey": "FileFlows",

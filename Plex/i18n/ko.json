@@ -48,8 +48,8 @@
       "Fields": {
         "AccessToken": "액세스 토큰",
         "AccessToken-Help": "Plex 서버와 통신하는 데 사용되는 [액세스 토큰](https://github.com/revenz/Fenrus/wiki/Plex-Token)입니다.",
-        "IgnoreCertificateErrors": "",
-        "IgnoreCertificateErrors-Help": "",
+        "IgnoreCertificateErrors": "인증서 오류 무시",
+        "IgnoreCertificateErrors-Help": "이 옵션을 활성화하면 인증서 오류를 무시하고 Plex에서 자체 서명된 인증서를 사용할 수 있습니다.",
         "Mapping": "매핑",
         "Mapping-Help": "FileFlows의 경로를 Plex에서 사용되는 경로로 교체하는 매핑 목록입니다.",
         "MappingKey": "FileFlows",

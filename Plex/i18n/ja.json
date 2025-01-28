@@ -48,8 +48,8 @@
       "Fields": {
         "AccessToken": "アクセストークン",
         "AccessToken-Help": "Plexサーバーと通信するために使用される[アクセストークン](https://github.com/revenz/Fenrus/wiki/Plex-Token)。",
-        "IgnoreCertificateErrors": "",
-        "IgnoreCertificateErrors-Help": "",
+        "IgnoreCertificateErrors": "証明書エラーを無視する",
+        "IgnoreCertificateErrors-Help": "このオプションを有効にすると、証明書エラーを回避し、Plexで自己署名証明書を使用できるようになります。",
         "Mapping": "マッピング",
         "Mapping-Help": "FileFlowsのパスとPlexで使用されるパスの間の置き換えマッピングのリスト。",
         "MappingKey": "FileFlows",
