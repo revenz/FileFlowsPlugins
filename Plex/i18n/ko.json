@@ -48,6 +48,8 @@
       "Fields": {
         "AccessToken": "액세스 토큰",
         "AccessToken-Help": "Plex 서버와 통신하는 데 사용되는 [액세스 토큰](https://github.com/revenz/Fenrus/wiki/Plex-Token)입니다.",
+        "IgnoreCertificateErrors": "",
+        "IgnoreCertificateErrors-Help": "",
         "Mapping": "매핑",
         "Mapping-Help": "FileFlows의 경로를 Plex에서 사용되는 경로로 교체하는 매핑 목록입니다.",
         "MappingKey": "FileFlows",

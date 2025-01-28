@@ -1090,6 +1090,14 @@
           "2": "비디오는 8-Bit가 아닙니다."
         }
       },
+      "VideoIsDolbyVision": {
+        "Description": "비디오 파일이 Dolby Vision인지 확인합니다.",
+        "Label": "비디오가 Dolby Vision인지",
+        "Outputs": {
+          "1": "비디오는 Dolby Vision입니다.",
+          "2": "비디오는 Dolby Vision이 아닙니다."
+        }
+      },
       "VideoIsInterlaced": {
         "Description": "비디오 파일이 인터레이스인지 테스트합니다.",
         "Label": "비디오 인터레이스",

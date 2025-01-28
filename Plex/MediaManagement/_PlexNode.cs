@@ -60,7 +60,7 @@ public abstract class PlexNode:Node
         string url = serverUrl;
         url += "library/sections";
 
-        using var httpClient = new HttpClient();
+        using var httpClient = GetHttpClient(settings.IgnoreCertificateErrors);
 
         var sectionsResponse = GetWebRequest(httpClient, url + "?X-Plex-Token=" + accessToken);
         if (sectionsResponse.success == false)
@@ -114,6 +114,23 @@ public abstract class PlexNode:Node
         }
         args.Logger?.ILog("Found section: " + (section.Key ?? "no-key"));
         return ExecuteActual(args, section, serverUrl, path, accessToken);
+    }
+
+    /// <summary>
+    /// Gets the HTTP client
+    /// </summary>
+    /// <param name="ignoreCertificateErrors">if certificate errors should be ignored</param>
+    /// <returns>the HTTP client</returns>
+    private HttpClient GetHttpClient(bool ignoreCertificateErrors)
+    {
+        if (ignoreCertificateErrors == false)
+            return new HttpClient();
+
+        var handler = new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+        };
+        return new HttpClient(handler);
     }
 
     protected abstract int ExecuteActual(NodeParameters args, PlexDirectory directory, string url, string mappedPath, string accessToken);

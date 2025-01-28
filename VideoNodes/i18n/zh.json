@@ -1090,6 +1090,14 @@
           "2": "视频不是8位"
         }
       },
+      "VideoIsDolbyVision": {
+        "Description": "Controleert of een videobestand Dolby Vision is.",
+        "Label": "Video is Dolby Vision",
+        "Outputs": {
+          "1": "De video is Dolby Vision.",
+          "2": "De video is niet Dolby Vision."
+        }
+      },
       "VideoIsInterlaced": {
         "Description": "测试视频文件是否为交错",
         "Label": "视频是交错",

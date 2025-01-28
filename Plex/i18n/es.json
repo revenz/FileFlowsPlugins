@@ -48,6 +48,8 @@
       "Fields": {
         "AccessToken": "Token de acceso",
         "AccessToken-Help": "El [token de acceso](https://github.com/revenz/Fenrus/wiki/Plex-Token) utilizado para comunicarse con el servidor Plex.",
+        "IgnoreCertificateErrors": "",
+        "IgnoreCertificateErrors-Help": "",
         "Mapping": "Mapeo",
         "Mapping-Help": "Una lista de reemplazos de mapeo utilizados para rutas en FileFlows con las rutas que se utilizan en Plex.",
         "MappingKey": "FileFlows",

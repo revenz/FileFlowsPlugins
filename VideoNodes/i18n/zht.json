@@ -1090,6 +1090,14 @@
           "2": "視頻不是8位"
         }
       },
+      "VideoIsDolbyVision": {
+        "Description": "測試視頻文件是否為Dolby Vision。",
+        "Label": "視頻是Dolby Vision",
+        "Outputs": {
+          "1": "視頻是Dolby Vision。",
+          "2": "視頻不是Dolby Vision。"
+        }
+      },
       "VideoIsInterlaced": {
         "Description": "測試視頻文件是否為交錯",
         "Label": "視頻為交錯",

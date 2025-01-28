@@ -48,6 +48,8 @@
       "Fields": {
         "AccessToken": "Токен доступа",
         "AccessToken-Help": "Токен доступа, используемый для связи с сервером Plex. [Токен доступа](https://github.com/revenz/Fenrus/wiki/Plex-Token).",
+        "IgnoreCertificateErrors": "",
+        "IgnoreCertificateErrors-Help": "",
         "Mapping": "Сопоставление",
         "Mapping-Help": "Список замен сопоставления, используемый для путей в FileFlows с путями, используемыми в Plex.",
         "MappingKey": "FileFlows",

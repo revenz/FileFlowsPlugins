@@ -48,6 +48,8 @@
       "Fields": {
         "AccessToken": "访问令牌",
         "AccessToken-Help": "用于与 Plex 服务器通信的 [访问令牌](https://github.com/revenz/Fenrus/wiki/Plex-Token)。",
+        "IgnoreCertificateErrors": "",
+        "IgnoreCertificateErrors-Help": "",
         "Mapping": "映射",
         "Mapping-Help": "用于将 FileFlows 中的路径映射到 Plex 中的路径的映射替换列表。",
         "MappingKey": "FileFlows",

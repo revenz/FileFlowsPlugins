@@ -1090,6 +1090,14 @@
           "2": "O vídeo não é de 8-Bit"
         }
       },
+      "VideoIsDolbyVision": {
+        "Description": "Controleert of een videobestand Dolby Vision is.",
+        "Label": "Video is Dolby Vision",
+        "Outputs": {
+          "1": "De video is Dolby Vision.",
+          "2": "De video is niet Dolby Vision."
+        }
+      },
       "VideoIsInterlaced": {
         "Description": "Testa se um arquivo de vídeo é entrelaçado",
         "Label": "O vídeo é entrelaçado",

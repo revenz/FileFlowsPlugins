@@ -48,6 +48,8 @@
       "Fields": {
         "AccessToken": "アクセストークン",
         "AccessToken-Help": "Plexサーバーと通信するために使用される[アクセストークン](https://github.com/revenz/Fenrus/wiki/Plex-Token)。",
+        "IgnoreCertificateErrors": "",
+        "IgnoreCertificateErrors-Help": "",
         "Mapping": "マッピング",
         "Mapping-Help": "FileFlowsのパスとPlexで使用されるパスの間の置き換えマッピングのリスト。",
         "MappingKey": "FileFlows",
