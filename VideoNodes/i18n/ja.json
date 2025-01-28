@@ -1090,12 +1090,36 @@
           "2": "ビデオは8ビットではありません"
         }
       },
+      "VideoIsAV1": {
+        "Description": "ビデオファイルがAV1であるかをテストします",
+        "Label": "ビデオはAV1です",
+        "Outputs": {
+          "1": "ビデオはAV1です",
+          "2": "ビデオはAV1ではありません!"
+        }
+      },
       "VideoIsDolbyVision": {
         "Description": "Checks if a video file is Dolby Vision.",
         "Label": "Video Is Dolby Vision",
         "Outputs": {
           "1": "The video is Dolby Vision.",
           "2": "The video is not Dolby Vision."
+        }
+      },
+      "VideoIsH264": {
+        "Description": "ビデオファイルがH.264であるかをテストします",
+        "Label": "ビデオはH.264です",
+        "Outputs": {
+          "1": "ビデオはH.264です",
+          "2": "ビデオはH.264ではありません!"
+        }
+      },
+      "VideoIsHevc": {
+        "Description": "ビデオファイルがHEVCであるかをテストします",
+        "Label": "ビデオはHEVCです",
+        "Outputs": {
+          "1": "ビデオはHEVCです",
+          "2": "ビデオはHEVCではありません!"
         }
       },
       "VideoIsInterlaced": {

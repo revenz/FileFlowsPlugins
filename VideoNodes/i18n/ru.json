@@ -1090,12 +1090,36 @@
           "2": "Видео не 8-битное"
         }
       },
+      "VideoIsAV1": {
+        "Description": "Проверяет, является ли видеофайл AV1",
+        "Label": "Видео является AV1",
+        "Outputs": {
+          "1": "Видео является AV1",
+          "2": "Видео не является AV1"
+        }
+      },
       "VideoIsDolbyVision": {
         "Description": "Controleert of een videobestand Dolby Vision is.",
         "Label": "Video is Dolby Vision",
         "Outputs": {
           "1": "De video is Dolby Vision.",
           "2": "De video is niet Dolby Vision."
+        }
+      },
+      "VideoIsH264": {
+        "Description": "Проверяет, является ли видеофайл H.264",
+        "Label": "Видео является H.264",
+        "Outputs": {
+          "1": "Видео является H.264",
+          "2": "Видео не является H.264"
+        }
+      },
+      "VideoIsHevc": {
+        "Description": "Проверяет, является ли видеофайл HEVC",
+        "Label": "Видео является HEVC",
+        "Outputs": {
+          "1": "Видео является HEVC",
+          "2": "Видео не является HEVC"
         }
       },
       "VideoIsInterlaced": {

@@ -1090,12 +1090,36 @@
           "2": "비디오는 8-Bit가 아닙니다."
         }
       },
+      "VideoIsAV1": {
+        "Description": "비디오 파일이 AV1인지 테스트합니다",
+        "Label": "비디오는 AV1입니다",
+        "Outputs": {
+          "1": "비디오는 AV1입니다",
+          "2": "비디오는 AV1이 아닙니다!"
+        }
+      },
       "VideoIsDolbyVision": {
         "Description": "비디오 파일이 Dolby Vision인지 확인합니다.",
         "Label": "비디오가 Dolby Vision인지",
         "Outputs": {
           "1": "비디오는 Dolby Vision입니다.",
           "2": "비디오는 Dolby Vision이 아닙니다."
+        }
+      },
+      "VideoIsH264": {
+        "Description": "비디오 파일이 H.264인지 테스트합니다",
+        "Label": "비디오는 H.264입니다",
+        "Outputs": {
+          "1": "비디오는 H.264입니다",
+          "2": "비디오는 H.264가 아닙니다!"
+        }
+      },
+      "VideoIsHevc": {
+        "Description": "비디오 파일이 HEVC인지 테스트합니다",
+        "Label": "비디오는 HEVC입니다",
+        "Outputs": {
+          "1": "비디오는 HEVC입니다",
+          "2": "비디오는 HEVC가 아닙니다!"
         }
       },
       "VideoIsInterlaced": {

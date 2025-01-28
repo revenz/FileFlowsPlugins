@@ -1090,12 +1090,36 @@
           "2": "Video is not 8-Bit"
         }
       },
+      "VideoIsAV1": {
+        "Description": "Checks if the video file is encoded in AV1 format.",
+        "Label": "Video Is AV1",
+        "Outputs": {
+          "1": "Video is AV1.",
+          "2": "Video is not AV1."
+        }
+      },
       "VideoIsDolbyVision": {
         "Description": "Checks if a video file is Dolby Vision.",
         "Label": "Video Is Dolby Vision",
         "Outputs": {
           "1": "The video is Dolby Vision.",
           "2": "The video is not Dolby Vision."
+        }
+      },
+      "VideoIsH264": {
+        "Description": "Checks if the video file is encoded in H.264 format.",
+        "Label": "Video Is H.264",
+        "Outputs": {
+          "1": "Video is H.264.",
+          "2": "Video is not H.264."
+        }
+      },
+      "VideoIsHevc": {
+        "Description": "Checks if the video file is encoded in HEVC format.",
+        "Label": "Video Is HEVC",
+        "Outputs": {
+          "1": "Video is HEVC.",
+          "2": "Video is not HEVC."
         }
       },
       "VideoIsInterlaced": {

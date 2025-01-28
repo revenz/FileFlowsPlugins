@@ -37,11 +37,7 @@ public class VideoIs8Bit : VideoNode
     {
         var videoInfo = GetVideoInfo(args);
         if (videoInfo == null)
-        {
-            args.FailureReason = "Failed to retrieve video info";
-            args.Logger?.ELog(args.FailureReason);
-            return -1;
-        }
+            return args.Fail("Failed to retrieve video info");
 
         bool is8Bit = videoInfo.VideoStreams?.Any(x => x.Bits == 8) == true;
         if (is8Bit)
