@@ -37,6 +37,7 @@ public abstract class ImageNode : ImageBaseNode
                     new () { Value = "###GROUP###", Label = "Lossy Formats" },
                     new () { Value = IMAGE_FORMAT_JPEG, Label = "JPEG" },
                     new () { Value = IMAGE_FORMAT_GIF, Label = "GIF" },
+                    new () { Value = IMAGE_FORMAT_HEIC, Label = "HEIC" },
                     new () { Value = IMAGE_FORMAT_PBM, Label = "PBM" },
                 };
             }
@@ -69,6 +70,7 @@ public abstract class ImageNode : ImageBaseNode
             case IMAGE_FORMAT_JPEG: return ImageType.Jpeg;
             case IMAGE_FORMAT_TIFF: return ImageType.Tiff;
             case IMAGE_FORMAT_WEBP: return ImageType.Webp;
+            case IMAGE_FORMAT_HEIC: return ImageType.Heic;
         }
         return null;
     }
