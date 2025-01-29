@@ -73,40 +73,41 @@ public class TVShowLookup : Node
 
         // RegisterSettings only needs to be called one time when your application starts-up.
         MovieDbFactory.RegisterSettings(Globals.MovieDbBearerToken);
-
-        var movieApi = MovieDbFactory.Create<IApiTVShowRequest>().Value;
         
         args.Logger?.ILog("Lookup TV Show: " + lookupName);
 
-        var response = movieApi.SearchByNameAsync(lookupName).Result;
-        
-
-        // try find an exact match
-        var results = response.Results.OrderByDescending(x =>
-            {
-                if (string.IsNullOrEmpty(year) == false)
-                {
-                    if(year == x.FirstAirDate.Year.ToString())
-                        return 2;
-                    // sometimes the user may have hte date off by one, or the app may have 
-                    if(year == (x.FirstAirDate.Year - 1).ToString())
-                        return 1;
-                    if(year == (x.FirstAirDate.Year + 1).ToString())
-                        return 1;
-                    return 0;
-                }
-                return 0;
-            })
-            .ThenBy(x => x.Name.ToLower().Trim().Replace(" ", "") == lookupName.ToLower().Trim().Replace(" ", "") ? 0 : 1)
-            .ThenBy(x => lookupName.ToLower().Trim().Replace(" ", "").StartsWith(x.Name.ToLower().Trim().Replace(" ", "")) ? 0 : 1)
-            // .ThenBy(x => x.Name)
-            .ToList();
-        var result = results.FirstOrDefault();
-
-        if (result == null)
+        string tvShowInfoCacheKey = $"TVShowInfo: {lookupName} ({year})";
+        TVShowInfo result = args.CacheGet<TVShowInfo>(tvShowInfoCacheKey).Result;
+        if (result != null)
         {
-            args.Logger?.ILog("No result found for: " + lookupName);
-            return 2; // no match
+            args.Logger?.ILog("Got TV show info from cache");
+        }
+        else
+        {
+            result = LookupShow(lookupName, year);
+
+            if (result == null)
+            {
+                args.Logger?.ILog("No result found for: " + lookupName);
+                return 2; // no match
+            }
+            args.CacheSet(tvShowInfoCacheKey, result, null);
+        }
+        
+        string tvShowCacheKey = $"TVShow: {result.Id}";
+        TVShow? tv = args.CacheGet<TVShow>(tvShowCacheKey).Result;
+        if (tv == null)
+        {
+            var tvApi = MovieDbFactory.Create<IApiTVShowRequest>().Value;
+            tv = tvApi.FindByIdAsync(result.Id).Result?.Item;
+            if (tv != null)
+            {
+                args.CacheSet(tvShowCacheKey, result, null);
+            }
+        }
+        else
+        {
+            args.Logger?.ILog("Got TV show from cache");
         }
 
         args.Logger?.ILog("Found TV Show: " + result.Name);
@@ -116,7 +117,7 @@ public class TVShowLookup : Node
         args.Logger?.ILog("Detected Title: " + result.Name);
         Variables["tvshow.Year"] = result.FirstAirDate.Year;
         args.Logger?.ILog("Detected Year: " + result.FirstAirDate.Year);
-        Variables["VideoMetadata"] = GetVideoMetadata(movieApi, result.Id, args.TempPath);
+        Variables["VideoMetadata"] = GetVideoMetadata(tv, args.TempPath);
         Variables[Globals.TV_SHOW_INFO] = result;
         if (string.IsNullOrWhiteSpace(result.OriginalLanguage) == false)
         {
@@ -147,6 +148,43 @@ public class TVShowLookup : Node
     //     return (result.ShowName, result.Year);
     // }
 
+    /// <summary>
+    /// Looks up a show online
+    /// </summary>
+    /// <param name="lookupName">the lookup name</param>
+    /// <param name="year">the year</param>
+    /// <returns>the show if found</returns>
+    private TVShowInfo LookupShow(string lookupName, string year)
+    {
+        
+        var movieApi = MovieDbFactory.Create<IApiTVShowRequest>().Value;
+
+        var response = movieApi.SearchByNameAsync(lookupName).Result;
+
+        // try find an exact match
+        var results = response.Results.OrderByDescending(x =>
+            {
+                if (string.IsNullOrEmpty(year) == false)
+                {
+                    if(year == x.FirstAirDate.Year.ToString())
+                        return 2;
+                    // sometimes the user may have hte date off by one, or the app may have 
+                    if(year == (x.FirstAirDate.Year - 1).ToString())
+                        return 1;
+                    if(year == (x.FirstAirDate.Year + 1).ToString())
+                        return 1;
+                    return 0;
+                }
+                return 0;
+            })
+            .ThenBy(x => x.Name.ToLower().Trim().Replace(" ", "") == lookupName.ToLower().Trim().Replace(" ", "") ? 0 : 1)
+            .ThenBy(x => lookupName.ToLower().Trim().Replace(" ", "").StartsWith(x.Name.ToLower().Trim().Replace(" ", "")) ? 0 : 1)
+            // .ThenBy(x => x.Name)
+            .ToList();
+        
+        return results.FirstOrDefault();
+    }
+
 
     /// <summary>
     /// Gets the VideoMetadata
@@ -155,9 +193,8 @@ public class TVShowLookup : Node
     /// <param name="id">the ID of the movie</param>
     /// <param name="tempPath">the temp path to save any images to</param>
     /// <returns>the VideoMetadata</returns>
-    internal static VideoMetadata GetVideoMetadata(IApiTVShowRequest tvApi, int id, string tempPath)
+    internal static VideoMetadata GetVideoMetadata(TVShow? tv, string tempPath)
     {
-        var tv = tvApi.FindByIdAsync(id).Result?.Item;
         if (tv == null)
             return null;
 
