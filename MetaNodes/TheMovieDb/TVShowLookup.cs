@@ -77,7 +77,7 @@ public class TVShowLookup : Node
         args.Logger?.ILog("Lookup TV Show: " + lookupName);
 
         string tvShowInfoCacheKey = $"TVShowInfo: {lookupName} ({year})";
-        TVShowInfo result = args.CacheGet<TVShowInfo>(tvShowInfoCacheKey);
+        TVShowInfo result = args.Cache.GetObject<TVShowInfo>(tvShowInfoCacheKey);
         if (result != null)
         {
             args.Logger?.ILog("Got TV show info from cache");
@@ -91,18 +91,18 @@ public class TVShowLookup : Node
                 args.Logger?.ILog("No result found for: " + lookupName);
                 return 2; // no match
             }
-            args.CacheSet(tvShowInfoCacheKey, result, null);
+            args.Cache.Set(tvShowInfoCacheKey, result);
         }
         
         string tvShowCacheKey = $"TVShow: {result.Id}";
-        TVShow? tv = args.CacheGet<TVShow>(tvShowCacheKey);
+        TVShow? tv = args.Cache.GetObject<TVShow>(tvShowCacheKey);
         if (tv == null)
         {
             var tvApi = MovieDbFactory.Create<IApiTVShowRequest>().Value;
             tv = tvApi.FindByIdAsync(result.Id).Result?.Item;
             if (tv != null)
             {
-                args.CacheSet(tvShowCacheKey, result, null);
+                args.Cache.Set(tvShowCacheKey, tv);
             }
         }
         else
