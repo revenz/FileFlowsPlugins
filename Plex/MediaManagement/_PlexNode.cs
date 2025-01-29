@@ -60,7 +60,7 @@ public abstract class PlexNode:Node
         string url = serverUrl;
         url += "library/sections";
 
-        using var httpClient = GetHttpClient(settings.IgnoreCertificateErrors);
+        using var httpClient = GetHttpClient(settings?.IgnoreCertificateErrors == true);
 
         var sectionsResponse = GetWebRequest(httpClient, url + "?X-Plex-Token=" + accessToken);
         if (sectionsResponse.success == false)
