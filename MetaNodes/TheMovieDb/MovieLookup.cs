@@ -48,7 +48,8 @@ public class MovieLookup : Node
         _Variables = new Dictionary<string, object>()
         {
             { "movie.Title", "Batman Begins" },
-            { "movie.Year", 2005 }
+            { "movie.Year", 2005 },
+            { "movie.ImdbId", "tt0372784" }
         };
     }
     /// <summary>
@@ -189,6 +190,9 @@ public class MovieLookup : Node
         var movie = movieApi.FindByIdAsync(id).Result?.Item;
         if (movie == null)
             return null;
+        
+        if(string.IsNullOrWhiteSpace(movie.ImdbId) == false)
+            args.Variables["movie.ImdbId"] = movie.ImdbId;
         
         var credits = movieApi.GetCreditsAsync(id).Result?.Item;
 
