@@ -80,7 +80,7 @@ public class TVShowLookup : Node
         TVShowInfo result = args.Cache.GetObject<TVShowInfo>(tvShowInfoCacheKey);
         if (result != null)
         {
-            args.Logger?.ILog("Got TV show info from cache");
+            args.Logger?.ILog("Got TV show info from cache: " + result.Name);
         }
         else
         {
