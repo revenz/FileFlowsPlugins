@@ -7,6 +7,7 @@ using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
 using FileFlows.Plugin.Helpers;
 using MetaNodes.Helpers;
+using Newtonsoft.Json;
 
 namespace MetaNodes.TheMovieDb;
 
@@ -80,7 +81,7 @@ public class TVShowLookup : Node
         TVShowInfo result = args.Cache.GetObject<TVShowInfo>(tvShowInfoCacheKey);
         if (result != null)
         {
-            args.Logger?.ILog("Got TV show info from cache: " + result.Name);
+            args.Logger?.ILog("Got TV show info from cache: " + result.Name + "\n" + System.Text.Json.JsonSerializer.Serialize(result));
         }
         else
         {
