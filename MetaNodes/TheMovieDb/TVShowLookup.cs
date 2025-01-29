@@ -77,7 +77,7 @@ public class TVShowLookup : Node
         args.Logger?.ILog("Lookup TV Show: " + lookupName);
 
         string tvShowInfoCacheKey = $"TVShowInfo: {lookupName} ({year})";
-        TVShowInfo result = args.CacheGet<TVShowInfo>(tvShowInfoCacheKey).Result;
+        TVShowInfo result = args.CacheGet<TVShowInfo>(tvShowInfoCacheKey);
         if (result != null)
         {
             args.Logger?.ILog("Got TV show info from cache");
@@ -95,7 +95,7 @@ public class TVShowLookup : Node
         }
         
         string tvShowCacheKey = $"TVShow: {result.Id}";
-        TVShow? tv = args.CacheGet<TVShow>(tvShowCacheKey).Result;
+        TVShow? tv = args.CacheGet<TVShow>(tvShowCacheKey);
         if (tv == null)
         {
             var tvApi = MovieDbFactory.Create<IApiTVShowRequest>().Value;
