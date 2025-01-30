@@ -78,12 +78,25 @@ public class TVShowLookup : Node
         args.Logger?.ILog("Lookup TV Show: " + lookupName);
 
         string tvShowInfoCacheKey = $"TVShowInfo: {lookupName} ({year})";
-        TVShowInfo result = args.Cache.GetObject<TVShowInfo>(tvShowInfoCacheKey);
-        if (result != null)
+        TVShowInfo result = null;
+        var showInfoJson = args.Cache.GetJson(tvShowInfoCacheKey);
+        if(string.IsNullOrWhiteSpace(showInfoJson) == false)
         {
-            args.Logger?.ILog("Got TV show info from cache: " + result.Name + "\n" + System.Text.Json.JsonSerializer.Serialize(result));
+            try
+            {
+                result = System.Text.Json.JsonSerializer.Deserialize<TVShowInfo>(showInfoJson);
+                if (result != null)
+                {
+                    args.Logger?.ILog("Got TV show info from cache: " + result.Name + "\n" + System.Text.Json.JsonSerializer.Serialize(result));
+                }
+            }
+            catch (Exception ex)
+            {
+                args.Logger?.WLog("Failed to deserialize TV SHow Info Json: " + ex.Message + "\n" + showInfoJson);
+            }
         }
-        else
+        
+        if (result == null)
         {
             result = LookupShow(lookupName, year);
 
