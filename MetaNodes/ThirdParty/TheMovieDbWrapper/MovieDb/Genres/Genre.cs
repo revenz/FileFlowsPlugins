@@ -6,10 +6,15 @@ namespace DM.MovieApi.MovieDb.Genres;
 public class Genre : IEqualityComparer<Genre>
 {
     [DataMember( Name = "id" )]
-    public int Id { get; private set; }
+    public int Id { get; init; }
 
     [DataMember( Name = "name" )]
-    public string Name { get; private set; }
+    public string Name { get; init; }
+
+    public Genre()
+    {
+        
+    }
 
     public Genre( int id, string name )
     {

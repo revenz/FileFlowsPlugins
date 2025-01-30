@@ -9,13 +9,13 @@ namespace DM.MovieApi.MovieDb.TV;
 public class TVShowInfo
 {
     [DataMember( Name = "id" )]
-    public int Id { get; private set; }
+    public int Id { get; init; }
 
     [DataMember( Name = "name" )]
-    public string Name { get; private set; }
+    public string Name { get; init; }
 
     [DataMember( Name = "original_name" )]
-    public string OriginalName { get; private set; }
+    public string OriginalName { get; init; }
 
     [DataMember( Name = "poster_path" )]
     public string PosterPath { get; set; }
@@ -24,36 +24,31 @@ public class TVShowInfo
     public string BackdropPath { get; set; }
 
     [DataMember( Name = "popularity" )]
-    public double Popularity { get; private set; }
+    public double Popularity { get; init; }
 
     [DataMember( Name = "vote_average" )]
-    public double VoteAverage { get; private set; }
+    public double VoteAverage { get; init; }
 
     [DataMember( Name = "vote_count" )]
-    public int VoteCount { get; private set; }
+    public int VoteCount { get; init; }
 
     [DataMember( Name = "overview" )]
-    public string Overview { get; private set; }
+    public string Overview { get; init; }
 
     [DataMember( Name = "first_air_date" )]
-    public DateTime FirstAirDate { get; private set; }
+    public DateTime FirstAirDate { get; init; }
 
     [DataMember( Name = "origin_country" )]
-    public IReadOnlyList<string> OriginCountry { get; private set; }
+    public List<string> OriginCountry { get; init; }
 
-    [DataMember( Name = "genre_ids" )]
-    internal IReadOnlyList<int> GenreIds { get; set; }
+    [DataMember(Name = "genre_ids")] public List<int> GenreIds { get; set; } = [];
+    public List<Genre> Genres { get; internal set; } = [];
 
-    public IReadOnlyList<Genre> Genres { get; internal set; }
-
-    [DataMember( Name = "original_language" )]
-    public string OriginalLanguage { get; private set; }
+    [DataMember(Name = "original_language")]
+    public string OriginalLanguage { get; init; }
 
     public TVShowInfo()
     {
-        OriginCountry = Array.Empty<string>();
-        GenreIds = Array.Empty<int>();
-        Genres = Array.Empty<Genre>();
     }
 
     public override string ToString()
