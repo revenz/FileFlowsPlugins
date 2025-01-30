@@ -1,44 +1,66 @@
 ﻿using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace DM.MovieApi.MovieDb.Genres;
 
+/// <summary>
+/// Represents a genre in the Movie Database API.
+/// </summary>
 [DataContract]
 public class Genre : IEqualityComparer<Genre>
 {
-    [DataMember( Name = "id" )]
+    /// <summary>
+    /// Gets or sets the unique identifier for the genre.
+    /// </summary>
+    [DataMember(Name = "id")]
+    [JsonProperty("id")]
     public int Id { get; init; }
 
-    [DataMember( Name = "name" )]
+    /// <summary>
+    /// Gets or sets the name of the genre.
+    /// </summary>
+    [DataMember(Name = "name")]
+    [JsonProperty("name")]
     public string Name { get; init; }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Genre"/> class.
+    /// </summary>
     public Genre()
     {
-        
     }
 
-    public Genre( int id, string name )
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Genre"/> class with specified values.
+    /// </summary>
+    /// <param name="id">The unique identifier for the genre.</param>
+    /// <param name="name">The name of the genre.</param>
+    public Genre(int id, string name)
     {
         Id = id;
         Name = name;
     }
 
-    public override bool Equals( object obj )
+    /// <inheritdoc/>
+    public override bool Equals(object obj)
     {
-        if( obj is not Genre genre )
+        if (obj is not Genre genre)
         {
             return false;
         }
-
-        return Equals( this, genre );
+        return Equals(this, genre);
     }
 
-    public bool Equals( Genre x, Genre y )
+    /// <inheritdoc/>
+    public bool Equals(Genre x, Genre y)
         => x != null && y != null && x.Id == y.Id && x.Name == y.Name;
 
+    /// <inheritdoc/>
     public override int GetHashCode()
-        => GetHashCode( this );
+        => GetHashCode(this);
 
-    public int GetHashCode( Genre obj )
+    /// <inheritdoc/>
+    public int GetHashCode(Genre obj)
     {
         unchecked // Overflow is fine, just wrap
         {
@@ -49,6 +71,7 @@ public class Genre : IEqualityComparer<Genre>
         }
     }
 
+    /// <inheritdoc/>
     public override string ToString()
         => $"{Name} ({Id})";
 }

@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace DM.MovieApi.MovieDb.Keywords;
 
@@ -9,14 +10,21 @@ public class Keyword : IEqualityComparer<Keyword>
     /// The keyword Id as identified by theMovieDB.org.
     /// </summary>
     [DataMember( Name = "id" )]
+    [JsonPropertyName("id")]
     public int Id { get; set; }
 
     /// <summary>
     /// The keyword.
     /// </summary>
     [DataMember( Name = "name" )]
+    [JsonPropertyName("name")]
     public string Name { get; set; }
 
+    public Keyword()
+    {
+        
+    }
+    
     public Keyword( int id, string name )
     {
         Id = id;

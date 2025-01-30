@@ -82,8 +82,7 @@ public class TVShowLookup : Node
         TVShowInfo result =args.Cache.GetObject<TVShowInfo>(tvShowInfoCacheKey);
         if (result != null)
         {
-            args.Logger?.ILog("Got TV show info from cache: " + result.Name + "\n" +
-                              System.Text.Json.JsonSerializer.Serialize(result));
+            args.Logger?.ILog("Got TV show info from cache: " + result.Name);
         }
         else
         {
@@ -94,8 +93,7 @@ public class TVShowLookup : Node
                 args.Logger?.ILog("No result found for: " + lookupName);
                 return 2; // no match
             }
-            string json = JsonConvert.SerializeObject(result, Formatting.Indented);
-            args.Cache.SetJson(tvShowInfoCacheKey, json);
+            args.Cache.SetObject(tvShowInfoCacheKey, result);
         }
         
         string tvShowCacheKey = $"TVShow: {result.Id}";
@@ -105,14 +103,11 @@ public class TVShowLookup : Node
             var tvApi = MovieDbFactory.Create<IApiTVShowRequest>().Value;
             tv = tvApi.FindByIdAsync(result.Id).Result?.Item;
             if (tv != null)
-            {
-                string json = JsonConvert.SerializeObject(result, Formatting.Indented);
-                args.Cache.SetJson(tvShowCacheKey, json);
-            }
+                args.Cache.SetObject(tvShowCacheKey, tv);
         }
         else
         {
-            args.Logger?.ILog("Got TV show from cache");
+            args.Logger?.ILog($"Got TV show from cache: {tv.Name} ({tv.FirstAirDate.Year})");
         }
 
         args.Logger?.ILog("Found TV Show: " + result.Name);
@@ -122,7 +117,17 @@ public class TVShowLookup : Node
         args.Logger?.ILog("Detected Title: " + result.Name);
         Variables["tvshow.Year"] = result.FirstAirDate.Year;
         args.Logger?.ILog("Detected Year: " + result.FirstAirDate.Year);
-        Variables["VideoMetadata"] = GetVideoMetadata(tv, args.TempPath);
+        var metadata = GetVideoMetadata(tv, args.TempPath);
+        if (metadata != null)
+        {
+            Variables["VideoMetadata"] = metadata;
+            args.Logger?.ILog("Title: " + metadata.Title);
+            args.Logger?.ILog("Description: " + metadata.Description);
+            args.Logger?.ILog("Year: " + metadata.Year);
+            args.Logger?.ILog("ReleaseDate: " + metadata.ReleaseDate.ToShortDateString());
+            args.Logger?.ILog("OriginalLanguage: " + metadata.OriginalLanguage);
+        }
+
         Variables[Globals.TV_SHOW_INFO] = result;
         if (string.IsNullOrWhiteSpace(result.OriginalLanguage) == false)
         {
