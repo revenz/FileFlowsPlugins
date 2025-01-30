@@ -170,8 +170,7 @@ public class TVShow
     /// Gets or sets the list of keywords associated with the TV show.
     /// </summary>
     [DataMember(Name = "keywords")]
-    [JsonPropertyName("keywords")]
-    public List<Keyword> Keywords { get; set; }
+    public IReadOnlyCollection<Keyword> Keywords { get; set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="TVShow"/> class.
