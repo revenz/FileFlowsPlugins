@@ -1,6 +1,7 @@
 
 using System.IO;
-using FileFlows.VideoNodes;
+
+namespace FileFlows.VideoNodes;
 
 /// <summary>
 /// Checks if a video file is in AVI format.
