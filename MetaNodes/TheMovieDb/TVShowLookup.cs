@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Text.Json;
+using System.Text.RegularExpressions;
 using DM.MovieApi;
 using DM.MovieApi.ApiResponse;
 using DM.MovieApi.MovieDb.Movies;
@@ -78,25 +79,13 @@ public class TVShowLookup : Node
         args.Logger?.ILog("Lookup TV Show: " + lookupName);
 
         string tvShowInfoCacheKey = $"TVShowInfo: {lookupName} ({year})";
-        TVShowInfo result = null;
-        var showInfoJson = args.Cache.GetJson(tvShowInfoCacheKey);
-        if(string.IsNullOrWhiteSpace(showInfoJson) == false)
+        TVShowInfo result =args.Cache.GetObject<TVShowInfo>(tvShowInfoCacheKey);
+        if (result != null)
         {
-            try
-            {
-                result = System.Text.Json.JsonSerializer.Deserialize<TVShowInfo>(showInfoJson);
-                if (result != null)
-                {
-                    args.Logger?.ILog("Got TV show info from cache: " + result.Name + "\n" + System.Text.Json.JsonSerializer.Serialize(result));
-                }
-            }
-            catch (Exception ex)
-            {
-                args.Logger?.WLog("Failed to deserialize TV SHow Info Json: " + ex.Message + "\n" + showInfoJson);
-            }
+            args.Logger?.ILog("Got TV show info from cache: " + result.Name + "\n" +
+                              System.Text.Json.JsonSerializer.Serialize(result));
         }
-        
-        if (result == null)
+        else
         {
             result = LookupShow(lookupName, year);
 
