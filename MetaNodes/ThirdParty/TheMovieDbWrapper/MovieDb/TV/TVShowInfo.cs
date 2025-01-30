@@ -9,13 +9,13 @@ namespace DM.MovieApi.MovieDb.TV;
 public class TVShowInfo
 {
     [DataMember( Name = "id" )]
-    public int Id { get; init; }
+    public int Id { get; set; }
 
     [DataMember( Name = "name" )]
-    public string Name { get; init; }
+    public string Name { get; set; }
 
     [DataMember( Name = "original_name" )]
-    public string OriginalName { get; init; }
+    public string OriginalName { get; set; }
 
     [DataMember( Name = "poster_path" )]
     public string PosterPath { get; set; }
@@ -24,28 +24,28 @@ public class TVShowInfo
     public string BackdropPath { get; set; }
 
     [DataMember( Name = "popularity" )]
-    public double Popularity { get; init; }
+    public double Popularity { get; set; }
 
     [DataMember( Name = "vote_average" )]
-    public double VoteAverage { get; init; }
+    public double VoteAverage { get; set; }
 
     [DataMember( Name = "vote_count" )]
-    public int VoteCount { get; init; }
+    public int VoteCount { get; set; }
 
     [DataMember( Name = "overview" )]
-    public string Overview { get; init; }
+    public string Overview { get; set; }
 
     [DataMember( Name = "first_air_date" )]
-    public DateTime FirstAirDate { get; init; }
+    public DateTime FirstAirDate { get; set; }
 
     [DataMember( Name = "origin_country" )]
-    public List<string> OriginCountry { get; init; }
+    public List<string> OriginCountry { get; set; }
 
     [DataMember(Name = "genre_ids")] public List<int> GenreIds { get; set; } = [];
     public List<Genre> Genres { get; internal set; } = [];
 
     [DataMember(Name = "original_language")]
-    public string OriginalLanguage { get; init; }
+    public string OriginalLanguage { get; set; }
 
     public TVShowInfo()
     {

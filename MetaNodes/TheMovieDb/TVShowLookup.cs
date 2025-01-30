@@ -92,7 +92,8 @@ public class TVShowLookup : Node
                 args.Logger?.ILog("No result found for: " + lookupName);
                 return 2; // no match
             }
-            args.Cache.Set(tvShowInfoCacheKey, result);
+            string json = JsonConvert.SerializeObject(result, Formatting.Indented);
+            args.Cache.SetJson(tvShowInfoCacheKey, json);
         }
         
         string tvShowCacheKey = $"TVShow: {result.Id}";
@@ -103,7 +104,8 @@ public class TVShowLookup : Node
             tv = tvApi.FindByIdAsync(result.Id).Result?.Item;
             if (tv != null)
             {
-                args.Cache.Set(tvShowCacheKey, tv);
+                string json = JsonConvert.SerializeObject(result, Formatting.Indented);
+                args.Cache.SetJson(tvShowCacheKey, json);
             }
         }
         else
