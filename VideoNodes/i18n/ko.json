@@ -1098,6 +1098,14 @@
           "2": "비디오는 AV1이 아닙니다!"
         }
       },
+      "VideoIsAvi": {
+        "Description": "비디오 파일이 AVI 형식인지 확인합니다",
+        "Label": "비디오는 AVI입니다",
+        "Outputs": {
+          "1": "비디오는 AVI입니다",
+          "2": "비디오는 AVI가 아닙니다"
+        }
+      },
       "VideoIsDolbyVision": {
         "Description": "비디오 파일이 Dolby Vision인지 확인합니다.",
         "Label": "비디오가 Dolby Vision인지",
@@ -1132,6 +1140,70 @@
         "Outputs": {
           "1": "비디오는 인터레이스입니다.",
           "2": "비디오는 인터레이스가 아닙니다."
+        }
+      },
+      "VideoIsMkv": {
+        "Description": "비디오 파일이 MKV 형식인지 확인합니다",
+        "Label": "비디오는 MKV입니다",
+        "Outputs": {
+          "1": "비디오는 MKV입니다",
+          "2": "비디오는 MKV가 아닙니다"
+        }
+      },
+      "VideoIsMov": {
+        "Description": "비디오 파일이 MOV 형식인지 확인합니다",
+        "Label": "비디오는 MOV입니다",
+        "Outputs": {
+          "1": "비디오는 MOV입니다",
+          "2": "비디오는 MOV가 아닙니다"
+        }
+      },
+      "VideoIsMp4": {
+        "Description": "비디오 파일이 MP4 형식인지 확인합니다",
+        "Label": "비디오는 MP4입니다",
+        "Outputs": {
+          "1": "비디오는 MP4입니다",
+          "2": "비디오는 MP4가 아닙니다"
+        }
+      },
+      "VideoIsMpeg": {
+        "Description": "비디오 파일이 MPEG 형식인지 확인합니다",
+        "Label": "비디오는 MPEG입니다",
+        "Outputs": {
+          "1": "비디오는 MPEG입니다",
+          "2": "비디오는 MPEG가 아닙니다"
+        }
+      },
+      "VideoIsMxf": {
+        "Description": "비디오 파일이 MXF 형식인지 확인합니다",
+        "Label": "비디오는 MXF입니다",
+        "Outputs": {
+          "1": "비디오는 MXF입니다",
+          "2": "비디오는 MXF가 아닙니다"
+        }
+      },
+      "VideoIsTs": {
+        "Description": "비디오 파일이 TS 형식인지 확인합니다",
+        "Label": "비디오는 TS입니다",
+        "Outputs": {
+          "1": "비디오는 TS입니다",
+          "2": "비디오는 TS가 아닙니다"
+        }
+      },
+      "VideoIsWebm": {
+        "Description": "비디오 파일이 WEBM 형식인지 확인합니다",
+        "Label": "비디오는 WEBM입니다",
+        "Outputs": {
+          "1": "비디오는 WEBM입니다",
+          "2": "비디오는 WEBM가 아닙니다"
+        }
+      },
+      "VideoIsWmv": {
+        "Description": "비디오 파일이 WMV 형식인지 확인합니다",
+        "Label": "비디오는 WMV입니다",
+        "Outputs": {
+          "1": "비디오는 WMV입니다",
+          "2": "비디오는 WMV가 아닙니다"
         }
       },
       "VideoResolution": {

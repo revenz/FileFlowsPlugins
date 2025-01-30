@@ -1098,6 +1098,14 @@
           "2": "视频不是AV1"
         }
       },
+      "VideoIsAvi": {
+        "Description": "检查视频文件是否为AVI格式",
+        "Label": "视频是AVI",
+        "Outputs": {
+          "1": "视频是AVI",
+          "2": "视频不是AVI"
+        }
+      },
       "VideoIsDolbyVision": {
         "Description": "Controleert of een videobestand Dolby Vision is.",
         "Label": "Video is Dolby Vision",
@@ -1132,6 +1140,70 @@
         "Outputs": {
           "1": "视频是交错",
           "2": "视频不是交错"
+        }
+      },
+      "VideoIsMkv": {
+        "Description": "检查视频文件是否为MKV格式",
+        "Label": "视频是MKV",
+        "Outputs": {
+          "1": "视频是MKV",
+          "2": "视频不是MKV"
+        }
+      },
+      "VideoIsMov": {
+        "Description": "检查视频文件是否为MOV格式",
+        "Label": "视频是MOV",
+        "Outputs": {
+          "1": "视频是MOV",
+          "2": "视频不是MOV"
+        }
+      },
+      "VideoIsMp4": {
+        "Description": "检查视频文件是否为MP4格式",
+        "Label": "视频是MP4",
+        "Outputs": {
+          "1": "视频是MP4",
+          "2": "视频不是MP4"
+        }
+      },
+      "VideoIsMpeg": {
+        "Description": "检查视频文件是否为MPEG格式",
+        "Label": "视频是MPEG",
+        "Outputs": {
+          "1": "视频是MPEG",
+          "2": "视频不是MPEG"
+        }
+      },
+      "VideoIsMxf": {
+        "Description": "检查视频文件是否为MXF格式",
+        "Label": "视频是MXF",
+        "Outputs": {
+          "1": "视频是MXF",
+          "2": "视频不是MXF"
+        }
+      },
+      "VideoIsTs": {
+        "Description": "检查视频文件是否为TS格式",
+        "Label": "视频是TS",
+        "Outputs": {
+          "1": "视频是TS",
+          "2": "视频不是TS"
+        }
+      },
+      "VideoIsWebm": {
+        "Description": "检查视频文件是否为WEBM格式",
+        "Label": "视频是WEBM",
+        "Outputs": {
+          "1": "视频是WEBM",
+          "2": "视频不是WEBM"
+        }
+      },
+      "VideoIsWmv": {
+        "Description": "检查视频文件是否为WMV格式",
+        "Label": "视频是WMV",
+        "Outputs": {
+          "1": "视频是WMV",
+          "2": "视频不是WMV"
         }
       },
       "VideoResolution": {

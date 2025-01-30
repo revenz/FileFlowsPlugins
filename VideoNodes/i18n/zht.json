@@ -1098,6 +1098,14 @@
           "2": "視頻不是AV1格式"
         }
       },
+      "VideoIsAvi": {
+        "Description": "檢查視頻文件是否為AVI格式",
+        "Label": "視頻是AVI",
+        "Outputs": {
+          "1": "視頻是AVI",
+          "2": "視頻不是AVI"
+        }
+      },
       "VideoIsDolbyVision": {
         "Description": "測試視頻文件是否為Dolby Vision。",
         "Label": "視頻是Dolby Vision",
@@ -1132,6 +1140,70 @@
         "Outputs": {
           "1": "視頻為交錯",
           "2": "視頻不是交錯"
+        }
+      },
+      "VideoIsMkv": {
+        "Description": "檢查視頻文件是否為MKV格式",
+        "Label": "視頻是MKV",
+        "Outputs": {
+          "1": "視頻是MKV",
+          "2": "視頻不是MKV"
+        }
+      },
+      "VideoIsMov": {
+        "Description": "檢查視頻文件是否為MOV格式",
+        "Label": "視頻是MOV",
+        "Outputs": {
+          "1": "視頻是MOV",
+          "2": "視頻不是MOV"
+        }
+      },
+      "VideoIsMp4": {
+        "Description": "檢查視頻文件是否為MP4格式",
+        "Label": "視頻是MP4",
+        "Outputs": {
+          "1": "視頻是MP4",
+          "2": "視頻不是MP4"
+        }
+      },
+      "VideoIsMpeg": {
+        "Description": "檢查視頻文件是否為MPEG格式",
+        "Label": "視頻是MPEG",
+        "Outputs": {
+          "1": "視頻是MPEG",
+          "2": "視頻不是MPEG"
+        }
+      },
+      "VideoIsMxf": {
+        "Description": "檢查視頻文件是否為MXF格式",
+        "Label": "視頻是MXF",
+        "Outputs": {
+          "1": "視頻是MXF",
+          "2": "視頻不是MXF"
+        }
+      },
+      "VideoIsTs": {
+        "Description": "檢查視頻文件是否為TS格式",
+        "Label": "視頻是TS",
+        "Outputs": {
+          "1": "視頻是TS",
+          "2": "視頻不是TS"
+        }
+      },
+      "VideoIsWebm": {
+        "Description": "檢查視頻文件是否為WEBM格式",
+        "Label": "視頻是WEBM",
+        "Outputs": {
+          "1": "視頻是WEBM",
+          "2": "視頻不是WEBM"
+        }
+      },
+      "VideoIsWmv": {
+        "Description": "檢查視頻文件是否為WMV格式",
+        "Label": "視頻是WMV",
+        "Outputs": {
+          "1": "視頻是WMV",
+          "2": "視頻不是WMV"
         }
       },
       "VideoResolution": {

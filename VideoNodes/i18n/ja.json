@@ -1098,6 +1098,14 @@
           "2": "ビデオはAV1ではありません!"
         }
       },
+      "VideoIsAvi": {
+        "Description": "動画ファイルがAVI形式であるかを確認します",
+        "Label": "動画はAVIです",
+        "Outputs": {
+          "1": "動画はAVIです",
+          "2": "動画はAVIではありません"
+        }
+      },
       "VideoIsDolbyVision": {
         "Description": "Checks if a video file is Dolby Vision.",
         "Label": "Video Is Dolby Vision",
@@ -1132,6 +1140,70 @@
         "Outputs": {
           "1": "ビデオはインターレースされています",
           "2": "ビデオはインターレースされていません"
+        }
+      },
+      "VideoIsMkv": {
+        "Description": "動画ファイルがMKV形式であるかを確認します",
+        "Label": "動画はMKVです",
+        "Outputs": {
+          "1": "動画はMKVです",
+          "2": "動画はMKVではありません"
+        }
+      },
+      "VideoIsMov": {
+        "Description": "動画ファイルがMOV形式であるかを確認します",
+        "Label": "動画はMOVです",
+        "Outputs": {
+          "1": "動画はMOVです",
+          "2": "動画はMOVではありません"
+        }
+      },
+      "VideoIsMp4": {
+        "Description": "動画ファイルがMP4形式であるかを確認します",
+        "Label": "動画はMP4です",
+        "Outputs": {
+          "1": "動画はMP4です",
+          "2": "動画はMP4ではありません"
+        }
+      },
+      "VideoIsMpeg": {
+        "Description": "動画ファイルがMPEG形式であるかを確認します",
+        "Label": "動画はMPEGです",
+        "Outputs": {
+          "1": "動画はMPEGです",
+          "2": "動画はMPEGではありません"
+        }
+      },
+      "VideoIsMxf": {
+        "Description": "動画ファイルがMXF形式であるかを確認します",
+        "Label": "動画はMXFです",
+        "Outputs": {
+          "1": "動画はMXFです",
+          "2": "動画はMXFではありません"
+        }
+      },
+      "VideoIsTs": {
+        "Description": "動画ファイルがTS形式であるかを確認します",
+        "Label": "動画はTSです",
+        "Outputs": {
+          "1": "動画はTSです",
+          "2": "動画はTSではありません"
+        }
+      },
+      "VideoIsWebm": {
+        "Description": "動画ファイルがWEBM形式であるかを確認します",
+        "Label": "動画はWEBMです",
+        "Outputs": {
+          "1": "動画はWEBMです",
+          "2": "動画はWEBMではありません"
+        }
+      },
+      "VideoIsWmv": {
+        "Description": "動画ファイルがWMV形式であるかを確認します",
+        "Label": "動画はWMVです",
+        "Outputs": {
+          "1": "動画はWMVです",
+          "2": "動画はWMVではありません"
         }
       },
       "VideoResolution": {

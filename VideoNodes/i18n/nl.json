@@ -1098,6 +1098,14 @@
           "2": "Video is geen AV1"
         }
       },
+      "VideoIsAvi": {
+        "Description": "Controleert of het videobestand in AVI-indeling is",
+        "Label": "Video is AVI",
+        "Outputs": {
+          "1": "De video is AVI",
+          "2": "De video is niet AVI"
+        }
+      },
       "VideoIsDolbyVision": {
         "Description": "Controleert of een videobestand Dolby Vision is.",
         "Label": "Video is Dolby Vision",
@@ -1132,6 +1140,70 @@
         "Outputs": {
           "1": "Video is interlaced",
           "2": "Video is niet interlaced"
+        }
+      },
+      "VideoIsMkv": {
+        "Description": "Controleert of het videobestand in MKV-indeling is",
+        "Label": "Video is MKV",
+        "Outputs": {
+          "1": "De video is MKV",
+          "2": "De video is niet MKV"
+        }
+      },
+      "VideoIsMov": {
+        "Description": "Controleert of het videobestand in MOV-indeling is",
+        "Label": "Video is MOV",
+        "Outputs": {
+          "1": "De video is MOV",
+          "2": "De video is niet MOV"
+        }
+      },
+      "VideoIsMp4": {
+        "Description": "Controleert of het videobestand in MP4-indeling is",
+        "Label": "Video is MP4",
+        "Outputs": {
+          "1": "De video is MP4",
+          "2": "De video is niet MP4"
+        }
+      },
+      "VideoIsMpeg": {
+        "Description": "Controleert of het videobestand in MPEG-indeling is",
+        "Label": "Video is MPEG",
+        "Outputs": {
+          "1": "De video is MPEG",
+          "2": "De video is niet MPEG"
+        }
+      },
+      "VideoIsMxf": {
+        "Description": "Controleert of het videobestand in MXF-indeling is",
+        "Label": "Video is MXF",
+        "Outputs": {
+          "1": "De video is MXF",
+          "2": "De video is niet MXF"
+        }
+      },
+      "VideoIsTs": {
+        "Description": "Controleert of het videobestand in TS-indeling is",
+        "Label": "Video is TS",
+        "Outputs": {
+          "1": "De video is TS",
+          "2": "De video is niet TS"
+        }
+      },
+      "VideoIsWebm": {
+        "Description": "Controleert of het videobestand in WEBM-indeling is",
+        "Label": "Video is WEBM",
+        "Outputs": {
+          "1": "De video is WEBM",
+          "2": "De video is niet WEBM"
+        }
+      },
+      "VideoIsWmv": {
+        "Description": "Controleert of het videobestand in WMV-indeling is",
+        "Label": "Video is WMV",
+        "Outputs": {
+          "1": "De video is WMV",
+          "2": "De video is niet WMV"
         }
       },
       "VideoResolution": {

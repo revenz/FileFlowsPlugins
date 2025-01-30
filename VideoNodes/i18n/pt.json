@@ -1098,6 +1098,14 @@
           "2": "O vídeo não é AV1"
         }
       },
+      "VideoIsAvi": {
+        "Description": "Verifica se o arquivo de vídeo está no formato AVI",
+        "Label": "Vídeo é AVI",
+        "Outputs": {
+          "1": "O vídeo é AVI",
+          "2": "O vídeo não é AVI"
+        }
+      },
       "VideoIsDolbyVision": {
         "Description": "Controleert of een videobestand Dolby Vision is.",
         "Label": "Video is Dolby Vision",
@@ -1132,6 +1140,70 @@
         "Outputs": {
           "1": "O vídeo é entrelaçado",
           "2": "O vídeo não é entrelaçado"
+        }
+      },
+      "VideoIsMkv": {
+        "Description": "Verifica se o arquivo de vídeo está no formato MKV",
+        "Label": "Vídeo é MKV",
+        "Outputs": {
+          "1": "O vídeo é MKV",
+          "2": "O vídeo não é MKV"
+        }
+      },
+      "VideoIsMov": {
+        "Description": "Verifica se o arquivo de vídeo está no formato MOV",
+        "Label": "Vídeo é MOV",
+        "Outputs": {
+          "1": "O vídeo é MOV",
+          "2": "O vídeo não é MOV"
+        }
+      },
+      "VideoIsMp4": {
+        "Description": "Verifica se o arquivo de vídeo está no formato MP4",
+        "Label": "Vídeo é MP4",
+        "Outputs": {
+          "1": "O vídeo é MP4",
+          "2": "O vídeo não é MP4"
+        }
+      },
+      "VideoIsMpeg": {
+        "Description": "Verifica se o arquivo de vídeo está no formato MPEG",
+        "Label": "Vídeo é MPEG",
+        "Outputs": {
+          "1": "O vídeo é MPEG",
+          "2": "O vídeo não é MPEG"
+        }
+      },
+      "VideoIsMxf": {
+        "Description": "Verifica se o arquivo de vídeo está no formato MXF",
+        "Label": "Vídeo é MXF",
+        "Outputs": {
+          "1": "O vídeo é MXF",
+          "2": "O vídeo não é MXF"
+        }
+      },
+      "VideoIsTs": {
+        "Description": "Verifica se o arquivo de vídeo está no formato TS",
+        "Label": "Vídeo é TS",
+        "Outputs": {
+          "1": "O vídeo é TS",
+          "2": "O vídeo não é TS"
+        }
+      },
+      "VideoIsWebm": {
+        "Description": "Verifica se o arquivo de vídeo está no formato WEBM",
+        "Label": "Vídeo é WEBM",
+        "Outputs": {
+          "1": "O vídeo é WEBM",
+          "2": "O vídeo não é WEBM"
+        }
+      },
+      "VideoIsWmv": {
+        "Description": "Verifica se o arquivo de vídeo está no formato WMV",
+        "Label": "Vídeo é WMV",
+        "Outputs": {
+          "1": "O vídeo é WMV",
+          "2": "O vídeo não é WMV"
         }
       },
       "VideoResolution": {

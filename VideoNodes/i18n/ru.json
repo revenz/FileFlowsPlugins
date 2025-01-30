@@ -1098,6 +1098,14 @@
           "2": "Видео не является AV1"
         }
       },
+      "VideoIsAvi": {
+        "Description": "Проверяет, является ли видеофайл формата AVI",
+        "Label": "Видео — это AVI",
+        "Outputs": {
+          "1": "Видео — это AVI",
+          "2": "Видео не является AVI"
+        }
+      },
       "VideoIsDolbyVision": {
         "Description": "Controleert of een videobestand Dolby Vision is.",
         "Label": "Video is Dolby Vision",
@@ -1132,6 +1140,70 @@
         "Outputs": {
           "1": "Видео интерлейсированное",
           "2": "Видео не интерлейсированное"
+        }
+      },
+      "VideoIsMkv": {
+        "Description": "Проверяет, является ли видеофайл формата MKV",
+        "Label": "Видео — это MKV",
+        "Outputs": {
+          "1": "Видео — это MKV",
+          "2": "Видео не является MKV"
+        }
+      },
+      "VideoIsMov": {
+        "Description": "Проверяет, является ли видеофайл формата MOV",
+        "Label": "Видео — это MOV",
+        "Outputs": {
+          "1": "Видео — это MOV",
+          "2": "Видео не является MOV"
+        }
+      },
+      "VideoIsMp4": {
+        "Description": "Проверяет, является ли видеофайл формата MP4",
+        "Label": "Видео — это MP4",
+        "Outputs": {
+          "1": "Видео — это MP4",
+          "2": "Видео не является MP4"
+        }
+      },
+      "VideoIsMpeg": {
+        "Description": "Проверяет, является ли видеофайл формата MPEG",
+        "Label": "Видео — это MPEG",
+        "Outputs": {
+          "1": "Видео — это MPEG",
+          "2": "Видео не является MPEG"
+        }
+      },
+      "VideoIsMxf": {
+        "Description": "Проверяет, является ли видеофайл формата MXF",
+        "Label": "Видео — это MXF",
+        "Outputs": {
+          "1": "Видео — это MXF",
+          "2": "Видео не является MXF"
+        }
+      },
+      "VideoIsTs": {
+        "Description": "Проверяет, является ли видеофайл формата TS",
+        "Label": "Видео — это TS",
+        "Outputs": {
+          "1": "Видео — это TS",
+          "2": "Видео не является TS"
+        }
+      },
+      "VideoIsWebm": {
+        "Description": "Проверяет, является ли видеофайл формата WEBM",
+        "Label": "Видео — это WEBM",
+        "Outputs": {
+          "1": "Видео — это WEBM",
+          "2": "Видео не является WEBM"
+        }
+      },
+      "VideoIsWmv": {
+        "Description": "Проверяет, является ли видеофайл формата WMV",
+        "Label": "Видео — это WMV",
+        "Outputs": {
+          "1": "Видео — это WMV",
+          "2": "Видео не является WMV"
         }
       },
       "VideoResolution": {
