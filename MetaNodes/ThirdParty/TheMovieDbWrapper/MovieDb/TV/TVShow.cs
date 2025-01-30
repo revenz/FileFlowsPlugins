@@ -166,11 +166,11 @@ public class TVShow
     [JsonPropertyName("seasons")]
     public List<Season> Seasons { get; set; }
 
-    /// <summary>
-    /// Gets or sets the list of keywords associated with the TV show.
-    /// </summary>
-    [DataMember(Name = "keywords")]
-    public IReadOnlyCollection<Keyword> Keywords { get; set; }
+    // /// <summary>
+    // /// Gets or sets the list of keywords associated with the TV show.
+    // /// </summary>
+    // [DataMember(Name = "keywords")]
+    // public IReadOnlyCollection<Keyword> Keywords { get; set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="TVShow"/> class.
@@ -185,7 +185,7 @@ public class TVShow
         OriginCountry = [];
         ProductionCompanies = [];
         Seasons = [];
-        Keywords = [];
+        //Keywords = [];
     }
 
     /// <summary>
