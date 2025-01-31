@@ -21,6 +21,11 @@ public class FfmpegBuilderRemuxToMxf : FfmpegBuilderNode
     /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
+        if (this.Model.Extension?.ToLowerInvariant() != "mxf")
+        {
+            args.Logger?.ILog($"Needs remuxing from '{this.Model.Extension}' to 'mxf', forcing encode");
+            this.Model.ForceEncode = true;
+        }
         this.Model.Extension = "mxf";
         return 1;
     }
