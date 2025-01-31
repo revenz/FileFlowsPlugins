@@ -58,6 +58,8 @@
           "HeadersValue": "Wert",
           "Method": "Methode",
           "Method-Help": "Die Webmethode, die beim Senden dieser Anfrage verwendet werden soll",
+          "ResponseVariable": "Antwortvariable",
+          "ResponseVariable-Help": "Der Name der Variablen, in der die JSON-Antwort gespeichert wird. Wenn die Antwort kein gültiges JSON ist, wird diese Variable nicht gesetzt.",
           "Url": "URL",
           "Url-Help": "Die URL der Anfrage"
         },

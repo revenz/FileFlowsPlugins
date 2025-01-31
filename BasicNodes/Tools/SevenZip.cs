@@ -298,6 +298,7 @@ public class SevenZip : Node
             }
             
             args.SetWorkingFile(destFile);
+            args.SetMimeType("application/x-7z-compressed");
             args.Logger?.ILog("7z created at: " + destFile);
             return 1;
         }

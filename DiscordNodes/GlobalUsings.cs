@@ -6,3 +6,4 @@ global using System.Threading.Tasks;
 global using System.ComponentModel.DataAnnotations;
 global using FileFlows.Plugin;
 global using FileFlows.Plugin.Attributes;
+global using FileFlows.Common;

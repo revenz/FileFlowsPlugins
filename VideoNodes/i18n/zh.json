@@ -235,6 +235,26 @@
           "2": "没有轨道待转换"
         }
       },
+      "FfmpegBuilderAudioLanguageConverter": {
+        "Description": "为指定语言添加新的音轨，使用所需格式、比特率和声道配置。如果已有匹配的音轨且格式正确，则直接复制而不是重新编码。可选地，可以删除其他音轨。",
+        "Label": "FFMPEG Builder：音频语言转换器",
+        "Fields": {
+          "Bitrate": "每通道比特率",
+          "Bitrate-Help": "新添加音轨的每通道目标比特率。选择一个在音质和文件大小之间提供平衡的值。",
+          "Channels": "声道",
+          "Channels-Help": "新音轨的声道数量。如果指定的声道少于来源，FFMPEG 将自动混音以匹配所需声道数量。",
+          "Codec": "编码器",
+          "Codec-Help": "用于编码新音轨的编码器。",
+          "Languages": "语言",
+          "Languages-Help": "需要添加新音轨的语言列表。",
+          "RemoveOthers": "删除其他",
+          "RemoveOthers-Help": "删除所有其他音轨，仅保留此处创建的音轨。如果无法添加音轨，原始配置将保持不变。"
+        },
+        "Outputs": {
+          "1": "音轨已添加到 FFmpeg 模型。",
+          "2": "未添加任何音轨。"
+        }
+      },
       "FfmpegBuilderAudioNormalization": {
         "Description": "使用FFMPEG的loudnorm过滤器规范化视频文件中的所有音轨",
         "Label": "FFMPEG构建器：音频规范化",
@@ -1070,6 +1090,46 @@
           "2": "视频不是8位"
         }
       },
+      "VideoIsAV1": {
+        "Description": "测试视频文件是否为AV1",
+        "Label": "视频是AV1",
+        "Outputs": {
+          "1": "视频是AV1",
+          "2": "视频不是AV1"
+        }
+      },
+      "VideoIsAvi": {
+        "Description": "检查视频文件是否为AVI格式",
+        "Label": "视频是AVI",
+        "Outputs": {
+          "1": "视频是AVI",
+          "2": "视频不是AVI"
+        }
+      },
+      "VideoIsDolbyVision": {
+        "Description": "Controleert of een videobestand Dolby Vision is.",
+        "Label": "Video is Dolby Vision",
+        "Outputs": {
+          "1": "De video is Dolby Vision.",
+          "2": "De video is niet Dolby Vision."
+        }
+      },
+      "VideoIsH264": {
+        "Description": "测试视频文件是否为H.264",
+        "Label": "视频是H.264",
+        "Outputs": {
+          "1": "视频是H.264",
+          "2": "视频不是H.264"
+        }
+      },
+      "VideoIsHevc": {
+        "Description": "测试视频文件是否为HEVC",
+        "Label": "视频是HEVC",
+        "Outputs": {
+          "1": "视频是HEVC",
+          "2": "视频不是HEVC"
+        }
+      },
       "VideoIsInterlaced": {
         "Description": "测试视频文件是否为交错",
         "Label": "视频是交错",
@@ -1080,6 +1140,70 @@
         "Outputs": {
           "1": "视频是交错",
           "2": "视频不是交错"
+        }
+      },
+      "VideoIsMkv": {
+        "Description": "检查视频文件是否为MKV格式",
+        "Label": "视频是MKV",
+        "Outputs": {
+          "1": "视频是MKV",
+          "2": "视频不是MKV"
+        }
+      },
+      "VideoIsMov": {
+        "Description": "检查视频文件是否为MOV格式",
+        "Label": "视频是MOV",
+        "Outputs": {
+          "1": "视频是MOV",
+          "2": "视频不是MOV"
+        }
+      },
+      "VideoIsMp4": {
+        "Description": "检查视频文件是否为MP4格式",
+        "Label": "视频是MP4",
+        "Outputs": {
+          "1": "视频是MP4",
+          "2": "视频不是MP4"
+        }
+      },
+      "VideoIsMpeg": {
+        "Description": "检查视频文件是否为MPEG格式",
+        "Label": "视频是MPEG",
+        "Outputs": {
+          "1": "视频是MPEG",
+          "2": "视频不是MPEG"
+        }
+      },
+      "VideoIsMxf": {
+        "Description": "检查视频文件是否为MXF格式",
+        "Label": "视频是MXF",
+        "Outputs": {
+          "1": "视频是MXF",
+          "2": "视频不是MXF"
+        }
+      },
+      "VideoIsTs": {
+        "Description": "检查视频文件是否为TS格式",
+        "Label": "视频是TS",
+        "Outputs": {
+          "1": "视频是TS",
+          "2": "视频不是TS"
+        }
+      },
+      "VideoIsWebm": {
+        "Description": "检查视频文件是否为WEBM格式",
+        "Label": "视频是WEBM",
+        "Outputs": {
+          "1": "视频是WEBM",
+          "2": "视频不是WEBM"
+        }
+      },
+      "VideoIsWmv": {
+        "Description": "检查视频文件是否为WMV格式",
+        "Label": "视频是WMV",
+        "Outputs": {
+          "1": "视频是WMV",
+          "2": "视频不是WMV"
         }
       },
       "VideoResolution": {

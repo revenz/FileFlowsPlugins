@@ -1,0 +1,19 @@
+{
+  "Flow": {
+    "Parts": {
+      "MoveToUserFolder": {
+        "Description": "Mueve el archivo de trabajo al directorio de salida del usuario.",
+        "Label": "Mover a la Carpeta del Usuario",
+        "Outputs": {
+          "1": "El archivo se movió con éxito"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Web": {
+      "Description": "Complemento que proporciona elementos de flujo relacionados con el revendedor",
+      "Label": "Revendedor"
+    }
+  }
+}

@@ -56,7 +56,7 @@ namespace FileFlows.AudioNodes
 
 
         private const string Audio_INFO = "AudioInfo";
-        internal void SetAudioInfo(NodeParameters args, AudioInfo AudioInfo, Dictionary<string, object> variables)
+        internal void SetAudioInfo(NodeParameters args, AudioInfo AudioInfo, Dictionary<string, object> variables, string filename)
         {
             args.Parameters[Audio_INFO] = AudioInfo;
 
@@ -102,6 +102,46 @@ namespace FileFlows.AudioNodes
             AddIfSet(metadata, "Disc", AudioInfo.Disc);
             AddIfSet(metadata, "TotalDiscs", AudioInfo.TotalDiscs);
             args.SetMetadata(metadata);
+            
+            
+            string extension = FileHelper.GetExtension(filename).ToLowerInvariant()[1..];
+            switch (extension)
+            {
+                case "mp3":
+                    args.SetMimeType("audio/mpeg");
+                    break;
+                case "wav":
+                    args.SetMimeType("audio/wav");
+                    break;
+                case "flac":
+                    args.SetMimeType("audio/flac");
+                    break;
+                case "aac":
+                    args.SetMimeType("audio/aac");
+                    break;
+                case "ogg":
+                    args.SetMimeType("audio/ogg");
+                    break;
+                case "m4a":
+                    args.SetMimeType("audio/mp4"); // Used for AAC or ALAC audio in MP4 container
+                    break;
+                case "opus":
+                    args.SetMimeType("audio/opus");
+                    break;
+                case "wma":
+                    args.SetMimeType("audio/x-ms-wma");
+                    break;
+                case "amr":
+                    args.SetMimeType("audio/amr");
+                    break;
+                case "aiff":
+                case "aif":
+                    args.SetMimeType("audio/aiff");
+                    break;
+                default:
+                    args.SetMimeType("audio/" + extension); // Fallback for unknown extensions
+                    break;
+            }
 
             args.UpdateVariables(variables);
         }
@@ -147,7 +187,7 @@ namespace FileFlows.AudioNodes
                 return false;
             }
 
-            SetAudioInfo(args, result.Value, Variables);
+            SetAudioInfo(args, result.Value, Variables, filename);
             return true;
         }
     }

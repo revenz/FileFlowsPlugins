@@ -441,6 +441,17 @@
           "2": "图像记录失败"
         }
       },
+      "LogVariables": {
+        "Description": "将流程中的所有变量记录到日志文件中以进行调试。",
+        "Label": "记录变量",
+        "Fields": {
+          "Recursive": "详细日志",
+          "Recursive-Help": "启用后，复杂变量的所有嵌套属性都将记录在日志中。"
+        },
+        "Outputs": {
+          "1": "变量已成功记录。"
+        }
+      },
       "Matches": {
         "Description": "比较一组值并匹配条件，以查看应该调用哪个输出",
         "Label": "匹配",

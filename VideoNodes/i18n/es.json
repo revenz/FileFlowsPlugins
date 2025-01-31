@@ -235,6 +235,26 @@
           "2": "No hay pistas para ser convertidas"
         }
       },
+      "FfmpegBuilderAudioLanguageConverter": {
+        "Description": "Agrega nuevas pistas de audio para los idiomas especificados en el formato, tasa de bits y configuración de canales deseados. Si ya existe una pista coincidente en el formato correcto, se copiará en lugar de volver a codificarse. Opcionalmente, se pueden eliminar otras pistas de audio.",
+        "Label": "FFMPEG Builder: Convertidor de idioma de audio",
+        "Fields": {
+          "Bitrate": "Bitrate por canal",
+          "Bitrate-Help": "La tasa de bits objetivo por canal para las pistas de audio recién agregadas. Elija un valor que proporcione un equilibrio entre calidad de audio y tamaño del archivo.",
+          "Channels": "Canales",
+          "Channels-Help": "El número de canales para las nuevas pistas de audio. Si especificas menos canales que la fuente, FFMPEG mezclará el audio automáticamente para coincidir con la cantidad de canales deseada.",
+          "Codec": "Códec",
+          "Codec-Help": "El códec que se utilizará para codificar las nuevas pistas de audio.",
+          "Languages": "Idiomas",
+          "Languages-Help": "La lista de idiomas para los que se deben agregar nuevas pistas de audio.",
+          "RemoveOthers": "Eliminar otros",
+          "RemoveOthers-Help": "Elimina todas las demás pistas de audio, dejando solo las creadas aquí. Si no se pueden agregar pistas, la configuración original permanecerá intacta."
+        },
+        "Outputs": {
+          "1": "Pistas de audio añadidas al modelo de FFmpeg",
+          "2": "No se añadieron pistas de audio"
+        }
+      },
       "FfmpegBuilderAudioNormalization": {
         "Description": "Normaliza todas las pistas de audio en un archivo de video usando el filtro loudnorm de FFMPEG",
         "Label": "FFMPEG Builder: Normalización de Audio",
@@ -1070,6 +1090,46 @@
           "2": "El video no es de 8-Bit"
         }
       },
+      "VideoIsAV1": {
+        "Description": "Comprueba si un archivo de video es AV1",
+        "Label": "El video es AV1",
+        "Outputs": {
+          "1": "El video es AV1",
+          "2": "El video no es AV1"
+        }
+      },
+      "VideoIsAvi": {
+        "Description": "Verifica si el archivo de video está en formato AVI",
+        "Label": "El video es AVI",
+        "Outputs": {
+          "1": "El video es AVI",
+          "2": "El video no es AVI"
+        }
+      },
+      "VideoIsDolbyVision": {
+        "Description": "Checks if a video file is Dolby Vision.",
+        "Label": "Video Is Dolby Vision",
+        "Outputs": {
+          "1": "The video is Dolby Vision.",
+          "2": "The video is not Dolby Vision."
+        }
+      },
+      "VideoIsH264": {
+        "Description": "Comprueba si un archivo de video es H.264",
+        "Label": "El video es H.264",
+        "Outputs": {
+          "1": "El video es H.264",
+          "2": "El video no es H.264"
+        }
+      },
+      "VideoIsHevc": {
+        "Description": "Comprueba si un archivo de video es HEVC",
+        "Label": "El video es HEVC",
+        "Outputs": {
+          "1": "El video es HEVC",
+          "2": "El video no es HEVC"
+        }
+      },
       "VideoIsInterlaced": {
         "Description": "Prueba si un archivo de video está entrelazado",
         "Label": "El video está entrelazado",
@@ -1080,6 +1140,70 @@
         "Outputs": {
           "1": "El video está entrelazado",
           "2": "El video no está entrelazado"
+        }
+      },
+      "VideoIsMkv": {
+        "Description": "Verifica si el archivo de video está en formato MKV",
+        "Label": "El video es MKV",
+        "Outputs": {
+          "1": "El video es MKV",
+          "2": "El video no es MKV"
+        }
+      },
+      "VideoIsMov": {
+        "Description": "Verifica si el archivo de video está en formato MOV",
+        "Label": "El video es MOV",
+        "Outputs": {
+          "1": "El video es MOV",
+          "2": "El video no es MOV"
+        }
+      },
+      "VideoIsMp4": {
+        "Description": "Verifica si el archivo de video está en formato MP4",
+        "Label": "El video es MP4",
+        "Outputs": {
+          "1": "El video es MP4",
+          "2": "El video no es MP4"
+        }
+      },
+      "VideoIsMpeg": {
+        "Description": "Verifica si el archivo de video está en formato MPEG",
+        "Label": "El video es MPEG",
+        "Outputs": {
+          "1": "El video es MPEG",
+          "2": "El video no es MPEG"
+        }
+      },
+      "VideoIsMxf": {
+        "Description": "Verifica si el archivo de video está en formato MXF",
+        "Label": "El video es MXF",
+        "Outputs": {
+          "1": "El video es MXF",
+          "2": "El video no es MXF"
+        }
+      },
+      "VideoIsTs": {
+        "Description": "Verifica si el archivo de video está en formato TS",
+        "Label": "El video es TS",
+        "Outputs": {
+          "1": "El video es TS",
+          "2": "El video no es TS"
+        }
+      },
+      "VideoIsWebm": {
+        "Description": "Verifica si el archivo de video está en formato WEBM",
+        "Label": "El video es WEBM",
+        "Outputs": {
+          "1": "El video es WEBM",
+          "2": "El video no es WEBM"
+        }
+      },
+      "VideoIsWmv": {
+        "Description": "Verifica si el archivo de video está en formato WMV",
+        "Label": "El video es WMV",
+        "Outputs": {
+          "1": "El video es WMV",
+          "2": "El video no es WMV"
         }
       },
       "VideoResolution": {

@@ -28,7 +28,15 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
                 return 2;
             }
 
-            string tempMetaDataFile = GenerateMetaDataFile(this, args, videoInfo, FFMPEG, this.Percent, this.MinimumLength);
+            var lfResult = args.FileService.GetLocalPath(args.WorkingFile);
+            if (lfResult.Failed(out var error))
+            {
+                args.Logger?.WLog("Failed to get local file: " + error);
+                return 2;
+            }
+            
+
+            string tempMetaDataFile = GenerateMetaDataFile(this, args, videoInfo, lfResult.Value, FFMPEG, this.Percent, this.MinimumLength);
             if (string.IsNullOrEmpty(tempMetaDataFile))
                 return 2;
 
@@ -37,13 +45,13 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
             return 1;
         }
 
-        string GenerateMetaDataFile(EncodingNode node, NodeParameters args, VideoInfo videoInfo, string ffmpegExe, int percent, int minimumLength)
+        string GenerateMetaDataFile(EncodingNode node, NodeParameters args, VideoInfo videoInfo, string localFile, string ffmpegExe, int percent, int minimumLength)
         {
             string output;
             var result = node.Encode(args, ffmpegExe, new List<string>
             {
                 "-hide_banner",
-                "-i", args.WorkingFile,
+                "-i", localFile,
                 "-filter:v", $"select='gt(scene,{percent / 100f})',showinfo",
                 "-f", "null",
                 "-"
@@ -55,10 +63,9 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes
                 return string.Empty;
             }
 
-
             if (minimumLength < 30)
             {
-                args.Logger?.ILog("Mimium length set to invalid number, defaulting to 60 seconds");
+                args.Logger?.ILog("Minimum length set to invalid number, defaulting to 60 seconds");
                 minimumLength = 60;
             }
             else

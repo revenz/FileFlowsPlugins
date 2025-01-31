@@ -48,6 +48,8 @@
       "Fields": {
         "AccessToken": "Toegangstoken",
         "AccessToken-Help": "De [toegangstoken](https://github.com/revenz/Fenrus/wiki/Plex-Token) die wordt gebruikt om te communiceren met de Plex-server.",
+        "IgnoreCertificateErrors": "Certificaatfouten negeren",
+        "IgnoreCertificateErrors-Help": "Schakel deze optie in om certificaatfouten te omzeilen en het gebruik van zelfondertekende certificaten in Plex toe te staan.",
         "Mapping": "Mapping",
         "Mapping-Help": "Een lijst van vervangingen die worden gebruikt om paden in FileFlows te mappen naar de paden die in Plex worden gebruikt.",
         "MappingKey": "FileFlows",

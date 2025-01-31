@@ -73,7 +73,7 @@
         "Label": "Consulta de Episódio de TV",
         "Fields": {
           "UseFolderName": "Usar Nome da Pasta",
-          "UseFolderName-Help": "Se o nome da pasta deve ser usado em vez do nome do arquivo.\n\nNota: se a pasta começar com Temporada ou Especiais, a pasta principal será usada."
+          "UseFolderName-Help": "Se o nome da pasta deve ser usado em vez do nome do arquivo.\n\nNota: se a pasta começar com Season/Staffel/Saison/Specials/S[0-9]+, a pasta principal será usada."
         },
         "Outputs": {
           "1": "Episódio de TV encontrado",
@@ -85,7 +85,7 @@
         "Label": "Consulta de Programa de TV",
         "Fields": {
           "UseFolderName": "Usar Nome da Pasta",
-          "UseFolderName-Help": "Se o nome da pasta deve ser usado em vez do nome do arquivo.\n\nNota: se a pasta começar com Temporada ou Especiais, a pasta principal será usada."
+          "UseFolderName-Help": "Se o nome da pasta deve ser usado em vez do nome do arquivo.\n\nNota: se a pasta começar com Season/Staffel/Saison/Specials/S[0-9]+, a pasta principal será usada."
         },
         "Outputs": {
           "1": "Programa de TV encontrado",

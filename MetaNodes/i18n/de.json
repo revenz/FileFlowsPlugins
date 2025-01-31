@@ -73,7 +73,7 @@
         "Label": "TV-Episode suchen",
         "Fields": {
           "UseFolderName": "Ordnernamen verwenden",
-          "UseFolderName-Help": "Ob der Ordnername anstelle des Dateinamens verwendet werden soll.\n\nHinweis: Wenn der Ordner mit Staffel oder Specials beginnt, wird der übergeordnete Ordner verwendet."
+          "UseFolderName-Help": "Ob der Ordnername anstelle des Dateinamens verwendet werden soll.\n\nHinweis: Wenn der Ordner mit Season/Staffel/Saison/Specials/S[0-9]+ beginnt, wird der übergeordnete Ordner verwendet."
         },
         "Outputs": {
           "1": "TV-Episode gefunden",
@@ -85,7 +85,7 @@
         "Label": "TV-Show suchen",
         "Fields": {
           "UseFolderName": "Ordnernamen verwenden",
-          "UseFolderName-Help": "Ob der Ordnername anstelle des Dateinamens verwendet werden soll.\n\nHinweis: Wenn der Ordner mit Staffel oder Specials beginnt, wird der übergeordnete Ordner verwendet."
+          "UseFolderName-Help": "Ob der Ordnername anstelle des Dateinamens verwendet werden soll.\n\nHinweis: Wenn der Ordner mit Season/Staffel/Saison/Specials/S[0-9]+ beginnt, wird der übergeordnete Ordner verwendet."
         },
         "Outputs": {
           "1": "TV-Show gefunden",

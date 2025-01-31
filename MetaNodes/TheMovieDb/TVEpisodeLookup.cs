@@ -91,34 +91,50 @@ public class TVEpisodeLookup : Node
         }
         
         args.Logger?.ILog($"Found show info from filename '{lookupName}' season '{season}' episode '{(episode + (lastEpisode == null ? "" : "-" + lastEpisode))}'");
-
-        // RegisterSettings only needs to be called one time when your application starts-up.
-        MovieDbFactory.RegisterSettings(Globals.MovieDbBearerToken);
-
-        var movieApi = MovieDbFactory.Create<IApiTVShowRequest>().Value;
         
-        args.Logger?.ILog("Lookup TV Show: " + lookupName);
+        string tvShowInfoCacheKey = $"TVShowInfo: {lookupName} ({year})";
+        TVShowInfo result =args.Cache.GetObject<TVShowInfo>(tvShowInfoCacheKey);
+        if (result != null)
+        {
+            args.Logger?.ILog("Got TV show info from cache: " + result.Name);
+        }
+        else
+        {
 
-        var response = movieApi.SearchByNameAsync(lookupName).Result;
-        
+            // RegisterSettings only needs to be called one time when your application starts-up.
+            MovieDbFactory.RegisterSettings(Globals.MovieDbBearerToken);
 
-        // try find an exact match
-        var result = response.Results.OrderBy(x =>
-            {
-                if (string.IsNullOrEmpty(year) == false)
+            var movieApi = MovieDbFactory.Create<IApiTVShowRequest>().Value;
+
+            args.Logger?.ILog("Lookup TV Show: " + lookupName);
+
+            var response = movieApi.SearchByNameAsync(lookupName).Result;
+
+
+            // try find an exact match
+            result = response.Results.OrderBy(x =>
                 {
-                    return year == x.FirstAirDate.Year.ToString() ? 0 : 1;
-                }
-                if (string.IsNullOrEmpty(year2) == false)
-                {
-                    return year2 == x.FirstAirDate.Year.ToString() ? 0 : 1;
-                }
-                return 0;
-            })
-            .ThenBy(x => x.Name.ToLower().Trim().Replace(" ", "") == lookupName.ToLower().Trim().Replace(" ", "") ? 0 : 1)
-            .ThenBy(x => lookupName.ToLower().Trim().Replace(" ", "").StartsWith(x.Name.ToLower().Trim().Replace(" ", "")) ? 0 : 1)
-            .ThenBy(x => x.Name)
-            .FirstOrDefault();
+                    if (string.IsNullOrEmpty(year) == false)
+                    {
+                        return year == x.FirstAirDate.Year.ToString() ? 0 : 1;
+                    }
+
+                    if (string.IsNullOrEmpty(year2) == false)
+                    {
+                        return year2 == x.FirstAirDate.Year.ToString() ? 0 : 1;
+                    }
+
+                    return 0;
+                })
+                .ThenBy(x =>
+                    x.Name.ToLower().Trim().Replace(" ", "") == lookupName.ToLower().Trim().Replace(" ", "") ? 0 : 1)
+                .ThenBy(x =>
+                    lookupName.ToLower().Trim().Replace(" ", "").StartsWith(x.Name.ToLower().Trim().Replace(" ", ""))
+                        ? 0
+                        : 1)
+                .ThenBy(x => x.Name)
+                .FirstOrDefault();
+        }
 
         if (result == null)
         {
@@ -131,7 +147,6 @@ public class TVEpisodeLookup : Node
         // now we have the show, try and get the episode
 
         var episodeApi  = MovieDbFactory.Create<IApiTVShowRequest>().Value;
-        
         
         var show = episodeApi.GetTvShowSeasonInfoAsync(result.Id, season.Value).Result;
         if (show.Item == null)

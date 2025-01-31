@@ -1,0 +1,19 @@
+{
+  "Flow": {
+    "Parts": {
+      "MoveToUserFolder": {
+        "Description": "將工作檔案移動到使用者的輸出目錄。",
+        "Label": "移動到使用者資料夾",
+        "Outputs": {
+          "1": "檔案已成功移動"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Web": {
+      "Description": "提供與經銷商相關的流程元素的外掛程式",
+      "Label": "經銷商"
+    }
+  }
+}

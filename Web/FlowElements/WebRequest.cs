@@ -1,9 +1,8 @@
-﻿namespace FileFlows.Web.FlowElements;
+﻿using System.Text.RegularExpressions;
+using FileFlows.Web.Helpers;
+using HttpMethod = System.Net.Http.HttpMethod;
 
-using FileFlows.Plugin;
-using FileFlows.Plugin.Attributes;
-using System;
-using System.Text;
+namespace FileFlows.Web.FlowElements;
 
 /// <summary>
 /// Flow element that makes a web request
@@ -65,6 +64,8 @@ public class WebRequest : Node
     /// </summary>
     [Select(nameof(ContentTypeOptions), 3)]
     public string ContentType { get; set; } = null!;
+    
+    const string CONTENT_TYPE_FORMDATA = "application/x-www-form-urlencoded";
 
     private static List<ListOption>? _ContentTypeOptions;
     /// <summary>
@@ -80,7 +81,7 @@ public class WebRequest : Node
                 {
                     new () { Label = "None", Value = ""},
                     new () { Label = "JSON", Value = "application/json"},
-                    new () { Label = "Form Data", Value = "application/x-www-form-urlencoded"},
+                    new () { Label = "Form Data", Value = CONTENT_TYPE_FORMDATA},
                 };
             }
             return _ContentTypeOptions;
@@ -99,6 +100,12 @@ public class WebRequest : Node
     /// </summary>
     [TextArea(5, variables: true)]
     public string Body { get; set; } = null!;
+    
+    /// <summary>
+    /// Gets or sets the variable to save the response object in
+    /// </summary>
+    [TextVariable(6)]
+    public string ResponseVariable { get; set; } = null!;
 
 
     private Dictionary<string, object>? _Variables;
@@ -147,19 +154,66 @@ public class WebRequest : Node
                     if (string.IsNullOrEmpty(header.Key) || string.IsNullOrEmpty(header.Value))
                         continue;
 
-                    message.Headers.Add(header.Key, header.Value);
+                    var headerKey = args.ReplaceVariables(header.Key, stripMissing: true);
+                    var headerValue = args.ReplaceVariables(header.Value, stripMissing:true);
+                    
+                    if (string.IsNullOrEmpty(headerKey) || string.IsNullOrEmpty(headerValue))
+                        continue;
+                    
+                    args.Logger?.ILog($"Header: {headerKey} = {headerValue}");
+                    message.Headers.Add(headerKey, headerValue);
                 }
             }
 
             if (string.IsNullOrEmpty(this.ContentType) == false && method != HttpMethod.Get && string.IsNullOrWhiteSpace(this.Body) == false)
             {
                 string body = args.ReplaceVariables(this.Body, stripMissing: false);
-                message.Content = new StringContent(body, Encoding.UTF8, this.ContentType?.EmptyAsNull() ?? "application/json");
+                if (this.ContentType.Equals(CONTENT_TYPE_FORMDATA, StringComparison.OrdinalIgnoreCase))
+                {
+                    // Create a MultipartFormDataContent for form-data
+                    var multipartContent = new MultipartFormDataContent();
+
+                    // Add content to the form-data. Parse `Body` if it contains multiple fields.
+                    // Example: Body = "field1=value1&field2=value2"
+                    var keyValuePairs = body.Split('&')
+                        .Select(p => p.Split('='))
+                        .Where(parts => parts.Length == 2)
+                        .Select(parts => new KeyValuePair<string, string>(parts[0], parts[1]));
+
+                    foreach (var kvp in keyValuePairs)
+                    {
+                        args.Logger?.ILog($"Form Data: {kvp.Key} = {kvp.Value}");
+                        multipartContent.Add(new StringContent(kvp.Value), kvp.Key);
+                    }
+
+                    message.Content = multipartContent;
+                }
+                else
+                {
+                    message.Content = new StringContent(body, Encoding.UTF8, this.ContentType?.EmptyAsNull() ?? "application/json");
+                }
             }
 
             var result = client.Send(message);
 
             string stringBody = result.Content.ReadAsStringAsync().Result ?? string.Empty;
+            
+            // Try to parse the JSON response and add it to the dictionary
+            var responseVariable = args.ReplaceVariables(ResponseVariable ?? string.Empty, stripMissing: true);
+            if (string.IsNullOrEmpty(responseVariable) == false &&
+                Regex.IsMatch(responseVariable, @"^[a-zA-Z_][a-zA-Z_0-9]*$"))
+            {
+                try
+                {
+                    var jsonResult = JsonUtils.DeserializeToDictionary(stringBody);
+                    if (jsonResult != null)
+                        args.Variables[responseVariable] = jsonResult;
+                }
+                catch (System.Text.Json.JsonException ex)
+                {
+                    args.Logger?.WLog("Failed to parse JSON response: " + ex.Message);
+                }
+            }
 
             args.UpdateVariables(new Dictionary<string, object>{
                 { "web.StatusCode", (int)result.StatusCode },

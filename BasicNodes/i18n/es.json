@@ -441,6 +441,17 @@
           "2": "La imagen no se pudo registrar"
         }
       },
+      "LogVariables": {
+        "Description": "Registra todas las variables del flujo en el archivo de registro para depuración.",
+        "Label": "Registrar Variables",
+        "Fields": {
+          "Recursive": "Registro Detallado",
+          "Recursive-Help": "Si está habilitado, las variables complejas incluirán todas sus propiedades anidadas en el registro."
+        },
+        "Outputs": {
+          "1": "Las variables se han registrado con éxito."
+        }
+      },
       "Matches": {
         "Description": "Compara un conjunto de valores y condiciones de coincidencia para ver qué salida debe ser llamada",
         "Label": "Coincidencias",

@@ -7,6 +7,7 @@ global using System.Collections.Generic;
 global using FileFlows.Plugin;
 global using FileFlows.Plugin.Attributes;
 
+global using FileFlows.Common;
 global using FileHelper = FileFlows.Plugin.Helpers.FileHelper;
 #if(DEBUG)
 global using PluginTestLibrary;

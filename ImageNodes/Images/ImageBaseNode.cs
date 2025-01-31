@@ -119,10 +119,82 @@ public abstract class ImageBaseNode:Node
         {
             args.Variables["img.DateTaken"] = imageInfo.DateTaken.Value;
             args.Variables["img.DateYear"] = imageInfo.DateTaken.Value.Year;
-            args.Variables["img.DateMont"] = imageInfo.DateTaken.Value.Year;
+            args.Variables["img.DateMonth"] = imageInfo.DateTaken.Value.Year;
         }
         else
             args.Variables.Remove("img.DateTaken");
+        
+        args.Logger?.ILog("About to set image mime/type: " + imageInfo.Type + " = " + imageInfo.Format);
+        switch (imageInfo.Type)
+        {
+            case ImageType.Bmp:
+                args.SetMimeType("image/bmp");
+                break;
+            case ImageType.Jpeg:
+                args.SetMimeType("image/jpeg");
+                break;
+            case ImageType.Png:
+                args.SetMimeType("image/png");
+                break;
+            case ImageType.Gif:
+                args.SetMimeType("image/gif");
+                break;
+            case ImageType.Tiff:
+                args.SetMimeType("image/tiff");
+                break;
+            case ImageType.Webp:
+                args.SetMimeType("image/webp");
+                break;
+            case ImageType.Pbm:
+                args.SetMimeType("image/pbm");
+                break;
+            case ImageType.Tga:
+                args.SetMimeType("image/tga");
+                break;
+            case ImageType.Heic:
+                args.SetMimeType("image/heic");
+                break;
+            default:
+            {
+                switch (imageInfo.Format?.ToLowerInvariant())
+                {
+                    case "bmp":
+                        args.SetMimeType("image/bmp");
+                        break;
+                    case "jpeg":
+                    case "jpg":
+                    case "jpe":
+                        args.SetMimeType("image/jpeg");
+                        break;
+                    case "png":
+                        args.SetMimeType("image/png");
+                        break;
+                    case "gif":
+                        args.SetMimeType("image/gif");
+                        break;
+                    case "tiff":
+                        args.SetMimeType("image/tiff");
+                        break;
+                    case "webp":
+                        args.SetMimeType("image/webp");
+                        break;
+                    case "pbm":
+                        args.SetMimeType("image/pbm");
+                        break;
+                    case "tga":
+                        args.SetMimeType("image/tga");
+                        break;
+                    case "heic":
+                        args.SetMimeType("image/heic");
+                        break;
+                    default:
+                        if(string.IsNullOrWhiteSpace(imageInfo.Format) == false)
+                            args.SetMimeType("image/" + imageInfo.Format.ToLowerInvariant());
+                        break;
+                }
+                break;
+            }
+        }
         
         args.SetMetadata(metadata);
     }

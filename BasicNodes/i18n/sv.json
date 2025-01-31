@@ -441,6 +441,17 @@
           "2": "Kunde inte logga bilden"
         }
       },
+      "LogVariables": {
+        "Description": "Loggar alla variabler i flödet till loggfilen för felsökning.",
+        "Label": "Logga Variabler",
+        "Fields": {
+          "Recursive": "Detaljerad Loggning",
+          "Recursive-Help": "Om aktiverat kommer komplexa variabler att inkludera alla sina inbäddade egenskaper i loggen."
+        },
+        "Outputs": {
+          "1": "Variabler har loggats framgångsrikt."
+        }
+      },
       "Matches": {
         "Description": "Jämför en uppsättning värden och matchar villkor för att se vilken utdata som ska anropas",
         "Label": "Matcher",

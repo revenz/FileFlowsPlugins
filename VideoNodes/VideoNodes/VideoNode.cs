@@ -197,6 +197,55 @@ namespace FileFlows.VideoNodes
                 if(stream.Forced)
                     metadata.Add(prefix + "Forced", true);
             }
+
+            string extension = FileHelper.GetExtension(videoInfo.FileName).ToLowerInvariant()[1..]; 
+            switch (extension)
+            {
+                case "mp4":
+                    args.SetMimeType("video/mp4");
+                    break;
+                case "avi":
+                    args.SetMimeType("video/x-msvideo");
+                    break;
+                case "mkv":
+                    args.SetMimeType("video/x-matroska");
+                    break;
+                case "mov":
+                    args.SetMimeType("video/quicktime");
+                    break;
+                case "wmv":
+                    args.SetMimeType("video/x-ms-wmv");
+                    break;
+                case "flv":
+                    args.SetMimeType("video/x-flv");
+                    break;
+                case "webm":
+                    args.SetMimeType("video/webm");
+                    break;
+                case "3gp":
+                    args.SetMimeType("video/3gpp");
+                    break;
+                case "mpeg":
+                case "mpg":
+                    args.SetMimeType("video/mpeg");
+                    break;
+                case "ogg":
+                    args.SetMimeType("video/ogg");
+                    break;
+                case "m4v":
+                    args.SetMimeType("video/x-m4v");
+                    break;
+                case "ts":
+                    args.SetMimeType("video/mp2t");
+                    break;
+                case "mpx":
+                    args.SetMimeType("video/mpx");
+                    break;
+                default:
+                    args.SetMimeType("video/" + extension); // Fallback for unknown extensions
+                    break;
+            }
+
             args.SetMetadata(metadata);
         }
 

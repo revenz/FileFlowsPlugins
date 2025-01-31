@@ -73,7 +73,7 @@
         "Label": "TV Aflevering Zoeken",
         "Fields": {
           "UseFolderName": "Gebruik Mapnaam",
-          "UseFolderName-Help": "Als de mapnaam in plaats van de bestandsnaam moet worden gebruikt.\n\nLet op, als de map begint met Seizoen of Staffel of Saison of Specials, wordt de bovenliggende map gebruikt."
+          "UseFolderName-Help": "Als de mapnaam in plaats van de bestandsnaam moet worden gebruikt.\n\nLet op, als de map begint met Season/Staffel/Saison/Specials/S[0-9]+, wordt de bovenliggende map gebruikt."
         },
         "Outputs": {
           "1": "TV-aflevering gevonden",
@@ -85,7 +85,7 @@
         "Label": "TV Show Zoeken",
         "Fields": {
           "UseFolderName": "Gebruik Mapnaam",
-          "UseFolderName-Help": "Als de mapnaam in plaats van de bestandsnaam moet worden gebruikt.\n\nLet op, als de map begint met Seizoen of Staffel of Saison of Specials, wordt de bovenliggende map gebruikt."
+          "UseFolderName-Help": "Als de mapnaam in plaats van de bestandsnaam moet worden gebruikt.\n\nLet op, als de map begint met Season/Staffel/Saison/Specials/S[0-9]+, wordt de bovenliggende map gebruikt."
         },
         "Outputs": {
           "1": "TV-show gevonden",

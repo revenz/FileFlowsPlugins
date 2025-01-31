@@ -58,6 +58,8 @@
           "HeadersValue": "Waarde",
           "Method": "Methode",
           "Method-Help": "De webmethode die gebruikt wordt voor het verzenden van dit verzoek",
+          "ResponseVariable": "Antwoordvariabele",
+          "ResponseVariable-Help": "De naam van de variabele waarin de JSON-antwoorden worden opgeslagen. Als de reactie geen geldig JSON is, wordt deze variabele niet ingesteld.",
           "Url": "URL",
           "Url-Help": "De URL van het verzoek"
         },

@@ -235,6 +235,26 @@
           "2": "변환할 트랙이 없습니다."
         }
       },
+      "FfmpegBuilderAudioLanguageConverter": {
+        "Description": "지정된 언어의 새 오디오 트랙을 원하는 형식, 비트레이트 및 채널 구성으로 추가합니다. 올바른 형식으로 일치하는 트랙이 이미 있는 경우 복사되며 다시 인코딩되지 않습니다. 선택적으로 다른 오디오 트랙을 제거할 수 있습니다.",
+        "Label": "FFMPEG Builder: 오디오 언어 변환기",
+        "Fields": {
+          "Bitrate": "채널당 비트레이트",
+          "Bitrate-Help": "새로 추가된 오디오 트랙의 채널당 목표 비트레이트입니다. 오디오 품질과 파일 크기 간의 균형을 제공하는 값을 선택하세요.",
+          "Channels": "채널",
+          "Channels-Help": "새 오디오 트랙의 채널 수입니다. 소스보다 적은 채널 수를 지정하면, FFMPEG가 자동으로 오디오를 다운믹스하여 원하는 채널 수에 맞춥니다.",
+          "Codec": "코덱",
+          "Codec-Help": "새 오디오 트랙을 인코딩할 때 사용할 코덱입니다.",
+          "Languages": "언어",
+          "Languages-Help": "새 오디오 트랙을 추가할 언어 목록입니다.",
+          "RemoveOthers": "기타 제거",
+          "RemoveOthers-Help": "다른 오디오 트랙을 모두 제거하고, 여기에서 생성된 트랙만 남깁니다. 추가할 수 있는 트랙이 없으면 원래 구성이 변경되지 않습니다."
+        },
+        "Outputs": {
+          "1": "FFmpeg 모델에 오디오 트랙이 추가되었습니다.",
+          "2": "추가된 오디오 트랙이 없습니다."
+        }
+      },
       "FfmpegBuilderAudioNormalization": {
         "Description": "FFMPEG의 loudnorm 필터를 사용하여 비디오 파일의 모든 오디오 트랙을 정규화합니다.",
         "Label": "FFMPEG 빌더: 오디오 정규화",
@@ -1070,6 +1090,46 @@
           "2": "비디오는 8-Bit가 아닙니다."
         }
       },
+      "VideoIsAV1": {
+        "Description": "비디오 파일이 AV1인지 테스트합니다",
+        "Label": "비디오는 AV1입니다",
+        "Outputs": {
+          "1": "비디오는 AV1입니다",
+          "2": "비디오는 AV1이 아닙니다!"
+        }
+      },
+      "VideoIsAvi": {
+        "Description": "비디오 파일이 AVI 형식인지 확인합니다",
+        "Label": "비디오는 AVI입니다",
+        "Outputs": {
+          "1": "비디오는 AVI입니다",
+          "2": "비디오는 AVI가 아닙니다"
+        }
+      },
+      "VideoIsDolbyVision": {
+        "Description": "비디오 파일이 Dolby Vision인지 확인합니다.",
+        "Label": "비디오가 Dolby Vision인지",
+        "Outputs": {
+          "1": "비디오는 Dolby Vision입니다.",
+          "2": "비디오는 Dolby Vision이 아닙니다."
+        }
+      },
+      "VideoIsH264": {
+        "Description": "비디오 파일이 H.264인지 테스트합니다",
+        "Label": "비디오는 H.264입니다",
+        "Outputs": {
+          "1": "비디오는 H.264입니다",
+          "2": "비디오는 H.264가 아닙니다!"
+        }
+      },
+      "VideoIsHevc": {
+        "Description": "비디오 파일이 HEVC인지 테스트합니다",
+        "Label": "비디오는 HEVC입니다",
+        "Outputs": {
+          "1": "비디오는 HEVC입니다",
+          "2": "비디오는 HEVC가 아닙니다!"
+        }
+      },
       "VideoIsInterlaced": {
         "Description": "비디오 파일이 인터레이스인지 테스트합니다.",
         "Label": "비디오 인터레이스",
@@ -1080,6 +1140,70 @@
         "Outputs": {
           "1": "비디오는 인터레이스입니다.",
           "2": "비디오는 인터레이스가 아닙니다."
+        }
+      },
+      "VideoIsMkv": {
+        "Description": "비디오 파일이 MKV 형식인지 확인합니다",
+        "Label": "비디오는 MKV입니다",
+        "Outputs": {
+          "1": "비디오는 MKV입니다",
+          "2": "비디오는 MKV가 아닙니다"
+        }
+      },
+      "VideoIsMov": {
+        "Description": "비디오 파일이 MOV 형식인지 확인합니다",
+        "Label": "비디오는 MOV입니다",
+        "Outputs": {
+          "1": "비디오는 MOV입니다",
+          "2": "비디오는 MOV가 아닙니다"
+        }
+      },
+      "VideoIsMp4": {
+        "Description": "비디오 파일이 MP4 형식인지 확인합니다",
+        "Label": "비디오는 MP4입니다",
+        "Outputs": {
+          "1": "비디오는 MP4입니다",
+          "2": "비디오는 MP4가 아닙니다"
+        }
+      },
+      "VideoIsMpeg": {
+        "Description": "비디오 파일이 MPEG 형식인지 확인합니다",
+        "Label": "비디오는 MPEG입니다",
+        "Outputs": {
+          "1": "비디오는 MPEG입니다",
+          "2": "비디오는 MPEG가 아닙니다"
+        }
+      },
+      "VideoIsMxf": {
+        "Description": "비디오 파일이 MXF 형식인지 확인합니다",
+        "Label": "비디오는 MXF입니다",
+        "Outputs": {
+          "1": "비디오는 MXF입니다",
+          "2": "비디오는 MXF가 아닙니다"
+        }
+      },
+      "VideoIsTs": {
+        "Description": "비디오 파일이 TS 형식인지 확인합니다",
+        "Label": "비디오는 TS입니다",
+        "Outputs": {
+          "1": "비디오는 TS입니다",
+          "2": "비디오는 TS가 아닙니다"
+        }
+      },
+      "VideoIsWebm": {
+        "Description": "비디오 파일이 WEBM 형식인지 확인합니다",
+        "Label": "비디오는 WEBM입니다",
+        "Outputs": {
+          "1": "비디오는 WEBM입니다",
+          "2": "비디오는 WEBM가 아닙니다"
+        }
+      },
+      "VideoIsWmv": {
+        "Description": "비디오 파일이 WMV 형식인지 확인합니다",
+        "Label": "비디오는 WMV입니다",
+        "Outputs": {
+          "1": "비디오는 WMV입니다",
+          "2": "비디오는 WMV가 아닙니다"
         }
       },
       "VideoResolution": {

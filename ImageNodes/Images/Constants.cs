@@ -10,4 +10,5 @@ public class Constants
     internal const string IMAGE_FORMAT_TIFF = "Tiff";
     internal const string IMAGE_FORMAT_TGA = "Tga";
     internal const string IMAGE_FORMAT_WEBP = "WebP";
+    internal const string IMAGE_FORMAT_HEIC = "Heic";
 }

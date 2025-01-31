@@ -558,8 +558,6 @@ public class VideoHasStreamTests : VideoTestBase
 
         Assert.AreEqual(2, output);
     }
-    
-    
 }
 
 

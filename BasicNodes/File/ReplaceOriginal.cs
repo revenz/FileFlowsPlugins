@@ -29,8 +29,6 @@ public class ReplaceOriginal : Node
     /// Gets the type of flow element
     /// </summary>
     public override FlowElementType Type => FlowElementType.Process;
-
-    public string _Pattern = string.Empty;
     
     /// <summary>
     /// Gets or sets if the original files creation and last write time dates should be preserved
@@ -83,6 +81,7 @@ public class ReplaceOriginal : Node
                 args.Logger?.ELog("Failed to move file to: " + dest + Environment.NewLine + error);
                 return -1;
             }
+            args.SetWorkingFile(dest);
 
             if (string.Equals(dest, args.FileName, StringComparison.CurrentCultureIgnoreCase) == false)
             {

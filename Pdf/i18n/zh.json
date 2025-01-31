@@ -1,0 +1,48 @@
+{
+  "Flow": {
+    "Parts": {
+      "PdfContainsText": {
+        "Description": "检查 PDF 是否包含指定的文本。",
+        "Label": "PDF 包含文本",
+        "Fields": {
+          "Text": "文本",
+          "Text-Help": "要在 PDF 文件中检查的文本。"
+        },
+        "Outputs": {
+          "1": "PDF 包含指定的文本。",
+          "2": "PDF 不包含指定的文本。"
+        }
+      },
+      "PdfMatchesText": {
+        "Description": "测试 PDF 是否使用高级匹配选项匹配指定的文本。",
+        "Label": "PDF 匹配文本",
+        "Fields": {
+          "Text": "文本",
+          "Text-Help": "在 PDF 文件中匹配的文本。支持正则表达式、以某个文本开头、以某个文本结尾等高级选项。"
+        },
+        "Outputs": {
+          "1": "PDF 匹配指定的文本。",
+          "2": "PDF 不匹配指定的文本。"
+        }
+      },
+      "PdfToTextFile": {
+        "Description": "将 PDF 文件内容提取到文本文件中，并将工作文件更新为提取的文本文件。",
+        "Label": "PDF 转文本文件",
+        "Fields": {
+          "File": "文件",
+          "File-Help": "要将 PDF 内容写入的文件。如果此文件已存在，将被替换。"
+        },
+        "Outputs": {
+          "1": "PDF 成功保存到文本文件。",
+          "2": "未找到可提取的文本内容。"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Pdf": {
+      "Description": "提供 PDF 相关流程元素的插件。",
+      "Label": "PDF"
+    }
+  }
+}

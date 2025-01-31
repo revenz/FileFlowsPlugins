@@ -18,7 +18,7 @@ internal static class GenreIdCollectionMappingExtensions
     {
         foreach( TVShowInfo tvShow in tvShows )
         {
-            tvShow.Genres = MapGenreIdsToGenres( tvShow.GenreIds, api );
+            tvShow.Genres = MapGenreIdsToGenres( tvShow.GenreIds, api ).ToList();
         }
     }
 

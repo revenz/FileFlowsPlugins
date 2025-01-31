@@ -5,6 +5,7 @@ using DM.MovieApi.MovieDb.TV;
 using MetaNodes.Helpers;
 using MetaNodes.TheMovieDb;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 using PluginTestLibrary;
 
 namespace MetaNodes.Tests.TheMovieDb;
@@ -13,6 +14,19 @@ namespace MetaNodes.Tests.TheMovieDb;
 [TestCategory("Slow")]
 public class TVShowLookupTests : TestBase
 {
+    /// <summary>
+    /// Tests JSON serialization
+    /// </summary>
+    [TestMethod]
+    public void DeserializeTest()
+    {
+        string json =
+            "{\"Id\":80748,\"Name\":\"FBI\",\"OriginalName\":\"FBI\",\"PosterPath\":\"/bircXcCsvP2DUximyQUOn5p2s4.jpg\",\"BackdropPath\":\"/adOjU80AEcr70IPTXe6ALLyXGxF.jpg\",\"Popularity\":238.873,\"VoteAverage\":7.9,\"VoteCount\":810,\"Overview\":\"The New York office of the FBI brings to bear all their talents, intellect and technical expertise on major cases in order to keep their city and the country safe.\",\"FirstAirDate\":\"2018-09-25T00:00:00\",\"OriginCountry\":[\"US\"],\"Genres\":[{\"Id\":80,\"Name\":\"Crime\"},{\"Id\":10759,\"Name\":\"Action \\u0026 Adventure\"},{\"Id\":18,\"Name\":\"Drama\"}],\"OriginalLanguage\":\"en\"}";
+        var tvShow = System.Text.Json.JsonSerializer.Deserialize<TVShowInfo>(json);
+        Assert.IsNotNull(tvShow);
+        Assert.AreEqual("FBI", tvShow.Name);
+    }
+    
     [TestMethod]
     public void TheBatman_Filename()
     {

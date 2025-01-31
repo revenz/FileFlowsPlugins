@@ -58,6 +58,8 @@
           "HeadersValue": "값",
           "Method": "메서드",
           "Method-Help": "이 요청을 보낼 때 사용할 웹 메서드",
+          "ResponseVariable": "응답 변수",
+          "ResponseVariable-Help": "JSON 응답을 저장할 변수의 이름입니다. 응답이 유효한 JSON이 아닌 경우 이 변수가 설정되지 않습니다.",
           "Url": "URL",
           "Url-Help": "요청의 URL"
         },

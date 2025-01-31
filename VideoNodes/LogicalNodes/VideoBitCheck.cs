@@ -46,7 +46,7 @@ public class VideoBitCheck : VideoNode
         bool is8Bit = videoInfo.VideoStreams?.Any(x => x.Bits == 8) == true;
         if (is8Bit)
         {
-            args.Logger?.ILog("Video is 12 bit");
+            args.Logger?.ILog("Video is 8 bit");
             return 1;
         }
         bool is10Bit = videoInfo.VideoStreams?.Any(x => x.Bits == 10) == true;
@@ -61,7 +61,7 @@ public class VideoBitCheck : VideoNode
             args.Logger?.ILog("Video is 12 bit");
             return 3;
         }
-        args.Logger?.ILog("Video Bits unknonw");
+        args.Logger?.ILog("Video Bits unknown");
         return 4;
     }
 }

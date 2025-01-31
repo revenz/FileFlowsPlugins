@@ -441,6 +441,17 @@
           "2": "Échec de l'enregistrement de l'image"
         }
       },
+      "LogVariables": {
+        "Description": "Enregistre toutes les variables du flux dans le fichier journal pour le débogage.",
+        "Label": "Enregistrer les Variables",
+        "Fields": {
+          "Recursive": "Journalisation Détaillée",
+          "Recursive-Help": "Lorsqu'elle est activée, les variables complexes incluront toutes leurs propriétés imbriquées dans le journal."
+        },
+        "Outputs": {
+          "1": "Les variables ont été enregistrées avec succès."
+        }
+      },
       "Matches": {
         "Description": "Compare un ensemble de valeurs et des conditions de correspondance pour voir quelle sortie doit être appelée",
         "Label": "Correspondances",

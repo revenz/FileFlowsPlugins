@@ -441,6 +441,17 @@
           "2": "Afbeelding kon niet worden gelogd"
         }
       },
+      "LogVariables": {
+        "Description": "Logt alle variabelen in de flow naar het logbestand voor foutopsporing.",
+        "Label": "Log Variabelen",
+        "Fields": {
+          "Recursive": "Gedetailleerd Loggen",
+          "Recursive-Help": "Als ingeschakeld, worden complexe variabelen met al hun geneste eigenschappen in het logbestand opgenomen."
+        },
+        "Outputs": {
+          "1": "Variabelen zijn succesvol gelogd."
+        }
+      },
       "Matches": {
         "Description": "Vergelijkt een set waarden en matcht voorwaarden om te zien welke output moet worden aangeroepen",
         "Label": "Matches",

@@ -1,5 +1,8 @@
 namespace FileFlows.Web;
 
+/// <summary>
+/// Plugin Information
+/// </summary>
 public class Plugin : FileFlows.Plugin.IPlugin
 {
     /// <inheritdoc />

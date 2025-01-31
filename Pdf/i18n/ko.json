@@ -1,0 +1,48 @@
+{
+  "Flow": {
+    "Parts": {
+      "PdfContainsText": {
+        "Description": "PDF에 지정된 텍스트가 포함되어 있는지 확인합니다.",
+        "Label": "PDF 텍스트 포함 여부",
+        "Fields": {
+          "Text": "텍스트",
+          "Text-Help": "PDF 파일에서 검색할 텍스트입니다."
+        },
+        "Outputs": {
+          "1": "PDF에 지정된 텍스트가 포함되어 있습니다.",
+          "2": "PDF에 지정된 텍스트가 포함되어 있지 않습니다."
+        }
+      },
+      "PdfMatchesText": {
+        "Description": "고급 옵션을 사용하여 PDF가 지정된 텍스트와 일치하는지 확인합니다.",
+        "Label": "PDF 텍스트 일치 여부",
+        "Fields": {
+          "Text": "텍스트",
+          "Text-Help": "PDF 파일에서 일치할 텍스트입니다. 정규식, 시작 문자, 끝 문자 등을 지원합니다."
+        },
+        "Outputs": {
+          "1": "PDF가 지정된 텍스트와 일치합니다.",
+          "2": "PDF가 지정된 텍스트와 일치하지 않습니다."
+        }
+      },
+      "PdfToTextFile": {
+        "Description": "PDF 파일의 내용을 텍스트 파일로 추출하고 작업 파일을 추출된 텍스트 파일로 업데이트합니다.",
+        "Label": "PDF를 텍스트 파일로 변환",
+        "Fields": {
+          "File": "파일",
+          "File-Help": "PDF 내용을 저장할 파일입니다. 이 파일이 이미 존재하면 덮어씌워집니다."
+        },
+        "Outputs": {
+          "1": "PDF가 텍스트 파일로 성공적으로 저장되었습니다.",
+          "2": "추출할 텍스트 내용이 없습니다."
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "Pdf": {
+      "Description": "PDF 관련 플로우 요소를 제공하는 플러그인입니다.",
+      "Label": "PDF"
+    }
+  }
+}

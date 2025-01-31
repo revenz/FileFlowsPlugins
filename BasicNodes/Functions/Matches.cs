@@ -44,12 +44,17 @@ public class Matches : Node
             output++;
             try
             {
+                // the value is what we will test
                 object value;
+                // first try to see if the key is a Variable, and if it is get the variables value
                 if (Regex.IsMatch(match.Key, @"\{[\w\d\.-]+\}") &&
                     args.Variables.TryGetValue(match.Key[1..^1], out var varValue))
                     value = varValue;
                 else
+                {
+                    // else, its not a variable, but it may contain a variable
                     value = args.ReplaceVariables(match.Key, stripMissing: true);
+                }
                 
                 if (args.MathHelper.IsMathOperation(match.Value))
                 {

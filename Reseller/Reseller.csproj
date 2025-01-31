@@ -1,0 +1,79 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>FileFlows.ResellerPlugin</RootNamespace>
+        <FileVersion>1.1.1.528</FileVersion>
+        <ProductVersion>1.1.1.528</ProductVersion>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+        <Company>FileFlows</Company>
+        <Authors>John Andrews</Authors>
+        <Product>Reseller</Product>
+        <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
+        <Description>Plugin that provides Reseller related flow elements</Description>
+        <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+        <LicenseFlag>Reseller</LicenseFlag>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Update="i18n\*.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="i18n\de.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="i18n\en.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="i18n\es.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="i18n\fr.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="i18n\it.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="i18n\ja.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="i18n\ko.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="i18n\nl.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="i18n\pt.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="i18n\ru.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="i18n\sv.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="i18n\zh.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="i18n\zht.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+    <ItemGroup Condition=" '$(Configuration)' == 'Debug'">
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
+        <PackageReference Include="MSTest.TestAdapter" Version="3.4.3" />
+        <PackageReference Include="MSTest.TestFramework" Version="3.4.3" />
+        <ProjectReference Include="..\PluginTestLibrary\PluginTestLibrary.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="FileFlows.Plugin">
+            <HintPath>..\FileFlows.Plugin.dll</HintPath>
+        </Reference>
+        <Reference Include="Common">
+            <HintPath>..\FileFlows.Common.dll</HintPath>
+            <SpecificVersion>False</SpecificVersion>
+        </Reference>
+    </ItemGroup>
+
+</Project>

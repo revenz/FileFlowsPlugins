@@ -1,6 +1,5 @@
 ﻿#if(DEBUG)
 
-using FileFlows.Apprise.Communication;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using PluginTestLibrary;

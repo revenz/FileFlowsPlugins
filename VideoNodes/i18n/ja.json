@@ -235,6 +235,26 @@
           "2": "変換するトラックはありません"
         }
       },
+      "FfmpegBuilderAudioLanguageConverter": {
+        "Description": "指定された言語の新しいオーディオトラックを、希望の形式、ビットレート、チャンネル構成で追加します。一致するトラックが既に正しい形式で存在する場合、それをコピーし、再エンコードは行いません。他のオーディオトラックをオプションで削除できます。",
+        "Label": "FFMPEG Builder: オーディオ言語コンバーター",
+        "Fields": {
+          "Bitrate": "チャンネルごとのビットレート",
+          "Bitrate-Help": "新しく追加されたオーディオトラックのチャンネルごとの目標ビットレート。音質とファイルサイズのバランスを取る値を選択してください。",
+          "Channels": "チャンネル",
+          "Channels-Help": "新しいオーディオトラックのチャンネル数。ソースより少ないチャンネル数を指定すると、FFMPEGが自動的にダウンミックスして希望のチャンネル数に調整します。",
+          "Codec": "コーデック",
+          "Codec-Help": "新しいオーディオトラックをエンコードする際に使用するコーデック。",
+          "Languages": "言語",
+          "Languages-Help": "新しいオーディオトラックを追加する対象の言語リスト。",
+          "RemoveOthers": "その他を削除",
+          "RemoveOthers-Help": "他のオーディオトラックをすべて削除し、ここで作成されたもののみを残します。トラックを追加できない場合、元の設定は変更されません。"
+        },
+        "Outputs": {
+          "1": "FFmpegモデルにオーディオトラックを追加しました",
+          "2": "オーディオトラックは追加されませんでした"
+        }
+      },
       "FfmpegBuilderAudioNormalization": {
         "Description": "FFMPEGのloudnormフィルターを使用して、ビデオファイル内のすべての音声トラックを正規化します。",
         "Label": "FFMPEG Builder: 音声正規化",
@@ -1070,6 +1090,46 @@
           "2": "ビデオは8ビットではありません"
         }
       },
+      "VideoIsAV1": {
+        "Description": "ビデオファイルがAV1であるかをテストします",
+        "Label": "ビデオはAV1です",
+        "Outputs": {
+          "1": "ビデオはAV1です",
+          "2": "ビデオはAV1ではありません!"
+        }
+      },
+      "VideoIsAvi": {
+        "Description": "動画ファイルがAVI形式であるかを確認します",
+        "Label": "動画はAVIです",
+        "Outputs": {
+          "1": "動画はAVIです",
+          "2": "動画はAVIではありません"
+        }
+      },
+      "VideoIsDolbyVision": {
+        "Description": "Checks if a video file is Dolby Vision.",
+        "Label": "Video Is Dolby Vision",
+        "Outputs": {
+          "1": "The video is Dolby Vision.",
+          "2": "The video is not Dolby Vision."
+        }
+      },
+      "VideoIsH264": {
+        "Description": "ビデオファイルがH.264であるかをテストします",
+        "Label": "ビデオはH.264です",
+        "Outputs": {
+          "1": "ビデオはH.264です",
+          "2": "ビデオはH.264ではありません!"
+        }
+      },
+      "VideoIsHevc": {
+        "Description": "ビデオファイルがHEVCであるかをテストします",
+        "Label": "ビデオはHEVCです",
+        "Outputs": {
+          "1": "ビデオはHEVCです",
+          "2": "ビデオはHEVCではありません!"
+        }
+      },
       "VideoIsInterlaced": {
         "Description": "ビデオファイルがインターレースされているかテストします。",
         "Label": "ビデオはインターレースされています",
@@ -1080,6 +1140,70 @@
         "Outputs": {
           "1": "ビデオはインターレースされています",
           "2": "ビデオはインターレースされていません"
+        }
+      },
+      "VideoIsMkv": {
+        "Description": "動画ファイルがMKV形式であるかを確認します",
+        "Label": "動画はMKVです",
+        "Outputs": {
+          "1": "動画はMKVです",
+          "2": "動画はMKVではありません"
+        }
+      },
+      "VideoIsMov": {
+        "Description": "動画ファイルがMOV形式であるかを確認します",
+        "Label": "動画はMOVです",
+        "Outputs": {
+          "1": "動画はMOVです",
+          "2": "動画はMOVではありません"
+        }
+      },
+      "VideoIsMp4": {
+        "Description": "動画ファイルがMP4形式であるかを確認します",
+        "Label": "動画はMP4です",
+        "Outputs": {
+          "1": "動画はMP4です",
+          "2": "動画はMP4ではありません"
+        }
+      },
+      "VideoIsMpeg": {
+        "Description": "動画ファイルがMPEG形式であるかを確認します",
+        "Label": "動画はMPEGです",
+        "Outputs": {
+          "1": "動画はMPEGです",
+          "2": "動画はMPEGではありません"
+        }
+      },
+      "VideoIsMxf": {
+        "Description": "動画ファイルがMXF形式であるかを確認します",
+        "Label": "動画はMXFです",
+        "Outputs": {
+          "1": "動画はMXFです",
+          "2": "動画はMXFではありません"
+        }
+      },
+      "VideoIsTs": {
+        "Description": "動画ファイルがTS形式であるかを確認します",
+        "Label": "動画はTSです",
+        "Outputs": {
+          "1": "動画はTSです",
+          "2": "動画はTSではありません"
+        }
+      },
+      "VideoIsWebm": {
+        "Description": "動画ファイルがWEBM形式であるかを確認します",
+        "Label": "動画はWEBMです",
+        "Outputs": {
+          "1": "動画はWEBMです",
+          "2": "動画はWEBMではありません"
+        }
+      },
+      "VideoIsWmv": {
+        "Description": "動画ファイルがWMV形式であるかを確認します",
+        "Label": "動画はWMVです",
+        "Outputs": {
+          "1": "動画はWMVです",
+          "2": "動画はWMVではありません"
         }
       },
       "VideoResolution": {

@@ -297,7 +297,11 @@ public class ComicConverter: Node
             return -1;
         }
 
-        args.SetWorkingFile(newFileResult.Value);   
+        args.SetWorkingFile(newFileResult.Value);  
+        if(Format == "CBZ")
+            args.SetMimeType("application/zip"); 
+        else if (Format == "PDF")
+            args.SetMimeType("application/pdf");
 
         return 1;
     }

@@ -73,7 +73,7 @@
         "Label": "Ricerca Episodio TV",
         "Fields": {
           "UseFolderName": "Usa Nome Cartella",
-          "UseFolderName-Help": "Se il nome della cartella deve essere usato al posto del nome del file.\n\nNota: se la cartella inizia con Stagione, Staffel, Saison o Speciali, verrà utilizzata la cartella principale."
+          "UseFolderName-Help": "Se il nome della cartella deve essere usato al posto del nome del file.\n\nNota: se la cartella inizia con Season/Staffel/Saison/Specials/S[0-9]+, verrà utilizzata la cartella principale."
         },
         "Outputs": {
           "1": "Episodio TV trovato",
@@ -85,7 +85,7 @@
         "Label": "Ricerca Show TV",
         "Fields": {
           "UseFolderName": "Usa Nome Cartella",
-          "UseFolderName-Help": "Se il nome della cartella deve essere usato al posto del nome del file.\n\nNota: se la cartella inizia con Stagione, Staffel, Saison o Speciali, verrà utilizzata la cartella principale."
+          "UseFolderName-Help": "Se il nome della cartella deve essere usato al posto del nome del file.\n\nNota: se la cartella inizia con Season/Staffel/Saison/Specials/S[0-9]+, verrà utilizzata la cartella principale."
         },
         "Outputs": {
           "1": "Show TV trovato",

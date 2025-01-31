@@ -441,6 +441,17 @@
           "2": "Bild konnte nicht protokolliert werden"
         }
       },
+      "LogVariables": {
+        "Description": "Protokolliert alle Variablen im Ablauf zur Fehlersuche in der Protokolldatei.",
+        "Label": "Variablen protokollieren",
+        "Fields": {
+          "Recursive": "Detailliertes Protokoll",
+          "Recursive-Help": "Wenn aktiviert, werden komplexe Variablen mit all ihren verschachtelten Eigenschaften protokolliert."
+        },
+        "Outputs": {
+          "1": "Variablen wurden erfolgreich protokolliert."
+        }
+      },
       "Matches": {
         "Description": "Vergleicht eine Menge von Werten und prüft die Bedingungen, um zu sehen, welche Ausgabe aufgerufen werden soll.",
         "Label": "Übereinstimmungen",

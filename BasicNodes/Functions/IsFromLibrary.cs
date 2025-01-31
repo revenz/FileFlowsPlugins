@@ -40,7 +40,7 @@ public class IsFromLibrary : Node
             return 1;
         }
 
-        args.Logger?.ILog("Is not from library: " + args.Library.Name);
+        args.Logger?.ILog("Is not from library: " + Library.Name);
         return 2;
     }
 }

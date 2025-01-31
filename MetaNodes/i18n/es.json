@@ -73,7 +73,7 @@
         "Label": "Búsqueda de Episodio de TV",
         "Fields": {
           "UseFolderName": "Usar Nombre de Carpeta",
-          "UseFolderName-Help": "Si se debe usar el nombre de la carpeta en lugar del nombre del archivo.\n\nNota: si la carpeta comienza con Temporada o Especiales, se utilizará la carpeta principal."
+          "UseFolderName-Help": "Si se debe usar el nombre de la carpeta en lugar del nombre del archivo.\n\nNota: si la carpeta comienza con Season/Staffel/Saison/Specials/S[0-9]+, se utilizará la carpeta principal."
         },
         "Outputs": {
           "1": "Episodio de TV encontrado",
@@ -85,7 +85,7 @@
         "Label": "Búsqueda de Programa de TV",
         "Fields": {
           "UseFolderName": "Usar Nombre de Carpeta",
-          "UseFolderName-Help": "Si se debe usar el nombre de la carpeta en lugar del nombre del archivo.\n\nNota: si la carpeta comienza con Temporada o Especiales, se utilizará la carpeta principal."
+          "UseFolderName-Help": "Si se debe usar el nombre de la carpeta en lugar del nombre del archivo.\n\nNota: si la carpeta comienza con Season/Staffel/Saison/Specials/S[0-9]+, se utilizará la carpeta principal."
         },
         "Outputs": {
           "1": "Programa de TV encontrado",

@@ -104,7 +104,8 @@ public class VideoFile : VideoNode
                 args.Variables["ORIGINAL_CREATE_UTC"] = creationTimeUtc;
             if (args.FileService.FileCreationTimeUtc(args.WorkingFile).Success(out DateTime lastWriteTimeUtc))
                 args.Variables["ORIGINAL_LAST_WRITE_UTC"] = lastWriteTimeUtc;
-                
+
+            
 
             foreach (var stream in videoInfo.VideoStreams)
             {

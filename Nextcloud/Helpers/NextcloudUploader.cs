@@ -1,4 +1,5 @@
 using System.Net;
+using HttpMethod = System.Net.Http.HttpMethod;
 
 namespace FileFlows.Nextcloud.Helpers;
 

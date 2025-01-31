@@ -235,6 +235,26 @@
           "2": "Inga spår att konvertera"
         }
       },
+      "FfmpegBuilderAudioLanguageConverter": {
+        "Description": "Lägger till nya ljudspår för de specificerade språken i önskat format, med bithastighet och kanalinställning. Om ett matchande spår redan finns i rätt format, kopieras det istället för att omkodas. Alternativt kan andra ljudspår tas bort.",
+        "Label": "FFMPEG Builder: Ljudspråksomvandlare",
+        "Fields": {
+          "Bitrate": "Bithastighet per kanal",
+          "Bitrate-Help": "Den målsatta bithastigheten per kanal för de nyligen tillagda ljudspåren. Välj ett värde som ger en balans mellan ljudkvalitet och filstorlek.",
+          "Channels": "Kanaler",
+          "Channels-Help": "Antalet kanaler för de nya ljudspåren. Om färre kanaler anges än källan, kommer FFMPEG automatiskt att mixa ned ljudet till önskat antal kanaler.",
+          "Codec": "Codec",
+          "Codec-Help": "Den codec som ska användas för att koda de nya ljudspåren.",
+          "Languages": "Språk",
+          "Languages-Help": "Listan över språk som nya ljudspår ska läggas till för.",
+          "RemoveOthers": "Ta bort andra",
+          "RemoveOthers-Help": "Tar bort alla andra ljudspår och lämnar endast de som skapats här. Om inga spår kan läggas till, förblir originalkonfigurationen oförändrad."
+        },
+        "Outputs": {
+          "1": "Ljudspår har lagts till i FFmpeg-modellen.",
+          "2": "Inga ljudspår har lagts till."
+        }
+      },
       "FfmpegBuilderAudioNormalization": {
         "Description": "Normaliserar alla ljudspår i en videofil med FFMPEG:s loudnorm-filter",
         "Label": "FFMPEG Builder: Ljudnormalisering",
@@ -1070,6 +1090,46 @@
           "2": "Videon är inte 8-Bit"
         }
       },
+      "VideoIsAV1": {
+        "Description": "Testar om en videofil är AV1",
+        "Label": "Videon är AV1",
+        "Outputs": {
+          "1": "Videon är AV1",
+          "2": "Videon är inte AV1"
+        }
+      },
+      "VideoIsAvi": {
+        "Description": "Kontrollerar om videofilen är i AVI-format",
+        "Label": "Video är AVI",
+        "Outputs": {
+          "1": "Videon är AVI",
+          "2": "Videon är inte AVI"
+        }
+      },
+      "VideoIsDolbyVision": {
+        "Description": "Controleert of een videobestand Dolby Vision is.",
+        "Label": "Video is Dolby Vision",
+        "Outputs": {
+          "1": "De video is Dolby Vision.",
+          "2": "De video is niet Dolby Vision."
+        }
+      },
+      "VideoIsH264": {
+        "Description": "Testar om en videofil är H.264",
+        "Label": "Videon är H.264",
+        "Outputs": {
+          "1": "Videon är H.264",
+          "2": "Videon är inte H.264"
+        }
+      },
+      "VideoIsHevc": {
+        "Description": "Testar om en videofil är HEVC",
+        "Label": "Videon är HEVC",
+        "Outputs": {
+          "1": "Videon är HEVC",
+          "2": "Videon är inte HEVC"
+        }
+      },
       "VideoIsInterlaced": {
         "Description": "Testar om en videofil är mellanlagrad",
         "Label": "Video Är Mellanlagrad",
@@ -1080,6 +1140,70 @@
         "Outputs": {
           "1": "Videon är mellanlagrad",
           "2": "Videon är inte mellanlagrad"
+        }
+      },
+      "VideoIsMkv": {
+        "Description": "Kontrollerar om videofilen är i MKV-format",
+        "Label": "Video är MKV",
+        "Outputs": {
+          "1": "Videon är MKV",
+          "2": "Videon är inte MKV"
+        }
+      },
+      "VideoIsMov": {
+        "Description": "Kontrollerar om videofilen är i MOV-format",
+        "Label": "Video är MOV",
+        "Outputs": {
+          "1": "Videon är MOV",
+          "2": "Videon är inte MOV"
+        }
+      },
+      "VideoIsMp4": {
+        "Description": "Kontrollerar om videofilen är i MP4-format",
+        "Label": "Video är MP4",
+        "Outputs": {
+          "1": "Videon är MP4",
+          "2": "Videon är inte MP4"
+        }
+      },
+      "VideoIsMpeg": {
+        "Description": "Kontrollerar om videofilen är i MPEG-format",
+        "Label": "Video är MPEG",
+        "Outputs": {
+          "1": "Videon är MPEG",
+          "2": "Videon är inte MPEG"
+        }
+      },
+      "VideoIsMxf": {
+        "Description": "Kontrollerar om videofilen är i MXF-format",
+        "Label": "Video är MXF",
+        "Outputs": {
+          "1": "Videon är MXF",
+          "2": "Videon är inte MXF"
+        }
+      },
+      "VideoIsTs": {
+        "Description": "Kontrollerar om videofilen är i TS-format",
+        "Label": "Video är TS",
+        "Outputs": {
+          "1": "Videon är TS",
+          "2": "Videon är inte TS"
+        }
+      },
+      "VideoIsWebm": {
+        "Description": "Kontrollerar om videofilen är i WEBM-format",
+        "Label": "Video är WEBM",
+        "Outputs": {
+          "1": "Videon är WEBM",
+          "2": "Videon är inte WEBM"
+        }
+      },
+      "VideoIsWmv": {
+        "Description": "Kontrollerar om videofilen är i WMV-format",
+        "Label": "Video är WMV",
+        "Outputs": {
+          "1": "Videon är WMV",
+          "2": "Videon är inte WMV"
         }
       },
       "VideoResolution": {

@@ -58,6 +58,8 @@
           "HeadersValue": "値",
           "Method": "メソッド",
           "Method-Help": "このリクエストを送信する際に使用するウェブメソッド",
+          "ResponseVariable": "応答変数",
+          "ResponseVariable-Help": "JSON応答を保存する変数の名前です。応答が有効なJSONでない場合、この変数は設定されません。",
           "Url": "URL",
           "Url-Help": "リクエストのURL"
         },

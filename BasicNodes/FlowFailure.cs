@@ -44,12 +44,12 @@ Flow: {flowName}
 Node: {failedNode}
 {logNoDates}";
 
-            Variables.AddOrUpdate("fail.Node", failedNode);
-            Variables.AddOrUpdate("fail.Flow", flowName);
-            Variables.AddOrUpdate("fail.Message", message);
-            Variables.AddOrUpdate("fail.MessageNoDates", messageNoDates);
-            Variables.AddOrUpdate("fail.Log", log);
-            Variables.AddOrUpdate("fail.LogNoDates", logNoDates);
+            Variables["fail.Node"] = failedNode;
+            Variables["fail.Flow"] = flowName;
+            Variables["fail.Message"] = message;
+            Variables["fail.MessageNoDates"] = messageNoDates;
+            Variables["fail.Log"] = log;
+            Variables["fail.LogNoDates"] = logNoDates;
             args.UpdateVariables(Variables);
             return 1;
         }
