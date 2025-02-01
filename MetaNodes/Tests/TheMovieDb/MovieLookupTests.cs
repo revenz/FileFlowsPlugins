@@ -30,6 +30,7 @@ public class MovieLookupTests : TestBase
 
         Assert.AreEqual("Ghostbusters", mi.Title);
         Assert.AreEqual(1984, mi.ReleaseDate.Year);
+        Assert.AreEqual("Comedy", args.Variables["movie.Genre"]);
     }
 
     [TestMethod]
