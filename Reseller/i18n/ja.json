@@ -11,7 +11,7 @@
     }
   },
   "Plugins": {
-    "Web": {
+    "Reseller": {
       "Description": "リセラー関連のフロー要素を提供するプラグイン",
       "Label": "リセラー"
     }

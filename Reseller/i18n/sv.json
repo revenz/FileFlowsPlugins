@@ -11,7 +11,7 @@
     }
   },
   "Plugins": {
-    "Web": {
+    "Reseller": {
       "Description": "Plugin som tillhandahåller flödesrelaterade element för återförsäljare",
       "Label": "Återförsäljare"
     }

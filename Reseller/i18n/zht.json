@@ -11,7 +11,7 @@
     }
   },
   "Plugins": {
-    "Web": {
+    "Reseller": {
       "Description": "提供與經銷商相關的流程元素的外掛程式",
       "Label": "經銷商"
     }

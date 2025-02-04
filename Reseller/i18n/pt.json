@@ -11,7 +11,7 @@
     }
   },
   "Plugins": {
-    "Web": {
+    "Reseller": {
       "Description": "Plugin que fornece elementos de fluxo relacionados ao revendedor",
       "Label": "Revendedor"
     }

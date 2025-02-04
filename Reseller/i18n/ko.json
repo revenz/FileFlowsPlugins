@@ -11,7 +11,7 @@
     }
   },
   "Plugins": {
-    "Web": {
+    "Reseller": {
       "Description": "리셀러 관련 흐름 요소를 제공하는 플러그인",
       "Label": "리셀러"
     }

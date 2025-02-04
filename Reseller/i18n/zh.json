@@ -11,7 +11,7 @@
     }
   },
   "Plugins": {
-    "Web": {
+    "Reseller": {
       "Description": "提供与经销商相关的流程元素的插件",
       "Label": "经销商"
     }

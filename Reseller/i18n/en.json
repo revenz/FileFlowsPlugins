@@ -11,7 +11,7 @@
     }
   },
   "Plugins": {
-    "Web": {
+    "Reseller": {
       "Description": "Plugin that provides Reseller related flow elements",
       "Label": "Reseller"
     }
