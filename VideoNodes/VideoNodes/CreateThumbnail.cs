@@ -150,6 +150,8 @@ public class CreateThumbnail : VideoNode
                 return 2;
             }
             args.Logger?.ILog("Thumbnail Path: " + output);
+            
+            args.SetThumbnail(output);
             // Set output variable
             args.UpdateVariables(new Dictionary<string, object> { { "ThumbnailPath", output } });
             return 1;
