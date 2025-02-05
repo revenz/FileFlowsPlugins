@@ -630,6 +630,17 @@
           "Node-Help": "このファイルを処理するための処理ノード。"
         }
       },
+      "SetFileFlowsThumbnail": {
+        "Description": "FileFlowsでこのファイルのサムネイルを設定します。",
+        "Label": "FileFlowsのサムネイルを設定",
+        "Fields": {
+          "FilePath": "ファイルパス",
+          "FilePath-Help": "サムネイルとして使用する画像ファイルのフルパス。"
+        },
+        "Outputs": {
+          "1": "サムネイルが設定されました"
+        }
+      },
       "SetVariable": {
         "Description": "フロー内で変数を設定します。",
         "Label": "変数を設定",

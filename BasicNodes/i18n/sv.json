@@ -630,6 +630,17 @@
           "Node-Help": "Behandlingsnod för att bearbeta denna fil."
         }
       },
+      "SetFileFlowsThumbnail": {
+        "Description": "Ställer in en miniatyr för denna fil i FileFlows.",
+        "Label": "Ställ in FileFlows-miniatyr",
+        "Fields": {
+          "FilePath": "Filväg",
+          "FilePath-Help": "Den fullständiga sökvägen till bildfilen som ska användas som miniatyr."
+        },
+        "Outputs": {
+          "1": "Miniatyr inställd"
+        }
+      },
       "SetVariable": {
         "Description": "Sätter en variabel i flödet.",
         "Label": "Ställ In Variabel",

@@ -630,6 +630,17 @@
           "Node-Help": "Il nodo di elaborazione per elaborare questo file."
         }
       },
+      "SetFileFlowsThumbnail": {
+        "Description": "Imposta una miniatura per questo file in FileFlows.",
+        "Label": "Imposta miniatura di FileFlows",
+        "Fields": {
+          "FilePath": "Percorso del file",
+          "FilePath-Help": "Il percorso completo del file immagine da usare come miniatura."
+        },
+        "Outputs": {
+          "1": "Miniatura impostata"
+        }
+      },
       "SetVariable": {
         "Description": "Imposta una variabile nel flusso.",
         "Label": "Imposta Variabile",

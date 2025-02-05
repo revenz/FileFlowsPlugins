@@ -630,6 +630,17 @@
           "Node-Help": "The processing node to process this file."
         }
       },
+      "SetFileFlowsThumbnail": {
+        "Description": "Sets the thumbnail for this file in FileFlows.",
+        "Label": "Set FileFlows Thumbnail",
+        "Fields": {
+          "FilePath": "File Path",
+          "FilePath-Help": "The full path to the image file to use as the thumbnail."
+        },
+        "Outputs": {
+          "1": "Thumbnail set"
+        }
+      },
       "SetVariable": {
         "Description": "Sets a variable in the flow.",
         "Label": "Set Variable",

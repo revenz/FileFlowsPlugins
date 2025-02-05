@@ -630,6 +630,17 @@
           "Node-Help": "Der Verarbeitungsnode, um diese Datei zu verarbeiten."
         }
       },
+      "SetFileFlowsThumbnail": {
+        "Description": "Legt ein Miniaturbild für diese Datei in FileFlows fest.",
+        "Label": "FileFlows-Miniaturbild festlegen",
+        "Fields": {
+          "FilePath": "Dateipfad",
+          "FilePath-Help": "Der vollständige Pfad zur Bilddatei, die als Miniaturbild verwendet werden soll."
+        },
+        "Outputs": {
+          "1": "Miniaturbild gesetzt"
+        }
+      },
       "SetVariable": {
         "Description": "Setzt eine Variable im Flow.",
         "Label": "Variable setzen",

@@ -630,6 +630,17 @@
           "Node-Help": "이 파일을 처리할 처리 노드입니다."
         }
       },
+      "SetFileFlowsThumbnail": {
+        "Description": "FileFlows에서 이 파일의 썸네일을 설정합니다.",
+        "Label": "FileFlows 썸네일 설정",
+        "Fields": {
+          "FilePath": "파일 경로",
+          "FilePath-Help": "썸네일로 사용할 이미지 파일의 전체 경로입니다."
+        },
+        "Outputs": {
+          "1": "썸네일 설정됨"
+        }
+      },
       "SetVariable": {
         "Description": "흐름에서 변수를 설정합니다.",
         "Label": "변수 설정",

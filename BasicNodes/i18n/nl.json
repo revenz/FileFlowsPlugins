@@ -630,6 +630,17 @@
           "Node-Help": "De verwerkingsnode voor het verwerken van dit bestand."
         }
       },
+      "SetFileFlowsThumbnail": {
+        "Description": "Stelt een miniatuur in voor dit bestand in FileFlows.",
+        "Label": "FileFlows Miniatuur instellen",
+        "Fields": {
+          "FilePath": "Bestandspad",
+          "FilePath-Help": "Het volledige pad naar het afbeeldingsbestand dat als miniatuur moet worden gebruikt."
+        },
+        "Outputs": {
+          "1": "Miniatuur ingesteld"
+        }
+      },
       "SetVariable": {
         "Description": "Stelt een variabele in binnen de stroom.",
         "Label": "Stel Variabele In",
