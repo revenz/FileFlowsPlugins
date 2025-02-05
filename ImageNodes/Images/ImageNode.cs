@@ -117,6 +117,7 @@ public abstract class ImageNode : ImageBaseNode
 
         args.SetWorkingFile(destination);
         ReadWorkingFileInfo(args);
+        args.SetThumbnail(destination);
 
         return 1;
     }
