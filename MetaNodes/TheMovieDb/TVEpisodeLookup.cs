@@ -210,9 +210,40 @@ public class TVEpisodeLookup : Node
             args.Logger?.ILog("Detected Original Language: " + result.OriginalLanguage);
         }
 
+        DownloadThumbnail(args, result.PosterPath);
+
         args.UpdateVariables(Variables);
         
         return 1;
+    }
+
+    /// <summary>
+    /// Downloads the poster path
+    /// </summary>
+    /// <param name="args">the node parameteres</param>
+    /// <param name="posterPath">the poster path</param>
+    private void DownloadThumbnail(NodeParameters args, string posterPath)
+    {
+        if (string.IsNullOrWhiteSpace(posterPath) == false)
+        {
+            try
+            {
+                string url = "https://image.tmdb.org/t/p/w500" + posterPath;
+                args.Logger?.ILog("Downloading poster: " + url);
+                using var httpClient = new HttpClient();
+                using var stream = httpClient.GetStreamAsync(url).Result;
+                string file = Path.Combine(args.TempPath, Guid.NewGuid() + ".jpg");
+                using var fileStream = new FileStream(file, FileMode.CreateNew);
+                stream.CopyTo(fileStream);
+                args.SetThumbnail(file);
+                args.Logger?.ILog("Set thumbnail: " + file);
+                //md.ArtJpeg = file;
+            }
+            catch (Exception)
+            {
+                // Ignored
+            }
+        }
     }
 
     /// <summary>

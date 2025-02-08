@@ -215,6 +215,7 @@ public class MovieLookup : Node
                 using var fileStream = new FileStream(file, FileMode.CreateNew);
                 stream.CopyTo(fileStream);
                 md.ArtJpeg = file;
+                args.SetThumbnail(file);
             }
             catch (Exception)
             {
