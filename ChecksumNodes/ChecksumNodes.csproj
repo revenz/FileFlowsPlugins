@@ -5,8 +5,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
-    <FileVersion>1.0.4.189</FileVersion>
-    <ProductVersion>1.0.4.189</ProductVersion>
+    <FileVersion>1.0.4.190</FileVersion>
+    <ProductVersion>1.0.4.190</ProductVersion>
     <Company>FileFlows</Company>
     <Authors>John Andrews</Authors>
     <Product>Checksum</Product>
