@@ -26,11 +26,7 @@ namespace ChecksumNodes
 
         public override int Execute(NodeParameters args)
         {
-            using var md5 = System.Security.Cryptography.MD5.Create();
-            DateTime start = DateTime.Now;
-            using var stream = File.OpenRead(args.WorkingFile);
-            var hash = md5.ComputeHash(stream);
-            string hashStr = BitConverter.ToString(hash).Replace("-", string.Empty).ToLowerInvariant();
+            string hashStr = ComputeHash(args.WorkingFile);
             args.Logger?.ILog("MD5 of working file: " + hashStr);
             args.Logger?.ILog("Time taken to compute hash: " + (DateTime.Now - start)); 
             args.UpdateVariables(new Dictionary<string, object>
@@ -39,6 +35,15 @@ namespace ChecksumNodes
                 { "Checksum", hashStr },
             });
             return 1;
+        }
+
+        private static string ComputeHash(string filePath)
+        {
+            using var md5 = System.Security.Cryptography.MD5.Create();
+            DateTime start = DateTime.Now;
+            using var stream = File.OpenRead(filePath);
+            var hash = md5.ComputeHash(stream);
+            return BitConverter.ToString(hash).Replace("-", string.Empty).ToLowerInvariant();
         }
     }
 }

@@ -27,19 +27,24 @@ namespace ChecksumNodes
 
         public override int Execute(NodeParameters args)
         {
-            using var hasher = System.Security.Cryptography.SHA256.Create();
-            DateTime start = DateTime.Now;
-            using var stream = File.OpenRead(args.WorkingFile);
-            var hash = hasher.ComputeHash(stream);
-            string hashStr = BitConverter.ToString(hash).Replace("-", string.Empty).ToLowerInvariant();
+            string hashStr = ComputeHash(args.WorkingFile);
             args.Logger?.ILog("SHA256 of working file: " + hashStr);
-            args.Logger?.ILog("Time taken to compute hash: " + (DateTime.Now - start));
+            args.Logger?.ILog("Time taken to compute hash: " + (DateTime.Now - start)); 
             args.UpdateVariables(new Dictionary<string, object>
             {
                 { "SHA256", hashStr },
                 { "Checksum", hashStr },
             });
             return 1;
+        }
+
+        private static string ComputeHash(string filePath)
+        {
+            using var sha256 = System.Security.Cryptography.SHA256.Create();
+            DateTime start = DateTime.Now;
+            using var stream = File.OpenRead(filePath);
+            var hash = sha256.ComputeHash(stream);
+            return BitConverter.ToString(hash).Replace("-", string.Empty).ToLowerInvariant();
         }
     }
 }
