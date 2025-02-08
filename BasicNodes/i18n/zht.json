@@ -635,7 +635,9 @@
         "Label": "設置 FileFlows 縮略圖",
         "Fields": {
           "FilePath": "文件路徑",
-          "FilePath-Help": "要用作縮略圖的圖片文件的完整路徑。"
+          "FilePath-Help": "要用作縮略圖的圖片文件的完整路徑。",
+          "IfNotSet": "If Not Set",
+          "IfNotSet-Help": "僅在流程執行過程中尚未設置縮略圖時進行設置。"
         },
         "Outputs": {
           "1": "縮略圖已設置"

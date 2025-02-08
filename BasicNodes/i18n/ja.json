@@ -635,7 +635,9 @@
         "Label": "FileFlowsのサムネイルを設定",
         "Fields": {
           "FilePath": "ファイルパス",
-          "FilePath-Help": "サムネイルとして使用する画像ファイルのフルパス。"
+          "FilePath-Help": "サムネイルとして使用する画像ファイルのフルパス。",
+          "IfNotSet": "If Not Set",
+          "IfNotSet-Help": "サムネイルがフロー実行中にまだ設定されていない場合にのみ設定します。"
         },
         "Outputs": {
           "1": "サムネイルが設定されました"

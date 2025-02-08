@@ -635,7 +635,9 @@
         "Label": "Définir la miniature de FileFlows",
         "Fields": {
           "FilePath": "Chemin du fichier",
-          "FilePath-Help": "Le chemin complet du fichier image à utiliser comme miniature."
+          "FilePath-Help": "Le chemin complet du fichier image à utiliser comme miniature.",
+          "IfNotSet": "If Not Set",
+          "IfNotSet-Help": "Définit la vignette uniquement si elle n’a pas déjà été définie lors de l’exécution du flux."
         },
         "Outputs": {
           "1": "Miniature définie"

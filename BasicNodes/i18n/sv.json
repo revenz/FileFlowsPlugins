@@ -635,7 +635,9 @@
         "Label": "Ställ in FileFlows-miniatyr",
         "Fields": {
           "FilePath": "Filväg",
-          "FilePath-Help": "Den fullständiga sökvägen till bildfilen som ska användas som miniatyr."
+          "FilePath-Help": "Den fullständiga sökvägen till bildfilen som ska användas som miniatyr.",
+          "IfNotSet": "If Not Set",
+          "IfNotSet-Help": "Устанавливает миниатюру только в том случае, если она еще не была установлена во время выполнения потока."
         },
         "Outputs": {
           "1": "Miniatyr inställd"

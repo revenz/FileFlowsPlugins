@@ -635,7 +635,9 @@
         "Label": "Definir miniatura do FileFlows",
         "Fields": {
           "FilePath": "Caminho do arquivo",
-          "FilePath-Help": "O caminho completo do arquivo de imagem a ser usado como miniatura."
+          "FilePath-Help": "O caminho completo do arquivo de imagem a ser usado como miniatura.",
+          "IfNotSet": "If Not Set",
+          "IfNotSet-Help": "Define a miniatura apenas se ainda não tiver sido definida durante a execução do fluxo."
         },
         "Outputs": {
           "1": "Miniatura definida"

@@ -635,7 +635,9 @@
         "Label": "FileFlows-Miniaturbild festlegen",
         "Fields": {
           "FilePath": "Dateipfad",
-          "FilePath-Help": "Der vollständige Pfad zur Bilddatei, die als Miniaturbild verwendet werden soll."
+          "FilePath-Help": "Der vollständige Pfad zur Bilddatei, die als Miniaturbild verwendet werden soll.",
+          "IfNotSet": "If Not Set",
+          "IfNotSet-Help": "Setzt das Vorschaubild nur, wenn es während der Flussausführung noch nicht festgelegt wurde."
         },
         "Outputs": {
           "1": "Miniaturbild gesetzt"

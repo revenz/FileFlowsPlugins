@@ -635,7 +635,9 @@
         "Label": "FileFlows Miniatuur instellen",
         "Fields": {
           "FilePath": "Bestandspad",
-          "FilePath-Help": "Het volledige pad naar het afbeeldingsbestand dat als miniatuur moet worden gebruikt."
+          "FilePath-Help": "Het volledige pad naar het afbeeldingsbestand dat als miniatuur moet worden gebruikt.",
+          "IfNotSet": "If Not Set",
+          "IfNotSet-Help": "Stelt de miniatuur alleen in als deze nog niet is ingesteld tijdens de uitvoer van de flow."
         },
         "Outputs": {
           "1": "Miniatuur ingesteld"

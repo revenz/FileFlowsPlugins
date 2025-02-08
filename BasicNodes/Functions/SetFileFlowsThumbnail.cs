@@ -25,10 +25,21 @@ public class SetFileFlowsThumbnail: Node
     /// </summary>
     [TextVariable(1)]
     public string FilePath { get; set; }
+    
+    /// <summary>
+    /// Gets or sets if the thumbnail should only be set if not already set
+    /// </summary>
+    [Boolean(2)]
+    public bool IfNotSet { get; set; }
 
     /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
+        if (IfNotSet && args.HasThumbnailBeenSet())
+        {
+            args.Logger?.ILog("Thumbnail already set");
+            return 1;
+        }
         string file = args.ReplaceVariables(FilePath ?? string.Empty, true)?.EmptyAsNull() ?? args.WorkingFile;
         if(string.IsNullOrWhiteSpace(file))
             return args.Fail("File Path not set");
