@@ -94,16 +94,16 @@ public class TVEpisodeLookup : Node
         
         string tvShowInfoCacheKey = $"TVShowInfo: {lookupName} ({year})";
         TVShowInfo result =args.Cache.GetObject<TVShowInfo>(tvShowInfoCacheKey);
+
+        // RegisterSettings only needs to be called one time when your application starts-up.
+        MovieDbFactory.RegisterSettings(Globals.MovieDbBearerToken);
+        
         if (result != null)
         {
             args.Logger?.ILog("Got TV show info from cache: " + result.Name);
         }
         else
         {
-
-            // RegisterSettings only needs to be called one time when your application starts-up.
-            MovieDbFactory.RegisterSettings(Globals.MovieDbBearerToken);
-
             var movieApi = MovieDbFactory.Create<IApiTVShowRequest>().Value;
 
             args.Logger?.ILog("Lookup TV Show: " + lookupName);
