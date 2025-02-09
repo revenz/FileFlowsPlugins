@@ -175,10 +175,10 @@ public abstract class TrackSelectorFlowElement<T> : FfmpegBuilderNode where T : 
                     break;
                 case "title":
                     if (Args.StringHelper.Matches(kvValue, stream.Title))
-                        Args?.Logger?.ILog($"Stream '{stream}' Title '{stream.Codec}' does match '{kvValue}'");
+                        Args?.Logger?.ILog($"Stream '{stream}' Title '{stream.Title}' does match '{kvValue}'");
                     else
                     {
-                        Args?.Logger?.ILog($"Stream '{stream}' Title '{stream.Codec}' does not match '{kvValue}'");
+                        Args?.Logger?.ILog($"Stream '{stream}' Title '{stream.Title}' does not match '{kvValue}'");
                         return false;
                     }
 
