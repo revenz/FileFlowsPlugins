@@ -107,8 +107,8 @@ namespace FileFlows.VideoNodes
 
             args.SetTraits(new string[]
             {
-                firstVideo.Codec,
-                videoInfo.AudioStreams?.FirstOrDefault()?.Codec,
+                firstVideo.Codec.ToUpper(),
+                videoInfo.AudioStreams?.FirstOrDefault()?.Codec?.ToUpper(),
                 ChannelHelper.FormatAudioChannels(videoInfo.AudioStreams?.FirstOrDefault()?.Channels ?? 0),
                 VideoHelper.FormatResolution(firstVideo.Width , firstVideo.Height),
                 firstVideo.HDR == true ? "HDR" : null,
