@@ -80,7 +80,7 @@ public class VideoFile : VideoNode
                 return -1;
             }
             
-            var videoInfoResult = new VideoInfoHelper(FFMPEG, args.Logger, args).Read(file);
+            var videoInfoResult = new VideoInfoHelper(FFMPEG, args.Logger).Read(file);
             if (videoInfoResult.Failed(out string error))
             {
                 args.FailureReason = error;

@@ -87,7 +87,7 @@ namespace FileFlows.VideoNodes
                 args.SetWorkingFile(outputFile);
 
                 // get the new video info
-                var videoInfo = new VideoInfoHelper(ffmpegExe, args.Logger, args).Read(outputFile).ValueOrDefault;
+                var videoInfo = new VideoInfoHelper(ffmpegExe, args.Logger).Read(outputFile).ValueOrDefault;
                 SetVideoInfo(args, videoInfo, this.Variables ?? new Dictionary<string, object>());
             }
             else if (success.successs == false)

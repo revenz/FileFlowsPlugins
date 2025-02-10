@@ -1,3 +1,5 @@
+using FileFlows.VideoNodes.Helpers;
+
 namespace FileFlows.VideoNodes
 {
     using FileFlows.Plugin;
@@ -101,6 +103,18 @@ namespace FileFlows.VideoNodes
             if (videoInfo.VideoStreams?.Any() == false)
                 return;
 
+            var firstVideo = videoInfo.VideoStreams.First();
+
+            args.SetTraits(new string[]
+            {
+                firstVideo.Codec,
+                videoInfo.AudioStreams?.FirstOrDefault()?.Codec,
+                ChannelHelper.FormatAudioChannels(videoInfo.AudioStreams?.FirstOrDefault()?.Channels ?? 0),
+                VideoHelper.FormatResolution(firstVideo.Width , firstVideo.Height),
+                firstVideo.HDR == true ? "HDR" : null,
+                firstVideo.DolbyVision == true ? "Dolby Vision" : null,
+            }.Where(x => string.IsNullOrWhiteSpace(x) == false).ToArray());
+            
             args.Parameters[VIDEO_INFO] = videoInfo;
 
             if (args.Variables.ContainsKey("vi.OriginalDuration") == false) // we only want to store this for the absolute original duration in the flow
@@ -318,7 +332,7 @@ namespace FileFlows.VideoNodes
                 return null;
             }
 
-            var viResult = new VideoInfoHelper(FFMPEG, args.Logger, args).Read(local);
+            var viResult = new VideoInfoHelper(FFMPEG, args.Logger).Read(local);
             if (viResult.Failed(out string error))
             {
                 args.Logger?.ELog(error);
