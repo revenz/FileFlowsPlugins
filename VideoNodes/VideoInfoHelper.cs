@@ -59,6 +59,8 @@ public class VideoInfoHelper(string ffMpegExe, ILogger logger, NodeParameters ar
                 vi.AudioStreams?.FirstOrDefault()?.Codec,
                 ChannelHelper.FormatAudioChannels(vi.AudioStreams?.FirstOrDefault()?.Channels ?? 0),
                 VideoHelper.FormatResolution(vi?.VideoStreams?.FirstOrDefault()?.Width ?? 0 , vi?.VideoStreams?.FirstOrDefault()?.Height ?? 0),
+                vi.VideoStreams?.FirstOrDefault()?.HDR == true ? "HDR" : null,
+                vi.VideoStreams?.FirstOrDefault()?.DolbyVision == true ? "Dolby Vision" : null,
             }.Where(x => string.IsNullOrWhiteSpace(x) == false).ToArray());
         }
         return result;
