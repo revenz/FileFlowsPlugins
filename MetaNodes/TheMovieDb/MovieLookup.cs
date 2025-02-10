@@ -159,6 +159,9 @@ public class MovieLookup : Node
         args.Variables["movie.Title"] = result.Title;
         args.Logger?.ILog("Detected Movie Title: " + result.Title);
         args.Variables["movie.Year"] = result.ReleaseDate.Year;
+         
+        args.SetDisplayName($"{result.Title} ({result.ReleaseDate.Year})");
+        
         args.Logger?.ILog("Detected Movie Year: " + result.ReleaseDate.Year);
         var meta = GetVideoMetadata(args, movieApi, result.Id, args.TempPath);
         args.Variables["VideoMetadata"] = meta;

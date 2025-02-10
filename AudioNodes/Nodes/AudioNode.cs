@@ -103,6 +103,8 @@ namespace FileFlows.AudioNodes
             AddIfSet(metadata, "TotalDiscs", AudioInfo.TotalDiscs);
             args.SetMetadata(metadata);
             
+            args.SetDisplayName($"{AudioInfo.Artist} - {AudioInfo.Title}");
+            
             
             string extension = FileHelper.GetExtension(filename).ToLowerInvariant()[1..];
             switch (extension)

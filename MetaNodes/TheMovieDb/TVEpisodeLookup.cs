@@ -110,7 +110,6 @@ public class TVEpisodeLookup : Node
 
             var response = movieApi.SearchByNameAsync(lookupName).Result;
 
-
             // try find an exact match
             result = response.Results.OrderBy(x =>
                 {
@@ -197,6 +196,13 @@ public class TVEpisodeLookup : Node
         {
             Variables["tvepisode.LastEpisode"] = lastEpisode.Value;
             args.Logger?.ILog("Detected Last Episode: " + lastEpisode.Value);
+
+            args.SetDisplayName(
+                $"{result.Name} - {epInfo.SeasonNumber}x{episode.Value:D2}-{lastEpisode.Value:D2} - {epInfo.Name}");
+        }
+        else
+        {
+            args.SetDisplayName($"{result.Name} - {epInfo.SeasonNumber}x{episode.Value:D2} - {epInfo.Name}");
         }
 
         Variables["tvepisode.Overview"] = epInfo.Overview;
