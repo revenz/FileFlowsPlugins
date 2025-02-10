@@ -318,7 +318,7 @@ namespace FileFlows.VideoNodes
                 return null;
             }
 
-            var viResult = new VideoInfoHelper(FFMPEG, args.Logger).Read(local);
+            var viResult = new VideoInfoHelper(FFMPEG, args.Logger, args).Read(local);
             if (viResult.Failed(out string error))
             {
                 args.Logger?.ELog(error);

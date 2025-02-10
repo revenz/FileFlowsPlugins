@@ -86,6 +86,12 @@ namespace FileFlows.AudioNodes
             variables.AddOrUpdate("audio.Disc", AudioInfo.Disc < 1 ? 1 : AudioInfo.Disc);
             variables.AddOrUpdate("audio.TotalDiscs", AudioInfo.TotalDiscs < 1 ? 1 : AudioInfo.TotalDiscs);
 
+            args.SetTraits(new string[]
+            {
+                AudioInfo.Codec,
+                FormatBitrate(AudioInfo.Bitrate),
+                FormatAudioChannels(AudioInfo.Channels)
+            }.Where(x => x != null).ToArray());
 
             var metadata = new Dictionary<string, object>();
             metadata.Add("Duration", AudioInfo.Duration);
@@ -191,6 +197,48 @@ namespace FileFlows.AudioNodes
 
             SetAudioInfo(args, result.Value, Variables, filename);
             return true;
+        }
+        
+        /// <summary>
+        /// Converts an audio bitrate (in bits per second) to a human-readable format.
+        /// </summary>
+        /// <param name="bitrate">The bitrate in bits per second.</param>
+        /// <returns>
+        /// A human-readable string representation of the bitrate, such as "128 kbps" or "1.4 Mbps".
+        /// Returns <c>null</c> if the bitrate is 0.
+        /// </returns>
+        public static string? FormatBitrate(long bitrate)
+        {
+            if (bitrate < 1)
+                return null;
+            if (bitrate < 1000)
+                return $"{bitrate} bps";
+            if (bitrate < 1_000_000)
+                return $"{bitrate / 1000.0:0.#} kbps";
+            return $"{bitrate / 1_000_000.0:0.#} Mbps";
+        }/// <summary>
+        /// Converts the number of audio channels into a human-readable format.
+        /// </summary>
+        /// <param name="channels">The number of audio channels.</param>
+        /// <returns>
+        /// A human-readable string representation of the channels, such as "Mono", "Stereo", or "5.1".
+        /// Returns <c>null</c> if the number of channels is 0.
+        /// </returns>
+        public static string? FormatAudioChannels(long channels)
+        {
+            return channels switch
+            {
+                0 => null,
+                1 => "Mono",
+                2 => "Stereo",
+                3 => "2.1",
+                4 => "Quad",
+                5 => "4.1",
+                6 => "5.1",
+                7 => "6.1",
+                8 => "7.1",
+                _ => $"{channels} channels"
+            };
         }
     }
 }

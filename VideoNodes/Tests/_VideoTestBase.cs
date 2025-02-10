@@ -50,6 +50,11 @@ public abstract class VideoTestBase : TestBase
     /// Video with many subtitles file
     /// </summary>
     protected static readonly string VideoSubtitles = ResourcesTestFilesDir + "/subtitles.mkv";
+
+    /// <summary>
+    /// Video with english and german audio
+    /// </summary>
+    protected static readonly string VideoEngGerAudio = ResourcesTestFilesDir + "/eng_ger_audio.mp4";
     
     /// <summary>
     /// Audio MP3 file

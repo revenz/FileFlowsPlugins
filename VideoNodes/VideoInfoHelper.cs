@@ -1,12 +1,12 @@
 using System.Diagnostics;
 using System.Globalization;
+using FileFlows.VideoNodes.Helpers;
 
 namespace FileFlows.VideoNodes;
 
-public class VideoInfoHelper
+public class VideoInfoHelper(string ffMpegExe, ILogger logger, NodeParameters args)
 {
-    private string ffMpegExe;
-    private ILogger Logger;
+    private ILogger Logger = logger;
 
     static Regex rgxTitle = new Regex(@"(?<=((^[\s]+title[\s]+:[\s])))(.*?)$", RegexOptions.Multiline);
     static Regex rgxDuration = new Regex(@"(?<=((^[\s]+DURATION(\-[\w]+)?[\s]+:[\s])))([\d]+:?)+\.[\d]{1,7}", RegexOptions.Multiline);
@@ -45,17 +45,25 @@ public class VideoInfoHelper
         set => _AnalyzeDuration = Math.Max(32, value);
     }
 
-    public VideoInfoHelper(string ffMpegExe, ILogger logger)
-    {
-        this.ffMpegExe = ffMpegExe;
-        this.Logger = logger;
-    }
-
     public static string GetFFMpegPath(NodeParameters args) => args.GetToolPath("FFMpeg");
 
     public Result<VideoInfo> Read(string filename)
-        => ReadStatic(Logger, ffMpegExe, filename);
-    
+    {
+        var result = ReadStatic(Logger, ffMpegExe, filename);
+        if (result.IsFailed == false)
+        {
+            var vi = result.Value;
+            args.SetTraits(new string[]
+            {
+                vi.VideoStreams?.FirstOrDefault()?.Codec,
+                vi.AudioStreams?.FirstOrDefault()?.Codec,
+                ChannelHelper.FormatAudioChannels(vi.AudioStreams?.FirstOrDefault()?.Channels ?? 0),
+                VideoHelper.FormatResolution(vi?.VideoStreams?.FirstOrDefault()?.Width ?? 0 , vi?.VideoStreams?.FirstOrDefault()?.Height ?? 0),
+            }.Where(x => string.IsNullOrWhiteSpace(x) == false).ToArray());
+        }
+        return result;
+    }
+
     internal static Result<VideoInfo> ReadStatic(ILogger logger, string ffMpegExe, string filename)
     {
         #if(DEBUG) // UNIT TESTING

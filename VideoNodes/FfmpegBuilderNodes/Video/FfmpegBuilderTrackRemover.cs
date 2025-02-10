@@ -77,6 +77,7 @@ public class FfmpegBuilderTrackRemover:  TrackSelectorFlowElement<FfmpegBuilderT
     {
         bool removing = false;
         int index = -1;
+        List<string> removed = [];
         foreach (var track in tracks)
         {
             if (track.Deleted)
@@ -89,10 +90,21 @@ public class FfmpegBuilderTrackRemover:  TrackSelectorFlowElement<FfmpegBuilderT
                 continue;
             }
             Args.Logger?.ILog($"Deleting Stream: {track}");
+            removed.Add(" - Removed: " + track.ToString());
             track.Deleted = true;
             removing = true;
         }
 
-        return removing;
+        if (removing == false)
+        {
+            Args.Logger?.ILog("Nothing removed!");
+            return false;
+        }
+
+        Args.Logger?.ILog("\n------------------------------ Removed Summary ------------------------------ \n" +
+                          string.Join("\n", removed) +
+                          "\n-----------------------------------------------------------------------------");
+
+        return true;
     }
 }
