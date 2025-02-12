@@ -416,7 +416,7 @@ public class VideoInfoHelper
     }
     public static SubtitleStream ParseSubtitleStream(string info)
     {
-        // Stream #0:1(eng): Audio: dts (DTS), 48000 Hz, stereo, fltp, 1536 kb/s (default)
+        // Stream #0:1(eng): Subtitle: subrip (srt) (default) (forced)
         string line = info.Split(new string[] { "\r\n", "\n", "\r" }, StringSplitOptions.RemoveEmptyEntries).First();
         var parts = line.Split(",").Select(x => x?.Trim() ?? "").ToArray();
         SubtitleStream sub = new SubtitleStream();
@@ -431,6 +431,7 @@ public class VideoInfoHelper
             sub.Title = rgxTitle.Match(info).Value.Trim();
 
         sub.Forced = info.ToLower().Contains("(forced)");
+        sub.HearingImpaired = info.ToLower().Contains("(hearing impaired)");
         return sub;
     }
     
