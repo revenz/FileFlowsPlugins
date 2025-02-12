@@ -91,10 +91,17 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
     [Boolean(8)]
     public bool Default { get; set; }
 
+
+    /// <summary>
+    /// Gets or sets if the subtitle is hearing impaired
+    /// </summary>
+    [Boolean(9)]
+    public bool HearingImpaired { get; set; }
+
     /// <summary>
     /// Gets or sets if the subtitle should be deleted afterwards
     /// </summary>
-    [Boolean(9)]
+    [Boolean(10)]
     public bool DeleteAfterwards { get; set; }
     
     /// <inheritdoc />
@@ -131,12 +138,13 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
 
             string language = string.Empty;
             bool forced = false;
+            bool hearingImpaired = false;
 
             if (MatchFilename)
             {
                 string lang1, lang2;
-                bool matchesOriginal = FilenameMatches(args.FileName, file, out lang1, out bool forced1);
-                bool matchesWorking = FilenameMatches(args.WorkingFile, file, out lang2, out bool forced2);
+                bool matchesOriginal = FilenameMatches(args.FileName, file, out lang1, out bool forced1, out bool hearingImpaired1);
+                bool matchesWorking = FilenameMatches(args.WorkingFile, file, out lang2, out bool forced2, out bool hearingImpaired2);
 
                 if (matchesOriginal == false && matchesWorking == false)
                     continue;
@@ -146,6 +154,7 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
                 if (string.IsNullOrEmpty(lang2) == false)
                     language = lang2;
                 forced = forced1 || forced2;
+                hearingImpaired = hearingImpaired1 || hearingImpaired2;
             }
             else if (pattern != null)
             {
@@ -160,6 +169,7 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
 
             language = language?.EmptyAsNull() ?? args.ReplaceVariables(Language ?? string.Empty, stripMissing: true);
             forced |= Forced;
+            hearingImpaired |= hearingImpaired;
 
             string subTitle = args.ReplaceVariables(Title ?? string.Empty, stripMissing: true)?.EmptyAsNull() ?? language ?? string.Empty;
             
@@ -174,12 +184,14 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
                 Language = string.IsNullOrEmpty(language) ? null : Regex.Replace(language, @" \([\w]+\)$", string.Empty).Trim(),
                 IsDefault = Default,
                 IsForced = forced,
+                IsHearingImpaired = hearingImpaired,
                 Stream = new SubtitleStream()
                 {
                     InputFileIndex = this.Model.InputFiles.Count - 1,
                     TypeIndex = 0,
                     Language = language,
                     Forced = forced,
+                    HearingImpaired = hearingImpaired,
                     Title = subTitle,
                     Default = Default,
                     Codec = ext,
@@ -202,11 +214,13 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
     /// <param name="other">the other file to check</param>
     /// <param name="languageCode">the language code found in the subtitle</param>
     /// <param name="forced">if the subtitle is detected as forced</param>
+    /// <param name="hearingImpaired">if the subtitle is detected as hearing impaired</param>
     /// <returns>true if it matches, otherwise false</returns>
-    internal bool FilenameMatches(string input, string other, out string languageCode, out bool forced)
+    internal bool FilenameMatches(string input, string other, out string languageCode, out bool forced, out bool hearingImpaired)
     {
         languageCode = string.Empty;
         forced = false;
+        hearingImpaired = false;
         var inputFileExtension = FileHelper.GetExtension(input);
         string inputName = FileHelper.GetShortFileName(input).Replace(inputFileExtension, "");
 
@@ -218,6 +232,7 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
 
         bool closedCaptions = HasSection(ref otherName, "closedcaptions") || HasSection(ref otherName, "cc");
         forced = HasSection(ref otherName, "forced");
+        hearingImpaired = HasSection(ref otherName, "sdh");
 
         if(Regex.IsMatch(otherName, @"(\.[a-zA-Z]{2,3}){1,2}$"))
         {
