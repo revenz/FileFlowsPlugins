@@ -16,7 +16,7 @@ public class SetResellerDisplayName : Node
     /// <inheritdoc />
     public override FlowElementType Type => FlowElementType.Process;
     /// <inheritdoc />
-    public override string Icon => "";
+    public override string Icon => "fas fa-file-signature";
 
     /// <inheritdoc />
     public override int Execute(NodeParameters args)
