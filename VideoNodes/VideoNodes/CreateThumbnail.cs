@@ -250,7 +250,7 @@ public class CreateThumbnail : VideoNode
     private TimeSpan AdjustCaptureTime(TimeSpan currentTime, TimeSpan duration)
     {
         // Move the capture time by 10% of the video length forwards or backwards
-        TimeSpan shift = TimeSpan.FromTicks((long)(duration.Ticks * 0.1));
+        TimeSpan shift = TimeSpan.FromTicks(Math.Max((long)(duration.Ticks * 0.1), TimeSpan.TicksPerSecond * 10));
         if (currentTime + shift < duration)
             return currentTime + shift;
 
