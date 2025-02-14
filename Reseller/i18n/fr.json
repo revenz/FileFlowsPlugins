@@ -7,6 +7,13 @@
         "Outputs": {
           "1": "Le fichier a été déplacé avec succès"
         }
+      },
+      "SetResellerDisplayName": {
+        "Description": "Définit le nom d'affichage d'un fichier en fonction des informations du fichier du revendeur, garantissant une clarté sur l'identité et la propriété du fichier.",
+        "Label": "Définir le Nom d'Affichage du Revendeur",
+        "Outputs": {
+          "1": "Nom d'affichage défini"
+        }
       }
     }
   },

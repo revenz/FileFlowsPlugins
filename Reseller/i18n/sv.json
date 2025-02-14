@@ -7,6 +7,13 @@
         "Outputs": {
           "1": "Filen flyttades framgångsrikt"
         }
+      },
+      "SetResellerDisplayName": {
+        "Description": "Ställer in visningsnamnet för en fil baserat på återförsäljarens filinformation, vilket säkerställer tydlighet om filens identitet och ägande.",
+        "Label": "Ställ in återförsäljarens visningsnamn",
+        "Outputs": {
+          "1": "Visningsnamn inställt"
+        }
       }
     }
   },

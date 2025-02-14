@@ -7,6 +7,13 @@
         "Outputs": {
           "1": "El archivo se movió con éxito"
         }
+      },
+      "SetResellerDisplayName": {
+        "Description": "Establece el nombre para mostrar de un archivo basado en la información del archivo del distribuidor, asegurando claridad sobre la identidad y propiedad del archivo.",
+        "Label": "Establecer Nombre de Distribuidor",
+        "Outputs": {
+          "1": "Nombre de visualización establecido"
+        }
       }
     }
   },

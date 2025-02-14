@@ -7,6 +7,13 @@
         "Outputs": {
           "1": "File was was successfully moved"
         }
+      },
+      "SetResellerDisplayName": {
+        "Description": "Sets the display name for a file based on reseller file information, ensuring clarity on file identity and ownership.",
+        "Label": "Set Reseller Display Name",
+        "Outputs": {
+          "1": "Display name set"
+        }
       }
     }
   },

@@ -7,6 +7,13 @@
         "Outputs": {
           "1": "Bestand is succesvol verplaatst"
         }
+      },
+      "SetResellerDisplayName": {
+        "Description": "Stelt de weergavenaam in voor een bestand op basis van de wederverkoperbestandgegevens, zodat de identiteit en het eigendom van het bestand duidelijk zijn.",
+        "Label": "Stel Weergavenaam Wederverkoper In",
+        "Outputs": {
+          "1": "Weergavenaam ingesteld"
+        }
       }
     }
   },

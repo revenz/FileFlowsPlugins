@@ -7,6 +7,13 @@
         "Outputs": {
           "1": "O arquivo foi movido com sucesso"
         }
+      },
+      "SetResellerDisplayName": {
+        "Description": "Define o nome de exibição de um arquivo com base nas informações do arquivo do revendedor, garantindo clareza sobre a identidade e propriedade do arquivo.",
+        "Label": "Definir Nome de Exibição do Revendedor",
+        "Outputs": {
+          "1": "Nome de exibição definido"
+        }
       }
     }
   },

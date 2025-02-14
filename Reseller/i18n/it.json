@@ -7,6 +7,13 @@
         "Outputs": {
           "1": "Il file è stato spostato con successo"
         }
+      },
+      "SetResellerDisplayName": {
+        "Description": "Imposta il nome visualizzato per un file in base alle informazioni del file del rivenditore, garantendo chiarezza sull'identità e sulla proprietà del file.",
+        "Label": "Imposta Nome Visualizzato Rivenditore",
+        "Outputs": {
+          "1": "Nome visualizzato impostato"
+        }
       }
     }
   },
