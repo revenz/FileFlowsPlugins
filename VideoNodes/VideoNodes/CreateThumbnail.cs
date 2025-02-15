@@ -37,12 +37,24 @@ public class CreateThumbnail : VideoNode
     [NumberInt(3)]
     [DefaultValue(200)]
     public int Height { get; set; }
+    
+    [Boolean(4)]
+    public bool UsePercent { get; set; }
 
     /// <summary>
     /// The time in the video to capture the thumbnail (in seconds or percentage of the video duration).
     /// </summary>
-    [Time(4)]
+    [Time(5)]
+    [ConditionEquals(nameof(UsePercent), false)]
     public TimeSpan Time { get; set; }
+
+    /// <summary>
+    /// The time in the video to capture the thumbnail (in seconds or percentage of the video duration).
+    /// </summary>
+    [Slider(6)]
+    [Range(0, 100)]
+    [ConditionEquals(nameof(UsePercent), true)]
+    public int Percent { get; set; }
     
 
     /// <summary>
@@ -107,6 +119,14 @@ public class CreateThumbnail : VideoNode
             string output = args.ReplaceVariables(OutputFile, stripMissing: true);
             if (string.IsNullOrWhiteSpace(output))
                 output = FileHelper.ChangeExtension(args.FileName, "jpg");
+
+            if (UsePercent)
+            {
+                TimeSpan duration = videoInfo.VideoStreams[0].Duration;
+                // get time from Percent (0 to 100) of duraiton, time should be seconds
+                Time = TimeSpan.FromSeconds(duration.TotalSeconds * (Percent / 100.0));
+                args.Logger?.ILog($"Percent time: {Time} seconds");
+            }
 
             // Ensure time is within bounds
             TimeSpan captureTime = GetValidCaptureTime(videoInfo.VideoStreams[0].Duration);
