@@ -707,6 +707,8 @@
           "DeleteAfterwards-Help": "Si le fichier de sous-titres doit être supprimé après avoir été fusionné",
           "Forced": "Forcé",
           "Forced-Help": "Si le sous-titre doit être forcé",
+          "HearingImpaired": "Malentendant",
+          "HearingImpaired-Help": "Si le sous-titre est destiné aux malentendants",
           "Language": "Langue",
           "Language-Help": "Code de langue optionnel [ISO 639-2](https://fr.wikipedia.org/wiki/ISO_639-2) pour le sous-titre ajouté.",
           "MatchFilename": "Correspondre au Nom de Fichier",

@@ -707,6 +707,8 @@
           "DeleteAfterwards-Help": "Se il file dei sottotitoli deve essere eliminato dopo essere stato unito",
           "Forced": "Forzato",
           "Forced-Help": "Se il sottotitolo deve essere forzato",
+          "HearingImpaired": "Udito Difettoso",
+          "HearingImpaired-Help": "Se il sottotitolo è per persone con problemi di udito",
           "Language": "Lingua",
           "Language-Help": "Codice lingua [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) opzionale per il sottotitolo aggiunto.",
           "MatchFilename": "Corrispondi Nome File",

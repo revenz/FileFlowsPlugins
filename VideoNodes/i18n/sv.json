@@ -707,6 +707,8 @@
           "DeleteAfterwards-Help": "Om undertextfilen ska tas bort efter att ha slagits samman",
           "Forced": "Tvingad",
           "Forced-Help": "Om undertexten ska vara tvingad",
+          "HearingImpaired": "Hörselskadad",
+          "HearingImpaired-Help": "Om undertexten ska vara för hörselskadade",
           "Language": "Språk",
           "Language-Help": "Valfri [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) språk kod för den tillagda undertexten.",
           "MatchFilename": "Matcha filnamn",
