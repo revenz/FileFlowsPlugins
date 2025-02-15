@@ -8,9 +8,9 @@
           "1": "Il file è stato spostato con successo"
         }
       },
-      "SetResellerDisplayName": {
-        "Description": "Imposta il nome visualizzato per un file in base alle informazioni del file del rivenditore, garantendo chiarezza sull'identità e sulla proprietà del file.",
-        "Label": "Imposta Nome Visualizzato Rivenditore",
+      "SetFileDropDisplayName": {
+        "Description": "Imposta il nome visualizzato di un file in base alle informazioni del file di File Drop, garantendo chiarezza sull'identità e la proprietà del file.",
+        "Label": "Imposta il nome visualizzato del file di File Drop",
         "Outputs": {
           "1": "Nome visualizzato impostato"
         }
@@ -18,9 +18,9 @@
     }
   },
   "Plugins": {
-    "Reseller": {
-      "Description": "Plugin che fornisce elementi di flusso relativi ai rivenditori",
-      "Label": "Rivenditore"
+    "FileDrop": {
+      "Description": "Plugin che fornisce elementi di flusso relativi a File Drop",
+      "Label": "File Drop"
     }
   }
 }

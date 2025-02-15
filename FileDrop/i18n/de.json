@@ -8,9 +8,9 @@
           "1": "Datei wurde erfolgreich verschoben"
         }
       },
-      "SetResellerDisplayName": {
-        "Description": "Legt den Anzeigenamen für eine Datei basierend auf den Wiederverkäufer-Dateiinformationen fest, um Klarheit über Identität und Eigentum der Datei zu gewährleisten.",
-        "Label": "Reseller-Anzeigenamen setzen",
+      "SetFileDropDisplayName": {
+        "Description": "Legt den Anzeigenamen für eine Datei basierend auf den Dateiinformationen des File Drops fest, um Klarheit über die Dateiidentität und den Besitz zu gewährleisten.",
+        "Label": "Datei Drop Anzeigenamen festlegen",
         "Outputs": {
           "1": "Anzeigename festgelegt"
         }
@@ -18,9 +18,9 @@
     }
   },
   "Plugins": {
-    "Reseller": {
-      "Description": "Plugin, das flow-bezogene Elemente für Reseller bereitstellt",
-      "Label": "Reseller"
+    "FileDrop": {
+      "Description": "Plugin, das File Drop bezogene Flow-Elemente bereitstellt",
+      "Label": "File Drop"
     }
   }
 }

@@ -1,0 +1,26 @@
+{
+  "Flow": {
+    "Parts": {
+      "MoveToUserFolder": {
+        "Description": "Flyttar arbetsfilen till användarens utmatningskatalog.",
+        "Label": "Flytta till Användarmapp",
+        "Outputs": {
+          "1": "Filen flyttades framgångsrikt"
+        }
+      },
+      "SetFileDropDisplayName": {
+        "Description": "Sätter visningsnamnet för en fil baserat på filinformation från File Drop, vilket säkerställer tydlighet om filens identitet och ägande.",
+        "Label": "Ställ in visningsnamn för File Drop",
+        "Outputs": {
+          "1": "Visningsnamn inställt"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "FileDrop": {
+      "Description": "Plugin som tillhandahåller flow-element relaterade till File Drop",
+      "Label": "File Drop"
+    }
+  }
+}

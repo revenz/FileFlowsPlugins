@@ -1,0 +1,26 @@
+{
+  "Flow": {
+    "Parts": {
+      "MoveToUserFolder": {
+        "Description": "Verplaatst het werkbestand naar de uitvoermap van de gebruiker.",
+        "Label": "Verplaats naar Gebruikersmap",
+        "Outputs": {
+          "1": "Bestand is succesvol verplaatst"
+        }
+      },
+      "SetFileDropDisplayName": {
+        "Description": "Stelt de weergavenaam van een bestand in op basis van de bestandsinformatie van File Drop, om duidelijkheid te waarborgen over de identiteit en eigendom van het bestand.",
+        "Label": "Weergavenaam voor File Drop instellen",
+        "Outputs": {
+          "1": "Weergavenaam ingesteld"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "FileDrop": {
+      "Description": "Plugin die File Drop gerelateerde flow-elementen biedt",
+      "Label": "File Drop"
+    }
+  }
+}

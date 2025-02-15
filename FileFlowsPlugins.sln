@@ -43,7 +43,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginTestLibrary", "Plugin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Docker", "Docker\Docker.csproj", "{2E26B8A7-269B-4E0C-A4D6-936B6FEC01F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reseller", "Reseller\Reseller.csproj", "{AB24139B-9B44-47EA-829A-954CFFC23A65}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileDrop", "FileDrop\FileDrop.csproj", "{AB24139B-9B44-47EA-829A-954CFFC23A65}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pdf", "Pdf\Pdf.csproj", "{4E968B9E-7B02-4F2B-BA99-F671C9336F0D}"
 EndProject

@@ -8,9 +8,9 @@
           "1": "File was was successfully moved"
         }
       },
-      "SetResellerDisplayName": {
-        "Description": "Sets the display name for a file based on reseller file information, ensuring clarity on file identity and ownership.",
-        "Label": "Set Reseller Display Name",
+      "SetFileDropDisplayName": {
+        "Description": "Sets the display name for a file based on file drop file information, ensuring clarity on file identity and ownership.",
+        "Label": "Set File Drop Display Name",
         "Outputs": {
           "1": "Display name set"
         }
@@ -18,9 +18,9 @@
     }
   },
   "Plugins": {
-    "Reseller": {
-      "Description": "Plugin that provides Reseller related flow elements",
-      "Label": "Reseller"
+    "FileDrop": {
+      "Description": "Plugin that provides File Drop related flow elements",
+      "Label": "File Drop"
     }
   }
 }

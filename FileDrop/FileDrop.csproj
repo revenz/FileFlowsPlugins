@@ -4,17 +4,17 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>FileFlows.ResellerPlugin</RootNamespace>
+        <RootNamespace>FileFlows.FileDropPlugin</RootNamespace>
         <FileVersion>1.1.1.528</FileVersion>
         <ProductVersion>1.1.1.528</ProductVersion>
         <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
         <Company>FileFlows</Company>
         <Authors>John Andrews</Authors>
-        <Product>Reseller</Product>
+        <Product>File Drop</Product>
         <PackageProjectUrl>https://fileflows.com/</PackageProjectUrl>
-        <Description>Plugin that provides Reseller related flow elements</Description>
+        <Description>Plugin that provides File Drop related flow elements</Description>
         <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-        <LicenseFlag>Reseller</LicenseFlag>
+        <LicenseFlag>File Drop</LicenseFlag>
     </PropertyGroup>
     <ItemGroup>
         <None Update="i18n\*.json">

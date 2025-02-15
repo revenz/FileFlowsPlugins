@@ -1,0 +1,26 @@
+{
+  "Flow": {
+    "Parts": {
+      "MoveToUserFolder": {
+        "Description": "Déplace le fichier de travail dans le répertoire de sortie de l'utilisateur.",
+        "Label": "Déplacer vers le Dossier Utilisateur",
+        "Outputs": {
+          "1": "Le fichier a été déplacé avec succès"
+        }
+      },
+      "SetFileDropDisplayName": {
+        "Description": "Définit le nom affiché d'un fichier en fonction des informations du fichier de File Drop, garantissant la clarté de l'identité et de la propriété du fichier.",
+        "Label": "Définir le nom affiché du fichier de File Drop",
+        "Outputs": {
+          "1": "Nom affiché défini"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "FileDrop": {
+      "Description": "Plugin qui fournit des éléments de flux liés à File Drop",
+      "Label": "File Drop"
+    }
+  }
+}

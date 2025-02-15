@@ -1,18 +1,18 @@
-namespace FileFlows.ResellerPlugin.FlowElements;
+namespace FileFlows.FileDropPlugin.FlowElements;
 
 /// <summary>
-/// Sets the display name ot a reseller friendly name
+/// Sets the display name ot a file drop friendly name
 /// </summary>
-public class SetResellerDisplayName : Node
+public class SetFileDropDisplayName : Node
 {
     /// <inheritdoc />
     public override int Inputs => 1;
     /// <inheritdoc />
     public override int Outputs => 1;
     /// <inheritdoc />
-    public override string HelpUrl => "https://fileflows.com/docs/plugins/reseller/set-reseller-display-name";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/file-drop/set-file-drop-display-name";
     /// <inheritdoc />
-    public override string Group => "Reseller";
+    public override string Group => "File Drop";
     /// <inheritdoc />
     public override FlowElementType Type => FlowElementType.Process;
     /// <inheritdoc />
@@ -21,11 +21,11 @@ public class SetResellerDisplayName : Node
     /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
-        var username = Variables["ResellerUser"]?.ToString() ??
-                          Variables["ResellerUserUid"]?.ToString();
+        var username = Variables["FileDropUser"]?.ToString() ??
+                          Variables["FileDropUserUid"]?.ToString();
         if (string.IsNullOrWhiteSpace(username))
         {
-            args.Logger?.WLog("Failed to get reseller username");
+            args.Logger?.WLog("Failed to get file drop username");
             return 1;
         }
 

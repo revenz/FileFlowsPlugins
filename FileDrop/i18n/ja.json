@@ -8,9 +8,9 @@
           "1": "ファイルは正常に移動されました"
         }
       },
-      "SetResellerDisplayName": {
-        "Description": "リセラーのファイル情報に基づいてファイルの表示名を設定し、ファイルの識別と所有者を明確にします。",
-        "Label": "リセラーの表示名を設定",
+      "SetFileDropDisplayName": {
+        "Description": "ファイルのドロップ情報に基づいてファイルの表示名を設定し、ファイルの識別と所有権が明確であることを保証します。",
+        "Label": "ファイルドロップ表示名を設定",
         "Outputs": {
           "1": "表示名が設定されました"
         }
@@ -18,9 +18,9 @@
     }
   },
   "Plugins": {
-    "Reseller": {
-      "Description": "リセラー関連のフロー要素を提供するプラグイン",
-      "Label": "リセラー"
+    "FileDrop": {
+      "Description": "File Drop 関連のフロー要素を提供するプラグイン",
+      "Label": "File Drop"
     }
   }
 }
