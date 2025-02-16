@@ -12,7 +12,7 @@ public class Plugin : FileFlows.Plugin.IPlugin
     /// <inheritdoc />
     public string MinimumVersion => "24.12.4.4168";
     /// <inheritdoc />
-    public string Icon => "fas fa-people-carry";
+    public string Icon => "fas fa-tint";
     
     /// <inheritdoc />
     public void Init()
