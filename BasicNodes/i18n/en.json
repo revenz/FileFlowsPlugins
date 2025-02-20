@@ -185,6 +185,32 @@
           "2": "Does Not Match"
         }
       },
+      "FilePropertyExists": {
+        "Description": "Tests if a property has been set on this file record. Properties are stored in the file's database record and are unique to this specific file instance, not the filename. If the same file appears in a different library, it will have its own separate properties.",
+        "Label": "File Property Exists",
+        "Fields": {
+          "Property": "Property",
+          "Property-Help": "Name of the file record property to check."
+        },
+        "Outputs": {
+          "1": "The property exists for this file record.",
+          "2": "The property does not exist for this file record."
+        }
+      },
+      "FilePropertyMatches": {
+        "Description": "Tests if a property on this file record matches a given value. Properties are stored in the file's database record and are unique to this specific file instance, not the filename. If the same file appears in a different library, it will have its own separate properties.",
+        "Label": "File Property Matches",
+        "Fields": {
+          "Property": "Property",
+          "Property-Help": "Name of the file record property to check.",
+          "Value": "Value",
+          "Value-Help": "Expected value of the property."
+        },
+        "Outputs": {
+          "1": "The property matches the expected value.",
+          "2": "The property does not match the expected value."
+        }
+      },
       "FileSize": {
         "Description": "Checks if the file size matches the configured parameters. The values are in megabytes.\n\nOutput 1: Matches\nOutput 2: Does not match",
         "Label": "File Size",
@@ -641,6 +667,19 @@
         },
         "Outputs": {
           "1": "Thumbnail set"
+        }
+      },
+      "SetFileProperty": {
+        "Description": "Sets a property on this file record. Properties are stored in the file's database record and are unique to this specific file instance, not the filename. If the same file appears in a different library, it will have its own separate properties.",
+        "Label": "Set File Property",
+        "Fields": {
+          "Property": "Property",
+          "Property-Help": "Name of the file record property to set.",
+          "Value": "Value",
+          "Value-Help": "Value to assign to the property."
+        },
+        "Outputs": {
+          "1": "The property was set on this file record."
         }
       },
       "SetVariable": {

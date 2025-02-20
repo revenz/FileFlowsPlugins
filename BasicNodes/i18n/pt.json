@@ -185,6 +185,32 @@
           "2": "Não corresponde"
         }
       },
+      "FilePropertyExists": {
+        "Description": "",
+        "Label": "",
+        "Fields": {
+          "Property": "",
+          "Property-Help": ""
+        },
+        "Outputs": {
+          "1": "",
+          "2": ""
+        }
+      },
+      "FilePropertyMatches": {
+        "Description": "",
+        "Label": "",
+        "Fields": {
+          "Property": "",
+          "Property-Help": "",
+          "Value": "",
+          "Value-Help": ""
+        },
+        "Outputs": {
+          "1": "",
+          "2": ""
+        }
+      },
       "FileSize": {
         "Description": "Verifica se o tamanho do arquivo corresponde aos parâmetros configurados. Os valores estão em megabytes.\n\nSaída 1: Corresponde\nSaída 2: Não corresponde",
         "Label": "Tamanho do arquivo",
@@ -641,6 +667,19 @@
         },
         "Outputs": {
           "1": "Miniatura definida"
+        }
+      },
+      "SetFileProperty": {
+        "Description": "",
+        "Label": "",
+        "Fields": {
+          "Property": "",
+          "Property-Help": "",
+          "Value": "",
+          "Value-Help": ""
+        },
+        "Outputs": {
+          "1": ""
         }
       },
       "SetVariable": {

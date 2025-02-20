@@ -185,6 +185,32 @@
           "2": "Komt niet overeen"
         }
       },
+      "FilePropertyExists": {
+        "Description": "Controleert of een eigenschap is ingesteld op dit bestandsrecord. Eigenschappen worden opgeslagen in het databasebestand en zijn uniek voor deze specifieke bestandsinstantie, niet voor de bestandsnaam. Als hetzelfde bestand in een andere bibliotheek voorkomt, heeft het zijn eigen afzonderlijke eigenschappen.",
+        "Label": "Bestandseigenschap Bestaat",
+        "Fields": {
+          "Property": "Eigenschap",
+          "Property-Help": "Naam van de bestandseigenschap die moet worden gecontroleerd."
+        },
+        "Outputs": {
+          "1": "De eigenschap bestaat voor dit bestandsrecord.",
+          "2": "De eigenschap bestaat niet voor dit bestandsrecord."
+        }
+      },
+      "FilePropertyMatches": {
+        "Description": "Controleert of een eigenschap in dit bestandsrecord overeenkomt met een opgegeven waarde. Eigenschappen worden opgeslagen in het databasebestand en zijn uniek voor deze specifieke bestandsinstantie, niet voor de bestandsnaam. Als hetzelfde bestand in een andere bibliotheek voorkomt, heeft het zijn eigen afzonderlijke eigenschappen.",
+        "Label": "Bestandseigenschap Komt Overeen",
+        "Fields": {
+          "Property": "Eigenschap",
+          "Property-Help": "Naam van de bestandseigenschap die moet worden gecontroleerd.",
+          "Value": "Waarde",
+          "Value-Help": "Verwachte waarde van de eigenschap."
+        },
+        "Outputs": {
+          "1": "De eigenschap komt overeen met de verwachte waarde.",
+          "2": "De eigenschap komt niet overeen met de verwachte waarde."
+        }
+      },
       "FileSize": {
         "Description": "Controleert of de bestandsgrootte overeenkomt met de geconfigureerde parameters. De waarden zijn in megabytes.\n\nOutput 1: Komt overeen\nOutput 2: Komt niet overeen",
         "Label": "Bestandsgrootte",
@@ -641,6 +667,19 @@
         },
         "Outputs": {
           "1": "Miniatuur ingesteld"
+        }
+      },
+      "SetFileProperty": {
+        "Description": "Stelt een eigenschap in voor dit bestandsrecord. Eigenschappen worden opgeslagen in het databasebestand en zijn uniek voor deze specifieke bestandsinstantie, niet voor de bestandsnaam. Als hetzelfde bestand in een andere bibliotheek voorkomt, heeft het zijn eigen afzonderlijke eigenschappen.",
+        "Label": "Bestandseigenschap Instellen",
+        "Fields": {
+          "Property": "Eigenschap",
+          "Property-Help": "Naam van de bestandseigenschap die moet worden ingesteld.",
+          "Value": "Waarde",
+          "Value-Help": "Waarde die aan de eigenschap moet worden toegekend."
+        },
+        "Outputs": {
+          "1": "De eigenschap is ingesteld voor dit bestandsrecord."
         }
       },
       "SetVariable": {

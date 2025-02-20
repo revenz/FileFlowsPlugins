@@ -185,6 +185,32 @@
           "2": "Matchar inte"
         }
       },
+      "FilePropertyExists": {
+        "Description": "Testar om en egenskap har ställts in för denna filpost. Egenskaper lagras i filens databasinformation och är unika för just denna instans av filen, inte för filnamnet. Om samma fil finns i ett annat bibliotek kommer den att ha separata och oberoende egenskaper.",
+        "Label": "Filens Egenskap Finns",
+        "Fields": {
+          "Property": "Egenskap",
+          "Property-Help": "Namn på filpostens egenskap som ska kontrolleras."
+        },
+        "Outputs": {
+          "1": "Egenskapen finns för denna filpost.",
+          "2": "Egenskapen finns inte för denna filpost."
+        }
+      },
+      "FilePropertyMatches": {
+        "Description": "Testar om en egenskap på denna filpost matchar ett angivet värde. Egenskaper lagras i filens databasinformation och är unika för just denna instans av filen, inte för filnamnet. Om samma fil finns i ett annat bibliotek kommer den att ha separata och oberoende egenskaper.",
+        "Label": "Filens Egenskap Matchar",
+        "Fields": {
+          "Property": "Egenskap",
+          "Property-Help": "Namn på filpostens egenskap som ska kontrolleras.",
+          "Value": "Värde",
+          "Value-Help": "Förväntat värde på egenskapen."
+        },
+        "Outputs": {
+          "1": "Egenskapen matchar det förväntade värdet.",
+          "2": "Egenskapen matchar inte det förväntade värdet."
+        }
+      },
       "FileSize": {
         "Description": "Kontrollerar om filstorleken matchar de konfigurerade parametrarna. Värdena är i megabyte.\n\nOutput 1: Matchar\nOutput 2: Matchar inte",
         "Label": "Filstorlek",
@@ -641,6 +667,19 @@
         },
         "Outputs": {
           "1": "Miniatyr inställd"
+        }
+      },
+      "SetFileProperty": {
+        "Description": "Ställer in en egenskap på denna filpost. Egenskaper lagras i filens databasinformation och är unika för just denna instans av filen, inte för filnamnet. Om samma fil finns i ett annat bibliotek kommer den att ha separata och oberoende egenskaper.",
+        "Label": "Ställ in Filens Egenskap",
+        "Fields": {
+          "Property": "Egenskap",
+          "Property-Help": "Namn på filpostens egenskap som ska ställas in.",
+          "Value": "Värde",
+          "Value-Help": "Värde som ska tilldelas egenskapen."
+        },
+        "Outputs": {
+          "1": "Egenskapen har ställts in för denna filpost."
         }
       },
       "SetVariable": {
