@@ -707,6 +707,8 @@
           "DeleteAfterwards-Help": "If the subtitle file should be deleted after being merged",
           "Forced": "Forced",
           "Forced-Help": "If the subtitle should be forced",
+          "HearingImpaired": "Hearing Impaired",
+          "HearingImpaired-Help": "If the subtitle should be marked as hearing impaired",
           "Language": "Language",
           "Language-Help": "Optional [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) language code for the added subtitle.",
           "MatchFilename": "Match Filename",

@@ -707,6 +707,8 @@
           "DeleteAfterwards-Help": "如果字幕文件在合并后应被删除",
           "Forced": "强制",
           "Forced-Help": "如果字幕应被强制",
+          "HearingImpaired": "听障",
+          "HearingImpaired-Help": "如果字幕应被标记为听障",
           "Language": "语言",
           "Language-Help": "添加字幕的可选[ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes)语言代码。",
           "MatchFilename": "匹配文件名",

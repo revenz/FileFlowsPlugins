@@ -707,6 +707,8 @@
           "DeleteAfterwards-Help": "Si el archivo de subtítulos debe ser eliminado después de ser fusionado",
           "Forced": "Forzado",
           "Forced-Help": "Si el subtítulo debe ser forzado",
+          "HearingImpaired": "Audición Impedida",
+          "HearingImpaired-Help": "Si el subtítulo debe ser para audición impedida",
           "Language": "Idioma",
           "Language-Help": "Código de idioma opcional [ISO 639-2](https://es.wikipedia.org/wiki/Anexo:C%C3%B3digos_ISO_639-2) para el subtítulo añadido.",
           "MatchFilename": "Coincidir Nombre de Archivo",

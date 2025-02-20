@@ -241,6 +241,11 @@ public class SubtitleStream : VideoFileStream
     public bool Default { get; set; }
 
     /// <summary>
+    /// If this is a hearing impaired subtitle
+    /// </summary>
+    public bool HearingImpaired { get; set; }
+
+    /// <summary>
     /// Converts the steam to a string
     /// </summary>
     /// <returns></returns>
