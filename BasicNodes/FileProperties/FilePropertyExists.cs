@@ -13,7 +13,7 @@ public class FilePropertyExists : Node
     /// <inheritdoc />
     public override int Outputs => 2;
     /// <inheritdoc />
-    public override FlowElementType Type => FlowElementType.Process;
+    public override FlowElementType Type => FlowElementType.Logic;
     /// <inheritdoc />
     public override string Icon => "fas fa-question";
     /// <inheritdoc />
@@ -34,7 +34,7 @@ public class FilePropertyExists : Node
         
         string actualValue = args.GetProperty(property);
         bool exists = string.IsNullOrWhiteSpace(actualValue) == false;
-        args.Logger?.ILog(exists ? "Property exists" : "Property does not exist");
+        args.Logger?.ILog(exists ? $"Property '{property}' exists" : $"Property '{property}' does not exist");
         return exists ? 1 : 2;
     }
 }

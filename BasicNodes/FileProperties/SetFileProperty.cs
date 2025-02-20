@@ -13,7 +13,7 @@ public class SetFileProperty : Node
     /// <inheritdoc />
     public override int Outputs => 1;
     /// <inheritdoc />
-    public override FlowElementType Type => FlowElementType.Process;
+    public override FlowElementType Type => FlowElementType.Logic;
     /// <inheritdoc />
     public override string Icon => "fas fa-file-signature";
     /// <inheritdoc />
