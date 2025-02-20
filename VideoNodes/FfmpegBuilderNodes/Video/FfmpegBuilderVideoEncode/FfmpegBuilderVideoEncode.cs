@@ -182,7 +182,7 @@ public partial class FfmpegBuilderVideoEncode:VideoEncodeBase
         else if (encoder == ENCODER_QSV)
             parameters.AddRange(H26x_Qsv(false, quality, 0, speed));
         else if (encoder == ENCODER_AMF)
-            parameters.AddRange(H26x_Amd(false, quality, speed));
+            parameters.AddRange(H26x_Amd(false, quality, speed, out bit10Filters));
         else if (encoder == ENCODER_VAAPI)
             parameters.AddRange(H26x_Vaapi(false, quality, speed));
         else if(IsMac && CanUseHardwareEncoding.CanProcess_VideoToolbox_H264(args))
@@ -195,7 +195,7 @@ public partial class FfmpegBuilderVideoEncode:VideoEncodeBase
             encoder = ENCODER_QSV;
         }
         else if (CanUseHardwareEncoding.CanProcess_Amd_H264(args))
-            parameters.AddRange(H26x_Amd(false, quality, speed));
+            parameters.AddRange(H26x_Amd(false, quality, speed, out bit10Filters));
         else if (CanUseHardwareEncoding.CanProcess_Vaapi_H264(args))
             parameters.AddRange(H26x_Vaapi(false, quality, speed));
         else
@@ -203,8 +203,7 @@ public partial class FfmpegBuilderVideoEncode:VideoEncodeBase
 
         if (tenBit)
         {
-            parameters.AddRange(bit10Filters ?? new string[]
-                { "-pix_fmt:v:{index}", "p010le", "-profile:v:{index}", "main10" });
+            parameters.AddRange(bit10Filters ?? ["-pix_fmt:v:{index}", "p010le", "-profile:v:{index}", "main10"]);
         }
 
         return parameters;
@@ -217,7 +216,7 @@ public partial class FfmpegBuilderVideoEncode:VideoEncodeBase
         List<string> parameters = new List<string>();
         string[]? bit10Filters = null;
         string[]? non10BitFilters = null;
-        bool qsv = false;
+        bool qsv = false, amf = false;
         if (encoder == ENCODER_CPU)
             parameters.AddRange(H26x_CPU(true, quality, speed, out bit10Filters));
         else if (IsMac && encoder == ENCODER_MAC)
@@ -230,7 +229,10 @@ public partial class FfmpegBuilderVideoEncode:VideoEncodeBase
             qsv = true;
         }
         else if (encoder == ENCODER_AMF)
-            parameters.AddRange(H26x_Amd(true, quality, speed));
+        {
+            parameters.AddRange(H26x_Amd(true, quality, speed, out bit10Filters));
+            amf = true;
+        }
         else if (encoder == ENCODER_VAAPI)
             parameters.AddRange(H26x_Vaapi(true, quality, speed));
         
@@ -244,7 +246,10 @@ public partial class FfmpegBuilderVideoEncode:VideoEncodeBase
             qsv = true;
         }
         else if (CanUseHardwareEncoding.CanProcess_Amd_Hevc(args))
-            parameters.AddRange(H26x_Amd(true, quality, speed));
+        {
+            parameters.AddRange(H26x_Amd(true, quality, speed, out bit10Filters));
+            amf = true;
+        }
         else if (CanUseHardwareEncoding.CanProcess_Vaapi_Hevc(args))
             parameters.AddRange(H26x_Vaapi(true, quality, speed));
         else
@@ -267,8 +272,8 @@ public partial class FfmpegBuilderVideoEncode:VideoEncodeBase
             }
             else
             {
-                parameters.AddRange(bit10Filters ?? new []
-                    { "-pix_fmt:v:{index}", "p010le", "-profile:v:{index}", "main10" });
+                parameters.AddRange(bit10Filters ?? 
+                                    ["-pix_fmt:v:{index}", "p010le", "-profile:v:{index}", amf ? "2" : "main10"]);
             }
         }
         else if(non10BitFilters?.Any() == true)

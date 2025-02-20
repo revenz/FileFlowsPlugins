@@ -73,8 +73,12 @@ public partial class FfmpegBuilderVideoEncode
         return parameters;
     }
 
-    private static IEnumerable<string> H26x_Amd(bool h265, int quality, string speed)
+    private static IEnumerable<string> H26x_Amd(bool h265, int quality, string speed, out string[] bit10Filters)
     {
+        bit10Filters = new[]
+        {
+            "-pix_fmt:v:{index}", "p010le", "-profile:v:{index}", "2"
+        };
         string preset = "6"; // Default to "medium" (6) if speed is null or invalid
 
         switch (speed)

@@ -70,8 +70,13 @@ public partial class FfmpegBuilderVideoBitrateEncode
         return parameters;
     }
 
-    private static IEnumerable<string> H26x_Amd(bool h265, int bitrate)
+    private static IEnumerable<string> H26x_Amd(bool h265, int bitrate, out string[] bit10Filters)
     {
+        bit10Filters = new[]
+        {
+            "-pix_fmt:v:{index}", "p010le", "-profile:v:{index}", "2"
+        };
+
         return new[]
         {
             h265 ? "hevc_amf" : "h264_amf",
