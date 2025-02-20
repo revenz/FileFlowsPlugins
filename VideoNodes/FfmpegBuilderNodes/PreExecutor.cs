@@ -36,6 +36,7 @@ public class PreExecutor
             int exitCode = args.ScriptExecutor.Execute(new FileFlows.Plugin.Models.ScriptExecutionArgs
             {
                 Args = args,
+                Logger = args.Logger,
                 Code = code + "\n\n// automatically added return code\nreturn 1;",
                 AdditionalArguments = new ()
                 {
