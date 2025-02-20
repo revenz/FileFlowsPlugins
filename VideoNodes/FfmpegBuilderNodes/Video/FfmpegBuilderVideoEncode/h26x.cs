@@ -77,7 +77,7 @@ public partial class FfmpegBuilderVideoEncode
     {
         bit10Filters = new[]
         {
-            "-pix_fmt:v:{index}", "p010le", "-profile:v:{index}", "2"
+            "-pix_fmt:v:{index}", "p010le", "-profile:v:{index}", "1" // 1 is main
         };
         string preset = "6"; // Default to "medium" (6) if speed is null or invalid
 

@@ -74,7 +74,7 @@ public partial class FfmpegBuilderVideoBitrateEncode
     {
         bit10Filters = new[]
         {
-            "-pix_fmt:v:{index}", "p010le", "-profile:v:{index}", "2"
+            "-pix_fmt:v:{index}", "p010le", "-profile:v:{index}", "1"
         };
 
         return new[]
