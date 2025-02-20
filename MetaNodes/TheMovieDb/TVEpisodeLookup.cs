@@ -94,22 +94,21 @@ public class TVEpisodeLookup : Node
         
         string tvShowInfoCacheKey = $"TVShowInfo: {lookupName} ({year})";
         TVShowInfo result =args.Cache.GetObject<TVShowInfo>(tvShowInfoCacheKey);
+
+        // RegisterSettings only needs to be called one time when your application starts-up.
+        MovieDbFactory.RegisterSettings(Globals.MovieDbBearerToken);
+        
         if (result != null)
         {
             args.Logger?.ILog("Got TV show info from cache: " + result.Name);
         }
         else
         {
-
-            // RegisterSettings only needs to be called one time when your application starts-up.
-            MovieDbFactory.RegisterSettings(Globals.MovieDbBearerToken);
-
             var movieApi = MovieDbFactory.Create<IApiTVShowRequest>().Value;
 
             args.Logger?.ILog("Lookup TV Show: " + lookupName);
 
             var response = movieApi.SearchByNameAsync(lookupName).Result;
-
 
             // try find an exact match
             result = response.Results.OrderBy(x =>
@@ -197,6 +196,13 @@ public class TVEpisodeLookup : Node
         {
             Variables["tvepisode.LastEpisode"] = lastEpisode.Value;
             args.Logger?.ILog("Detected Last Episode: " + lastEpisode.Value);
+
+            args.SetDisplayName(
+                $"{result.Name} - {epInfo.SeasonNumber}x{episode.Value:D2}-{lastEpisode.Value:D2} - {epInfo.Name}");
+        }
+        else
+        {
+            args.SetDisplayName($"{result.Name} - {epInfo.SeasonNumber}x{episode.Value:D2} - {epInfo.Name}");
         }
 
         Variables["tvepisode.Overview"] = epInfo.Overview;
@@ -210,9 +216,40 @@ public class TVEpisodeLookup : Node
             args.Logger?.ILog("Detected Original Language: " + result.OriginalLanguage);
         }
 
+        DownloadThumbnail(args, result.PosterPath);
+
         args.UpdateVariables(Variables);
         
         return 1;
+    }
+
+    /// <summary>
+    /// Downloads the poster path
+    /// </summary>
+    /// <param name="args">the node parameteres</param>
+    /// <param name="posterPath">the poster path</param>
+    private void DownloadThumbnail(NodeParameters args, string posterPath)
+    {
+        if (string.IsNullOrWhiteSpace(posterPath) == false)
+        {
+            try
+            {
+                string url = "https://image.tmdb.org/t/p/w500" + posterPath;
+                args.Logger?.ILog("Downloading poster: " + url);
+                using var httpClient = new HttpClient();
+                using var stream = httpClient.GetStreamAsync(url).Result;
+                string file = Path.Combine(args.TempPath, Guid.NewGuid() + ".jpg");
+                using var fileStream = new FileStream(file, FileMode.CreateNew);
+                stream.CopyTo(fileStream);
+                args.SetThumbnail(file);
+                args.Logger?.ILog("Set thumbnail: " + file);
+                //md.ArtJpeg = file;
+            }
+            catch (Exception)
+            {
+                // Ignored
+            }
+        }
     }
 
     /// <summary>

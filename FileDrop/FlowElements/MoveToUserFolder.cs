@@ -1,6 +1,6 @@
 using FileFlows.Plugin.Helpers;
 
-namespace FileFlows.ResellerPlugin.FlowElements;
+namespace FileFlows.FileDropPlugin.FlowElements;
 
 /// <summary>
 /// Moves a file to a new location
@@ -16,15 +16,15 @@ public class MoveToUserFolder: Node
     /// <inheritdoc />
     public override string Icon => "fas fa-file-export";
     /// <inheritdoc />
-    public override string HelpUrl => "https://fileflows.com/docs/plugins/reseller/move-to-user-folder";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/file-drop/move-to-user-folder";
     
     /// <inheritdoc />
-    public override string Group => "Reseller";
+    public override string Group => "File Drop";
 
     /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
-        if (args.Variables.TryGetValue("ResellerUserOutputDir", out var oOutputDir) == false || string.IsNullOrWhiteSpace(oOutputDir as string))
+        if (args.Variables.TryGetValue("FileDropUserOutputDir", out var oOutputDir) == false || string.IsNullOrWhiteSpace(oOutputDir as string))
             return args.Fail("No user output directory in variables");
 
         var outputDir = (string)oOutputDir;

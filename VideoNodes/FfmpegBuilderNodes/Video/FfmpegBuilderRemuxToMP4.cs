@@ -5,9 +5,7 @@
 /// </summary>
 public class FfmpegBuilderRemuxToMP4: FfmpegBuilderNode
 {
-    /// <summary>
-    /// Gets the help URL for this flow element
-    /// </summary>
+    /// <inheritdoc />
     public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/remux-to-mp4";
 
     /// <summary>
@@ -22,8 +20,15 @@ public class FfmpegBuilderRemuxToMP4: FfmpegBuilderNode
     /// </summary>
     [Boolean(1)] public bool UseHvc1 { get; set; }
 
+    /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
+        if (this.Model.Extension?.ToLowerInvariant() != "mp4")
+        {
+            args.Logger?.ILog($"Needs remuxing from '{this.Model.Extension}' to 'mp4', forcing encode");
+            this.Model.ForceEncode = true;
+        }
+        
         this.Model.Extension = "mp4";
         if (UseHvc1)
         {

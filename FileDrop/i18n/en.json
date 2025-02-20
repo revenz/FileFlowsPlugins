@@ -1,0 +1,26 @@
+{
+  "Flow": {
+    "Parts": {
+      "MoveToUserFolder": {
+        "Description": "Moves the working file into the users output directory.",
+        "Label": "Move To User Folder",
+        "Outputs": {
+          "1": "File was was successfully moved"
+        }
+      },
+      "SetFileDropDisplayName": {
+        "Description": "Sets the display name for a file based on file drop file information, ensuring clarity on file identity and ownership.",
+        "Label": "Set File Drop Display Name",
+        "Outputs": {
+          "1": "Display name set"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "FileDrop": {
+      "Description": "Plugin that provides File Drop related flow elements",
+      "Label": "File Drop"
+    }
+  }
+}

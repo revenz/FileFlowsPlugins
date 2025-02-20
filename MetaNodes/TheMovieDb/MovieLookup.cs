@@ -49,7 +49,8 @@ public class MovieLookup : Node
         {
             { "movie.Title", "Batman Begins" },
             { "movie.Year", 2005 },
-            { "movie.ImdbId", "tt0372784" }
+            { "movie.ImdbId", "tt0372784" },
+            { "movie.Genre", "Action" }
         };
     }
     /// <summary>
@@ -155,25 +156,26 @@ public class MovieLookup : Node
 
         args.SetParameter(Globals.MOVIE_INFO, result);
 
-
-        Variables["movie.Title"] = result.Title;
+        args.Variables["movie.Title"] = result.Title;
         args.Logger?.ILog("Detected Movie Title: " + result.Title);
-        Variables["movie.Year"] = result.ReleaseDate.Year;
+        args.Variables["movie.Year"] = result.ReleaseDate.Year;
+         
+        args.SetDisplayName($"{result.Title} ({result.ReleaseDate.Year})");
+        
         args.Logger?.ILog("Detected Movie Year: " + result.ReleaseDate.Year);
         var meta = GetVideoMetadata(args, movieApi, result.Id, args.TempPath);
-        Variables["VideoMetadata"] = meta;
+        args.Variables["VideoMetadata"] = meta;
         if (string.IsNullOrWhiteSpace(meta.OriginalLanguage) == false)
         {
             args.Logger?.ILog("Detected Original Language: " + meta.OriginalLanguage);
-            Variables["OriginalLanguage"] = meta.OriginalLanguage;
+            args.Variables["OriginalLanguage"] = meta.OriginalLanguage;
         }
 
-        Variables[Globals.MOVIE_INFO] = result;
+        args.Variables[Globals.MOVIE_INFO] = result;
         var movie = movieApi.FindByIdAsync(result.Id).Result.Item;
         if(movie != null)
-            Variables[Globals.MOVIE] = movie;
+            args.Variables[Globals.MOVIE] = movie;
 
-        args.UpdateVariables(Variables);
         return 1;
     }
 
@@ -193,6 +195,8 @@ public class MovieLookup : Node
         
         if(string.IsNullOrWhiteSpace(movie.ImdbId) == false)
             args.Variables["movie.ImdbId"] = movie.ImdbId;
+        if(movie.Genres?.Any() != false)
+            args.Variables["movie.Genre"] = movie.Genres.First().Name;
         
         var credits = movieApi.GetCreditsAsync(id).Result?.Item;
 
@@ -214,6 +218,7 @@ public class MovieLookup : Node
                 using var fileStream = new FileStream(file, FileMode.CreateNew);
                 stream.CopyTo(fileStream);
                 md.ArtJpeg = file;
+                args.SetThumbnail(file);
             }
             catch (Exception)
             {

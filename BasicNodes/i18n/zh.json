@@ -630,6 +630,19 @@
           "Node-Help": "用于处理该文件的处理节点。"
         }
       },
+      "SetFileFlowsThumbnail": {
+        "Description": "在 FileFlows 中为此文件设置缩略图。",
+        "Label": "设置 FileFlows 缩略图",
+        "Fields": {
+          "FilePath": "文件路径",
+          "FilePath-Help": "要用作缩略图的图片文件的完整路径。",
+          "IfNotSet": "If Not Set",
+          "IfNotSet-Help": "仅在流程执行过程中尚未设置缩略图时进行设置。"
+        },
+        "Outputs": {
+          "1": "缩略图已设置"
+        }
+      },
       "SetVariable": {
         "Description": "在流中设置一个变量。",
         "Label": "设置变量",

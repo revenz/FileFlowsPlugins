@@ -13,10 +13,15 @@ public class FFmpegBuilder_TrackRemoverTests : VideoTestBase
     VideoInfo vii;
     NodeParameters args;
     FfmpegModel Model;
-    
+
     protected override void TestStarting()
     {
-        args = GetVideoNodeParameters();
+        InitializeModel();
+    }
+
+    private void InitializeModel(string filename = null)
+    {
+        args = GetVideoNodeParameters(filename);
         VideoFile vf = new VideoFile();
         vf.PreExecute(args);
         vf.Execute(args);
@@ -94,6 +99,40 @@ public class FFmpegBuilder_TrackRemoverTests : VideoTestBase
         Assert.AreEqual("fre", nonDeletedSubtitles[0].Language);
     }
     
+    /// <summary>
+    /// Test German is matched and removed
+    /// </summary>
+    [TestMethod]
+    public void RemoveNonGerman()
+    {
+        InitializeModel(VideoEngGerAudio);
+        vii.AudioStreams[1].Language = "ger";
+        Model.AudioStreams[1].Language = "ger";
+        int originaluNonDeletedSubtitles = Model.AudioStreams.Count(x => x.Deleted == false);
+        FfmpegBuilderTrackRemover ffRemover = new();
+        ffRemover.CustomTrackSelection = true;
+        ffRemover.TrackSelectionOptions = new();
+        ffRemover.TrackSelectionOptions.Add(new ("Language", "!deu"));
+        ffRemover.StreamType = "Audio";
+        ffRemover.PreExecute(args);
+        Assert.AreEqual(1, ffRemover.Execute(args));
+        List<FfmpegAudioStream> nonDeletedAudio = new();
+
+        Logger.ILog(new string('-', 100));
+        foreach (var stream in Model.AudioStreams.Where(x => x.Deleted))
+        {
+            Logger.ILog("Deleted audio: " + stream);
+        }
+        Logger.ILog(new string('-', 100));
+        foreach (var stream in Model.AudioStreams.Where(x => x.Deleted == false))
+        {
+            Logger.ILog("Non audio subtitle: " + stream);
+            nonDeletedAudio.Add(stream);
+        }
+        Assert.AreNotEqual(originaluNonDeletedSubtitles, nonDeletedAudio.Count);
+        Assert.AreEqual(nonDeletedAudio.Count, 1);
+        Assert.IsTrue("deu" == nonDeletedAudio[0].Language || nonDeletedAudio[0].Language == "ger");
+    }
     /// <summary>
     /// Tests english subtitles are removed
     /// </summary>

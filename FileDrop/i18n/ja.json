@@ -1,0 +1,26 @@
+{
+  "Flow": {
+    "Parts": {
+      "MoveToUserFolder": {
+        "Description": "作業ファイルをユーザーの出力ディレクトリに移動します。",
+        "Label": "ユーザーフォルダーに移動",
+        "Outputs": {
+          "1": "ファイルは正常に移動されました"
+        }
+      },
+      "SetFileDropDisplayName": {
+        "Description": "ファイルのドロップ情報に基づいてファイルの表示名を設定し、ファイルの識別と所有権が明確であることを保証します。",
+        "Label": "ファイルドロップ表示名を設定",
+        "Outputs": {
+          "1": "表示名が設定されました"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "FileDrop": {
+      "Description": "File Drop 関連のフロー要素を提供するプラグイン",
+      "Label": "File Drop"
+    }
+  }
+}

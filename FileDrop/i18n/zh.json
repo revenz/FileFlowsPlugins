@@ -1,0 +1,26 @@
+{
+  "Flow": {
+    "Parts": {
+      "MoveToUserFolder": {
+        "Description": "将工作文件移动到用户的输出目录。",
+        "Label": "移动到用户文件夹",
+        "Outputs": {
+          "1": "文件已成功移动"
+        }
+      },
+      "SetFileDropDisplayName": {
+        "Description": "根据文件上传信息设置文件的显示名称，确保文件的身份和所有权清晰可见。",
+        "Label": "设置文件上传显示名称",
+        "Outputs": {
+          "1": "显示名称已设置"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "FileDrop": {
+      "Description": "提供与文件上传相关的流程元素的插件",
+      "Label": "文件上传"
+    }
+  }
+}

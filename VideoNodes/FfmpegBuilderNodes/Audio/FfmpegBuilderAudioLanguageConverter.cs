@@ -254,14 +254,14 @@ public class FfmpegBuilderAudioLanguageConverter : FfmpegBuilderNode
             }
         }
 
-        audio.Title = LanguageHelper.GetEnglishFor(language) + (Channels switch
+        audio.Title = LanguageHelper.GetEnglishFor(language) + (audio.Channels switch
         {
             < 1.9f => " (Mono)",
             < 2.1f => " (Stereo)",
             < 3f => " (2.1)",
             < 6.1f => " (5.1)",
             < 8.1f => " (7.1)",
-            _ => $" ({Math.Round(Channels, 1)})"
+            _ => $" ({Math.Round(audio.Channels, 1)})"
         });
 
         return audio;

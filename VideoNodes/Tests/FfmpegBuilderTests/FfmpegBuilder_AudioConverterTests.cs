@@ -168,9 +168,9 @@ public class FfmpegBuilder_AudioConverterTests: VideoTestBase
     [TestCategory("Slow")]
     public void FfmpegBuilder_AudioConverter_Opus_All()
     {
+        var args = GetVideoNodeParameters(VideoMkv);
         var vi = new VideoInfoHelper(FFmpeg, Logger);
         var vii = vi.Read(VideoMkv);
-        var args = GetVideoNodeParameters(VideoMkv);
         args.Parameters.Add("VideoInfo", vii);
 
         FfmpegBuilderStart ffStart = new();

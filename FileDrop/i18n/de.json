@@ -1,0 +1,26 @@
+{
+  "Flow": {
+    "Parts": {
+      "MoveToUserFolder": {
+        "Description": "Verschiebt die Arbeitsdatei in das Ausgabeverzeichnis des Benutzers.",
+        "Label": "In Benutzerordner verschieben",
+        "Outputs": {
+          "1": "Datei wurde erfolgreich verschoben"
+        }
+      },
+      "SetFileDropDisplayName": {
+        "Description": "Legt den Anzeigenamen für eine Datei basierend auf den Dateiinformationen des File Drops fest, um Klarheit über die Dateiidentität und den Besitz zu gewährleisten.",
+        "Label": "Datei Drop Anzeigenamen festlegen",
+        "Outputs": {
+          "1": "Anzeigename festgelegt"
+        }
+      }
+    }
+  },
+  "Plugins": {
+    "FileDrop": {
+      "Description": "Plugin, das File Drop bezogene Flow-Elemente bereitstellt",
+      "Label": "File Drop"
+    }
+  }
+}

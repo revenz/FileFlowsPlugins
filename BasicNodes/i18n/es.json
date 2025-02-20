@@ -630,6 +630,19 @@
           "Node-Help": "El nodo de procesamiento para procesar este archivo."
         }
       },
+      "SetFileFlowsThumbnail": {
+        "Description": "Establece una miniatura para este archivo en FileFlows.",
+        "Label": "Establecer miniatura de FileFlows",
+        "Fields": {
+          "FilePath": "Ruta del archivo",
+          "FilePath-Help": "La ruta completa del archivo de imagen que se utilizará como miniatura.",
+          "IfNotSet": "If Not Set",
+          "IfNotSet-Help": "Establece la miniatura solo si no se ha configurado previamente durante la ejecución del flujo."
+        },
+        "Outputs": {
+          "1": "Miniatura establecida"
+        }
+      },
       "SetVariable": {
         "Description": "Establece una variable en el flujo.",
         "Label": "Establecer Variable",

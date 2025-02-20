@@ -630,6 +630,19 @@
           "Node-Help": "Le nœud de traitement pour traiter ce fichier."
         }
       },
+      "SetFileFlowsThumbnail": {
+        "Description": "Définit une miniature pour ce fichier dans FileFlows.",
+        "Label": "Définir la miniature de FileFlows",
+        "Fields": {
+          "FilePath": "Chemin du fichier",
+          "FilePath-Help": "Le chemin complet du fichier image à utiliser comme miniature.",
+          "IfNotSet": "If Not Set",
+          "IfNotSet-Help": "Définit la vignette uniquement si elle n’a pas déjà été définie lors de l’exécution du flux."
+        },
+        "Outputs": {
+          "1": "Miniature définie"
+        }
+      },
       "SetVariable": {
         "Description": "Définit une variable dans le flux.",
         "Label": "Définir une Variable",

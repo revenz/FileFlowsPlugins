@@ -135,17 +135,15 @@
                     Codec = item.stream.Codec
                 });
             }
-
-            if(info.FileName.ToLower().EndsWith(".mp4"))
-                model.Extension = info.FileName[(info.FileName.LastIndexOf(".", StringComparison.Ordinal) + 1)..];
-            else if (info.FileName.ToLower().EndsWith(".mkv"))
-                model.Extension = info.FileName[(info.FileName.LastIndexOf(".", StringComparison.Ordinal) + 1)..];
-            else if (info.FileName.ToLower().EndsWith(".mov"))
-                model.Extension = info.FileName[(info.FileName.LastIndexOf(".", StringComparison.Ordinal) + 1)..];
-            else if (info.FileName.ToLower().EndsWith(".mxf"))
-                model.Extension = info.FileName[(info.FileName.LastIndexOf(".", StringComparison.Ordinal) + 1)..];
-            else if (info.FileName.ToLower().EndsWith(".webm"))
-                model.Extension = info.FileName[(info.FileName.LastIndexOf(".", StringComparison.Ordinal) + 1)..];
+            
+            foreach (var ext in new[] { "mp4", "mkv", "mov", "mxf", "webm" })
+            {
+                if (info.FileName.EndsWith("." + ext, StringComparison.OrdinalIgnoreCase))
+                {
+                    model.Extension = ext;
+                    break;
+                }
+            }
 
             return model;
         }

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.IO.Enumeration;
 using FileFlows.Plugin.Helpers;
 
 namespace FileFlows.ComicNodes.Comics;
@@ -174,6 +175,8 @@ public class ComicConverter: Node
             return -1;
         }
 
+        List<string> traits = [];
+
         if (DeleteNonPageImages)
         {
             List<string> nonPages = new();
@@ -228,6 +231,11 @@ public class ComicConverter: Node
             args.Logger?.ILog("Total Files: " + files.Length);
             args.PartPercentageUpdate?.Invoke(0);
             int count = 0;
+            if (files.Length == 1)
+                traits.Add("1 Page");
+            else
+                traits.Add($"{files.Length} Pages");
+            traits.Add(Codec.ToLowerInvariant() == "webp" ? "WebP" : "JPEG");
 
             for (int i = 0; i < files.Length; i++)
             {
@@ -296,6 +304,9 @@ public class ComicConverter: Node
             args.Logger?.ELog(args.FailureReason);
             return -1;
         }
+        
+        if(traits.Count > 0)
+            args.SetTraits(traits.ToArray());
 
         args.SetWorkingFile(newFileResult.Value);  
         if(Format == "CBZ")

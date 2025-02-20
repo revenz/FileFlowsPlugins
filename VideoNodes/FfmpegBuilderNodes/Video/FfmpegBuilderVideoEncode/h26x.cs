@@ -79,14 +79,30 @@ public partial class FfmpegBuilderVideoEncode
         {
             "-pix_fmt:v:{index}", "p010le", "-profile:v:{index}", "2"
         };
+        string preset = "6"; // Default to "medium" (6) if speed is null or invalid
+
+        switch (speed)
+        {
+            case "ultrafast": preset = "0"; break;
+            case "superfast": preset = "1"; break;
+            case "veryfast":  preset = "2"; break;
+            case "faster": preset = "3"; break;
+            case "fast": preset = "4"; break;
+            case "medium": preset = "6"; break;
+            case "slow": preset = "8"; break;
+            case "slower": preset = "9"; break;
+            case "veryslow": preset = "10"; break;
+        }
+
         return new[]
         {
             h265 ? "hevc_amf" : "h264_amf",
             "-qp", quality.ToString(),
-            "-preset", speed?.EmptyAsNull() ?? "slower",
+            "-preset", preset,
             "-spatial-aq", "1"
         };
     }
+
     private static IEnumerable<string> H26x_Vaapi(bool h265, int quality, string speed)
     {
         return new[]
