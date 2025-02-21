@@ -951,7 +951,7 @@
         "Label": "Tasa de Bits de Video Mayor Que",
         "Fields": {
           "Bitrate": "Tasa de Bits",
-          "Bitrate-Suffix": "KBps"
+          "Bitrate-Suffix": "Kbps"
         },
         "Outputs": {
           "1": "La tasa de bits es mayor que",

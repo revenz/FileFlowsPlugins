@@ -951,7 +951,7 @@
         "Label": "Videobitrate größer als",
         "Fields": {
           "Bitrate": "Bitrate",
-          "Bitrate-Suffix": "KBits"
+          "Bitrate-Suffix": "Kbps"
         },
         "Outputs": {
           "1": "Bitrate ist größer als",

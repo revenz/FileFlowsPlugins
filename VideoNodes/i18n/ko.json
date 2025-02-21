@@ -951,7 +951,7 @@
         "Label": "비디오 비트레이트 초과",
         "Fields": {
           "Bitrate": "비트레이트",
-          "Bitrate-Suffix": "KBps"
+          "Bitrate-Suffix": "Kbps"
         },
         "Outputs": {
           "1": "비트레이트가 더 큽니다.",

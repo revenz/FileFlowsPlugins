@@ -951,7 +951,7 @@
         "Label": "Битрейт видео больше чем",
         "Fields": {
           "Bitrate": "Битрейт",
-          "Bitrate-Suffix": "КБ/с"
+          "Bitrate-Suffix": "Kbps"
         },
         "Outputs": {
           "1": "Битрейт больше",

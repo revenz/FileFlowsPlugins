@@ -951,7 +951,7 @@
         "Label": "视频比特率大于",
         "Fields": {
           "Bitrate": "比特率",
-          "Bitrate-Suffix": "KBps"
+          "Bitrate-Suffix": "Kbps"
         },
         "Outputs": {
           "1": "比特率大于",

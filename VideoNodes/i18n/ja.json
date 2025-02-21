@@ -951,7 +951,7 @@
         "Label": "動画ビットレートがより大きい",
         "Fields": {
           "Bitrate": "ビットレート",
-          "Bitrate-Suffix": "KBps"
+          "Bitrate-Suffix": "Kbps"
         },
         "Outputs": {
           "1": "ビットレートはより大きいです",

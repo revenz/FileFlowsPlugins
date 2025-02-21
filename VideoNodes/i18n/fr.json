@@ -951,7 +951,7 @@
         "Label": "Débit Vidéo Supérieur À",
         "Fields": {
           "Bitrate": "Débit",
-          "Bitrate-Suffix": "KBps"
+          "Bitrate-Suffix": "Kbps"
         },
         "Outputs": {
           "1": "Le débit est supérieur à",
