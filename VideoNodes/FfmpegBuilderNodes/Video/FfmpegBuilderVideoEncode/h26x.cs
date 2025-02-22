@@ -11,7 +11,7 @@ public partial class FfmpegBuilderVideoEncode
         {
             "-pix_fmt:v:{index}", "yuv420p10le", "-profile:v:{index}", "main10"
         };
-        return new []
+        return new[]
         {
             h265 ? "libx265" : "libx264",
             "-preset", speed?.EmptyAsNull() ?? "slow",
