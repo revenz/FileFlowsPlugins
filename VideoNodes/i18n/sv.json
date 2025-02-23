@@ -848,6 +848,17 @@
           "1": "FFMPEG Builder videoströmmar inställda på att koda"
         }
       },
+      "FfmpegBuilderVideoEncodeManual": {
+        "Description": "Konfigurerar FFMPEG Builder för att koda huvudvideoströmmen med manuellt angivna kodningsparametrar.",
+        "Label": "FFMPEG Builder: Video Encode Manual",
+        "Fields": {
+          "Parameters": "Parameters",
+          "Parameters-Help": "Ange anpassade videokodningsparametrar. Se FFmpeg-dokumentationen för tillgängliga alternativ."
+        },
+        "Outputs": {
+          "1": "FFMPEG Builders videokodningsparametrar uppdaterade"
+        }
+      },
       "FfmpegBuilderVideoEncodeSimple": {
         "Description": "Ställer in FFMPEG Builder för att koda video med lättanvända förinställningar. Att använda medelvärden för Kvalitet och Hastighet ger en bra balans mellan filstorlek, kodningstid och videokvalitet.",
         "Label": "FFMPEG Builder: Video Encode",

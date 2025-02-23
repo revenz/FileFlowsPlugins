@@ -848,6 +848,17 @@
           "1": "FFMPEG ビルダーのビデオストリームがエンコードするように設定されました"
         }
       },
+      "FfmpegBuilderVideoEncodeManual": {
+        "Description": "FFMPEG Builder を設定して、手動で指定したエンコードパラメータを使用してメインビデオストリームをエンコードします。",
+        "Label": "FFMPEG Builder: Video Encode Manual",
+        "Fields": {
+          "Parameters": "Parameters",
+          "Parameters-Help": "カスタムビデオエンコードパラメータを指定します。利用可能なオプションについては FFmpeg のドキュメントを参照してください。"
+        },
+        "Outputs": {
+          "1": "FFMPEG Builder のビデオエンコードパラメータが更新されました"
+        }
+      },
       "FfmpegBuilderVideoEncodeSimple": {
         "Description": "FFMPEG Builder を設定し、使いやすいプリセットで動画をエンコードします。品質と速度の中間値を使用すると、ファイルサイズ、エンコード時間、画質のバランスが良くなります。",
         "Label": "FFMPEG Builder: Video Encode",

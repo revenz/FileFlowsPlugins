@@ -848,6 +848,17 @@
           "1": "FFMPEG Builder video streams ingesteld om te coderen"
         }
       },
+      "FfmpegBuilderVideoEncodeManual": {
+        "Description": "Configureert FFMPEG Builder om de hoofdvideostream te coderen met handmatig gespecificeerde coderingsparameters.",
+        "Label": "FFMPEG Builder: Video Encode Manual",
+        "Fields": {
+          "Parameters": "Parameters",
+          "Parameters-Help": "Specificeer aangepaste video-encoderingsparameters. Raadpleeg de FFmpeg-documentatie voor beschikbare opties."
+        },
+        "Outputs": {
+          "1": "FFMPEG Builder video-encoderingsparameters bijgewerkt"
+        }
+      },
       "FfmpegBuilderVideoEncodeSimple": {
         "Description": "Stelt de FFMPEG Builder in om video te coderen met eenvoudig te gebruiken voorinstellingen. Door middelwaarden voor Kwaliteit en Snelheid te gebruiken, ontstaat een goede balans tussen bestandsgrootte, coderingstijd en videokwaliteit.",
         "Label": "FFMPEG Builder: Video Encode",

@@ -847,7 +847,19 @@
         "Outputs": {
           "1": "FFMPEG Builder video streams set to encode"
         }
-      },"FfmpegBuilderVideoEncodeSimple": {
+      },
+      "FfmpegBuilderVideoEncodeManual": {
+        "Description": "Configures FFMPEG Builder to encode the main video stream using manually specified encoding parameters.",
+        "Label": "FFMPEG Builder: Video Encode Manual",
+        "Fields": {
+          "Parameters": "Parameters",
+          "Parameters-Help": "Specify custom video encoding parameters. Refer to the FFmpeg documentation for available options."
+        },
+        "Outputs": {
+          "1": "FFMPEG Builder video encoding parameters updated"
+        }
+      },
+      "FfmpegBuilderVideoEncodeSimple": {
         "Description": "Sets the FFMPEG Builder to encode the video with simple-to-use presets. Using middle values for Quality and Speed provides a good balance between file size, encoding time, and video quality.",
         "Label": "FFMPEG Builder: Video Encode",
         "Fields": {

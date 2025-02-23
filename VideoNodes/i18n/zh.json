@@ -848,6 +848,17 @@
           "1": "FFMPEG Builder视频流设置为编码"
         }
       },
+      "FfmpegBuilderVideoEncodeManual": {
+        "Description": "配置 FFMPEG Builder 以使用手动指定的编码参数对主视频流进行编码。",
+        "Label": "FFMPEG Builder: Video Encode Manual",
+        "Fields": {
+          "Parameters": "Parameters",
+          "Parameters-Help": "指定自定义视频编码参数。请参考 FFmpeg 文档以获取可用选项。"
+        },
+        "Outputs": {
+          "1": "FFMPEG Builder 视频编码参数已更新"
+        }
+      },
       "FfmpegBuilderVideoEncodeSimple": {
         "Description": "配置 FFMPEG Builder 以使用简单的预设编码视频。使用质量和速度的中间值可以在文件大小、编码时间和视频质量之间取得良好平衡。",
         "Label": "FFMPEG Builder：视频编码",

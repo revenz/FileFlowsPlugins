@@ -848,6 +848,17 @@
           "1": "Видеопотоки FFMPEG Builder настроены на кодирование"
         }
       },
+      "FfmpegBuilderVideoEncodeManual": {
+        "Description": "Настраивает FFMPEG Builder для кодирования основного видеопотока с использованием вручную указанных параметров кодирования.",
+        "Label": "FFMPEG Builder: Video Encode Manual",
+        "Fields": {
+          "Parameters": "Parameters",
+          "Parameters-Help": "Укажите пользовательские параметры кодирования видео. Доступные параметры можно найти в документации FFmpeg."
+        },
+        "Outputs": {
+          "1": "Параметры кодирования видео в FFMPEG Builder обновлены"
+        }
+      },
       "FfmpegBuilderVideoEncodeSimple": {
         "Description": "Настраивает FFMPEG Builder для кодирования видео с простыми предустановками. Использование средних значений качества и скорости обеспечивает хороший баланс между размером файла, временем кодирования и качеством видео.",
         "Label": "FFMPEG Builder: Кодирование видео",

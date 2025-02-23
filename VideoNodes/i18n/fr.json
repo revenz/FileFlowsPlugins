@@ -848,6 +848,17 @@
           "1": "Flux vidéo du FFMPEG Builder configurés pour encoder"
         }
       },
+      "FfmpegBuilderVideoEncodeManual": {
+        "Description": "Configure FFMPEG Builder pour encoder le flux vidéo principal en utilisant des paramètres d'encodage spécifiés manuellement.",
+        "Label": "FFMPEG Builder: Video Encode Manual",
+        "Fields": {
+          "Parameters": "Parameters",
+          "Parameters-Help": "Spécifiez des paramètres d'encodage vidéo personnalisés. Consultez la documentation FFmpeg pour les options disponibles."
+        },
+        "Outputs": {
+          "1": "Paramètres d'encodage vidéo de FFMPEG Builder mis à jour"
+        }
+      },
       "FfmpegBuilderVideoEncodeSimple": {
         "Description": "Configure le FFMPEG Builder pour encoder la vidéo avec des préréglages faciles à utiliser. L'utilisation de valeurs intermédiaires pour la Qualité et la Vitesse offre un bon équilibre entre la taille du fichier, le temps d'encodage et la qualité vidéo.",
         "Label": "FFMPEG Builder: Video Encode",

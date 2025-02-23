@@ -848,6 +848,17 @@
           "1": "Fluxos de vídeo do FFMPEG Builder configurados para codificar"
         }
       },
+      "FfmpegBuilderVideoEncodeManual": {
+        "Description": "Configura o FFMPEG Builder para codificar o fluxo de vídeo principal usando parâmetros de codificação especificados manualmente.",
+        "Label": "FFMPEG Builder: Video Encode Manual",
+        "Fields": {
+          "Parameters": "Parameters",
+          "Parameters-Help": "Especifique parâmetros de codificação de vídeo personalizados. Consulte a documentação do FFmpeg para opções disponíveis."
+        },
+        "Outputs": {
+          "1": "Parâmetros de codificação de vídeo do FFMPEG Builder atualizados"
+        }
+      },
       "FfmpegBuilderVideoEncodeSimple": {
         "Description": "Configura o FFMPEG Builder para codificar o vídeo com predefinições fáceis de usar. O uso de valores médios para Qualidade e Velocidade proporciona um bom equilíbrio entre tamanho do arquivo, tempo de codificação e qualidade do vídeo.",
         "Label": "FFMPEG Builder: Codificação de Vídeo",
