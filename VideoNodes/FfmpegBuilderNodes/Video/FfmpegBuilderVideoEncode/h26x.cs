@@ -147,11 +147,11 @@ public partial class FfmpegBuilderVideoEncode
     /// <returns>Equivalent VideoToolbox quality value (50-80).</returns>
     private static int MapQualityToVideoToolbox(int crf)
     {
-        // Enforce bounds on CRF
+        // Enforce CRF bounds
         crf = Math.Clamp(crf, 1, 51);
-        
-        // CRF 1 (highest quality) → Q 50 (best quality in VideoToolbox)
-        // CRF 51 (lowest quality) → Q 80 (worst quality in VideoToolbox)
-        return (int)Math.Round(50 + (crf - 1) * (30.0 / 50.0));
+
+        // Adjusted scale to align with x264/x265/NVENC/AMF/QSV behavior
+        return (int)Math.Round(80 - (crf - 1) * (25.0 / 50.0)); 
     }
+
 }
