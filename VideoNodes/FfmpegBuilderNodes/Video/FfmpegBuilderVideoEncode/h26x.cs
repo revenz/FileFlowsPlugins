@@ -1,175 +1,151 @@
-using System;
-using System.Collections.Generic;
 using System.Globalization;
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 
-/// <summary>
-/// Provides methods for generating FFmpeg command parameters for various video encoders.
-/// </summary>
 public partial class FfmpegBuilderVideoEncode
 {
-    /// <summary>
-    /// Gets the encoding parameters for CPU-based H.264/H.265 encoding.
-    /// </summary>
-    internal static string[] H26x_CPU(bool h265, int quality, string speed, out string[] bit10Filters)
+    
+    private static IEnumerable<string> H26x_CPU(bool h265, int quality, string speed, out string[] bit10Filters)
     {
-        bit10Filters = ["-pix_fmt:v:{index}", "yuv420p10le", "-profile:v:{index}", "main10"];
-        return
-        [
+        bit10Filters = new[]
+        {
+            "-pix_fmt:v:{index}", "yuv420p10le", "-profile:v:{index}", "main10"
+        };
+        return new []
+        {
             h265 ? "libx265" : "libx264",
-            "-preset", MapSpeed(speed, "slow"),
-            "-crf", MapQuality(quality).ToString()
-        ];
+            "-preset", speed?.EmptyAsNull() ?? "slow",
+            "-crf", quality.ToString()
+        };
     }
 
-    /// <summary>
-    /// Gets the encoding parameters for NVIDIA GPU-based H.264/H.265 encoding.
-    /// </summary>
-    internal static string[] H26x_Nvidia(bool h265, int quality, string speed, out string[] non10BitFilters)
+    private static IEnumerable<string> H26x_Nvidia(bool h265, int quality, string speed, out string[] non10BitFilters)
     {
-        non10BitFilters = h265 ? null : ["-pix_fmt:v:{index}", "yuv420p"];
-        return
-        [
+        if (h265 == false)
+            non10BitFilters = new[] { "-pix_fmt:v:{index}", "yuv420p" };
+        else 
+            non10BitFilters = null;
+
+        return new []
+        {
             h265 ? "hevc_nvenc" : "h264_nvenc",
             "-rc", "constqp",
-            "-qp", MapQuality(quality).ToString(),
-            "-preset", MapSpeed(speed, "medium"),
+            "-qp", quality.ToString(),
+            "-preset", GetSpeed(speed, nvidia:true),
             "-spatial-aq", "1"
-        ];
+        };
     }
 
-    /// <summary>
-    /// Gets the encoding parameters for Intel QSV-based H.264/H.265 encoding.
-    /// </summary>
-    internal static string[] H26x_Qsv(bool h265, int quality, float fps, string speed)
+    private static IEnumerable<string> H26x_Qsv(bool h265, int quality, float fps, string speed)
     {
-        var parameters = new List<string> { h265 ? "hevc_qsv" : "h264_qsv" };
-
-        if (h265)
-            parameters.AddRange(new[] { "-load_plugin", "hevc_hw" });
-
-        if (fps > 0)
+        //hevc_qsv -load_plugin hevc_hw -pix_fmt p010le -profile:v main10 -global_quality 21 -g 24 -look_ahead 1 -look_ahead_depth 60
+        var parameters = new List<string>();
+        if (h265) 
         {
-            parameters.AddRange(["-r", fps.ToString(CultureInfo.InvariantCulture)]);
-            parameters.AddRange(["-g", ((int)Math.Round(fps * 5)).ToString(CultureInfo.InvariantCulture)]);
-        }
+            parameters.AddRange(new[]
+            {
+                "hevc_qsv",
+                "-load_plugin", "hevc_hw",
+                // -g is gop/keyframe not framerate
+                //"-g",  (fps < 1 ? 29.97 : fps).ToString(CultureInfo.InvariantCulture)
+            });
 
+            if (fps > 0)
+            {
+                parameters.AddRange(["-r", fps.ToString(CultureInfo.InvariantCulture)]);
+                parameters.AddRange(["-g", ((int)Math.Round(fps * 5)).ToString(CultureInfo.InvariantCulture)]);
+            }
+
+        }
+        else
+        {
+            parameters.AddRange(new[]
+            {
+                "h264_qsv"
+            });
+
+        }
         parameters.AddRange(new[]
         {
-            "-global_quality:v", MapQuality(quality).ToString(),
-            "-preset", MapSpeed(speed, "slower")
+            "-global_quality:v", quality.ToString(),
+            "-preset", speed?.EmptyAsNull() ?? "slower",
         });
-        return parameters.ToArray();
+        return parameters;
     }
 
-    /// <summary>
-    /// Gets the encoding parameters for AMD GPU-based H.264/H.265 encoding.
-    /// </summary>
-    internal static string[] H26x_Amd(bool h265, int quality, string speed, out string[] bit10Filters)
+    private static IEnumerable<string> H26x_Amd(bool h265, int quality, string speed, out string[] bit10Filters)
     {
-        bit10Filters = ["-pix_fmt:v:{index}", "p010le", "-profile:v:{index}", "1"];
-        return
+        bit10Filters =
         [
-            h265 ? "hevc_amf" : "h264_amf",
-            "-qp", MapQuality(quality).ToString(),
-            "-preset", MapSpeedAmd(speed),
-            "-spatial-aq", "1"
+            "-pix_fmt:v:{index}", "p010le", "-profile:v:{index}", "1" // 1 is main
         ];
+        string preset = "6"; // Default to "medium" (6) if speed is null or invalid
+
+        switch (speed)
+        {
+            case "ultrafast": preset = "0"; break;
+            case "superfast": preset = "1"; break;
+            case "veryfast":  preset = "2"; break;
+            case "faster": preset = "3"; break;
+            case "fast": preset = "4"; break;
+            case "medium": preset = "6"; break;
+            case "slow": preset = "8"; break;
+            case "slower": preset = "9"; break;
+            case "veryslow": preset = "10"; break;
+        }
+
+        return new[]
+        {
+            h265 ? "hevc_amf" : "h264_amf",
+            "-qp", quality.ToString(),
+            "-preset", preset,
+            "-spatial-aq", "1"
+        };
     }
 
-    /// <summary>
-    /// Gets the encoding parameters for VAAPI-based H.264/H.265 encoding.
-    /// </summary>
-    internal static string[] H26x_Vaapi(bool h265, int quality, string speed)
+    private static IEnumerable<string> H26x_Vaapi(bool h265, int quality, string speed)
     {
         return
         [
             h265 ? "hevc_vaapi" : "h264_vaapi",
-            "-qp", MapQuality(quality).ToString(),
-            "-preset", MapSpeed(speed, "slower"),
+            "-qp", quality.ToString(),
+            "-preset", speed?.EmptyAsNull() ?? "slower",
             "-spatial-aq", "1"
         ];
     }
 
     /// <summary>
     /// Generates encoding parameters for VideoToolbox (macOS hardware acceleration).
+    /// Maps a CRF-style quality value (1-51) to VideoToolbox's scale (50-80) for consistency across encoders.
     /// </summary>
-    internal static string[] H26x_VideoToolbox(bool h265, int quality, string speed)
+    /// <param name="h265">True for HEVC, false for H.264.</param>
+    /// <param name="quality">CRF-style quality value (1-51).</param>
+    /// <param name="speed">Encoding speed preset.</param>
+    /// <returns>List of FFmpeg parameters for VideoToolbox encoding.</returns>
+    private static IEnumerable<string> H26x_VideoToolbox(bool h265, int quality, string speed)
     {
-        int q = MapQualityToVideoToolbox(MapQuality(quality));
-        return
-        [
+        // Map quality (1-51 CRF style) to VideoToolbox's Q scale (50-80)
+        int q = MapQualityToVideoToolbox(quality);
+        
+        return new[]
+        {
             h265 ? "hevc_videotoolbox" : "h264_videotoolbox",
             "-q", q.ToString(),
-            "-preset", MapSpeed(speed, "slower")
-        ];
+            "-preset", speed?.EmptyAsNull() ?? "slower"
+        };
     }
 
     /// <summary>
     /// Maps a CRF-style quality value (1-51) to VideoToolbox's Q scale (50-80).
     /// </summary>
+    /// <param name="crf">CRF-style quality value (1-51).</param>
+    /// <returns>Equivalent VideoToolbox quality value (50-80).</returns>
     private static int MapQualityToVideoToolbox(int crf)
     {
+        // Enforce CRF bounds
         crf = Math.Clamp(crf, 1, 51);
-        return (int)Math.Round(80 - (crf - 15) * (30.0 / 15.0));
-    }
 
-    /// <summary>
-    /// Maps speed presets (1-5) or named values to the appropriate FFmpeg preset.
-    /// </summary>
-    private static string MapSpeed(string speed, string defaultValue)
-    {
-        return speed switch
-        {
-            "1" => "veryslow",
-            "2" => "slow",
-            "3" => "medium",
-            "4" => "fast",
-            "5" => "ultrafast",
-            "ultrafast" or "superfast" => "ultrafast",
-            "veryfast" => "veryfast",
-            "faster" => "faster",
-            "fast" => "fast",
-            "medium" => "medium",
-            "slow" => "slow",
-            "slower" => "slower",
-            "veryslow" => "veryslow",
-            _ => defaultValue
-        };
-    }
-
-    /// <summary>
-    /// Maps AMD speed presets (1-5) or named values to AMD-specific values.
-    /// </summary>
-    private static string MapSpeedAmd(string speed)
-    {
-        return speed switch
-        {
-            "1" => "10",
-            "2" => "8",
-            "3" => "6",
-            "4" => "4",
-            "5" => "0",
-            "ultrafast" => "0",
-            "superfast" => "1",
-            "veryfast" => "2",
-            "faster" => "3",
-            "fast" => "4",
-            "medium" => "6",
-            "slow" => "8",
-            "slower" => "9",
-            "veryslow" => "10",
-            _ => "6"
-        };
-    }
-
-    /// <summary>
-    /// Maps a 1-10 quality scale to a 1-51 CRF-style quality value.
-    /// </summary>
-    internal static int MapQuality(int quality)
-    {
-        quality = Math.Clamp(quality, 1, 10);
-        return (int)Math.Round(30 - (quality - 1) * (15.0 / 9.0));
+        // More aggressive mapping to VideoToolbox -q scale
+        return (int)Math.Round(82 - (crf - 1) * (32.0 / 50.0));
     }
 }

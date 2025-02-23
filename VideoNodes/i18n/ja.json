@@ -832,7 +832,7 @@
       },
       "FfmpegBuilderVideoEncode": {
         "Description": "使いやすいプリセットでビデオをエンコードするようにFFMPEG Builderを設定します。",
-        "Label": "FFMPEG ビルダー: ビデオエンコード",
+        "Label": "FFMPEG Builder: ビデオエンコード（上級）",
         "Fields": {
           "Codec": "コーデック",
           "Encoder": "エンコーダ",
@@ -846,6 +846,24 @@
         },
         "Outputs": {
           "1": "FFMPEG ビルダーのビデオストリームがエンコードするように設定されました"
+        }
+      },
+      "FfmpegBuilderVideoEncodeSimple": {
+        "Description": "FFMPEG Builder を設定し、使いやすいプリセットで動画をエンコードします。品質と速度の中間値を使用すると、ファイルサイズ、エンコード時間、画質のバランスが良くなります。",
+        "Label": "FFMPEG Builder: Video Encode",
+        "Fields": {
+          "Codec": "コーデック",
+          "Encoder": "エンコーダ",
+          "Encoder-Help": "使用するエンコーダを指定します。利用できないハードウェアエンコーダを指定すると、エンコードは失敗します。",
+          "HardwareEncoding": "ハードウェアエンコード",
+          "HardwareEncoding-Help": "有効にすると、処理ノードでハードウェアエンコーダが利用可能かをチェックします。利用可能ならハードウェアエンコードを使用し、なければ CPU エンコードにフォールバックします。",
+          "Quality": "品質",
+          "Quality-Help": "値が高いほど画質が向上し、ファイルサイズが大きくなります。値が低いと画質とファイルサイズが小さくなります。",
+          "Speed": "速度",
+          "Speed-Help": "エンコード速度が速いほど圧縮効率が低下し、画質が低下またはファイルサイズが大きくなります。エンコード速度が遅いほど圧縮効率が向上し、画質が向上またはファイルサイズが小さくなります。"
+        },
+        "Outputs": {
+          "1": "FFMPEG Builder により動画ストリームをエンコード"
         }
       },
       "FfmpegBuilderVideoMaxBitrate": {

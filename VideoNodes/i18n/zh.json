@@ -832,7 +832,7 @@
       },
       "FfmpegBuilderVideoEncode": {
         "Description": "设置 FFMPEG Builder使用简单的预设编码视频",
-        "Label": "FFMPEG Builder：视频编码",
+        "Label": "FFMPEG Builder: 视频编码高级",
         "Fields": {
           "Codec": "编解码器",
           "Encoder": "编码器",
@@ -846,6 +846,24 @@
         },
         "Outputs": {
           "1": "FFMPEG Builder视频流设置为编码"
+        }
+      },
+      "FfmpegBuilderVideoEncodeSimple": {
+        "Description": "配置 FFMPEG Builder 以使用简单的预设编码视频。使用质量和速度的中间值可以在文件大小、编码时间和视频质量之间取得良好平衡。",
+        "Label": "FFMPEG Builder：视频编码",
+        "Fields": {
+          "Codec": "编解码器",
+          "Encoder": "编码器",
+          "Encoder-Help": "要使用的编码器。如果指定的硬件编码器不可用，则编码将失败。",
+          "HardwareEncoding": "硬件编码",
+          "HardwareEncoding-Help": "启用后，将检查处理节点上是否有可用的硬件编码器。如果找到，则使用硬件编码，否则使用 CPU 编码。",
+          "Quality": "质量",
+          "Quality-Help": "较高的值会产生更好的质量和更大的文件。较低的值会减少质量并缩小文件大小。",
+          "Speed": "速度",
+          "Speed-Help": "更快的编码会降低压缩效率，可能导致质量下降或文件变大。较慢的编码会提高压缩效率，使质量更好或文件更小。"
+        },
+        "Outputs": {
+          "1": "FFMPEG Builder 已配置为编码视频流"
         }
       },
       "FfmpegBuilderVideoMaxBitrate": {

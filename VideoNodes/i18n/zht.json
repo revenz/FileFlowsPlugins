@@ -832,7 +832,7 @@
       },
       "FfmpegBuilderVideoEncode": {
         "Description": "設置 FFMPEG 建構器以使用簡單的預設進行視頻編碼。",
-        "Label": "FFMPEG Builder: 視頻編碼",
+        "Label": "FFMPEG Builder: 視頻編碼高級",
         "Fields": {
           "Codec": "編碼器",
           "Encoder": "編碼器",
@@ -846,6 +846,24 @@
         },
         "Outputs": {
           "1": "FFMPEG 建構器視頻流設置為編碼"
+        }
+      },
+      "FfmpegBuilderVideoEncodeSimple": {
+        "Description": "設定 FFMPEG Builder 以使用簡單的預設來編碼影片。使用品質與速度的中間值，可以在檔案大小、編碼時間與影片品質之間取得良好平衡。",
+        "Label": "FFMPEG Builder：影片編碼",
+        "Fields": {
+          "Codec": "編解碼器",
+          "Encoder": "編碼器",
+          "Encoder-Help": "要使用的編碼器。如果指定的硬體編碼器不可用，則編碼將失敗。",
+          "HardwareEncoding": "硬體編碼",
+          "HardwareEncoding-Help": "啟用後，將檢查處理節點上是否有可用的硬體編碼器。如果找到，則使用硬體編碼，否則使用 CPU 編碼。",
+          "Quality": "品質",
+          "Quality-Help": "較高的值會產生更好的品質和更大的檔案。較低的值會降低品質並縮小檔案大小。",
+          "Speed": "速度",
+          "Speed-Help": "較快的編碼會降低壓縮效率，可能導致品質下降或檔案變大。較慢的編碼會提高壓縮效率，使品質更好或檔案更小。"
+        },
+        "Outputs": {
+          "1": "FFMPEG Builder 已設定為編碼影片串流"
         }
       },
       "FfmpegBuilderVideoMaxBitrate": {
