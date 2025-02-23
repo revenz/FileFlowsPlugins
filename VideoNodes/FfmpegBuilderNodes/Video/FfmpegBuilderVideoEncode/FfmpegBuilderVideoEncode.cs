@@ -23,69 +23,48 @@ public partial class FfmpegBuilderVideoEncode:VideoEncodeBase
     /// Gets or sets the codec used to encode
     /// </summary>
     [DefaultValue(CODEC_H264)]
-    [ChangeValue(nameof(Quality), 23, CODEC_H264)]
-    [ChangeValue(nameof(Quality), 28, CODEC_H265)]
-    [ChangeValue(nameof(Quality), 28, CODEC_H265_10BIT)]
-    [ChangeValue(nameof(Quality), 28, CODEC_AV1)]
-    [ChangeValue(nameof(Quality), 28, CODEC_AV1_10BIT)]
-    [ChangeValue(nameof(Quality), 28, CODEC_VP9)]
     [Select(nameof(CodecOptions), 1)]
     public string Codec { get; set; }
     /// <summary>
     /// Gets or sets the encoder to use
     /// </summary>
     [Select(nameof(Encoders), 2)]
-    //[ConditionEquals(nameof(Codec), "/av1/", inverse: true)]
     public string Encoder { get; set; }
     /// <summary>
     /// Gets or sets the quality of the video encode
     /// </summary>
-    [Slider(3, inverse: true)]
-    [Range(0, 51)]
-    [DefaultValue(28)]
+    [Slider(3)]
+    [Range(1, 10)]
+    [DefaultValue(6)]
     public int Quality { get; set; }
     
     /// <summary>
     /// Gets or sets the speed to encode
     /// </summary>
-    [Select(nameof(SpeedOptions), 4)]
-    [DefaultValue("medium")]
-    public string Speed { get; set; }
+    [Slider(4)]
+    [Range(1, 5)]
+    [DefaultValue(3)]
+    public int SpeedValue { get; set; }
 
-    private static List<ListOption> _SpeedOptions;
     /// <summary>
-    /// Gets or sets the codec options
+    /// Gets or sets the legacy speed, this will be removed at some point
     /// </summary>
-    public static List<ListOption> SpeedOptions
-    {
-        get
-        {
-            if (_SpeedOptions == null)
-            {
-                _SpeedOptions = new List<ListOption>
-                {
-                    new () { Label = "Very Slow", Value = "veryslow" },
-                    new () { Label = "Slower", Value = "slower" },
-                    new () { Label = "Slow", Value = "slow" },
-                    new () { Label = "Medium", Value = "medium" },
-                    new () { Label = "Fast", Value = "fast" },
-                    new () { Label = "Faster", Value = "faster" },
-                    new () { Label = "Very Fast", Value = "veryfast" },
-                    new () { Label = "Super Fast", Value = "superfast" },
-                    new () { Label = "Ultra Fast", Value = "ultrafast" },
-                };
-            }
-            return _SpeedOptions;
-        }
-    }
-
-    //private string bit10Filter = "yuv420p10le";
-    private string[] bit10Filters = new[]
-    {
-        "-pix_fmt:v:{index}", "p010le", "-profile:v:{index}", "main10"
-    };
-    private string[] non10BitFilters = new string[]{};
-
+    public string Speed { get; set; }
+    
+    /// <summary>
+    /// Gets or sets if the user is using a manual quality value
+    /// </summary>
+    [Boolean(5)]
+    public bool UseManualQuality { get; set; }
+    
+    /// <summary>
+    /// Gets or sets the manual value for quality 
+    /// </summary>
+    [NumberInt(6)]
+    [Range(11, 255)]
+    [ConditionEquals(nameof(UseManualQuality), true)]
+    public int ManualQuality { get; set; }
+    
     /// <summary>
     /// Executes the node
     /// </summary>
@@ -105,11 +84,15 @@ public partial class FfmpegBuilderVideoEncode:VideoEncodeBase
                 args.Variables?.TryGetValue("HW_OFF", out object? oHwOff) == true && (oHwOff as bool? == true || oHwOff?.ToString() == "1")
             ) ? ENCODER_CPU : this.Encoder;
 
-        args.Logger?.ILog("Quality: " + Quality);
+        var quality = UseManualQuality ? ManualQuality : Quality;
+        var speed = SpeedValue < 1 ? Speed : SpeedValue.ToString(); 
+
+        args.Logger?.ILog("Quality: " + quality);
+        args.Logger?.ILog("Speed: " + speed);
         args.Logger?.ILog("Codec: " + Codec);
         if (Codec == CODEC_H264)
         {
-            var encodingParameters = H264(args, false, Quality, encoder, Speed).ToArray();
+            var encodingParameters = H264(args, false, quality, encoder, speed).ToArray();
             args.Logger?.ILog("Encoding Parameters: " +
                               string.Join(" ", encodingParameters.Select(x => x.Contains(" ") ? "\"" + x + "\"" : x)));
             stream.EncodingParameters.AddRange(encodingParameters);
@@ -120,7 +103,7 @@ public partial class FfmpegBuilderVideoEncode:VideoEncodeBase
             bool tenBit = (Codec == CODEC_H265_10BIT || stream.Stream.Is10Bit) && (Codec != CODEC_H265_8BIT);
             bool forceBitSetting = Codec is CODEC_H265_10BIT or CODEC_H265_8BIT;
             args.Logger?.ILog("10 Bit: " + tenBit);
-            var encodingParameters = H265(stream, args, tenBit, Quality, encoder, stream.Stream.FramesPerSecond, Speed, forceBitSetting: forceBitSetting).ToArray();
+            var encodingParameters = H265(stream, args, tenBit, quality, encoder, stream.Stream.FramesPerSecond, speed, forceBitSetting: forceBitSetting).ToArray();
             args.Logger?.ILog("Encoding Parameters: " +
                               string.Join(" ", encodingParameters.Select(x => x.Contains(" ") ? "\"" + x + "\"" : x)));
             stream.EncodingParameters.AddRange(encodingParameters);
@@ -130,7 +113,7 @@ public partial class FfmpegBuilderVideoEncode:VideoEncodeBase
         {
             bool tenBit = Codec == CODEC_AV1_10BIT || stream.Stream.Is10Bit;
             args.Logger?.ILog("10 Bit: " + tenBit);
-            var encodingParameters = AV1(args, tenBit, Quality, encoder, Speed, Model.Device).ToArray();
+            var encodingParameters = AV1(args, tenBit, quality, encoder, speed, Model.Device).ToArray();
             args.Logger?.ILog("Encoding Parameters: " +
                               string.Join(" ", encodingParameters.Select(x => x.Contains(" ") ? "\"" + x + "\"" : x)));
             stream.EncodingParameters.AddRange(encodingParameters);
@@ -138,7 +121,7 @@ public partial class FfmpegBuilderVideoEncode:VideoEncodeBase
         }
         else if (Codec == CODEC_VP9)
         {
-            var encodingParameters = VP9(args, Quality, encoder, Speed).ToArray();
+            var encodingParameters = VP9(args, quality, encoder, speed).ToArray();
             args.Logger?.ILog("Encoding Parameters: " +
                               string.Join(" ", encodingParameters.Select(x => x.Contains(" ") ? "\"" + x + "\"" : x)));
             stream.EncodingParameters.AddRange(encodingParameters);
