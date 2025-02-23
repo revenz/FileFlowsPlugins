@@ -832,7 +832,7 @@
       },
       "FfmpegBuilderVideoEncode": {
         "Description": "Configure le FFMPEG Builder pour encoder la vidéo avec des préréglages faciles à utiliser",
-        "Label": "FFMPEG Builder: Encodage Vidéo",
+        "Label": "FFMPEG Builder: Encodage Vidéo Avancé",
         "Fields": {
           "Codec": "Codec",
           "Encoder": "Encodeur",
@@ -846,6 +846,24 @@
         },
         "Outputs": {
           "1": "Flux vidéo du FFMPEG Builder configurés pour encoder"
+        }
+      },
+      "FfmpegBuilderVideoEncodeSimple": {
+        "Description": "Configure le FFMPEG Builder pour encoder la vidéo avec des préréglages faciles à utiliser. L'utilisation de valeurs intermédiaires pour la Qualité et la Vitesse offre un bon équilibre entre la taille du fichier, le temps d'encodage et la qualité vidéo.",
+        "Label": "FFMPEG Builder: Video Encode",
+        "Fields": {
+          "Codec": "Codec",
+          "Encoder": "Encodeur",
+          "Encoder-Help": "L'encodeur à utiliser. Si vous spécifiez un encodeur matériel indisponible, l'encodage échouera.",
+          "HardwareEncoding": "Encodage matériel",
+          "HardwareEncoding-Help": "Si activé, vérifie si des encodeurs matériels sont disponibles sur le nœud de traitement. S'ils sont trouvés, l'encodage matériel sera utilisé, sinon l'encodage CPU sera appliqué.",
+          "Quality": "Qualité",
+          "Quality-Help": "Des valeurs plus élevées offrent une meilleure qualité et des fichiers plus volumineux. Des valeurs plus basses réduisent la qualité et la taille du fichier.",
+          "Speed": "Vitesse",
+          "Speed-Help": "Un encodage plus rapide réduit l'efficacité de la compression, ce qui entraîne une qualité inférieure ou des fichiers plus volumineux. Un encodage plus lent améliore l'efficacité de la compression, offrant une meilleure qualité ou des fichiers plus petits."
+        },
+        "Outputs": {
+          "1": "FFMPEG Builder configuré pour encoder les flux vidéo"
         }
       },
       "FfmpegBuilderVideoMaxBitrate": {

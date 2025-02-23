@@ -6,86 +6,47 @@ namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
 /// <summary>
 /// Set a video codec encoding for a video stream based on users settings
 /// </summary>
-public partial class FfmpegBuilderVideoEncode:VideoEncodeBase
+public partial class FfmpegBuilderVideoEncodeSimple:VideoEncodeBase
 {
     /// <summary>
     /// The number of outputs for this flow element
     /// </summary>
     public override int Outputs => 1;
 
-
     /// <summary>
     /// The Help URL for this flow element
     /// </summary>
-    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/video-encode-advanced";
+    public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/video-encode";
 
     /// <summary>
     /// Gets or sets the codec used to encode
     /// </summary>
     [DefaultValue(CODEC_H264)]
-    [ChangeValue(nameof(Quality), 23, CODEC_H264)]
-    [ChangeValue(nameof(Quality), 28, CODEC_H265)]
-    [ChangeValue(nameof(Quality), 28, CODEC_H265_10BIT)]
-    [ChangeValue(nameof(Quality), 28, CODEC_AV1)]
-    [ChangeValue(nameof(Quality), 28, CODEC_AV1_10BIT)]
-    [ChangeValue(nameof(Quality), 28, CODEC_VP9)]
     [Select(nameof(CodecOptions), 1)]
     public string Codec { get; set; }
+    
     /// <summary>
     /// Gets or sets the encoder to use
     /// </summary>
     [Select(nameof(Encoders), 2)]
-    //[ConditionEquals(nameof(Codec), "/av1/", inverse: true)]
     public string Encoder { get; set; }
+    
     /// <summary>
     /// Gets or sets the quality of the video encode
     /// </summary>
-    [Slider(3, inverse: true)]
-    [Range(0, 51)]
-    [DefaultValue(28)]
+    [Slider(3)]
+    [Range(1, 10)]
+    [DefaultValue(6)]
     public int Quality { get; set; }
     
     /// <summary>
     /// Gets or sets the speed to encode
     /// </summary>
-    [Select(nameof(SpeedOptions), 4)]
-    [DefaultValue("medium")]
-    public string Speed { get; set; }
-
-    private static List<ListOption> _SpeedOptions;
-    /// <summary>
-    /// Gets or sets the codec options
-    /// </summary>
-    public static List<ListOption> SpeedOptions
-    {
-        get
-        {
-            if (_SpeedOptions == null)
-            {
-                _SpeedOptions = new List<ListOption>
-                {
-                    new () { Label = "Very Slow", Value = "veryslow" },
-                    new () { Label = "Slower", Value = "slower" },
-                    new () { Label = "Slow", Value = "slow" },
-                    new () { Label = "Medium", Value = "medium" },
-                    new () { Label = "Fast", Value = "fast" },
-                    new () { Label = "Faster", Value = "faster" },
-                    new () { Label = "Very Fast", Value = "veryfast" },
-                    new () { Label = "Super Fast", Value = "superfast" },
-                    new () { Label = "Ultra Fast", Value = "ultrafast" },
-                };
-            }
-            return _SpeedOptions;
-        }
-    }
-
-    //private string bit10Filter = "yuv420p10le";
-    private string[] bit10Filters = new[]
-    {
-        "-pix_fmt:v:{index}", "p010le", "-profile:v:{index}", "main10"
-    };
-    private string[] non10BitFilters = new string[]{};
-
+    [Slider(4)]
+    [Range(1, 5)]
+    [DefaultValue(3)]
+    public int Speed { get; set; }
+    
     /// <summary>
     /// Executes the node
     /// </summary>
@@ -105,7 +66,9 @@ public partial class FfmpegBuilderVideoEncode:VideoEncodeBase
                 args.Variables?.TryGetValue("HW_OFF", out object? oHwOff) == true && (oHwOff as bool? == true || oHwOff?.ToString() == "1")
             ) ? ENCODER_CPU : this.Encoder;
 
+
         args.Logger?.ILog("Quality: " + Quality);
+        args.Logger?.ILog("Speed: " + Speed);
         args.Logger?.ILog("Codec: " + Codec);
         if (Codec == CODEC_H264)
         {
@@ -154,7 +117,7 @@ public partial class FfmpegBuilderVideoEncode:VideoEncodeBase
         return 1;
     }
 
-    internal static IEnumerable<string> GetEncodingParameters(NodeParameters args, string codec, int quality, string encoder, float fps, string speed, string? device = null)
+    internal static IEnumerable<string> GetEncodingParameters(NodeParameters args, string codec, int quality, string encoder, float fps, int speed, string? device = null)
     {
         if (codec == CODEC_H264)
             return H264(args, false, quality, encoder, speed).Select(x => x.Replace("{index}", "0")); 
@@ -168,7 +131,7 @@ public partial class FfmpegBuilderVideoEncode:VideoEncodeBase
 
     private static readonly bool IsMac = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
 
-    private static IEnumerable<string> H264(NodeParameters args, bool tenBit, int quality, string encoder, string speed)
+    private static IEnumerable<string> H264(NodeParameters args, bool tenBit, int quality, string encoder, int speed)
     {
         List<string> parameters = new List<string>();
         string[]? bit10Filters = null;
@@ -210,7 +173,7 @@ public partial class FfmpegBuilderVideoEncode:VideoEncodeBase
     }
     
     private static IEnumerable<string> H265(FfmpegVideoStream stream, NodeParameters args, bool tenBit, int quality, 
-        string encoder, float fps, string speed, bool forceBitSetting = false)
+        string encoder, float fps, int speed, bool forceBitSetting = false)
     {
         // hevc_qsv -load_plugin hevc_hw -pix_fmt p010le -profile:v main10 -global_quality 21 -g 24 -look_ahead 1 -look_ahead_depth 60
         List<string> parameters = new List<string>();
@@ -280,7 +243,7 @@ public partial class FfmpegBuilderVideoEncode:VideoEncodeBase
     }
 
     
-    private static IEnumerable<string> AV1(NodeParameters args, bool tenBit, int quality, string encoder, string speed, string device)
+    private static IEnumerable<string> AV1(NodeParameters args, bool tenBit, int quality, string encoder, int speed, string device)
     {
         // hevc_qsv -load_plugin hevc_hw -pix_fmt p010le -profile:v main10 -global_quality 21 -g 24 -look_ahead 1 -look_ahead_depth 60
         List<string> parameters = new List<string>();
@@ -318,7 +281,7 @@ public partial class FfmpegBuilderVideoEncode:VideoEncodeBase
         return parameters;
     }
     
-    private static IEnumerable<string> VP9(NodeParameters args,  int quality, string encoder, string speed)
+    private static IEnumerable<string> VP9(NodeParameters args,  int quality, string encoder, int speed)
     {
         List<string> parameters = new List<string>();
         if (encoder == ENCODER_CPU)

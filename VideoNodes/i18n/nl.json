@@ -832,7 +832,7 @@
       },
       "FfmpegBuilderVideoEncode": {
         "Description": "Stelt de FFMPEG Builder in om de video te coderen met eenvoudig te gebruiken presets",
-        "Label": "FFMPEG Builder: Video Coderen",
+        "Label": "FFMPEG Builder: Geavanceerde Video-Encoding",
         "Fields": {
           "Codec": "Codec",
           "Encoder": "Encoder",

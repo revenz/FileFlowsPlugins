@@ -1,0 +1,8 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1cce6e2a_002D4783_002D4dea_002Da2aa_002D7a3510fc2b19/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="FfmpegBuilderVideoEncodeTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;MSTest::CF96D3D1-1D8B-47F7-BEA7-BB238F7A566A::net8.0::FileFlows.VideoNodes.Tests.FfmpegBuilderTests.FfmpegBuilder_VideoEncodeTests_H26x&lt;/TestId&gt;
+    &lt;TestId&gt;MSTest::CF96D3D1-1D8B-47F7-BEA7-BB238F7A566A::net8.0::FileFlows.VideoNodes.Tests.FfmpegBuilderTests.FfmpegBuilder_VideoEncodeTests_AV1.Av1_Qsv_Tests&lt;/TestId&gt;
+    &lt;TestId&gt;MSTest::CF96D3D1-1D8B-47F7-BEA7-BB238F7A566A::net8.0::FileFlows.VideoNodes.Tests.FfmpegBuilderTests.FfmpegBuilder_VideoEncodeTests_AV1&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

@@ -102,7 +102,7 @@
         }
       },
       "FfmpegBuilderAddInputFile": {
-        "Label": "FFMPEG 빌더: 입력 파일 추가",
+        "Label": "FFMPEG Builder: 입력 파일 추가",
         "Fields": {
           "Pattern": "패턴",
           "Pattern-Help": "입력 파일을 검색하는 데 사용되는 정규 표현식입니다.",
@@ -115,7 +115,7 @@
         }
       },
       "FfmpegBuilderAspectRatio": {
-        "Label": "FFMPEG 빌더: 종횡비",
+        "Label": "FFMPEG Builder: 종횡비",
         "Fields": {
           "AdjustmentMode": "조정 모드",
           "AdjustmentMode-Help": "종횡비를 적용하는 방식을 선택하세요. 옵션에는 비디오를 늘리기, 검은색 바 추가(레터박스), 또는 비디오를 자르는 방식이 포함됩니다.",
@@ -133,7 +133,7 @@
       },
       "FfmpegBuilderAudioAddTrack": {
         "Description": "FFMPEG 빌더에 새로운 오디오 트랙을 추가하며, 빌더가 실행되면 추가됩니다.",
-        "Label": "FFMPEG 빌더: 오디오 트랙 추가",
+        "Label": "FFMPEG Builder: 오디오 트랙 추가",
         "Fields": {
           "Bitrate": "비트 전송률",
           "Bitrate-Help": "새 오디오 트랙의 비트 전송률",
@@ -167,7 +167,7 @@
       },
       "FfmpegBuilderAudioAdjustVolume": {
         "Description": "FFMPEG를 사용하여 비디오 파일의 오디오 트랙 볼륨을 조정합니다.",
-        "Label": "FFMPEG 빌더: 오디오 볼륨 조정",
+        "Label": "FFMPEG Builder: 오디오 볼륨 조정",
         "Fields": {
           "AllAudio": "모든 오디오 트랙",
           "AllAudio-Help": "모든 오디오 트랙을 정규화할지 아니면 첫 번째 트랙만 정규화할지 여부",
@@ -187,7 +187,7 @@
       },
       "FfmpegBuilderAudioConvert": {
         "Description": "매개변수에 맞는 모든 트랙을 변환할 수 있게 해줍니다.",
-        "Label": "FFMPEG 빌더: 오디오 변환",
+        "Label": "FFMPEG Builder: 오디오 변환",
         "Fields": {
           "Bitrate": "비트 전송률",
           "Bitrate-Help": "오디오 트랙의 비트 전송률",
@@ -211,7 +211,7 @@
       },
       "FfmpegBuilderAudioConverter": {
         "Description": "매개변수에 맞는 모든 트랙을 변환할 수 있게 해줍니다.",
-        "Label": "FFMPEG 빌더: 오디오 변환기",
+        "Label": "FFMPEG Builder: 오디오 변환기",
         "Fields": {
           "Bitrate": "비트 전송률",
           "Bitrate-Help": "오디오 트랙의 비트 전송률",
@@ -257,7 +257,7 @@
       },
       "FfmpegBuilderAudioNormalization": {
         "Description": "FFMPEG의 loudnorm 필터를 사용하여 비디오 파일의 모든 오디오 트랙을 정규화합니다.",
-        "Label": "FFMPEG 빌더: 오디오 정규화",
+        "Label": "FFMPEG Builder: 오디오 정규화",
         "Fields": {
           "AllAudio": "모든 오디오 트랙",
           "AllAudio-Help": "모든 오디오 트랙을 정규화할지, 아니면 첫 번째 트랙만 정규화할지 여부",
@@ -277,7 +277,7 @@
       },
       "FfmpegBuilderAudioSetLanguage": {
         "Description": "언어가 설정되지 않은 트랙에 언어를 설정할 수 있습니다. 트랙에 언어가 설정되어 있으면 건너뜁니다.\n\n출력 1: 트랙이 업데이트되었습니다.\n출력 2: 업데이트할 트랙이 없었습니다.",
-        "Label": "FFMPEG 빌더: 언어 설정",
+        "Label": "FFMPEG Builder: 언어 설정",
         "Fields": {
           "Language": "언어",
           "Language-Help": "[ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) 언어 코드를 사용합니다.",
@@ -291,7 +291,7 @@
       },
       "FfmpegBuilderAudioTrackRemover": {
         "Description": "제목이나 언어 코드를 기준으로 트랙을 제거할 수 있습니다.\n\n빈 제목(또는 \"언어 코드 사용\"으로 설정된 경우의 언어 코드)은 패턴과 관계없이 제거되지 않습니다.",
-        "Label": "FFMPEG 빌더: 트랙 제거기 (구식)",
+        "Label": "FFMPEG Builder: 트랙 제거기 (구식)",
         "Fields": {
           "MatchType": "일치",
           "MatchType-Help": "일치할 값을 지정합니다.",
@@ -315,7 +315,7 @@
       },
       "FfmpegBuilderAudioTrackReorder": {
         "Description": "선호하는 순서로 트랙을 재정렬할 수 있습니다.\n\n원하는 순서로 언어/오디오 코덱/채널을 입력하십시오. 나열되지 않은 항목은 입력한 순서 뒤에 원래 순서로 정렬됩니다.\n같은 언어/코덱/채널이 있는 여러 트랙이 있는 경우, 입력한 순서로 먼저 정렬한 후 원래 순서로 정렬됩니다.\n\n재정렬 후 첫 번째 트랙은 기본 트랙으로 설정됩니다.\n\n출력 1: 트랙이 재정렬되었습니다.\n출력 2: 트랙이 재정렬될 필요가 없었습니다.",
-        "Label": "FFMPEG 빌더: 트랙 재정렬",
+        "Label": "FFMPEG Builder: 트랙 재정렬",
         "Fields": {
           "Channels": "채널",
           "Channels-Help": "오디오 트랙을 정렬할 오디오 채널의 순서입니다. 이 정렬은 언어보다 먼저 수행됩니다.\n예: \"5.1\",\"7.1\",\"6.2\",\"2\"",
@@ -333,7 +333,7 @@
       },
       "FfmpegBuilderAutoChapters": {
         "Description": "비디오에서 장면 변화를 자동으로 감지하여 챕터를 생성합니다.",
-        "Label": "FFMPEG 빌더: 자동 챕터",
+        "Label": "FFMPEG Builder: 자동 챕터",
         "Fields": {
           "MinimumLength": "최소 길이",
           "MinimumLength-Help": "챕터의 최소 길이(초)",
@@ -440,7 +440,7 @@
       },
       "FfmpegBuilderHdrToSdr": {
         "Description": "비디오 스트림이 HDR인지 확인하고, 그렇다면 FFMPEG 빌더를 업데이트하여 SDR로 변환합니다.",
-        "Label": "FFMPEG 빌더: HDR에서 SDR로",
+        "Label": "FFMPEG Builder: HDR에서 SDR로",
         "Outputs": {
           "1": "HDR 스트림이 감지되어 FFMPEG 빌더가 변환하도록 업데이트됨",
           "2": "HDR 스트림이 발견되지 않음"
@@ -448,7 +448,7 @@
       },
       "FfmpegBuilderKeepOriginalLanguage": {
         "Description": "이 흐름 요소는 원본 언어와 사용자가 정의한 추가 언어만 유지합니다.\n\n모든 다른 언어 스트림은 제거되거나 삭제를 위해 표시됩니다.",
-        "Label": "FFMPEG 빌더: 원본 언어 유지",
+        "Label": "FFMPEG Builder: 원본 언어 유지",
         "Fields": {
           "AdditionalLanguages": "추가 언어",
           "AdditionalLanguages-Help": "유지할 추가 언어 코드의 선택적 목록입니다.\n\n[ISO 639-2 언어 코드](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes)를 사용하는 것이 좋습니다.",
@@ -484,7 +484,7 @@
       },
       "FfmpegBuilderMetadataRemover": {
         "Description": "FFMPEG 빌더에서 메타데이터를 제거하여 파일이 처리될 때 선택된 메타데이터가 제거됩니다.\n\n참고: 이 흐름 요소에 영향을 받는 메타데이터만 제거되며, 이 노드가 실행된 후에 추가된 메타데이터는 영향을 받지 않습니다.",
-        "Label": "FFMPEG 빌더: 메타데이터 제거기",
+        "Label": "FFMPEG Builder: 메타데이터 제거기",
         "Fields": {
           "Audio": "오디오",
           "Audio-Help": "오디오 트랙에서 이 메타데이터를 제거해야 하는지 여부",
@@ -506,8 +506,8 @@
         }
       },
       "FfmpegBuilderPreExecute": {
-        "Description": "이 요소는 [FFmpeg 빌더: 실행기](https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder)가 FFmpeg를 실행하기 직전에 사용자 지정 코드를 실행할 수 있게 합니다.\n\n이를 통해 FFmpeg에 전달되는 인수를 변경할 수 있습니다.",
-        "Label": "FFMPEG 빌더: 사전 실행",
+        "Description": "이 요소는 [FFMPEG Builder: 실행기](https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder)가 FFmpeg를 실행하기 직전에 사용자 지정 코드를 실행할 수 있게 합니다.\n\n이를 통해 FFmpeg에 전달되는 인수를 변경할 수 있습니다.",
+        "Label": "FFMPEG Builder: 사전 실행",
         "Fields": {
           "Code": "코드"
         },
@@ -517,7 +517,7 @@
       },
       "FfmpegBuilderProres": {
         "Description": "비디오를 prores 형식으로 인코딩합니다.",
-        "Label": "FFMPEG 빌더: Prores",
+        "Label": "FFMPEG Builder: Prores",
         "Fields": {
           "Encoder": "인코더",
           "Encoder-Help": "어떤 FFmpeg prores 인코더를 사용할지.",
@@ -532,14 +532,14 @@
       },
       "FfmpegBuilderRemoveAttachments": {
         "Description": "비디오에서 모든 첨부 파일을 제거합니다. 첨부 파일이 있는 경우.",
-        "Label": "FFMPEG 빌더: 첨부 파일 제거",
+        "Label": "FFMPEG Builder: 첨부 파일 제거",
         "Outputs": {
           "1": "FFMPEG 빌더가 첨부 파일을 제거하도록 설정됨."
         }
       },
       "FfmpegBuilderRemuxToMkv": {
         "Description": "비디오 파일을 MKV 컨테이너로 리믹스합니다.",
-        "Label": "FFMPEG 빌더: MKV로 리믹스",
+        "Label": "FFMPEG Builder: MKV로 리믹스",
         "Outputs": {
           "1": "FFMPEG 빌더가 MKV로 리믹스하도록 설정됨"
         }
@@ -784,7 +784,7 @@
       },
       "FfmpegBuilderVideoBitrate": {
         "Description": "주어진 비트레이트로 비디오를 인코딩하도록 FFMPEG 빌더를 설정합니다.",
-        "Label": "FFMPEG 빌더: 비디오 비트레이트",
+        "Label": "FFMPEG Builder: 비디오 비트레이트",
         "Fields": {
           "Bitrate": "비트레이트",
           "Bitrate-Help": "비디오의 목표 비트레이트(킬로바이트)",
@@ -798,7 +798,7 @@
       },
       "FfmpegBuilderVideoBitrateEncode": {
         "Description": "비트레이트 기반의 사용하기 쉬운 프리셋으로 비디오를 인코딩하도록 FFMPEG 빌더를 설정합니다.",
-        "Label": "FFMPEG 빌더: 비트레이트 인코드",
+        "Label": "FFMPEG Builder: 비트레이트 인코드",
         "Fields": {
           "Bitrate": "비트레이트",
           "Bitrate-Suffix": "Kbps",
@@ -814,7 +814,7 @@
       },
       "FfmpegBuilderVideoCodec": {
         "Description": "지정된 코덱으로 비디오 스트림을 인코딩하도록 FFMPEG 빌더를 설정합니다.",
-        "Label": "FFMPEG 빌더: 비디오 코덱",
+        "Label": "FFMPEG Builder: 비디오 코덱",
         "Fields": {
           "DisableOtherVideoStreams": "첫 번째만 사용",
           "DisableOtherVideoStreams-Help": "선택할 경우, 파일에 여러 비디오 스트림이 있을 경우, 실행 후 첫 번째 비디오 스트림을 제외한 모든 비디오 스트림이 제거됩니다.",
@@ -832,7 +832,7 @@
       },
       "FfmpegBuilderVideoEncode": {
         "Description": "사용하기 쉬운 프리셋으로 비디오를 인코딩하도록 FFMPEG 빌더를 설정합니다.",
-        "Label": "FFMPEG 빌더: 비디오 인코드",
+        "Label": "FFMPEG Builder: 비디오 인코딩 고급",
         "Fields": {
           "Codec": "코덱",
           "Encoder": "인코더",
@@ -848,9 +848,27 @@
           "1": "FFMPEG 빌더 비디오 스트림이 인코딩하도록 설정되었습니다."
         }
       },
+      "FfmpegBuilderVideoEncodeSimple": {
+        "Description": "FFMPEG Builder를 설정하여 사용하기 쉬운 사전 설정으로 비디오를 인코딩합니다. 품질과 속도의 중간 값을 사용하면 파일 크기, 인코딩 시간, 비디오 품질 간의 균형을 잘 맞출 수 있습니다.",
+        "Label": "FFMPEG Builder: 비디오 인코딩",
+        "Fields": {
+          "Codec": "코덱",
+          "Encoder": "인코더",
+          "Encoder-Help": "사용할 인코더입니다. 사용 가능한 하드웨어 인코더를 지정하지 않으면 인코딩이 실패할 수 있습니다.",
+          "HardwareEncoding": "하드웨어 인코딩",
+          "HardwareEncoding-Help": "활성화하면 처리 노드에서 사용 가능한 하드웨어 인코더를 확인합니다. 발견되면 하드웨어 인코딩을 사용하고, 그렇지 않으면 CPU 인코딩을 사용합니다.",
+          "Quality": "품질",
+          "Quality-Help": "값이 높을수록 품질이 향상되고 파일 크기가 커집니다. 값이 낮으면 품질과 파일 크기가 줄어듭니다.",
+          "Speed": "속도",
+          "Speed-Help": "빠른 인코딩은 압축 효율성을 낮추어 품질 저하 또는 파일 크기 증가를 초래할 수 있습니다. 느린 인코딩은 압축 효율성을 높여 품질 향상 또는 파일 크기 감소를 가능하게 합니다."
+        },
+        "Outputs": {
+          "1": "FFMPEG Builder에서 비디오 스트림 인코딩 설정 완료"
+        }
+      },
       "FfmpegBuilderVideoMaxBitrate": {
         "Description": "FFMPEG 빌더의 비디오 비트레이트 한계를 설정합니다.",
-        "Label": "FFMPEG 빌더: 비디오 최대 비트레이트",
+        "Label": "FFMPEG Builder: 비디오 최대 비트레이트",
         "Fields": {
           "Bitrate": "최대 비트레이트",
           "Bitrate-Help": "비디오의 최대 비트레이트(킬로바이트)",
@@ -862,7 +880,7 @@
       },
       "FfmpegBuilderVideoTag": {
         "Description": "비디오 파일에 태그를 설정합니다.",
-        "Label": "FFMPEG 빌더: 비디오 태그",
+        "Label": "FFMPEG Builder: 비디오 태그",
         "Fields": {
           "Tag": "태그",
           "Tag-Help": "비디오 파일에 추가할 태그입니다."
@@ -873,7 +891,7 @@
       },
       "FFmpegBuilderWatermark": {
         "Description": "비디오 파일에 워터마크를 추가합니다.",
-        "Label": "FFMPEG 빌더: 워터마크",
+        "Label": "FFMPEG Builder: 워터마크",
         "Fields": {
           "Height": "높이",
           "Height-Help": "이미지의 사용자 정의 높이를 설정하거나, 0으로 설정하여 원본 높이 또는 너비가 설정된 경우 스케일링합니다.",
