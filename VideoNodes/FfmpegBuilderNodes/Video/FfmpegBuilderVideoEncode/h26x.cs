@@ -150,8 +150,9 @@ public partial class FfmpegBuilderVideoEncode
         // Enforce CRF bounds
         crf = Math.Clamp(crf, 1, 51);
 
-        // Adjusted scale to align with x264/x265/NVENC/AMF/QSV behavior
-        return (int)Math.Round(80 - (crf - 1) * (25.0 / 50.0)); 
+        // More aggressive mapping to VideoToolbox -q scale
+        return (int)Math.Round(82 - (crf - 1) * (32.0 / 50.0));
     }
+
 
 }
