@@ -150,6 +150,6 @@ public partial class FfmpegBuilderVideoEncodeSimple
         int min = 30;
         double max = 17.0;
         quality = Math.Clamp(quality, minQuality, maxQuality);
-        return (int)Math.Round(min - (quality - 1) * (max / (double)(maxQuality - minQuality)));
+        return (int)Math.Round(min - ((quality - minQuality) / (double)(maxQuality - minQuality)) * (min - max));
     }
 }

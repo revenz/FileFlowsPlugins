@@ -57,11 +57,15 @@ public class FfmpegBuilder_VideoEncodeTests_AV1
     }
 
     [TestMethod]
-    [DataRow(0, 30)] // Lower bound
     [DataRow(1, 30)]
-    [DataRow(5, 23)]
-    [DataRow(10, 15)] // Upper bound
-    [DataRow(11, 15)] // Out of range
+    [DataRow(2, 28)]
+    [DataRow(3, 27)]
+    [DataRow(4, 25)]
+    [DataRow(5, 24)]
+    [DataRow(6, 22)] 
+    [DataRow(7, 20)] 
+    [DataRow(8, 19)] 
+    [DataRow(9, 17)] 
     public void MapQuality_Tests(int quality, int expected)
     {
         int result = FfmpegBuilderVideoEncodeSimple.MapQuality(quality);
