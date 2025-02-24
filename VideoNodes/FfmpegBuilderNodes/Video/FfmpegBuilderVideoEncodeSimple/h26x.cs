@@ -97,22 +97,27 @@ public partial class FfmpegBuilderVideoEncodeSimple
     /// </summary>
     internal static string[] H26x_VideoToolbox(bool h265, int quality, int speed)
     {
-        int q = MapQualityToVideoToolbox(MapQuality(quality));
+        int q = quality switch
+        {
+            1 => 90,  // Lowest quality, most compression (smallest file)
+            2 => 87,
+            3 => 85,
+            4 => 82,
+            5 => 78,  // Mid quality (~CRF 23-25)
+            6 => 76,
+            7 => 74,
+            8 => 72,
+            9 => 70,
+            10 => 68, // Highest quality, least compression (largest file)
+            _ => 78   // Default to mid-quality
+        };
+
         return
         [
             h265 ? "hevc_videotoolbox" : "h264_videotoolbox",
             "-q", q.ToString(),
             "-preset", MapSpeed(speed, "slower")
         ];
-    }
-
-    /// <summary>
-    /// Maps a CRF-style quality value (1-51) to VideoToolbox's Q scale (50-80).
-    /// </summary>
-    private static int MapQualityToVideoToolbox(int crf)
-    {
-        crf = Math.Clamp(crf, 1, 51);
-        return (int)Math.Round(80 - (crf - 15) * (30.0 / 15.0));
     }
 
     /// <summary>
