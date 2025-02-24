@@ -98,26 +98,9 @@ public partial class FfmpegBuilderVideoEncodeSimple
     internal static string[] H26x_VideoToolbox(bool h265, int quality, int speed)
     {
         quality = Math.Clamp(quality, minQuality, maxQuality);
-        int min = 43;
+        int min = 42;
         int max = 78;
         int q = (int)Math.Round(min + ((quality - minQuality) / (double)(maxQuality - minQuality)) * (max - min));
-
-
-        int q2 = quality switch
-        {
-            0 => 40,
-            1 => 43,  // Lowest quality, most compression (smallest file)
-            2 => 46,
-            3 => 49,
-            4 => 52,
-            5 => 55,  // Mid quality (~CRF 23-25)
-            6 => 60,
-            7 => 65,
-            8 => 70,
-            9 => 75,
-            10 => 80, // Highest quality, least compression (largest file)
-            _ => 55   // Default to mid-quality
-        };
 
         return
         [
