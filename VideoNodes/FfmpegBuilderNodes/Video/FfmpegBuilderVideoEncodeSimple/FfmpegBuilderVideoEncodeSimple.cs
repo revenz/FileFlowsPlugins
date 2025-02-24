@@ -35,9 +35,12 @@ public partial class FfmpegBuilderVideoEncodeSimple:VideoEncodeBase
     /// Gets or sets the quality of the video encode
     /// </summary>
     [Slider(3, hideValue: false)]
-    [Range(0, 10)]
-    [DefaultValue(6)]
+    [Range(1, 9)]
+    [DefaultValue(5)]
     public int Quality { get; set; }
+
+    private const int minQuality = 1;
+    private const int maxQuality = 9;
     
     /// <summary>
     /// Gets or sets the speed to encode

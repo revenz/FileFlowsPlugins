@@ -97,7 +97,13 @@ public partial class FfmpegBuilderVideoEncodeSimple
     /// </summary>
     internal static string[] H26x_VideoToolbox(bool h265, int quality, int speed)
     {
-        int q = quality switch
+        quality = Math.Clamp(quality, minQuality, maxQuality);
+        int min = 43;
+        int max = 78;
+        int q = (int)Math.Round(min + ((quality - minQuality) / (double)(maxQuality - minQuality)) * (max - min));
+
+
+        int q2 = quality switch
         {
             0 => 40,
             1 => 43,  // Lowest quality, most compression (smallest file)
@@ -158,7 +164,9 @@ public partial class FfmpegBuilderVideoEncodeSimple
     /// </summary>
     internal static int MapQuality(int quality)
     {
-        quality = Math.Clamp(quality, 0, 10);
-        return (int)Math.Round(30 - quality * (15.0 / 9.0));
+        int min = 30;
+        double max = 15.0;
+        quality = Math.Clamp(quality, minQuality, maxQuality);
+        return (int)Math.Round(min - (quality - 1) * (max / (double)(maxQuality - minQuality)));
     }
 }
