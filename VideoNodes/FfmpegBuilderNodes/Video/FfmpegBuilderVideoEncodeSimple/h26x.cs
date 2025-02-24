@@ -99,17 +99,17 @@ public partial class FfmpegBuilderVideoEncodeSimple
     {
         int q = quality switch
         {
-            1 => 86,  // Lowest quality, most compression (smallest file)
-            2 => 84,
-            3 => 82,
-            4 => 80,
-            5 => 78,  // Mid quality (~CRF 23-25)
-            6 => 76,
-            7 => 74,
-            8 => 72,
-            9 => 70,
-            10 => 68, // Highest quality, least compression (largest file)
-            _ => 78   // Default to mid-quality
+            1 => 60,  // Lowest quality, most compression (smallest file)
+            2 => 62,
+            3 => 64,
+            4 => 66,
+            5 => 68,  // Mid quality (~CRF 23-25)
+            6 => 70,
+            7 => 72,
+            8 => 74,
+            9 => 76,
+            10 => 78, // Highest quality, least compression (largest file)
+            _ => 68   // Default to mid-quality
         };
 
         return
