@@ -35,7 +35,7 @@ public partial class FfmpegBuilderVideoEncodeSimple:VideoEncodeBase
     /// Gets or sets the quality of the video encode
     /// </summary>
     [Slider(3, hideValue: true)]
-    [Range(1, 10)]
+    [Range(0, 10)]
     [DefaultValue(6)]
     public int Quality { get; set; }
     

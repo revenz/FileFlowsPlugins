@@ -99,10 +99,11 @@ public partial class FfmpegBuilderVideoEncodeSimple
     {
         int q = quality switch
         {
-            1 => 40,  // Lowest quality, most compression (smallest file)
-            2 => 44,
-            3 => 48,
-            4 => 51,
+            0 => 40,
+            1 => 43,  // Lowest quality, most compression (smallest file)
+            2 => 46,
+            3 => 49,
+            4 => 52,
             5 => 55,  // Mid quality (~CRF 23-25)
             6 => 60,
             7 => 65,
@@ -157,7 +158,7 @@ public partial class FfmpegBuilderVideoEncodeSimple
     /// </summary>
     internal static int MapQuality(int quality)
     {
-        quality = Math.Clamp(quality, 1, 10);
-        return (int)Math.Round(30 - (quality - 1) * (15.0 / 9.0));
+        quality = Math.Clamp(quality, 0, 10);
+        return (int)Math.Round(30 - quality * (15.0 / 9.0));
     }
 }
