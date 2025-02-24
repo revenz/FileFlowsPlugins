@@ -34,7 +34,7 @@ public partial class FfmpegBuilderVideoEncodeSimple:VideoEncodeBase
     /// <summary>
     /// Gets or sets the quality of the video encode
     /// </summary>
-    [Slider(3, hideValue: true)]
+    [Slider(3, hideValue: false)]
     [Range(0, 10)]
     [DefaultValue(6)]
     public int Quality { get; set; }
@@ -42,7 +42,7 @@ public partial class FfmpegBuilderVideoEncodeSimple:VideoEncodeBase
     /// <summary>
     /// Gets or sets the speed to encode
     /// </summary>
-    [Slider(4, hideValue: true)]
+    [Slider(4, hideValue: false)]
     [Range(1, 5)]
     [DefaultValue(3)]
     public int Speed { get; set; }
