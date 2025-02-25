@@ -164,17 +164,18 @@ public partial class FfmpegBuilderVideoEncodeSimple
         // Linear interpolation
         return (int)Math.Round(max - ((quality - minQuality) / (double)(maxQuality - minQuality)) * (max - min));
     }
-
     /// <summary>
-    /// Maps a 1-10 quality scale to VideoToolbox's quality range (60-80).
+    /// Maps a 1-9 quality scale to VideoToolbox's quality range (60-80).
     /// </summary>
     internal static int MapQualityVideoToolbox(int quality)
     {
-        int minVTB = 54, maxVTB = 78; // VideoToolbox quality range
+        int minVTB = 60, maxVTB = 80; // VideoToolbox quality range
 
         quality = Math.Clamp(quality, minQuality, maxQuality);
 
-        return (int)Math.Round(minVTB + ((quality - minQuality) / (double)(maxQuality - minQuality)) * (maxVTB - minVTB));
+        return (int)Math.Round(minVTB + ((quality - minQuality) / 8.0) * (maxVTB - minVTB));
     }
+
+
 
 }
