@@ -122,7 +122,9 @@ namespace FileFlows.VideoNodes
                     }
                     else if (HasLine(lines, "codec not currently supported in container", out line))
                     {
-                        if (line.Contains("codec ttf")) // add more as i see them
+                        if (line.Contains("mp4") && line.Contains("codec ttf"))
+                            args.FailureReason = "MP4 format does not support embedding TrueType font (TTF) streams. Remove the TTF attachment or use a different container format.";
+                        else if (line.Contains("codec ttf")) // add more as i see them
                             args.FailureReason = "Subtitle codec not currently supported in container";
                         else // generic
                             args.FailureReason = "Codec not currently supported in container";

@@ -185,6 +185,32 @@
           "2": "Non corrisponde"
         }
       },
+      "FilePropertyExists": {
+        "Description": "Verifica se una proprietà è stata impostata su questo record di file. Le proprietà vengono memorizzate nel record del database del file e sono uniche per questa specifica istanza del file, non per il nome del file. Se lo stesso file appare in un'altra libreria, avrà proprietà separate e indipendenti.",
+        "Label": "Proprietà del File Esiste",
+        "Fields": {
+          "Property": "Proprietà",
+          "Property-Help": "Nome della proprietà del file da verificare."
+        },
+        "Outputs": {
+          "1": "La proprietà esiste per questo record di file.",
+          "2": "La proprietà non esiste per questo record di file."
+        }
+      },
+      "FilePropertyMatches": {
+        "Description": "Verifica se una proprietà in questo record di file corrisponde a un valore specificato. Le proprietà vengono memorizzate nel record del database del file e sono uniche per questa specifica istanza del file, non per il nome del file. Se lo stesso file appare in un'altra libreria, avrà proprietà separate e indipendenti.",
+        "Label": "Proprietà del File Corrisponde",
+        "Fields": {
+          "Property": "Proprietà",
+          "Property-Help": "Nome della proprietà del file da verificare.",
+          "Value": "Valore",
+          "Value-Help": "Valore atteso della proprietà."
+        },
+        "Outputs": {
+          "1": "La proprietà corrisponde al valore atteso.",
+          "2": "La proprietà non corrisponde al valore atteso."
+        }
+      },
       "FileSize": {
         "Description": "Controlla se la dimensione del file corrisponde ai parametri configurati. I valori sono in megabyte.\n\nOutput 1: Corrisponde\nOutput 2: Non corrisponde",
         "Label": "Dimensione File",
@@ -641,6 +667,19 @@
         },
         "Outputs": {
           "1": "Miniatura impostata"
+        }
+      },
+      "SetFileProperty": {
+        "Description": "Imposta una proprietà su questo record di file. Le proprietà vengono memorizzate nel record del database del file e sono uniche per questa specifica istanza del file, non per il nome del file. Se lo stesso file appare in un'altra libreria, avrà proprietà separate e indipendenti.",
+        "Label": "Imposta Proprietà del File",
+        "Fields": {
+          "Property": "Proprietà",
+          "Property-Help": "Nome della proprietà del file da impostare.",
+          "Value": "Valore",
+          "Value-Help": "Valore da assegnare alla proprietà."
+        },
+        "Outputs": {
+          "1": "La proprietà è stata impostata su questo record di file."
         }
       },
       "SetVariable": {

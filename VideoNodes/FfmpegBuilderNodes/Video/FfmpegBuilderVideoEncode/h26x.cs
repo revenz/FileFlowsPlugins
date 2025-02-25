@@ -75,10 +75,10 @@ public partial class FfmpegBuilderVideoEncode
 
     private static IEnumerable<string> H26x_Amd(bool h265, int quality, string speed, out string[] bit10Filters)
     {
-        bit10Filters = new[]
-        {
-            "-pix_fmt:v:{index}", "p010le", "-profile:v:{index}", "2"
-        };
+        bit10Filters =
+        [
+            "-pix_fmt:v:{index}", "p010le", "-profile:v:{index}", "1" // 1 is main
+        ];
         string preset = "6"; // Default to "medium" (6) if speed is null or invalid
 
         switch (speed)
@@ -105,21 +105,47 @@ public partial class FfmpegBuilderVideoEncode
 
     private static IEnumerable<string> H26x_Vaapi(bool h265, int quality, string speed)
     {
-        return new[]
-        {
+        return
+        [
             h265 ? "hevc_vaapi" : "h264_vaapi",
             "-qp", quality.ToString(),
             "-preset", speed?.EmptyAsNull() ?? "slower",
             "-spatial-aq", "1"
-        };
+        ];
     }
+
+    /// <summary>
+    /// Generates encoding parameters for VideoToolbox (macOS hardware acceleration).
+    /// Maps a CRF-style quality value (1-51) to VideoToolbox's scale (50-80) for consistency across encoders.
+    /// </summary>
+    /// <param name="h265">True for HEVC, false for H.264.</param>
+    /// <param name="quality">CRF-style quality value (1-51).</param>
+    /// <param name="speed">Encoding speed preset.</param>
+    /// <returns>List of FFmpeg parameters for VideoToolbox encoding.</returns>
     private static IEnumerable<string> H26x_VideoToolbox(bool h265, int quality, string speed)
     {
+        // Map quality (1-51 CRF style) to VideoToolbox's Q scale (50-80)
+        int q = MapQualityToVideoToolbox(quality);
+        
         return new[]
         {
             h265 ? "hevc_videotoolbox" : "h264_videotoolbox",
-            "-qp", quality.ToString(),
+            "-q", q.ToString(),
             "-preset", speed?.EmptyAsNull() ?? "slower"
         };
+    }
+
+    /// <summary>
+    /// Maps a CRF-style quality value (1-51) to VideoToolbox's Q scale (50-80).
+    /// </summary>
+    /// <param name="crf">CRF-style quality value (1-51).</param>
+    /// <returns>Equivalent VideoToolbox quality value (50-80).</returns>
+    private static int MapQualityToVideoToolbox(int crf)
+    {
+        // Enforce CRF bounds
+        crf = Math.Clamp(crf, 1, 51);
+
+        // More aggressive mapping to VideoToolbox -q scale
+        return (int)Math.Round(82 - (crf - 1) * (32.0 / 50.0));
     }
 }

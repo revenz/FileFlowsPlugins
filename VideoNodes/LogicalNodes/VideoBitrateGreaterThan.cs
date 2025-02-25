@@ -27,7 +27,7 @@ public class VideoBitrateGreaterThan: VideoNode
     public override string Icon => "fas fa-video";
 
     /// <summary>
-    /// Gets or sets the bitrate in KBps to test
+    /// Gets or sets the bitrate in Kbps to test
     /// </summary>
     [NumberInt(1)]
     [Range(1, 10_000_000)]
@@ -101,15 +101,15 @@ public class VideoBitrateGreaterThan: VideoNode
     /// <returns>the output to call next</returns>
     public static int CheckBitrate(ILogger logger, float videoBitrateBps, float maxBitrateKbps)
     {
- 
-        // check if the bitrate is over the maximum bitrate
+        // Convert maxBitrateKbps to bps
         if (videoBitrateBps > (maxBitrateKbps * 1000))
         {
-            logger?.ILog($"Bitrate '{videoBitrateBps / 1000} KBps' is greater than '{maxBitrateKbps} KBps'");
-            return 1; // it is, so call output 1
+            logger?.ILog($"Bitrate '{videoBitrateBps / 1000} Kbps' is greater than '{maxBitrateKbps} Kbps'");
+            return 1;
         }
 
-        logger?.ILog($"Bitrate '{videoBitrateBps / 1000} KBps' is not greater than '{maxBitrateKbps} KBps'");
-        return 2; // it isn't so call output 2
+        logger?.ILog($"Bitrate '{videoBitrateBps / 1000} Kbps' is not greater than '{maxBitrateKbps} Kbps'");
+        return 2;
     }
+
 }

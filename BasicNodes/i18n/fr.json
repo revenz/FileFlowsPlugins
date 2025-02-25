@@ -185,6 +185,32 @@
           "2": "Ne correspond pas"
         }
       },
+      "FilePropertyExists": {
+        "Description": "Vérifie si une propriété a été définie sur cet enregistrement de fichier. Les propriétés sont stockées dans l'enregistrement de base de données du fichier et sont uniques à cette instance spécifique du fichier, et non au nom du fichier. Si le même fichier apparaît dans une autre bibliothèque, il aura ses propres propriétés distinctes.",
+        "Label": "Propriété du Fichier Existe",
+        "Fields": {
+          "Property": "Propriété",
+          "Property-Help": "Nom de la propriété du fichier à vérifier."
+        },
+        "Outputs": {
+          "1": "La propriété existe pour cet enregistrement de fichier.",
+          "2": "La propriété n'existe pas pour cet enregistrement de fichier."
+        }
+      },
+      "FilePropertyMatches": {
+        "Description": "Vérifie si une propriété de cet enregistrement de fichier correspond à une valeur donnée. Les propriétés sont stockées dans l'enregistrement de base de données du fichier et sont uniques à cette instance spécifique du fichier, et non au nom du fichier. Si le même fichier apparaît dans une autre bibliothèque, il aura ses propres propriétés distinctes.",
+        "Label": "Propriété du Fichier Correspond",
+        "Fields": {
+          "Property": "Propriété",
+          "Property-Help": "Nom de la propriété du fichier à vérifier.",
+          "Value": "Valeur",
+          "Value-Help": "Valeur attendue de la propriété."
+        },
+        "Outputs": {
+          "1": "La propriété correspond à la valeur attendue.",
+          "2": "La propriété ne correspond pas à la valeur attendue."
+        }
+      },
       "FileSize": {
         "Description": "Vérifie si la taille du fichier correspond aux paramètres configurés. Les valeurs sont en mégaoctets.\n\nSortie 1: Correspond\nSortie 2: Ne correspond pas",
         "Label": "Taille de fichier",
@@ -641,6 +667,19 @@
         },
         "Outputs": {
           "1": "Miniature définie"
+        }
+      },
+      "SetFileProperty": {
+        "Description": "Définit une propriété sur cet enregistrement de fichier. Les propriétés sont stockées dans l'enregistrement de base de données du fichier et sont uniques à cette instance spécifique du fichier, et non au nom du fichier. Si le même fichier apparaît dans une autre bibliothèque, il aura ses propres propriétés distinctes.",
+        "Label": "Définir une Propriété du Fichier",
+        "Fields": {
+          "Property": "Propriété",
+          "Property-Help": "Nom de la propriété du fichier à définir.",
+          "Value": "Valeur",
+          "Value-Help": "Valeur à attribuer à la propriété."
+        },
+        "Outputs": {
+          "1": "La propriété a été définie sur cet enregistrement de fichier."
         }
       },
       "SetVariable": {

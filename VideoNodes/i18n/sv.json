@@ -834,7 +834,7 @@
       },
       "FfmpegBuilderVideoEncode": {
         "Description": "Ställer in FFMPEG Builder för att koda videon med enkla förinställningar",
-        "Label": "FFMPEG Builder: Video Koda",
+        "Label": "FFMPEG Builder: Avancerad Videokodning",
         "Fields": {
           "Codec": "Codec",
           "Encoder": "Encoder",
@@ -848,6 +848,35 @@
         },
         "Outputs": {
           "1": "FFMPEG Builder videoströmmar inställda på att koda"
+        }
+      },
+      "FfmpegBuilderVideoEncodeManual": {
+        "Description": "Konfigurerar FFMPEG Builder för att koda huvudvideoströmmen med manuellt angivna kodningsparametrar.",
+        "Label": "FFMPEG Builder: Video Encode Manual",
+        "Fields": {
+          "Parameters": "Parameters",
+          "Parameters-Help": "Ange anpassade videokodningsparametrar. Se FFmpeg-dokumentationen för tillgängliga alternativ."
+        },
+        "Outputs": {
+          "1": "FFMPEG Builders videokodningsparametrar uppdaterade"
+        }
+      },
+      "FfmpegBuilderVideoEncodeSimple": {
+        "Description": "Ställer in FFMPEG Builder för att koda video med lättanvända förinställningar. Att använda medelvärden för Kvalitet och Hastighet ger en bra balans mellan filstorlek, kodningstid och videokvalitet.",
+        "Label": "FFMPEG Builder: Video Encode",
+        "Fields": {
+          "Codec": "Codec",
+          "Encoder": "Encoder",
+          "Encoder-Help": "Encodern som ska användas. Om en hårdvaruencoder anges som inte är tillgänglig kommer kodningen att misslyckas.",
+          "HardwareEncoding": "Hårdvaruencoding",
+          "HardwareEncoding-Help": "Om aktiverat kontrollerar det om hårdvaruencoders finns tillgängliga på bearbetningsnoden. Om de hittas används hårdvaruencoding, annars används CPU-encoding.",
+          "Quality": "Kvalitet",
+          "Quality-Help": "Högre värden ger bättre kvalitet och större filer. Lägre värden minskar kvalitet och filstorlek.",
+          "Speed": "Hastighet",
+          "Speed-Help": "Snabbare kodning minskar komprimeringseffektiviteten, vilket kan leda till sämre kvalitet eller större filer. Långsammare kodning förbättrar komprimeringseffektiviteten, vilket ger bättre kvalitet eller mindre filer."
+        },
+        "Outputs": {
+          "1": "FFMPEG Builder inställd för att koda videoströmmar"
         }
       },
       "FfmpegBuilderVideoMaxBitrate": {
@@ -953,7 +982,7 @@
         "Label": "Videobitrate större än",
         "Fields": {
           "Bitrate": "Bitrate",
-          "Bitrate-Suffix": "KBps"
+          "Bitrate-Suffix": "Kbps"
         },
         "Outputs": {
           "1": "Bitrate är större än",

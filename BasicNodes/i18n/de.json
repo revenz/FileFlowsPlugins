@@ -185,6 +185,32 @@
           "2": "Stimmt nicht überein"
         }
       },
+      "FilePropertyExists": {
+        "Description": "Prüft, ob eine Eigenschaft für diesen Datei-Datensatz gesetzt wurde. Eigenschaften werden im Datenbankeintrag der Datei gespeichert und sind einzigartig für diese spezifische Dateiinstanz, nicht für den Dateinamen. Wenn dieselbe Datei in einer anderen Bibliothek erscheint, hat sie ihre eigenen separaten Eigenschaften.",
+        "Label": "Dateieigenschaft Existiert",
+        "Fields": {
+          "Property": "Eigenschaft",
+          "Property-Help": "Name der Dateieigenschaft, die überprüft werden soll."
+        },
+        "Outputs": {
+          "1": "Die Eigenschaft existiert für diesen Datei-Datensatz.",
+          "2": "Die Eigenschaft existiert nicht für diesen Datei-Datensatz."
+        }
+      },
+      "FilePropertyMatches": {
+        "Description": "Prüft, ob eine Eigenschaft in diesem Datei-Datensatz einem bestimmten Wert entspricht. Eigenschaften werden im Datenbankeintrag der Datei gespeichert und sind einzigartig für diese spezifische Dateiinstanz, nicht für den Dateinamen. Wenn dieselbe Datei in einer anderen Bibliothek erscheint, hat sie ihre eigenen separaten Eigenschaften.",
+        "Label": "Dateieigenschaft Stimmt Überein",
+        "Fields": {
+          "Property": "Eigenschaft",
+          "Property-Help": "Name der Dateieigenschaft, die überprüft werden soll.",
+          "Value": "Wert",
+          "Value-Help": "Erwarteter Wert der Eigenschaft."
+        },
+        "Outputs": {
+          "1": "Die Eigenschaft entspricht dem erwarteten Wert.",
+          "2": "Die Eigenschaft entspricht nicht dem erwarteten Wert."
+        }
+      },
       "FileSize": {
         "Description": "Überprüft, ob die Dateigröße mit den konfigurierten Parametern übereinstimmt. Die Werte sind in Megabyte angegeben.\n\nAusgang 1: Trifft zu\nAusgang 2: Trifft nicht zu",
         "Label": "Dateigröße",
@@ -641,6 +667,19 @@
         },
         "Outputs": {
           "1": "Miniaturbild gesetzt"
+        }
+      },
+      "SetFileProperty": {
+        "Description": "Setzt eine Eigenschaft für diesen Datei-Datensatz. Eigenschaften werden im Datenbankeintrag der Datei gespeichert und sind einzigartig für diese spezifische Dateiinstanz, nicht für den Dateinamen. Wenn dieselbe Datei in einer anderen Bibliothek erscheint, hat sie ihre eigenen separaten Eigenschaften.",
+        "Label": "Dateieigenschaft Setzen",
+        "Fields": {
+          "Property": "Eigenschaft",
+          "Property-Help": "Name der Dateieigenschaft, die gesetzt werden soll.",
+          "Value": "Wert",
+          "Value-Help": "Wert, der der Eigenschaft zugewiesen werden soll."
+        },
+        "Outputs": {
+          "1": "Die Eigenschaft wurde für diesen Datei-Datensatz gesetzt."
         }
       },
       "SetVariable": {

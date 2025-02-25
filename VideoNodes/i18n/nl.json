@@ -834,7 +834,7 @@
       },
       "FfmpegBuilderVideoEncode": {
         "Description": "Stelt de FFMPEG Builder in om de video te coderen met eenvoudig te gebruiken presets",
-        "Label": "FFMPEG Builder: Video Coderen",
+        "Label": "FFMPEG Builder: Geavanceerde Video-Encoding",
         "Fields": {
           "Codec": "Codec",
           "Encoder": "Encoder",
@@ -848,6 +848,35 @@
         },
         "Outputs": {
           "1": "FFMPEG Builder video streams ingesteld om te coderen"
+        }
+      },
+      "FfmpegBuilderVideoEncodeManual": {
+        "Description": "Configureert FFMPEG Builder om de hoofdvideostream te coderen met handmatig gespecificeerde coderingsparameters.",
+        "Label": "FFMPEG Builder: Video Encode Manual",
+        "Fields": {
+          "Parameters": "Parameters",
+          "Parameters-Help": "Specificeer aangepaste video-encoderingsparameters. Raadpleeg de FFmpeg-documentatie voor beschikbare opties."
+        },
+        "Outputs": {
+          "1": "FFMPEG Builder video-encoderingsparameters bijgewerkt"
+        }
+      },
+      "FfmpegBuilderVideoEncodeSimple": {
+        "Description": "Stelt de FFMPEG Builder in om video te coderen met eenvoudig te gebruiken voorinstellingen. Door middelwaarden voor Kwaliteit en Snelheid te gebruiken, ontstaat een goede balans tussen bestandsgrootte, coderingstijd en videokwaliteit.",
+        "Label": "FFMPEG Builder: Video Encode",
+        "Fields": {
+          "Codec": "Codec",
+          "Encoder": "Encoder",
+          "Encoder-Help": "De te gebruiken encoder. Als een hardware-encoder wordt opgegeven die niet beschikbaar is, zal de codering mislukken.",
+          "HardwareEncoding": "Hardwarecodering",
+          "HardwareEncoding-Help": "Als ingeschakeld, controleert het of er hardware-encoders beschikbaar zijn op de verwerkingsnode. Als deze worden gevonden, wordt hardwarecodering gebruikt; anders wordt CPU-codering toegepast.",
+          "Quality": "Kwaliteit",
+          "Quality-Help": "Hogere waarden resulteren in betere kwaliteit en grotere bestanden. Lagere waarden verminderen de kwaliteit en bestandsgrootte.",
+          "Speed": "Snelheid",
+          "Speed-Help": "Snellere codering verlaagt de compressie-efficiëntie, wat resulteert in een lagere kwaliteit of grotere bestanden. Langzamere codering verbetert de compressie-efficiëntie, waardoor een betere kwaliteit of kleinere bestanden mogelijk zijn."
+        },
+        "Outputs": {
+          "1": "FFMPEG Builder ingesteld om videostreams te coderen"
         }
       },
       "FfmpegBuilderVideoMaxBitrate": {
@@ -953,7 +982,7 @@
         "Label": "Video Bitrate Groter Dan",
         "Fields": {
           "Bitrate": "Bitrate",
-          "Bitrate-Suffix": "KBps"
+          "Bitrate-Suffix": "Kbps"
         },
         "Outputs": {
           "1": "Bitrate is groter dan",

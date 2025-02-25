@@ -833,8 +833,8 @@
         }
       },
       "FfmpegBuilderVideoEncode": {
-        "Description": "Sets the FFMPEG Builder to encode the video with simple to use presets",
-        "Label": "FFMPEG Builder: Video Encode",
+        "Description": "Sets the FFMPEG Builder to encode the video with easy to use presets",
+        "Label": "FFMPEG Builder: Video Encode Advanced",
         "Fields": {
           "Codec": "Codec",
           "Encoder": "Encoder",
@@ -845,6 +845,35 @@
           "Quality-Help": "A logarithmic quality scale, so small changes in the this slider cause large changes in file size/quality.\nThe lower the number the higher the quality.\nSee Help for more information",
           "Quality-Suffix": "(Higher Quality, larger file)",
           "Speed": "Speed"
+        },
+        "Outputs": {
+          "1": "FFMPEG Builder video streams set to encode"
+        }
+      },
+      "FfmpegBuilderVideoEncodeManual": {
+        "Description": "Configures FFMPEG Builder to encode the main video stream using manually specified encoding parameters.",
+        "Label": "FFMPEG Builder: Video Encode Manual",
+        "Fields": {
+          "Parameters": "Parameters",
+          "Parameters-Help": "Specify custom video encoding parameters. Refer to the FFmpeg documentation for available options."
+        },
+        "Outputs": {
+          "1": "FFMPEG Builder video encoding parameters updated"
+        }
+      },
+      "FfmpegBuilderVideoEncodeSimple": {
+        "Description": "Sets the FFMPEG Builder to encode the video with simple-to-use presets. Using middle values for Quality and Speed provides a good balance between file size, encoding time, and video quality.",
+        "Label": "FFMPEG Builder: Video Encode",
+        "Fields": {
+          "Codec": "Codec",
+          "Encoder": "Encoder",
+          "Encoder-Help": "The encoder to force use. If you specify a hardware encoder that is unavailable, the encode will fail.",
+          "HardwareEncoding": "Hardware Encode",
+          "HardwareEncoding-Help": "When checked, will test to see if hardware encoders are available on the Processing Node. If found, hardware encoding will be used; otherwise, it will fall back to CPU encoding.",
+          "Quality": "Quality",
+          "Quality-Help": "Higher values result in better quality and larger file sizes. Lower values reduce quality and file size.",
+          "Speed": "Speed",
+          "Speed-Help": "Faster encoding reduces compression efficiency, leading to lower quality or larger file sizes. Slower encoding improves compression efficiency, allowing better quality or smaller file sizes."
         },
         "Outputs": {
           "1": "FFMPEG Builder video streams set to encode"
@@ -953,7 +982,7 @@
         "Label": "Video Bitrate Greater Than",
         "Fields": {
           "Bitrate": "Bitrate",
-          "Bitrate-Suffix": "KBps"
+          "Bitrate-Suffix": "Kbps"
         },
         "Outputs": {
           "1": "Bitrate is greater than",

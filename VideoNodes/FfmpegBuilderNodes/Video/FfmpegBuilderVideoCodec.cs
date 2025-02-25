@@ -6,6 +6,12 @@
 
         public override string HelpUrl => "https://fileflows.com/docs/plugins/video-nodes/ffmpeg-builder/video-codec";
 
+        /// <inheritdoc />
+        public override bool Obsolete => true;
+
+        /// <inheritdoc />
+        public override string ObsoleteMessage => "This flow element has been replaced with Video Encode Manual";
+
         [DefaultValue("hevc")]
         [TextVariable(1)]
         public string VideoCodec { get; set; }

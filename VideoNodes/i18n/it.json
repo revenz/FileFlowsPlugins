@@ -834,7 +834,7 @@
       },
       "FfmpegBuilderVideoEncode": {
         "Description": "Imposta FFMPEG Builder per codificare il video con preset semplici da usare",
-        "Label": "FFMPEG Builder: Codifica Video",
+        "Label": "FFMPEG Builder: Codifica Video Avanzata",
         "Fields": {
           "Codec": "Codec",
           "Encoder": "Codificatore",
@@ -848,6 +848,35 @@
         },
         "Outputs": {
           "1": "Flussi video FFMPEG Builder impostati per codificare"
+        }
+      },
+      "FfmpegBuilderVideoEncodeManual": {
+        "Description": "Configura FFMPEG Builder per codificare il flusso video principale utilizzando parametri di codifica specificati manualmente.",
+        "Label": "FFMPEG Builder: Video Encode Manual",
+        "Fields": {
+          "Parameters": "Parameters",
+          "Parameters-Help": "Specifica parametri di codifica video personalizzati. Fare riferimento alla documentazione di FFmpeg per le opzioni disponibili."
+        },
+        "Outputs": {
+          "1": "Parametri di codifica video di FFMPEG Builder aggiornati"
+        }
+      },
+      "FfmpegBuilderVideoEncodeSimple": {
+        "Description": "Imposta FFMPEG Builder per codificare il video con preset facili da usare. L'uso di valori intermedi per Qualità e Velocità fornisce un buon equilibrio tra dimensione del file, tempo di codifica e qualità del video.",
+        "Label": "FFMPEG Builder: Video Encode",
+        "Fields": {
+          "Codec": "Codec",
+          "Encoder": "Codificatore",
+          "Encoder-Help": "Il codificatore da utilizzare. Se si specifica un codificatore hardware non disponibile, la codifica fallirà.",
+          "HardwareEncoding": "Codifica hardware",
+          "HardwareEncoding-Help": "Se abilitato, verifica se ci sono codificatori hardware disponibili nel nodo di elaborazione. Se trovati, verrà utilizzata la codifica hardware, altrimenti verrà usata la codifica CPU.",
+          "Quality": "Qualità",
+          "Quality-Help": "Valori più alti offrono una qualità migliore e file più grandi. Valori più bassi riducono la qualità e le dimensioni del file.",
+          "Speed": "Velocità",
+          "Speed-Help": "Una codifica più veloce riduce l'efficienza della compressione, portando a una qualità inferiore o file più grandi. Una codifica più lenta migliora l'efficienza della compressione, consentendo una qualità migliore o file più piccoli."
+        },
+        "Outputs": {
+          "1": "FFMPEG Builder configurato per codificare i flussi video"
         }
       },
       "FfmpegBuilderVideoMaxBitrate": {
@@ -953,7 +982,7 @@
         "Label": "Bitrate Video Maggiore di",
         "Fields": {
           "Bitrate": "Bitrate",
-          "Bitrate-Suffix": "KBps"
+          "Bitrate-Suffix": "Kbps"
         },
         "Outputs": {
           "1": "Il bitrate è maggiore di",

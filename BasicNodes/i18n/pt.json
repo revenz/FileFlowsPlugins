@@ -185,6 +185,32 @@
           "2": "Não corresponde"
         }
       },
+      "FilePropertyExists": {
+        "Description": "Verifica se uma propriedade foi definida para este registro de arquivo. As propriedades são armazenadas no registro do banco de dados do arquivo e são exclusivas para esta instância específica do arquivo, não para o nome do arquivo. Se o mesmo arquivo aparecer em uma biblioteca diferente, ele terá suas próprias propriedades separadas.",
+        "Label": "Propriedade do Arquivo Existe",
+        "Fields": {
+          "Property": "Propriedade",
+          "Property-Help": "Nome da propriedade do registro do arquivo a ser verificada."
+        },
+        "Outputs": {
+          "1": "A propriedade existe para este registro de arquivo.",
+          "2": "A propriedade não existe para este registro de arquivo."
+        }
+      },
+      "FilePropertyMatches": {
+        "Description": "Verifica se uma propriedade neste registro de arquivo corresponde a um valor específico. As propriedades são armazenadas no registro do banco de dados do arquivo e são exclusivas para esta instância específica do arquivo, não para o nome do arquivo. Se o mesmo arquivo aparecer em uma biblioteca diferente, ele terá suas próprias propriedades separadas.",
+        "Label": "Propriedade do Arquivo Corresponde",
+        "Fields": {
+          "Property": "Propriedade",
+          "Property-Help": "Nome da propriedade do registro do arquivo a ser verificada.",
+          "Value": "Valor",
+          "Value-Help": "Valor esperado da propriedade."
+        },
+        "Outputs": {
+          "1": "A propriedade corresponde ao valor esperado.",
+          "2": "A propriedade não corresponde ao valor esperado."
+        }
+      },
       "FileSize": {
         "Description": "Verifica se o tamanho do arquivo corresponde aos parâmetros configurados. Os valores estão em megabytes.\n\nSaída 1: Corresponde\nSaída 2: Não corresponde",
         "Label": "Tamanho do arquivo",
@@ -641,6 +667,19 @@
         },
         "Outputs": {
           "1": "Miniatura definida"
+        }
+      },
+      "SetFileProperty": {
+        "Description": "Define uma propriedade para este registro de arquivo. As propriedades são armazenadas no registro do banco de dados do arquivo e são exclusivas para esta instância específica do arquivo, não para o nome do arquivo. Se o mesmo arquivo aparecer em uma biblioteca diferente, ele terá suas próprias propriedades separadas.",
+        "Label": "Definir Propriedade do Arquivo",
+        "Fields": {
+          "Property": "Propriedade",
+          "Property-Help": "Nome da propriedade do registro do arquivo a ser definida.",
+          "Value": "Valor",
+          "Value-Help": "Valor a ser atribuído à propriedade."
+        },
+        "Outputs": {
+          "1": "A propriedade foi definida para este registro de arquivo."
         }
       },
       "SetVariable": {
