@@ -73,8 +73,8 @@ public class FfmpegBuilder_VideoEncodeTests_AV1
     }
 
     [TestMethod]
-    [DataRow(1, 60)]
-    [DataRow(2, 62)]
+    [DataRow(1, 54)]
+    [DataRow(2, 57)]
     [DataRow(3, 65)]
     [DataRow(4, 68)]
     [DataRow(5, 70)]

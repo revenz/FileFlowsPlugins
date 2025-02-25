@@ -170,7 +170,7 @@ public partial class FfmpegBuilderVideoEncodeSimple
     /// </summary>
     internal static int MapQualityVideoToolbox(int quality)
     {
-        int minVTB = 60, maxVTB = 80; // VideoToolbox quality range
+        int minVTB = 54, maxVTB = 78; // VideoToolbox quality range
 
         quality = Math.Clamp(quality, minQuality, maxQuality);
 
