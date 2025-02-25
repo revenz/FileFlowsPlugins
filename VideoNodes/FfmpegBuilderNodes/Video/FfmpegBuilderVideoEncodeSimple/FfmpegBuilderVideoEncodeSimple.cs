@@ -57,7 +57,9 @@ public partial class FfmpegBuilderVideoEncodeSimple:VideoEncodeBase
     /// <returns>the output return</returns>
     public override int Execute(NodeParameters args)
     {
-        var stream = Model.VideoStreams.First(x => x.Deleted == false);
+        var stream = Model.VideoStreams.FirstOrDefault(x => x.Deleted == false);
+        if (stream == null)
+            return args.Fail("No non-deleted video stream");
         
         stream.EncodingParameters.Clear();
 
