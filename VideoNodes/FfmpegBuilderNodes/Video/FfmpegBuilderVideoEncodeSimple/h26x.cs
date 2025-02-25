@@ -29,12 +29,22 @@ public partial class FfmpegBuilderVideoEncodeSimple
     internal static string[] H26x_Nvidia(bool h265, int quality, int speed, out string[] non10BitFilters)
     {
         non10BitFilters = h265 ? null : ["-pix_fmt:v:{index}", "yuv420p"];
+        var speedStr = speed switch
+        {
+            1 => "p7",
+            2 => "p5",
+            3 => "p3",
+            4 => "p2",
+            5 => "p1",
+            _ => "p3"
+        };
+
         return
         [
             h265 ? "hevc_nvenc" : "h264_nvenc",
             "-rc", "constqp",
             "-qp", MapQuality(quality).ToString(),
-            "-preset", MapSpeed(speed, "medium"),
+            "-preset", speedStr,
             "-spatial-aq", "1"
         ];
     }
