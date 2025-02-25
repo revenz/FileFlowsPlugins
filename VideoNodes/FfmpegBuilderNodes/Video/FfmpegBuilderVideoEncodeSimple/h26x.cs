@@ -19,7 +19,7 @@ public partial class FfmpegBuilderVideoEncodeSimple
         [
             h265 ? "libx265" : "libx264",
             "-preset", MapSpeed(speed, "slow"),
-            "-crf", MapQuality(quality).ToString()
+            "-crf", MapQuality(quality, h265 == false).ToString()
         ];
     }
 
@@ -43,7 +43,7 @@ public partial class FfmpegBuilderVideoEncodeSimple
         [
             h265 ? "hevc_nvenc" : "h264_nvenc",
             "-rc", "constqp",
-            "-qp", MapQuality(quality).ToString(),
+            "-qp", MapQuality(quality, h265 == false).ToString(),
             "-preset", speedStr,
             "-spatial-aq", "1"
         ];
@@ -67,7 +67,7 @@ public partial class FfmpegBuilderVideoEncodeSimple
 
         parameters.AddRange(new[]
         {
-            "-global_quality:v", MapQuality(quality).ToString(),
+            "-global_quality:v", MapQuality(quality, h265 == false).ToString(),
             "-preset", MapSpeed(speed, "slower")
         });
         return parameters.ToArray();
@@ -82,7 +82,7 @@ public partial class FfmpegBuilderVideoEncodeSimple
         return
         [
             h265 ? "hevc_amf" : "h264_amf",
-            "-qp", MapQuality(quality).ToString(),
+            "-qp", MapQuality(quality, h265 == false).ToString(),
             "-preset", MapSpeedAmd(speed),
             "-spatial-aq", "1"
         ];
@@ -96,7 +96,7 @@ public partial class FfmpegBuilderVideoEncodeSimple
         return
         [
             h265 ? "hevc_vaapi" : "h264_vaapi",
-            "-qp", MapQuality(quality).ToString(),
+            "-qp", MapQuality(quality, h265 == false).ToString(),
             "-preset", MapSpeed(speed, "slower"),
             "-spatial-aq", "1"
         ];
@@ -155,11 +155,24 @@ public partial class FfmpegBuilderVideoEncodeSimple
     /// <summary>
     /// Maps a 1-10 quality scale to a 1-51 CRF-style quality value.
     /// </summary>
-    internal static int MapQuality(int quality)
+    internal static int MapQuality(int quality, bool isH264 = false)
     {
-        int min = 30;
-        double max = 17.0;
+        // Define CRF ranges
+        int minH265 = 18, maxH265 = 30;
+        int minH264 = 18, maxH264 = 25;  // Slightly tighter for H.264
+
+        int min = isH264 ? minH264 : minH265;
+        int max = isH264 ? maxH264 : maxH265;
+
         quality = Math.Clamp(quality, minQuality, maxQuality);
-        return (int)Math.Round(min - ((quality - minQuality) / (double)(maxQuality - minQuality)) * (min - max));
+
+        // Linear interpolation
+        return (int)Math.Round(max - ((quality - minQuality) / (double)(maxQuality - minQuality)) * (max - min));
     }
+
+
+
+
+
+
 }

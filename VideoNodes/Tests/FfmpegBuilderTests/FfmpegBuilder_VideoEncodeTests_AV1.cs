@@ -60,12 +60,12 @@ public class FfmpegBuilder_VideoEncodeTests_AV1
     [DataRow(1, 30)]
     [DataRow(2, 28)]
     [DataRow(3, 27)]
-    [DataRow(4, 25)]
+    [DataRow(4, 26)]
     [DataRow(5, 24)]
     [DataRow(6, 22)] 
-    [DataRow(7, 20)] 
-    [DataRow(8, 19)] 
-    [DataRow(9, 17)] 
+    [DataRow(7, 21)] 
+    [DataRow(8, 20)] 
+    [DataRow(9, 18)] 
     public void MapQuality_Tests(int quality, int expected)
     {
         int result = FfmpegBuilderVideoEncodeSimple.MapQuality(quality);
