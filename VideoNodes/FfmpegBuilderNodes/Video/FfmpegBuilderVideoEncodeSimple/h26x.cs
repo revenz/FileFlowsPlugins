@@ -107,15 +107,10 @@ public partial class FfmpegBuilderVideoEncodeSimple
     /// </summary>
     internal static string[] H26x_VideoToolbox(bool h265, int quality, int speed)
     {
-        quality = Math.Clamp(quality, minQuality, maxQuality);
-        int min = 50;
-        int max = 82;
-        int q = (int)Math.Round(min + ((quality - minQuality) / (double)(maxQuality - minQuality)) * (max - min));
-
         return
         [
             h265 ? "hevc_videotoolbox" : "h264_videotoolbox",
-            "-q", q.ToString(),
+            "-q", MapQualityVideoToolbox(quality).ToString(),
             "-preset", MapSpeed(speed, "slower")
         ];
     }
@@ -170,9 +165,16 @@ public partial class FfmpegBuilderVideoEncodeSimple
         return (int)Math.Round(max - ((quality - minQuality) / (double)(maxQuality - minQuality)) * (max - min));
     }
 
+    /// <summary>
+    /// Maps a 1-10 quality scale to VideoToolbox's quality range (60-80).
+    /// </summary>
+    internal static int MapQualityVideoToolbox(int quality)
+    {
+        int minVTB = 60, maxVTB = 80; // VideoToolbox quality range
 
+        quality = Math.Clamp(quality, minQuality, maxQuality);
 
-
-
+        return (int)Math.Round(minVTB + ((quality - minQuality) / (double)(maxQuality - minQuality)) * (maxVTB - minVTB));
+    }
 
 }

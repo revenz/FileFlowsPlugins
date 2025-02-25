@@ -71,6 +71,22 @@ public class FfmpegBuilder_VideoEncodeTests_AV1
         int result = FfmpegBuilderVideoEncodeSimple.MapQuality(quality);
         Assert.AreEqual(expected, result);
     }
+
+    [TestMethod]
+    [DataRow(1, 60)]
+    [DataRow(2, 62)]
+    [DataRow(3, 65)]
+    [DataRow(4, 68)]
+    [DataRow(5, 70)]
+    [DataRow(6, 72)] 
+    [DataRow(7, 75)] 
+    [DataRow(8, 78)] 
+    [DataRow(9, 80)] 
+    public void MapQuality_VideoToolbox_Tests(int quality, int expected)
+    {
+        int result = FfmpegBuilderVideoEncodeSimple.MapQualityVideoToolbox(quality);
+        Assert.AreEqual(expected, result);
+    }
 }
 
 
