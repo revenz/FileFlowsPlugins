@@ -23,11 +23,17 @@ public class FFMpegEncoder
     private Process process;
     DateTime startedAt;
     private string? AbortReason;
+    private CancellationToken _cancellationToken;
+    private ProcessHelper _processHelper;
 
-    public FFMpegEncoder(string ffMpegExe, ILogger logger)
+    public FFMpegEncoder(string ffMpegExe, ILogger logger, CancellationToken cancellationToken)
     {
         this.ffMpegExe = ffMpegExe;
         this.Logger = logger;
+        _processHelper = new(logger, cancellationToken, false);
+        _processHelper.OnStandardOutputReceived += OnOutputDataReceived;
+        _processHelper.OnErrorOutputReceived += OnErrorDataReceived;
+        _cancellationToken = cancellationToken;
     }
 
     /// <summary>
@@ -99,20 +105,13 @@ public class FFMpegEncoder
     {
         try
         {
-            if (this.process != null)
-            {
-                this.process.Kill();
-                this.process = null;
-            }
-
+            _processHelper.Kill();
         }
         catch (Exception) { }
     }
 
     public async Task<ProcessResult> ExecuteShellCommand(string command, List<string> arguments, int timeout = 0)
     {
-        var result = new ProcessResult();
-
         var hwDecoderIndex = arguments.FindIndex(x => x == "-hwaccel");
         string? decoder = null;
         if (hwDecoderIndex >= 0 && hwDecoderIndex < arguments.Count - 2)
@@ -151,18 +150,19 @@ public class FFMpegEncoder
 
         string? encoder = null;
         if (arguments.Any(x =>
-                x.ToLowerInvariant().Contains("hevc_qsv") || x.ToLowerInvariant().Contains("h264_qsv") ||
-                x.ToLowerInvariant().Contains("av1_qsv")))
+                x.Contains("hevc_qsv", StringComparison.InvariantCultureIgnoreCase) ||
+                x.Contains("h264_qsv", StringComparison.InvariantCultureIgnoreCase) ||
+                x.Contains("av1_qsv", StringComparison.InvariantCultureIgnoreCase)))
             encoder = "QSV";
-        else if (arguments.Any(x => x.ToLowerInvariant().Contains("_nvenc")))
+        else if (arguments.Any(x => x.Contains("_nvenc", StringComparison.InvariantCultureIgnoreCase)))
             encoder = "NVIDIA";
-        else if (arguments.Any(x => x.ToLowerInvariant().Contains("_amf")))
+        else if (arguments.Any(x => x.Contains("_amf", StringComparison.InvariantCultureIgnoreCase)))
             encoder = "AMF";
-        else if (arguments.Any(x => x.ToLowerInvariant().Contains("_vaapi")))
+        else if (arguments.Any(x => x.Contains("_vaapi", StringComparison.InvariantCultureIgnoreCase)))
             encoder = "VAAPI";
-        else if (arguments.Any(x => x.ToLowerInvariant().Contains("_videotoolbox")))
+        else if (arguments.Any(x => x.Contains("_videotoolbox", StringComparison.InvariantCultureIgnoreCase)))
             encoder = "VideoToolbox";
-        else if (arguments.Any(x => x.ToLowerInvariant().Contains("libx") || x.ToLowerInvariant().Contains("libvpx")))
+        else if (arguments.Any(x => x.Contains("libx", StringComparison.InvariantCultureIgnoreCase) || x.Contains("libvpx", StringComparison.InvariantCultureIgnoreCase)))
             encoder = "CPU";
 
         if (encoder != null)
@@ -171,123 +171,52 @@ public class FFMpegEncoder
             OnStatChange?.Invoke("Encoder", encoder, recordStatistic: true);
         }
 
-        using (var process = new Process())
+        var processHelper = new ProcessHelper(Logger, _cancellationToken, false);
+        processHelper.OnStandardOutputReceived += OnOutputDataReceived;
+        processHelper.OnErrorOutputReceived += OnErrorDataReceived;
+        var result = processHelper.ExecuteShellCommand(new()
         {
-            this.process = process;
-
-            process.StartInfo.FileName = command;
-            if (arguments?.Any() == true)
-            {
-                foreach (string arg in arguments)
-                    process.StartInfo.ArgumentList.Add(arg);
-            }
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardInput = true;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.RedirectStandardError = true;
-            process.StartInfo.CreateNoWindow = true;
-
-            outputBuilder = new StringBuilder();
-            outputCloseEvent = new TaskCompletionSource<bool>();
-
-            process.OutputDataReceived += OnOutputDataReceived;
-
-            errorBuilder = new StringBuilder();
-            errorCloseEvent = new TaskCompletionSource<bool>();
-
-            process.ErrorDataReceived += OnErrorDataReceived;
-
-            bool isStarted;
-
-            startedAt = DateTime.Now;
-            try
-            {
-                isStarted = process.Start();
-            }
-            catch (Exception error)
-            {
-                // Usually it occurs when an executable file is not found or is not executable
-
-                result.Completed = true;
-                result.ExitCode = -1;
-                result.Output = error.Message;
-
-                isStarted = false;
-            }
-
-            if (isStarted)
-            {
-                // Reads the output stream first and then waits because deadlocks are possible
-                process.BeginOutputReadLine();
-                process.BeginErrorReadLine();
-
-                // Creates task to wait for process exit using timeout
-                var waitForExit = WaitForExitAsync(process, timeout);
-
-                // Create task to wait for process exit and closing all output streams
-                var processTask = Task.WhenAll(waitForExit, outputCloseEvent.Task, errorCloseEvent.Task);
-
-                // Waits process completion and then checks it was not completed by timeout
-                if (
-                    (
-                        (timeout > 0 && await Task.WhenAny(Task.Delay(timeout), processTask) == processTask) ||
-                        (timeout == 0 && await Task.WhenAny(processTask) == processTask)
-                    )
-                     && waitForExit.Result)
-                {
-                    result.Completed = true;
-                    result.ExitCode = process.ExitCode;
-                    result.Output = $"{outputBuilder}{errorBuilder}";
-                }
-                else
-                {
-                    try
-                    {
-                        // Kill hung process
-                        process.Kill();
-                    }
-                    catch
-                    {
-                    }
-                }
-            }
-        }
-        process = null;
-
-        if (this.AbortReason != null)
-            result.AbortReason = this.AbortReason;
-
-        return result;
+            Command = command,
+            ArgumentList = arguments.ToArray()
+        }).Result;
+        
+        return new()
+        {
+            Completed = result.Completed,
+            ExitCode = result.ExitCode,
+            Output = result.StandardOutput,
+            AbortReason = AbortReason?.EmptyAsNull()
+        };
     }
     
-    public void OnOutputDataReceived(object sender, DataReceivedEventArgs e)
+    private void OnOutputDataReceived(string data)
     {
         // The output stream has been closed i.e. the process has terminated
-        if (e.Data == null)
+        if (data == null)
         {
             outputCloseEvent.SetResult(true);
         }
         else
         {
-            CheckOutputLine(e.Data);
+            CheckOutputLine(data);
         }
     }
 
-    public void OnErrorDataReceived(object sender, DataReceivedEventArgs e)
+    private void OnErrorDataReceived(string data)
     {
         // The error stream has been closed i.e. the process has terminated
-        if (e.Data == null)
+        if (data == null)
         {
             errorCloseEvent.SetResult(true);
         }
-        else if (e.Data.ToLower().Contains("failed") || e.Data.Contains("No capable devices found") || e.Data.ToLower().Contains("error"))
+        else if (data.ToLower().Contains("failed") || data.Contains("No capable devices found") || data.ToLower().Contains("error"))
         {
-            Logger.ELog(e.Data);
-            errorBuilder.AppendLine(e.Data);
+            Logger.ELog(data);
+            errorBuilder.AppendLine(data);
         }
         else
         {
-            CheckOutputLine(e.Data);
+            CheckOutputLine(data);
         }
     }
 
@@ -337,17 +266,6 @@ public class FFMpegEncoder
         outputBuilder.AppendLine(line);
     }
 
-
-    private static Task<bool> WaitForExitAsync(Process process, int timeout)
-    {
-        if (timeout > 0)
-            return Task.Run(() => process.WaitForExit(timeout));
-        return Task.Run(() =>
-        {
-            process.WaitForExit();
-            return Task.FromResult<bool>(true);
-        });
-    }
     /// <summary>
     /// Represents the result of a process execution.
     /// </summary>
