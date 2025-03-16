@@ -14,14 +14,14 @@ public class FfmpegBuilderAudioLanguageConverter : FfmpegBuilderNode
     public override string Icon => "fas fa-comment-dots";
     /// <inheritdoc />
     public override int Outputs => 2;
-    
+
     /// <summary>
     /// Gets or sets the languages to create audio tracks for
     /// </summary>
     [Languages(1)]
     [Required]
     public string[] Languages { get; set; }
-    
+
     /// <summary>
     /// Gets or sets the codec to use
     /// </summary>
@@ -114,7 +114,7 @@ public class FfmpegBuilderAudioLanguageConverter : FfmpegBuilderNode
             return _BitrateOptions;
         }
     }
-    
+
     /// <summary>
     /// Gets or sets if the other audio tracks should be removed
     /// </summary>
@@ -140,7 +140,7 @@ public class FfmpegBuilderAudioLanguageConverter : FfmpegBuilderNode
             }
             return x;
         }).Where(x => x != null).Distinct().ToList();
-        
+
         foreach (var lang in languages)
         {
             var newAudio = GetNewAudioStream(args, lang);
@@ -180,7 +180,7 @@ public class FfmpegBuilderAudioLanguageConverter : FfmpegBuilderNode
                     args.Logger?.ILog($"Existing Audio '{ex} channels: {existingChannels}");
                     if (existingChannels != newAudioChannels)
                         continue;
-                    if (ex.Codec != newAudioStream.Codec && 
+                    if (ex.Codec != newAudioStream.Codec &&
                         Regex.IsMatch(ex.Codec ?? string.Empty, "/^(ac3|aac|opus)$", RegexOptions.IgnoreCase))
                         continue;
                     args.Logger?.ILog("Deleting similar audio to newly created one: " + ex);
@@ -190,12 +190,12 @@ public class FfmpegBuilderAudioLanguageConverter : FfmpegBuilderNode
         }
 
         Model.AudioStreams.AddRange(newAudioStreams);
-        
+
         args.Logger?.ILog($"Created {newAudioStreams.Count} new audio streams");
         return 1;
 
     }
-    
+
     /// <summary>
     /// Gets the new audio stream for the specified language, or null if failed to locate matching stream
     /// </summary>
@@ -207,7 +207,7 @@ public class FfmpegBuilderAudioLanguageConverter : FfmpegBuilderNode
         var sourceAudio = GetBestAudioTrack(args, Model.AudioStreams.Select(x => x.Stream), language);
         if (sourceAudio == null)
             return null;
-        
+
         args.Logger?.ILog($"Using audio track for language '{language}': {sourceAudio}");
 
         var audio = new FfmpegAudioStream();
@@ -215,14 +215,14 @@ public class FfmpegBuilderAudioLanguageConverter : FfmpegBuilderNode
         audio.Channels = audio.Stream.Channels;
 
         bool directCopy = false;
-        if(string.Equals(sourceAudio.Codec, this.Codec, StringComparison.CurrentCultureIgnoreCase))
+        if (string.Equals(sourceAudio.Codec, this.Codec, StringComparison.CurrentCultureIgnoreCase))
         {
-            if((Channels == 0 || Math.Abs(Channels - sourceAudio.Channels) < 0.05f) && Bitrate <= 2)
+            if ((Channels == 0 || Math.Abs(Channels - sourceAudio.Channels) < 0.05f) && Bitrate <= 2)
             {
                 directCopy = true;
             }
         }
-        
+
         if (directCopy)
         {
             audio.Codec = sourceAudio.Codec;
@@ -231,14 +231,14 @@ public class FfmpegBuilderAudioLanguageConverter : FfmpegBuilderNode
         else
         {
             audio.Codec = Codec;
-            
+
             int totalChannels = FfmpegBuilderAudioAddTrack.GetAudioBitrateChannels(args.Logger, Channels < 1 ? audio.Channels : Channels, Codec);
             int channels = Channels < 1 ? 0 : totalChannels;
 
             int bitrate = Bitrate == 1 ? (int)Math.Round(audio.Stream.Bitrate / Math.Max(1, audio.Stream.Channels)) :
                 Bitrate == 2 ? totalChannels * Bitrate :
                 0;
-            
+
             if (bitrate > 0)
             {
                 args.Logger?.ILog("Total channels: " + totalChannels);
@@ -288,7 +288,8 @@ public class FfmpegBuilderAudioLanguageConverter : FfmpegBuilderNode
             // only get a track that has more or equal number of channels
             .Where(x => Math.Abs(x.Channels - comparingChannels) < 0.1f || x.Channels >= comparingChannels)
             // remove any commentary tracks
-            .Where(x => System.Text.Json.JsonSerializer.Serialize(x).ToLower().Contains("comment") == false)
+            .Where(x => System.Text.Json.JsonSerializer.Serialize(x).ToLower().Contains("comment") == false &&
+                System.Text.Json.JsonSerializer.Serialize(x).ToLower().Contains("coment") == false)
             .OrderBy(x =>
             {
                 if (Math.Abs(this.Channels - 2) < 0.05f)
