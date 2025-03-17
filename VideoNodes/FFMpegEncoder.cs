@@ -48,7 +48,7 @@ public class FFMpegEncoder
     /// <returns>the result and output of the encode</returns>
     public (bool successs, string output, string? abortReason) Encode(string input, string output, List<string> arguments, bool dontAddInputFile = false, bool dontAddOutputFile = false, string strictness = "-2")
     {
-        arguments ??= new List<string> ();
+        arguments ??= [];
         if (string.IsNullOrWhiteSpace(strictness))
             strictness = "-2";
         
@@ -70,23 +70,22 @@ public class FFMpegEncoder
         {
             if (arguments.Last() != "-")
             {
-                arguments.AddRange(new string[]
-                    { "-metadata", "comment=Created by FileFlows\nhttps://fileflows.com" });
+                arguments.AddRange(["-metadata", "comment=Created by FileFlows\nhttps://fileflows.com"]);
                 // strict -2 needs to be just before the output file
-                arguments.AddRange(new[] { "-strict", strictness }); 
+                arguments.AddRange(["-strict", strictness]); 
                 arguments.Add(output);
             }
             else
                 Logger.ILog("Last argument '-' skipping adding output file");
         }
 
-        string argsString = String.Join(" ", arguments.Select(x => x.IndexOf(" ") > 0 ? "\"" + x + "\"" : x));
+        string argsString = string.Join(" ", arguments.Select(x => x.IndexOf(' ') > 0 ? "\"" + x + "\"" : x));
         Logger.ILog(new string('-', ("FFmpeg.Arguments: " + argsString).Length));
         Logger.ILog("FFmpeg.Arguments: " + argsString);
         Logger.ILog(new string('-', ("FFmpeg.Arguments: " + argsString).Length));
 
         var task = ExecuteShellCommand(ffMpegExe, arguments, 0);
-        task.Wait();
+        task.Wait(_cancellationToken);
         Logger.ILog("Exit Code: " + task.Result.ExitCode);
         return (task.Result.ExitCode == 0, task.Result.Output, task.Result.AbortReason); // exitcode 0 means it was successful
     }
@@ -101,13 +100,19 @@ public class FFMpegEncoder
         Cancel();
     }
 
+    /// <summary>
+    /// Cancels the process
+    /// </summary>
     internal void Cancel()
     {
         try
         {
             _processHelper.Kill();
         }
-        catch (Exception) { }
+        catch (Exception)
+        {
+            // iGNORED
+        }
     }
 
     public async Task<ProcessResult> ExecuteShellCommand(string command, List<string> arguments, int timeout = 0)
