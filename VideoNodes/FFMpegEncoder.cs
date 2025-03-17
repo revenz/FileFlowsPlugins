@@ -241,8 +241,8 @@ public class FFMpegEncoder
         if (rgxTime.IsMatch(line))
         {
             var timeString = rgxTime.Match(line).Value;
-            var ts = TimeSpan.Parse(timeString);
-            AtTime?.Invoke(ts, startedAt);
+            if(TimeSpan.TryParse(timeString, out var ts))
+                AtTime?.Invoke(ts, startedAt);
         }
 
         if (line.Contains("Exit Code"))
