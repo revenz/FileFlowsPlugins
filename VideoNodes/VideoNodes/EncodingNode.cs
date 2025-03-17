@@ -165,11 +165,19 @@ namespace FileFlows.VideoNodes
             // Calculate ETA to reach 100%
             if (percent > 0)
             {
-                TimeSpan elapsed = DateTime.Now - startedAt;
-                double remainingMilliseconds = elapsed.TotalMilliseconds * (100 - percent) / percent;
-                TimeSpan eta = TimeSpan.FromMilliseconds(remainingMilliseconds);
+                try
+                {
+                    TimeSpan elapsed = DateTime.Now - startedAt;
+                    double remainingMilliseconds = elapsed.TotalMilliseconds * (100 - percent) / percent;
+                    TimeSpan eta = TimeSpan.FromMilliseconds(remainingMilliseconds);
 
-                Args?.AdditionalInfoRecorder?.Invoke("ETA", TimeHelper.ToHumanReadableString(eta), 1, new TimeSpan(0, 1, 0));
+                    Args?.AdditionalInfoRecorder?.Invoke("ETA", TimeHelper.ToHumanReadableString(eta), 1,
+                        new TimeSpan(0, 1, 0));
+                }
+                catch (Exception)
+                {
+                    // Ignored
+                }
             }
         }
 
