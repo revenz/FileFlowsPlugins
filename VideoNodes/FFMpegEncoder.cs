@@ -177,6 +177,7 @@ public class FFMpegEncoder
         var result = processHelper.ExecuteShellCommand(new()
         {
             Command = command,
+            Silent = true,
             ArgumentList = arguments.ToArray()
         }).Result;
         
