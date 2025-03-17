@@ -7,7 +7,7 @@ public class FFMpegEncoder
     private string ffMpegExe;
     private ILogger Logger;
 
-    StringBuilder outputBuilder, errorBuilder;
+    StringBuilder outputBuilder = new (), errorBuilder = new ();
     TaskCompletionSource<bool> outputCloseEvent, errorCloseEvent;
 
     private Regex rgxTime = new Regex(@"(?<=(time=))([\d]+:?)+\.[\d]+");
