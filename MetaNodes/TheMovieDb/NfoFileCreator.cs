@@ -96,6 +96,13 @@ public class NfoFileCreator : Node
             args.Logger?.ILog("MovieInformation found");
             nfoXml = CreateMovieNfo(args, movie);
         }
+        else if (args.Parameters.TryGetValue(Globals.MOVIE, out object oMovieInfo2) &&
+                 oMovieInfo2 is Movie movie2)
+        {
+            args.Logger?.ILog("MovieInformation found");
+            nfoXml = CreateMovieNfo(args, movie2);
+        }
+
 
 
         if (string.IsNullOrWhiteSpace(nfoXml))

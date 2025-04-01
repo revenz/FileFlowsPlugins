@@ -107,7 +107,11 @@ public abstract class TestBase
         var args = new NodeParameters(filename, Logger, isDirectory, libPath, new LocalFileService())
         {
             LibraryFileName = filename,
-            TempPath = tempPath
+            TempPath = tempPath,
+            SetDisplayNameActual = _ =>
+            {
+                
+            }
         };
         return args;
     }

@@ -194,6 +194,7 @@ public class MovieLookupTests : TestBase
         });
         File.WriteAllText(@"D:\videos\metadata.json", json);
     }
+    
     [TestMethod]
     public void MovieLookupTests_WonderWoman_Nfo()
     {

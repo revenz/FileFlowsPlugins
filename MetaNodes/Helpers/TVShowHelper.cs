@@ -19,6 +19,8 @@ public class TVShowHelper(NodeParameters args)
         {
             lookupName = FileHelper.GetShortFileNameWithoutExtension(filename);
         }
+
+       // lookupName = lookupName.Replace("!", "");
         
         var result = GetTVShowInfo(lookupName);
         return (result.ShowName, result.Year);
