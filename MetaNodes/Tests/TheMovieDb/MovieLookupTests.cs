@@ -196,6 +196,25 @@ public class MovieLookupTests : TestBase
     }
     
     [TestMethod]
+    [RequiresUnreferencedCode("")]
+    public void MovieLookupTests_File_TheDeparted()
+    {
+        var args = GetNodeParameters(@"/data/downloads/complete/The Departed (2006)/The.Departed.2006.1080p.BluRay.DDP.5.1.H.265-EDGE2020.mkv");
+
+        MovieLookup ml = new MovieLookup();
+        ml.UseFolderName = false;
+
+        var result = ml.Execute(args);
+        Assert.AreEqual(1, result);
+        Assert.IsTrue(args.Parameters.ContainsKey(Globals.MOVIE_INFO));
+
+        var mi = args.Parameters[Globals.MOVIE_INFO] as MovieInfo;
+        Assert.IsNotNull(mi);
+        Assert.AreEqual("The Departed", mi.Title);
+        Assert.AreEqual(2006, mi.ReleaseDate.Year);
+    }
+    
+    [TestMethod]
     public void MovieLookupTests_WonderWoman_Nfo()
     {
         var args = GetNodeParameters(@"Wonder.Woman.1984.2020.German.DL.AC3.1080p.BluRay.x265-Fun{{fdg$ERGESDG32fesdfgds}}/Wonder.Woman.1984.2020.German.DL.AC3.1080p.BluRay.x265-Fun{{fdg$ERGESDG32fesdfgds}}.mkv");
