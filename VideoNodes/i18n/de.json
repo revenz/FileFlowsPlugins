@@ -1055,6 +1055,16 @@
           "1": "Video-Datei aus der Bibliothek"
         }
       },
+      "VideoHasAudio": {
+        "Description": "Prüft, ob eine Videodatei Audiospuren enthält.",
+        "Label": "Video hat Audio",
+        "Fields": {
+          "CheckDeleted": "Gelöschte Spuren prüfen",
+          "CheckDeleted-Help": "Gibt an, ob gelöschte Spuren im FFmpeg-Builder-Modell berücksichtigt werden sollen.",
+          "CheckFFmpegModel": "FFmpeg-Modell prüfen",
+          "CheckFFmpegModel-Help": "Gibt an, ob das FFmpeg-Builder-Modell oder die tatsächlichen Videodateimetadaten überprüft werden sollen."
+        }
+      },
       "VideoHasErrors": {
         "Description": "Prüft, ob eine Videodatei Fehler enthält",
         "Label": "Video hat Fehler",

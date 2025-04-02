@@ -1055,6 +1055,16 @@
           "1": "Videobestand uit bibliotheek"
         }
       },
+      "VideoHasAudio": {
+        "Description": "Controleert of een videobestand audiotracks bevat.",
+        "Label": "Video heeft audio",
+        "Fields": {
+          "CheckDeleted": "Verwijderde tracks controleren",
+          "CheckDeleted-Help": "Geeft aan of verwijderde tracks ook moeten worden overwogen in het FFmpeg Builder-model.",
+          "CheckFFmpegModel": "FFmpeg-model controleren",
+          "CheckFFmpegModel-Help": "Specificeert of het FFmpeg Builder-model of de daadwerkelijke videobestand-metadata moet worden gecontroleerd."
+        }
+      },
       "VideoHasErrors": {
         "Description": "Test of een videobestand fouten bevat",
         "Label": "Video Heeft Fouten",

@@ -1055,6 +1055,16 @@
           "1": "File video dalla libreria"
         }
       },
+      "VideoHasAudio": {
+        "Description": "Verifica se un file video contiene tracce audio.",
+        "Label": "Il video ha audio",
+        "Fields": {
+          "CheckDeleted": "Verifica tracce eliminate",
+          "CheckDeleted-Help": "Indica se le tracce eliminate devono essere considerate anche nel modello di compilazione FFmpeg.",
+          "CheckFFmpegModel": "Verifica modello FFmpeg",
+          "CheckFFmpegModel-Help": "Specifica se controllare il modello di compilazione FFmpeg o i metadati effettivi del file video."
+        }
+      },
       "VideoHasErrors": {
         "Description": "Controlla se un file video contiene errori.",
         "Label": "Il video ha errori",

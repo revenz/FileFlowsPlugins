@@ -1055,6 +1055,16 @@
           "1": "Videofil från biblioteket"
         }
       },
+      "VideoHasAudio": {
+        "Description": "Kontrollerar om en videofil innehåller ljudspår.",
+        "Label": "Video har ljud",
+        "Fields": {
+          "CheckDeleted": "Kontrollera borttagna spår",
+          "CheckDeleted-Help": "Anger om borttagna spår också ska kontrolleras i FFmpeg Builder-modellen.",
+          "CheckFFmpegModel": "Kontrollera FFmpeg-modell",
+          "CheckFFmpegModel-Help": "Anger om FFmpeg Builder-modellen eller de faktiska metadata för videofilen ska kontrolleras."
+        }
+      },
       "VideoHasErrors": {
         "Description": "Testar om en videofil innehåller några fel",
         "Label": "Video Har Fel",

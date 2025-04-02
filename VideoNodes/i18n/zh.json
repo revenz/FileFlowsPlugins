@@ -1055,6 +1055,16 @@
           "1": "来自库的视频文件"
         }
       },
+      "VideoHasAudio": {
+        "Description": "检查视频文件是否包含音轨。",
+        "Label": "视频包含音频",
+        "Fields": {
+          "CheckDeleted": "检查已删除的音轨",
+          "CheckDeleted-Help": "指定是否在 FFmpeg 构建模型中考虑已删除的音轨。",
+          "CheckFFmpegModel": "检查 FFmpeg 模型",
+          "CheckFFmpegModel-Help": "指定是检查 FFmpeg 构建模型还是实际的视频文件元数据。"
+        }
+      },
       "VideoHasErrors": {
         "Description": "测试视频文件是否包含任何错误",
         "Label": "视频有错误",

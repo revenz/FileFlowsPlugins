@@ -1055,6 +1055,16 @@
           "1": "來自庫的視頻文件"
         }
       },
+      "VideoHasAudio": {
+        "Description": "檢查影片文件是否包含音軌。",
+        "Label": "影片包含音訊",
+        "Fields": {
+          "CheckDeleted": "檢查已刪除的音軌",
+          "CheckDeleted-Help": "指定是否在 FFmpeg 建置模型中考慮已刪除的音軌。",
+          "CheckFFmpegModel": "檢查 FFmpeg 模型",
+          "CheckFFmpegModel-Help": "指定是檢查 FFmpeg 建置模型，還是檢查實際的影片文件中繼資料。"
+        }
+      },
       "VideoHasErrors": {
         "Description": "測試視頻文件是否包含任何錯誤",
         "Label": "視頻有錯誤",

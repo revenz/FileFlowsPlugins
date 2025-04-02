@@ -1055,6 +1055,16 @@
           "1": "Fichier vidéo de la bibliothèque"
         }
       },
+      "VideoHasAudio": {
+        "Description": "Vérifie si un fichier vidéo contient des pistes audio.",
+        "Label": "La vidéo a de l'audio",
+        "Fields": {
+          "CheckDeleted": "Vérifier les pistes supprimées",
+          "CheckDeleted-Help": "Indique si les pistes supprimées doivent également être prises en compte dans le modèle de construction FFmpeg.",
+          "CheckFFmpegModel": "Vérifier le modèle FFmpeg",
+          "CheckFFmpegModel-Help": "Indique s'il faut vérifier le modèle de construction FFmpeg ou les métadonnées réelles du fichier vidéo."
+        }
+      },
       "VideoHasErrors": {
         "Description": "Teste si un fichier vidéo contient des erreurs",
         "Label": "La vidéo a des erreurs",

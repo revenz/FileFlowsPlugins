@@ -1055,6 +1055,16 @@
           "1": "ライブラリからのビデオファイル"
         }
       },
+      "VideoHasAudio": {
+        "Description": "ビデオファイルに音声トラックが含まれているかを確認します。",
+        "Label": "ビデオに音声あり",
+        "Fields": {
+          "CheckDeleted": "削除されたトラックを確認",
+          "CheckDeleted-Help": "削除されたトラックもFFmpegビルダーモデルで考慮するかどうかを指定します。",
+          "CheckFFmpegModel": "FFmpegモデルを確認",
+          "CheckFFmpegModel-Help": "FFmpegビルダーモデルを確認するか、実際のビデオファイルのメタデータを確認するかを指定します。"
+        }
+      },
       "VideoHasErrors": {
         "Description": "ビデオファイルにエラーが含まれているかテストします",
         "Label": "ビデオにエラーあり",

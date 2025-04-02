@@ -1055,6 +1055,16 @@
           "1": "Video file from library"
         }
       },
+      "VideoHasAudio": {
+        "Description": "Checks if a video file contains any audio tracks.",
+        "Label": "Video Has Audio",
+        "Fields": {
+          "CheckDeleted": "Check Deleted Tracks",
+          "CheckDeleted-Help": "Indicates whether deleted tracks should also be considered in the FFmpeg Builder model.",
+          "CheckFFmpegModel": "Check FFmpeg Model",
+          "CheckFFmpegModel-Help": "Specifies whether to check the FFmpeg Builder model or the actual video file metadata."
+        }
+      },
       "VideoHasErrors": {
         "Description": "Tests if a video file contains any errors",
         "Label": "Video Has Errors",

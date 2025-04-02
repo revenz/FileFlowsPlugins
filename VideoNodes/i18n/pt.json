@@ -1055,6 +1055,16 @@
           "1": "Arquivo de vídeo da biblioteca"
         }
       },
+      "VideoHasAudio": {
+        "Description": "Verifica se um arquivo de vídeo contém trilhas de áudio.",
+        "Label": "Vídeo tem áudio",
+        "Fields": {
+          "CheckDeleted": "Verificar trilhas excluídas",
+          "CheckDeleted-Help": "Indica se as trilhas excluídas também devem ser verificadas no modelo do FFmpeg Builder.",
+          "CheckFFmpegModel": "Verificar modelo FFmpeg",
+          "CheckFFmpegModel-Help": "Especifica se o modelo do FFmpeg Builder deve ser verificado ou os metadados reais do arquivo de vídeo."
+        }
+      },
       "VideoHasErrors": {
         "Description": "Testa se um arquivo de vídeo contém erros",
         "Label": "O vídeo tem erros",
