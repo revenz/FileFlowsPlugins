@@ -1063,6 +1063,10 @@
           "CheckDeleted-Help": "Gibt an, ob gelöschte Spuren im FFmpeg-Builder-Modell berücksichtigt werden sollen.",
           "CheckFFmpegModel": "FFmpeg-Modell prüfen",
           "CheckFFmpegModel-Help": "Gibt an, ob das FFmpeg-Builder-Modell oder die tatsächlichen Videodateimetadaten überprüft werden sollen."
+        },
+        "Outputs": {
+          "1": "Hat Audio",
+          "2": "Hat kein Audio"
         }
       },
       "VideoHasErrors": {

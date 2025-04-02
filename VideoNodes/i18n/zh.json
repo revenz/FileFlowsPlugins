@@ -1063,6 +1063,10 @@
           "CheckDeleted-Help": "指定是否在 FFmpeg 构建模型中考虑已删除的音轨。",
           "CheckFFmpegModel": "检查 FFmpeg 模型",
           "CheckFFmpegModel-Help": "指定是检查 FFmpeg 构建模型还是实际的视频文件元数据。"
+        },
+        "Outputs": {
+          "1": "有音频",
+          "2": "没有音频"
         }
       },
       "VideoHasErrors": {
