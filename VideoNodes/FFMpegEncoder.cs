@@ -184,13 +184,13 @@ public class FFMpegEncoder
             Command = command,
             Silent = true,
             ArgumentList = arguments.ToArray()
-        }).Result;
+        }).GetAwaiter().GetResult();
         
         return new()
         {
             Completed = result.Completed,
             ExitCode = result.ExitCode,
-            Output = result.StandardOutput,
+            Output = result.Output,
             AbortReason = AbortReason?.EmptyAsNull()
         };
     }

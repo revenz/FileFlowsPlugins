@@ -105,6 +105,10 @@ public abstract class VideoTestBase : TestBase
             if(tool.ToLowerInvariant().Contains("ffprobe")) return FFprobe;
             return tool;
         };
+        args.SetTraitsActual = (traits) =>
+        {
+
+        };
         args.TempPath = TempPath;
         return args;
     }
