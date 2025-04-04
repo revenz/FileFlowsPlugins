@@ -179,6 +179,7 @@ public class FFMpegEncoder
         var processHelper = new ProcessHelper(Logger, _cancellationToken, false);
         processHelper.OnStandardOutputReceived += OnOutputDataReceived;
         processHelper.OnErrorOutputReceived += OnErrorDataReceived;
+        startedAt = DateTime.Now;
         var result = processHelper.ExecuteShellCommand(new()
         {
             Command = command,
