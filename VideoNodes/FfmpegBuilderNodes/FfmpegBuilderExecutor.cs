@@ -120,7 +120,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         int overallIndex = 0;
         int currentType = 0;
 
-        string sourceExtension = model.VideoInfo.FileName.Substring(model.VideoInfo.FileName.LastIndexOf(".") + 1).ToLower();
+        string sourceExtension = model.VideoInfo.FileName[(model.VideoInfo.FileName.LastIndexOf('.') + 1)..].ToLower();
         string extension = (model.Extension?.EmptyAsNull() ?? "mkv").ToLower();
 
         foreach (var item in model.VideoStreams.Select((x, index) => (stream: (FfmpegStream)x, index, type: 1, list: model.VideoStreams.Select(x => (FfmpegStream)x).ToList())).Union(

@@ -202,11 +202,12 @@ public class FFMpegEncoder
         if (data == null)
         {
             outputCloseEvent.SetResult(true);
+            return;
         }
-        else
-        {
-            CheckOutputLine(data);
-        }
+        
+        
+        Logger.ILog("OnOutputDataReceived: " + data);
+        CheckOutputLine(data);
     }
 
     private void OnErrorDataReceived(string data)
@@ -215,8 +216,12 @@ public class FFMpegEncoder
         if (data == null)
         {
             errorCloseEvent.SetResult(true);
+            return;
         }
-        else if (data.ToLower().Contains("failed") || data.Contains("No capable devices found") || data.ToLower().Contains("error"))
+        
+        Logger.ILog("OnErrorDataReceived: " + data);
+        
+        if (data.ToLower().Contains("failed") || data.Contains("No capable devices found") || data.ToLower().Contains("error"))
         {
             Logger.ELog(data);
             errorBuilder.AppendLine(data);
