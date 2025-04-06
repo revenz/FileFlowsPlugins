@@ -327,6 +327,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         }
         
         startArgs.Add("-y");
+        startArgs.AddRange(["-stats_period", "2.5"]);
         if(model.CutDuration != null)
             startArgs.AddRange(new [] { "-t", model.CutDuration.Value.ToString()});
         if(model.StartTime != null)
