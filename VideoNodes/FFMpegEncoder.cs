@@ -204,9 +204,6 @@ public class FFMpegEncoder
             outputCloseEvent.SetResult(true);
             return;
         }
-        
-        
-        Logger.ILog("OnOutputDataReceived: " + data);
         CheckOutputLine(data);
     }
 
@@ -218,8 +215,6 @@ public class FFMpegEncoder
             errorCloseEvent.SetResult(true);
             return;
         }
-        
-        Logger.ILog("OnErrorDataReceived: " + data);
         
         if (data.ToLower().Contains("failed") || data.Contains("No capable devices found") || data.ToLower().Contains("error"))
         {

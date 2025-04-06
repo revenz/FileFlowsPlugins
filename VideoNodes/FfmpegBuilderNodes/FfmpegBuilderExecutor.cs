@@ -539,6 +539,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                         ArgumentList = arguments.ToArray(),
                         Timeout = timeout
                     });
+                    args.Logger?.ILog("FFmpeg test exit: " + result.ExitCode);
                     if (result.ExitCode == 0)
                     {
                         args.Logger?.ILog("Supported hardware decoding detected: " + string.Join(" ", hw));
@@ -560,6 +561,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                 }
                 catch (Exception)
                 {
+                    // ignored
                 }
             }
 
