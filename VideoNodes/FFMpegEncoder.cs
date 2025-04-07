@@ -233,6 +233,8 @@ public class FFMpegEncoder
     {
         if (line.Contains("Skipping NAL unit"))
             return; // just slightly ignore these
+        if (line.Contains("Last message repeated"))
+            return;
 
         if (line.Contains("error ", StringComparison.InvariantCultureIgnoreCase))
         {
