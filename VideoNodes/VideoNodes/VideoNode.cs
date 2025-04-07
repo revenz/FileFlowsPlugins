@@ -100,7 +100,7 @@ namespace FileFlows.VideoNodes
         internal const string VIDEO_INFO = "VideoInfo";
         protected void SetVideoInfo(NodeParameters args, VideoInfo videoInfo, Dictionary<string, object> variables)
         {
-            var firstVideo = videoInfo.VideoStreams?.FirstOrDefault();
+            var firstVideo = videoInfo?.VideoStreams?.FirstOrDefault();
             if (firstVideo == null)
                 return;
 
@@ -343,7 +343,7 @@ namespace FileFlows.VideoNodes
                 return null;
             }
 
-            var viResult = new VideoInfoHelper(FFMPEG, args.Logger).Read(local);
+            var viResult = new VideoInfoHelper(FFMPEG, args.Logger, args.Process).Read(local);
             if (viResult.Failed(out string error))
             {
                 args.Logger?.ELog(error);

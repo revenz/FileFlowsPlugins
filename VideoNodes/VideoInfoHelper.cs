@@ -7,6 +7,7 @@ public class VideoInfoHelper
 {
     private string ffMpegExe;
     private ILogger Logger;
+    private IProcessHelper _processHelper;
 
     static Regex rgxTitle = new Regex(@"(?<=((^[\s]+title[\s]+:[\s])))(.*?)$", RegexOptions.Multiline);
     static Regex rgxDuration = new Regex(@"(?<=((^[\s]+DURATION(\-[\w]+)?[\s]+:[\s])))([\d]+:?)+\.[\d]{1,7}", RegexOptions.Multiline);
@@ -45,18 +46,19 @@ public class VideoInfoHelper
         set => _AnalyzeDuration = Math.Max(32, value);
     }
 
-    public VideoInfoHelper(string ffMpegExe, ILogger logger)
+    public VideoInfoHelper(string ffMpegExe, ILogger logger, IProcessHelper processHelper)
     {
         this.ffMpegExe = ffMpegExe;
         this.Logger = logger;
+        this._processHelper = processHelper;
     }
 
     public static string GetFFMpegPath(NodeParameters args) => args.GetToolPath("FFMpeg");
 
     public Result<VideoInfo> Read(string filename)
-        => ReadStatic(Logger, ffMpegExe, filename);
+        => ReadStatic(_processHelper, Logger, ffMpegExe, filename);
     
-    internal static Result<VideoInfo> ReadStatic(ILogger logger, string ffMpegExe, string filename)
+    internal static Result<VideoInfo> ReadStatic(IProcessHelper processHelper, ILogger logger, string ffMpegExe, string filename)
     {
         #if(DEBUG) // UNIT TESTING
         filename = filename.Replace("~/", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/");
@@ -67,55 +69,79 @@ public class VideoInfoHelper
         if (string.IsNullOrEmpty(ffMpegExe) || System.IO.File.Exists(ffMpegExe) == false)
             return Result<VideoInfo>.Fail("FFmpeg not found: " + (ffMpegExe ?? "not passed in"));
 
-        try
+        var result = processHelper.ExecuteShellCommand(new()
         {
-            using (var process = new Process())
-            {
-                process.StartInfo = new ProcessStartInfo();
-                process.StartInfo.FileName = ffMpegExe;
-                process.StartInfo.UseShellExecute = false;
-                process.StartInfo.RedirectStandardOutput = true;
-                process.StartInfo.RedirectStandardError = true;
-                process.StartInfo.CreateNoWindow = true;
-                foreach (var arg in new[]
-                {
-                    "-hide_banner",
-                    "-probesize", ProbeSize + "M",
-                    "-analyzeduration", AnalyzeDuration.ToString(),
-                    "-i",
-                    filename,
-                })
-                {
-                    process.StartInfo.ArgumentList.Add(arg);
-                }
-                process.Start();
-                string output = process.StandardError.ReadToEnd();
-                output = output.Replace("At least one output file must be specified", string.Empty).Trim();
-                string error = process.StandardError.ReadToEnd();
-                process.WaitForExit();
-
-                if (string.IsNullOrEmpty(error) == false && error != "At least one output file must be specified")
-                    return Result<VideoInfo>.Fail("Failed reading ffmpeg info: " + error);
-
-                logger.ILog("Video Information:" + Environment.NewLine + output);
-
-                if (process.ExitCode != 0)
-                {
-                    if (output.Contains("moov atom not found"))
-                        return Result<VideoInfo>.Fail(
-                            "The video file appears to be corrupted or incomplete. (moov atom not found)");
-                }
+            Command = ffMpegExe,
+            ArgumentList =
+            [
+                "-hide_banner",
+                "-probesize", ProbeSize + "M",
+                "-analyzeduration", AnalyzeDuration.ToString(),
+                "-i",
+                filename
+            ]
+        }).GetAwaiter().GetResult();
+        
+        if (result.ExitCode != 0)
+        {
+            if (result.Output.Contains("moov atom not found"))
+                return Result<VideoInfo>.Fail(
+                    "The video file appears to be corrupted or incomplete. (moov atom not found)");
+        }
                 
-                var vi = ParseOutput(logger, output);
-                vi.FileName = filename;
-                return vi;
-            }
-        }
-        catch (Exception ex)
-        {
-            logger.ELog(ex.Message, ex.StackTrace);
-            return Result<VideoInfo>.Fail("Failed reading video information: " + ex.Message);
-        }
+        var vi = ParseOutput(logger, result.Output);
+        vi.FileName = filename;
+        return vi;
+        
+        // try
+        // {
+        //     using (var process = new Process())
+        //     {
+        //         process.StartInfo = new ProcessStartInfo();
+        //         process.StartInfo.FileName = ffMpegExe;
+        //         process.StartInfo.UseShellExecute = false;
+        //         process.StartInfo.RedirectStandardOutput = true;
+        //         process.StartInfo.RedirectStandardError = true;
+        //         process.StartInfo.CreateNoWindow = true;
+        //         foreach (var arg in new[]
+        //         {
+        //             "-hide_banner",
+        //             "-probesize", ProbeSize + "M",
+        //             "-analyzeduration", AnalyzeDuration.ToString(),
+        //             "-i",
+        //             filename,
+        //         })
+        //         {
+        //             process.StartInfo.ArgumentList.Add(arg);
+        //         }
+        //         process.Start();
+        //         string output = process.StandardError.ReadToEnd();
+        //         output = output.Replace("At least one output file must be specified", string.Empty).Trim();
+        //         string error = process.StandardError.ReadToEnd();
+        //         process.WaitForExit();
+        //
+        //         if (string.IsNullOrEmpty(error) == false && error != "At least one output file must be specified")
+        //             return Result<VideoInfo>.Fail("Failed reading ffmpeg info: " + error);
+        //
+        //         logger.ILog("Video Information:" + Environment.NewLine + output);
+        //
+        //         if (process.ExitCode != 0)
+        //         {
+        //             if (output.Contains("moov atom not found"))
+        //                 return Result<VideoInfo>.Fail(
+        //                     "The video file appears to be corrupted or incomplete. (moov atom not found)");
+        //         }
+        //         
+        //         var vi = ParseOutput(logger, output);
+        //         vi.FileName = filename;
+        //         return vi;
+        //     }
+        // }
+        // catch (Exception ex)
+        // {
+        //     logger.ELog(ex.Message, ex.StackTrace);
+        //     return Result<VideoInfo>.Fail("Failed reading video information: " + ex.Message);
+        // }
     }
 
     public static VideoInfo ParseOutput(ILogger logger, string output)
