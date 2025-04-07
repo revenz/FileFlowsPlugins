@@ -307,16 +307,17 @@ public class FFMpegEncoder
                     var oldest = frameHistory.Peek();
                     var newest = frameHistory.Last(); // Get the most recent entry
 
-                    // Calculate the time difference between the oldest and newest frame
-                    var videoTimeDelta = (newest.frame - oldest.frame) / oldest.fps;
-                    var wallTimeDelta = (newest.time - oldest.time).TotalSeconds;
+                    // Calculate the frame difference and video time difference
+                    var frameDelta = newest.frame - oldest.frame;
+                    var videoTimeDelta = frameDelta / oldest.fps; // "video time" passed
+                    var wallTimeDelta = (newest.time - oldest.time).TotalSeconds; // Actual wall time passed
 
                     // Calculate the speed only if there's valid data
                     if (wallTimeDelta > 0 && videoTimeDelta >= 0)
                     {
                         var speed = videoTimeDelta / wallTimeDelta;
                         string strSpeed = speed.ToString("0.00") + "x";
-                        Logger.ILog("Calcuated speed: " + strSpeed);
+                        Logger.ILog("Calculated speed: " + strSpeed);
                         OnStatChange?.Invoke("Speed", strSpeed);
                     }
                 }
