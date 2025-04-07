@@ -100,27 +100,30 @@ namespace FileFlows.VideoNodes
         internal const string VIDEO_INFO = "VideoInfo";
         protected void SetVideoInfo(NodeParameters args, VideoInfo videoInfo, Dictionary<string, object> variables)
         {
-            if (videoInfo.VideoStreams?.Any() == false)
+            var firstVideo = videoInfo.VideoStreams?.FirstOrDefault();
+            if (firstVideo == null)
                 return;
 
-            var firstVideo = videoInfo.VideoStreams.First();
 
-            args.SetTraits(new string[]
+            args.Logger.ILog("Setting traits");
+            args.SetTraits(new[]
             {
-                firstVideo.Codec.ToUpper(),
+                firstVideo.Codec?.ToUpper(),
                 videoInfo.AudioStreams?.FirstOrDefault()?.Codec?.ToUpper(),
                 ChannelHelper.FormatAudioChannels(videoInfo.AudioStreams?.FirstOrDefault()?.Channels ?? 0),
-                VideoHelper.FormatResolution(firstVideo.Width , firstVideo.Height),
+                VideoHelper.FormatResolution(firstVideo.Width, firstVideo.Height),
                 firstVideo.HDR == true ? "HDR" : null,
                 firstVideo.DolbyVision == true ? "Dolby Vision" : null,
             }.Where(x => string.IsNullOrWhiteSpace(x) == false).ToArray());
             
+            args.Logger.ILog("Setting Video Info");
             args.Parameters[VIDEO_INFO] = videoInfo;
 
             if (args.Variables.ContainsKey("vi.OriginalDuration") == false) // we only want to store this for the absolute original duration in the flow
                 args.Variables["vi.OriginalDuration"] = videoInfo.VideoStreams[0].Duration;
 
             args.Variables["vi.VideoInfo"] = videoInfo;
+            args.Logger.ILog("Setting Video stream information");
             var videoVariables = new Dictionary<string, object>();
             videoVariables["vi.Width"] = videoInfo.VideoStreams[0].Width;
             videoVariables["vi.Height"] = videoInfo.VideoStreams[0].Height;
@@ -129,12 +132,14 @@ namespace FileFlows.VideoNodes
             videoVariables["vi.Codec"] = videoInfo.VideoStreams[0].Codec; // assume they want the Videos codec here
             if (videoInfo.AudioStreams?.Any() == true)
             {
+                args.Logger.ILog("Setting Video audio information");
                 videoVariables["vi.Audio.Codec"] = videoInfo.AudioStreams[0].Codec?.EmptyAsNull();
                 videoVariables["vi.Audio.Channels"] = videoInfo.AudioStreams[0].Channels > 0 ? (object)videoInfo.AudioStreams[0].Channels : null;
                 videoVariables["vi.Audio.Language"] = videoInfo.AudioStreams[0].Language?.EmptyAsNull();
                 videoVariables["vi.Audio.Codecs"] = string.Join(", ", videoInfo.AudioStreams.Select(x => x.Codec).Where(x => string.IsNullOrEmpty(x) == false));
                 videoVariables["vi.Audio.Languages"] = string.Join(", ", videoInfo.AudioStreams.Select(x => x.Language).Where(x => string.IsNullOrEmpty(x) == false));
             }
+            args.Logger.ILog("Setting Video resolution");
             var resolution = ResolutionHelper.GetResolution(videoInfo.VideoStreams[0].Width, videoInfo.VideoStreams[0].Height);
             if(resolution == ResolutionHelper.Resolution.r1080p)
                 videoVariables["vi.Resolution"] = "1080p";
@@ -152,6 +157,7 @@ namespace FileFlows.VideoNodes
             videoVariables["vi.FPS"] = videoInfo.VideoStreams[0].FramesPerSecond;
             videoVariables["vi.HDR"] = videoInfo.VideoStreams[0].HDR;
 
+            args.Logger.ILog("Setting Video variables");
             foreach (var vv in videoVariables)
             {
                 args.Variables[vv.Key] = vv.Value;
@@ -160,6 +166,7 @@ namespace FileFlows.VideoNodes
             }
             
 
+            args.Logger.ILog("Setting metadata");
             var metadata = new Dictionary<string, object>();
             metadata.Add("Duration", videoInfo.VideoStreams[0].Duration);
             foreach (var (stream, i) in videoInfo.VideoStreams.Select((value, i) => (value, i)))
@@ -184,6 +191,7 @@ namespace FileFlows.VideoNodes
                 else if(stream.Bits == 12)
                     metadata.Add(prefix + "Bits", "12 Bit");
             }
+            args.Logger.ILog("Setting audio metadata");
             foreach (var (stream, i) in videoInfo.AudioStreams.Select((value, i) => (value, i)))
             {
                 string prefix = "Audio" + (i == 0 ? "" : " " + (i + 1)) + " ";
@@ -198,6 +206,7 @@ namespace FileFlows.VideoNodes
                 if (stream.Bitrate > 0)
                     metadata.Add(prefix + "Bitrate", stream.Bitrate);
             }
+            args.Logger.ILog("Setting subtitle metadata");
             foreach (var (stream, i) in videoInfo.SubtitleStreams.Select((value, i) => (value, i)))
             {
                 string prefix = "Subtitle" + (i == 0 ? "" : " " + (i + 1)) + " ";
@@ -212,6 +221,7 @@ namespace FileFlows.VideoNodes
                     metadata.Add(prefix + "Forced", true);
             }
 
+            args.Logger.ILog("Setting mimetype");
             string extension = FileHelper.GetExtension(videoInfo.FileName).ToLowerInvariant()[1..]; 
             switch (extension)
             {
@@ -260,6 +270,7 @@ namespace FileFlows.VideoNodes
                     break;
             }
 
+            args.Logger.ILog("Setting metadata");
             args.SetMetadata(metadata);
         }
 
