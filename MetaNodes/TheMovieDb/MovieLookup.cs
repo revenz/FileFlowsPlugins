@@ -3,7 +3,6 @@ using DM.MovieApi;
 using DM.MovieApi.MovieDb.Movies;
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
-using Microsoft.VisualStudio.TestTools.UnitTesting.Logging;
 using FileHelper = FileFlows.Plugin.Helpers.FileHelper;
 
 namespace MetaNodes.TheMovieDb;
