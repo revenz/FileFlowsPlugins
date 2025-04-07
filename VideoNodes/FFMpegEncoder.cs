@@ -87,7 +87,10 @@ public class FFMpegEncoder
         var task = ExecuteShellCommand(ffMpegExe, arguments, 0);
         task.Wait(_cancellationToken);
         Logger.ILog("Exit Code: " + task.Result.ExitCode);
-        return (task.Result.ExitCode == 0, task.Result.Output, task.Result.AbortReason); // exitcode 0 means it was successful
+        Logger.ILog("Completed: " + task.Result.Completed);
+        if (task.Result.Completed && string.IsNullOrEmpty(AbortReason))
+            AbortReason = "Process was terminated early";
+        return (task.Result is { ExitCode: 0, Completed: true }, task.Result.Output, task.Result.AbortReason); // exitcode 0 means it was successful
     }
 
     /// <summary>

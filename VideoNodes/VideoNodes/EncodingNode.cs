@@ -81,22 +81,37 @@ namespace FileFlows.VideoNodes
             }
 
             var success = Encoder.Encode(args.WorkingFile, outputFile, ffmpegParameters, dontAddInputFile: dontAddInputFile, dontAddOutputFile: dontAddOutputFile, strictness: strictness);
+            
+            Encoder.AtTime -= AtTimeEvent;
+            Encoder.OnStatChange -= EncoderOnOnStatChange;
+            Encoder = null;
+            
             args.Logger.ILog("Encoding successful: " + success.successs);
             if (success.successs && updateWorkingFile)
             {
-                args.SetWorkingFile(outputFile);
-
-                // get the new video info
-                args.Logger.ILog("Reading new video information");
-                var videoInfo = new VideoInfoHelper(ffmpegExe, args.Logger, args.Process).Read(outputFile).ValueOrDefault;
-                if (videoInfo != null)
+                if (System.IO.File.Exists(outputFile) == false)
                 {
-                    args.Logger.ILog("Setting new video information");
-                    SetVideoInfo(args, videoInfo, this.Variables ?? new Dictionary<string, object>());
+                    args.FailureReason = "File does not exist after encoding: " + outputFile;
+                    args.Logger.ELog(args.FailureReason);
                 }
                 else
                 {
-                    args.Logger.WLog("Video information was null");
+                    args.SetWorkingFile(outputFile);
+
+                    // get the new video info
+                    args.Logger.ILog("Reading new video information");
+                    var result = new VideoInfoHelper(ffmpegExe, args.Logger, args.Process).Read(outputFile);
+                    if (result.Failed(out string error))
+                        args.Logger.WLog("Failed reading video information: " + error);
+                    else if (result.Success(out var videoInfo) && videoInfo != null)
+                    {
+                        args.Logger.ILog("Setting new video information");
+                        SetVideoInfo(args, videoInfo, this.Variables ?? new Dictionary<string, object>());
+                    }
+                    else
+                    {
+                        args.Logger.WLog("Video information was null");
+                    }
                 }
             }
             else if (success.successs == false)
@@ -147,9 +162,6 @@ namespace FileFlows.VideoNodes
                     }
                 }
             }
-            Encoder.AtTime -= AtTimeEvent;
-            Encoder.OnStatChange -= EncoderOnOnStatChange;
-            Encoder = null;
             output = success.output;
             return success.successs;
 
