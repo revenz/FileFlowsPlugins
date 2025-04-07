@@ -71,6 +71,7 @@ public class TVShowLookup : Node
     public override int Execute(NodeParameters args)
     {
         var helper = new TVShowHelper(args);
+        
         (string lookupName, string year) = helper.GetLookupName(args.LibraryFileName, UseFolderName);
 
         // RegisterSettings only needs to be called one time when your application starts-up.

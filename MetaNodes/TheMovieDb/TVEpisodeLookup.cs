@@ -71,7 +71,10 @@ public class TVEpisodeLookup : Node
     /// <returns>the output to call next</returns>
     public override int Execute(NodeParameters args)
     {
-        string filename = FileHelper.GetShortFileNameWithoutExtension(args.LibraryFileName);
+        string fullFilename = args.WorkingFile.StartsWith(args.TempPath) ? args.LibraryFileName : args.WorkingFile;
+        string filename = FileHelper.GetShortFileNameWithoutExtension(fullFilename);
+        
+        args.Logger.ILog("Lookup filename: " + filename);
         
         var helper = new TVShowHelper(args);
         (string lookupName, string year) = helper.GetLookupName(args.LibraryFileName, UseFolderName);
@@ -93,7 +96,7 @@ public class TVEpisodeLookup : Node
         args.Logger?.ILog($"Found show info from filename '{lookupName}' season '{season}' episode '{(episode + (lastEpisode == null ? "" : "-" + lastEpisode))}'");
         
         string tvShowInfoCacheKey = $"TVShowInfo: {lookupName} ({year})";
-        TVShowInfo result =args.Cache.GetObject<TVShowInfo>(tvShowInfoCacheKey);
+        TVShowInfo result = args.Cache?.GetObject<TVShowInfo>(tvShowInfoCacheKey);
 
         // RegisterSettings only needs to be called one time when your application starts-up.
         MovieDbFactory.RegisterSettings(Globals.MovieDbBearerToken);
