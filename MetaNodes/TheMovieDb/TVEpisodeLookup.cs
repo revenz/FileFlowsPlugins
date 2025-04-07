@@ -73,6 +73,7 @@ public class TVEpisodeLookup : Node
     public override int Execute(NodeParameters args)
     {
         string fullFilename = args.WorkingFile.StartsWith(args.TempPath) ? args.LibraryFileName : args.WorkingFile;
+        args.Logger.ILog("Full File Nama: " + fullFilename);
         string filename = FileHelper.GetShortFileNameWithoutExtension(fullFilename);
         
         args.Logger.ILog("Lookup filename: " + filename);

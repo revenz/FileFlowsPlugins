@@ -72,7 +72,10 @@ public class TVShowLookup : Node
     {
         var helper = new TVShowHelper(args);
         
-        (string lookupName, string year) = helper.GetLookupName(args.LibraryFileName, UseFolderName);
+        string fullFilename = args.WorkingFile.StartsWith(args.TempPath) ? args.LibraryFileName : args.WorkingFile;
+        args.Logger.ILog("Full File Nama: " + fullFilename);
+        
+        (string lookupName, string year) = helper.GetLookupName(fullFilename, UseFolderName);
 
         // RegisterSettings only needs to be called one time when your application starts-up.
         MovieDbFactory.RegisterSettings(Globals.MovieDbBearerToken);

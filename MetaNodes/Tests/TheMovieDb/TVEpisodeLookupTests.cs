@@ -36,7 +36,7 @@ public class TVEpisodeLookupTests : TestBase
     [TestMethod]
     public void TeenTitansGo()
     {
-        var args = GetNodeParameters("D:\\Internal\\Downloads\\TV\\Teen Titans Go - S09E07 High Five 1080p AMZN WEB-DL DDP2 0 H 264-NTb[EZTVx.to].mkv");
+        var args = GetNodeParameters("D:\\Internal\\Downloads\\TV\\Teen Titans Go! - S09E07 High Five 1080p AMZN WEB-DL DDP2 0 H 264-NTb[EZTVx.to].mkv");
 
         var element = new TVEpisodeLookup();
 

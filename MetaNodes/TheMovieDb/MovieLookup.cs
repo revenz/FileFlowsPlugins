@@ -3,6 +3,7 @@ using DM.MovieApi;
 using DM.MovieApi.MovieDb.Movies;
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
+using Microsoft.VisualStudio.TestTools.UnitTesting.Logging;
 using FileHelper = FileFlows.Plugin.Helpers.FileHelper;
 
 namespace MetaNodes.TheMovieDb;
@@ -89,9 +90,11 @@ public class MovieLookup : Node
     /// <returns>The cleaned-up lookup name.</returns>
     private string PrepareLookupName(NodeParameters args, out int year)
     {
+        string fullFilename = args.WorkingFile.StartsWith(args.TempPath) ? args.LibraryFileName : args.WorkingFile;
+        args.Logger.ILog("Full File Nama: " + fullFilename);
         var originalName = UseFolderName
-            ? FileHelper.GetDirectoryName(args.LibraryFileName)
-            : FileHelper.GetShortFileNameWithoutExtension(args.LibraryFileName);
+            ? FileHelper.GetDirectoryName(fullFilename)
+            : FileHelper.GetShortFileNameWithoutExtension(fullFilename);
 
         string lookupName = originalName.Replace(".", " ").Replace("_", " ");
         lookupName = RemoveYearFromName(lookupName, out year);

@@ -64,7 +64,7 @@ public class TVShowHelper(NodeParameters args)
         (text, var year) = ExtractYearAndCleanText(text);
         
         
-        string pattern = @"^(?<showName>[\w\s',&$.-]+)[. _-]?(?:(s|S)(?<season>\d+)(e|E)(?<episode>\d+)(?:-(?<lastEpisode>\d+))?)";
+        string pattern = @"^(?<showName>[\w\s',&$!.-]+)[. _-]?(?:(s|S)(?<season>\d+)(e|E)(?<episode>\d+)(?:-(?<lastEpisode>\d+))?)";
 
         Match match = Regex.Match(text, pattern);
 
