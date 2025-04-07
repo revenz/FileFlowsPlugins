@@ -98,8 +98,7 @@ public partial class FfmpegBuilderVideoEncode
         {
             h265 ? "hevc_amf" : "h264_amf",
             "-qp", quality.ToString(),
-            "-preset", preset,
-            "-spatial-aq", "1"
+            "-preset", preset
         };
     }
 
@@ -109,8 +108,7 @@ public partial class FfmpegBuilderVideoEncode
         [
             h265 ? "hevc_vaapi" : "h264_vaapi",
             "-qp", quality.ToString(),
-            "-preset", speed?.EmptyAsNull() ?? "slower",
-            "-spatial-aq", "1"
+            "-preset", speed?.EmptyAsNull() ?? "slower"
         ];
     }
 

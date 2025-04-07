@@ -308,13 +308,13 @@ public class CanUseHardwareEncoding:Node
             ArgumentList = arguments.ToArray(),
             Silent = true
         }).Result;
-        args.Logger?.ILog(new string ('=', 100) + "\n\nOutput:\n" + cmd.Output + "\n\n" + new string('=', 100));
-        args.Logger?.ILog(new string ('=', 100) + "\n\nStandardOutput:\n" + cmd.StandardOutput + "\n\n" + new string('=', 100));
-        args.Logger?.ILog(new string ('=', 100) + "\n\nStandardError:\n" + cmd.StandardError + "\n\n" + new string('=', 100));
+        args.Logger?.ILog("\n" + new string ('=', 100) + "\n\nOutput:\n" + cmd.Output + "\n\n" + new string('=', 100));
+        args.Logger?.ILog("\n" + new string ('=', 100) + "\n\nStandardOutput:\n" + cmd.StandardOutput + "\n\n" + new string('=', 100));
+        args.Logger?.ILog("\n" + new string ('=', 100) + "\n\nStandardError:\n" + cmd.StandardError + "\n\n" + new string('=', 100));
         string? output = cmd.Output?.Contains("va_openDriver() returns 0") == true ? null : cmd.Output;
         if (cmd.ExitCode != 0 || string.IsNullOrWhiteSpace(output) == false)
         {
-            string asStr = string.Join(" ", arguments.Select(x => x.Contains(" ") ? "\"" + x + "\"" : x));
+            string asStr = string.Join(" ", arguments.Select(x => x.Contains(' ') ? "\"" + x + "\"" : x));
             args.Logger?.WLog($"Cant process '{ffmpeg} {asStr}': {cmd.Output ?? ""}");
             return false;
         }

@@ -50,8 +50,7 @@ public partial class FfmpegBuilderVideoEncodeSimple
                 4 => "balanced",
                 5 => "speed",
                 _ => "balanced"
-            },
-            "-spatial-aq", "1"
+            }
         ];
     }
 

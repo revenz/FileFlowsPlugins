@@ -23,9 +23,9 @@ public class FfmpegBuilder_VideoEncodeTests_AV1
     }
 
     [TestMethod]
-    [DataRow(1, 1, new[] { "av1_amf", "-qp", "30", "-preset", "high_quality", "-spatial-aq", "1" })]
-    [DataRow(10, 3, new[] { "av1_amf", "-qp", "15", "-preset", "balanced", "-spatial-aq", "1" })]
-    [DataRow(5, 5, new[] { "av1_amf", "-qp", "23", "-preset", "speed", "-spatial-aq", "1" })]
+    [DataRow(1, 1, new[] { "av1_amf", "-qp", "30", "-preset", "high_quality" })]
+    [DataRow(10, 3, new[] { "av1_amf", "-qp", "15", "-preset", "balanced" })]
+    [DataRow(5, 5, new[] { "av1_amf", "-qp", "23", "-preset", "speed" })]
     public void Av1_Amd_Tests(int quality, int speed, string[] expected)
     {
         var result = FfmpegBuilderVideoEncodeSimple.AV1_Amd(quality, speed).ToArray();
