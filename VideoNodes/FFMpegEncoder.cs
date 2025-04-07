@@ -231,6 +231,13 @@ public class FFMpegEncoder
     }
 
     private int ErrorCount = 0;
+    private int? prevFrame = null;
+    private double? prevFps = null;
+    private DateTime? prevUpdateTime = null;
+    private readonly Queue<(int frame, double fps, DateTime time)> frameHistory = new();
+    private const int FrameHistorySize = 3;
+
+
 
     private void CheckOutputLine(string line)
     {
@@ -248,36 +255,112 @@ public class FFMpegEncoder
                 Abort(line);
             }
         }
-        
-        if (rgxTime.IsMatch(line))
-        {
-            var timeString = rgxTime.Match(line).Value;
-            if(TimeSpan.TryParse(timeString, out var ts))
-                AtTime?.Invoke(ts, startedAt);
-        }
+
+
+        Logger.ILog(line);
+        outputBuilder.AppendLine(line);
 
         if (line.Contains("Exit Code"))
         {
             OnStatChange?.Invoke("Speed", null);
             OnStatChange?.Invoke("Bitrate", null);
             OnStatChange?.Invoke("FPS", null);
+            return;
         }
-        else
-        {
-            if (rgxSpeed.TryMatch(line, out Match matchSpeed))
-                OnStatChange?.Invoke("Speed", matchSpeed.Value);
 
-            if (rgxBitrate.TryMatch(line, out Match matchBitrate))
-                OnStatChange?.Invoke("Bitrate", matchBitrate.Value);
-            
-            if (rgxFps.TryMatch(line, out Match matchFps))
-                OnStatChange?.Invoke("FPS", matchFps.Value);
+        bool reportedTimeForLine = false;
+        if (rgxTime.IsMatch(line))
+        {
+            var timeString = rgxTime.Match(line).Value;
+            if (TimeSpan.TryParse(timeString, out var ts))
+            {
+                AtTime?.Invoke(ts, startedAt);
+                reportedTimeForLine = true;
+            }
         }
-        
-        Logger.ILog(line);
-        outputBuilder.AppendLine(line);
+
+        if (rgxBitrate.TryMatch(line, out Match matchBitrate))
+            OnStatChange?.Invoke("Bitrate", matchBitrate.Value);
+
+        if (rgxFps.TryMatch(line, out Match matchFps))
+            OnStatChange?.Invoke("FPS", matchFps.Value);
+
+        if (rgxSpeed.TryMatch(line, out Match matchSpeed))
+            OnStatChange?.Invoke("Speed", matchSpeed.Value);
+        else if (TryExtractFrameAndFps(line, out int frame, out double fps))
+        {
+            var now = DateTime.UtcNow;
+
+            if (line.Contains("speed=N/A"))
+            {
+                // Store frame, fps, and the current time
+                frameHistory.Enqueue((frame, fps, now));
+
+                // If the history exceeds the max size, remove the oldest entry
+                if (frameHistory.Count > FrameHistorySize)
+                    frameHistory.Dequeue();
+
+                // If there are at least 2 entries, calculate the speed
+                if (frameHistory.Count >= 2)
+                {
+                    // Get the oldest and newest frame from the queue
+                    var oldest = frameHistory.Peek();
+                    var newest = frameHistory.Last(); // Get the most recent entry
+
+                    // Calculate the time difference between the oldest and newest frame
+                    var videoTimeDelta = (newest.frame - oldest.frame) / oldest.fps;
+                    var wallTimeDelta = (newest.time - oldest.time).TotalSeconds;
+
+                    // Calculate the speed only if there's valid data
+                    if (wallTimeDelta > 0 && videoTimeDelta >= 0)
+                    {
+                        var speed = videoTimeDelta / wallTimeDelta;
+                        string strSpeed = speed.ToString("0.00") + "x";
+                        Logger.ILog("Calcuated speed: " + strSpeed);
+                        OnStatChange?.Invoke("Speed", strSpeed);
+                    }
+                }
+            }
+            else
+            {
+                // If speed is not N/A, we can still keep the buffer up-to-date for future use
+                frameHistory.Clear();
+            }
+
+
+
+            prevFrame = frame;
+            prevFps = fps;
+            prevUpdateTime = now;
+
+            if (!reportedTimeForLine && fps > 0 && frame > 0)
+            {
+                var estimatedTime = TimeSpan.FromSeconds(frame / fps);
+                Logger.ILog("Estimated time: " + estimatedTime);
+                AtTime?.Invoke(estimatedTime, startedAt);
+            }
+        }
     }
 
+
+    private bool TryExtractFrameAndFps(string line, out int frame, out double fps)
+    {
+        frame = -1;
+        fps = -1;
+
+        var matchFrame = Regex.Match(line, @"frame=\s*(\d+)");
+        var matchFps = Regex.Match(line, @"fps=\s*([\d\.]+)");
+
+        if (matchFrame.Success && matchFps.Success)
+        {
+            int.TryParse(matchFrame.Groups[1].Value, out frame);
+            double.TryParse(matchFps.Groups[1].Value, out fps);
+            return true;
+        }
+
+        return false;
+    }
+    
     /// <summary>
     /// Represents the result of a process execution.
     /// </summary>
