@@ -1,4 +1,5 @@
 ﻿using DM.MovieApi;
+using DM.MovieApi.ApiResponse;
 using DM.MovieApi.MovieDb.TV;
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
@@ -111,7 +112,15 @@ public class TVEpisodeLookup : Node
 
             args.Logger?.ILog("Lookup TV Show: " + lookupName);
 
-            var response = movieApi.SearchByNameAsync(lookupName).Result;
+            ApiSearchResponse<TVShowInfo> response;
+            try
+            {
+                response = movieApi.SearchByNameAsync(lookupName).GetAwaiter().GetResult();
+            }
+            catch (Exception ex)
+            {
+                return args.Fail("TV Show Lookup failed: " + ex.Message);
+            }
 
             // try find an exact match
             result = response.Results.OrderBy(x =>
