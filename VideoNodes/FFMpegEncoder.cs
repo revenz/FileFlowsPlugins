@@ -231,11 +231,7 @@ public class FFMpegEncoder
     }
 
     private int ErrorCount = 0;
-    private int? prevFrame = null;
-    private double? prevFps = null;
-    private DateTime? prevUpdateTime = null;
-    private readonly Queue<(int frame, double fps, DateTime time)> frameHistory = new();
-    private const int FrameHistorySize = 3;
+    private float? videoFrameRate;
 
 
 
@@ -268,6 +264,14 @@ public class FFMpegEncoder
             return;
         }
 
+        if (videoFrameRate == null && Regex.IsMatch(line, @"([\d]+(\.[\d]+)?)\sfps") &&
+            float.TryParse(Regex.Match(line, @"([\d]+(\.[\d]+)?)\sfps").Groups[1].Value, out float ovarallFps) &&
+            ovarallFps > 10)
+        {
+            Logger.ILog("Got overall FPS: " + ovarallFps);
+            videoFrameRate = ovarallFps;
+        }
+
         bool reportedTimeForLine = false;
         if (rgxTime.IsMatch(line))
         {
@@ -291,48 +295,13 @@ public class FFMpegEncoder
         {
             var now = DateTime.UtcNow;
 
-            if (line.Contains("speed=N/A"))
+            if (line.Contains("speed=N/A") && videoFrameRate != null && videoFrameRate > 0)
             {
-                // Store frame, fps, and the current time
-                frameHistory.Enqueue((frame, fps, now));
-
-                // If the history exceeds the max size, remove the oldest entry
-                if (frameHistory.Count > FrameHistorySize)
-                    frameHistory.Dequeue();
-
-                // If there are at least 2 entries, calculate the speed
-                if (frameHistory.Count >= 2)
-                {
-                    // Get the oldest and newest frame from the queue
-                    var oldest = frameHistory.Peek();
-                    var newest = frameHistory.Last(); // Get the most recent entry
-
-                    // Calculate the frame difference and video time difference
-                    var frameDelta = newest.frame - oldest.frame;
-                    var videoTimeDelta = frameDelta / oldest.fps; // "video time" passed
-                    var wallTimeDelta = (newest.time - oldest.time).TotalSeconds; // Actual wall time passed
-
-                    // Calculate the speed only if there's valid data
-                    if (wallTimeDelta > 0 && videoTimeDelta >= 0)
-                    {
-                        var speed = videoTimeDelta / wallTimeDelta;
-                        string strSpeed = speed.ToString("0.00") + "x";
-                        Logger.ILog("Calculated speed: " + strSpeed);
-                        OnStatChange?.Invoke("Speed", strSpeed);
-                    }
-                }
+                var speed = fps / videoFrameRate.Value;
+                string strSpeed = speed.ToString("0.00") + "x";
+                Logger.ILog("Calculated speed: " + strSpeed);
+                OnStatChange?.Invoke("Speed", strSpeed);
             }
-            else
-            {
-                // If speed is not N/A, we can still keep the buffer up-to-date for future use
-                frameHistory.Clear();
-            }
-
-
-
-            prevFrame = frame;
-            prevFps = fps;
-            prevUpdateTime = now;
 
             if (!reportedTimeForLine && fps > 0 && frame > 0)
             {
