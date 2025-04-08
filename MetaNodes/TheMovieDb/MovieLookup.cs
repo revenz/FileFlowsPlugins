@@ -90,7 +90,7 @@ public class MovieLookup : Node
     private string PrepareLookupName(NodeParameters args, out int year)
     {
         string fullFilename = args.WorkingFile.StartsWith(args.TempPath) ? args.LibraryFileName : args.WorkingFile;
-        args.Logger.ILog("Full File Nama: " + fullFilename);
+        args.Logger.ILog("Full File Name: " + fullFilename);
         var originalName = UseFolderName
             ? FileHelper.GetDirectoryName(fullFilename)
             : FileHelper.GetShortFileNameWithoutExtension(fullFilename);

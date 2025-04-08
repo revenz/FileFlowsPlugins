@@ -73,7 +73,7 @@ public class TVEpisodeLookup : Node
     public override int Execute(NodeParameters args)
     {
         string fullFilename = args.WorkingFile.StartsWith(args.TempPath) ? args.LibraryFileName : args.WorkingFile;
-        args.Logger.ILog("Full File Nama: " + fullFilename);
+        args.Logger.ILog("Full File Name: " + fullFilename);
         string filename = FileHelper.GetShortFileNameWithoutExtension(fullFilename);
         
         args.Logger.ILog("Lookup filename: " + filename);
@@ -85,9 +85,11 @@ public class TVEpisodeLookup : Node
         if (season == null && episode == null)
         {
             args.Logger.ILog("Attempting lookup using Folder");
-            var folder = FileHelper.GetDirectoryName(filename);
+            var folder = FileHelper.GetDirectoryName(fullFilename);
             (showName,  season, episode, lastEpisode, year2) = helper.GetTVShowInfo(folder);
-            
+            lookupName = showName;
+            year = year2;
+
         }
 
         if (season == null)

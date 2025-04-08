@@ -73,7 +73,7 @@ public class TVShowLookup : Node
         var helper = new TVShowHelper(args);
         
         string fullFilename = args.WorkingFile.StartsWith(args.TempPath) ? args.LibraryFileName : args.WorkingFile;
-        args.Logger.ILog("Full File Nama: " + fullFilename);
+        args.Logger.ILog("Full File Name: " + fullFilename);
         
         (string lookupName, string year) = helper.GetLookupName(fullFilename, UseFolderName);
 
