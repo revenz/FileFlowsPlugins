@@ -61,8 +61,12 @@ public class AnimeShowLookup : Node
     /// <returns>The output to call next</returns>
     public override int Execute(NodeParameters args)
     {
+        string fullFilename = args.WorkingFile.StartsWith(args.TempPath) ? args.LibraryFileName : args.WorkingFile;
+        args.Logger.ILog("Full File Name: " + fullFilename);
+        
         var helper = new TVShowHelper(args);
-        (string lookupName, string year) = helper.GetLookupName(args.LibraryFileName, UseFolderName);
+        
+        (string lookupName, string year) = helper.GetLookupName(fullFilename, UseFolderName);
 
         // Send query to AniList
         var aniList = new AniListInterface(args);
