@@ -79,9 +79,16 @@ public class TVEpisodeLookup : Node
         args.Logger.ILog("Lookup filename: " + filename);
         
         var helper = new TVShowHelper(args);
-        (string lookupName, string year) = helper.GetLookupName(args.LibraryFileName, UseFolderName);
+        (string lookupName, string year) = helper.GetLookupName(fullFilename, UseFolderName);
 
-        (string showName, int? season, int? episode, int? lastEpisode, string year2) = helper.GetTVShowInfo(filename);
+        (string? showName, int? season, int? episode, int? lastEpisode, string year2) = helper.GetTVShowInfo(filename);
+        if (season == null && episode == null)
+        {
+            args.Logger.ILog("Attempting lookup using Folder");
+            var folder = FileHelper.GetDirectoryName(filename);
+            (showName,  season, episode, lastEpisode, year2) = helper.GetTVShowInfo(folder);
+            
+        }
 
         if (season == null)
         {
