@@ -20,6 +20,8 @@ public class VariableExists: Node
     public override string HelpUrl => "https://fileflows.com/docs/plugins/basic-nodes/variable-exists";
     /// <inheritdoc />
     public override bool FailureNode => true;
+    /// <inheritdoc />
+    public override string Group => "Functions";
 
 
     /// <summary>
