@@ -18,7 +18,51 @@ namespace FileFlows.AudioNodes
             }
 
             LocalWorkingFile = localFile.Value;
+
+            if (args.Parameters.ContainsKey(Audio_INFO) == false)
+            {
+                if (ReadAudioFileInfo(args) == -1)
+                    return false;
+            }
+            
             return true;
+        }
+
+        /// <summary>
+        /// Reads the audio file information from teh working file
+        /// </summary>
+        /// <param name="args">the node parameters</param>
+        /// <returns>the output, -1 for failure, 1 for ok</returns>
+        protected int ReadAudioFileInfo(NodeParameters args)
+        {
+            var ffmpegExeResult = GetFFmpeg(args);
+            if (ffmpegExeResult.Failed(out string ffmpegError))
+                return args.Fail(ffmpegError);
+            
+            string ffmpegExe = ffmpegExeResult.Value;
+        
+            var ffprobeResult = GetFFprobe(args);
+            if (ffprobeResult.Failed(out string ffprobeError))
+                return args.Fail(ffprobeError);
+            
+            string ffprobe = ffprobeResult.Value;
+
+
+            if (args.FileService.FileCreationTimeUtc(args.WorkingFile).Success(out DateTime createTime))
+                args.Variables["ORIGINAL_CREATE_UTC"] = createTime;
+            if (args.FileService.FileLastWriteTimeUtc(args.WorkingFile).Success(out DateTime writeTime))
+                args.Variables["ORIGINAL_LAST_WRITE_UTC"] = writeTime;
+        
+            try
+            {
+                if (ReadAudioFileInfo(args, ffmpegExe, ffprobe, LocalWorkingFile))
+                    return 1;
+                return args.Fail("Failed to read audio file");
+            }
+            catch (Exception ex)
+            {
+                return args.Fail("Failed processing AudioFile: " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -178,9 +222,9 @@ namespace FileFlows.AudioNodes
         /// <returns>the audio information</returns>
         protected Result<AudioInfo> GetAudioInfo(NodeParameters args)
         {
-            if (args.Parameters.ContainsKey(Audio_INFO) == false)
+            if (args.Parameters.TryGetValue(Audio_INFO, out var parameter) == false)
                 return Result<AudioInfo>.Fail("No codec information loaded, use a 'Audio File' flow element first");
-            if (args.Parameters[Audio_INFO] is AudioInfo result == false)
+            if (parameter is AudioInfo result == false)
                 return Result<AudioInfo>.Fail("AudioInfo not found for file");
             return result;
         }
