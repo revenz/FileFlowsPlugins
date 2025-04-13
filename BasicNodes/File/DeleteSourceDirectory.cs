@@ -258,11 +258,13 @@ public class DeleteSourceDirectory : Node
                     }
                     catch (Exception)
                     {
+                        return true; // if in doubt, we say there's a file, and do not delete 
                     }
                 }
 
                 return false;
             }).ToList();
+            
             if (includeFiles.Any())
             {
                 args.Logger?.ILog("Directory is not empty, cannot delete: " + path + Environment.NewLine +
