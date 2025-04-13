@@ -104,15 +104,19 @@ namespace FileFlows.AudioNodes
         {
             args.Parameters[Audio_INFO] = AudioInfo;
 
-            if(AudioInfo.Artist.EndsWith(", The"))
-                variables.AddOrUpdate("audio.Artist", "The " + AudioInfo.Artist.Substring(0, AudioInfo.Artist.Length - ", The".Length).Trim());
-            else
-                variables.AddOrUpdate("audio.Artist", AudioInfo.Artist);
+            if (string.IsNullOrWhiteSpace(AudioInfo.Artist) == false)
+            {
+                if (AudioInfo.Artist.EndsWith(", The"))
+                    variables.AddOrUpdate("audio.Artist",
+                        "The " + AudioInfo.Artist.Substring(0, AudioInfo.Artist.Length - ", The".Length).Trim());
+                else
+                    variables.AddOrUpdate("audio.Artist", AudioInfo.Artist);
 
-            if(AudioInfo.Artist?.StartsWith("The ") == true)
-                variables.AddOrUpdate("audio.ArtistThe", AudioInfo.Artist.Substring(4).Trim() + ", The");
-            else
-                variables.AddOrUpdate("audio.ArtistThe", AudioInfo.Artist);
+                if (AudioInfo.Artist?.StartsWith("The ") == true)
+                    variables.AddOrUpdate("audio.ArtistThe", AudioInfo.Artist.Substring(4).Trim() + ", The");
+                else
+                    variables.AddOrUpdate("audio.ArtistThe", AudioInfo.Artist);
+            }
 
             variables.AddOrUpdate("audio.Album", AudioInfo.Album);
             variables.AddOrUpdate("audio.Bitrate", AudioInfo.Bitrate);
@@ -153,8 +157,8 @@ namespace FileFlows.AudioNodes
             AddIfSet(metadata, "TotalDiscs", AudioInfo.TotalDiscs);
             args.SetMetadata(metadata);
             
-            args.SetDisplayName($"{AudioInfo.Artist} - {AudioInfo.Title}");
-            
+            if(string.IsNullOrWhiteSpace(AudioInfo.Artist) == false && string.IsNullOrWhiteSpace(AudioInfo.Title) == false)
+                args.SetDisplayName($"{AudioInfo.Artist} - {AudioInfo.Title}");
             
             string extension = FileHelper.GetExtension(filename).ToLowerInvariant()[1..];
             switch (extension)
