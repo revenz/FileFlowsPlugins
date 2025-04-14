@@ -167,9 +167,28 @@ public class TVEpisodeLookup : Node
         
         // now we have the show, try and get the episode
 
-        var episodeApi  = MovieDbFactory.Create<IApiTVShowRequest>().Value;
+        IApiTVShowRequest episodeApi = null;
+        try
+        {
+            episodeApi = MovieDbFactory.Create<IApiTVShowRequest>().Value;
+        }
+        catch (Exception ex)
+        {
+            args.Logger?.ILog("API error getting TV show: " + ex.Message);
+            return 2; // no match
+        }
         
-        var show = episodeApi.GetTvShowSeasonInfoAsync(result.Id, season.Value).Result;
+        ApiQueryResponse<SeasonInfo> show;
+        try
+        {
+            show = episodeApi.GetTvShowSeasonInfoAsync(result.Id, season.Value).Result;
+        }
+        catch (Exception ex)
+        {
+            args.Logger?.ILog("API error getting TV season info: " + ex.Message);
+            return 2; // no match
+        }
+
         if (show.Item == null)
         {
             args.Logger?.WLog("Failed to load season info: " + (show?.Error?.Message?.EmptyAsNull() ?? "Unexpected error"));
