@@ -707,7 +707,6 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             noQsv ? null : ["-hwaccel", "qsv", "-hwaccel_output_format", "qsv"],
             noQsv ? null : ["-hwaccel", "qsv"],
             noVaapi ? null : ["-hwaccel", "vaapi"],
-            noVaapi ? null : ["-hwaccel", "vaapi", "-v"],
             noVaapi ? null : ["-hwaccel", "vaapi", "-hwaccel_output_format", "vaapi"],
             noVulkan ? null : ["-hwaccel", "vulkan", "-hwaccel_output_format", "vulkan"],
             noDxva2 || isWindows == false ? null : ["-hwaccel", "dxva2"],
