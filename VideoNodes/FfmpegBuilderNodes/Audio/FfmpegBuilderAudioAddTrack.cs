@@ -203,6 +203,7 @@ public class FfmpegBuilderAudioAddTrack : TrackSelectorFlowElement<FfmpegBuilder
 
         audio.Stream = sourceAudio;
         audio.Channels = audio.Stream.Channels;
+        audio.Language = Language?.EmptyAsNull() ?? sourceAudio.Language;
 
         bool directCopy = false;
         if(sourceAudio.Codec.ToLower() == this.Codec.ToLower())
@@ -212,7 +213,7 @@ public class FfmpegBuilderAudioAddTrack : TrackSelectorFlowElement<FfmpegBuilder
                 directCopy = true;
             }
         }
-        string filter=  args.ReplaceVariables(Filter ?? string.Empty, stripMissing: true);
+        string filter = args.ReplaceVariables(Filter ?? string.Empty, stripMissing: true);
         if (string.IsNullOrWhiteSpace(filter) == false)
         {
             directCopy = false;
