@@ -931,6 +931,19 @@
           "2": "Bestand was geen videobestand of kon niet worden gelezen"
         }
       },
+      "SizePerHour": {
+        "Description": "Controleert of de bestandsgrootte binnen een acceptabele limiet ligt op basis van de duur, waarbij de limiet in megabytes per uur van video is gedefinieerd.",
+        "Label": "Grootte per uur",
+        "Fields": {
+          "MegabytesPerHour": "Grootte",
+          "MegabytesPerHour-Help": "Stel de maximale grootte (in megabytes) in die een videobestand per uur mag innemen.",
+          "MegabytesPerHour-Suffix": "MB"
+        },
+        "Outputs": {
+          "1": "Bestandsgrootte is acceptabel.",
+          "2": "Bestandsgrootte is te groot."
+        }
+      },
       "SubtitleExtractor": {
         "Description": "Extraheert een enkele ondertiteltrack en slaat deze op de bestemming op. Kan srt-, ass- en ssa-indeling extraheren.\nDit zal het werkbestand NIET bijwerken en zal het werkbestand hetzelfde houden als het invoerbestand.\n\nOutput 1: Ondertitels zijn geëxtraheerd\nOutput 2: Geen ondertitels gevonden om te extraheren",
         "Label": "Ondertitel Extractor",

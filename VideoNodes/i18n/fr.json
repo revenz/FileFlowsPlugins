@@ -931,6 +931,19 @@
           "2": "Le fichier n'était pas un fichier vidéo ou n'a pas pu être lu"
         }
       },
+      "SizePerHour": {
+        "Description": "Vérifie si la taille du fichier est dans une limite acceptable en fonction de sa durée, où la limite de taille est définie en mégaoctets par heure de vidéo.",
+        "Label": "Taille par heure",
+        "Fields": {
+          "MegabytesPerHour": "Taille",
+          "MegabytesPerHour-Help": "Définissez la taille maximale (en mégaoctets) qu'un fichier vidéo peut occuper par heure de vidéo.",
+          "MegabytesPerHour-Suffix": "MB"
+        },
+        "Outputs": {
+          "1": "La taille du fichier est acceptable.",
+          "2": "La taille du fichier est trop grande."
+        }
+      },
       "SubtitleExtractor": {
         "Description": "Extrait une seule piste de sous-titres et la sauvegarde à la destination. Peut extraire les formats srt, ass et ssa.\nCela NE metTRA PAS à jour le fichier de travail et gardera le fichier de travail identique au fichier d'entrée.\n\nSortie 1: Sous-titres extraits\nSortie 2: Aucun sous-titre trouvé à extraire",
         "Label": "Extracteur de Sous-titres",

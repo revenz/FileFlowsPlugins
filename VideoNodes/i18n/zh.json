@@ -931,6 +931,19 @@
           "2": "文件不是视频文件或读取失败"
         }
       },
+      "SizePerHour": {
+        "Description": "检查文件大小是否在基于其时长的可接受限制内，限制大小按每小时视频的兆字节计算。",
+        "Label": "每小时大小",
+        "Fields": {
+          "MegabytesPerHour": "大小",
+          "MegabytesPerHour-Help": "设置视频文件每小时允许占用的最大大小（以兆字节为单位）。",
+          "MegabytesPerHour-Suffix": "MB"
+        },
+        "Outputs": {
+          "1": "文件大小在可接受范围内。",
+          "2": "文件大小太大。"
+        }
+      },
       "SubtitleExtractor": {
         "Description": "提取单个字幕轨道并保存到目标位置。可以提取 srt、ass 和 ssa 格式。\n这不会更新工作文件，工作文件将保持与输入文件相同。\n\n输出 1：提取了字幕\n输出 2：未找到可提取的字幕",
         "Label": "字幕提取器",

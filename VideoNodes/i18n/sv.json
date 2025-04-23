@@ -931,6 +931,19 @@
           "2": "Fil var inte en videofil eller kunde inte läsas"
         }
       },
+      "SizePerHour": {
+        "Description": "Kontrollerar om filstorleken är inom ett acceptabelt gräns baserat på dess varaktighet, där storleksgränsen definieras i megabyte per timme video.",
+        "Label": "Storlek per timme",
+        "Fields": {
+          "MegabytesPerHour": "Storlek",
+          "MegabytesPerHour-Help": "Ställ in den maximala storleken (i megabyte) som en videofil får uppta per timme video.",
+          "MegabytesPerHour-Suffix": "MB"
+        },
+        "Outputs": {
+          "1": "Filstorleken är acceptabel.",
+          "2": "Filstorleken är för stor."
+        }
+      },
       "SubtitleExtractor": {
         "Description": "Extraherar en enda undertextspår och sparar den till destinationen. Kan extrahera srt, ass och ssa-format.\nDetta kommer INTE att uppdatera arbetsfilen och kommer att hålla arbetsfilen densamma som ingångsfilen.\n\nUtdata 1: Undertexter extraherade\nUtdata 2: Inga undertexter hittades för att extrahera",
         "Label": "Undertextsextraktor",

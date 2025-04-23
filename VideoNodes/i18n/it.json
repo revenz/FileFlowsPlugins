@@ -931,6 +931,19 @@
           "2": "Il file non era un file video o non è stato possibile leggerlo"
         }
       },
+      "SizePerHour": {
+        "Description": "Verifica se la dimensione del file è all'interno di un limite accettabile in base alla durata, dove il limite di dimensione è definito in megabyte per ora di video.",
+        "Label": "Dimensione per ora",
+        "Fields": {
+          "MegabytesPerHour": "Dimensione",
+          "MegabytesPerHour-Help": "Imposta la dimensione massima (in megabyte) che un file video può occupare per ogni ora di durata.",
+          "MegabytesPerHour-Suffix": "MB"
+        },
+        "Outputs": {
+          "1": "La dimensione del file è accettabile.",
+          "2": "La dimensione del file è troppo grande."
+        }
+      },
       "SubtitleExtractor": {
         "Description": "Estrae una singola traccia di sottotitoli e la salva nella destinazione. Può estrarre formati srt, ass e ssa.\nQuesto NON aggiornerà il file di lavoro e manterrà il file di lavoro lo stesso del file di input.\n\nOutput 1: I sottotitoli sono stati estratti\nOutput 2: Nessun sottotitolo trovato da estrarre",
         "Label": "Estrattore Sottotitoli",

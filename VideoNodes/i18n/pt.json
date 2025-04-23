@@ -931,6 +931,19 @@
           "2": "O arquivo não era um arquivo de vídeo ou não pôde ser lido"
         }
       },
+      "SizePerHour": {
+        "Description": "Verifica se o tamanho do arquivo está dentro de um limite aceitável com base na sua duração, onde o limite de tamanho é definido em megabytes por hora de vídeo.",
+        "Label": "Tamanho por hora",
+        "Fields": {
+          "MegabytesPerHour": "Tamanho",
+          "MegabytesPerHour-Help": "Defina o tamanho máximo (em megabytes) que um arquivo de vídeo pode ocupar por hora de duração.",
+          "MegabytesPerHour-Suffix": "MB"
+        },
+        "Outputs": {
+          "1": "O tamanho do arquivo é aceitável.",
+          "2": "O tamanho do arquivo é grande demais."
+        }
+      },
       "SubtitleExtractor": {
         "Description": "Extrai uma única faixa de legendas e a salva no destino. Pode extrair formatos srt, ass e ssa.\nIsto NÃO atualizará o arquivo de trabalho e manterá o arquivo de trabalho igual ao arquivo de entrada.\n\nSaída 1: Legendas foram extraídas\nSaída 2: Nenhuma legenda encontrada para extrair",
         "Label": "Extrator de Legendas",

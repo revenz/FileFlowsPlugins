@@ -931,6 +931,19 @@
           "2": "Datei war keine Videodatei oder konnte nicht gelesen werden"
         }
       },
+      "SizePerHour": {
+        "Description": "Prüft, ob die Dateigröße innerhalb eines akzeptablen Limits basierend auf ihrer Dauer liegt, wobei das Größenlimit in Megabyte pro Stunde Video dauert.",
+        "Label": "Größe pro Stunde",
+        "Fields": {
+          "MegabytesPerHour": "Größe",
+          "MegabytesPerHour-Help": "Legen Sie die maximale Größe (in Megabyte) fest, die eine Videodatei pro Stunde Video belegen darf.",
+          "MegabytesPerHour-Suffix": "MB"
+        },
+        "Outputs": {
+          "1": "Dateigröße ist akzeptabel.",
+          "2": "Dateigröße ist zu groß."
+        }
+      },
       "SubtitleExtractor": {
         "Description": "Extrahiert eine einzelne Untertitelspur und speichert sie am Zielort.  Es können die Formate srt, ass und ssa extrahiert werden.\nDie Arbeitsdatei wird NICHT aktualisiert und bleibt mit der Eingabedatei identisch.\n\nAusgabe 1: Untertitel wurden extrahiert\nAusgabe 2: Keine Untertitel zum Extrahieren gefunden.",
         "Label": "Untertitel-Extraktor",

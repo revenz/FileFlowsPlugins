@@ -931,6 +931,19 @@
           "2": "File was not a video file or failed to be read"
         }
       },
+      "SizePerHour": {
+        "Description": "Checks if the file size is within an acceptable limit based on its duration, where the size limit is defined in megabytes per hour of video duration.",
+        "Label": "Size Per Hour",
+        "Fields": {
+          "MegabytesPerHour": "Size",
+          "MegabytesPerHour-Help": "Set the maximum size (in megabytes) that a video file is allowed to occupy per hour of video duration.",
+          "MegabytesPerHour-Suffix": "MB"
+        },
+        "Outputs": {
+          "1": "File size is acceptable.",
+          "2": "File size is too large."
+        }
+      },
       "SubtitleExtractor": {
         "Description": "Extracts a single subtitle track and saves it to the specified destination. Supports extraction of SRT, ASS, and SSA formats.\nThis operation does NOT modify the working file; it will remain unchanged from the input file.\n\nOutput 1: Subtitles extracted successfully.\nOutput 2: No subtitles found to extract.",
         "Label": "Subtitle Extractor",
