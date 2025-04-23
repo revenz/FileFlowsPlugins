@@ -45,15 +45,19 @@ public class SizePerHour : VideoNode
 
         // Calculate the allowed size for the duration in hours
         double maxAllowedSize = MegabytesPerHour * duration.TotalHours;
+        
+        // Round the file size and max allowed size
+        double roundedSizeInMB = Math.Round(sizeInMB, sizeInMB % 1 == 0 ? 0 : 1);
+        double roundedMaxAllowedSize = Math.Round(maxAllowedSize, maxAllowedSize % 1 == 0 ? 0 : 1);
 
         // Compare size to the allowed size
         if (sizeInMB <= maxAllowedSize)
         {
-            args.Logger?.ILog($"File size is within the allowed limit: {sizeInMB}MB <= {maxAllowedSize}MB");
+            args.Logger?.ILog($"File size is within the allowed limit: {roundedSizeInMB}MB <= {roundedMaxAllowedSize}MB");
             return 1; // Passes the check
         }
         
-        args.Logger?.ILog($"File size exceeds the allowed limit: {sizeInMB}MB > {maxAllowedSize}MB");
+        args.Logger?.ILog($"File size exceeds the allowed limit: {roundedSizeInMB}MB > {roundedMaxAllowedSize}MB");
         return 2; // Fails the check
             
     }
