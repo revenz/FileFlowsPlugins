@@ -365,7 +365,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
 
 
         if (Encode(args, ffmpeg, ffArgs, extension, dontAddInputFile: true, strictness: Strictness) == false)
-            return -1;
+            return args.Fail("Video encoding failed. See the log for details.");
 
         foreach (var file in model.InputFiles)
         {
