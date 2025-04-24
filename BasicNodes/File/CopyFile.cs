@@ -136,8 +136,13 @@ public class CopyFile : Node
                     oCreateTimeUtc is DateTime dtCreateTimeUtc && oLastWriteUtc is DateTime dtLastWriteUtc)
                 {
                     args.Logger?.ILog("Preserving dates");
-                    args.FileService.SetLastWriteTimeUtc(dest, dtLastWriteUtc);
-                    args.FileService.SetCreationTimeUtc(dest, dtCreateTimeUtc);
+                
+                    args.Logger?.ILog($"Setting creation time: {dest}, {dtCreateTimeUtc}");
+                    if(args.FileService.SetCreationTimeUtc(dest, dtCreateTimeUtc).Failed(out error))
+                        args.Logger?.WLog("Failed to set creation time: " + error);
+                    args.Logger?.ILog($"Setting last write time: {dest}, {dtLastWriteUtc}");
+                    if(args.FileService.SetLastWriteTimeUtc(dest, dtLastWriteUtc).Failed(out error))
+                        args.Logger?.WLog("Failed to set last write time: " + error);
                 }
                 else
                 {
