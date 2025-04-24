@@ -100,13 +100,6 @@ public class VideoFile : VideoNode
                 args.Logger.ILog($"Video stream '{vs.Codec}' '{vs.Index}'");
             }
 
-            if (args.FileService.FileCreationTimeUtc(args.WorkingFile).Success(out DateTime creationTimeUtc))
-                args.Variables["ORIGINAL_CREATE_UTC"] = creationTimeUtc;
-            if (args.FileService.FileCreationTimeUtc(args.WorkingFile).Success(out DateTime lastWriteTimeUtc))
-                args.Variables["ORIGINAL_LAST_WRITE_UTC"] = lastWriteTimeUtc;
-
-            
-
             foreach (var stream in videoInfo.VideoStreams)
             {
                 if (string.IsNullOrEmpty(stream.Codec) == false)

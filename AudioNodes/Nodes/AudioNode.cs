@@ -47,12 +47,6 @@ namespace FileFlows.AudioNodes
             
             string ffprobe = ffprobeResult.Value;
 
-
-            if (args.FileService.FileCreationTimeUtc(args.WorkingFile).Success(out DateTime createTime))
-                args.Variables["ORIGINAL_CREATE_UTC"] = createTime;
-            if (args.FileService.FileLastWriteTimeUtc(args.WorkingFile).Success(out DateTime writeTime))
-                args.Variables["ORIGINAL_LAST_WRITE_UTC"] = writeTime;
-        
             try
             {
                 if (ReadAudioFileInfo(args, ffmpegExe, ffprobe, LocalWorkingFile))
