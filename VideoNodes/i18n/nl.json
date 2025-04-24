@@ -1178,6 +1178,14 @@
           "2": "Video is geen H.264"
         }
       },
+      "VideoIsHdr": {
+        "Description": "Controleert of een videobestand HDR is.",
+        "Label": "Video is HDR",
+        "Outputs": {
+          "1": "De video is HDR.",
+          "2": "De video is geen HDR."
+        }
+      },
       "VideoIsHevc": {
         "Description": "Test of een videobestand HEVC is",
         "Label": "Video is HEVC",

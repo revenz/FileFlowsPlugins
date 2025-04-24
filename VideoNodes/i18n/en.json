@@ -1178,6 +1178,14 @@
           "2": "Video is not H.264."
         }
       },
+      "VideoIsHdr": {
+        "Description": "Checks if a video file is HDR.",
+        "Label": "Video Is HDR",
+        "Outputs": {
+          "1": "The video is HDR.",
+          "2": "The video is not HDR."
+        }
+      },
       "VideoIsHevc": {
         "Description": "Checks if the video file is encoded in HEVC format.",
         "Label": "Video Is HEVC",

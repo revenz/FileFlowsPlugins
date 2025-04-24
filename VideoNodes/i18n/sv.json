@@ -1178,6 +1178,14 @@
           "2": "Videon är inte H.264"
         }
       },
+      "VideoIsHdr": {
+        "Description": "Kontrollerar om en videofil är HDR.",
+        "Label": "Videon är HDR",
+        "Outputs": {
+          "1": "Videon är HDR.",
+          "2": "Videon är inte HDR."
+        }
+      },
       "VideoIsHevc": {
         "Description": "Testar om en videofil är HEVC",
         "Label": "Videon är HEVC",

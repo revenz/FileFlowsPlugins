@@ -1178,6 +1178,14 @@
           "2": "视频不是H.264"
         }
       },
+      "VideoIsHdr": {
+        "Description": "检查视频文件是否为HDR。",
+        "Label": "视频是HDR",
+        "Outputs": {
+          "1": "视频是HDR。",
+          "2": "视频不是HDR。"
+        }
+      },
       "VideoIsHevc": {
         "Description": "测试视频文件是否为HEVC",
         "Label": "视频是HEVC",

@@ -1178,6 +1178,14 @@
           "2": "비디오는 H.264가 아닙니다!"
         }
       },
+      "VideoIsHdr": {
+        "Description": "비디오 파일이 HDR인지 확인합니다.",
+        "Label": "비디오는 HDR입니다",
+        "Outputs": {
+          "1": "비디오는 HDR입니다.",
+          "2": "비디오는 HDR이 아닙니다."
+        }
+      },
       "VideoIsHevc": {
         "Description": "비디오 파일이 HEVC인지 테스트합니다",
         "Label": "비디오는 HEVC입니다",
