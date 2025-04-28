@@ -129,6 +129,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         {
             if (item.stream.Deleted)
             {
+                args.Logger?.ILog($"Stream '{item.stream}' deleted, has changed");
                 hasChange = true;
                 continue;
             }
@@ -165,6 +166,8 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             }
 
             ffArgs.AddRange(streamArgs);
+            if(item.stream.HasChange)
+                args.Logger?.ILog("Stream Changed: " + item.stream);
             hasChange |= item.stream.HasChange | item.stream.ForcedChange;
             ++actualIndex;
             ++overallIndex;
@@ -172,13 +175,20 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
 
         if (model.MetadataParameters?.Any() == true)
         {
+            args.Logger?.ILog("Has Metadata Parameters");
             hasChange = true;
             ffArgs.AddRange(model.MetadataParameters);
         }
+        
+        args.Logger?.ILog("ForceEncode: " + model.ForceEncode);;
+        args.Logger?.ILog("HasChange: " + hasChange);
+        args.Logger?.ILog("HasChange: " + hasChange);
+        bool extensionChanged = string.IsNullOrWhiteSpace(model.Extension) == false &&
+                                args.WorkingFile.ToLower()
+                                    .EndsWith("." + model.Extension.ToLower()) == false;
+        args.Logger?.ILog("ExtensionChanged: " + extensionChanged);;
 
-        if (model.ForceEncode == false && hasChange == false && (string.IsNullOrWhiteSpace(model.Extension) ||
-                                                                 args.WorkingFile.ToLower()
-                                                                     .EndsWith("." + model.Extension.ToLower())))
+        if (model.ForceEncode == false && hasChange == false && extensionChanged == false)
         {
             DoClearModel();
             return 2; // nothing to do
