@@ -166,9 +166,18 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             }
 
             ffArgs.AddRange(streamArgs);
-            if(item.stream.HasChange)
+            if (item.stream.HasChange)
+            {
                 args.Logger?.ILog("Stream Changed: " + item.stream);
-            hasChange |= item.stream.HasChange | item.stream.ForcedChange;
+                hasChange = true;
+            }
+
+            if (item.stream.ForcedChange)
+            {
+                args.Logger?.ILog("Stream Force Change: " + item.stream);
+                hasChange = true;
+            }
+            
             ++actualIndex;
             ++overallIndex;
         }
@@ -181,7 +190,6 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         }
         
         args.Logger?.ILog("ForceEncode: " + model.ForceEncode);;
-        args.Logger?.ILog("HasChange: " + hasChange);
         args.Logger?.ILog("HasChange: " + hasChange);
         bool extensionChanged = string.IsNullOrWhiteSpace(model.Extension) == false &&
                                 args.WorkingFile.ToLower()
