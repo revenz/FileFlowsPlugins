@@ -85,7 +85,11 @@ public class FfmpegVideoStream : FfmpegStream
             {
                 results.Add($"-metadata:s:v:{args.OutputTypeIndex}");
                 results.Add($"title={(Title == REMOVED ? "" : Title)}");
-                ForcedChange = true;
+                if (Title == REMOVED)
+                {
+                    args.Logger?.ILog("Video clearing title, forcing change");
+                    ForcedChange = true;
+                }
             }
             return results.ToArray();
         }
