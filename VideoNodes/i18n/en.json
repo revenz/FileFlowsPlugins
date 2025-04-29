@@ -933,6 +933,19 @@
           "2": "File was not a video file or failed to be read"
         }
       },
+      "SizePerHour": {
+        "Description": "Checks if the file size is within an acceptable limit based on its duration, where the size limit is defined in megabytes per hour of video duration.",
+        "Label": "Size Per Hour",
+        "Fields": {
+          "MegabytesPerHour": "Size",
+          "MegabytesPerHour-Help": "Set the maximum size (in megabytes) that a video file is allowed to occupy per hour of video duration.",
+          "MegabytesPerHour-Suffix": "MB"
+        },
+        "Outputs": {
+          "1": "File size is acceptable.",
+          "2": "File size is too large."
+        }
+      },
       "SubtitleExtractor": {
         "Description": "Extracts a single subtitle track and saves it to the specified destination. Supports extraction of SRT, ASS, and SSA formats.\nThis operation does NOT modify the working file; it will remain unchanged from the input file.\n\nOutput 1: Subtitles extracted successfully.\nOutput 2: No subtitles found to extract.",
         "Label": "Subtitle Extractor",
@@ -1057,6 +1070,20 @@
           "1": "Video file from library"
         }
       },
+      "VideoHasAudio": {
+        "Description": "Checks if a video file contains any audio tracks.",
+        "Label": "Video Has Audio",
+        "Fields": {
+          "CheckDeleted": "Check Deleted Tracks",
+          "CheckDeleted-Help": "Indicates whether deleted tracks should also be considered in the FFmpeg Builder model.",
+          "CheckFFmpegModel": "Check FFmpeg Model",
+          "CheckFFmpegModel-Help": "Specifies whether to check the FFmpeg Builder model or the actual video file metadata."
+        },
+        "Outputs": {
+          "1": "Has audio",
+          "2": "Does not have audio"
+        }
+      },
       "VideoHasErrors": {
         "Description": "Tests if a video file contains any errors",
         "Label": "Video Has Errors",
@@ -1151,6 +1178,14 @@
         "Outputs": {
           "1": "Video is H.264.",
           "2": "Video is not H.264."
+        }
+      },
+      "VideoIsHdr": {
+        "Description": "Checks if a video file is HDR.",
+        "Label": "Video Is HDR",
+        "Outputs": {
+          "1": "The video is HDR.",
+          "2": "The video is not HDR."
         }
       },
       "VideoIsHevc": {

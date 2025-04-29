@@ -66,7 +66,7 @@ public class ReadVideoInfo: EncodingNode
                 return -1;
             }
 
-            var videoInfoResult = new VideoInfoHelper(FFMPEG, args.Logger).Read(localFileResult.Value);
+            var videoInfoResult = new VideoInfoHelper(FFMPEG, args.Logger, args.Process).Read(localFileResult.Value);
             if (videoInfoResult.Failed(out string error))
             {
                 args.Logger.ELog(error);

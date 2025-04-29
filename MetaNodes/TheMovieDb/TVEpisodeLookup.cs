@@ -1,4 +1,5 @@
 ﻿using DM.MovieApi;
+using DM.MovieApi.ApiResponse;
 using DM.MovieApi.MovieDb.TV;
 using FileFlows.Plugin;
 using FileFlows.Plugin.Attributes;
@@ -71,12 +72,25 @@ public class TVEpisodeLookup : Node
     /// <returns>the output to call next</returns>
     public override int Execute(NodeParameters args)
     {
-        string filename = FileHelper.GetShortFileNameWithoutExtension(args.LibraryFileName);
+        string fullFilename = args.WorkingFile.StartsWith(args.TempPath) ? args.LibraryFileName : args.WorkingFile;
+        args.Logger.ILog("Full File Name: " + fullFilename);
+        string filename = FileHelper.GetShortFileNameWithoutExtension(fullFilename);
+        
+        args.Logger.ILog("Lookup filename: " + filename);
         
         var helper = new TVShowHelper(args);
-        (string lookupName, string year) = helper.GetLookupName(args.LibraryFileName, UseFolderName);
+        (string lookupName, string year) = helper.GetLookupName(fullFilename, UseFolderName);
 
-        (string showName, int? season, int? episode, int? lastEpisode, string year2) = helper.GetTVShowInfo(filename);
+        (string? showName, int? season, int? episode, int? lastEpisode, string year2) = helper.GetTVShowInfo(filename);
+        if (season == null && episode == null)
+        {
+            args.Logger.ILog("Attempting lookup using Folder");
+            var folder = FileHelper.GetDirectoryName(fullFilename);
+            (showName,  season, episode, lastEpisode, year2) = helper.GetTVShowInfo(folder);
+            lookupName = showName;
+            year = year2;
+
+        }
 
         if (season == null)
         {
@@ -93,7 +107,7 @@ public class TVEpisodeLookup : Node
         args.Logger?.ILog($"Found show info from filename '{lookupName}' season '{season}' episode '{(episode + (lastEpisode == null ? "" : "-" + lastEpisode))}'");
         
         string tvShowInfoCacheKey = $"TVShowInfo: {lookupName} ({year})";
-        TVShowInfo result =args.Cache.GetObject<TVShowInfo>(tvShowInfoCacheKey);
+        TVShowInfo result = args.Cache?.GetObject<TVShowInfo>(tvShowInfoCacheKey);
 
         // RegisterSettings only needs to be called one time when your application starts-up.
         MovieDbFactory.RegisterSettings(Globals.MovieDbBearerToken);
@@ -108,7 +122,15 @@ public class TVEpisodeLookup : Node
 
             args.Logger?.ILog("Lookup TV Show: " + lookupName);
 
-            var response = movieApi.SearchByNameAsync(lookupName).Result;
+            ApiSearchResponse<TVShowInfo> response;
+            try
+            {
+                response = movieApi.SearchByNameAsync(lookupName).GetAwaiter().GetResult();
+            }
+            catch (Exception ex)
+            {
+                return args.Fail("TV Show Lookup failed: " + ex.Message);
+            }
 
             // try find an exact match
             result = response.Results.OrderBy(x =>
@@ -145,9 +167,28 @@ public class TVEpisodeLookup : Node
         
         // now we have the show, try and get the episode
 
-        var episodeApi  = MovieDbFactory.Create<IApiTVShowRequest>().Value;
+        IApiTVShowRequest episodeApi = null;
+        try
+        {
+            episodeApi = MovieDbFactory.Create<IApiTVShowRequest>().Value;
+        }
+        catch (Exception ex)
+        {
+            args.Logger?.ILog("API error getting TV show: " + ex.Message);
+            return 2; // no match
+        }
         
-        var show = episodeApi.GetTvShowSeasonInfoAsync(result.Id, season.Value).Result;
+        ApiQueryResponse<SeasonInfo> show;
+        try
+        {
+            show = episodeApi.GetTvShowSeasonInfoAsync(result.Id, season.Value).Result;
+        }
+        catch (Exception ex)
+        {
+            args.Logger?.ILog("API error getting TV season info: " + ex.Message);
+            return 2; // no match
+        }
+
         if (show.Item == null)
         {
             args.Logger?.WLog("Failed to load season info: " + (show?.Error?.Message?.EmptyAsNull() ?? "Unexpected error"));

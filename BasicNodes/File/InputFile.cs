@@ -45,8 +45,6 @@ public partial class InputFile : Node
                 return -1;
             }
             
-            args.Variables["ORIGINAL_CREATE_UTC"] = args.FileService.FileCreationTimeUtc(args.WorkingFile).ValueOrDefault;
-            args.Variables["ORIGINAL_LAST_WRITE_UTC"] = args.FileService.FileLastWriteTimeUtc(args.WorkingFile).ValueOrDefault;
             return 1;
         }
         catch (Exception ex)

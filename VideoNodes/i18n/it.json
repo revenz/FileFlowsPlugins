@@ -933,6 +933,19 @@
           "2": "Il file non era un file video o non è stato possibile leggerlo"
         }
       },
+      "SizePerHour": {
+        "Description": "Verifica se la dimensione del file è all'interno di un limite accettabile in base alla durata, dove il limite di dimensione è definito in megabyte per ora di video.",
+        "Label": "Dimensione per ora",
+        "Fields": {
+          "MegabytesPerHour": "Dimensione",
+          "MegabytesPerHour-Help": "Imposta la dimensione massima (in megabyte) che un file video può occupare per ogni ora di durata.",
+          "MegabytesPerHour-Suffix": "MB"
+        },
+        "Outputs": {
+          "1": "La dimensione del file è accettabile.",
+          "2": "La dimensione del file è troppo grande."
+        }
+      },
       "SubtitleExtractor": {
         "Description": "Estrae una singola traccia di sottotitoli e la salva nella destinazione. Può estrarre formati srt, ass e ssa.\nQuesto NON aggiornerà il file di lavoro e manterrà il file di lavoro lo stesso del file di input.\n\nOutput 1: I sottotitoli sono stati estratti\nOutput 2: Nessun sottotitolo trovato da estrarre",
         "Label": "Estrattore Sottotitoli",
@@ -1057,6 +1070,20 @@
           "1": "File video dalla libreria"
         }
       },
+      "VideoHasAudio": {
+        "Description": "Verifica se un file video contiene tracce audio.",
+        "Label": "Il video ha audio",
+        "Fields": {
+          "CheckDeleted": "Verifica tracce eliminate",
+          "CheckDeleted-Help": "Indica se le tracce eliminate devono essere considerate anche nel modello di compilazione FFmpeg.",
+          "CheckFFmpegModel": "Verifica modello FFmpeg",
+          "CheckFFmpegModel-Help": "Specifica se controllare il modello di compilazione FFmpeg o i metadati effettivi del file video."
+        },
+        "Outputs": {
+          "1": "Ha audio",
+          "2": "Non ha audio"
+        }
+      },
       "VideoHasErrors": {
         "Description": "Controlla se un file video contiene errori.",
         "Label": "Il video ha errori",
@@ -1151,6 +1178,14 @@
         "Outputs": {
           "1": "Il video è H.264",
           "2": "Il video non è H.264"
+        }
+      },
+      "VideoIsHdr": {
+        "Description": "Verifica se un file video è HDR.",
+        "Label": "Il video è HDR",
+        "Outputs": {
+          "1": "Il video è HDR.",
+          "2": "Il video non è HDR."
         }
       },
       "VideoIsHevc": {

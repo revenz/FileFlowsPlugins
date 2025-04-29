@@ -933,6 +933,19 @@
           "2": "Datei war keine Videodatei oder konnte nicht gelesen werden"
         }
       },
+      "SizePerHour": {
+        "Description": "Prüft, ob die Dateigröße innerhalb eines akzeptablen Limits basierend auf ihrer Dauer liegt, wobei das Größenlimit in Megabyte pro Stunde Video dauert.",
+        "Label": "Größe pro Stunde",
+        "Fields": {
+          "MegabytesPerHour": "Größe",
+          "MegabytesPerHour-Help": "Legen Sie die maximale Größe (in Megabyte) fest, die eine Videodatei pro Stunde Video belegen darf.",
+          "MegabytesPerHour-Suffix": "MB"
+        },
+        "Outputs": {
+          "1": "Dateigröße ist akzeptabel.",
+          "2": "Dateigröße ist zu groß."
+        }
+      },
       "SubtitleExtractor": {
         "Description": "Extrahiert eine einzelne Untertitelspur und speichert sie am Zielort.  Es können die Formate srt, ass und ssa extrahiert werden.\nDie Arbeitsdatei wird NICHT aktualisiert und bleibt mit der Eingabedatei identisch.\n\nAusgabe 1: Untertitel wurden extrahiert\nAusgabe 2: Keine Untertitel zum Extrahieren gefunden.",
         "Label": "Untertitel-Extraktor",
@@ -1057,6 +1070,20 @@
           "1": "Video-Datei aus der Bibliothek"
         }
       },
+      "VideoHasAudio": {
+        "Description": "Prüft, ob eine Videodatei Audiospuren enthält.",
+        "Label": "Video hat Audio",
+        "Fields": {
+          "CheckDeleted": "Gelöschte Spuren prüfen",
+          "CheckDeleted-Help": "Gibt an, ob gelöschte Spuren im FFmpeg-Builder-Modell berücksichtigt werden sollen.",
+          "CheckFFmpegModel": "FFmpeg-Modell prüfen",
+          "CheckFFmpegModel-Help": "Gibt an, ob das FFmpeg-Builder-Modell oder die tatsächlichen Videodateimetadaten überprüft werden sollen."
+        },
+        "Outputs": {
+          "1": "Hat Audio",
+          "2": "Hat kein Audio"
+        }
+      },
       "VideoHasErrors": {
         "Description": "Prüft, ob eine Videodatei Fehler enthält",
         "Label": "Video hat Fehler",
@@ -1138,11 +1165,11 @@
         }
       },
       "VideoIsDolbyVision": {
-        "Description": "Checks if a video file is Dolby Vision.",
-        "Label": "Video Is Dolby Vision",
+        "Description": "Prüft, ob eine Videodatei Dolby Vision ist.",
+        "Label": "Video ist Dolby Vision",
         "Outputs": {
-          "1": "The video is Dolby Vision.",
-          "2": "The video is not Dolby Vision."
+          "1": "Das Video ist Dolby Vision.",
+          "2": "Das Video ist nicht Dolby Vision."
         }
       },
       "VideoIsH264": {
@@ -1151,6 +1178,14 @@
         "Outputs": {
           "1": "Video ist H.264",
           "2": "Video ist nicht H.264"
+        }
+      },
+      "VideoIsHdr": {
+        "Description": "Prüft, ob eine Videodatei HDR ist.",
+        "Label": "Video ist HDR",
+        "Outputs": {
+          "1": "Das Video ist HDR.",
+          "2": "Das Video ist nicht HDR."
         }
       },
       "VideoIsHevc": {

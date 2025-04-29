@@ -933,6 +933,19 @@
           "2": "Fil var inte en videofil eller kunde inte läsas"
         }
       },
+      "SizePerHour": {
+        "Description": "Kontrollerar om filstorleken är inom ett acceptabelt gräns baserat på dess varaktighet, där storleksgränsen definieras i megabyte per timme video.",
+        "Label": "Storlek per timme",
+        "Fields": {
+          "MegabytesPerHour": "Storlek",
+          "MegabytesPerHour-Help": "Ställ in den maximala storleken (i megabyte) som en videofil får uppta per timme video.",
+          "MegabytesPerHour-Suffix": "MB"
+        },
+        "Outputs": {
+          "1": "Filstorleken är acceptabel.",
+          "2": "Filstorleken är för stor."
+        }
+      },
       "SubtitleExtractor": {
         "Description": "Extraherar en enda undertextspår och sparar den till destinationen. Kan extrahera srt, ass och ssa-format.\nDetta kommer INTE att uppdatera arbetsfilen och kommer att hålla arbetsfilen densamma som ingångsfilen.\n\nUtdata 1: Undertexter extraherade\nUtdata 2: Inga undertexter hittades för att extrahera",
         "Label": "Undertextsextraktor",
@@ -1057,6 +1070,20 @@
           "1": "Videofil från biblioteket"
         }
       },
+      "VideoHasAudio": {
+        "Description": "Kontrollerar om en videofil innehåller ljudspår.",
+        "Label": "Video har ljud",
+        "Fields": {
+          "CheckDeleted": "Kontrollera borttagna spår",
+          "CheckDeleted-Help": "Anger om borttagna spår också ska kontrolleras i FFmpeg Builder-modellen.",
+          "CheckFFmpegModel": "Kontrollera FFmpeg-modell",
+          "CheckFFmpegModel-Help": "Anger om FFmpeg Builder-modellen eller de faktiska metadata för videofilen ska kontrolleras."
+        },
+        "Outputs": {
+          "1": "Har ljud",
+          "2": "Har inget ljud"
+        }
+      },
       "VideoHasErrors": {
         "Description": "Testar om en videofil innehåller några fel",
         "Label": "Video Har Fel",
@@ -1151,6 +1178,14 @@
         "Outputs": {
           "1": "Videon är H.264",
           "2": "Videon är inte H.264"
+        }
+      },
+      "VideoIsHdr": {
+        "Description": "Kontrollerar om en videofil är HDR.",
+        "Label": "Videon är HDR",
+        "Outputs": {
+          "1": "Videon är HDR.",
+          "2": "Videon är inte HDR."
         }
       },
       "VideoIsHevc": {

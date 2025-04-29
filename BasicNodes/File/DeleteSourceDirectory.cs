@@ -195,14 +195,40 @@ public class DeleteSourceDirectory : Node
 
         if (deleteSubFolders == false)
         {
-            if (args.FileService.GetDirectories(path).ValueOrDefault?.Any() == true)
+            var dirResult = args.FileService.GetDirectories(path);
+            if (dirResult.Failed(out var derror))
+            {
+                args.Logger.WLog("Failed to get directories: " + derror);
+                return 2;
+            }
+
+            if (dirResult.Value == null)
+            {
+                args.Logger.WLog("Directory result was null, assuming an error");
+                return 2;
+            }
+            
+            if (dirResult.Value.Length > 0)
             {
                 args.Logger?.ILog("Directory contains subfolders, cannot delete: " + path);
                 return 2;
             }
         }
 
-        var files = args.FileService.GetFiles(path, "", true).ValueOrDefault ?? new string [] {};
+        var result = args.FileService.GetFiles(path, "", true);
+        if (result.Failed(out var error))
+        {
+            args.Logger.WLog("Failed to get files: " + error);
+            return 2;
+        }
+
+        if (result.Value == null)
+        {
+            args.Logger.WLog("File result was null, assuming an error");
+            return 2;
+        }
+
+        var files = result.Value;
         args.Logger?.ILog($"Directory contains {files.Length} file{(files.Length == 1 ? "" : "s")}");
         
         foreach (var file in files)
@@ -232,11 +258,13 @@ public class DeleteSourceDirectory : Node
                     }
                     catch (Exception)
                     {
+                        return true; // if in doubt, we say there's a file, and do not delete 
                     }
                 }
 
                 return false;
             }).ToList();
+            
             if (includeFiles.Any())
             {
                 args.Logger?.ILog("Directory is not empty, cannot delete: " + path + Environment.NewLine +

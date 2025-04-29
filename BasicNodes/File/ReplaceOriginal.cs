@@ -68,8 +68,12 @@ public class ReplaceOriginal : Node
                args.Variables.TryGetValue("ORIGINAL_LAST_WRITE_UTC", out object oLastWriteUtc) &&
                oCreateTimeUtc is DateTime dtCreateTimeUtc && oLastWriteUtc is DateTime dtLastWriteUtc)
             {
-                args.FileService.SetCreationTimeUtc(args.FileName, dtCreateTimeUtc);
-                args.FileService.SetLastWriteTimeUtc(args.FileName, dtLastWriteUtc);
+                args.Logger?.ILog($"Setting creation time: {args.FileName}, {dtCreateTimeUtc}");
+                if(args.FileService.SetCreationTimeUtc(args.FileName, dtCreateTimeUtc).Failed(out error))
+                    args.Logger?.WLog("Failed to set creation time: " + error);
+                args.Logger?.ILog($"Setting last write time: {args.FileName}, {dtLastWriteUtc}");
+                if(args.FileService.SetLastWriteTimeUtc(args.FileName, dtLastWriteUtc).Failed(out error))
+                    args.Logger?.WLog("Failed to set last write time: " + error);
             }
         }
         else
@@ -98,8 +102,12 @@ public class ReplaceOriginal : Node
                args.Variables.TryGetValue("ORIGINAL_LAST_WRITE_UTC", out object oLastWriteUtc) &&
                oCreateTimeUtc is DateTime dtCreateTimeUtc && oLastWriteUtc is DateTime dtLastWriteUtc)
             {
-                args.FileService.SetCreationTimeUtc(args.FileName, dtCreateTimeUtc);
-                args.FileService.SetLastWriteTimeUtc(args.FileName, dtLastWriteUtc);
+                args.Logger?.ILog($"Setting creation time: {args.FileName}, {dtCreateTimeUtc}");
+                if(args.FileService.SetCreationTimeUtc(args.FileName, dtCreateTimeUtc).Failed(out error))
+                    args.Logger?.WLog("Failed to set creation time: " + error);
+                args.Logger?.ILog($"Setting last write time: {args.FileName}, {dtLastWriteUtc}");
+                if(args.FileService.SetLastWriteTimeUtc(args.FileName, dtLastWriteUtc).Failed(out error))
+                    args.Logger?.WLog("Failed to set last write time: " + error);
             }
         }
 

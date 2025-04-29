@@ -33,7 +33,39 @@ public class TVEpisodeLookupTests : TestBase
         Assert.IsFalse(string.IsNullOrWhiteSpace(args.Variables["tvepisode.Overview"] as string));
     }
     
+    [TestMethod]
+    public void TeenTitansGo()
+    {
+        var args = GetNodeParameters("D:\\Internal\\Downloads\\TV\\Teen Titans Go! - S09E07 High Five 1080p AMZN WEB-DL DDP2 0 H 264-NTb[EZTVx.to].mkv");
 
+        var element = new TVEpisodeLookup();
+
+        var result = element.Execute(args);
+        Assert.AreEqual(1, result);
+        
+        Assert.AreEqual("Teen Titans Go!", args.Variables["tvepisode.Title"]);
+        Assert.AreEqual(9, args.Variables["tvepisode.Season"]);
+        Assert.AreEqual(7, args.Variables["tvepisode.Episode"]);
+        Assert.AreEqual("Episode 7", args.Variables["tvepisode.Subtitle"]);
+    }
+
+    
+    [TestMethod]
+    public void RubbishFileName()
+    {
+        var args = GetNodeParameters("media/downloads/complete/tv/The.Good.Wife.S07E16.1080p.WEB.H264-DiMEPiECE/381d8e641fa24c6c8d14214755f3ccc8.mkv");
+
+        var element = new TVEpisodeLookup();
+
+        var result = element.Execute(args);
+        Assert.AreEqual(1, result);
+        
+        Assert.AreEqual("The Good Wife", args.Variables["tvepisode.Title"]);
+        Assert.AreEqual(7, args.Variables["tvepisode.Season"]);
+        Assert.AreEqual(16, args.Variables["tvepisode.Episode"]);
+        Assert.AreEqual("Hearing", args.Variables["tvepisode.Subtitle"]);
+    }
+    
     [TestMethod]
     public void TheBatman_s02space01()
     {

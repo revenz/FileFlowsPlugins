@@ -59,182 +59,237 @@ public class MovieLookup : Node
     [Boolean(1)]
     public bool UseFolderName { get; set; }
 
-    /// <summary>
-    /// Executes the flow element
-    /// </summary>
-    /// <param name="args">the node parameters</param>
-    /// <returns>the output to call next</returns>
+    
+    /// <inheritdoc/>
     public override int Execute(NodeParameters args)
     {
-        var originalName = UseFolderName
-            ? FileHelper.GetDirectoryName(args.LibraryFileName)
-            : FileHelper.GetShortFileNameWithoutExtension(args.LibraryFileName);
-        string lookupName = originalName;
-        lookupName = lookupName.Replace(".", " ").Replace("_", " ");
+        string lookupName = PrepareLookupName(args, out int year);
+        args.Logger?.ILog("Lookup name: " + lookupName);
 
-        // look for year
-        int year = 0;
-        var match = Regex.Matches(lookupName, @"((19[2-9][0-9])|(20[0-9]{2}))(?=([\.\s_\-\)\]]|$))").LastOrDefault();
+        MovieDbFactory.RegisterSettings(Globals.MovieDbBearerToken);
+        var movieApi = MovieDbFactory.Create<IApiMovieRequest>().Value;
+
+        var result = SearchMovie(args, movieApi, lookupName, year);
+        if (result == null)
+            return 2; // No match found
+
+        args.SetParameter(Globals.MOVIE_INFO, result);
+        PopulateMovieVariables(args, result);
+        args.SetDisplayName($"{result.Title} ({result.ReleaseDate.Year})");
+
+        return RetrieveAdditionalMetadata(args, movieApi, result.Id) ? 1 : 2;
+    }
+
+    /// <summary>
+    /// Prepares the lookup name from the input file name or folder name.
+    /// Extracts the year from the name.
+    /// </summary>
+    /// <param name="args">The node parameters.</param>
+    /// <param name="year">The extracted year from the name.</param>
+    /// <returns>The cleaned-up lookup name.</returns>
+    private string PrepareLookupName(NodeParameters args, out int year)
+    {
+        string fullFilename = args.WorkingFile.StartsWith(args.TempPath) ? args.LibraryFileName : args.WorkingFile;
+        args.Logger.ILog("Full File Name: " + fullFilename);
+        var originalName = UseFolderName
+            ? FileHelper.GetDirectoryName(fullFilename)
+            : FileHelper.GetShortFileNameWithoutExtension(fullFilename);
+
+        string lookupName = originalName.Replace(".", " ").Replace("_", " ");
+        lookupName = RemoveYearFromName(lookupName, out year);
+        lookupName = lookupName.TrimEnd('(', '-', ' ');
+
+        args.Logger?.ILog($"Prepared lookup name: {lookupName}, Detected Year: {year}");
+        return lookupName;
+    }
+
+
+    /// <summary>
+    /// Removes the year from the lookup name if present.
+    /// </summary>
+    private static string RemoveYearFromName(string lookupName, out int year)
+    {
+        year = 0;
+        var match = Regex.Matches(lookupName, @"(?<=[\s\.\-\[\(\{])((19[2-9][0-9])|(20[0-9]{2}))(?=[\s.\-_\]\)\}]|$)").LastOrDefault();
         if (match != null)
         {
             int.TryParse(match.Value, out year);
             lookupName = lookupName[..lookupName.IndexOf(match.Value, StringComparison.Ordinal)].TrimEnd('(');
         }
 
-        // remove double spaces in case they were added when removing the year
-        while (lookupName.IndexOf("  ", StringComparison.Ordinal) > 0)
-            lookupName = lookupName.Replace("  ", " ");
 
-        lookupName = lookupName.TrimEnd('(', '-');
-        
-        args.Logger?.ILog("Lookup name: " + lookupName);
-
-        // RegisterSettings only needs to be called one time when your application starts-up.
-        MovieDbFactory.RegisterSettings(Globals.MovieDbBearerToken);
-
-        var movieApi = MovieDbFactory.Create<IApiMovieRequest>().Value;
-
-        var response = movieApi.SearchByTitleAsync(lookupName).Result;
-        
-        if(response.Results.Count == 0 && originalName.Contains("german", StringComparison.CurrentCultureIgnoreCase) && lookupName.Contains("Ae", StringComparison.InvariantCultureIgnoreCase))
+        return lookupName.Replace("  ", " ");
+    }
+    
+    /// <summary>
+    /// Searches for a movie using the API.
+    /// </summary>
+    /// <param name="args">The node parameters for logging.</param>
+    /// <param name="movieApi">The API client for movie lookup.</param>
+    /// <param name="lookupName">The name of the movie to search for.</param>
+    /// <param name="year">The extracted year from the title.</param>
+    /// <returns>The movie information if found; otherwise, null.</returns>
+    private MovieInfo SearchMovie(NodeParameters args, IApiMovieRequest movieApi, string lookupName, int year)
+    {
+        try
         {
-            lookupName = lookupName.Replace("Ae", "Ä", StringComparison.InvariantCultureIgnoreCase);
-            response = movieApi.SearchByTitleAsync(lookupName).Result;
+            args.Logger?.ILog($"Searching for movie: {lookupName}");
+
+            var response = movieApi.SearchByTitleAsync(lookupName).Result;
+        
+            if (response.Results.Count == 0 && lookupName.Contains("Ae", StringComparison.InvariantCultureIgnoreCase))
+            {
+                lookupName = lookupName.Replace("Ae", "Ä", StringComparison.InvariantCultureIgnoreCase);
+                args.Logger?.ILog($"Retrying search with modified title: {lookupName}");
+                response = movieApi.SearchByTitleAsync(lookupName).Result;
+            }
+
+            if (response.Results.Count == 0)
+            {
+                args.Logger?.WLog($"No results found for '{lookupName}'");
+                return null;
+            }
+
+            // Store the year in a local variable to use inside the lambda
+            int searchYear = year;
+
+            var movies  = response.Results
+                .OrderBy(x =>
+                {
+                    if (searchYear > 0)
+                        return Math.Abs(searchYear - x.ReleaseDate.Year) < 2 ? 0 : 1;
+                    return 0;
+                })
+                .ThenBy(x => x.VoteCount > 250 ? 1 : 2) // behind the scenes etc, try treduce those
+                .ThenBy(x => NormalizeTitle(x.Title) == NormalizeTitle(lookupName) ? 0 : 1)
+                .ToList();
+            
+            var movie = movies.FirstOrDefault();
+
+            args.Logger?.ILog($"Found movie: {movie?.Title} ({movie?.ReleaseDate.Year})");
+
+            return movie;
         }
-        
-
-        // try find an exact match
-        var results = response.Results.OrderBy(x =>
-            {
-                if (year > 0)
-                {
-                    // sometimes a year can be off by 1, if a movie was released late in the year but recorded in the next year
-                    return Math.Abs(year - x.ReleaseDate.Year) < 2 ? 0 : 1;
-                }
-                return 0;
-            })
-            .ThenBy(x => x.Title.ToLower().Trim().Replace(" ", "") == lookupName.ToLower().Trim().Replace(" ", "") ? 0 : 1)
-            .ThenBy(x =>
-            {
-                // do some fuzzy logic with roman numerals
-                var numMatch = Regex.Match(lookupName, @"[\s]([\d]+)$");
-                if (numMatch.Success == false)
-                    return 0;
-                int number = int.Parse(numMatch.Groups[1].Value);
-                string roman = number switch
-                {
-                    1 => "i",
-                    2 => "ii",
-                    3 => "iii",
-                    4 => "iv",
-                    5 => "v",
-                    6 => "vi,",
-                    7 => "vii",
-                    8 => "viii",
-                    9 => "ix",
-                    10 => "x",
-                    11 => "xi",
-                    12 => "xii",
-                    13 => "xiii",
-                    _ => string.Empty
-                };
-                string ln = lookupName[..lookupName.LastIndexOf(number.ToString(), StringComparison.Ordinal)].ToLower().Trim().Replace(" ", "");
-                string softTitle = x.Title.ToLower().Replace(" ", "").Trim();
-                if (softTitle == ln + roman)
-                    return 0;
-                if (softTitle.StartsWith(ln) && softTitle.EndsWith(roman))
-                    return 0;
-                return 1;
-             })
-            .ThenBy(x => lookupName.ToLower().Trim().Replace(" ", "").StartsWith(x.Title.ToLower().Trim().Replace(" ", "")) ? 0 : 1)
-            // .ThenBy(x => x.Title)
-            .ToList();
-        var result = results.FirstOrDefault();
-
-        if (result == null)
-            return 2; // no match
-
-        args.SetParameter(Globals.MOVIE_INFO, result);
-
-        args.Variables["movie.Title"] = result.Title;
-        args.Logger?.ILog("Detected Movie Title: " + result.Title);
-        args.Variables["movie.Year"] = result.ReleaseDate.Year;
-         
-        args.SetDisplayName($"{result.Title} ({result.ReleaseDate.Year})");
-        
-        args.Logger?.ILog("Detected Movie Year: " + result.ReleaseDate.Year);
-        var meta = GetVideoMetadata(args, movieApi, result.Id, args.TempPath);
-        args.Variables["VideoMetadata"] = meta;
-        if (string.IsNullOrWhiteSpace(meta.OriginalLanguage) == false)
+        catch (Exception ex)
         {
-            args.Logger?.ILog("Detected Original Language: " + meta.OriginalLanguage);
-            args.Variables["OriginalLanguage"] = meta.OriginalLanguage;
+            args.Logger?.ELog($"Error searching for movie '{lookupName}': {ex.Message}");
+            return null;
         }
-
-        args.Variables[Globals.MOVIE_INFO] = result;
-        var movie = movieApi.FindByIdAsync(result.Id).Result.Item;
-        if(movie != null)
-            args.Variables[Globals.MOVIE] = movie;
-
-        return 1;
     }
 
 
+
     /// <summary>
-    /// Gets the VideoMetadata
+    /// Normalizes a movie title by removing spaces and converting to lowercase.
     /// </summary>
-    /// <param name="movieApi">the movie API</param>
-    /// <param name="id">the ID of the movie</param>
-    /// <param name="tempPath">the temp path to save any images to</param>
-    /// <returns>the VideoMetadata</returns>
+    private static string NormalizeTitle(string title)
+        => title.ToLower().Trim().Replace(" ", "");
+
+    /// <summary>
+    /// Populates movie-related variables into the execution context.
+    /// </summary>
+    private void PopulateMovieVariables(NodeParameters args, MovieInfo result)
+    {
+        args.Variables["movie.Title"] = result.Title;
+        args.Logger?.ILog("Detected Movie Title: " + result.Title);
+        args.Variables["movie.Year"] = result.ReleaseDate.Year;
+        args.Logger?.ILog("Detected Movie Year: " + result.ReleaseDate.Year);
+    }
+
+    /// <summary>
+    /// Retrieves additional metadata such as cast and crew information.
+    /// </summary>
+    private bool RetrieveAdditionalMetadata(NodeParameters args, IApiMovieRequest movieApi, int movieId)
+    {
+        try
+        {
+            var meta = GetVideoMetadata(args, movieApi, movieId, args.TempPath);
+            if (meta == null)
+                return false;
+
+            args.Variables["VideoMetadata"] = meta;
+            if (!string.IsNullOrWhiteSpace(meta.OriginalLanguage))
+            {
+                args.Logger?.ILog("Detected Original Language: " + meta.OriginalLanguage);
+                args.Variables["OriginalLanguage"] = meta.OriginalLanguage;
+            }
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            args.Logger?.WLog($"Failed looking up movie: {ex}");
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Retrieves video metadata including movie details and credits.
+    /// </summary>
     internal static VideoMetadata GetVideoMetadata(NodeParameters args, IApiMovieRequest movieApi, int id, string tempPath)
     {
         var movie = movieApi.FindByIdAsync(id).Result?.Item;
         if (movie == null)
             return null;
-        
-        if(string.IsNullOrWhiteSpace(movie.ImdbId) == false)
+
+        if (!string.IsNullOrWhiteSpace(movie.ImdbId))
             args.Variables["movie.ImdbId"] = movie.ImdbId;
-        if(movie.Genres?.Any() != false)
+        if (movie.Genres?.Any() == true)
             args.Variables["movie.Genre"] = movie.Genres.First().Name;
+
+        args.SetParameter(Globals.MOVIE, movie);
         
+        var meta = new VideoMetadata
+        {
+            Title = movie.Title,
+            Genres = movie.Genres?.Select(x => x.Name).ToList(),
+            Description = movie.Overview,
+            Year = movie.ReleaseDate.Year,
+            Subtitle = movie.Tagline,
+            ReleaseDate = movie.ReleaseDate,
+            OriginalLanguage = movie.OriginalLanguage
+        };
+
+        DownloadPosterImage(args, movie, tempPath, meta);
+        PopulateCredits(args, movieApi, id, meta);
+
+        return meta;
+    }
+
+    /// <summary>
+    /// Downloads and assigns the movie poster image.
+    /// </summary>
+    private static void DownloadPosterImage(NodeParameters args, Movie movie, string tempPath, VideoMetadata meta)
+    {
+        if (string.IsNullOrWhiteSpace(movie.PosterPath))
+            return;
+
+        try
+        {
+            using var httpClient = new HttpClient();
+            using var stream = httpClient.GetStreamAsync("https://image.tmdb.org/t/p/w500" + movie.PosterPath).Result;
+            string file = Path.Combine(tempPath, Guid.NewGuid() + ".jpg");
+            using var fileStream = new FileStream(file, FileMode.CreateNew);
+            stream.CopyTo(fileStream);
+            meta.ArtJpeg = file;
+            args.SetThumbnail(file);
+        }
+        catch
+        {
+            // Ignored
+        }
+    }
+
+    /// <summary>
+    /// Populates the cast and crew information.
+    /// </summary>
+    private static void PopulateCredits(NodeParameters args, IApiMovieRequest movieApi, int id, VideoMetadata meta)
+    {
         var credits = movieApi.GetCreditsAsync(id).Result?.Item;
+        if (credits == null) return;
 
-        VideoMetadata md = new();
-        md.Title = movie.Title;
-        md.Genres = movie.Genres?.Select(x => x.Name).ToList();
-        md.Description = movie.Overview;
-        md.Year = movie.ReleaseDate.Year;
-        md.Subtitle = movie.Tagline;
-        md.ReleaseDate = movie.ReleaseDate;
-        md.OriginalLanguage = movie.OriginalLanguage;
-        if (string.IsNullOrWhiteSpace(movie.PosterPath) == false)
-        {
-            try
-            {
-                using var httpClient = new HttpClient();
-                using var stream = httpClient.GetStreamAsync("https://image.tmdb.org/t/p/w500" + movie.PosterPath).Result;
-                string file = Path.Combine(tempPath, Guid.NewGuid() + ".jpg");
-                using var fileStream = new FileStream(file, FileMode.CreateNew);
-                stream.CopyTo(fileStream);
-                md.ArtJpeg = file;
-                args.SetThumbnail(file);
-            }
-            catch (Exception)
-            {
-                // Ignored
-            }
-        }
-        
-        if(credits != null)
-        {
-            args.Variables[Globals.MOVIE_CREDITS] = credits;
-            md.Actors = credits.CastMembers?.Select(x => x.Name)?.ToList();
-            md.Writers  = credits.CrewMembers?.Where(x => x.Department == "Writing" || x.Job == "Writer" || x.Job == "Screenplay") ?.Select(x => x.Name)?.ToList();
-            md.Directors = credits.CrewMembers?.Where(x => x.Job == "Director")?.Select(x => x.Name)?.ToList();
-            md.Producers = credits.CrewMembers?.Where(x => x.Job == "Producer")?.Select(x => x.Name)?.ToList();
-        }
-
-        return md;
+        args.Variables[Globals.MOVIE_CREDITS] = credits;
+        meta.Actors = credits.CastMembers?.Select(x => x.Name)?.ToList();
+        meta.Directors = credits.CrewMembers?.Where(x => x.Job == "Director")?.Select(x => x.Name)?.ToList();
     }
 }

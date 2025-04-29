@@ -50,6 +50,50 @@ public class TVShowLookupTests : TestBase
     }
     
     [TestMethod]
+    public void TeenTitans()
+    {
+        var args = GetNodeParameters("/Internal/Downloads/TV/Teen Titans Go! S09E051.mkv");
+
+        var element = new TVShowLookup();
+        element.UseFolderName = false;
+
+        var result = element.Execute(args);
+        Assert.AreEqual(1, result);
+        Assert.IsTrue(args.Parameters.ContainsKey(Globals.TV_SHOW_INFO));
+
+        var info = args.Parameters[Globals.TV_SHOW_INFO] as TVShowInfo;
+        Assert.IsNotNull(info);
+
+        Assert.AreEqual("Teen Titans Go!", info.Name);
+        Assert.AreEqual(2013, info.FirstAirDate.Year);
+        Assert.AreEqual("en", info.OriginalLanguage);
+        Assert.AreEqual("Teen Titans Go!", args.Variables["tvshow.Title"]);
+        Assert.AreEqual(2013, args.Variables["tvshow.Year"]);
+    }
+    
+    [TestMethod]
+    public void Severence()
+    {
+        var args = GetNodeParameters("/data/downloads/complete/Severence S01 COMPLETE DS4K 1080p ATVP WEBRip AV1 Opus 5.1 [RAV1NE]/Severance.S01E09.The.We.We.Are.1080p.DS4K.ATVP.WEBRip.AV1.Opus.5.1-RAV1NE.mkv");
+
+        var element = new TVShowLookup();
+        element.UseFolderName = false;
+
+        var result = element.Execute(args);
+        Assert.AreEqual(1, result);
+        Assert.IsTrue(args.Parameters.ContainsKey(Globals.TV_SHOW_INFO));
+
+        var info = args.Parameters[Globals.TV_SHOW_INFO] as TVShowInfo;
+        Assert.IsNotNull(info);
+
+        Assert.AreEqual("Severance", info.Name);
+        Assert.AreEqual(2022, info.FirstAirDate.Year);
+        Assert.AreEqual("en", info.OriginalLanguage);
+        Assert.AreEqual("Severance", args.Variables["tvshow.Title"]);
+        Assert.AreEqual(2022, args.Variables["tvshow.Year"]);
+    }
+
+    [TestMethod]
     public void YearInFilename()
     {
         var args = GetNodeParameters("TestFolder/Eric.2024.S01.01.mkv");

@@ -34,43 +34,45 @@ public class AudioFile : AudioNode
 
     public override int Execute(NodeParameters args)
     {
-        var ffmpegExeResult = GetFFmpeg(args);
-        if (ffmpegExeResult.Failed(out string ffmpegError))
-        {
-            args.FailureReason = ffmpegError;
-            args.Logger?.ELog(ffmpegError);
-            return -1;
-        }
-        string ffmpegExe = ffmpegExeResult.Value;
-        
-        var ffprobeResult = GetFFprobe(args);
-        if (ffprobeResult.Failed(out string ffprobeError))
-        {
-            args.FailureReason = ffprobeError;
-            args.Logger?.ELog(ffprobeError);
-            return -1;
-        }
-        string ffprobe = ffprobeResult.Value;
-
-
-        if (args.FileService.FileCreationTimeUtc(args.WorkingFile).Success(out DateTime createTime))
-            args.Variables["ORIGINAL_CREATE_UTC"] = createTime;
-        if (args.FileService.FileLastWriteTimeUtc(args.WorkingFile).Success(out DateTime writeTime))
-            args.Variables["ORIGINAL_LAST_WRITE_UTC"] = writeTime;
-        
-        
-        try
-        {
-            if (ReadAudioFileInfo(args, ffmpegExe, ffprobe, LocalWorkingFile))
-                return 1;
-            return -1;
-        }
-        catch (Exception ex)
-        {
-            args.Logger.ELog("Failed processing AudioFile: " + ex.Message);
-            args.FailureReason = "Failed processing AudioFile: " + ex.Message;
-            return -1;
-        }
+        // this info is read in the base class in pre-execute, so if here, its fine.
+        return 1;
+        // var ffmpegExeResult = GetFFmpeg(args);
+        // if (ffmpegExeResult.Failed(out string ffmpegError))
+        // {
+        //     args.FailureReason = ffmpegError;
+        //     args.Logger?.ELog(ffmpegError);
+        //     return -1;
+        // }
+        // string ffmpegExe = ffmpegExeResult.Value;
+        //
+        // var ffprobeResult = GetFFprobe(args);
+        // if (ffprobeResult.Failed(out string ffprobeError))
+        // {
+        //     args.FailureReason = ffprobeError;
+        //     args.Logger?.ELog(ffprobeError);
+        //     return -1;
+        // }
+        // string ffprobe = ffprobeResult.Value;
+        //
+        //
+        // if (args.FileService.FileCreationTimeUtc(args.WorkingFile).Success(out DateTime createTime))
+        //     args.Variables["ORIGINAL_CREATE_UTC"] = createTime;
+        // if (args.FileService.FileLastWriteTimeUtc(args.WorkingFile).Success(out DateTime writeTime))
+        //     args.Variables["ORIGINAL_LAST_WRITE_UTC"] = writeTime;
+        //
+        //
+        // try
+        // {
+        //     if (ReadAudioFileInfo(args, ffmpegExe, ffprobe, LocalWorkingFile))
+        //         return 1;
+        //     return -1;
+        // }
+        // catch (Exception ex)
+        // {
+        //     args.Logger.ELog("Failed processing AudioFile: " + ex.Message);
+        //     args.FailureReason = "Failed processing AudioFile: " + ex.Message;
+        //     return -1;
+        // }
     }
 }
 

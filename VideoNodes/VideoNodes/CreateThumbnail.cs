@@ -222,9 +222,9 @@ public class CreateThumbnail : VideoNode
             Timeout = 30
         }).Result;
 
-        if (result.ExitCode != 0 || File.Exists(outputPath) == false)
+        if (File.Exists(outputPath) == false)
         {
-            args.Logger?.ELog("FFmpeg failed to capture thumbnail.");
+            args.Logger?.ELog("FFmpeg failed to capture thumbnail: " + result.ExitCode);
             return false;
         }
         

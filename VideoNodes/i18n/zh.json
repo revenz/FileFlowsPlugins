@@ -933,6 +933,19 @@
           "2": "文件不是视频文件或读取失败"
         }
       },
+      "SizePerHour": {
+        "Description": "检查文件大小是否在基于其时长的可接受限制内，限制大小按每小时视频的兆字节计算。",
+        "Label": "每小时大小",
+        "Fields": {
+          "MegabytesPerHour": "大小",
+          "MegabytesPerHour-Help": "设置视频文件每小时允许占用的最大大小（以兆字节为单位）。",
+          "MegabytesPerHour-Suffix": "MB"
+        },
+        "Outputs": {
+          "1": "文件大小在可接受范围内。",
+          "2": "文件大小太大。"
+        }
+      },
       "SubtitleExtractor": {
         "Description": "提取单个字幕轨道并保存到目标位置。可以提取 srt、ass 和 ssa 格式。\n这不会更新工作文件，工作文件将保持与输入文件相同。\n\n输出 1：提取了字幕\n输出 2：未找到可提取的字幕",
         "Label": "字幕提取器",
@@ -1057,6 +1070,20 @@
           "1": "来自库的视频文件"
         }
       },
+      "VideoHasAudio": {
+        "Description": "检查视频文件是否包含音轨。",
+        "Label": "视频包含音频",
+        "Fields": {
+          "CheckDeleted": "检查已删除的音轨",
+          "CheckDeleted-Help": "指定是否在 FFmpeg 构建模型中考虑已删除的音轨。",
+          "CheckFFmpegModel": "检查 FFmpeg 模型",
+          "CheckFFmpegModel-Help": "指定是检查 FFmpeg 构建模型还是实际的视频文件元数据。"
+        },
+        "Outputs": {
+          "1": "有音频",
+          "2": "没有音频"
+        }
+      },
       "VideoHasErrors": {
         "Description": "测试视频文件是否包含任何错误",
         "Label": "视频有错误",
@@ -1151,6 +1178,14 @@
         "Outputs": {
           "1": "视频是H.264",
           "2": "视频不是H.264"
+        }
+      },
+      "VideoIsHdr": {
+        "Description": "检查视频文件是否为HDR。",
+        "Label": "视频是HDR",
+        "Outputs": {
+          "1": "视频是HDR。",
+          "2": "视频不是HDR。"
         }
       },
       "VideoIsHevc": {

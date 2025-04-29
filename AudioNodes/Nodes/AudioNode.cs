@@ -18,7 +18,45 @@ namespace FileFlows.AudioNodes
             }
 
             LocalWorkingFile = localFile.Value;
+
+            if (args.Parameters.ContainsKey(Audio_INFO) == false)
+            {
+                if (ReadAudioFileInfo(args) == -1)
+                    return false;
+            }
+            
             return true;
+        }
+
+        /// <summary>
+        /// Reads the audio file information from teh working file
+        /// </summary>
+        /// <param name="args">the node parameters</param>
+        /// <returns>the output, -1 for failure, 1 for ok</returns>
+        protected int ReadAudioFileInfo(NodeParameters args)
+        {
+            var ffmpegExeResult = GetFFmpeg(args);
+            if (ffmpegExeResult.Failed(out string ffmpegError))
+                return args.Fail(ffmpegError);
+            
+            string ffmpegExe = ffmpegExeResult.Value;
+        
+            var ffprobeResult = GetFFprobe(args);
+            if (ffprobeResult.Failed(out string ffprobeError))
+                return args.Fail(ffprobeError);
+            
+            string ffprobe = ffprobeResult.Value;
+
+            try
+            {
+                if (ReadAudioFileInfo(args, ffmpegExe, ffprobe, LocalWorkingFile))
+                    return 1;
+                return args.Fail("Failed to read audio file");
+            }
+            catch (Exception ex)
+            {
+                return args.Fail("Failed processing AudioFile: " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -60,15 +98,19 @@ namespace FileFlows.AudioNodes
         {
             args.Parameters[Audio_INFO] = AudioInfo;
 
-            if(AudioInfo.Artist.EndsWith(", The"))
-                variables.AddOrUpdate("audio.Artist", "The " + AudioInfo.Artist.Substring(0, AudioInfo.Artist.Length - ", The".Length).Trim());
-            else
-                variables.AddOrUpdate("audio.Artist", AudioInfo.Artist);
+            if (string.IsNullOrWhiteSpace(AudioInfo.Artist) == false)
+            {
+                if (AudioInfo.Artist.EndsWith(", The"))
+                    variables.AddOrUpdate("audio.Artist",
+                        "The " + AudioInfo.Artist.Substring(0, AudioInfo.Artist.Length - ", The".Length).Trim());
+                else
+                    variables.AddOrUpdate("audio.Artist", AudioInfo.Artist);
 
-            if(AudioInfo.Artist?.StartsWith("The ") == true)
-                variables.AddOrUpdate("audio.ArtistThe", AudioInfo.Artist.Substring(4).Trim() + ", The");
-            else
-                variables.AddOrUpdate("audio.ArtistThe", AudioInfo.Artist);
+                if (AudioInfo.Artist?.StartsWith("The ") == true)
+                    variables.AddOrUpdate("audio.ArtistThe", AudioInfo.Artist.Substring(4).Trim() + ", The");
+                else
+                    variables.AddOrUpdate("audio.ArtistThe", AudioInfo.Artist);
+            }
 
             variables.AddOrUpdate("audio.Album", AudioInfo.Album);
             variables.AddOrUpdate("audio.Bitrate", AudioInfo.Bitrate);
@@ -109,8 +151,8 @@ namespace FileFlows.AudioNodes
             AddIfSet(metadata, "TotalDiscs", AudioInfo.TotalDiscs);
             args.SetMetadata(metadata);
             
-            args.SetDisplayName($"{AudioInfo.Artist} - {AudioInfo.Title}");
-            
+            if(string.IsNullOrWhiteSpace(AudioInfo.Artist) == false && string.IsNullOrWhiteSpace(AudioInfo.Title) == false)
+                args.SetDisplayName($"{AudioInfo.Artist} - {AudioInfo.Title}");
             
             string extension = FileHelper.GetExtension(filename).ToLowerInvariant()[1..];
             switch (extension)
@@ -178,9 +220,9 @@ namespace FileFlows.AudioNodes
         /// <returns>the audio information</returns>
         protected Result<AudioInfo> GetAudioInfo(NodeParameters args)
         {
-            if (args.Parameters.ContainsKey(Audio_INFO) == false)
+            if (args.Parameters.TryGetValue(Audio_INFO, out var parameter) == false)
                 return Result<AudioInfo>.Fail("No codec information loaded, use a 'Audio File' flow element first");
-            if (args.Parameters[Audio_INFO] is AudioInfo result == false)
+            if (parameter is AudioInfo result == false)
                 return Result<AudioInfo>.Fail("AudioInfo not found for file");
             return result;
         }

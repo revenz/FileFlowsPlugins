@@ -51,12 +51,14 @@ public class Executor : Node
 
     private NodeParameters args;
 
-    /// <inheritdoc />
-    public override Task Cancel()
-    {
-        args?.Process?.Cancel();
-        return Task.CompletedTask;
-    }
+    // /// <inheritdoc />
+    // public override Task Cancel()
+    // {
+    //     if (args.Process is ProcessHelper process)
+    //         process.Kill();
+    //     
+    //     return Task.CompletedTask;
+    // }
 
     /// <inheritdoc />
     public override int Execute(NodeParameters args)

@@ -933,6 +933,19 @@
           "2": "Bestand was geen videobestand of kon niet worden gelezen"
         }
       },
+      "SizePerHour": {
+        "Description": "Controleert of de bestandsgrootte binnen een acceptabele limiet ligt op basis van de duur, waarbij de limiet in megabytes per uur van video is gedefinieerd.",
+        "Label": "Grootte per uur",
+        "Fields": {
+          "MegabytesPerHour": "Grootte",
+          "MegabytesPerHour-Help": "Stel de maximale grootte (in megabytes) in die een videobestand per uur mag innemen.",
+          "MegabytesPerHour-Suffix": "MB"
+        },
+        "Outputs": {
+          "1": "Bestandsgrootte is acceptabel.",
+          "2": "Bestandsgrootte is te groot."
+        }
+      },
       "SubtitleExtractor": {
         "Description": "Extraheert een enkele ondertiteltrack en slaat deze op de bestemming op. Kan srt-, ass- en ssa-indeling extraheren.\nDit zal het werkbestand NIET bijwerken en zal het werkbestand hetzelfde houden als het invoerbestand.\n\nOutput 1: Ondertitels zijn geëxtraheerd\nOutput 2: Geen ondertitels gevonden om te extraheren",
         "Label": "Ondertitel Extractor",
@@ -1057,6 +1070,20 @@
           "1": "Videobestand uit bibliotheek"
         }
       },
+      "VideoHasAudio": {
+        "Description": "Controleert of een videobestand audiotracks bevat.",
+        "Label": "Video heeft audio",
+        "Fields": {
+          "CheckDeleted": "Verwijderde tracks controleren",
+          "CheckDeleted-Help": "Geeft aan of verwijderde tracks ook moeten worden overwogen in het FFmpeg Builder-model.",
+          "CheckFFmpegModel": "FFmpeg-model controleren",
+          "CheckFFmpegModel-Help": "Specificeert of het FFmpeg Builder-model of de daadwerkelijke videobestand-metadata moet worden gecontroleerd."
+        },
+        "Outputs": {
+          "1": "Heeft audio",
+          "2": "Heeft geen audio"
+        }
+      },
       "VideoHasErrors": {
         "Description": "Test of een videobestand fouten bevat",
         "Label": "Video Heeft Fouten",
@@ -1151,6 +1178,14 @@
         "Outputs": {
           "1": "Video is H.264",
           "2": "Video is geen H.264"
+        }
+      },
+      "VideoIsHdr": {
+        "Description": "Controleert of een videobestand HDR is.",
+        "Label": "Video is HDR",
+        "Outputs": {
+          "1": "De video is HDR.",
+          "2": "De video is geen HDR."
         }
       },
       "VideoIsHevc": {

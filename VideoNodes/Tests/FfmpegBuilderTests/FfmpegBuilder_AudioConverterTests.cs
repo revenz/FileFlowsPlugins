@@ -169,7 +169,7 @@ public class FfmpegBuilder_AudioConverterTests: VideoTestBase
     public void FfmpegBuilder_AudioConverter_Opus_All()
     {
         var args = GetVideoNodeParameters(VideoMkv);
-        var vi = new VideoInfoHelper(FFmpeg, Logger);
+        var vi = new VideoInfoHelper(FFmpeg, Logger, args.Process);
         var vii = vi.Read(VideoMkv);
         args.Parameters.Add("VideoInfo", vii);
 

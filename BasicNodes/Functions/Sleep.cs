@@ -29,6 +29,7 @@ public class Sleep : Node
     [DefaultValue(1000)]
     public int Milliseconds{ get; set; }
 
+    /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
         if (Milliseconds < 1 || Milliseconds > 3_600_000)
@@ -36,7 +37,21 @@ public class Sleep : Node
             args.Logger.ELog("Milliseconds must be between 1 and 3,600,000");
             return -1;
         }
-        Thread.Sleep(Milliseconds);
-        return 1;
+
+        try
+        {
+            // Use GetAwaiter().GetResult() instead of Wait() to avoid potential deadlocks.
+            Task.Delay(Milliseconds, args.CancellationToken).GetAwaiter().GetResult();
+
+            // Return 1 to indicate the operation completed successfully.
+            return 1;
+        }
+        catch (OperationCanceledException)
+        {
+            // Handle cancellation of the operation.
+            args.Logger.ELog("Execution was canceled.");
+            // Return -1 to indicate that the operation was canceled.
+            return -1;
+        }
     }
 }

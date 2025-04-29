@@ -71,7 +71,11 @@ public class TVShowLookup : Node
     public override int Execute(NodeParameters args)
     {
         var helper = new TVShowHelper(args);
-        (string lookupName, string year) = helper.GetLookupName(args.LibraryFileName, UseFolderName);
+        
+        string fullFilename = args.WorkingFile.StartsWith(args.TempPath) ? args.LibraryFileName : args.WorkingFile;
+        args.Logger.ILog("Full File Name: " + fullFilename);
+        
+        (string lookupName, string year) = helper.GetLookupName(fullFilename, UseFolderName);
 
         // RegisterSettings only needs to be called one time when your application starts-up.
         MovieDbFactory.RegisterSettings(Globals.MovieDbBearerToken);
@@ -79,7 +83,7 @@ public class TVShowLookup : Node
         args.Logger?.ILog("Lookup TV Show: " + lookupName);
 
         string tvShowInfoCacheKey = $"TVShowInfo: {lookupName} ({year})";
-        TVShowInfo result =args.Cache.GetObject<TVShowInfo>(tvShowInfoCacheKey);
+        TVShowInfo result = args.Cache?.GetObject<TVShowInfo>(tvShowInfoCacheKey);
         if (result != null)
         {
             args.Logger?.ILog("Got TV show info from cache: " + result.Name);
@@ -93,17 +97,17 @@ public class TVShowLookup : Node
                 args.Logger?.ILog("No result found for: " + lookupName);
                 return 2; // no match
             }
-            args.Cache.SetObject(tvShowInfoCacheKey, result);
+            args.Cache?.SetObject(tvShowInfoCacheKey, result);
         }
         
         string tvShowCacheKey = $"TVShow: {result.Id}";
-        TVShow? tv = args.Cache.GetObject<TVShow>(tvShowCacheKey);
+        TVShow? tv = args.Cache?.GetObject<TVShow>(tvShowCacheKey);
         if (tv == null)
         {
             var tvApi = MovieDbFactory.Create<IApiTVShowRequest>().Value;
             tv = tvApi.FindByIdAsync(result.Id).Result?.Item;
             if (tv != null)
-                args.Cache.SetObject(tvShowCacheKey, tv);
+                args.Cache?.SetObject(tvShowCacheKey, tv);
         }
         else
         {

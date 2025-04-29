@@ -33,14 +33,14 @@ public class FfmpegBuilder_BasicTests : VideoTestBase
     public void FfmpegBuilder_Basic_h265()
     {
         FfmpegBuilderVideoEncode ffEncode = new();
-        ffEncode.Codec = "h265 10BIT";
+        ffEncode.Codec = "h265";
         ffEncode.Quality = 28;
-        //ffEncode.HardwareEncoding = true;
+        ffEncode.Encoder = "CPU";
         ffEncode.PreExecute(args);
         ffEncode.Execute(args);
 
         FfmpegBuilderExecutor ffExecutor = new();
-        ffExecutor.HardwareDecoding = true;
+        ffExecutor.HardwareDecoding = false;
         ffExecutor.PreExecute(args);
         int result = ffExecutor.Execute(args);
 

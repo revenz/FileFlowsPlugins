@@ -120,7 +120,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         int overallIndex = 0;
         int currentType = 0;
 
-        string sourceExtension = model.VideoInfo.FileName.Substring(model.VideoInfo.FileName.LastIndexOf(".") + 1).ToLower();
+        string sourceExtension = model.VideoInfo.FileName[(model.VideoInfo.FileName.LastIndexOf('.') + 1)..].ToLower();
         string extension = (model.Extension?.EmptyAsNull() ?? "mkv").ToLower();
 
         foreach (var item in model.VideoStreams.Select((x, index) => (stream: (FfmpegStream)x, index, type: 1, list: model.VideoStreams.Select(x => (FfmpegStream)x).ToList())).Union(
@@ -129,6 +129,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         {
             if (item.stream.Deleted)
             {
+                args.Logger?.ILog($"Stream '{item.stream}' deleted, has changed");
                 hasChange = true;
                 continue;
             }
@@ -165,20 +166,37 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             }
 
             ffArgs.AddRange(streamArgs);
-            hasChange |= item.stream.HasChange | item.stream.ForcedChange;
+            if (item.stream.HasChange)
+            {
+                args.Logger?.ILog("Stream Changed: " + item.stream);
+                hasChange = true;
+            }
+
+            if (item.stream.ForcedChange)
+            {
+                args.Logger?.ILog("Stream Force Change: " + item.stream);
+                hasChange = true;
+            }
+            
             ++actualIndex;
             ++overallIndex;
         }
 
         if (model.MetadataParameters?.Any() == true)
         {
+            args.Logger?.ILog("Has Metadata Parameters");
             hasChange = true;
             ffArgs.AddRange(model.MetadataParameters);
         }
+        
+        args.Logger?.ILog("ForceEncode: " + model.ForceEncode);;
+        args.Logger?.ILog("HasChange: " + hasChange);
+        bool extensionChanged = string.IsNullOrWhiteSpace(model.Extension) == false &&
+                                args.WorkingFile.ToLower()
+                                    .EndsWith("." + model.Extension.ToLower()) == false;
+        args.Logger?.ILog("ExtensionChanged: " + extensionChanged);;
 
-        if (model.ForceEncode == false && hasChange == false && (string.IsNullOrWhiteSpace(model.Extension) ||
-                                                                 args.WorkingFile.ToLower()
-                                                                     .EndsWith("." + model.Extension.ToLower())))
+        if (model.ForceEncode == false && hasChange == false && extensionChanged == false)
         {
             DoClearModel();
             return 2; // nothing to do
@@ -327,6 +345,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         }
         
         startArgs.Add("-y");
+        startArgs.AddRange(["-stats_period", "2.5"]);
         if(model.CutDuration != null)
             startArgs.AddRange(new [] { "-t", model.CutDuration.Value.ToString()});
         if(model.StartTime != null)
@@ -364,7 +383,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
 
 
         if (Encode(args, ffmpeg, ffArgs, extension, dontAddInputFile: true, strictness: Strictness) == false)
-            return -1;
+            return args.Fail("Video encoding failed. See the log for details.");
 
         foreach (var file in model.InputFiles)
         {
@@ -538,6 +557,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                         ArgumentList = arguments.ToArray(),
                         Timeout = timeout
                     });
+                    args.Logger?.ILog("FFmpeg test exit: " + result.ExitCode);
                     if (result.ExitCode == 0)
                     {
                         args.Logger?.ILog("Supported hardware decoding detected: " + string.Join(" ", hw));
@@ -559,6 +579,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                 }
                 catch (Exception)
                 {
+                    // ignored
                 }
             }
 
@@ -704,7 +725,6 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             noQsv ? null : ["-hwaccel", "qsv", "-hwaccel_output_format", "qsv"],
             noQsv ? null : ["-hwaccel", "qsv"],
             noVaapi ? null : ["-hwaccel", "vaapi"],
-            noVaapi ? null : ["-hwaccel", "vaapi", "-v"],
             noVaapi ? null : ["-hwaccel", "vaapi", "-hwaccel_output_format", "vaapi"],
             noVulkan ? null : ["-hwaccel", "vulkan", "-hwaccel_output_format", "vulkan"],
             noDxva2 || isWindows == false ? null : ["-hwaccel", "dxva2"],
