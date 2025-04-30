@@ -202,18 +202,21 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
             return 2; // nothing to do
         }
 
-        var localFile = args.FileService.GetLocalPath(args.WorkingFile);
-        if (localFile.IsFailed)
-        {
-            args.Logger?.ELog("Failed to get local file: " + localFile.Error);
-            return -1;
-        }
 
         List<string> startArgs = new List<string>();
         if (model.InputFiles?.Any() == false)
+        {
+            var localFile = args.FileService.GetLocalPath(args.WorkingFile);
+            if (localFile.IsFailed)
+            {
+                args.Logger?.ELog("Failed to get local file: " + localFile.Error);
+                return -1;
+            }
+
             model.InputFiles.Add(new InputFile(localFile));
-        else
-            model.InputFiles[0].FileName = localFile;
+        }
+        // else
+        //     model.InputFiles[0].FileName = localFile;
 
         startArgs.AddRange(new[] { "-fflags", "+genpts" }); //Generate missing PTS if DTS is present.
 
@@ -304,7 +307,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
                 }
 
                 var decodingParameters =
-                    GetHardwareDecodingArgs(args, model, localFile, FFMPEG, video?.Stream?.Codec, pxtFormat, 
+                    GetHardwareDecodingArgs(args, model, model.InputFiles[0].FileName, FFMPEG, video?.Stream?.Codec, pxtFormat, 
                         encodingParameters: encodingParameters,
                         inputPixelFormat: video.Stream.PixelFormat,
                         destPixelFormat: targetIs10Bit ? "p010le" : (video?.Stream?.Is10Bit == false && video?.Stream?.Is12Bit == false) ? "nv12" : null);
