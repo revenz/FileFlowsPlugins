@@ -37,20 +37,6 @@ public class FFMpegEncoder
     }
 
     /// <summary>
-    /// Aborts the FFmpeg command
-    /// </summary>
-    public void Abort()
-    {
-        Logger.ILog("Aborting FFmpeg Encoder");
-        Cancel();
-        if (process != null)
-        {
-            process.Kill();
-            process.Dispose();
-        }
-    }
-
-    /// <summary>
     /// Encodes using FFmpeg
     /// </summary>
     /// <param name="input">the input file</param>
