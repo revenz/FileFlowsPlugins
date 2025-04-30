@@ -80,6 +80,11 @@ namespace FileFlows.VideoNodes
                 }
             }
 
+            using var registration = args.CancellationToken.Register(() =>
+            {
+                Encoder?.Abort();
+            });
+            
             var success = Encoder.Encode(args.WorkingFile, outputFile, ffmpegParameters, dontAddInputFile: dontAddInputFile, dontAddOutputFile: dontAddOutputFile, strictness: strictness);
             
             Encoder.AtTime -= AtTimeEvent;
