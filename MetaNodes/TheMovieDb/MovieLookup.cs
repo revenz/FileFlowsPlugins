@@ -183,7 +183,39 @@ public class MovieLookup : Node
     /// Normalizes a movie title by removing spaces and converting to lowercase.
     /// </summary>
     private static string NormalizeTitle(string title)
-        => title.ToLower().Trim().Replace(" ", "");
+    {
+        var parts = title.ToLowerInvariant().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        string normalized = "";
+        foreach (var part in parts)
+        {
+            if (part == "ii")
+                normalized += " 2";
+            else if (part == "iii")
+                normalized += " 3";
+            else if (part == "iv")
+                normalized += " 4";
+            else if (part == "v")
+                normalized += " 5";
+            else if (part == "vi")
+                normalized += " 6";
+            else if (part == "vii")
+                normalized += " 7";
+            else if (part == "viii")
+                normalized += " 8";
+            else if (part == "ix")
+                normalized += " 9";
+            else if (part == "x")
+                normalized += " 10";
+            else if (part == "xi")
+                normalized += " 11";
+            else if (part == "xii")
+                normalized += " 12";
+            else
+                normalized += " " + part;
+        }
+
+        return normalized.Trim();
+    }
 
     /// <summary>
     /// Populates movie-related variables into the execution context.
@@ -247,7 +279,12 @@ public class MovieLookup : Node
             Year = movie.ReleaseDate.Year,
             Subtitle = movie.Tagline,
             ReleaseDate = movie.ReleaseDate,
-            OriginalLanguage = movie.OriginalLanguage
+            OriginalLanguage = movie.OriginalLanguage?.ToLowerInvariant() switch
+            {
+                "ch" => "zho",
+                "chi" => "zho",
+                _ => movie.OriginalLanguage
+            }
         };
 
         DownloadPosterImage(args, movie, tempPath, meta);

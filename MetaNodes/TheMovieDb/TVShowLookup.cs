@@ -135,6 +135,12 @@ public class TVShowLookup : Node
         Variables[Globals.TV_SHOW_INFO] = result;
         if (string.IsNullOrWhiteSpace(result.OriginalLanguage) == false)
         {
+            result.OriginalLanguage = result.OriginalLanguage.ToLowerInvariant() switch
+            {
+                "ch" => "zho",
+                "chi" => "zho",
+                _ => tv.OriginalLanguage
+            };
             Variables["OriginalLanguage"] = result.OriginalLanguage;
             args.Logger?.ILog("Detected Original Language: " + result.OriginalLanguage);
         }
@@ -249,7 +255,12 @@ public class TVShowLookup : Node
         md.Description = tv.Overview;
         md.Year = tv.FirstAirDate.Year;
         md.ReleaseDate = tv.FirstAirDate;
-        md.OriginalLanguage = tv.OriginalLanguage;
+        md.OriginalLanguage = tv.OriginalLanguage?.ToLowerInvariant() switch
+        {
+            "ch" => "zho",
+            "chi" => "zho",
+            _ => tv.OriginalLanguage
+        };
         if (string.IsNullOrWhiteSpace(tv.PosterPath) == false)
         {
             try

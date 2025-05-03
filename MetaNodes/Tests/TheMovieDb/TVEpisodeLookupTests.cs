@@ -46,7 +46,7 @@ public class TVEpisodeLookupTests : TestBase
         Assert.AreEqual("Teen Titans Go!", args.Variables["tvepisode.Title"]);
         Assert.AreEqual(9, args.Variables["tvepisode.Season"]);
         Assert.AreEqual(7, args.Variables["tvepisode.Episode"]);
-        Assert.AreEqual("Episode 7", args.Variables["tvepisode.Subtitle"]);
+        Assert.AreEqual("High Five", args.Variables["tvepisode.Subtitle"]);
     }
 
     
