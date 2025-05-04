@@ -99,6 +99,7 @@ public class FfmpegBuilderSetTrackTitles: FfmpegBuilderNode
     public override int Execute(NodeParameters args)
     {
         int changes = 0;
+        string format = args.ReplaceVariables(this.Format , stripMissing:true) ?? string.Empty;
         if (string.IsNullOrEmpty(StreamType) || StreamType is "Audio" or "Both")
         {
             foreach(var track in Model.AudioStreams)
@@ -117,7 +118,7 @@ public class FfmpegBuilderSetTrackTitles: FfmpegBuilderNode
                 else
                 {
 
-                    track.Title = FormatTitle(Format, Separator,
+                    track.Title = FormatTitle(format, Separator,
                         track.Language?.EmptyAsNull() ?? track.Stream?.Language,
                         track.Codec?.EmptyAsNull() ?? track.Stream?.Codec,
                         track.IsDefault,
@@ -158,7 +159,7 @@ public class FfmpegBuilderSetTrackTitles: FfmpegBuilderNode
                 }
                 else
                 {
-                    track.Title = FormatTitle(Format, Separator,
+                    track.Title = FormatTitle(format, Separator,
                         track.Language?.EmptyAsNull() ?? track.Stream?.Language,
                         track.Codec?.EmptyAsNull() ?? track.Stream?.Codec,
                         track.IsDefault,
@@ -185,7 +186,7 @@ public class FfmpegBuilderSetTrackTitles: FfmpegBuilderNode
             foreach (var track in Model.VideoStreams)
             {
                 string originalTitle = track.Title;
-                track.Title = FormatTitle(Format, Separator,
+                track.Title = FormatTitle(format, Separator,
                     track.Language?.EmptyAsNull(),
                     track.Codec?.EmptyAsNull() ?? track.Stream?.Codec,
                     bitrate: track.Stream?.Bitrate ?? 0,
