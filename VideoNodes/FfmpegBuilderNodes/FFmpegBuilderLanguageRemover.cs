@@ -125,7 +125,7 @@ public class FFmpegBuilderLanguageRemover: FfmpegBuilderNode
             
             stream.Deleted = true;
             ++changed;
-            args.Logger?.ILog($"Stream '{stream.GetType().Name}' '{stream.Language}' deleted");
+            args.Logger?.ILog($"Stream '{stream.GetType().Name}' '{stream}' deleted");
         }
 
         return changed;
