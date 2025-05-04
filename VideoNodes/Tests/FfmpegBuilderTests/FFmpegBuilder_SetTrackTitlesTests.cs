@@ -415,6 +415,27 @@ public class FFmpegBuilder_SetTrackTitlesTests : VideoTestBase
         // Assert
         Assert.AreEqual("Track: English / AAC / Default / Forced / 128Kbps / Stereo / 44.1kHz", result);
     }
+    
+    [TestMethod]
+    public void FormatTitle_Ac371to51_Success()
+    {
+        // Arrange
+        string formatter = "Track: lang / codec / default / forced / bitrate / channels / sample-rate";
+        string separator = " / ";
+        string language = "English";
+        string codec = "AC3";
+        bool isDefault = true;
+        float bitrate = 128_000;
+        float channels = 7.1f;
+        int sampleRate = 44_100;
+        bool isForced = true;
+
+        // Act
+        string result = FfmpegBuilderSetTrackTitles.FormatTitle(formatter, separator, language, codec, isDefault, bitrate, channels, sampleRate, isForced);
+
+        // Assert
+        Assert.AreEqual("Track: English / AC3 / Default / Forced / 128Kbps / 5.1 / 44.1kHz", result);
+    }
     [TestMethod]
     public void FormatTitle_OnlyForcedSet_Success()
     {
