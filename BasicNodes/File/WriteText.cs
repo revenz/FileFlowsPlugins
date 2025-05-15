@@ -38,7 +38,7 @@ public class WriteText : Node
     /// <summary>
     /// Gets or sets the text to write, if blank writes the current file
     /// </summary>
-    [TextVariable(2)]
+    [TextArea(2, true)]
     public string Text { get; set; }
 
     /// <inheritdoc />
