@@ -34,6 +34,23 @@ public class TVEpisodeLookupTests : TestBase
     }
     
     [TestMethod]
+    public void TheBatman_s02e01_German()
+    {
+        var args = GetNodeParameters("The Batman/Season 2/The Batman.s02e01.mkv");
+
+        var element = new TVEpisodeLookup();
+        element.Language ="de";
+
+        var result = element.Execute(args);
+        Assert.AreEqual(1, result);
+        
+        Assert.AreEqual("The Batman", args.Variables["tvepisode.Title"]);
+        Assert.AreEqual(2, args.Variables["tvepisode.Season"]);
+        Assert.AreEqual(1, args.Variables["tvepisode.Episode"]);
+        Assert.AreEqual("Folge 1", args.Variables["tvepisode.Subtitle"]);
+    }
+    
+    [TestMethod]
     public void TeenTitansGo()
     {
         var args = GetNodeParameters("D:\\Internal\\Downloads\\TV\\Teen Titans Go! - S09E07 High Five 1080p AMZN WEB-DL DDP2 0 H 264-NTb[EZTVx.to].mkv");

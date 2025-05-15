@@ -30,6 +30,8 @@
         "Description": "Voert een zoekopdracht uit op TheMovieDB.org voor een film.\nSlaat de metadata op in de variabele 'MovieInfo'.",
         "Label": "Film Zoeken",
         "Fields": {
+          "Language": "Taal",
+          "Language-Help": "Optionele ISO 639-1-taalcode om te gebruiken bij het opzoeken van metadata.",
           "UseFolderName": "Gebruik Mapnaam",
           "UseFolderName-Help": "Als de mapnaam in plaats van de bestandsnaam moet worden gebruikt."
         },
@@ -72,6 +74,8 @@
         "Description": "Voert een zoekopdracht uit op TheMovieDB.org voor een TV-aflevering.",
         "Label": "TV Aflevering Zoeken",
         "Fields": {
+          "Language": "Taal",
+          "Language-Help": "Optionele ISO 639-1-taalcode om te gebruiken bij het opzoeken van metadata.",
           "UseFolderName": "Gebruik Mapnaam",
           "UseFolderName-Help": "Als de mapnaam in plaats van de bestandsnaam moet worden gebruikt.\n\nLet op, als de map begint met Season/Staffel/Saison/Specials/S[0-9]+, wordt de bovenliggende map gebruikt."
         },
@@ -84,6 +88,8 @@
         "Description": "Voert een zoekopdracht uit op TheMovieDB.org voor een TV-show.\nSlaat de metadata op in de variabele 'TVShowInfo'.",
         "Label": "TV Show Zoeken",
         "Fields": {
+          "Language": "Taal",
+          "Language-Help": "Optionele ISO 639-1-taalcode om te gebruiken bij het opzoeken van metadata.",
           "UseFolderName": "Gebruik Mapnaam",
           "UseFolderName-Help": "Als de mapnaam in plaats van de bestandsnaam moet worden gebruikt.\n\nLet op, als de map begint met Season/Staffel/Saison/Specials/S[0-9]+, wordt de bovenliggende map gebruikt."
         },

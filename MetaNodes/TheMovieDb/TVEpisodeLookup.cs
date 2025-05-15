@@ -48,6 +48,12 @@ public class TVEpisodeLookup : Node
     public bool UseFolderName { get; set; }
 
     /// <summary>
+    /// Gets or sets an optional language to use for the lookup.
+    /// </summary>
+    [Text(2)]
+    public string Language { get; set; } = "";
+
+    /// <summary>
     /// Constructs a new instance of this flow element
     /// </summary>
     public TVEpisodeLookup()
@@ -75,6 +81,8 @@ public class TVEpisodeLookup : Node
         string fullFilename = args.WorkingFile.StartsWith(args.TempPath) ? args.LibraryFileName : args.WorkingFile;
         args.Logger.ILog("Full File Name: " + fullFilename);
         string filename = FileHelper.GetShortFileNameWithoutExtension(fullFilename);
+        Language = LanguageHelper.GetIso1Code(Language?.Trim()?.EmptyAsNull() ?? "en");
+        args.Logger?.ILog("Lookup Language: " + Language);
         
         args.Logger.ILog("Lookup filename: " + filename);
         
@@ -125,7 +133,7 @@ public class TVEpisodeLookup : Node
             ApiSearchResponse<TVShowInfo> response;
             try
             {
-                response = movieApi.SearchByNameAsync(lookupName).GetAwaiter().GetResult();
+                response = movieApi.SearchByNameAsync(lookupName, language: Language).GetAwaiter().GetResult();
             }
             catch (Exception ex)
             {
@@ -181,7 +189,7 @@ public class TVEpisodeLookup : Node
         ApiQueryResponse<SeasonInfo> show;
         try
         {
-            show = episodeApi.GetTvShowSeasonInfoAsync(result.Id, season.Value).Result;
+            show = episodeApi.GetTvShowSeasonInfoAsync(result.Id, season.Value, language: Language).Result;
         }
         catch (Exception ex)
         {
@@ -307,9 +315,9 @@ public class TVEpisodeLookup : Node
     /// <param name="id">the ID of the movie</param>
     /// <param name="tempPath">the temp path to save any images to</param>
     /// <returns>the VideoMetadata</returns>
-    internal static VideoMetadata GetVideoMetadata(IApiTVShowRequest tvApi, int id, string tempPath)
+    internal static VideoMetadata GetVideoMetadata(IApiTVShowRequest tvApi, int id, string tempPath, string language)
     {
-        var tv = tvApi.FindByIdAsync(id).Result?.Item;
+        var tv = tvApi.FindByIdAsync(id, language: language).Result?.Item;
         if (tv == null)
             return null;
 

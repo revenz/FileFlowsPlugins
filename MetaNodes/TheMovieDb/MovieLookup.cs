@@ -59,12 +59,20 @@ public class MovieLookup : Node
     [Boolean(1)]
     public bool UseFolderName { get; set; }
 
+    /// <summary>
+    /// Gets or sets an optional language to use for the lookup.
+    /// </summary>
+    [Text(2)]
+    public string Language { get; set; } = "";
+
     
     /// <inheritdoc/>
     public override int Execute(NodeParameters args)
     {
         string lookupName = PrepareLookupName(args, out int year);
         args.Logger?.ILog("Lookup name: " + lookupName);
+        Language = LanguageHelper.GetIso1Code(Language?.Trim()?.EmptyAsNull() ?? "en");
+        args.Logger?.ILog("Lookup Language: " + Language);
 
         MovieDbFactory.RegisterSettings(Globals.MovieDbBearerToken);
         var movieApi = MovieDbFactory.Create<IApiMovieRequest>().Value;
@@ -135,7 +143,7 @@ public class MovieLookup : Node
         {
             args.Logger?.ILog($"Searching for movie: {lookupName}");
 
-            var response = movieApi.SearchByTitleAsync(lookupName).Result;
+            var response = movieApi.SearchByTitleAsync(lookupName, language: Language).Result;
         
             if (response.Results.Count == 0 && lookupName.Contains("Ae", StringComparison.InvariantCultureIgnoreCase))
             {
@@ -235,7 +243,7 @@ public class MovieLookup : Node
     {
         try
         {
-            var meta = GetVideoMetadata(args, movieApi, movieId, args.TempPath);
+            var meta = GetVideoMetadata(args, movieApi, movieId, args.TempPath, language: Language);
             if (meta == null)
                 return false;
 
@@ -258,9 +266,11 @@ public class MovieLookup : Node
     /// <summary>
     /// Retrieves video metadata including movie details and credits.
     /// </summary>
-    internal static VideoMetadata GetVideoMetadata(NodeParameters args, IApiMovieRequest movieApi, int id, string tempPath)
+    internal static VideoMetadata GetVideoMetadata(NodeParameters args, IApiMovieRequest movieApi, 
+        int id, string tempPath, string language = "en")
     {
-        var movie = movieApi.FindByIdAsync(id).Result?.Item;
+        var movie = movieApi.FindByIdAsync(id, language).Result?.Item;
+        
         if (movie == null)
             return null;
 

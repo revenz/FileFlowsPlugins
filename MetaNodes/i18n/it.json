@@ -30,6 +30,8 @@
         "Description": "Esegue una ricerca su TheMovieDB.org per un film.\nMemorizza i metadati nella variabile 'MovieInfo'.",
         "Label": "Ricerca Film",
         "Fields": {
+          "Language": "Lingua",
+          "Language-Help": "Codice lingua ISO 639-1 opzionale da utilizzare per la ricerca dei metadati.",
           "UseFolderName": "Usa Nome Cartella",
           "UseFolderName-Help": "Se il nome della cartella deve essere usato al posto del nome del file."
         },
@@ -72,6 +74,8 @@
         "Description": "Esegue una ricerca su TheMovieDB.org per un episodio TV.",
         "Label": "Ricerca Episodio TV",
         "Fields": {
+          "Language": "Lingua",
+          "Language-Help": "Codice lingua ISO 639-1 opzionale da utilizzare per la ricerca dei metadati.",
           "UseFolderName": "Usa Nome Cartella",
           "UseFolderName-Help": "Se il nome della cartella deve essere usato al posto del nome del file.\n\nNota: se la cartella inizia con Season/Staffel/Saison/Specials/S[0-9]+, verrà utilizzata la cartella principale."
         },
@@ -84,6 +88,8 @@
         "Description": "Esegue una ricerca su TheMovieDB.org per uno show TV.\nMemorizza i metadati nella variabile 'TVShowInfo'.",
         "Label": "Ricerca Show TV",
         "Fields": {
+          "Language": "Lingua",
+          "Language-Help": "Codice lingua ISO 639-1 opzionale da utilizzare per la ricerca dei metadati.",
           "UseFolderName": "Usa Nome Cartella",
           "UseFolderName-Help": "Se il nome della cartella deve essere usato al posto del nome del file.\n\nNota: se la cartella inizia con Season/Staffel/Saison/Specials/S[0-9]+, verrà utilizzata la cartella principale."
         },

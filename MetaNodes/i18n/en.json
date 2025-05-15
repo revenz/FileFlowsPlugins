@@ -30,6 +30,8 @@
         "Description": "Performs a search on TheMovieDB.org for a movie.\nStores the Metadata inside the variable 'MovieInfo'.",
         "Label": "Movie Lookup",
         "Fields": {
+          "Language": "Language",
+          "Language-Help": "Optional ISO 639-1 language code used for metadata lookup.",
           "UseFolderName": "Use Folder Name",
           "UseFolderName-Help": "If the folder name should be used instead of the filename."
         },
@@ -72,6 +74,8 @@
         "Description": "Performs a search on TheMovieDB.org for a TV Epsidoe.",
         "Label": "TV Episode Lookup",
         "Fields": {
+          "Language": "Language",
+          "Language-Help": "Optional ISO 639-1 language code used for metadata lookup.",
           "UseFolderName": "Use Folder Name",
           "UseFolderName-Help": "If the folder name should be used instead of the filename.\n\nNote if the folder starts with Season/Staffel/Saison/Specials/S[0-9]+ the parent folder will be used."
         },
@@ -84,6 +88,8 @@
         "Description": "Performs a search on TheMovieDB.org for a TV Show.\nStores the Metadata inside the variable 'TVShowInfo'.",
         "Label": "TV Show Lookup",
         "Fields": {
+          "Language": "Language",
+          "Language-Help": "Optional ISO 639-1 language code used for metadata lookup.",
           "UseFolderName": "Use Folder Name",
           "UseFolderName-Help": "If the folder name should be used instead of the filename.\n\nNote if the folder starts with Season/Staffel/Saison/Specials/S[0-9]+ the parent folder will be used."
         },
