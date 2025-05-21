@@ -105,7 +105,7 @@ public class FFMpegEncoder
 
         // Regex to match the flags: -map, -i, -metadata
         // Add newline before the flag if it is preceded by non-whitespace or another argument
-        var pattern = @"(?=\s*(-map|-i|-metadata)\b)";
+        var pattern = @"(?<!\S)(-map|-i|-metadata)(?=\s|$)";
         var result = Regex.Replace(args, pattern, "\n$1");
 
         // Optional: Trim leading/trailing whitespace and normalize multiple spaces
