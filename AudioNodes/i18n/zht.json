@@ -79,6 +79,28 @@
           "2": "音頻已在編解碼器中，未進行轉換"
         }
       },
+      "ConvertToALAC": {
+        "Description": "將音頻文件轉換為ALAC",
+        "Label": "轉換為ALAC",
+        "Fields": {
+          "Bitrate": "比特率",
+          "Bitrate-Help": "新ALAC文件的比特率，比特率越高，質量越好，但文件越大。建議使用128 Kbps的比特率。",
+          "Channels": "通道",
+          "Channels-Help": "轉換文件的通道數。\n如果您指定的通道數多於源，FFmpeg將自動進行升級混合。\n如果您指定的通道數少於源，FFmpeg將自動進行降混合。",
+          "CustomExtension": "擴展名",
+          "CustomExtension-Help": "允許您設置自定義文件擴展名，以代替由編解碼器自動確定的擴展名。",
+          "Normalize": "標準化",
+          "Normalize-Help": "音頻是否應進行兩次通過的音頻標準化",
+          "SampleRate": "取樣率",
+          "SampleRate-Help": "要使用的取樣率",
+          "SkipIfCodecMatches": "如果編解碼器匹配則跳過",
+          "SkipIfCodecMatches-Help": "如果現有音頻編解碼器匹配，則無論比特率如何，該文件都不會被處理。否則如果關閉，則比特率必須小於或等於才能跳過。"
+        },
+        "Outputs": {
+          "1": "音頻已轉換並保存到臨時文件",
+          "2": "音頻已在編解碼器中，未進行轉換"
+        }
+      },
       "ConvertToFLAC": {
         "Description": "將音頻文件轉換為FLAC",
         "Label": "轉換為FLAC",

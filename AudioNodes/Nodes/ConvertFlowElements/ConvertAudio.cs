@@ -27,6 +27,8 @@ public class ConvertAudio : ConvertNode
                 _CodecOptions = new List<ListOption>
                 {
                     new () { Label = "AAC", Value = "aac"},
+                    new () { Label = "ALAC", Value = "alac"},
+                    new () { Label = "FLAC", Value = "flac"},
                     new () { Label = "MP3", Value = "MP3"},
                     new () { Label = "OGG (Vorbis)", Value = "ogg"},
                     new () { Label = "OGG (Opus)", Value = "libopus"},

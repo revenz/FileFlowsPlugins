@@ -79,6 +79,28 @@
           "2": "Audio al in codec, geen conversie uitgevoerd"
         }
       },
+      "ConvertToALAC": {
+        "Description": "Converteer een audiobestand naar ALAC",
+        "Label": "Converteer naar ALAC",
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "De bitrate voor het nieuwe ALAC-bestand, hoe hoger de bitrate, hoe beter de kwaliteit maar ook groter het bestand. 128 Kbps is de aanbevolen waarde.",
+          "Channels": "Kanalen",
+          "Channels-Help": "Het aantal kanalen dat het geconverteerde bestand zal hebben.\nAls je meer kanalen opgeeft dan de bron, zal FFmpeg het automatisch upmixen.\nAls je minder kanalen opgeeft dan de bron, zal FFmpeg het automatisch downmixen.",
+          "CustomExtension": "Extensie",
+          "CustomExtension-Help": "Stelt je in staat om een aangepaste bestands extensie in te stellen in plaats van de automatische die door de codec wordt bepaald.",
+          "Normalize": "Normaliseren",
+          "Normalize-Help": "Als de audio genormaliseerd moet worden met twee-pass audio normalisatie.",
+          "SampleRate": "Monsterfrequentie",
+          "SampleRate-Help": "De monsterfrequentie die gebruikt moet worden.",
+          "SkipIfCodecMatches": "Overslaan als Codec Overeenkomt",
+          "SkipIfCodecMatches-Help": "Als de bestaande audiocodec overeenkomt, zal dit bestand niet worden verwerkt ongeacht de bitrate. Anders, als het uit staat, moet de bitrate kleiner dan of gelijk aan zijn om over te slaan."
+        },
+        "Outputs": {
+          "1": "Audio geconverteerd en opgeslagen in tijdelijk bestand",
+          "2": "Audio al in codec, geen conversie uitgevoerd"
+        }
+      },
       "ConvertToFLAC": {
         "Description": "Converteer een audiobestand naar FLAC",
         "Label": "Converteer naar FLAC",

@@ -79,6 +79,28 @@
           "2": "Ljud redan i codec, ingen konvertering gjord"
         }
       },
+      "ConvertToALAC": {
+        "Description": "Konvertera en ljudfil till ALAC",
+        "Label": "Konvertera till ALAC",
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "Bitrate för den nya ALAC-filen, ju högre bitrate desto bättre kvalitet men större fil.  128 Kbps är den rekommenderade hastigheten.",
+          "Channels": "Kanaler",
+          "Channels-Help": "Antalet kanaler den konverterade filen kommer att ha.\nOm du specificerar fler kanaler än källan kommer FFmpeg automatiskt att uppblanda den.\nOm du specificerar färre kanaler än källan kommer FFmpeg automatiskt att nedblanda den.",
+          "CustomExtension": "Tillägg",
+          "CustomExtension-Help": "Möjliggör att ange ett anpassat filnamnstillägg att använda istället för det automatiska som bestäms av kodningen.",
+          "Normalize": "Normalisera",
+          "Normalize-Help": "Om ljudet ska normaliseras med två pass ljudnormalisering",
+          "SampleRate": "Samplingsfrekvens",
+          "SampleRate-Help": "Samplingsfrekvensen som ska användas",
+          "SkipIfCodecMatches": "Hoppa över om Codec Matchar",
+          "SkipIfCodecMatches-Help": "Om den befintliga ljudkodningen matchar kommer denna fil inte att bearbetas oavsett bitrate. Annars, om avstängd, måste bitraten vara mindre än eller lika med för att hoppa över."
+        },
+        "Outputs": {
+          "1": "Ljud konverterat och sparat i tillfällig fil",
+          "2": "Ljud redan i codec, ingen konvertering gjord"
+        }
+      },
       "ConvertToFLAC": {
         "Description": "Konvertera en ljudfil till FLAC",
         "Label": "Konvertera till FLAC",
