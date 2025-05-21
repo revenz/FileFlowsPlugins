@@ -175,6 +175,38 @@ public class FfmpegBuilderAudioConvert : TrackSelectorFlowElement<FfmpegBuilderA
     /// </summary>
     [Boolean(15)]
     public bool BitratePerChannel { get; set; }
+        
+    /// <summary>
+    /// Gets or sets the sample rate
+    /// </summary>
+    [Select(nameof(SampleRateOptions), 16)]
+    public int SampleRate { get; set; }
+
+    private static List<ListOption> _SampleRateOptions;
+    /// <summary>
+    /// Gets the sample rate options
+    /// </summary>
+    public static List<ListOption> SampleRateOptions
+    {
+        get
+        {
+            if (_SampleRateOptions == null)
+            {
+                _SampleRateOptions = new List<ListOption>
+                {
+                    new () { Label = "Automatic", Value = 0},
+                    new () { Label = "Same as source", Value = 1},
+                    new () { Label = "44100", Value = 44100 },
+                    new () { Label = "48000", Value = 48000 },
+                    new () { Label = "88200", Value = 88200 },
+                    new () { Label = "96000", Value = 96000 },
+                    new () { Label = "176400", Value = 176400 },
+                    new () { Label = "192000", Value = 192000 }
+                };
+            }
+            return _SampleRateOptions;
+        }
+    }
 
     /// <inheritdoc />
     public override int Execute(NodeParameters args)
@@ -231,7 +263,7 @@ public class FfmpegBuilderAudioConvert : TrackSelectorFlowElement<FfmpegBuilderA
         int totalChannels = FfmpegBuilderAudioAddTrack.GetAudioBitrateChannels(args.Logger, channels, codec);
         
         bool channelsSame = originalChannels == totalChannels;
-
+        
         int bitrate = Bitrate;
         if (BitratePerChannel && bitrate > 0)
         {
@@ -252,19 +284,29 @@ public class FfmpegBuilderAudioConvert : TrackSelectorFlowElement<FfmpegBuilderA
 
             args.Logger?.ILog("Total Bitrate: " + bitrate);
         }
+
+        int sampleRate = SampleRate switch
+        {
+            0 => 0,
+            1 => stream.Stream.SampleRate,
+            _ => SampleRate
+        };
         
         bool bitrateSame = Bitrate < 2 || stream.Stream.Bitrate == 0 ||
                            Math.Abs(stream.Stream.Bitrate - Bitrate) < 0.05f;
+        
+        bool sampleRateSame = SampleRate <= 1 || SampleRate == stream.Stream.SampleRate;
 
-        if (codecSame && channelsSame && bitrateSame)
+        if (codecSame && channelsSame && bitrateSame && sampleRateSame)
         {
-            args.Logger.ILog($"Stream {stream} matches codec, channels, and bitrate, skipping conversion");
+            args.Logger.ILog($"Stream {stream} matches codec, channels, bitrate and sample rate, skipping conversion");
             return false;
         }
 
         stream.Codec = Codec.ToLowerInvariant();
 
-        stream.EncodingParameters.AddRange(FfmpegBuilderAudioAddTrack.GetNewAudioTrackParameters(args, stream, codec, channels, bitrate, 0));
+        stream.EncodingParameters.AddRange(
+            FfmpegBuilderAudioAddTrack.GetNewAudioTrackParameters(args, stream, codec, channels, bitrate, sampleRate));
         return true;
     }
 }

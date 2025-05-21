@@ -200,6 +200,8 @@
           "CustomTrackSelection": "Convertir",
           "PcmFormat": "Format",
           "PcmFormat-Help": "Le format PCM à utiliser pour encoder l'audio PCM.",
+          "SampleRate": "Taux d'échantillonnage",
+          "SampleRate-Help": "Automatique laisse le choix à l'encodeur. Même que la source utilise le taux de la piste sélectionnée. Ou choisissez un taux spécifique.",
           "TrackSelectionOptions": "Correspondance",
           "TrackSelectionOptionsKey": "Propriété",
           "TrackSelectionOptionsValue": "Valeur"

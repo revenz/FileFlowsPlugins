@@ -200,6 +200,8 @@
           "CustomTrackSelection": "変換",
           "PcmFormat": "フォーマット",
           "PcmFormat-Help": "PCMオーディオをエンコードするために使用するPCMフォーマット。",
+          "SampleRate": "サンプルレート",
+          "SampleRate-Help": "自動はエンコーダーに任せます。同じにするは選択したトラックのレートを使用します。特定のレートを指定することもできます。",
           "TrackSelectionOptions": "マッチング",
           "TrackSelectionOptionsKey": "プロパティ",
           "TrackSelectionOptionsValue": "値"

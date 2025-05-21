@@ -200,6 +200,8 @@
           "CustomTrackSelection": "Converti",
           "PcmFormat": "Formato",
           "PcmFormat-Help": "Il formato PCM da utilizzare per la codifica audio PCM.",
+          "SampleRate": "Frequenza di campionamento",
+          "SampleRate-Help": "Automatico lascia decidere al codificatore. Uguale alla sorgente usa la frequenza della traccia selezionata. Oppure scegli una frequenza specifica.",
           "TrackSelectionOptions": "Corrispondenza",
           "TrackSelectionOptionsKey": "Proprietà",
           "TrackSelectionOptionsValue": "Valore"

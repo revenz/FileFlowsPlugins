@@ -200,6 +200,8 @@
           "CustomTrackSelection": "Convert",
           "PcmFormat": "Format",
           "PcmFormat-Help": "The PCM format to use for encoding PCM audio.",
+          "SampleRate": "Sample Rate",
+          "SampleRate-Help": "Automatic lets the encoder decide. Same as source uses the selected track's rate. Or choose a specific sample rate.",
           "TrackSelectionOptions": "Matching",
           "TrackSelectionOptionsKey": "Property",
           "TrackSelectionOptionsValue": "Value"

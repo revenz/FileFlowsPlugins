@@ -200,6 +200,8 @@
           "CustomTrackSelection": "Konvertieren",
           "PcmFormat": "Format",
           "PcmFormat-Help": "Das PCM-Format, das für die Kodierung von PCM-Audio verwendet werden soll.",
+          "SampleRate": "Abtastrate",
+          "SampleRate-Help": "Automatisch überlässt die Wahl dem Encoder. Gleich wie Quelle verwendet die Rate der gewählten Spur. Oder eine bestimmte Rate wählen.",
           "TrackSelectionOptions": "Übereinstimmung",
           "TrackSelectionOptionsKey": "Eigenschaft",
           "TrackSelectionOptionsValue": "Wert"

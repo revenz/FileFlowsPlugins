@@ -200,6 +200,8 @@
           "CustomTrackSelection": "Конвертировать",
           "PcmFormat": "Формат",
           "PcmFormat-Help": "Формат PCM для кодирования PCM аудио.",
+          "SampleRate": "Частота дискретизации",
+          "SampleRate-Help": "Автоматически — выбор за кодером. Как у источника — используется частота выбранной дорожки. Или укажите конкретную частоту.",
           "TrackSelectionOptions": "Совпадение",
           "TrackSelectionOptionsKey": "Свойство",
           "TrackSelectionOptionsValue": "Значение"

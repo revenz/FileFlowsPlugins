@@ -200,6 +200,8 @@
           "CustomTrackSelection": "변환",
           "PcmFormat": "형식",
           "PcmFormat-Help": "PCM 오디오 인코딩에 사용할 PCM 형식입니다.",
+          "SampleRate": "샘플레이트",
+          "SampleRate-Help": "자동은 인코더가 결정합니다. 소스와 같음은 선택한 트랙의 레이트를 사용합니다. 또는 특정 레이트를 선택하세요.",
           "TrackSelectionOptions": "일치",
           "TrackSelectionOptionsKey": "속성",
           "TrackSelectionOptionsValue": "값"

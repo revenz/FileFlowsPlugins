@@ -200,6 +200,8 @@
           "CustomTrackSelection": "Converteren",
           "PcmFormat": "Formaat",
           "PcmFormat-Help": "Het PCM-formaat dat gebruikt moet worden voor het coderen van PCM-audio.",
+          "SampleRate": "Samplefrequentie",
+          "SampleRate-Help": "Automatisch laat de encoder beslissen. Zelfde als bron gebruikt de snelheid van het geselecteerde spoor. Of kies een specifieke snelheid.",
           "TrackSelectionOptions": "Overeenkomend",
           "TrackSelectionOptionsKey": "Eigenschap",
           "TrackSelectionOptionsValue": "Waarde"

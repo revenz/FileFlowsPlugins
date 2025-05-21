@@ -200,6 +200,8 @@
           "CustomTrackSelection": "Konvertera",
           "PcmFormat": "Format",
           "PcmFormat-Help": "PCM-formatet att använda för att koda PCM-ljud.",
+          "SampleRate": "Samplingsfrekvens",
+          "SampleRate-Help": "Automatisk låter kodaren bestämma. Samma som källa använder vald spårs frekvens. Eller välj en specifik frekvens.",
           "TrackSelectionOptions": "Matchande",
           "TrackSelectionOptionsKey": "Egenskap",
           "TrackSelectionOptionsValue": "Värde"

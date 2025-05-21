@@ -68,6 +68,22 @@ public class TVEpisodeLookupTests : TestBase
 
     
     [TestMethod]
+    public void Ds9()
+    {
+        var args = GetNodeParameters(@"G:\Videos\PlayOn TV-Plex\Star Trek Deep Space Nine\Season 01\Star Trek Deep Space Nine - s01e09 - The Passenger.mp4");
+
+        var element = new TVEpisodeLookup();
+
+        var result = element.Execute(args);
+        Assert.AreEqual(1, result);
+        
+        Assert.AreEqual("Star Trek: Deep Space Nine", args.Variables["tvepisode.Title"]);
+        Assert.AreEqual(1, args.Variables["tvepisode.Season"]);
+        Assert.AreEqual(9, args.Variables["tvepisode.Episode"]);
+        Assert.AreEqual("The Passenger", args.Variables["tvepisode.Subtitle"]);
+    }
+    
+    [TestMethod]
     public void RubbishFileName()
     {
         var args = GetNodeParameters("media/downloads/complete/tv/The.Good.Wife.S07E16.1080p.WEB.H264-DiMEPiECE/381d8e641fa24c6c8d14214755f3ccc8.mkv");

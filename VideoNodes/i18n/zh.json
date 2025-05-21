@@ -200,6 +200,8 @@
           "CustomTrackSelection": "转换",
           "PcmFormat": "格式",
           "PcmFormat-Help": "用于编码PCM音频的PCM格式。",
+          "SampleRate": "采样率",
+          "SampleRate-Help": "自动由编码器决定。与来源相同使用所选音轨的采样率。或选择特定采样率。",
           "TrackSelectionOptions": "匹配",
           "TrackSelectionOptionsKey": "属性",
           "TrackSelectionOptionsValue": "值"
