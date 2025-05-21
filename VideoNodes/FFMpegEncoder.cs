@@ -81,7 +81,7 @@ public class FFMpegEncoder
 
         string argsString = string.Join(" ", arguments.Select(x => x.IndexOf(' ') > 0 ? "\"" + x + "\"" : x));
         Logger.ILog(new string('-', ("FFmpeg.Arguments: " + argsString).Length));
-        Logger.ILog("FFmpeg.Arguments: " + argsString);
+        Logger.ILog("FFmpeg.Arguments: " + SplitFFmpegArgs(argsString));
         Logger.ILog(new string('-', ("FFmpeg.Arguments: " + argsString).Length));
 
         var task = ExecuteShellCommand(ffMpegExe, arguments, 0);
@@ -91,6 +91,25 @@ public class FFMpegEncoder
         if (task.Result.Completed && string.IsNullOrEmpty(AbortReason))
             AbortReason = "Process was terminated early";
         return (task.Result is { ExitCode: 0, Completed: true }, task.Result.Output, task.Result.AbortReason); // exitcode 0 means it was successful
+    }
+
+    /// <summary>
+    /// Splits the FFmpeg arguments into a more readable format by adding line breaks at specific flags.
+    /// </summary>
+    /// <param name="args">The FFmpeg arguments as a single string.</param>
+    /// <returns>The reformatted FFmpeg arguments with improved readability, including line breaks and trimmed whitespace.</returns>
+    private string SplitFFmpegArgs(string args)
+    {
+        if (string.IsNullOrWhiteSpace(args))
+            return args;
+
+        // Regex to match the flags: -map, -i, -metadata
+        // Add newline before the flag if it is preceded by non-whitespace or another argument
+        var pattern = @"(?=\s*(-map|-i|-metadata)\b)";
+        var result = Regex.Replace(args, pattern, "\n$1");
+
+        // Optional: Trim leading/trailing whitespace and normalize multiple spaces
+        return "\n" + result.Trim();
     }
 
     /// <summary>
