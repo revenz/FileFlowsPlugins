@@ -119,6 +119,11 @@ public class VideoFileStream : IVideoStream
     /// Gets or sets the pixel format that should be used to decode this stream
     /// </summary>
     public string PixelFormat { get; set; }
+    
+    /// <summary>
+    /// Gets or sets if the video is interlaced
+    /// </summary>
+    public bool IsInterlaced { get; set; }
 }
 
 /// <summary>

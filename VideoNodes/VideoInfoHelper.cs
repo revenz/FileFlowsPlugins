@@ -301,6 +301,11 @@ public class VideoInfoHelper
         vs.Codec = line.Substring(line.IndexOf("Video: ") + "Video: ".Length).Replace(",", "").Trim().Split(' ').First().ToLower();
         vs.PixelFormat = GetDecoderPixelFormat(line);
         vs.Bits = GetBitDepthFromStreamInfo(logger, info);
+        vs.IsInterlaced =
+            line.Contains("top first", StringComparison.OrdinalIgnoreCase) ||
+            line.Contains("bottom first", StringComparison.OrdinalIgnoreCase) ||
+            line.Contains("interlaced", StringComparison.OrdinalIgnoreCase);
+        
         if (rgxTitle.IsMatch(info))
             vs.Title = rgxTitle.Match(info).Value.Trim();
 
