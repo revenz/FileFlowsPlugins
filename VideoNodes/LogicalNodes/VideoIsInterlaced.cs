@@ -1,5 +1,3 @@
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client;
-
 namespace FileFlows.VideoNodes;
 
 /// <summary>
