@@ -127,7 +127,7 @@ public class CopyFile : Node
         if (inputFile == args.WorkingFile)
         {
             args.Logger?.ILog("Setting working file to: " + dest);
-            args.SetWorkingFile(dest);
+            args.SetWorkingFile(dest, dontDelete: true);
 
             if (PreserverOriginalDates)
             {
