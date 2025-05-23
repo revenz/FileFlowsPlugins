@@ -207,36 +207,39 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
     {
         languageCode = string.Empty;
         forced = false;
-        var inputFileExtension = FileHelper.GetExtension(input);
-        string inputName = FileHelper.GetShortFileName(input).Replace(inputFileExtension, "");
-
-        var otherFileExtension = FileHelper.GetExtension(other);
-        string otherName = FileHelper.GetShortFileName(other).Replace(otherFileExtension, "");
+        
+        string inputName = FileHelper.GetShortFileNameWithoutExtension(input);
+        string otherName = FileHelper.GetShortFileNameWithoutExtension(other);
+        string testString = otherName;
+        if (otherName.StartsWith(inputName))
+            testString = otherName[inputName.Length..].TrimStart('.', '-', '_', ' ');
+            
         
         if (inputName.ToLowerInvariant().Equals(otherName.ToLowerInvariant()))
             return true;
 
-        bool closedCaptions = HasSection(ref otherName, "closedcaptions") || HasSection(ref otherName, "cc");
-        forced = HasSection(ref otherName, "forced");
+        bool closedCaptions = HasSection(ref testString, "closedcaptions") || HasSection(ref testString, "cc");
+        forced = HasSection(ref testString, "forced");
 
-        if(Regex.IsMatch(otherName, @"(\.[a-zA-Z]{2,3}){1,2}$"))
+
+        if(Regex.IsMatch(testString, @"(\.[a-zA-Z]{2,3}){1,2}$"))
         {
-            string stripLang = Regex.Replace(otherName, @"(\.[a-zA-Z]{2,3}){1,2}$", string.Empty).Replace("  ", " ").Trim();
+            string stripLang = Regex.Replace(testString, @"(\.[a-zA-Z]{2,3}){1,2}$", string.Empty).Replace("  ", " ").Trim();
 
             var rgxLanguage = new Regex("(?<=(\\.))(" + string.Join("|", LanguageCodes.Codes.Keys) + ")");
-            if (rgxLanguage.IsMatch(otherName))
+            if (rgxLanguage.IsMatch(testString))
             {
-                string key = rgxLanguage.Match(otherName).Value;
+                string key = rgxLanguage.Match(testString).Value;
                 languageCode = LanguageCodes.Codes.GetValueOrDefault(key, key);
             }
 
             if (string.IsNullOrEmpty(languageCode) == false)
             {
-                if (Regex.IsMatch(otherName, @"\.hi(\.|$)"))
+                if (Regex.IsMatch(testString, @"\.hi(\.|$)"))
                     languageCode += " (HI)";
-                if (closedCaptions || Regex.IsMatch(otherName, @"\.cc(\.|$)"))
+                if (closedCaptions || Regex.IsMatch(testString, @"\.cc(\.|$)"))
                     languageCode += " (CC)";
-                if (Regex.IsMatch(otherName, @"\.sdh(\.|$)"))
+                if (Regex.IsMatch(testString, @"\.sdh(\.|$)"))
                     languageCode += " (SDH)";
             }
 
@@ -245,14 +248,14 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
                 return true;
         }
 
-        if (Regex.IsMatch(otherName, @"\([a-zA-Z]{2,3}\)"))
+        if (Regex.IsMatch(testString, @"\([a-zA-Z]{2,3}\)"))
         {
-            string stripLang = Regex.Replace(otherName, @"\([a-zA-Z]{2,3}\)", string.Empty).Replace("  ", " ").Trim();
+            string stripLang = Regex.Replace(testString, @"\([a-zA-Z]{2,3}\)", string.Empty).Replace("  ", " ").Trim();
 
             var rgxLanguage = new Regex("(?<=(\\())(" + string.Join("|", LanguageCodes.Codes.Keys) + ")(?!=\\))");
-            if (rgxLanguage.IsMatch(otherName))
+            if (rgxLanguage.IsMatch(testString))
             {
-                string key = rgxLanguage.Match(otherName).Value;
+                string key = rgxLanguage.Match(testString).Value;
                 languageCode = LanguageCodes.Codes.GetValueOrDefault(key, key);
             }
 
@@ -268,6 +271,13 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
             }
             if (inputName.ToLowerInvariant().Equals(stripLang.ToLowerInvariant()))
                 return true;
+        }
+
+        if (string.IsNullOrWhiteSpace(languageCode))
+        {
+            var iso2 = LanguageHelper.GetIso2Code(testString.ToUpper());
+            if(iso2 != testString.ToUpper())
+                languageCode = iso2; // since this should be lowered case if known
         }
 
         if (otherName.StartsWith(inputName, StringComparison.InvariantCultureIgnoreCase))
