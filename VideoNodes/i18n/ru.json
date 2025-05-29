@@ -736,6 +736,8 @@
           "DeleteAfterwards-Help": "Если файл субтитров должен быть удалён после объединения",
           "Forced": "Принудительно",
           "Forced-Help": "Если субтитр должен быть принудительным",
+          "HearingImpaired": "Слабослышащие",
+          "HearingImpaired-Help": "Если субтитр должен быть помечен как слабослышащий",
           "Language": "Язык",
           "Language-Help": "Необязательный [код языка ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) для добавленного субтитра.",
           "MatchFilename": "Совпадение имени файла",

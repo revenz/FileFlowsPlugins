@@ -736,6 +736,8 @@
           "DeleteAfterwards-Help": "如果字幕文件在合併後應被刪除",
           "Forced": "強制",
           "Forced-Help": "如果字幕應該是強制的",
+          "HearingImpaired": "聽力障礙",
+          "HearingImpaired-Help": "如果字幕應該是聽力障礙字幕",
           "Language": "語言",
           "Language-Help": "添加字幕的可選 [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) 語言代碼。",
           "MatchFilename": "匹配檔名",

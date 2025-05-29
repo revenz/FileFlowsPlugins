@@ -736,6 +736,8 @@
           "DeleteAfterwards-Help": "병합 후 자막 파일을 삭제해야 하는지 여부",
           "Forced": "강제",
           "Forced-Help": "자막이 강제되어야 하는지 여부",
+          "HearingImpaired": "청각 장애인",
+          "HearingImpaired-Help": "자막이 청각 장애인을 위한 자막이어야 하는지 여부",
           "Language": "언어",
           "Language-Help": "추가된 자막에 대한 선택적 [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) 언어 코드.",
           "MatchFilename": "파일명 일치",

@@ -15,6 +15,11 @@ public class FfmpegSubtitleStream : FfmpegStream
     public bool IsForced { get; set; }
 
     /// <summary>
+    /// Gets or sets if this is a Hearing Impaired subtitle
+    /// </summary>
+    public bool IsHearingImpaired { get; set; }
+
+    /// <summary>
     /// Gets or sets if this stream has changed
     /// </summary>
     public override bool HasChange => false;
@@ -81,6 +86,8 @@ public class FfmpegSubtitleStream : FfmpegStream
             results.AddRange(new[] { "-disposition:s:" + args.OutputTypeIndex, "default" });
         else if(this.IsForced)
             results.AddRange(new[] { "-disposition:s:" + args.OutputTypeIndex, "forced" });
+        else if(this.IsHearingImpaired)
+            results.AddRange(new[] { "-disposition:s:" + args.OutputTypeIndex, "hearing_impaired" });
         else
             results.AddRange(new[] { "-disposition:s:" + args.OutputTypeIndex, "0" });
 
@@ -106,6 +113,7 @@ public class FfmpegSubtitleStream : FfmpegStream
             Title,
             IsDefault ? "Default" : null,
             Stream?.Forced == true ? "Forced" : null,
+            Stream?.HearingImpaired == true ? "Hearing Impaired" : null,
             Deleted ? "Deleted" : null,
             HasChange ? "Changed" : null
         }.Where(x => string.IsNullOrWhiteSpace(x) == false));

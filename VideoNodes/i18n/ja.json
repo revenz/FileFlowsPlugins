@@ -736,6 +736,8 @@
           "DeleteAfterwards-Help": "マージ後に字幕ファイルを削除するかどうか",
           "Forced": "強制",
           "Forced-Help": "字幕を強制するかどうか",
+          "HearingImpaired": "聴覚障害者向け",
+          "HearingImpaired-Help": "字幕を聴覚障害者向けにするかどうか",
           "Language": "言語",
           "Language-Help": "追加された字幕のオプションの[ISO 639-2](https://ja.wikipedia.org/wiki/ISO_639-2)言語コード。",
           "MatchFilename": "ファイル名を一致させる",

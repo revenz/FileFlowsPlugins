@@ -736,6 +736,8 @@
           "DeleteAfterwards-Help": "Ob die Untertiteldatei nach dem Zusammenführen gelöscht werden soll",
           "Forced": "Erzwingend",
           "Forced-Help": "Ob der Untertitel erzwungen werden soll",
+          "HearingImpaired": "Hörgeschädigt",
+          "HearingImpaired-Help": "Ob der Untertitel für Hörgeschädigte sein soll",
           "Language": "Sprache",
           "Language-Help": "Optionaler [ISO 639-2](https://de.wikipedia.org/wiki/Liste_der_ISO_639-2-Codes) Sprachcode für den hinzugefügten Untertitel.",
           "MatchFilename": "Dateiname abgleichen",

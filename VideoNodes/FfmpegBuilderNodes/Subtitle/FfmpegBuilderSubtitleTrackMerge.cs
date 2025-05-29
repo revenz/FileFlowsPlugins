@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes;

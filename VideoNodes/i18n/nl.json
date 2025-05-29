@@ -736,6 +736,8 @@
           "DeleteAfterwards-Help": "Als het ondertitelbestand moet worden verwijderd na het samenvoegen",
           "Forced": "Gedwongen",
           "Forced-Help": "Als de ondertitel gedwongen moet worden",
+          "HearingImpaired": "Slechthorend",
+          "HearingImpaired-Help": "Als de ondertitel voor slechthorenden is",
           "Language": "Taal",
           "Language-Help": "Optionele [ISO 639-2](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) taalcodes voor de toegevoegde ondertitel.",
           "MatchFilename": "Bestandsnaam Matchen",

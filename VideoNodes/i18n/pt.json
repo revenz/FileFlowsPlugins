@@ -736,6 +736,8 @@
           "DeleteAfterwards-Help": "Se o arquivo de legenda deve ser excluído após ser mesclado",
           "Forced": "Forçado",
           "Forced-Help": "Se a legenda deve ser forçada",
+          "HearingImpaired": "Deficiência Auditiva",
+          "HearingImpaired-Help": "Se a legenda deve ser marcada como deficiência auditiva",
           "Language": "Idioma",
           "Language-Help": "Código de idioma opcional [ISO 639-2](https://pt.wikipedia.org/wiki/ISO_639-2) para a legenda adicionada.",
           "MatchFilename": "Correspondência de Nome de Arquivo",

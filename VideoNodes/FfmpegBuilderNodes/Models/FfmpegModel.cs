@@ -137,6 +137,7 @@
                     Stream = item.stream,
                     IsDefault = item.stream.Default,
                     IsForced = item.stream.Forced,
+                    IsHearingImpaired = item.stream.HearingImpaired,
                     Codec = item.stream.Codec
                 });
             }

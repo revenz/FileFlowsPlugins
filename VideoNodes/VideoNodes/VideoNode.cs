@@ -219,6 +219,8 @@ namespace FileFlows.VideoNodes
                     metadata.Add(prefix + "Default", true);
                 if(stream.Forced)
                     metadata.Add(prefix + "Forced", true);
+                if (stream.HearingImpaired)
+                    metadata.Add(prefix + "Hearing Impaired", true);
             }
 
             args.Logger.ILog("Setting mimetype");
