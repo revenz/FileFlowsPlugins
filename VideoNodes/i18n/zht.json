@@ -353,8 +353,8 @@
         "Description": "變更所有影片、音訊和字幕軌道的語言代碼，其原始語言符合定義的替代項。",
         "Label": "FFMPEG Builder: 更改語言代碼",
         "Fields": {
-          "Replacement-Help": "一個由原始語言代碼與其對應替代值所組成的鍵值對清單。",
-          "Replacements": "語言替代項"
+          "Replacements": "語言替代項",
+          "Replacements-Help": "一個由原始語言代碼與其對應替代值所組成的鍵值對清單。"
         },
         "Outputs": {
           "1": "已執行一個或多個語言替代。",

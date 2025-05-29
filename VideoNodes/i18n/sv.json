@@ -353,8 +353,8 @@
         "Description": "Ändrar språkkoderna för alla video-, ljud- och undertextspår vars ursprungliga språk matchar de definierade ersättningarna.",
         "Label": "FFMPEG Builder: Ändra språkkod",
         "Fields": {
-          "Replacement-Help": "En lista över ursprungliga språkkoder och deras ersättningsvärden, definierade som nyckel-värde-par.",
-          "Replacements": "Språkersättningar"
+          "Replacements": "Språkersättningar",
+          "Replacements-Help": "En lista över ursprungliga språkkoder och deras ersättningsvärden, definierade som nyckel-värde-par."
         },
         "Outputs": {
           "1": "En eller flera språkersättningar har gjorts.",

@@ -353,8 +353,8 @@
         "Description": "Cambia los códigos de idioma de todas las pistas de vídeo, audio y subtítulos cuya lengua original coincida con una de las sustituciones especificadas.",
         "Label": "FFMPEG Builder: Cambiar código de idioma",
         "Fields": {
-          "Replacement-Help": "Una lista de códigos de idioma originales y sus valores de reemplazo, definidos como pares clave-valor.",
-          "Replacements": "Sustituciones de idioma"
+          "Replacements": "Sustituciones de idioma",
+          "Replacements-Help": "Una lista de códigos de idioma originales y sus valores de reemplazo, definidos como pares clave-valor."
         },
         "Outputs": {
           "1": "Se realizó uno o más reemplazos de idioma.",

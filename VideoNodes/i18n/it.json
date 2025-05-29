@@ -353,8 +353,8 @@
         "Description": "Modifica i codici lingua di tutte le tracce video, audio e dei sottotitoli la cui lingua originale corrisponde a una delle sostituzioni specificate.",
         "Label": "FFMPEG Builder: Cambia codice lingua",
         "Fields": {
-          "Replacement-Help": "Un elenco di codici lingua originali e i loro valori di sostituzione, definiti come coppie chiave-valore.",
-          "Replacements": "Sostituzioni lingua"
+          "Replacements": "Sostituzioni lingua",
+          "Replacements-Help": "Un elenco di codici lingua originali e i loro valori di sostituzione, definiti come coppie chiave-valore."
         },
         "Outputs": {
           "1": "È stata effettuata una o più sostituzioni di lingua.",

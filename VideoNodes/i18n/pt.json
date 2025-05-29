@@ -353,8 +353,8 @@
         "Description": "Altera os códigos de idioma de todas as faixas de vídeo, áudio e legendas cujo idioma original corresponde a um dos substitutos definidos.",
         "Label": "FFMPEG Builder: Alterar código de idioma",
         "Fields": {
-          "Replacement-Help": "Uma lista de códigos de idioma originais e seus respectivos valores de substituição, definidos como pares chave-valor.",
-          "Replacements": "Substituições de idioma"
+          "Replacements": "Substituições de idioma",
+          "Replacements-Help": "Uma lista de códigos de idioma originais e seus respectivos valores de substituição, definidos como pares chave-valor."
         },
         "Outputs": {
           "1": "Uma ou mais substituições de idioma foram realizadas.",

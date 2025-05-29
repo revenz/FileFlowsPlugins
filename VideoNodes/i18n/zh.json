@@ -353,8 +353,8 @@
         "Description": "更改所有视频、音频和字幕轨道的语言代码，如果原始语言与定义的替换项匹配。",
         "Label": "FFMPEG Builder: 更改语言代码",
         "Fields": {
-          "Replacement-Help": "一个由原始语言代码和替换值组成的键值对列表。",
-          "Replacements": "语言替换"
+          "Replacements": "语言替换",
+          "Replacements-Help": "一个由原始语言代码和替换值组成的键值对列表。"
         },
         "Outputs": {
           "1": "已执行一个或多个语言替换。",
