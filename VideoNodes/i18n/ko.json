@@ -349,6 +349,18 @@
           "2": "챕터가 감지되지 않거나 비디오에 이미 챕터가 있습니다."
         }
       },
+      "FfmpegBuilderChangeLanguageCode": {
+        "Description": "원래 언어가 지정된 대체 항목과 일치하는 모든 비디오, 오디오 및 자막 트랙의 언어 코드를 변경합니다.",
+        "Label": "FFMPEG Builder: 언어 코드 변경",
+        "Fields": {
+          "Replacement-Help": "원본 언어 코드와 해당 대체 값을 키-값 쌍으로 정의한 목록입니다.",
+          "Replacements": "언어 대체 목록"
+        },
+        "Outputs": {
+          "1": "하나 이상의 언어 대체가 수행되었습니다.",
+          "2": "언어 대체가 수행되지 않았습니다."
+        }
+      },
       "FfmpegBuilderComskipChapters": {
         "Description": "comskip EDL 파일을 사용하여 해당 EDL comskip 파일을 기반으로 챕터를 생성합니다.",
         "Label": "FFMPEG Builder: Comskip 챕터",

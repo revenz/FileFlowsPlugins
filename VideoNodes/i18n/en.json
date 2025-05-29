@@ -349,6 +349,18 @@
           "2": "No chapters detected or video already had chapters"
         }
       },
+      "FfmpegBuilderChangeLanguageCode": {
+        "Description": "Changes the language codes on all video, audio, and subtitle tracks whose original language matches any of the specified replacements.",
+        "Label": "FFMPEG Builder: Change Language Code",
+        "Fields": {
+          "Replacement-Help": "A list of original language codes and their replacement values, defined as key-value pairs.",
+          "Replacements": "Language Replacements"
+        },
+        "Outputs": {
+          "1": "One or more language replacements were performed.",
+          "2": "No language replacements were performed."
+        }
+      },
       "FfmpegBuilderComskipChapters": {
         "Description": "Uses a comskip EDL file and will create chapters given that EDL comskip file.",
         "Label": "FFMPEG Builder: Comskip Chapters",

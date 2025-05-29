@@ -349,6 +349,18 @@
           "2": "Nenhum capítulo detectado ou o vídeo já tinha capítulos"
         }
       },
+      "FfmpegBuilderChangeLanguageCode": {
+        "Description": "Altera os códigos de idioma de todas as faixas de vídeo, áudio e legendas cujo idioma original corresponde a um dos substitutos definidos.",
+        "Label": "FFMPEG Builder: Alterar código de idioma",
+        "Fields": {
+          "Replacement-Help": "Uma lista de códigos de idioma originais e seus respectivos valores de substituição, definidos como pares chave-valor.",
+          "Replacements": "Substituições de idioma"
+        },
+        "Outputs": {
+          "1": "Uma ou mais substituições de idioma foram realizadas.",
+          "2": "Nenhuma substituição de idioma foi realizada."
+        }
+      },
       "FfmpegBuilderComskipChapters": {
         "Description": "Usa um arquivo EDL do comskip e criará capítulos dados esse arquivo EDL do comskip.",
         "Label": "Construtor FFMPEG: Capítulos Comskip",

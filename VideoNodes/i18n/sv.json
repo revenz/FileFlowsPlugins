@@ -349,6 +349,18 @@
           "2": "Inga kapitel upptäcktes eller videon hade redan kapitel"
         }
       },
+      "FfmpegBuilderChangeLanguageCode": {
+        "Description": "Ändrar språkkoderna för alla video-, ljud- och undertextspår vars ursprungliga språk matchar de definierade ersättningarna.",
+        "Label": "FFMPEG Builder: Ändra språkkod",
+        "Fields": {
+          "Replacement-Help": "En lista över ursprungliga språkkoder och deras ersättningsvärden, definierade som nyckel-värde-par.",
+          "Replacements": "Språkersättningar"
+        },
+        "Outputs": {
+          "1": "En eller flera språkersättningar har gjorts.",
+          "2": "Inga språkersättningar har gjorts."
+        }
+      },
       "FfmpegBuilderComskipChapters": {
         "Description": "Använder en comskip EDL-fil och kommer att skapa kapitel givet den EDL comskip-filen.",
         "Label": "FFMPEG Builder: Comskip Kapitel",

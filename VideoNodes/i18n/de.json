@@ -349,6 +349,18 @@
           "2": "Keine Kapitel erkannt oder Video hatte bereits Kapitel"
         }
       },
+      "FfmpegBuilderChangeLanguageCode": {
+        "Description": "Ändert die Sprachcodes aller Video-, Audio- und Untertitelspuren, deren ursprüngliche Sprache einem der angegebenen Ersetzungen entspricht.",
+        "Label": "FFMPEG Builder: Sprachcode ändern",
+        "Fields": {
+          "Replacement-Help": "Eine Liste ursprünglicher Sprachcodes und ihrer Ersatzwerte, definiert als Schlüssel-Wert-Paare.",
+          "Replacements": "Sprach-Ersetzungen"
+        },
+        "Outputs": {
+          "1": "Eine oder mehrere Sprachänderungen wurden durchgeführt.",
+          "2": "Keine Sprachänderungen wurden durchgeführt."
+        }
+      },
       "FfmpegBuilderComskipChapters": {
         "Description": "Verwendet eine Comskip-EDL-Datei und erstellt Kapitel anhand dieser EDL-Comskip-Datei.",
         "Label": "FFMPEG Builder: Comskip-Kapitel",

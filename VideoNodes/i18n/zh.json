@@ -349,6 +349,18 @@
           "2": "未检测到章节或视频已经有章节"
         }
       },
+      "FfmpegBuilderChangeLanguageCode": {
+        "Description": "更改所有视频、音频和字幕轨道的语言代码，如果原始语言与定义的替换项匹配。",
+        "Label": "FFMPEG Builder: 更改语言代码",
+        "Fields": {
+          "Replacement-Help": "一个由原始语言代码和替换值组成的键值对列表。",
+          "Replacements": "语言替换"
+        },
+        "Outputs": {
+          "1": "已执行一个或多个语言替换。",
+          "2": "未执行任何语言替换。"
+        }
+      },
       "FfmpegBuilderComskipChapters": {
         "Description": "使用comskip EDL文件并将根据该EDL comskip文件创建章节。",
         "Label": "FFMPEG构建器：Comskip章节",

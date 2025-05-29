@@ -349,6 +349,18 @@
           "2": "章が検出されなかったか、ビデオにはすでに章がありました"
         }
       },
+      "FfmpegBuilderChangeLanguageCode": {
+        "Description": "指定された置換に一致する元の言語を持つすべてのビデオ、オーディオ、字幕トラックの言語コードを変更します。",
+        "Label": "FFMPEG Builder: 言語コードを変更",
+        "Fields": {
+          "Replacement-Help": "元の言語コードとその置換値のリスト（キーと値のペアで定義）。",
+          "Replacements": "言語の置換"
+        },
+        "Outputs": {
+          "1": "1 つ以上の言語置換が行われました。",
+          "2": "言語の置換は行われませんでした。"
+        }
+      },
       "FfmpegBuilderComskipChapters": {
         "Description": "comskip EDLファイルを使用し、そのEDL comskipファイルに基づいて章を作成します。",
         "Label": "FFMPEG Builder: Comskip章",

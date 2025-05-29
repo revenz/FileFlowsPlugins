@@ -349,6 +349,18 @@
           "2": "Nessun capitolo rilevato o il video aveva già capitoli"
         }
       },
+      "FfmpegBuilderChangeLanguageCode": {
+        "Description": "Modifica i codici lingua di tutte le tracce video, audio e dei sottotitoli la cui lingua originale corrisponde a una delle sostituzioni specificate.",
+        "Label": "FFMPEG Builder: Cambia codice lingua",
+        "Fields": {
+          "Replacement-Help": "Un elenco di codici lingua originali e i loro valori di sostituzione, definiti come coppie chiave-valore.",
+          "Replacements": "Sostituzioni lingua"
+        },
+        "Outputs": {
+          "1": "È stata effettuata una o più sostituzioni di lingua.",
+          "2": "Nessuna sostituzione di lingua è stata effettuata."
+        }
+      },
       "FfmpegBuilderComskipChapters": {
         "Description": "Utilizza un file EDL di comskip e creerà capitoli dati quel file EDL di comskip.",
         "Label": "FFMPEG Builder: Capitoli Comskip",
