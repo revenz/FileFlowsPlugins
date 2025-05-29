@@ -15,18 +15,7 @@
     }
   },
   "Flow": {
-    "Parts": {"FfmpegBuilderParameterReplacer": {
-      "Description": "Définit les remplacements pour les paramètres FFmpeg finaux générés par le FFMPEG Builder. Les remplacements effectifs ont lieu lors de l’exécution de l’exécuteur FFMPEG Builder.",
-      "Label": "FFMPEG Builder: Parameter Replacer",
-      "Fields": {
-        "Replacements": "Replacements",
-        "Replacements-Help": "Saisissez des paires clé/valeur pour remplacer des paramètres FFmpeg spécifiques. Utilisez des espaces entre les valeurs pour remplacer un paramètre par plusieurs arguments."
-      },
-      "Outputs": {
-        "1": "Remplacements définis"
-      }
-    },
-
+    "Parts": {
       "AudioToVideo": {
         "Description": "Convertit un fichier audio en un fichier vidéo et génère une vidéo basée sur l'audio",
         "Label": "Audio vers Vidéo",
@@ -365,7 +354,9 @@
         "Label": "FFMPEG Builder: Changer le code de langue",
         "Fields": {
           "Replacements": "Remplacements de langue",
-          "Replacements-Help": "Une liste de codes de langue d'origine et leurs valeurs de remplacement, définis en paires clé-valeur."
+          "Replacements-Help": "Une liste de codes de langue d'origine et leurs valeurs de remplacement, définis en paires clé-valeur.",
+          "ReplacementsKey": "Original",
+          "ReplacementsValue": "Remplacé"
         },
         "Outputs": {
           "1": "Un ou plusieurs remplacements de langue ont été effectués.",
@@ -528,6 +519,19 @@
         },
         "Outputs": {
           "1": "Métadonnées supprimées du FFMPEG Builder"
+        }
+      },
+      "FfmpegBuilderParameterReplacer": {
+        "Description": "Définit les remplacements pour les paramètres FFmpeg finaux générés par le FFMPEG Builder. Les remplacements effectifs ont lieu lors de l’exécution de l’exécuteur FFMPEG Builder.",
+        "Label": "FFMPEG Builder: Parameter Replacer",
+        "Fields": {
+          "Replacements": "Replacements",
+          "Replacements-Help": "Saisissez des paires clé/valeur pour remplacer des paramètres FFmpeg spécifiques. Utilisez des espaces entre les valeurs pour remplacer un paramètre par plusieurs arguments.",
+          "ReplacementsKey": "Original",
+          "ReplacementsValue": "Remplacé"
+        },
+        "Outputs": {
+          "1": "Remplacements définis"
         }
       },
       "FfmpegBuilderPreExecute": {

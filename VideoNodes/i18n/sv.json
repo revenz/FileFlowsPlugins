@@ -15,18 +15,7 @@
     }
   },
   "Flow": {
-    "Parts": {"FfmpegBuilderParameterReplacer": {
-      "Description": "Sätter ersättningar för de slutliga FFmpeg-parametrarna som genereras av FFMPEG Builder. De faktiska ersättningarna sker när FFMPEG Builder-exekutorn körs.",
-      "Label": "FFMPEG Builder: Parameter Replacer",
-      "Fields": {
-        "Replacements": "Replacements",
-        "Replacements-Help": "Ange nyckel/värde-par för att ersätta specifika FFmpeg-parametrar. Använd mellanslag mellan värden för att ersätta en parameter med flera argument."
-      },
-      "Outputs": {
-        "1": "Ersättningar inställda"
-      }
-    },
-
+    "Parts": {
       "AudioToVideo": {
         "Description": "Konverterar en ljudfil till en videofil och genererar en video baserad på ljudet.",
         "Label": "Ljud till Video",
@@ -365,7 +354,9 @@
         "Label": "FFMPEG Builder: Ändra språkkod",
         "Fields": {
           "Replacements": "Språkersättningar",
-          "Replacements-Help": "En lista över ursprungliga språkkoder och deras ersättningsvärden, definierade som nyckel-värde-par."
+          "Replacements-Help": "En lista över ursprungliga språkkoder och deras ersättningsvärden, definierade som nyckel-värde-par.",
+          "ReplacementsKey": "Original",
+          "ReplacementsValue": "Ersatt"
         },
         "Outputs": {
           "1": "En eller flera språkersättningar har gjorts.",
@@ -528,6 +519,19 @@
         },
         "Outputs": {
           "1": "Metadata borttagen från FFMPEG Builder"
+        }
+      },
+      "FfmpegBuilderParameterReplacer": {
+        "Description": "Sätter ersättningar för de slutliga FFmpeg-parametrarna som genereras av FFMPEG Builder. De faktiska ersättningarna sker när FFMPEG Builder-exekutorn körs.",
+        "Label": "FFMPEG Builder: Parameter Replacer",
+        "Fields": {
+          "Replacements": "Replacements",
+          "Replacements-Help": "Ange nyckel/värde-par för att ersätta specifika FFmpeg-parametrar. Använd mellanslag mellan värden för att ersätta en parameter med flera argument.",
+          "ReplacementsKey": "Original",
+          "ReplacementsValue": "Ersatt"
+        },
+        "Outputs": {
+          "1": "Ersättningar inställda"
         }
       },
       "FfmpegBuilderPreExecute": {

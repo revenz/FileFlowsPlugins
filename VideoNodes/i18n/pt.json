@@ -15,18 +15,7 @@
     }
   },
   "Flow": {
-    "Parts": {"FfmpegBuilderParameterReplacer": {
-      "Description": "Define substituições para os parâmetros finais do FFmpeg gerados pelo FFMPEG Builder. As substituições reais ocorrem quando o executor do FFMPEG Builder é executado.",
-      "Label": "FFMPEG Builder: Parameter Replacer",
-      "Fields": {
-        "Replacements": "Replacements",
-        "Replacements-Help": "Insira pares chave/valor para substituir parâmetros específicos do FFmpeg. Use espaços entre valores para substituir um parâmetro por múltiplos argumentos."
-      },
-      "Outputs": {
-        "1": "Substituições definidas"
-      }
-    },
-
+    "Parts": {
       "AudioToVideo": {
         "Description": "Converte um arquivo de áudio em um arquivo de vídeo e gera um vídeo baseado no áudio",
         "Label": "Áudio para Vídeo",
@@ -365,7 +354,9 @@
         "Label": "FFMPEG Builder: Alterar código de idioma",
         "Fields": {
           "Replacements": "Substituições de idioma",
-          "Replacements-Help": "Uma lista de códigos de idioma originais e seus respectivos valores de substituição, definidos como pares chave-valor."
+          "Replacements-Help": "Uma lista de códigos de idioma originais e seus respectivos valores de substituição, definidos como pares chave-valor.",
+          "ReplacementsKey": "Original",
+          "ReplacementsValue": "Substituído"
         },
         "Outputs": {
           "1": "Uma ou mais substituições de idioma foram realizadas.",
@@ -528,6 +519,19 @@
         },
         "Outputs": {
           "1": "Metadados removidos do Construtor FFMPEG"
+        }
+      },
+      "FfmpegBuilderParameterReplacer": {
+        "Description": "Define substituições para os parâmetros finais do FFmpeg gerados pelo FFMPEG Builder. As substituições reais ocorrem quando o executor do FFMPEG Builder é executado.",
+        "Label": "FFMPEG Builder: Parameter Replacer",
+        "Fields": {
+          "Replacements": "Replacements",
+          "Replacements-Help": "Insira pares chave/valor para substituir parâmetros específicos do FFmpeg. Use espaços entre valores para substituir um parâmetro por múltiplos argumentos.",
+          "ReplacementsKey": "Original",
+          "ReplacementsValue": "Substituído"
+        },
+        "Outputs": {
+          "1": "Substituições definidas"
         }
       },
       "FfmpegBuilderPreExecute": {

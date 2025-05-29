@@ -15,18 +15,7 @@
     }
   },
   "Flow": {
-    "Parts": {"FfmpegBuilderParameterReplacer": {
-      "Description": "Legt Ersatzwerte für die endgültigen FFmpeg-Parameter fest, die vom FFMPEG Builder generiert werden. Die tatsächlichen Ersetzungen erfolgen, wenn der FFMPEG Builder Executor ausgeführt wird.",
-      "Label": "FFMPEG Builder: Parameter Ersetzer",
-      "Fields": {
-        "Replacements": "Replacements",
-        "Replacements-Help": "Geben Sie Schlüssel/Wert-Paare ein, um bestimmte FFmpeg-Parameter zu ersetzen. Verwenden Sie Leerzeichen zwischen den Werten, um einen Parameter durch mehrere Argumente zu ersetzen."
-      },
-      "Outputs": {
-        "1": "Ersatzwerte gesetzt"
-      }
-    },
-
+    "Parts": {
       "AudioToVideo": {
         "Description": "Konvertiert eine Audiodatei in eine Videodatei und erzeugt ein Video auf der Grundlage des Audios.",
         "Label": "Audio zu Video",
@@ -365,7 +354,9 @@
         "Label": "FFMPEG Builder: Sprachcode ändern",
         "Fields": {
           "Replacements": "Sprach-Ersetzungen",
-          "Replacements-Help": "Eine Liste ursprünglicher Sprachcodes und ihrer Ersatzwerte, definiert als Schlüssel-Wert-Paare."
+          "Replacements-Help": "Eine Liste ursprünglicher Sprachcodes und ihrer Ersatzwerte, definiert als Schlüssel-Wert-Paare.",
+          "ReplacementsKey": "Original",
+          "ReplacementsValue": "Ersetzt"
         },
         "Outputs": {
           "1": "Eine oder mehrere Sprachänderungen wurden durchgeführt.",
@@ -528,6 +519,19 @@
         },
         "Outputs": {
           "1": " Metadaten aus dem FFMPEG Builder entfernt "
+        }
+      },
+      "FfmpegBuilderParameterReplacer": {
+        "Description": "Legt Ersatzwerte für die endgültigen FFmpeg-Parameter fest, die vom FFMPEG Builder generiert werden. Die tatsächlichen Ersetzungen erfolgen, wenn der FFMPEG Builder Executor ausgeführt wird.",
+        "Label": "FFMPEG Builder: Parameter Ersetzer",
+        "Fields": {
+          "Replacements": "Replacements",
+          "Replacements-Help": "Geben Sie Schlüssel/Wert-Paare ein, um bestimmte FFmpeg-Parameter zu ersetzen. Verwenden Sie Leerzeichen zwischen den Werten, um einen Parameter durch mehrere Argumente zu ersetzen.",
+          "ReplacementsKey": "Original",
+          "ReplacementsValue": "Ersetzt"
+        },
+        "Outputs": {
+          "1": "Ersatzwerte gesetzt"
         }
       },
       "FfmpegBuilderPreExecute": {
