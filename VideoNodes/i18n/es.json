@@ -15,7 +15,18 @@
     }
   },
   "Flow": {
-    "Parts": {
+    "Parts": {"FfmpegBuilderParameterReplacer": {
+      "Description": "Establece reemplazos para los parámetros finales de FFmpeg generados por el FFMPEG Builder. Los reemplazos reales ocurren cuando se ejecuta el ejecutor del FFMPEG Builder.",
+      "Label": "FFMPEG Builder: Reemplazador de Parámetros",
+      "Fields": {
+        "Replacements": "Replacements",
+        "Replacements-Help": "Ingrese pares clave/valor para reemplazar parámetros específicos de FFmpeg. Use espacios entre los valores para reemplazar un parámetro con múltiples argumentos."
+      },
+      "Outputs": {
+        "1": "Reemplazos establecidos"
+      }
+    },
+
       "AudioToVideo": {
         "Description": "Convierte un archivo de audio en un archivo de video y genera un video basado en el audio",
         "Label": "Audio a Video",

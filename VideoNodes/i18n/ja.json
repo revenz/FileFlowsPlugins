@@ -15,7 +15,18 @@
     }
   },
   "Flow": {
-    "Parts": {
+    "Parts": {"FfmpegBuilderParameterReplacer": {
+      "Description": "FFMPEG Builderによって生成された最終的なFFmpegパラメーターの置換を設定します。実際の置換はFFMPEG Builderの実行時に行われます。",
+      "Label": "FFMPEG Builder: Parameter Replacer",
+      "Fields": {
+        "Replacements": "Replacements",
+        "Replacements-Help": "特定のFFmpegパラメーターを置換するためのキーと値のペアを入力します。値の間にスペースを入れると、複数の引数で置換できます。"
+      },
+      "Outputs": {
+        "1": "置換が設定されました"
+      }
+    },
+
       "AudioToVideo": {
         "Description": "オーディオファイルをビデオファイルに変換し、オーディオに基づいてビデオを生成します。",
         "Label": "オーディオからビデオ",

@@ -15,7 +15,18 @@
     }
   },
   "Flow": {
-    "Parts": {
+    "Parts": {"FfmpegBuilderParameterReplacer": {
+      "Description": "Sätter ersättningar för de slutliga FFmpeg-parametrarna som genereras av FFMPEG Builder. De faktiska ersättningarna sker när FFMPEG Builder-exekutorn körs.",
+      "Label": "FFMPEG Builder: Parameter Replacer",
+      "Fields": {
+        "Replacements": "Replacements",
+        "Replacements-Help": "Ange nyckel/värde-par för att ersätta specifika FFmpeg-parametrar. Använd mellanslag mellan värden för att ersätta en parameter med flera argument."
+      },
+      "Outputs": {
+        "1": "Ersättningar inställda"
+      }
+    },
+
       "AudioToVideo": {
         "Description": "Konverterar en ljudfil till en videofil och genererar en video baserad på ljudet.",
         "Label": "Ljud till Video",

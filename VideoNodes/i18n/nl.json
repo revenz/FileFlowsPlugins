@@ -15,7 +15,18 @@
     }
   },
   "Flow": {
-    "Parts": {
+    "Parts": {"FfmpegBuilderParameterReplacer": {
+      "Description": "Stelt vervangingen in voor de uiteindelijke FFmpeg-parameters die door de FFMPEG Builder worden gegenereerd. De daadwerkelijke vervangingen vinden plaats wanneer de FFMPEG Builder executor wordt uitgevoerd.",
+      "Label": "FFMPEG Builder: Parameter Replacer",
+      "Fields": {
+        "Replacements": "Replacements",
+        "Replacements-Help": "Voer sleutel/waarde-paren in om specifieke FFmpeg-parameters te vervangen. Gebruik spaties tussen waarden om een parameter te vervangen door meerdere argumenten."
+      },
+      "Outputs": {
+        "1": "Vervangingen ingesteld"
+      }
+    },
+
       "AudioToVideo": {
         "Description": "Converteert een audiobestand naar een videobestand en genereert een video op basis van de audio.",
         "Label": "Audio naar Video",

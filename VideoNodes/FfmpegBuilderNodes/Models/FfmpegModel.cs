@@ -49,6 +49,11 @@
         }
 
         /// <summary>
+        /// Gets or sets parameters to replace
+        /// </summary>
+        public List<KeyValuePair<string, string>> ParameterReplacements { get; set; } = [];
+
+        /// <summary>
         /// Gets or sets if the builder should forcible execute even if nothing appears to have changed
         /// </summary>
         public bool ForceEncode { get; set; }

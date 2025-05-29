@@ -15,7 +15,18 @@
     }
   },
   "Flow": {
-    "Parts": {
+    "Parts": {"FfmpegBuilderParameterReplacer": {
+      "Description": "Устанавливает замены для итоговых параметров FFmpeg, сгенерированных FFMPEG Builder. Фактические замены применяются при запуске исполнительного модуля FFMPEG Builder.",
+      "Label": "FFMPEG Builder: Parameter Replacer",
+      "Fields": {
+        "Replacements": "Replacements",
+        "Replacements-Help": "Введите пары ключ/значение для замены конкретных параметров FFmpeg. Используйте пробелы между значениями для замены параметра несколькими аргументами."
+      },
+      "Outputs": {
+        "1": "Замены установлены"
+      }
+    },
+
       "AudioToVideo": {
         "Description": "Конвертирует аудиофайл в видеофайл и генерирует видео на основе аудио",
         "Label": "Аудио в видео",

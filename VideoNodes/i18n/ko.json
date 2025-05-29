@@ -15,7 +15,18 @@
     }
   },
   "Flow": {
-    "Parts": {
+    "Parts": {"FfmpegBuilderParameterReplacer": {
+      "Description": "FFMPEG Builder에서 생성된 최종 FFmpeg 매개변수에 대한 대체값을 설정합니다. 실제 대체는 FFMPEG Builder 실행 시 적용됩니다.",
+      "Label": "FFMPEG Builder: Parameter Replacer",
+      "Fields": {
+        "Replacements": "Replacements",
+        "Replacements-Help": "특정 FFmpeg 매개변수를 대체할 키/값 쌍을 입력하세요. 값 사이에 공백을 넣어 여러 인수로 대체할 수 있습니다."
+      },
+      "Outputs": {
+        "1": "대체값 설정 완료"
+      }
+    },
+
       "AudioToVideo": {
         "Description": "오디오 파일을 비디오 파일로 변환하고 오디오를 기반으로 비디오를 생성합니다.",
         "Label": "오디오에서 비디오로",

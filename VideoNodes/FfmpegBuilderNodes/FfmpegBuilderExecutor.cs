@@ -371,6 +371,8 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         ffArgs = EncoderAdjustment.Run(args.Logger, model, ffArgs);
 
         var ffmpeg = FFMPEG;
+
+        ffArgs = FFmpegParameterHelper.ApplyParameterReplacements(ffArgs, model.ParameterReplacements, args.Logger);
         
         if(string.IsNullOrWhiteSpace(model.PreExecuteCode) == false)
         {

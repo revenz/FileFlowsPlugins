@@ -15,7 +15,18 @@
     }
   },
   "Flow": {
-    "Parts": {
+    "Parts": {"FfmpegBuilderParameterReplacer": {
+      "Description": "Legt Ersatzwerte für die endgültigen FFmpeg-Parameter fest, die vom FFMPEG Builder generiert werden. Die tatsächlichen Ersetzungen erfolgen, wenn der FFMPEG Builder Executor ausgeführt wird.",
+      "Label": "FFMPEG Builder: Parameter Ersetzer",
+      "Fields": {
+        "Replacements": "Replacements",
+        "Replacements-Help": "Geben Sie Schlüssel/Wert-Paare ein, um bestimmte FFmpeg-Parameter zu ersetzen. Verwenden Sie Leerzeichen zwischen den Werten, um einen Parameter durch mehrere Argumente zu ersetzen."
+      },
+      "Outputs": {
+        "1": "Ersatzwerte gesetzt"
+      }
+    },
+
       "AudioToVideo": {
         "Description": "Konvertiert eine Audiodatei in eine Videodatei und erzeugt ein Video auf der Grundlage des Audios.",
         "Label": "Audio zu Video",

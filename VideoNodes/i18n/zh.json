@@ -15,7 +15,18 @@
     }
   },
   "Flow": {
-    "Parts": {
+    "Parts": {"FfmpegBuilderParameterReplacer": {
+      "Description": "设置由 FFMPEG Builder 生成的最终 FFmpeg 参数的替换。实际替换在 FFMPEG Builder 执行器运行时进行。",
+      "Label": "FFMPEG Builder: Parameter Replacer",
+      "Fields": {
+        "Replacements": "Replacements",
+        "Replacements-Help": "输入键/值对以替换特定的 FFmpeg 参数。使用空格分隔多个值以用多个参数替换单个参数。"
+      },
+      "Outputs": {
+        "1": "替换已设置"
+      }
+    },
+
       "AudioToVideo": {
         "Description": "将音频文件转换为视频文件，并基于音频生成视频",
         "Label": "音频转视频",
