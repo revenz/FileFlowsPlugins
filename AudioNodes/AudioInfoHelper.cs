@@ -96,6 +96,8 @@ public class AudioInfoHelper
             mi.Codec = "ogg";
         else if (output.ToLower().Contains("flac"))
             mi.Codec = "flac";
+        else if (output.ToLower().Contains("alac"))
+            mi.Codec = "alac";
         else if (output.ToLower().Contains("wav"))
             mi.Codec = "wav";
         else if (filename.ToLower().EndsWith(".mp3"))

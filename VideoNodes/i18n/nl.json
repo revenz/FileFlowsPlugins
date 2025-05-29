@@ -200,6 +200,8 @@
           "CustomTrackSelection": "Converteren",
           "PcmFormat": "Formaat",
           "PcmFormat-Help": "Het PCM-formaat dat gebruikt moet worden voor het coderen van PCM-audio.",
+          "SampleRate": "Samplefrequentie",
+          "SampleRate-Help": "Automatisch laat de encoder beslissen. Zelfde als bron gebruikt de snelheid van het geselecteerde spoor. Of kies een specifieke snelheid.",
           "TrackSelectionOptions": "Overeenkomend",
           "TrackSelectionOptionsKey": "Eigenschap",
           "TrackSelectionOptionsValue": "Waarde"
@@ -345,6 +347,20 @@
         "Outputs": {
           "1": "Hoofdstukken gegenereerd en toegevoegd aan FFMPEG Bouwer",
           "2": "Geen hoofdstukken gedetecteerd of video had al hoofdstukken"
+        }
+      },
+      "FfmpegBuilderChangeLanguageCode": {
+        "Description": "Wijzigt de taalcodes van alle video-, audio- en ondertitelsporen waarvan de oorspronkelijke taal overeenkomt met een van de opgegeven vervangingen.",
+        "Label": "FFMPEG Builder: Wijzig taalcode",
+        "Fields": {
+          "Replacements": "Taalvervangingen",
+          "Replacements-Help": "Een lijst met oorspronkelijke taalcodes en hun vervangende waarden, gedefinieerd als sleutel-waardeparen.",
+          "ReplacementsKey": "Origineel",
+          "ReplacementsValue": "Vervangen"
+        },
+        "Outputs": {
+          "1": "Een of meer taalvervangingen zijn uitgevoerd.",
+          "2": "Er zijn geen taalvervangingen uitgevoerd."
         }
       },
       "FfmpegBuilderComskipChapters": {
@@ -503,6 +519,19 @@
         },
         "Outputs": {
           "1": "Metadata verwijderd uit FFMPEG Builder"
+        }
+      },
+      "FfmpegBuilderParameterReplacer": {
+        "Description": "Stelt vervangingen in voor de uiteindelijke FFmpeg-parameters die door de FFMPEG Builder worden gegenereerd. De daadwerkelijke vervangingen vinden plaats wanneer de FFMPEG Builder executor wordt uitgevoerd.",
+        "Label": "FFMPEG Builder: Parameter Replacer",
+        "Fields": {
+          "Replacements": "Replacements",
+          "Replacements-Help": "Voer sleutel/waarde-paren in om specifieke FFmpeg-parameters te vervangen. Gebruik spaties tussen waarden om een parameter te vervangen door meerdere argumenten.",
+          "ReplacementsKey": "Origineel",
+          "ReplacementsValue": "Vervangen"
+        },
+        "Outputs": {
+          "1": "Vervangingen ingesteld"
         }
       },
       "FfmpegBuilderPreExecute": {

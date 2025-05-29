@@ -48,6 +48,36 @@ public class ConvertTests : AudioTestBase
     }
     
     [TestMethod]
+    public void Convert_FlacToAlac()
+    {
+        var args = GetAudioNodeParameters(AudioFlac);
+        var af = new AudioFile();
+        af.PreExecute(args);
+        af.Execute(args); // need to read the Audio info and set it
+        
+        ConvertToALAC node = new();
+        node.PreExecute(args);
+        int output = node.Execute(args);
+
+        Assert.AreEqual(1, output);
+    }
+    
+    [TestMethod]
+    public void Convert_Mp3ToFlac()
+    {
+        var args = GetAudioNodeParameters();
+        var af = new AudioFile();
+        af.PreExecute(args);
+        af.Execute(args); // need to read the Audio info and set it
+        
+        ConvertToFLAC node = new();
+        node.PreExecute(args);
+        int output = node.Execute(args);
+
+        Assert.AreEqual(1, output);
+    }
+    
+    [TestMethod]
     public void Convert_Mp3ToWAV()
     {
         var args = GetAudioNodeParameters();

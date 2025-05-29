@@ -200,6 +200,8 @@
           "CustomTrackSelection": "変換",
           "PcmFormat": "フォーマット",
           "PcmFormat-Help": "PCMオーディオをエンコードするために使用するPCMフォーマット。",
+          "SampleRate": "サンプルレート",
+          "SampleRate-Help": "自動はエンコーダーに任せます。同じにするは選択したトラックのレートを使用します。特定のレートを指定することもできます。",
           "TrackSelectionOptions": "マッチング",
           "TrackSelectionOptionsKey": "プロパティ",
           "TrackSelectionOptionsValue": "値"
@@ -345,6 +347,20 @@
         "Outputs": {
           "1": "章が生成され、FFMPEG Builderに追加されました",
           "2": "章が検出されなかったか、ビデオにはすでに章がありました"
+        }
+      },
+      "FfmpegBuilderChangeLanguageCode": {
+        "Description": "指定された置換に一致する元の言語を持つすべてのビデオ、オーディオ、字幕トラックの言語コードを変更します。",
+        "Label": "FFMPEG Builder: 言語コードを変更",
+        "Fields": {
+          "Replacements": "言語の置換",
+          "Replacements-Help": "元の言語コードとその置換値のリスト（キーと値のペアで定義）。",
+          "ReplacementsKey": "元の値",
+          "ReplacementsValue": "置換後"
+        },
+        "Outputs": {
+          "1": "1 つ以上の言語置換が行われました。",
+          "2": "言語の置換は行われませんでした。"
         }
       },
       "FfmpegBuilderComskipChapters": {
@@ -503,6 +519,19 @@
         },
         "Outputs": {
           "1": "FFMPEG Builderからメタデータが削除されました"
+        }
+      },
+      "FfmpegBuilderParameterReplacer": {
+        "Description": "FFMPEG Builderによって生成された最終的なFFmpegパラメーターの置換を設定します。実際の置換はFFMPEG Builderの実行時に行われます。",
+        "Label": "FFMPEG Builder: Parameter Replacer",
+        "Fields": {
+          "Replacements": "Replacements",
+          "Replacements-Help": "特定のFFmpegパラメーターを置換するためのキーと値のペアを入力します。値の間にスペースを入れると、複数の引数で置換できます。",
+          "ReplacementsKey": "元の値",
+          "ReplacementsValue": "置換後"
+        },
+        "Outputs": {
+          "1": "置換が設定されました"
         }
       },
       "FfmpegBuilderPreExecute": {

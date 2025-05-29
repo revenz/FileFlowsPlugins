@@ -200,6 +200,8 @@
           "CustomTrackSelection": "Конвертировать",
           "PcmFormat": "Формат",
           "PcmFormat-Help": "Формат PCM для кодирования PCM аудио.",
+          "SampleRate": "Частота дискретизации",
+          "SampleRate-Help": "Автоматически — выбор за кодером. Как у источника — используется частота выбранной дорожки. Или укажите конкретную частоту.",
           "TrackSelectionOptions": "Совпадение",
           "TrackSelectionOptionsKey": "Свойство",
           "TrackSelectionOptionsValue": "Значение"
@@ -345,6 +347,20 @@
         "Outputs": {
           "1": "Главы сгенерированы и добавлены в FFMPEG Builder",
           "2": "Главы не обнаружены или видео уже имело главы"
+        }
+      },
+      "FfmpegBuilderChangeLanguageCode": {
+        "Description": "Изменяет языковые коды всех видеодорожек, аудиодорожек и субтитров, если их исходный язык соответствует одному из указанных замен.",
+        "Label": "FFMPEG Builder: Изменить код языка",
+        "Fields": {
+          "Replacements": "Замены языка",
+          "Replacements-Help": "Список исходных языковых кодов и соответствующих им значений замены, заданных в виде пар ключ-значение.",
+          "ReplacementsKey": "Оригинал",
+          "ReplacementsValue": "Заменено"
+        },
+        "Outputs": {
+          "1": "Выполнена одна или несколько замен языка.",
+          "2": "Замены языка не были выполнены."
         }
       },
       "FfmpegBuilderComskipChapters": {
@@ -503,6 +519,19 @@
         },
         "Outputs": {
           "1": "Метаданные удалены из FFMPEG Builder"
+        }
+      },
+      "FfmpegBuilderParameterReplacer": {
+        "Description": "Устанавливает замены для итоговых параметров FFmpeg, сгенерированных FFMPEG Builder. Фактические замены применяются при запуске исполнительного модуля FFMPEG Builder.",
+        "Label": "FFMPEG Builder: Parameter Replacer",
+        "Fields": {
+          "Replacements": "Replacements",
+          "Replacements-Help": "Введите пары ключ/значение для замены конкретных параметров FFmpeg. Используйте пробелы между значениями для замены параметра несколькими аргументами.",
+          "ReplacementsKey": "Оригинал",
+          "ReplacementsValue": "Заменено"
+        },
+        "Outputs": {
+          "1": "Замены установлены"
         }
       },
       "FfmpegBuilderPreExecute": {

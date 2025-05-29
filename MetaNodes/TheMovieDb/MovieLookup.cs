@@ -59,12 +59,20 @@ public class MovieLookup : Node
     [Boolean(1)]
     public bool UseFolderName { get; set; }
 
+    /// <summary>
+    /// Gets or sets an optional language to use for the lookup.
+    /// </summary>
+    [Text(2)]
+    public string Language { get; set; } = "";
+
     
     /// <inheritdoc/>
     public override int Execute(NodeParameters args)
     {
         string lookupName = PrepareLookupName(args, out int year);
         args.Logger?.ILog("Lookup name: " + lookupName);
+        Language = LanguageHelper.GetIso1Code(Language?.Trim()?.EmptyAsNull() ?? "en");
+        args.Logger?.ILog("Lookup Language: " + Language);
 
         MovieDbFactory.RegisterSettings(Globals.MovieDbBearerToken);
         var movieApi = MovieDbFactory.Create<IApiMovieRequest>().Value;
@@ -135,7 +143,7 @@ public class MovieLookup : Node
         {
             args.Logger?.ILog($"Searching for movie: {lookupName}");
 
-            var response = movieApi.SearchByTitleAsync(lookupName).Result;
+            var response = movieApi.SearchByTitleAsync(lookupName, language: Language).Result;
         
             if (response.Results.Count == 0 && lookupName.Contains("Ae", StringComparison.InvariantCultureIgnoreCase))
             {
@@ -183,7 +191,39 @@ public class MovieLookup : Node
     /// Normalizes a movie title by removing spaces and converting to lowercase.
     /// </summary>
     private static string NormalizeTitle(string title)
-        => title.ToLower().Trim().Replace(" ", "");
+    {
+        var parts = title.ToLowerInvariant().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        string normalized = "";
+        foreach (var part in parts)
+        {
+            if (part == "ii")
+                normalized += " 2";
+            else if (part == "iii")
+                normalized += " 3";
+            else if (part == "iv")
+                normalized += " 4";
+            else if (part == "v")
+                normalized += " 5";
+            else if (part == "vi")
+                normalized += " 6";
+            else if (part == "vii")
+                normalized += " 7";
+            else if (part == "viii")
+                normalized += " 8";
+            else if (part == "ix")
+                normalized += " 9";
+            else if (part == "x")
+                normalized += " 10";
+            else if (part == "xi")
+                normalized += " 11";
+            else if (part == "xii")
+                normalized += " 12";
+            else
+                normalized += " " + part;
+        }
+
+        return normalized.Trim();
+    }
 
     /// <summary>
     /// Populates movie-related variables into the execution context.
@@ -203,7 +243,7 @@ public class MovieLookup : Node
     {
         try
         {
-            var meta = GetVideoMetadata(args, movieApi, movieId, args.TempPath);
+            var meta = GetVideoMetadata(args, movieApi, movieId, args.TempPath, language: Language);
             if (meta == null)
                 return false;
 
@@ -226,9 +266,11 @@ public class MovieLookup : Node
     /// <summary>
     /// Retrieves video metadata including movie details and credits.
     /// </summary>
-    internal static VideoMetadata GetVideoMetadata(NodeParameters args, IApiMovieRequest movieApi, int id, string tempPath)
+    internal static VideoMetadata GetVideoMetadata(NodeParameters args, IApiMovieRequest movieApi, 
+        int id, string tempPath, string language = "en")
     {
-        var movie = movieApi.FindByIdAsync(id).Result?.Item;
+        var movie = movieApi.FindByIdAsync(id, language).Result?.Item;
+        
         if (movie == null)
             return null;
 
@@ -247,7 +289,12 @@ public class MovieLookup : Node
             Year = movie.ReleaseDate.Year,
             Subtitle = movie.Tagline,
             ReleaseDate = movie.ReleaseDate,
-            OriginalLanguage = movie.OriginalLanguage
+            OriginalLanguage = movie.OriginalLanguage?.ToLowerInvariant() switch
+            {
+                "ch" => "zho",
+                "chi" => "zho",
+                _ => movie.OriginalLanguage
+            }
         };
 
         DownloadPosterImage(args, movie, tempPath, meta);

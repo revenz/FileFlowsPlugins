@@ -30,6 +30,8 @@
         "Description": "在 TheMovieDB.org 上执行电影搜索。\n将元数据存储在变量 'MovieInfo' 中。",
         "Label": "电影搜索",
         "Fields": {
+          "Language": "语言",
+          "Language-Help": "用于元数据查找的可选 ISO 639-1 语言代码。",
           "UseFolderName": "使用文件夹名称",
           "UseFolderName-Help": "如果应使用文件夹名称而不是文件名。"
         },
@@ -72,6 +74,8 @@
         "Description": "在 TheMovieDB.org 上执行 TV 集搜索。",
         "Label": "电视集搜索",
         "Fields": {
+          "Language": "语言",
+          "Language-Help": "用于元数据查找的可选 ISO 639-1 语言代码。",
           "UseFolderName": "使用文件夹名称",
           "UseFolderName-Help": "如果应使用文件夹名称而不是文件名。\n\n注意，如果文件夹以季节、Season/Staffel/Saison/Specials/S[0-9]+ 开头，将使用父文件夹。"
         },
@@ -84,6 +88,8 @@
         "Description": "在 TheMovieDB.org 上执行 TV 节目搜索。\n将元数据存储在变量 'TVShowInfo' 中。",
         "Label": "电视节目搜索",
         "Fields": {
+          "Language": "语言",
+          "Language-Help": "用于元数据查找的可选 ISO 639-1 语言代码。",
           "UseFolderName": "使用文件夹名称",
           "UseFolderName-Help": "如果应使用文件夹名称而不是文件名。\n\n注意，如果文件夹以季节、Season/Staffel/Saison/Specials/S[0-9]+ 开头，将使用父文件夹。"
         },

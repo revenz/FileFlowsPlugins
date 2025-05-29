@@ -200,6 +200,8 @@
           "CustomTrackSelection": "변환",
           "PcmFormat": "형식",
           "PcmFormat-Help": "PCM 오디오 인코딩에 사용할 PCM 형식입니다.",
+          "SampleRate": "샘플레이트",
+          "SampleRate-Help": "자동은 인코더가 결정합니다. 소스와 같음은 선택한 트랙의 레이트를 사용합니다. 또는 특정 레이트를 선택하세요.",
           "TrackSelectionOptions": "일치",
           "TrackSelectionOptionsKey": "속성",
           "TrackSelectionOptionsValue": "값"
@@ -345,6 +347,20 @@
         "Outputs": {
           "1": "챕터가 생성되어 FFMPEG 빌더에 추가되었습니다.",
           "2": "챕터가 감지되지 않거나 비디오에 이미 챕터가 있습니다."
+        }
+      },
+      "FfmpegBuilderChangeLanguageCode": {
+        "Description": "원래 언어가 지정된 대체 항목과 일치하는 모든 비디오, 오디오 및 자막 트랙의 언어 코드를 변경합니다.",
+        "Label": "FFMPEG Builder: 언어 코드 변경",
+        "Fields": {
+          "Replacements": "언어 대체 목록",
+          "Replacements-Help": "원본 언어 코드와 해당 대체 값을 키-값 쌍으로 정의한 목록입니다.",
+          "ReplacementsKey": "원본",
+          "ReplacementsValue": "대체됨"
+        },
+        "Outputs": {
+          "1": "하나 이상의 언어 대체가 수행되었습니다.",
+          "2": "언어 대체가 수행되지 않았습니다."
         }
       },
       "FfmpegBuilderComskipChapters": {
@@ -503,6 +519,19 @@
         },
         "Outputs": {
           "1": "FFMPEG 빌더에서 메타데이터가 제거되었습니다"
+        }
+      },
+      "FfmpegBuilderParameterReplacer": {
+        "Description": "FFMPEG Builder에서 생성된 최종 FFmpeg 매개변수에 대한 대체값을 설정합니다. 실제 대체는 FFMPEG Builder 실행 시 적용됩니다.",
+        "Label": "FFMPEG Builder: Parameter Replacer",
+        "Fields": {
+          "Replacements": "Replacements",
+          "Replacements-Help": "특정 FFmpeg 매개변수를 대체할 키/값 쌍을 입력하세요. 값 사이에 공백을 넣어 여러 인수로 대체할 수 있습니다.",
+          "ReplacementsKey": "원본",
+          "ReplacementsValue": "대체됨"
+        },
+        "Outputs": {
+          "1": "대체값 설정 완료"
         }
       },
       "FfmpegBuilderPreExecute": {

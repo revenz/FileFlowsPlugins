@@ -164,6 +164,7 @@ public class ComskipRemoveAds: EncodingNode
             "-f", "concat",
             "-safe", "0",
             "-i", concatList,
+            "-map", "0",
             "-c", "copy"
         };
 
@@ -196,6 +197,7 @@ public class ComskipRemoveAds: EncodingNode
             {
                 "-ss", start.ToString(),
                 "-t", duration.ToString(),
+                "-map", "0",
                 "-c", "copy"
             };
             if (Encode(args, FFMPEG, ffArgs, outputFile: segment, updateWorkingFile: false))

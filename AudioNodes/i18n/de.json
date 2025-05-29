@@ -79,6 +79,28 @@
           "2": "Audio ist bereits im Codec, keine Konvertierung durchgeführt"
         }
       },
+      "ConvertToALAC": {
+        "Description": "Konvertiert eine Audiodatei in ALAC",
+        "Label": "In ALAC konvertieren",
+        "Fields": {
+          "Bitrate": "Bitrate",
+          "Bitrate-Help": "Die Bitrate für die neue ALAC-Datei, je höher die Bitrate, desto besser die Qualität, aber desto größer die Datei. 128 Kbps wird empfohlen.",
+          "Channels": "Kanäle",
+          "Channels-Help": "Die Anzahl der Kanäle, die die konvertierte Datei haben wird.\nWenn Sie mehr Kanäle als die Quelle angeben, wird FFmpeg automatisch einen Hochmix erstellen.\nWenn Sie weniger Kanäle als die Quelle angeben, wird FFmpeg automatisch einen Herabmix erstellen.",
+          "CustomExtension": "Erweiterung",
+          "CustomExtension-Help": "Erlaubt es, eine benutzerdefinierte Dateierweiterung anstelle der automatisch vom Codec bestimmten festzulegen.",
+          "Normalize": "Normalisieren",
+          "Normalize-Help": "Ob das Audio mit einer Normalisierung von zwei Durchläufen normalisiert werden soll",
+          "SampleRate": "Abtastrate",
+          "SampleRate-Help": "Die zu verwendende Abtastrate",
+          "SkipIfCodecMatches": "Überspringen, wenn der Codec übereinstimmt",
+          "SkipIfCodecMatches-Help": "Wenn der vorhandene Audio-Codec übereinstimmt, wird diese Datei unabhängig von der Bitrate nicht verarbeitet. Wenn deaktiviert, muss die Bitrate gleich oder geringer sein, um übersprungen zu werden."
+        },
+        "Outputs": {
+          "1": "Konvertiertes Audio, gespeichert in einer temporären Datei",
+          "2": "Audio ist bereits im Codec, keine Konvertierung durchgeführt"
+        }
+      },
       "ConvertToFLAC": {
         "Description": "Konvertiert eine Audiodatei in FLAC",
         "Label": "In FLAC konvertieren",

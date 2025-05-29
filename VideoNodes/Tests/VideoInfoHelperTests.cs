@@ -8,7 +8,7 @@ namespace VideoNodes.Tests;
 [TestClass]
 public class VideoInfoHelperTests : VideoTestBase
 {
-  
+
   // [TestMethod]
   // public void ComskipTest()
   // {
@@ -877,6 +877,57 @@ Metadata:
     Assert.AreEqual("eng", audio.Language);
     Assert.AreEqual(4049069, audio.Bitrate);
     Assert.AreEqual(7.1f, audio.Channels);
+  }
+  
+  [TestMethod]
+  public void InterlacedProgressive()
+  {
+    string output =
+      @"Stream #0:0: Video: h264 (High), yuv420p(tv, bt709, progressive), 1920x1080
+Metadata:
+  title           : Dolby Atmos Audio / 7.1 / 48 kHz / 4049 kbps / 24-bit
+  BPS             : 4049069
+  BPS-eng         : 4049069
+  DURATION        : 00:51:27.585000000
+  DURATION-eng    : 00:51:27.585000000
+  NUMBER_OF_FRAMES: 3705102
+  NUMBER_OF_FRAMES-eng: 3705102
+  NUMBER_OF_BYTES : 1562730694
+  NUMBER_OF_BYTES-eng: 1562730694
+  _STATISTICS_WRITING_APP: mkvmerge v9.4.2 ('So High') 64bit
+  _STATISTICS_WRITING_APP-eng: mkvmerge v9.4.2 ('So High') 64bit
+  _STATISTICS_WRITING_DATE_UTC: 2016-11-03 04:12:51
+  _STATISTICS_WRITING_DATE_UTC-eng: 2016-11-03 04:12:51
+  _STATISTICS_TAGS: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+  _STATISTICS_TAGS-eng: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES";
+    var video = VideoInfoHelper.ParseVideoStream(Logger, output, output);
+    Assert.AreEqual("h264", video.Codec);
+    Assert.IsFalse(video.IsInterlaced);
+  }
+  [TestMethod]
+  public void InterlacedInterlaced()
+  {
+    string output =
+      @"Stream #0:0: Video: h264 (High), yuv420p(tv, bt709, top first), 1920x1080
+Metadata:
+  title           : Dolby Atmos Audio / 7.1 / 48 kHz / 4049 kbps / 24-bit
+  BPS             : 4049069
+  BPS-eng         : 4049069
+  DURATION        : 00:51:27.585000000
+  DURATION-eng    : 00:51:27.585000000
+  NUMBER_OF_FRAMES: 3705102
+  NUMBER_OF_FRAMES-eng: 3705102
+  NUMBER_OF_BYTES : 1562730694
+  NUMBER_OF_BYTES-eng: 1562730694
+  _STATISTICS_WRITING_APP: mkvmerge v9.4.2 ('So High') 64bit
+  _STATISTICS_WRITING_APP-eng: mkvmerge v9.4.2 ('So High') 64bit
+  _STATISTICS_WRITING_DATE_UTC: 2016-11-03 04:12:51
+  _STATISTICS_WRITING_DATE_UTC-eng: 2016-11-03 04:12:51
+  _STATISTICS_TAGS: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES
+  _STATISTICS_TAGS-eng: BPS DURATION NUMBER_OF_FRAMES NUMBER_OF_BYTES";
+    var video = VideoInfoHelper.ParseVideoStream(Logger, output, output);
+    Assert.AreEqual("h264", video.Codec);
+    Assert.IsTrue(video.IsInterlaced);
   }
 }
 

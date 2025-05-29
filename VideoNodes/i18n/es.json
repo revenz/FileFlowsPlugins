@@ -200,6 +200,8 @@
           "CustomTrackSelection": "Convertir",
           "PcmFormat": "Formato",
           "PcmFormat-Help": "El formato PCM a utilizar para codificar audio PCM.",
+          "SampleRate": "Frecuencia de muestreo",
+          "SampleRate-Help": "Automático deja que el codificador decida. Igual que la fuente usa la tasa de la pista seleccionada. O elige una tasa específica.",
           "TrackSelectionOptions": "Coincidencia",
           "TrackSelectionOptionsKey": "Propiedad",
           "TrackSelectionOptionsValue": "Valor"
@@ -345,6 +347,20 @@
         "Outputs": {
           "1": "Capítulos generados y añadidos al FFMPEG Builder",
           "2": "No se detectaron capítulos o el video ya tenía capítulos"
+        }
+      },
+      "FfmpegBuilderChangeLanguageCode": {
+        "Description": "Cambia los códigos de idioma de todas las pistas de vídeo, audio y subtítulos cuya lengua original coincida con una de las sustituciones especificadas.",
+        "Label": "FFMPEG Builder: Cambiar código de idioma",
+        "Fields": {
+          "Replacements": "Sustituciones de idioma",
+          "Replacements-Help": "Una lista de códigos de idioma originales y sus valores de reemplazo, definidos como pares clave-valor.",
+          "ReplacementsKey": "Original",
+          "ReplacementsValue": "Reemplazado"
+        },
+        "Outputs": {
+          "1": "Se realizó uno o más reemplazos de idioma.",
+          "2": "No se realizaron reemplazos de idioma."
         }
       },
       "FfmpegBuilderComskipChapters": {
@@ -503,6 +519,19 @@
         },
         "Outputs": {
           "1": "Metadatos eliminados del FFMPEG Builder"
+        }
+      },
+      "FfmpegBuilderParameterReplacer": {
+        "Description": "Establece reemplazos para los parámetros finales de FFmpeg generados por el FFMPEG Builder. Los reemplazos reales ocurren cuando se ejecuta el ejecutor del FFMPEG Builder.",
+        "Label": "FFMPEG Builder: Reemplazador de Parámetros",
+        "Fields": {
+          "Replacements": "Replacements",
+          "Replacements-Help": "Ingrese pares clave/valor para reemplazar parámetros específicos de FFmpeg. Use espacios entre los valores para reemplazar un parámetro con múltiples argumentos.",
+          "ReplacementsKey": "Original",
+          "ReplacementsValue": "Reemplazado"
+        },
+        "Outputs": {
+          "1": "Reemplazos establecidos"
         }
       },
       "FfmpegBuilderPreExecute": {

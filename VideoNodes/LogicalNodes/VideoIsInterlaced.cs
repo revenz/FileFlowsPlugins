@@ -41,6 +41,21 @@ public class VideoIsInterlaced : VideoNode
     /// <returns>the output to call next</returns>
     public override int Execute(NodeParameters args)
     {
+        var videoInfo = GetVideoInfo(args);
+        if (videoInfo != null)
+        {
+            bool interlaced = videoInfo.VideoStreams?.Any(x => x.IsInterlaced) == true;
+            if (interlaced)
+            {
+                args.Logger?.ILog("Video detected as interlaced from VideoInfo");
+                return 1;
+            }
+            
+            args.Logger?.ILog("Video detected as not interlaced from VideoInfo");
+            return 2;
+        }
+
+
         string ffmpeg = args.GetToolPath("FFmpeg");
         if (string.IsNullOrEmpty(ffmpeg))
         {

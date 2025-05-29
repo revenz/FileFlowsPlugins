@@ -30,6 +30,8 @@
         "Description": "TheMovieDB.orgで映画を検索します。\nメタデータを'MovieInfo'変数に保存します。",
         "Label": "映画検索",
         "Fields": {
+          "Language": "言語",
+          "Language-Help": "メタデータの検索時に使用するオプションの ISO 639-1 言語コード。",
           "UseFolderName": "フォルダ名を使用",
           "UseFolderName-Help": "ファイル名の代わりにフォルダ名を使用するかどうか。"
         },
@@ -72,6 +74,8 @@
         "Description": "TheMovieDB.orgでTVエピソードを検索します。",
         "Label": "TVエピソード検索",
         "Fields": {
+          "Language": "言語",
+          "Language-Help": "メタデータの検索時に使用するオプションの ISO 639-1 言語コード。",
           "UseFolderName": "フォルダ名を使用",
           "UseFolderName-Help": "ファイル名の代わりにフォルダ名を使用する必要がある場合。\n\nフォルダが Season/Staffel/Saison/Specials/S[0-9]+ で始まる場合は、親フォルダが使用されることに注意してください。"
         },
@@ -84,6 +88,8 @@
         "Description": "TheMovieDB.orgでTVショーを検索します。\nメタデータを'TVShowInfo'変数に保存します。",
         "Label": "TVショー検索",
         "Fields": {
+          "Language": "言語",
+          "Language-Help": "メタデータの検索時に使用するオプションの ISO 639-1 言語コード。",
           "UseFolderName": "フォルダ名を使用",
           "UseFolderName-Help": "ファイル名の代わりにフォルダ名を使用する必要がある場合。\n\nフォルダが Season/Staffel/Saison/Specials/S[0-9]+ で始まる場合は、親フォルダが使用されることに注意してください。"
         },

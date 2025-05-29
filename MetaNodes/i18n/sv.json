@@ -30,6 +30,8 @@
         "Description": "Genomför en sökning på TheMovieDB.org efter en film.\nLagrar metadata i variabeln 'MovieInfo'.",
         "Label": "Filmsökning",
         "Fields": {
+          "Language": "Språk",
+          "Language-Help": "Valfri ISO 639-1-språkkod som används vid hämtning av metadata.",
           "UseFolderName": "Använd mappnamn",
           "UseFolderName-Help": "Om mappnamnet ska användas istället för filnamnet."
         },
@@ -72,6 +74,8 @@
         "Description": "Genomför en sökning på TheMovieDB.org efter ett TV-avsnitt.",
         "Label": "TV-avsnittssökning",
         "Fields": {
+          "Language": "Språk",
+          "Language-Help": "Valfri ISO 639-1-språkkod som används vid hämtning av metadata.",
           "UseFolderName": "Använd mappnamn",
           "UseFolderName-Help": "Om mappnamnet ska användas istället för filnamnet.\n\nObservera om mappen börjar med Season/Staffel/Saison/Specials/S[0-9]+ kommer den överordnade mappen att användas."
         },
@@ -84,6 +88,8 @@
         "Description": "Genomför en sökning på TheMovieDB.org efter en TV-show.\nLagrar metadata i variabeln 'TVShowInfo'.",
         "Label": "TV-showsökning",
         "Fields": {
+          "Language": "Språk",
+          "Language-Help": "Valfri ISO 639-1-språkkod som används vid hämtning av metadata.",
           "UseFolderName": "Använd mappnamn",
           "UseFolderName-Help": "Om mappnamnet ska användas istället för filnamnet.\n\nObservera om mappen börjar med Season/Staffel/Saison/Specials/S[0-9]+ kommer den överordnade mappen att användas."
         },

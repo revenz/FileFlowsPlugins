@@ -203,7 +203,7 @@ public class FfmpegBuilderAudioAddTrack : TrackSelectorFlowElement<FfmpegBuilder
 
         audio.Stream = sourceAudio;
         audio.Channels = audio.Stream.Channels;
-        audio.Language = Language?.EmptyAsNull() ?? sourceAudio.Language;
+        audio.Language = args.ReplaceVariables(Language ?? string.Empty, stripMissing: true)?.EmptyAsNull() ?? sourceAudio.Language;
 
         bool directCopy = false;
         if(sourceAudio.Codec.ToLower() == this.Codec.ToLower())

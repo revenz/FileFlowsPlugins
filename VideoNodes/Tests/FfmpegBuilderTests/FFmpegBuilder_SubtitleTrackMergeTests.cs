@@ -81,6 +81,26 @@ public class FFmpegBuild_SubtitleTrackMergeTests : VideoTestBase
         Assert.IsFalse(newSub.IsDefault);
         Assert.IsFalse(newSub.IsForced);
     }
+
+    /// <summary>
+    /// Test a file with a bad name that could match other languages
+    /// </summary>
+    [TestMethod]
+    public void BadName()
+    {
+        string filename =
+            "/volume1/syno/seedbox/anime/Solo.Leveling.S02E09.It.was.All.Worth.It.1080p.AMZN.WEB-DL.DDP2.0.H.264-ANiMEZ.mkv";
+        
+        string subfile =
+            "/volume1/syno/seedbox/anime/Solo.Leveling.S02E09.It.was.All.Worth.It.1080p.AMZN.WEB-DL.DDP2.0.H.264-ANiMEZ.eng.srt";
+
+        var ele = new FfmpegBuilderSubtitleTrackMerge();
+        ele.FilenameMatches(filename, subfile, out var language, out var forced);
+        
+        Assert.AreEqual("eng", language);
+        Assert.IsFalse(forced);
+        
+    }
 }
 
 

@@ -79,7 +79,6 @@ namespace FileFlows.VideoNodes
                     args.Logger.ILog("### Total Run-Time Of Video: " + TotalTime);
                 }
             }
-
             var success = Encoder.Encode(args.WorkingFile, outputFile, ffmpegParameters, dontAddInputFile: dontAddInputFile, dontAddOutputFile: dontAddOutputFile, strictness: strictness);
             
             Encoder.AtTime -= AtTimeEvent;

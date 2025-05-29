@@ -30,6 +30,8 @@
         "Description": "Durchführt eine Suche auf TheMovieDB.org nach einem Film.\nSpeichert die Metadaten in der Variablen 'MovieInfo'.",
         "Label": "Film suchen",
         "Fields": {
+          "Language": "Sprache",
+          "Language-Help": "Optionaler ISO 639-1 Sprachcode zur Verwendung bei der Metadatenabfrage.",
           "UseFolderName": "Ordnernamen verwenden",
           "UseFolderName-Help": "Ob der Ordnername anstelle des Dateinamens verwendet werden soll."
         },
@@ -72,6 +74,8 @@
         "Description": "Durchführt eine Suche auf TheMovieDB.org nach einer TV-Episode.",
         "Label": "TV-Episode suchen",
         "Fields": {
+          "Language": "Sprache",
+          "Language-Help": "Optionaler ISO 639-1 Sprachcode zur Verwendung bei der Metadatenabfrage.",
           "UseFolderName": "Ordnernamen verwenden",
           "UseFolderName-Help": "Ob der Ordnername anstelle des Dateinamens verwendet werden soll.\n\nHinweis: Wenn der Ordner mit Season/Staffel/Saison/Specials/S[0-9]+ beginnt, wird der übergeordnete Ordner verwendet."
         },
@@ -84,6 +88,8 @@
         "Description": "Durchführt eine Suche auf TheMovieDB.org nach einer TV-Show.\nSpeichert die Metadaten in der Variablen 'TVShowInfo'.",
         "Label": "TV-Show suchen",
         "Fields": {
+          "Language": "Sprache",
+          "Language-Help": "Optionaler ISO 639-1 Sprachcode zur Verwendung bei der Metadatenabfrage.",
           "UseFolderName": "Ordnernamen verwenden",
           "UseFolderName-Help": "Ob der Ordnername anstelle des Dateinamens verwendet werden soll.\n\nHinweis: Wenn der Ordner mit Season/Staffel/Saison/Specials/S[0-9]+ beginnt, wird der übergeordnete Ordner verwendet."
         },

@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using FileFlows.VideoNodes.FfmpegBuilderNodes.Models;
 
 namespace FileFlows.VideoNodes.FfmpegBuilderNodes;
@@ -91,17 +91,10 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
     [Boolean(8)]
     public bool Default { get; set; }
 
-
-    /// <summary>
-    /// Gets or sets if the subtitle is hearing impaired
-    /// </summary>
-    [Boolean(9)]
-    public bool HearingImpaired { get; set; }
-
     /// <summary>
     /// Gets or sets if the subtitle should be deleted afterwards
     /// </summary>
-    [Boolean(10)]
+    [Boolean(9)]
     public bool DeleteAfterwards { get; set; }
     
     /// <inheritdoc />
@@ -138,13 +131,12 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
 
             string language = string.Empty;
             bool forced = false;
-            bool hearingImpaired = false;
 
             if (MatchFilename)
             {
                 string lang1, lang2;
-                bool matchesOriginal = FilenameMatches(args.FileName, file, out lang1, out bool forced1, out bool hearingImpaired1);
-                bool matchesWorking = FilenameMatches(args.WorkingFile, file, out lang2, out bool forced2, out bool hearingImpaired2);
+                bool matchesOriginal = FilenameMatches(args.FileName, file, out lang1, out bool forced1);
+                bool matchesWorking = FilenameMatches(args.WorkingFile, file, out lang2, out bool forced2);
 
                 if (matchesOriginal == false && matchesWorking == false)
                     continue;
@@ -154,7 +146,6 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
                 if (string.IsNullOrEmpty(lang2) == false)
                     language = lang2;
                 forced = forced1 || forced2;
-                hearingImpaired = hearingImpaired1 || hearingImpaired2;
             }
             else if (pattern != null)
             {
@@ -169,7 +160,6 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
 
             language = language?.EmptyAsNull() ?? args.ReplaceVariables(Language ?? string.Empty, stripMissing: true);
             forced |= Forced;
-            hearingImpaired |= hearingImpaired;
 
             string subTitle = args.ReplaceVariables(Title ?? string.Empty, stripMissing: true)?.EmptyAsNull() ?? language ?? string.Empty;
             
@@ -184,14 +174,12 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
                 Language = string.IsNullOrEmpty(language) ? null : Regex.Replace(language, @" \([\w]+\)$", string.Empty).Trim(),
                 IsDefault = Default,
                 IsForced = forced,
-                IsHearingImpaired = hearingImpaired,
                 Stream = new SubtitleStream()
                 {
                     InputFileIndex = this.Model.InputFiles.Count - 1,
                     TypeIndex = 0,
                     Language = language,
                     Forced = forced,
-                    HearingImpaired = hearingImpaired,
                     Title = subTitle,
                     Default = Default,
                     Codec = ext,
@@ -214,44 +202,44 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
     /// <param name="other">the other file to check</param>
     /// <param name="languageCode">the language code found in the subtitle</param>
     /// <param name="forced">if the subtitle is detected as forced</param>
-    /// <param name="hearingImpaired">if the subtitle is detected as hearing impaired</param>
     /// <returns>true if it matches, otherwise false</returns>
-    internal bool FilenameMatches(string input, string other, out string languageCode, out bool forced, out bool hearingImpaired)
+    internal bool FilenameMatches(string input, string other, out string languageCode, out bool forced)
     {
         languageCode = string.Empty;
         forced = false;
-        hearingImpaired = false;
-        var inputFileExtension = FileHelper.GetExtension(input);
-        string inputName = FileHelper.GetShortFileName(input).Replace(inputFileExtension, "");
-
-        var otherFileExtension = FileHelper.GetExtension(other);
-        string otherName = FileHelper.GetShortFileName(other).Replace(otherFileExtension, "");
+        
+        string inputName = FileHelper.GetShortFileNameWithoutExtension(input);
+        string otherName = FileHelper.GetShortFileNameWithoutExtension(other);
+        string testString = otherName;
+        if (otherName.StartsWith(inputName))
+            testString = otherName[inputName.Length..].TrimStart('.', '-', '_', ' ');
+            
         
         if (inputName.ToLowerInvariant().Equals(otherName.ToLowerInvariant()))
             return true;
 
-        bool closedCaptions = HasSection(ref otherName, "closedcaptions") || HasSection(ref otherName, "cc");
-        forced = HasSection(ref otherName, "forced");
-        hearingImpaired = HasSection(ref otherName, "sdh");
+        bool closedCaptions = HasSection(ref testString, "closedcaptions") || HasSection(ref testString, "cc");
+        forced = HasSection(ref testString, "forced");
 
-        if(Regex.IsMatch(otherName, @"(\.[a-zA-Z]{2,3}){1,2}$"))
+
+        if(Regex.IsMatch(testString, @"(\.[a-zA-Z]{2,3}){1,2}$"))
         {
-            string stripLang = Regex.Replace(otherName, @"(\.[a-zA-Z]{2,3}){1,2}$", string.Empty).Replace("  ", " ").Trim();
+            string stripLang = Regex.Replace(testString, @"(\.[a-zA-Z]{2,3}){1,2}$", string.Empty).Replace("  ", " ").Trim();
 
             var rgxLanguage = new Regex("(?<=(\\.))(" + string.Join("|", LanguageCodes.Codes.Keys) + ")");
-            if (rgxLanguage.IsMatch(otherName))
+            if (rgxLanguage.IsMatch(testString))
             {
-                string key = rgxLanguage.Match(otherName).Value;
+                string key = rgxLanguage.Match(testString).Value;
                 languageCode = LanguageCodes.Codes.GetValueOrDefault(key, key);
             }
 
             if (string.IsNullOrEmpty(languageCode) == false)
             {
-                if (Regex.IsMatch(otherName, @"\.hi(\.|$)"))
+                if (Regex.IsMatch(testString, @"\.hi(\.|$)"))
                     languageCode += " (HI)";
-                if (closedCaptions || Regex.IsMatch(otherName, @"\.cc(\.|$)"))
+                if (closedCaptions || Regex.IsMatch(testString, @"\.cc(\.|$)"))
                     languageCode += " (CC)";
-                if (Regex.IsMatch(otherName, @"\.sdh(\.|$)"))
+                if (Regex.IsMatch(testString, @"\.sdh(\.|$)"))
                     languageCode += " (SDH)";
             }
 
@@ -260,14 +248,14 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
                 return true;
         }
 
-        if (Regex.IsMatch(otherName, @"\([a-zA-Z]{2,3}\)"))
+        if (Regex.IsMatch(testString, @"\([a-zA-Z]{2,3}\)"))
         {
-            string stripLang = Regex.Replace(otherName, @"\([a-zA-Z]{2,3}\)", string.Empty).Replace("  ", " ").Trim();
+            string stripLang = Regex.Replace(testString, @"\([a-zA-Z]{2,3}\)", string.Empty).Replace("  ", " ").Trim();
 
             var rgxLanguage = new Regex("(?<=(\\())(" + string.Join("|", LanguageCodes.Codes.Keys) + ")(?!=\\))");
-            if (rgxLanguage.IsMatch(otherName))
+            if (rgxLanguage.IsMatch(testString))
             {
-                string key = rgxLanguage.Match(otherName).Value;
+                string key = rgxLanguage.Match(testString).Value;
                 languageCode = LanguageCodes.Codes.GetValueOrDefault(key, key);
             }
 
@@ -283,6 +271,13 @@ public class FfmpegBuilderSubtitleTrackMerge : FfmpegBuilderNode
             }
             if (inputName.ToLowerInvariant().Equals(stripLang.ToLowerInvariant()))
                 return true;
+        }
+
+        if (string.IsNullOrWhiteSpace(languageCode))
+        {
+            var iso2 = LanguageHelper.GetIso2Code(testString.ToUpper());
+            if(iso2 != testString.ToUpper())
+                languageCode = iso2; // since this should be lowered case if known
         }
 
         if (otherName.StartsWith(inputName, StringComparison.InvariantCultureIgnoreCase))

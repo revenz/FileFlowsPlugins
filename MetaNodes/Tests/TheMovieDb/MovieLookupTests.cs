@@ -32,6 +32,27 @@ public class MovieLookupTests : TestBase
         Assert.AreEqual(1984, mi.ReleaseDate.Year);
         Assert.AreEqual("Comedy", args.Variables["movie.Genre"]);
     }
+    
+    [TestMethod]
+    public void MovieLookupTests_File_Ghostbusters_German()
+    {
+        var args = GetNodeParameters("Ghostbusters 1984.mkv");
+
+        MovieLookup ml = new MovieLookup();
+        ml.UseFolderName = false;
+        ml.Language = "de";
+
+        var result = ml.Execute(args);
+        Assert.AreEqual(1, result);
+        Assert.IsTrue(args.Parameters.ContainsKey(Globals.MOVIE_INFO));
+
+        var mi = args.Parameters[Globals.MOVIE_INFO] as MovieInfo;
+        Assert.IsNotNull(mi);
+
+        Assert.AreEqual("Ghostbusters - Die Geisterjäger", mi.Title);
+        Assert.AreEqual(1984, mi.ReleaseDate.Year);
+        Assert.AreEqual("Komödie", args.Variables["movie.Genre"]);
+    }
 
     [TestMethod]
     public void MovieLookupTests_File_Ghostbusters2()

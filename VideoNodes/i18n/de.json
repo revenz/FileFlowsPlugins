@@ -200,6 +200,8 @@
           "CustomTrackSelection": "Konvertieren",
           "PcmFormat": "Format",
           "PcmFormat-Help": "Das PCM-Format, das für die Kodierung von PCM-Audio verwendet werden soll.",
+          "SampleRate": "Abtastrate",
+          "SampleRate-Help": "Automatisch überlässt die Wahl dem Encoder. Gleich wie Quelle verwendet die Rate der gewählten Spur. Oder eine bestimmte Rate wählen.",
           "TrackSelectionOptions": "Übereinstimmung",
           "TrackSelectionOptionsKey": "Eigenschaft",
           "TrackSelectionOptionsValue": "Wert"
@@ -345,6 +347,20 @@
         "Outputs": {
           "1": "Erstellte und dem FFMPEG Builder hinzugefügte Kapitel",
           "2": "Keine Kapitel erkannt oder Video hatte bereits Kapitel"
+        }
+      },
+      "FfmpegBuilderChangeLanguageCode": {
+        "Description": "Ändert die Sprachcodes aller Video-, Audio- und Untertitelspuren, deren ursprüngliche Sprache einem der angegebenen Ersetzungen entspricht.",
+        "Label": "FFMPEG Builder: Sprachcode ändern",
+        "Fields": {
+          "Replacements": "Sprach-Ersetzungen",
+          "Replacements-Help": "Eine Liste ursprünglicher Sprachcodes und ihrer Ersatzwerte, definiert als Schlüssel-Wert-Paare.",
+          "ReplacementsKey": "Original",
+          "ReplacementsValue": "Ersetzt"
+        },
+        "Outputs": {
+          "1": "Eine oder mehrere Sprachänderungen wurden durchgeführt.",
+          "2": "Keine Sprachänderungen wurden durchgeführt."
         }
       },
       "FfmpegBuilderComskipChapters": {
@@ -503,6 +519,19 @@
         },
         "Outputs": {
           "1": " Metadaten aus dem FFMPEG Builder entfernt "
+        }
+      },
+      "FfmpegBuilderParameterReplacer": {
+        "Description": "Legt Ersatzwerte für die endgültigen FFmpeg-Parameter fest, die vom FFMPEG Builder generiert werden. Die tatsächlichen Ersetzungen erfolgen, wenn der FFMPEG Builder Executor ausgeführt wird.",
+        "Label": "FFMPEG Builder: Parameter Ersetzer",
+        "Fields": {
+          "Replacements": "Replacements",
+          "Replacements-Help": "Geben Sie Schlüssel/Wert-Paare ein, um bestimmte FFmpeg-Parameter zu ersetzen. Verwenden Sie Leerzeichen zwischen den Werten, um einen Parameter durch mehrere Argumente zu ersetzen.",
+          "ReplacementsKey": "Original",
+          "ReplacementsValue": "Ersetzt"
+        },
+        "Outputs": {
+          "1": "Ersatzwerte gesetzt"
         }
       },
       "FfmpegBuilderPreExecute": {

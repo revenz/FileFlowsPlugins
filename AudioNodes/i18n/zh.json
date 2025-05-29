@@ -79,6 +79,28 @@
           "2": "音频已经是编码器，无需转换"
         }
       },
+      "ConvertToALAC": {
+        "Description": "将音频文件转换为 ALAC",
+        "Label": "转换为 ALAC",
+        "Fields": {
+          "Bitrate": "比特率",
+          "Bitrate-Help": "新 ALAC 文件的比特率，比特率越高质量越好，但文件越大。128 Kbps 是推荐速度。",
+          "Channels": "通道",
+          "Channels-Help": "转换后文件的通道数量。\n如果指定的通道数超过源文件，FFmpeg 会自动混音。\n如果指定的通道数少于源文件，FFmpeg 会自动降混。",
+          "CustomExtension": "扩展名",
+          "CustomExtension-Help": "允许指定一个自定义的文件名扩展名，而不是自动确定的扩展名。",
+          "Normalize": "归一化",
+          "Normalize-Help": "是否需要使用双通道音频归一化。",
+          "SampleRate": "采样率",
+          "SampleRate-Help": "要使用的采样率",
+          "SkipIfCodecMatches": "如果编码器匹配则跳过",
+          "SkipIfCodecMatches-Help": "如果现有的音频编码器匹配，则此文件将不会被处理，无论比特率如何。否则，如果关闭，则比特率必须小于或等于以跳过。"
+        },
+        "Outputs": {
+          "1": "音频已转换并保存在临时文件中",
+          "2": "音频已经是编码器，无需转换"
+        }
+      },
       "ConvertToFLAC": {
         "Description": "将音频文件转换为 FLAC",
         "Label": "转换为 FLAC",

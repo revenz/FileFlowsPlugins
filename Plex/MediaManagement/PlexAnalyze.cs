@@ -9,7 +9,7 @@ public class PlexAnalyze : PlexNode
     protected override int ExecuteActual(NodeParameters args, PlexDirectory directory, string baseUrl, string mappedPath, string accessToken)
     {
         string filename = new FileInfo(args.WorkingFile).Name;
-        string mappedFile = mappedPath + (mappedPath.IndexOf("/") >= 0 ? "/" : @"\") + filename;
+        string mappedFile = mappedPath + (mappedPath.IndexOf('/') >= 0 ? "/" : @"\") + filename;
 
         using var httpClient = new HttpClient();
         string itemId = GetItemId(httpClient, args, baseUrl, $"library/sections/{directory.Key}/all?includeCollections=1&includeAdvanced=1", accessToken, mappedFile);
@@ -59,7 +59,9 @@ public class PlexAnalyze : PlexNode
             urlPath = urlPath[1..];
 
         string fullUrl = baseUrl + urlPath;
-        fullUrl += (fullUrl.IndexOf('?', StringComparison.Ordinal) > 0 ? "&" : "?") + "X-Plex-Token=" + token;
+        fullUrl += (fullUrl.IndexOf('?', StringComparison.Ordinal) > 0 ? "&" : "?") + "X-Plex-Token=";
+        args.Logger?.ILog("Requesting URL: " + fullUrl);
+        fullUrl += token;
         var updateResponse = GetWebRequest(httpClient, fullUrl);
         if (updateResponse.success == false)
         {

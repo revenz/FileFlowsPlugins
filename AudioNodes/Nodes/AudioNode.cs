@@ -128,12 +128,15 @@ namespace FileFlows.AudioNodes
             variables.AddOrUpdate("audio.Disc", AudioInfo.Disc < 1 ? 1 : AudioInfo.Disc);
             variables.AddOrUpdate("audio.TotalDiscs", AudioInfo.TotalDiscs < 1 ? 1 : AudioInfo.TotalDiscs);
 
-            args.SetTraits(new string[]
+            if (args.SetTraitsActual != null)
             {
-                AudioInfo.Codec,
-                FormatBitrate(AudioInfo.Bitrate),
-                FormatAudioChannels(AudioInfo.Channels)
-            }.Where(x => x != null).ToArray());
+                args.SetTraits(new string[]
+                {
+                    AudioInfo.Codec,
+                    FormatBitrate(AudioInfo.Bitrate),
+                    FormatAudioChannels(AudioInfo.Channels)
+                }.Where(x => x != null).ToArray());
+            }
 
             var metadata = new Dictionary<string, object>();
             metadata.Add("Duration", AudioInfo.Duration);
@@ -151,7 +154,7 @@ namespace FileFlows.AudioNodes
             AddIfSet(metadata, "TotalDiscs", AudioInfo.TotalDiscs);
             args.SetMetadata(metadata);
             
-            if(string.IsNullOrWhiteSpace(AudioInfo.Artist) == false && string.IsNullOrWhiteSpace(AudioInfo.Title) == false)
+            if(string.IsNullOrWhiteSpace(AudioInfo.Artist) == false && string.IsNullOrWhiteSpace(AudioInfo.Title) == false && args.SetDisplayNameActual != null)
                 args.SetDisplayName($"{AudioInfo.Artist} - {AudioInfo.Title}");
             
             string extension = FileHelper.GetExtension(filename).ToLowerInvariant()[1..];

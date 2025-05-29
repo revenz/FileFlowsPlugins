@@ -200,6 +200,8 @@
           "CustomTrackSelection": "轉換",
           "PcmFormat": "格式",
           "PcmFormat-Help": "用於編碼 PCM 音頻的 PCM 格式。",
+          "SampleRate": "取樣率",
+          "SampleRate-Help": "自動讓編碼器決定。與來源相同使用所選音軌的取樣率。或選擇特定取樣率。",
           "TrackSelectionOptions": "匹配",
           "TrackSelectionOptionsKey": "屬性",
           "TrackSelectionOptionsValue": "值"
@@ -345,6 +347,20 @@
         "Outputs": {
           "1": "生成的章節已添加到 FFMPEG 建構器",
           "2": "未檢測到章節或視頻已經有章節"
+        }
+      },
+      "FfmpegBuilderChangeLanguageCode": {
+        "Description": "變更所有影片、音訊和字幕軌道的語言代碼，其原始語言符合定義的替代項。",
+        "Label": "FFMPEG Builder: 更改語言代碼",
+        "Fields": {
+          "Replacements": "語言替代項",
+          "Replacements-Help": "一個由原始語言代碼與其對應替代值所組成的鍵值對清單。",
+          "ReplacementsKey": "原始",
+          "ReplacementsValue": "已取代"
+        },
+        "Outputs": {
+          "1": "已執行一個或多個語言替代。",
+          "2": "未執行任何語言替代。"
         }
       },
       "FfmpegBuilderComskipChapters": {
@@ -503,6 +519,19 @@
         },
         "Outputs": {
           "1": "已從 FFMPEG 建構器中移除元數據"
+        }
+      },
+      "FfmpegBuilderParameterReplacer": {
+        "Description": "設定由 FFMPEG Builder 生成的最終 FFmpeg 參數的替換。實際替換於 FFMPEG Builder 執行器運行時進行。",
+        "Label": "FFMPEG Builder: Parameter Replacer",
+        "Fields": {
+          "Replacements": "Replacements",
+          "Replacements-Help": "輸入鍵/值對以替換特定的 FFmpeg 參數。使用空格分隔多個值以用多個參數替換單個參數。",
+          "ReplacementsKey": "原始",
+          "ReplacementsValue": "已取代"
+        },
+        "Outputs": {
+          "1": "替換已設定"
         }
       },
       "FfmpegBuilderPreExecute": {

@@ -49,6 +49,7 @@ public class TVShowLookupTests : TestBase
         Assert.AreEqual(2004, args.Variables["tvshow.Year"]);
     }
     
+    
     [TestMethod]
     public void TeenTitans()
     {
@@ -92,7 +93,7 @@ public class TVShowLookupTests : TestBase
         Assert.AreEqual("Severance", args.Variables["tvshow.Title"]);
         Assert.AreEqual(2022, args.Variables["tvshow.Year"]);
     }
-
+    
     [TestMethod]
     public void YearInFilename()
     {
@@ -158,6 +159,29 @@ public class TVShowLookupTests : TestBase
         Assert.AreEqual(2010, args.Variables["tvshow.Year"]);
     }
 
+    [TestMethod]
+    public void TvdbID_Test_German()
+    {
+        var args = GetNodeParameters("The Walking Dead (2010) [tvdbid-153021]/Season 07/S07E03 - The Cell [HDTV-1080p][AAC 5.1][h265].mkv");
+
+        var element = new TVShowLookup();
+        element.UseFolderName = true;
+        element.Language = "de";
+
+        var result = element.Execute(args);
+        Assert.AreEqual(1, result);
+        Assert.IsTrue(args.Parameters.ContainsKey(Globals.TV_SHOW_INFO));
+
+        var info = args.Parameters[Globals.TV_SHOW_INFO] as TVShowInfo;
+        Assert.IsNotNull(info);
+
+        Assert.AreEqual("The Walking Dead", info.Name);
+        Assert.AreEqual(2010, info.FirstAirDate.Year);
+        Assert.AreEqual("en", info.OriginalLanguage);
+        Assert.AreEqual("The Walking Dead", args.Variables["tvshow.Title"]);
+        Assert.AreEqual(2010, args.Variables["tvshow.Year"]);
+    }
+    
     [TestMethod]
     public void TheBatman_Folder()
     {

@@ -415,6 +415,27 @@ public class FFmpegBuilder_SetTrackTitlesTests : VideoTestBase
         // Assert
         Assert.AreEqual("Track: English / AAC / Default / Forced / 128Kbps / Stereo / 44.1kHz", result);
     }
+    
+    [TestMethod]
+    public void FormatTitle_Ac371to51_Success()
+    {
+        // Arrange
+        string formatter = "Track: lang / codec / default / forced / bitrate / channels / sample-rate";
+        string separator = " / ";
+        string language = "English";
+        string codec = "AC3";
+        bool isDefault = true;
+        float bitrate = 128_000;
+        float channels = 7.1f;
+        int sampleRate = 44_100;
+        bool isForced = true;
+
+        // Act
+        string result = FfmpegBuilderSetTrackTitles.FormatTitle(formatter, separator, language, codec, isDefault, bitrate, channels, sampleRate, isForced);
+
+        // Assert
+        Assert.AreEqual("Track: English / AC3 / Default / Forced / 128Kbps / 5.1 / 44.1kHz", result);
+    }
     [TestMethod]
     public void FormatTitle_OnlyForcedSet_Success()
     {
@@ -693,6 +714,46 @@ public class FFmpegBuilder_SetTrackTitlesTests : VideoTestBase
 
         var videoInfo = (VideoInfo)args.Parameters["VideoInfo"];
         Assert.AreEqual("H264 / 24FPS", videoInfo.VideoStreams[0].Title);
+    }
+    
+    
+    /// <summary>
+    /// Tests setting a track video title and actually processes the file
+    /// </summary>
+    [TestMethod]
+    public void SetVideoTitle_Process_Variables()
+    {
+        var args = GetVideoNodeParameters(VideoMkv);
+        
+        var vf = new VideoFile();
+        vf.PreExecute(args);
+        Assert.AreEqual(1, vf.Execute(args));
+
+        var ffStart = new FfmpegBuilderStart();
+        ffStart.PreExecute(args);
+        Assert.AreEqual(1, ffStart.Execute(args));
+
+        args.Variables["myvar"] = "this is bob";
+        
+        var ffSetTrackTitle = new FfmpegBuilderSetTrackTitles();
+        ffSetTrackTitle.Format = "lang / codec / resolution / fps / {myvar}";
+        ffSetTrackTitle.Separator = " / ";
+        ffSetTrackTitle.StreamType = "Video";
+        ffSetTrackTitle.PreExecute(args);
+        Assert.AreEqual(1, ffSetTrackTitle.Execute(args));
+        
+        var ffExecutor = new FfmpegBuilderExecutor();
+        ffExecutor.PreExecute(args);
+        Assert.AreEqual(1, ffExecutor.Execute(args));
+        
+        Logger.ILog("Working File: " + args.WorkingFile);
+        
+        var readVideoInfo = new ReadVideoInfo();
+        readVideoInfo.PreExecute(args);
+        Assert.AreEqual(1, readVideoInfo.Execute(args));
+
+        var videoInfo = (VideoInfo)args.Parameters["VideoInfo"];
+        Assert.AreEqual("H264 / 24FPS / this is bob", videoInfo.VideoStreams[0].Title);
     }
 }
 

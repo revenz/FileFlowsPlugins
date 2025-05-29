@@ -200,6 +200,8 @@
           "CustomTrackSelection": "Konvertera",
           "PcmFormat": "Format",
           "PcmFormat-Help": "PCM-formatet att använda för att koda PCM-ljud.",
+          "SampleRate": "Samplingsfrekvens",
+          "SampleRate-Help": "Automatisk låter kodaren bestämma. Samma som källa använder vald spårs frekvens. Eller välj en specifik frekvens.",
           "TrackSelectionOptions": "Matchande",
           "TrackSelectionOptionsKey": "Egenskap",
           "TrackSelectionOptionsValue": "Värde"
@@ -345,6 +347,20 @@
         "Outputs": {
           "1": "Kapitel genererade och tillagda till FFMPEG Builder",
           "2": "Inga kapitel upptäcktes eller videon hade redan kapitel"
+        }
+      },
+      "FfmpegBuilderChangeLanguageCode": {
+        "Description": "Ändrar språkkoderna för alla video-, ljud- och undertextspår vars ursprungliga språk matchar de definierade ersättningarna.",
+        "Label": "FFMPEG Builder: Ändra språkkod",
+        "Fields": {
+          "Replacements": "Språkersättningar",
+          "Replacements-Help": "En lista över ursprungliga språkkoder och deras ersättningsvärden, definierade som nyckel-värde-par.",
+          "ReplacementsKey": "Original",
+          "ReplacementsValue": "Ersatt"
+        },
+        "Outputs": {
+          "1": "En eller flera språkersättningar har gjorts.",
+          "2": "Inga språkersättningar har gjorts."
         }
       },
       "FfmpegBuilderComskipChapters": {
@@ -503,6 +519,19 @@
         },
         "Outputs": {
           "1": "Metadata borttagen från FFMPEG Builder"
+        }
+      },
+      "FfmpegBuilderParameterReplacer": {
+        "Description": "Sätter ersättningar för de slutliga FFmpeg-parametrarna som genereras av FFMPEG Builder. De faktiska ersättningarna sker när FFMPEG Builder-exekutorn körs.",
+        "Label": "FFMPEG Builder: Parameter Replacer",
+        "Fields": {
+          "Replacements": "Replacements",
+          "Replacements-Help": "Ange nyckel/värde-par för att ersätta specifika FFmpeg-parametrar. Använd mellanslag mellan värden för att ersätta en parameter med flera argument.",
+          "ReplacementsKey": "Original",
+          "ReplacementsValue": "Ersatt"
+        },
+        "Outputs": {
+          "1": "Ersättningar inställda"
         }
       },
       "FfmpegBuilderPreExecute": {
