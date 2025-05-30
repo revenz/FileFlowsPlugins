@@ -301,6 +301,26 @@ public class MovieLookupTests : TestBase
         Assert.AreEqual("Woman of the Hour", mi.Title);
         Assert.AreEqual(2024, mi.ReleaseDate.Year);
     }
+    
+    
+    [TestMethod]
+    public void MovieLookupTests_FourDigitTmbd()
+    {
+        var args = GetNodeParameters("/storage/media/movies/Ratatouille (2007) [tmdb-2062]/Ratatouille (2007) [tmdb-2062] - [Hybrid][Remux-2160p][DV HDR10][TrueHD Atmos 7.1][HEVC]-FraMeSToR.mkv");
+
+        MovieLookup ml = new MovieLookup();
+        ml.UseFolderName = false;
+
+        var result = ml.Execute(args);
+        Assert.AreEqual(1, result);
+        Assert.IsTrue(args.Parameters.ContainsKey(Globals.MOVIE_INFO));
+
+        var mi = args.Parameters[Globals.MOVIE_INFO] as MovieInfo;
+        Assert.IsNotNull(mi);
+
+        Assert.AreEqual("Ratatouille", mi.Title);
+        Assert.AreEqual(2007, mi.ReleaseDate.Year);
+    }
 }
 
 #endif

@@ -118,13 +118,23 @@ public class MovieLookup : Node
     private static string RemoveYearFromName(string lookupName, out int year)
     {
         year = 0;
-        var match = Regex.Matches(lookupName, @"(?<=[\s\.\-\[\(\{])((19[2-9][0-9])|(20[0-9]{2}))(?=[\s.\-_\]\)\}]|$)").LastOrDefault();
-        if (match != null)
+        var matchBest =Regex.Matches(lookupName, @"(?<=\()((19[2-9][0-9])|(20[0-9]{2}))(?=[\)])").LastOrDefault();
+        if (matchBest?.Success == true)
         {
-            int.TryParse(match.Value, out year);
-            lookupName = lookupName[..lookupName.IndexOf(match.Value, StringComparison.Ordinal)].TrimEnd('(');
+            int.TryParse(matchBest.Value, out year);
+            lookupName = lookupName[..lookupName.IndexOf(matchBest.Value, StringComparison.Ordinal)].TrimEnd('(');
         }
-
+        else
+        {
+            var match = Regex
+                .Matches(lookupName, @"(?<=[\s\.\-\[\(\{])((19[2-9][0-9])|(20[0-9]{2}))(?=[\s.\-_\]\)\}]|$)")
+                .LastOrDefault();
+            if (match != null)
+            {
+                int.TryParse(match.Value, out year);
+                lookupName = lookupName[..lookupName.IndexOf(match.Value, StringComparison.Ordinal)].TrimEnd('(');
+            }
+        }
 
         return lookupName.Replace("  ", " ");
     }
