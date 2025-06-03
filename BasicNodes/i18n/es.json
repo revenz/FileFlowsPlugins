@@ -86,6 +86,13 @@
           "1": "Archivo eliminado"
         }
       },
+      "DeleteOriginal": {
+        "Description": "Löscht die ursprüngliche Eingabedatei oder den Ordner.",
+        "Label": "Original Löschen",
+        "Outputs": {
+          "1": "Datei oder Ordner erfolgreich gelöscht oder existierte nicht."
+        }
+      },
       "DeleteSourceDirectory": {
         "Description": "Elimina la carpeta fuente del archivo de biblioteca original",
         "Label": "Eliminar carpeta fuente",

@@ -86,6 +86,13 @@
           "1": "File eliminato"
         }
       },
+      "DeleteOriginal": {
+        "Description": "Elimina il file o la cartella di input originale.",
+        "Label": "Elimina Originale",
+        "Outputs": {
+          "1": "File o cartella eliminati con successo o inesistenti."
+        }
+      },
       "DeleteSourceDirectory": {
         "Description": "Elimina la cartella sorgente del file della libreria originale",
         "Label": "Elimina la cartella sorgente",

@@ -86,6 +86,13 @@
           "1": "檔案已刪除"
         }
       },
+      "DeleteOriginal": {
+        "Description": "刪除原始輸入檔案或資料夾。",
+        "Label": "刪除原始檔案",
+        "Outputs": {
+          "1": "成功刪除檔案或資料夾，或其不存在。"
+        }
+      },
       "DeleteSourceDirectory": {
         "Description": "刪除原始資料庫檔案的來源資料夾",
         "Label": "刪除來源資料夾",

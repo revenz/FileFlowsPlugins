@@ -86,6 +86,13 @@
           "1": "Fil borttagen"
         }
       },
+      "DeleteOriginal": {
+        "Description": "Tar bort den ursprungliga inmatade filen eller mappen.",
+        "Label": "Ta Bort Original",
+        "Outputs": {
+          "1": "Filen eller mappen togs bort eller existerade inte."
+        }
+      },
       "DeleteSourceDirectory": {
         "Description": "Tar bort källmappen för den ursprungliga bibliotekfilen",
         "Label": "Ta bort källmapp",

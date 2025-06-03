@@ -86,6 +86,13 @@
           "1": "Fichier supprimé"
         }
       },
+      "DeleteOriginal": {
+        "Description": "Elimina el archivo o carpeta de entrada original.",
+        "Label": "Eliminar Original",
+        "Outputs": {
+          "1": "Archivo o carpeta eliminados correctamente o no existían."
+        }
+      },
       "DeleteSourceDirectory": {
         "Description": "Supprime le dossier source du fichier de bibliothèque original",
         "Label": "Supprimer le dossier source",

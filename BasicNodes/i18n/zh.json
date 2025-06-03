@@ -86,6 +86,13 @@
           "1": "文件已删除"
         }
       },
+      "DeleteOriginal": {
+        "Description": "删除原始输入文件或文件夹。",
+        "Label": "删除原始文件",
+        "Outputs": {
+          "1": "成功删除了文件或文件夹，或者它们不存在。"
+        }
+      },
       "DeleteSourceDirectory": {
         "Description": "删除原始库文件的源文件夹",
         "Label": "删除源文件夹",

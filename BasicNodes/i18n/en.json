@@ -86,6 +86,13 @@
           "1": "File deleted"
         }
       },
+      "DeleteOriginal": {
+        "Description": "Deletes the original input file or folder.",
+        "Label": "Delete Original",
+        "Outputs": {
+          "1": "Successfully deleted the file or folder, or it didn't exist."
+        }
+      },
       "DeleteSourceDirectory": {
         "Description": "Deletes the source folder of the original library file",
         "Label": "Delete Source Folder",

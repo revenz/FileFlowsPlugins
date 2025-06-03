@@ -86,6 +86,13 @@
           "1": "Bestand verwijderd"
         }
       },
+      "DeleteOriginal": {
+        "Description": "Verwijdert het oorspronkelijke invoerbestand of de map.",
+        "Label": "Origineel Verwijderen",
+        "Outputs": {
+          "1": "Bestand of map succesvol verwijderd of bestond niet."
+        }
+      },
       "DeleteSourceDirectory": {
         "Description": "Verwijdert de bronmap van het originele bibliotheekbestand",
         "Label": "Verwijder bronmap",

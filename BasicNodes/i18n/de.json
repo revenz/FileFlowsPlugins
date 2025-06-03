@@ -86,6 +86,13 @@
           "1": "Datei gelöscht"
         }
       },
+      "DeleteOriginal": {
+        "Description": "Löscht die ursprüngliche Eingabedatei oder den Ordner.",
+        "Label": "Original löschen",
+        "Outputs": {
+          "1": "Datei oder Ordner erfolgreich gelöscht oder existierte nicht."
+        }
+      },
       "DeleteSourceDirectory": {
         "Description": "Deletes the source folder of the original library file",
         "Label": "Ausgangsordner löschen?",

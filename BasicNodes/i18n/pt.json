@@ -86,6 +86,13 @@
           "1": "Arquivo excluído"
         }
       },
+      "DeleteOriginal": {
+        "Description": "Exclui o arquivo ou pasta de entrada original.",
+        "Label": "Excluir Original",
+        "Outputs": {
+          "1": "Arquivo ou pasta excluído com sucesso ou não existia."
+        }
+      },
       "DeleteSourceDirectory": {
         "Description": "Exclui a pasta de origem do arquivo da biblioteca original",
         "Label": "Excluir pasta de origem",

@@ -86,6 +86,13 @@
           "1": "파일이 삭제되었습니다"
         }
       },
+      "DeleteOriginal": {
+        "Description": "원본 입력 파일 또는 폴더를 삭제합니다.",
+        "Label": "원본 삭제",
+        "Outputs": {
+          "1": "파일 또는 폴더를 성공적으로 삭제했거나 존재하지 않았습니다."
+        }
+      },
       "DeleteSourceDirectory": {
         "Description": "원본 라이브러리 파일의 소스 폴더를 삭제합니다.",
         "Label": "소스 폴더 삭제",
