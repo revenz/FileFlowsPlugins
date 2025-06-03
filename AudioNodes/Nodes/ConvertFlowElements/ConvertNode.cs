@@ -274,6 +274,7 @@ public abstract class ConvertNode:AudioNode
                     new () { Label = "Same as source", Value = -1 },
                     
                     new () { Label = "Constant Bitrate", Value = "###GROUP###" },
+                    new () { Label = "32 Kbps", Value = 32},
                     new () { Label = "64 Kbps", Value = 64},
                     new () { Label = "96 Kbps", Value = 96},
                     new () { Label = "128 Kbps", Value = 128},
