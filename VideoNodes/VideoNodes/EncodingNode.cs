@@ -63,9 +63,16 @@ namespace FileFlows.VideoNodes
             if (string.IsNullOrEmpty(extension))
                 extension = "mkv";
 
+            object? infinity = null;
+            if (OperatingSystem.IsWindows() && args.Variables.TryGetValue("FFmpegInfinity", out infinity) && infinity != null )
+            {
+                args.Logger?.ILog("Got FFmpeg Infinity: " + infinity);
+            }
+            
             Encoder = new FFMpegEncoder(ffmpegExe, args.Logger, args.CancellationToken);
             Encoder.AtTime += AtTimeEvent;
             Encoder.OnStatChange += EncoderOnOnStatChange;
+
 
             if (string.IsNullOrEmpty(outputFile))
                 outputFile = System.IO.Path.Combine(args.TempPath, Guid.NewGuid() + "." + extension);
@@ -79,7 +86,9 @@ namespace FileFlows.VideoNodes
                     args.Logger.ILog("### Total Run-Time Of Video: " + TotalTime);
                 }
             }
-            var success = Encoder.Encode(args.WorkingFile, outputFile, ffmpegParameters, dontAddInputFile: dontAddInputFile, dontAddOutputFile: dontAddOutputFile, strictness: strictness);
+            var success = Encoder.Encode(args.WorkingFile, outputFile, ffmpegParameters,
+                dontAddInputFile: dontAddInputFile, dontAddOutputFile: dontAddOutputFile, strictness: strictness, 
+                infinity: infinity);
             
             Encoder.AtTime -= AtTimeEvent;
             Encoder.OnStatChange -= EncoderOnOnStatChange;

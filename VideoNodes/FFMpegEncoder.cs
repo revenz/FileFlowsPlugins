@@ -45,8 +45,10 @@ public class FFMpegEncoder
     /// <param name="dontAddInputFile">if the input file should not be added to the arguments</param>
     /// <param name="dontAddOutputFile">if the output file should not be added to the arguments</param>
     /// <param name="strictness">the strictness to use</param>
+    /// <param name="infinity">the process infinity</param>
     /// <returns>the result and output of the encode</returns>
-    public (bool successs, string output, string? abortReason) Encode(string input, string output, List<string> arguments, bool dontAddInputFile = false, bool dontAddOutputFile = false, string strictness = "-2")
+    public (bool successs, string output, string? abortReason) Encode(string input, string output, List<string> arguments, 
+        bool dontAddInputFile = false, bool dontAddOutputFile = false, string strictness = "-2", object infinity = null)
     {
         arguments ??= [];
         if (string.IsNullOrWhiteSpace(strictness))
@@ -137,7 +139,8 @@ public class FFMpegEncoder
         }
     }
 
-    public async Task<ProcessResult> ExecuteShellCommand(string command, List<string> arguments, int timeout = 0)
+    public async Task<ProcessResult> ExecuteShellCommand(string command, List<string> arguments, int timeout = 0,
+        object? infinity = null)
     {
         var hwDecoderIndex = arguments.FindIndex(x => x == "-hwaccel");
         string? decoder = null;
@@ -202,11 +205,15 @@ public class FFMpegEncoder
         processHelper.OnStandardOutputReceived += OnOutputDataReceived;
         processHelper.OnErrorOutputReceived += OnErrorDataReceived;
         startedAt = DateTime.Now;
+        Dictionary<string, object> variables = [];
+        if(infinity != null)
+            variables.Add("Infinity", infinity);
         var result = processHelper.ExecuteShellCommand(new()
         {
             Command = command,
             Silent = true,
-            ArgumentList = arguments.ToArray()
+            ArgumentList = arguments.ToArray(),
+            Variables = variables
         }).GetAwaiter().GetResult();
         
         return new()
