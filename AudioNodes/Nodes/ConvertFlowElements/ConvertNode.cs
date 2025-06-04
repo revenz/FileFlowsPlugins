@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using FileFlows.AudioNodes.Helpers;
+using FileFlows.Plugin.Helpers;
 
 namespace FileFlows.AudioNodes;
 
@@ -46,6 +47,9 @@ public abstract class ConvertNode:AudioNode
         extension = null;
         string codecKey = Codec + "_codec";
         string codec = args.GetToolPathActual(codecKey)?.EmptyAsNull() ?? Codec;
+        if (codec.EndsWith("_codec"))
+            codec = codec[..^6];
+        
         if (codec.ToLowerInvariant() == "mp3")
         {
             extension = "mp3";
@@ -61,6 +65,10 @@ public abstract class ConvertNode:AudioNode
         {
             codec = "libvorbis";
             extension = "ogg";
+        }
+        else if (codec.ToLowerInvariant() == "aac")
+        {
+            extension = "m4a";
         }
 
         bool ogg = extension?.ToLowerInvariant() == "ogg";
@@ -370,8 +378,53 @@ public abstract class ConvertNode:AudioNode
         ffArgs.Insert(1, "-y"); // tells ffmpeg to replace the file if already exists, which it shouldnt but just incase
         ffArgs.Insert(2, "-i");
         ffArgs.Insert(3, LocalWorkingFile);
-        ffArgs.Insert(4, "-vn"); // disables video
+        // ffArgs.Insert(4, "-vn"); // disables video
+        int insertIndex = 4;
 
+        switch (CoverArtHandling(actualExt))
+        {
+            case CoverArtMode.Supported:
+                // Do nothing — leave existing image stream alone (e.g. mp3)
+                break;
+
+            case CoverArtMode.NeedsExtractAndConvert:
+            {
+                var jpgResult = ExtractCoverImage(args, LocalWorkingFile);
+                if (jpgResult.Failed(out error))
+                {
+                    args.Logger?.WLog("Failed extracting cover art:" + error);
+                }
+                else
+                {
+                    var pngResult = ConvertToPng(args, jpgResult.Value);
+                    if (pngResult.Failed(out error))
+                    {
+                        args.Logger?.WLog("Failed converting image to png: " + error);
+                    }
+                    else
+                    {
+                        ffArgs.Insert(insertIndex++, "-i");
+                        ffArgs.Insert(insertIndex++, pngResult.Value);
+                        ffArgs.AddRange(new[] { "-c:v", "mjpeg", "-disposition:v:0", "attached_pic" });
+                    }
+                }
+            }
+                break;
+
+            case CoverArtMode.NeedsExtractOnly:
+            {
+                string image = ExtractCoverImage(args, LocalWorkingFile);
+                ffArgs.Insert(insertIndex++, "-i");
+                ffArgs.Insert(insertIndex++, image);
+                ffArgs.AddRange(new[] { "-c:v", "mjpeg", "-disposition:v:0", "attached_pic" });
+            }
+                break;
+
+            case CoverArtMode.Remove:
+            default:
+                ffArgs.Insert(insertIndex, "-vn");
+                break;
+        }
 
         if (Normalize)
         {
@@ -389,7 +442,7 @@ public abstract class ConvertNode:AudioNode
 
         ffArgs.Add(outputFile);
 
-        args.Logger?.ILog("FFArgs: " + string.Join(" ", ffArgs.Select(x => x.IndexOf(" ") > 0 ? "\"" + x + "\"" : x).ToArray()));
+        args.Logger?.ILog("FFArgs: " + string.Join(" ", ffArgs.Select(x => x.IndexOf(' ') > 0 ? "\"" + x + "\"" : x).ToArray()));
 
         var result = args.Execute(new ExecuteArgs
         {
@@ -411,4 +464,64 @@ public abstract class ConvertNode:AudioNode
 
         return -1;
     }
+    
+    enum CoverArtMode
+    {
+        Supported,              // Use existing cover (e.g. mp3)
+        NeedsExtractOnly,       // Extract and embed as-is
+        NeedsExtractAndConvert, // Extract, convert (e.g. to PNG), then embed
+        Remove                  // Strip video
+    }
+
+    private CoverArtMode CoverArtHandling(string? ext)
+    {
+        if (string.IsNullOrWhiteSpace(ext))
+            return CoverArtMode.Remove;
+
+        ext = ext.ToLowerInvariant();
+
+        return ext switch
+        {
+            "mp3" => CoverArtMode.Supported,
+            "m4a" or "m4b" => CoverArtMode.NeedsExtractAndConvert,
+            "ogg" => CoverArtMode.Remove,
+            _ => CoverArtMode.Remove
+        };
+    }
+    
+    private Result<string> ExtractCoverImage(NodeParameters args, string inputFile)
+    {
+        string tempImage = System.IO.Path.Combine(args.TempPath, "cover.jpg");
+        var result = RunFfmpeg(args, new[] { "-y", "-i", inputFile, "-an", "-vframes", "1", "-f", "image2", tempImage });
+        if(result.Failed(out var error))
+            return Result<string>.Fail(error);
+        return tempImage;
+    }
+
+    private Result<string> ConvertToPng(NodeParameters args, string inputImage)
+    {
+        string outputPng = System.IO.Path.ChangeExtension(inputImage, ".png");
+        var result = args.ImageHelper.ConvertImage(inputImage, outputPng, ImageType.Png, 100);
+        if(result.Failed(out var error))
+            return Result<string>.Fail(error);
+        return outputPng;
+    }
+
+    private Result<bool> RunFfmpeg(NodeParameters args, IEnumerable<string> arguments)
+    {
+        string ffmpegExe = args.GetToolPath("ffmpeg");
+        if (string.IsNullOrWhiteSpace(ffmpegExe))
+            return Result<bool>.Fail("FFmpeg executable path not set or found.");
+
+        var result = args.Execute(new ExecuteArgs
+        {
+            Command = ffmpegExe,
+            ArgumentList = arguments.ToArray()
+        });
+
+        if (result.ExitCode != 0)
+            return Result<bool>.Fail("FFmpeg execution failed: " + result.Output);
+        return true;
+    }
+
 }

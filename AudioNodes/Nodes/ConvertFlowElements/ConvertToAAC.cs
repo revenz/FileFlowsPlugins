@@ -14,4 +14,5 @@ public class ConvertToAAC : ConvertNode
     /// </summary>
     [Boolean(6)]
     public bool HighEfficiency { get => base.HighEfficiency; set =>base.HighEfficiency = value; }
+    
 }

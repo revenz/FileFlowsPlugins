@@ -1,5 +1,6 @@
 #if(DEBUG)
 
+using FileFlows.FlowRunner.Helpers;
 using File = System.IO.File;
 
 namespace FileFlows.AudioNodes.Tests;
@@ -19,6 +20,11 @@ public abstract class AudioTestBase : TestBase
     /// Audio MP3 file
     /// </summary>
     protected static readonly string AudioMp3 = ResourcesTestFilesDir + "/audio.mp3";
+    
+    /// <summary>
+    /// Audio MP3 file
+    /// </summary>
+    protected static readonly string AudioMp3Metadata = ResourcesTestFilesDir + "/metadata.mp3";
 
     /// <summary>
     /// Audio OGG file
@@ -29,6 +35,11 @@ public abstract class AudioTestBase : TestBase
     /// Audio FLAC file
     /// </summary>
     protected static readonly string AudioFlac = ResourcesTestFilesDir + "/audio.flac";
+
+    /// <summary>
+    /// Audio FLAC file
+    /// </summary>
+    protected static readonly string AudioFlacMetadata = ResourcesTestFilesDir + "/metadata.flac";
 
     /// <summary>
     /// Audio WAV file
@@ -58,6 +69,7 @@ public abstract class AudioTestBase : TestBase
         {
             LibraryFileName = filename
         };
+        args.ImageHelper = new ImageHelper(Logger, args);
         args.InitFile(filename);
 
         FFmpeg = File.Exists("/tools/ffmpeg/ffmpeg") ? "/tools/ffmpeg/ffmpeg" : File.Exists("/usr/local/bin/ffmpeg") ? "/usr/local/bin/ffmpeg" : "ffmpeg";

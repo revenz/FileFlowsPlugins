@@ -35,16 +35,59 @@ public class ConvertTests : AudioTestBase
     [TestMethod]
     public void Convert_FlacToMp3()
     {
-        var args = GetAudioNodeParameters(AudioFlac);
+        var args = GetAudioNodeParameters(AudioFlacMetadata);
         var af = new AudioFile();
         af.PreExecute(args);
         af.Execute(args); // need to read the Audio info and set it
-        
+
+        var info = args.Parameters["AudioInfo"] as AudioInfo;
+        Assert.IsNotNull(info);
+        Assert.AreEqual("Test Artist", info.Artist);
+        Assert.AreEqual("Test Album", info.Album);
+        Assert.AreEqual("Unit Test Song", info.Title);
+        Assert.AreEqual(2023, info.Date.Year);
+        Assert.AreEqual("Electronic", info.Genres.FirstOrDefault());
         ConvertToMP3 node = new();
         node.PreExecute(args);
         int output = node.Execute(args);
 
         Assert.AreEqual(1, output);
+        var updatedInfo = args.Parameters["AudioInfo"] as AudioInfo;
+        Assert.IsNotNull(updatedInfo);
+        Assert.AreEqual("Test Artist", updatedInfo.Artist);
+        Assert.AreEqual("Test Album", updatedInfo.Album);
+        Assert.AreEqual("Unit Test Song", updatedInfo.Title);
+        Assert.AreEqual(2023, updatedInfo.Date.Year);
+        Assert.AreEqual("Electronic", updatedInfo.Genres.FirstOrDefault());
+    }
+    
+    [TestMethod]
+    public void Convert_FlacToAacMetadata()
+    {
+        var args = GetAudioNodeParameters(AudioFlacMetadata);
+        var af = new AudioFile();
+        af.PreExecute(args);
+        af.Execute(args); // need to read the Audio info and set it
+
+        var info = args.Parameters["AudioInfo"] as AudioInfo;
+        Assert.IsNotNull(info);
+        Assert.AreEqual("Test Artist", info.Artist);
+        Assert.AreEqual("Test Album", info.Album);
+        Assert.AreEqual("Unit Test Song", info.Title);
+        Assert.AreEqual(2023, info.Date.Year);
+        Assert.AreEqual("Electronic", info.Genres.FirstOrDefault());
+        ConvertToAAC node = new();
+        node.PreExecute(args);
+        int output = node.Execute(args);
+
+        Assert.AreEqual(1, output);
+        var updatedInfo = args.Parameters["AudioInfo"] as AudioInfo;
+        Assert.IsNotNull(updatedInfo);
+        Assert.AreEqual("Test Artist", updatedInfo.Artist);
+        Assert.AreEqual("Test Album", updatedInfo.Album);
+        Assert.AreEqual("Unit Test Song", updatedInfo.Title);
+        Assert.AreEqual(2023, updatedInfo.Date.Year);
+        Assert.AreEqual("Electronic", updatedInfo.Genres.FirstOrDefault());
     }
     
     [TestMethod]

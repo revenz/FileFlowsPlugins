@@ -38,6 +38,9 @@
     <PackageReference Include="TagLibSharp" Version="2.3.0" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="FileFlows.FlowRunner" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <HintPath>..\..\FileFlows\FlowRunner\bin\Debug\net8.0\FileFlows.FlowRunner.dll</HintPath>
+    </Reference>
     <Reference Include="Plugin">
       <HintPath>..\FileFlows.Plugin.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
