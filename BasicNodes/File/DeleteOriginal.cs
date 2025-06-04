@@ -57,6 +57,8 @@ public class DeleteOriginal : Node
         var deleteDirResult = args.FileService.DirectoryDelete(args.LibraryFileName, true);
         if (deleteDirResult.Failed(out error))
             return args.Fail($"Failed to delete directory '{args.LibraryFileName}': {error}");
+        
+        args.Logger.ILog("Directory deleted: " + args.LibraryFileName);
         return 1;
     }
 
@@ -79,6 +81,7 @@ public class DeleteOriginal : Node
         var deleteResult = args.FileService.FileDelete(args.LibraryFileName);
         if(deleteResult.Failed(out error))
             return args.Fail($"Failed to delete file '{args.LibraryFileName}': {error}");
+        args.Logger.ILog("File deleted: " + args.LibraryFileName);
         return 1;
     }
 }
