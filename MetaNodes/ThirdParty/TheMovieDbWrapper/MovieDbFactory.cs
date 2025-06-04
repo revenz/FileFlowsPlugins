@@ -15,7 +15,7 @@ namespace DM.MovieApi;
 public static class MovieDbFactory
 {
     /// <include file='ApiDocs.xml' path='Doc/ApiSettings/ApiUrl/*'/>
-    public const string TheMovieDbApiUrl = "http://api.themoviedb.org/3/";
+    public const string TheMovieDbApiUrl = "https://api.themoviedb.org/3/";
 
     /// <summary>
     /// Determines if the underlying factory has been created.
