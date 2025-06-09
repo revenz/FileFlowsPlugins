@@ -233,6 +233,9 @@ public class FFMpegEncoder
             outputCloseEvent.SetResult(true);
             return;
         }
+        if (IgnoreLine(data))
+            return;
+        
         CheckOutputLine(data);
     }
 
@@ -244,6 +247,9 @@ public class FFMpegEncoder
             errorCloseEvent.SetResult(true);
             return;
         }
+
+        if (IgnoreLine(data))
+            return;
         
         if (data.ToLower().Contains("failed") || data.Contains("No capable devices found") || data.ToLower().Contains("error"))
         {
@@ -255,6 +261,31 @@ public class FFMpegEncoder
             CheckOutputLine(data);
         }
     }
+
+    private bool IgnoreLine(string line)
+        => IgnoreGpuHangLine(line) || IgnoreInputOutputError(line);
+
+    private DateTime _LastGpuHang = DateTime.MinValue;
+    private bool IgnoreGpuHangLine(string line)
+    {
+        if (line.Contains("GPU Hang", StringComparison.InvariantCultureIgnoreCase) == false)
+            return false;
+        if ((DateTime.Now - _LastGpuHang).TotalSeconds < 30)
+            return true;
+        _LastGpuHang = DateTime.Now;
+        return false;
+    }
+    private DateTime _LastInputOutputError = DateTime.MinValue;
+    private bool IgnoreInputOutputError(string line)
+    {
+        if (line.Contains("Input/output error", StringComparison.InvariantCultureIgnoreCase) == false)
+            return false;
+        if ((DateTime.Now - _LastInputOutputError).TotalSeconds < 30)
+            return true;
+        _LastInputOutputError = DateTime.Now;
+        return false;
+    }
+
 
     private int ErrorCount = 0;
     private float? videoFrameRate;
