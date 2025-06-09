@@ -50,6 +50,7 @@ public class MovieLookup : Node
             { "movie.Title", "Batman Begins" },
             { "movie.Year", 2005 },
             { "movie.ImdbId", "tt0372784" },
+            { "movie.TmdbId", 123456 },
             { "movie.Genre", "Action" }
         };
     }
@@ -286,6 +287,8 @@ public class MovieLookup : Node
 
         if (!string.IsNullOrWhiteSpace(movie.ImdbId))
             args.Variables["movie.ImdbId"] = movie.ImdbId;
+        if (movie.Id > 0)
+            args.Variables["movie.TmdbId"] = movie.Id.ToString();
         if (movie.Genres?.Any() == true)
             args.Variables["movie.Genre"] = movie.Genres.First().Name;
 
