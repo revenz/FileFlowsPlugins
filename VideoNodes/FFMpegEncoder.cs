@@ -86,7 +86,7 @@ public class FFMpegEncoder
         Logger.ILog("FFmpeg.Arguments: " + SplitFFmpegArgs(argsString));
         Logger.ILog(new string('-', ("FFmpeg.Arguments: " + argsString).Length));
 
-        var task = ExecuteShellCommand(ffMpegExe, arguments, 0);
+        var task = ExecuteShellCommand(ffMpegExe, arguments, 0, infinity:infinity);
         task.Wait(_cancellationToken);
         Logger.ILog("Exit Code: " + task.Result.ExitCode);
         Logger.ILog("Completed: " + task.Result.Completed);
