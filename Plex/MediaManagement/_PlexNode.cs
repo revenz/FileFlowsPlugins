@@ -147,6 +147,7 @@ public abstract class PlexNode:Node
                 {
                     try
                     {
+                        client.DefaultRequestHeaders.Accept.Clear();
                         client.DefaultRequestHeaders.Add("Accept", "application/json");
                         var response = client.GetAsync(url).Result;
                         string body = response.Content.ReadAsStringAsync().Result;
@@ -175,6 +176,7 @@ public abstract class PlexNode:Node
                 {
                     try
                     {
+                        client.DefaultRequestHeaders.Accept.Clear();
                         client.DefaultRequestHeaders.Add("Accept", "application/json");
                         var response = client.PutAsync(url, null).Result;
                         string body = response.Content.ReadAsStringAsync().Result;
