@@ -25,6 +25,8 @@ public abstract class PlexNode:Node
     [KeyValue(3, null)]
     public List<KeyValuePair<string, string>>? Mapping { get; set; }
 
+    private HttpClient HttpClient = null!;
+
     public override int Execute(NodeParameters args)
     {
         var settings = args.GetPluginSettings<PluginSettings>();
@@ -61,8 +63,9 @@ public abstract class PlexNode:Node
         url += "library/sections";
 
         using var httpClient = GetHttpClient(settings?.IgnoreCertificateErrors == true);
+        HttpClient = httpClient;
 
-        var sectionsResponse = GetWebRequest(httpClient, url + "?X-Plex-Token=" + accessToken);
+        var sectionsResponse = GetWebRequest(url + "?X-Plex-Token=" + accessToken);
         if (sectionsResponse.success == false)
         {
             args.Logger?.WLog("Failed to retrieve sections" + (string.IsNullOrWhiteSpace(sectionsResponse.body) ? "" : ": " + sectionsResponse.body));
@@ -136,20 +139,20 @@ public abstract class PlexNode:Node
     protected abstract int ExecuteActual(NodeParameters args, PlexDirectory directory, string url, string mappedPath, string accessToken);
 
 
-    private Func<HttpClient, string, (bool success, string body)>? _GetWebRequest;
-    internal Func<HttpClient, string, (bool success, string body)> GetWebRequest
+    private Func<string, (bool success, string body)>? _GetWebRequest;
+    internal Func<string, (bool success, string body)> GetWebRequest
     {
         get
         {
             if (_GetWebRequest == null)
             {
-                _GetWebRequest = (HttpClient client, string url) =>
+                _GetWebRequest = (string url) =>
                 {
                     try
                     {
-                        client.DefaultRequestHeaders.Accept.Clear();
-                        client.DefaultRequestHeaders.Add("Accept", "application/json");
-                        var response = client.GetAsync(url).Result;
+                        HttpClient.DefaultRequestHeaders.Accept.Clear();
+                        HttpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+                        var response = HttpClient.GetAsync(url).Result;
                         string body = response.Content.ReadAsStringAsync().Result;
                         return (response.IsSuccessStatusCode, body);
                     }
@@ -165,20 +168,20 @@ public abstract class PlexNode:Node
         set => _GetWebRequest = value;
         #endif
     }
-    private Func<HttpClient, string, (bool success, string body)>? _PutWebRequest;
-    internal Func<HttpClient, string, (bool success, string body)> PutWebRequest
+    private Func<string, (bool success, string body)>? _PutWebRequest;
+    internal Func<string, (bool success, string body)> PutWebRequest
     {
         get
         {
             if (_PutWebRequest == null)
             {
-                _PutWebRequest = (HttpClient client, string url) =>
+                _PutWebRequest = (string url) =>
                 {
                     try
                     {
-                        client.DefaultRequestHeaders.Accept.Clear();
-                        client.DefaultRequestHeaders.Add("Accept", "application/json");
-                        var response = client.PutAsync(url, null).Result;
+                        HttpClient.DefaultRequestHeaders.Accept.Clear();
+                        HttpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+                        var response = HttpClient.PutAsync(url, null).Result;
                         string body = response.Content.ReadAsStringAsync().Result;
                         return (response.IsSuccessStatusCode, body);
                     }

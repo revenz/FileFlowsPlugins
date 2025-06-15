@@ -18,7 +18,7 @@ public class PlexUpdaterTests : TestBase
         args.GetPluginSettingsJson = _ => """{"AccessToken": "access-token", "ServerUrl": "http://plex.test" }""";
         
         var element = new PlexUpdater();
-        element.GetWebRequest = (_, url) =>
+        element.GetWebRequest = (url) =>
         {
             if (url.Contains("library/sections"))
                 return (true, JsonSerializer.Serialize(new PlexSections()
@@ -71,7 +71,7 @@ public class PlexUpdaterTests : TestBase
         });
         
         var element = new PlexUpdater();
-        element.GetWebRequest = (_, url) =>
+        element.GetWebRequest = (url) =>
         {
             if (url.Contains("library/sections"))
                 return (true, JsonSerializer.Serialize(new PlexSections()

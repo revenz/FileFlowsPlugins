@@ -11,15 +11,14 @@ public class PlexAnalyze : PlexNode
         string filename = new FileInfo(args.WorkingFile).Name;
         string mappedFile = mappedPath + (mappedPath.IndexOf('/') >= 0 ? "/" : @"\") + filename;
 
-        using var httpClient = new HttpClient();
-        string itemId = GetItemId(httpClient, args, baseUrl, $"library/sections/{directory.Key}/all?includeCollections=1&includeAdvanced=1", accessToken, mappedFile);
+        string itemId = GetItemId(args, baseUrl, $"library/sections/{directory.Key}/all?includeCollections=1&includeAdvanced=1", accessToken, mappedFile);
         
         if (string.IsNullOrEmpty(itemId))
             return 2;
         args.Logger?.ILog("Found Plex Media: " + itemId);
 
         string url = $"{baseUrl}library/metadata/{itemId}/analyze?X-Plex-Token={accessToken}";
-        var analyzeReponse = PutWebRequest(httpClient, url);
+        var analyzeReponse = PutWebRequest(url);
 
         if (analyzeReponse.success == false)
         {
@@ -31,9 +30,9 @@ public class PlexAnalyze : PlexNode
         return 1;
     }
 
-    internal string GetItemId(HttpClient httpClient, NodeParameters args, string baseUrl, string urlPath, string token, string file)
+    internal string GetItemId(NodeParameters args, string baseUrl, string urlPath, string token, string file)
     {
-        var media = GetPlexMedia(httpClient, args, baseUrl, urlPath, token);
+        var media = GetPlexMedia(args, baseUrl, urlPath, token);
         if(media?.Any() != true)
         {
             args.Logger?.ILog("No media found in Plex");
@@ -51,7 +50,7 @@ public class PlexAnalyze : PlexNode
     }
 
     [UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "<Pending>")]
-    internal PlexMedia[] GetPlexMedia(HttpClient httpClient, NodeParameters args, string baseUrl, string urlPath, string token, int depth = 0)
+    internal PlexMedia[] GetPlexMedia(NodeParameters args, string baseUrl, string urlPath, string token, int depth = 0)
     {
         if (depth > 10)
             return [];
@@ -62,7 +61,7 @@ public class PlexAnalyze : PlexNode
         fullUrl += (fullUrl.IndexOf('?', StringComparison.Ordinal) > 0 ? "&" : "?") + "X-Plex-Token=";
         args.Logger?.ILog("Requesting URL: " + fullUrl);
         fullUrl += token;
-        var updateResponse = GetWebRequest(httpClient, fullUrl);
+        var updateResponse = GetWebRequest(fullUrl);
         if (updateResponse.success == false)
         {
             if (string.IsNullOrWhiteSpace(updateResponse.body) == false)
@@ -100,7 +99,7 @@ public class PlexAnalyze : PlexNode
             }
             else if(string.IsNullOrEmpty(item?.Key) == false && depth < 10)
             {
-                var children = GetPlexMedia(httpClient, args, baseUrl, item.Key, token, depth + 1);
+                var children = GetPlexMedia(args, baseUrl, item.Key, token, depth + 1);
                 if (children?.Any() == true)
                     results.AddRange(children);
             }

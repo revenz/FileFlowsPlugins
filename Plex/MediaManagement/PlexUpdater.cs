@@ -10,8 +10,7 @@ public class PlexUpdater: PlexNode
         url += $"library/sections/{directory.Key}/refresh?path={Uri.EscapeDataString(mappedPath)}&X-Plex-Token=" + accessToken;
 
         args.Logger?.ILog("Plex Request: " + url);
-        using var httpClient = new HttpClient();
-        var updateResponse = GetWebRequest(httpClient, url);
+        var updateResponse = GetWebRequest(url);
         if (updateResponse.success == false)
         {
             if(string.IsNullOrWhiteSpace(updateResponse.body) == false)
