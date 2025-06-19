@@ -63,7 +63,7 @@ public class FfmpegBuilderAudioSetLanguage : FfmpegBuilderNode
 
         if (language.ToLowerInvariant().Contains("orig"))
         {
-            if (Variables.TryGetValue("OriginalLanguage", out object? oLang) == false || string.IsNullOrEmpty(oLang as string))
+            if (args.Variables.TryGetValue("OriginalLanguage", out object? oLang) == false || string.IsNullOrEmpty(oLang as string))
             {
                 args.Logger?.ILog("OriginalLanguage not found in variables.");
                 return 2;

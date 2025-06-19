@@ -243,7 +243,7 @@ public class FfmpegBuilderExecutor: FfmpegBuilderNode
         {
             args.Logger?.ILog("HW_OFF detected");
         }
-        else if (Variables.TryGetValue("HW_OFF", out object? oHwOff) && 
+        else if (args.Variables.TryGetValue("HW_OFF", out object? oHwOff) && 
                  (oHwOff as bool? == true || oHwOff?.ToString() == "1")
                  )
         {

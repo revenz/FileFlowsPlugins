@@ -134,7 +134,7 @@ public class FfmpegBuilderAudioLanguageConverter : FfmpegBuilderNode
                 string.Equals("originallanguage", comparison, StringComparison.InvariantCultureIgnoreCase))
             {
                 args.Logger?.ILog("Attempting to use original language");
-                if (Variables.TryGetValue("OriginalLanguage", out var oLang) == false || oLang == null)
+                if (args.Variables.TryGetValue("OriginalLanguage", out var oLang) == false || oLang == null)
                 {
                     args.Logger?.ILog("Original Language not found in variables");
                     return null;
