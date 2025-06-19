@@ -86,7 +86,7 @@ public class VideoFileStream : IVideoStream
     public string Language { get; set; }
 
     /// <summary>
-    /// The bitrate(BPS) of the video stream in bytes per second
+    /// The bitrate(BPS) of the video stream in bits per second
     /// </summary>
     public float Bitrate { get; set; }
 
