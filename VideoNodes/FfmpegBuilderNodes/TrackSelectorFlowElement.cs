@@ -73,6 +73,7 @@ public abstract class TrackSelectorFlowElement<T> : FfmpegBuilderNode where T : 
                 var instance = (T)Activator.CreateInstance(typeof(T))!;
                 _TrackSelectionOptionsOptions = new List<ListOption>
                 {
+                    new() { Label = "Bitrate", Value = "Bitrate" },
                     new() { Label = "Channels", Value = "Channels" },
                     new() { Label = "Codec", Value = "Codec" },
                     new() { Label = "Language", Value = "Language" },
@@ -192,6 +193,16 @@ public abstract class TrackSelectorFlowElement<T> : FfmpegBuilderNode where T : 
                         return false;
                     }
                     break;
+                case "bitrate":
+                    if(BitrateMatches(stream, kvValue))
+                        Args?.Logger?.ILog($"Bitrate Matches '{stream}' = {kvValue}");
+                    else
+                    {
+                        Args?.Logger?.ILog($"Bitrate does not match '{stream}' = {kvValue}");
+                        return false;
+                    }
+                    return false;
+                    break;
                 case "index":
                 {
                     if (index == null)
@@ -213,6 +224,43 @@ public abstract class TrackSelectorFlowElement<T> : FfmpegBuilderNode where T : 
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// Checks if the bitrate matches
+    /// </summary>
+    /// <param name="value">the value to check</param>
+    /// <returns>true if bitrate matches, otherwise false</returns>
+    private bool BitrateMatches(IVideoStream stream, string value)
+    {
+        double? bitrate = null;
+        if (stream is AudioStream audio)
+            bitrate = Math.Round(audio.Bitrate, 1);
+        else if(stream is FfmpegAudioStream ffAudio && ffAudio.Stream != null)
+            bitrate = Math.Round(ffAudio.Stream.Bitrate, 1);
+        else if(stream is VideoStream video)
+            bitrate = Math.Round(video.Bitrate, 1);
+        else if(stream is FfmpegVideoStream ffVideo && ffVideo.Stream != null)
+            bitrate = Math.Round(ffVideo.Stream.Bitrate, 1);
+        
+        else
+        {
+            Args?.Logger?.WLog("Not an video or audio stream, cannot test Bitrate");
+            return false;
+        }
+        if (Args?.MathHelper.IsMathOperation(value) == true)
+        {
+            Args?.Logger?.DLog($"Is Math operation '{value}' comparing '{bitrate}'");
+            return Args.MathHelper.IsTrue(value, bitrate.Value);
+        }
+
+        if (double.TryParse(value, out var dblValue) == false)
+        {
+            Args?.Logger?.WLog($"Failed to parse '{value}' as a double");
+            return false;
+        }
+
+        return Math.Abs(bitrate.Value - dblValue) < 0.05f;
     }
 
     /// <summary>
