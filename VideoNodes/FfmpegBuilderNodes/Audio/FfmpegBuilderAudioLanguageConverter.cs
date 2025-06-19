@@ -128,15 +128,23 @@ public class FfmpegBuilderAudioLanguageConverter : FfmpegBuilderNode
         // ensure theres no duplicates, e.g. if OriginalLanguage is english and english is also specified
         var languages = Languages.Select(x =>
         {
-            var comparison = x.Replace("{", "").Replace("}", "");
+            var comparison = x.Replace("{", "").Replace("}", "").Trim();
             if (string.Equals("original", comparison, StringComparison.InvariantCultureIgnoreCase) ||
                 string.Equals("orig", comparison, StringComparison.InvariantCultureIgnoreCase) ||
                 string.Equals("originallanguage", comparison, StringComparison.InvariantCultureIgnoreCase))
             {
+                args.Logger?.ILog("Attempting to use original language");
                 if (Variables.TryGetValue("OriginalLanguage", out var oLang) == false ||
                     oLang is string oLangStr == false || string.IsNullOrEmpty(oLangStr))
+                {
+                    args.Logger?.ILog("Original Language not found in variables");
                     return null;
-                return LanguageHelper.GetIso2Code(oLangStr);
+                }
+        
+                args.Logger?.ILog("Found original language: " + oLangStr);
+                var code = LanguageHelper.GetIso2Code(oLangStr);
+                args.Logger?.ILog("Using original language code: " + code);
+                return code;
             }
             return x;
         }).Where(x => x != null).Distinct().ToList();
