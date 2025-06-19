@@ -218,7 +218,9 @@ public class FfmpegBuilderAudioLanguageConverter : FfmpegBuilderNode
     /// <returns>the new stream or null if not found</returns>
     private FfmpegAudioStream? GetNewAudioStream(NodeParameters args, string language)
     {
-        var sourceAudio = GetBestAudioTrack(args, Model.AudioStreams.Select(x => x.Stream), language);
+        var sourceAudio = GetBestAudioTrack(args,
+            Model.AudioStreams.Select(x => x.Stream), 
+            language);
         if (sourceAudio == null)
             return null;
         
@@ -332,6 +334,7 @@ public class FfmpegBuilderAudioLanguageConverter : FfmpegBuilderNode
 
                 return x.Channels;
             })
+            .ThenBy(x => x.Codec?.ToLower() == this.Codec?.ToLower() ? 0 : 1)
             .ThenBy(x => x.Index)
             .FirstOrDefault();
         return bestAudio;
