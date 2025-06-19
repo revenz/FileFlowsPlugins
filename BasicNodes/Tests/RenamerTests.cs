@@ -2,6 +2,7 @@
 
 using System.IO;
 using FileFlows.BasicNodes.File;
+using FileFlows.Plugin.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BasicNodes.Tests;
@@ -9,6 +10,17 @@ namespace BasicNodes.Tests;
 [TestClass]
 public class RenamerTests : TestBase
 {
+    [TestMethod]
+    public void PathCombineTest()
+    {
+        string path = "D:\\Internal\\Downloads\\TV";
+        string file = "Perry Mason - S02E08.avi";
+        var args = new FileFlows.Plugin.NodeParameters(TempFile, Logger, false, string.Empty, new LocalFileService());
+
+        var combined = FileHelper.Combine(path, args.GetSafeName(file));
+        Assert.AreEqual("D:\\Internal\\Downloads\\TV\\Perry Mason - S02E08.avi", combined);;
+    }
+    
     [TestMethod]
     public void Renamer_Extension()
     {
