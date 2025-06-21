@@ -36,13 +36,14 @@ public class FfmpegBuilderVideoEncodeAutoCrf : FfmpegBuilderNode
         new() { Label = "AV1", Value = "av1" }
     };
 
-    private string ffmpegBtbn, ffpmegUranite, ffmpegJellyfin;
+    private string ffmpegBtbn, //ffpmegUranite,
+        ffmpegJellyfin;
 
     /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
         // Checking dependencies
-        var abAv1Result = FindTool(args, "ab-av1", ["/opt/autocrf", "/usr/local/bin"]);
+        var abAv1Result = FindTool("ab-av1", ["/opt/autocrf", "/usr/local/bin"]);
         if (abAv1Result.Failed(out var error))
             return args.Fail(error);
         var abAv1 = abAv1Result.Value;
@@ -196,17 +197,17 @@ public class FfmpegBuilderVideoEncodeAutoCrf : FfmpegBuilderNode
 
     private int LoadFFmpegs(NodeParameters args)
     {
-        var btbn = FindTool(args, "ffmpeg", "/opt/ffmpeg-static/bin");
+        var btbn = FindTool("ffmpeg", "/opt/ffmpeg-static/bin");
         if (btbn.Failed(out var error))
             return args.Fail(error);
         ffmpegBtbn = btbn.Value;
 
-        var uraninte = FindTool(args, "ffmpeg", "/opt/ffmpeg-uranite-static/bin");
-        if (uraninte.Failed(out error))
-            return args.Fail(error);
-        ffpmegUranite = uraninte.Value;
+        // var uraninte = FindTool("ffmpeg", "/opt/ffmpeg-uranite-static/bin");
+        // if (uraninte.Failed(out error))
+        //     return args.Fail(error);
+        // ffpmegUranite = uraninte.Value;
 
-        var jellyfin = FindTool(args, "ffmpeg", "/usr/local/bin");
+        var jellyfin = FindTool("ffmpeg", "/usr/local/bin");
         if (jellyfin.Failed(out error))
             return args.Fail(error);
         ffmpegJellyfin = jellyfin.Value;
@@ -351,7 +352,7 @@ public class FfmpegBuilderVideoEncodeAutoCrf : FfmpegBuilderNode
         return "-crf";
     }
 
-    private static Result<string> FindTool(NodeParameters args, string tool, params string[] paths)
+    private static Result<string> FindTool(string tool, params string[] paths)
     {
         foreach (var path in paths)
         {
@@ -360,7 +361,7 @@ public class FfmpegBuilderVideoEncodeAutoCrf : FfmpegBuilderNode
                 return fullPath;
         }
 
-        return Result<string>.Fail($"Tool {tool} not found in any provided paths");
+        return Result<string>.Fail($"Tool {tool} not found in any provided paths: " + string.Join(", ", paths));
     }
 
     private CrfSearchResult CrfSearch(NodeParameters args, string abAv1, string localFile, string targetCodec,
