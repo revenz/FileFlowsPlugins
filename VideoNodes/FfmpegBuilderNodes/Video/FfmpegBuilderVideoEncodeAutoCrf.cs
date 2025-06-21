@@ -43,13 +43,7 @@ public class FfmpegBuilderVideoEncodeAutoCrf : FfmpegBuilderNode
         var abAv1Result = FindTool(args, "ab-av1", ["/opt/autocrf", "/usr/local/bin"]);
         if (abAv1Result.Failed(out var error))
             return args.Fail(error);
-        var abAv1 = abAv1Result.Value;
-
-        var ffmpegResult = FindTool(args, "ffmpeg", "/opt/autocrf");
-        if (ffmpegResult.Failed(out error))
-            return args.Fail(error);
-
-        var ffmpeg = ffmpegResult.Value;
+        var abAv1 = abAv1Result.Value;;
 
         if (FindTool(args, "ffmpeg", "/opt/ffmpeg-static/bin", "/opt/ffmpeg-uranite-static/bin").Failed(out error))
             return args.Fail(error);
@@ -108,8 +102,8 @@ public class FfmpegBuilderVideoEncodeAutoCrf : FfmpegBuilderNode
         // if we're cropping black bars, we will force the encode
         bool croppingBlackBars =
             video.Filter?.Any(x => x?.StartsWith("crop=", StringComparison.InvariantCultureIgnoreCase) == true) == true;
-
-        forceEncode |= DolbyVisionFix(args, video, ffmpeg);
+        
+        forceEncode |= DolbyVisionFix(args, video);
         forceEncode |= croppingBlackBars;
 
         // If the bitrate is more than we want then we don't care what the codec is
@@ -201,47 +195,49 @@ public class FfmpegBuilderVideoEncodeAutoCrf : FfmpegBuilderNode
         return 1;
     }
 
-    private bool DolbyVisionFix(NodeParameters args, FfmpegVideoStream video, string ffmpeg)
+    private bool DolbyVisionFix(NodeParameters args, FfmpegVideoStream video)
     {
         bool forceEncode = false;
-        if (video.Stream.DolbyVision && video.Stream.HDR == false && FixDolby5)
+        if (video.Stream.DolbyVision == false || video.Stream.HDR  || FixDolby5 == false) 
+            return forceEncode;
+
+        var ffmpeg = args.GetToolPath("ffmpeg");
+        
+        args.Logger?.ILog("Video is DoVi without a fallback, so were creating one");
+        forceEncode = true;
+        args.Logger?.ILog("Testing for openCL");
+        var processResult = args.Execute(new ExecuteArgs()
         {
-            args.Logger?.ILog("Video is DoVi without a fallback, so were creating one");
-            forceEncode = true;
-            args.Logger?.ILog("Testing for openCL");
-            var processResult = args.Execute(new ExecuteArgs()
-            {
-                Command = ffmpeg,
-                ArgumentList =
-                [
-                    "-hwaccel", "opencl", "-f", "lavfi", "-i", "testsrc=size=640x480:rate=25", "-t", "1", "-c:v",
-                    "libx264", "-f", "null", "-"
-                ]
-            });
-            if (processResult.ExitCode == 0)
-            {
-                Model.CustomParameters.AddRange(
-                [
-                    "-init_hw_device",
-                    "opencl=ocl",
-                    "-filter_hw_device",
-                    "ocl"
-                ]);
+            Command = ffmpeg,
+            ArgumentList =
+            [
+                "-hwaccel", "opencl", "-f", "lavfi", "-i", "testsrc=size=640x480:rate=25", "-t", "1", "-c:v",
+                "libx264", "-f", "null", "-"
+            ]
+        });
+        if (processResult.ExitCode == 0)
+        {
+            Model.CustomParameters.AddRange(
+            [
+                "-init_hw_device",
+                "opencl=ocl",
+                "-filter_hw_device",
+                "ocl"
+            ]);
 
-                video.Filter.Add(
-                    "format=p010le,hwupload=derive_device=opencl,tonemap_opencl=tonemap=bt2390:transfer=smpte2084:matrix=bt2020:primaries=bt2020:format=p010le,hwdownload,format=p010le");
-            }
-            else
-            {
-                args.Logger?.WLog("Could not find openCL, you may want the oneVPL DockerMod");
-                video.Filter.Add(
-                    "tonemapx=tonemap=bt2390:transfer=smpte2084:matrix=bt2020:primaries=bt2020"
-                );
-            }
-
-            args.Logger?.WLog("QSV does not support dolby vision 5 decode properly so we are disabling it");
-            Variables["NoQSV"] = true;
+            video.Filter.Add(
+                "format=p010le,hwupload=derive_device=opencl,tonemap_opencl=tonemap=bt2390:transfer=smpte2084:matrix=bt2020:primaries=bt2020:format=p010le,hwdownload,format=p010le");
         }
+        else
+        {
+            args.Logger?.WLog("Could not find openCL, you may want the oneVPL DockerMod");
+            video.Filter.Add(
+                "tonemapx=tonemap=bt2390:transfer=smpte2084:matrix=bt2020:primaries=bt2020"
+            );
+        }
+
+        args.Logger?.WLog("QSV does not support dolby vision 5 decode properly so we are disabling it");
+        Variables["NoQSV"] = true;
 
         return forceEncode;
     }
@@ -515,20 +511,20 @@ public class FfmpegBuilderVideoEncodeAutoCrf : FfmpegBuilderNode
         logger.ILog("| CRF | Score | Size |");
         logger.ILog("----------------------");
 
-        foreach (var line in result.Data)
+        foreach (var line in result.Data ?? [])
         {
-            string crf = line.Crf?.ToString().PadLeft(4).Substring(0, Math.Min(4, line.Crf.Length)) ?? "    ";
-            string score = line.Score?.ToString().PadLeft(5) ?? "     ";
-            string size = line.Size?.ToString().PadLeft(3) ?? "   ";
+            string crf = line.Crf?.PadLeft(4).Substring(0, Math.Min(4, line.Crf.Length)) ?? "    ";
+            string score = line.Score?.PadLeft(5) ?? "     ";
+            string size = line.Size?.PadLeft(3) ?? "   ";
             logger.ILog($"|{crf} | {score} | {size}% |");
         }
 
         if (result.Winner != null)
         {
-            string crf = result.Winner.Crf?.ToString().PadLeft(4).Substring(0, Math.Min(4, result.Winner.Crf.Length)) ??
+            string crf = result.Winner.Crf?.PadLeft(4).Substring(0, Math.Min(4, result.Winner.Crf.Length)) ??
                          "    ";
-            string score = result.Winner.Score?.ToString().PadLeft(5) ?? "     ";
-            string size = result.Winner.Size?.ToString().PadLeft(3) ?? "   ";
+            string score = result.Winner.Score?.PadLeft(5) ?? "     ";
+            string size = result.Winner.Size?.PadLeft(3) ?? "   ";
             logger.ILog("----------------------");
             logger.ILog($"|{crf} | {score} | {size}% |");
         }
