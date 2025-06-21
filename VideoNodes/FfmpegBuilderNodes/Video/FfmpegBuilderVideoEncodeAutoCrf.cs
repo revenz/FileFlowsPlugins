@@ -36,6 +36,8 @@ public class FfmpegBuilderVideoEncodeAutoCrf : FfmpegBuilderNode
         new() { Label = "AV1", Value = "av1" }
     };
 
+    private string ffmpegBtbn, ffpmegUranite, ffmpegJellyfin;
+
     /// <inheritdoc />
     public override int Execute(NodeParameters args)
     {
@@ -43,14 +45,11 @@ public class FfmpegBuilderVideoEncodeAutoCrf : FfmpegBuilderNode
         var abAv1Result = FindTool(args, "ab-av1", ["/opt/autocrf", "/usr/local/bin"]);
         if (abAv1Result.Failed(out var error))
             return args.Fail(error);
-        var abAv1 = abAv1Result.Value;;
+        var abAv1 = abAv1Result.Value;
 
-        if (FindTool(args, "ffmpeg", "/opt/ffmpeg-static/bin", "/opt/ffmpeg-uranite-static/bin").Failed(out error))
-            return args.Fail(error);
-
-        if (FindTool(args, "ffmpeg", "/usr/local/bin").Failed(out error))
-            return args.Fail(error);
-
+        if (LoadFFmpegs(args) == -1)
+            return -1;
+        
         if (Model.VideoInfo.VideoStreams?.Any() != true)
             return args.Fail("No video streams found.");
 
@@ -195,20 +194,38 @@ public class FfmpegBuilderVideoEncodeAutoCrf : FfmpegBuilderNode
         return 1;
     }
 
+    private int LoadFFmpegs(NodeParameters args)
+    {
+        var btbn = FindTool(args, "ffmpeg", "/opt/ffmpeg-static/bin");
+        if (btbn.Failed(out var error))
+            return args.Fail(error);
+        ffmpegBtbn = btbn.Value;
+
+        var uraninte = FindTool(args, "ffmpeg", "/opt/ffmpeg-uranite-static/bin");
+        if (uraninte.Failed(out error))
+            return args.Fail(error);
+        ffpmegUranite = uraninte.Value;
+
+        var jellyfin = FindTool(args, "ffmpeg", "/usr/local/bin");
+        if (jellyfin.Failed(out error))
+            return args.Fail(error);
+        ffmpegJellyfin = jellyfin.Value;
+
+        return 1;
+    }
+
     private bool DolbyVisionFix(NodeParameters args, FfmpegVideoStream video)
     {
         bool forceEncode = false;
         if (video.Stream.DolbyVision == false || video.Stream.HDR  || FixDolby5 == false) 
             return forceEncode;
-
-        var ffmpeg = args.GetToolPath("ffmpeg");
         
         args.Logger?.ILog("Video is DoVi without a fallback, so were creating one");
         forceEncode = true;
         args.Logger?.ILog("Testing for openCL");
         var processResult = args.Execute(new ExecuteArgs()
         {
-            Command = ffmpeg,
+            Command = ffmpegBtbn,
             ArgumentList =
             [
                 "-hwaccel", "opencl", "-f", "lavfi", "-i", "testsrc=size=640x480:rate=25", "-t", "1", "-c:v",
