@@ -894,6 +894,64 @@ public class FfmpegBuilder_TrackSorterTests : VideoTestBase
         Assert.AreEqual("3 / deu / AAC / 5.1", model.AudioStreams[2].ToString());
         Assert.AreEqual("1 / en / AAC / Directors Commentary / 2.0", model.AudioStreams[3].ToString());
     }
+    
+    [TestMethod]
+    public void ProcessStreams_SortsStreamsBasedOnDefaultFlag()
+    {
+        var trackSorter = new FfmpegBuilderTrackSorter();
+
+        var streams = new List<FfmpegAudioStream>
+        {
+            new() { Index = 1, Language = "en", Codec = "aac", Stream = new AudioStream { Default = false }, IsDefault = false},
+            new() { Index = 2, Language = "fr", Codec = "aac", Stream = new AudioStream { Default = true }, IsDefault = true },
+            new() { Index = 3, Language = "en", Codec = "ac3", Stream = new AudioStream { Default = true }, IsDefault = true },
+        };
+
+        trackSorter.Sorters = new List<KeyValuePair<string, string>>
+        {
+            new("Default", "true")
+        };
+
+        var sorted = trackSorter.SortStreams(args, streams);
+        
+        foreach(var track in sorted)
+            Logger.ILog("Track: " + track);
+
+
+        // Expect IsDefault = true ones to come first
+        Assert.AreEqual(2, sorted[0].Index); // fr, default
+        Assert.AreEqual(3, sorted[1].Index); // en, default
+        Assert.AreEqual(1, sorted[2].Index); // en, not default
+    }
+    
+    [TestMethod]
+    public void ProcessSubtitleStreams_SortsStreamsBasedOnForcedFlag()
+    {
+        var trackSorter = new FfmpegBuilderTrackSorter();
+
+        var streams = new List<FfmpegSubtitleStream>
+        {
+            new() { Index = 1, Language = "en", Codec = "movtext", IsForced = false },
+            new() { Index = 2, Language = "fr", Codec = "movtext", IsForced = true },
+            new() { Index = 3, Language = "deu", Codec = "movtext", IsForced = false },
+        };
+
+        trackSorter.Sorters = new List<KeyValuePair<string, string>>
+        {
+            new("Forced", "1") // equivalent to true
+        };
+
+        var sorted = trackSorter.SortStreams(args, streams);
+        
+        foreach(var track in sorted)
+            Logger.ILog("Track: " + track);
+
+        // Expect IsForced = true to come first
+        Assert.AreEqual(2, sorted[0].Index); // forced = true
+        Assert.AreEqual(1, sorted[1].Index); // forced = false
+        Assert.AreEqual(3, sorted[2].Index); // forced = false
+    }
+
 }
 
 #endif

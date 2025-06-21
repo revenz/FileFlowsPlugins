@@ -78,7 +78,9 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
                     new() { Label = "Language", Value = "Language" },
                     new() { Label = "Language Reversed", Value = "LanguageDesc" },
                     new() { Label = "Title", Value = "Title" },
-                    new() { Label = "Title Reversed", Value = "TitleDesc" }
+                    new() { Label = "Title Reversed", Value = "TitleDesc" },
+                    new() { Label = "Default", Value = "Default" },
+                    new() { Label = "Forced", Value = "Forced" },
                 };
             }
 
@@ -266,6 +268,35 @@ public class FfmpegBuilderTrackSorter : FfmpegBuilderNode
             if (invert)
                 return matches ? 1 : 0;
             return matches ? 0 : 1;
+        }
+
+        // Handles "Forced" or "Default" sorting based on comparison input (e.g., "true" or "1")
+        if (property.Equals("Forced", StringComparison.InvariantCultureIgnoreCase) 
+            || property.Equals("Default", StringComparison.InvariantCultureIgnoreCase))
+        {
+            // Interpret comparison value as "truthy"
+            bool wantsMatch = comparison == "1" || comparison.Trim().Equals("true", StringComparison.InvariantCultureIgnoreCase);
+            int match = wantsMatch ? 0 : 1;
+            int noMatch = wantsMatch ? 1 : 0;
+
+            if (stream is FfmpegAudioStream audioStream)
+            {
+                // Audio streams don't support "Forced"
+                if (property == "Forced")
+                    return 0;
+                return audioStream.IsDefault ? match : noMatch;
+            }
+
+            if (stream is FfmpegSubtitleStream subtitleStream)
+            {
+                if (property == "Forced")
+                    return subtitleStream.IsForced ? match : noMatch;
+
+                return subtitleStream.IsDefault ? match : noMatch;
+            }
+
+            // Unknown stream type
+            return 0;
         }
 
         var value = property switch
