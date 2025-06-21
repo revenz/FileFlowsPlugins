@@ -69,7 +69,13 @@ public class FfmpegBuilderVideoEncodeAutoCrf : FfmpegBuilderNode
 
         string currentCodec = video.Stream.Codec?.ToLowerInvariant() ?? string.Empty;
 
-        var videoBitRate = GetBitrate(args, Model.VideoInfo);
+        var localFileResult = args.FileService.GetLocalPath(args.WorkingFile);
+        if (localFileResult.Failed(out error))
+            return args.Fail(error);
+
+        var localFile = localFileResult.Value;
+
+        var videoBitRate = GetBitrate(args, Model.VideoInfo, localFile);
         if (videoBitRate <= 0)
             return args.Fail("Unable to determine video bitrate");
 
@@ -135,12 +141,6 @@ public class FfmpegBuilderVideoEncodeAutoCrf : FfmpegBuilderNode
 
 
         string encoder = GetEncoder(args);
-
-        var localFileResult = args.FileService.GetLocalPath(args.WorkingFile);
-        if (localFileResult.Failed(out error))
-            return args.Fail(error);
-
-        var localFile = localFileResult.Value;
 
         args.Logger?.ILog($"Targeting {firstTryPercentage}% size, {firstTryScore}% VMAF");
         var attempt = CrfSearch(args, abAv1, localFile, encoder, preset,
@@ -230,7 +230,6 @@ public class FfmpegBuilderVideoEncodeAutoCrf : FfmpegBuilderNode
 
                 video.Filter.Add(
                     "format=p010le,hwupload=derive_device=opencl,tonemap_opencl=tonemap=bt2390:transfer=smpte2084:matrix=bt2020:primaries=bt2020:format=p010le,hwdownload,format=p010le");
-
             }
             else
             {
@@ -247,41 +246,45 @@ public class FfmpegBuilderVideoEncodeAutoCrf : FfmpegBuilderNode
         return forceEncode;
     }
 
-    private float GetBitrate(NodeParameters args, VideoInfo videoInfO)
+    private float GetBitrate(NodeParameters args, VideoInfo videoInfo, string localFile)
     {
-        // Video info
-        var video = videoInfO.VideoStreams[0];
-        // var videoBitRate = Variables.vi.VideoInfo.Bitrate;
+        var video = videoInfo.VideoStreams.FirstOrDefault(x => x.Bitrate > 0);
 
-        if (video.Bitrate > 0)
+        if(video != null)
             return video.Bitrate;
+        
 
-        args.Logger?.ILog("FileFlows has no bitrate info about the video, calculating...");
-        // video stream doesn't have bitrate information
-        // need to use the overall bitrate
-        var overall = video.Bitrate;
-        if (overall < 1)
-            return 0; // couldn't get overall bitrate either
+        args.Logger?.ILog("Bitrate not found in metadata, calculating...");
 
-        // overall bitrate includes all audio streams, so we try and subtract those
-        var calculated = overall;
-        if (videoInfO.AudioStreams?.Any() != true)
-            return calculated;
-
-        foreach (var audio in videoInfO.AudioStreams)
+        float GetEstimatedVideoBitrate(float totalBitrate)
         {
-            if (audio.Bitrate > 0)
-                calculated -= audio.Bitrate;
-            else
-            {
-                // audio doesn't have bitrate either, so we just subtract 5% of the original bitrate
-                // this is a guess, but it should get us close
-                calculated -= (overall * 0.05f);
-            }
+            if (videoInfo.AudioStreams?.Any() != true)
+                return totalBitrate;
+
+            foreach (var audio in videoInfo.AudioStreams)
+                totalBitrate -= audio.Bitrate > 0 ? audio.Bitrate : totalBitrate * 0.05f;
+
+            return Math.Max(0, totalBitrate);
         }
 
-        return calculated;
+        if (videoInfo.Bitrate > 0)
+            return GetEstimatedVideoBitrate(videoInfo.Bitrate);
+
+        // Fallback to file size-based calculation
+        var fileSize = new FileInfo(localFile).Length; // bytes
+        var duration = videoInfo.VideoStreams[0].Duration;
+        if (duration.TotalSeconds < 1)
+        {
+            args.Logger?.WLog("No duration available to calculate bitrate.");
+            return 0;
+        }
+
+        var totalBitrate = (float)(fileSize * 8 / duration.TotalSeconds); // bits per second
+        args.Logger?.ILog($"Calculated total bitrate from file size and duration: {totalBitrate} bps");
+
+        return GetEstimatedVideoBitrate(totalBitrate);
     }
+
 
     /// <summary>
     /// Gets the encoder to use
